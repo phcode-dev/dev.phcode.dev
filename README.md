@@ -1,11 +1,11 @@
-# staging.phcode.dev
+# dev.phcode.dev
 
-The deployed site for [staging.phcode.dev](https://staging.phcode.dev).
+The deployed site for [dev.phcode.dev](https://dev.phcode.dev).
 
-This serves staging/test site of phoenix code editor
+This serves development/test site of phoenix code editor
 
 
-Please see branch: [gh-pages](https://github.com/phcode-dev/staging.phcode.dev/tree/gh-pages) for seeing the files in the deployed site. 
+Please see branch: [gh-pages](https://github.com/phcode-dev/dev.phcode.dev/tree/gh-pages) for seeing the files in the deployed site. 
 
 ## Parent repository:
 

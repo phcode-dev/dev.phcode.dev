@@ -1,8 +1,8 @@
-name: Deploy Notification To staging.phcode.dev
+name: Deploy Notification To dev.phcode.dev
 
 on:
   repository_dispatch:
-    types: [deploy-staging]
+    types: [deploy-dev]
 
 jobs:
   build-tasks:
@@ -17,13 +17,13 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: phcode-dev/phoenix
-          ref: staging
+          ref: main
           path: './phoenix'
       - name: Building phoenix release artifacts
         working-directory: ./phoenix
         run: |
           npm install
-          npm run release:staging
+          npm run release:dev
           npm run test
           cp -r dist distToDeploy/
           cp -r dist distToDeploy/src/
@@ -41,4 +41,4 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
-          cname: staging.phcode.dev
+          cname: dev.phcode.dev
