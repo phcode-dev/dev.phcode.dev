@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+
+<!--
+  Copyright (c) 2021 - present core.ai . All rights reserved.
+  Original work Copyright (c) 2012 - 2021 Adobe Systems Incorporated. All rights reserved.
+  Permission is hereby granted, free of charge, to any person obtaining a
+  copy of this software and associated documentation files (the "Software"),
+  to deal in the Software without restriction, including without limitation
+  the rights to use, copy, modify, merge, publish, distribute, sublicense,
+  and/or sell copies of the Software, and to permit persons to whom the
+  Software is furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+  DEALINGS IN THE SOFTWARE.
+-->
+
+<html lang="en">
+<head>
+  <title>Jasmine Spec Runner</title>
+
+  <script type="text/javascript">
+    //brackets.app.showDeveloperTools();
+    console.warn('Make sure to run this following command before starting tests : npm run test ');
+  </script>
+
+  <!-- Import the phoenix browser virtual file system -->
+  <script src="../src/phoenix/virtualfs.js"></script>
+  <script src="../src/phoenix/shell.js" type="module"></script>
+  <script src="virtual-server-loader.js" type="module"></script>
+
+  <link href="thirdparty/bootstrap2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="thirdparty/bootstrap2/css/bootstrap-responsive.min.css" rel="stylesheet">
+  <link href="BootstrapReporterView.css" rel="stylesheet">
+
+  <!-- Pre-load third party scripts that cannot be async loaded. -->
+  <!-- Keep in sync with Gruntfile.js jasmine vendor dependencies -->
+  <script src="../src/thirdparty/jquery-2.1.3.min.js"></script>
+  <script src="../src/thirdparty/underscore-min.js"></script>
+  <script>
+    // https://lesscss.org/usage/#using-less-in-the-browser-setting-options
+    less = {
+      math: 'always'
+    };
+  </script>
+  <link rel="stylesheet/less" type="text/css" href="../src/styles/brackets.less">
+  <script src="../src/thirdparty/less.min.js"></script>
+  <script src="thirdparty/bootstrap2/js/bootstrap.min.js"></script>
+
+  <script src="thirdparty/jasmine-core/jasmine.js"></script>
+  <script src="thirdparty/jasmine-core/jasmine-html.js"></script>
+  <script src="thirdparty/jasmine-core/boot0.js"></script>
+
+  <script type="text/javascript" src="../src/thirdparty/jszip-utils-phoenix.js"></script>
+  <style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    .pass{
+      background-color: green;
+      color: black;
+    }
+
+    .fail{
+      background-color: darkred;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+  </style>
+</head>
+
+<body style="user-select: text !important; display: flex">
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container" style="width: 100%;">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+
+          <div class="nav-collapse">
+            <span class="brand" href="#">Brackets Tests</span>
+            <ul class="nav">
+              <li><a id="all" href="?category=all">All</a></li>
+              <li><a id="unit" href="?category=unit">Unit</a></li>
+              <li><a id="integration" href="?category=integration">Integration</a></li>
+              <li><a id="search" href="?category=search">Find Replace</a></li>
+              <li><a id="livepreview" href="?category=livepreview">Live&nbsp;Preview</a></li>
+              <li><a id="mainview"    href="?category=mainview">Main&nbsp;View</a></li>
+              <li><a id="performance" href="?category=performance">Performance</a></li>
+              <li><a id="extension" href="?category=extension">Extensions</a></li>
+              <li><a id="individualrun" href="?category=individualrun">Individual Run</a></li>
+              <li><a id="reload" href="#">Reset and Reload Tests</a></li>
+              <li><a id="show-report-to-copy" href="#">Toggle Printable Report</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="printableReport" class="forced-hidden" style="margin-top: 30px;overflow: scroll;width: 100%; height: 94%;">
+      <button id="copyReportButton"> Copy Report</button>
+      <button id="copyReportErrorsButton"> Copy Error Report</button>
+      <button id="copyFullReportButton"> Copy Full Report</button>
+    </div>
+    <div id="loading" style="display: none; margin-top: 100px;">
+      Please run <code>npm run test</code> before starting tests at least once or if you are facing issues.
+      </p>Extracting test files <span id="loadProgressMessage"></span>.... <img src="../src/styles/images/throbber.gif" alt=".......">
+    </div>
+    <div id="mock-main-view" style="position:absolute; height:1000px; width:1000px; left:-10000px; top:-10000px;"></div>
+    <!-- All other scripts are loaded through require. -->
+    <script src="../src/thirdparty/requirejs/require.js" data-main="SpecRunner"></script>
+</body>
+</html>
