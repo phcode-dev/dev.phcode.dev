@@ -24,7 +24,7 @@
 /* jshint ignore:start */
 
 define(function (require, exports, module) {
-    let Survey       = require("survey"),
+    const Survey       = require("survey"),
         serverSync   = require("serverSync"),
         newProject   = require("new-project"),
         defaultProjects   = require("default-projects"),
@@ -35,7 +35,8 @@ define(function (require, exports, module) {
         Mustache     = brackets.getModule("thirdparty/mustache/mustache"),
         unSupportedBrowserTemplate     = require("text!html/unsupported-browser.html");
 
-    let $icon;
+    const PERSIST_STORAGE_DIALOG_DELAY_SECS = 60000;
+    let $icon, unsupportedBrowserDialogShown;
 
     function _addToolbarIcon() {
         const helpButtonID = "help-button";
@@ -52,7 +53,11 @@ define(function (require, exports, module) {
         });
     }
     function _showUnSupportedBrowserDialogue() {
-        var templateVars = {
+        if(unsupportedBrowserDialogShown){
+            return;
+        }
+        unsupportedBrowserDialogShown = true;
+        let templateVars = {
             Strings: Strings,
             surveyURL: "https://s.surveyplanet.com/6208d1eccd51c561fc8e59ca"
         };
@@ -67,6 +72,23 @@ define(function (require, exports, module) {
         }
     }
 
+    async function _persistBrowserStorage() {
+        if(navigator.storage && navigator.storage.persist){
+            let isPersisted = await navigator.storage.persisted();
+            console.log(`Browser Persisted storage granted?: ${isPersisted}`);
+            setTimeout(async ()=>{
+                if(!isPersisted){
+                    console.log(`Browser Persisted storage requesting`);
+                    isPersisted = await navigator.storage.persist();
+                    console.log(`Browser Persisted storage granted?: ${isPersisted}`);
+                }
+            }, PERSIST_STORAGE_DIALOG_DELAY_SECS);
+        } else {
+            console.error("Browser does not support storage persistence APIs");
+            _showUnSupportedBrowserDialogue();
+        }
+    }
+
     AppInit.appReady(function () {
         _addToolbarIcon();
         Survey.init();
@@ -75,5 +97,6 @@ define(function (require, exports, module) {
         newProject.init();
         newFeature.init();
         _detectUnSupportedBrowser();
+        _persistBrowserStorage();
     });
 });
