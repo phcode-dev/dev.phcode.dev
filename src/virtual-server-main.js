@@ -27,13 +27,10 @@ importScripts('phoenix/virtualServer/json-formatter.js');
 importScripts('phoenix/virtualServer/html-formatter.js');
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/6.4.1/workbox-sw.js');
 
-const VIRTUAL_SERVER_URLS = [];
-
 const _debugSWCacheLogs = false; // change debug to true to see more logs
 
 workbox.setConfig({debug: _debugSWCacheLogs && Config.debug});
 
-const cacheBaseURL = `${location.origin}`;
 const Route = workbox.routing.Route;
 // other strategies include CacheFirst, NetworkFirst Etc..
 const cacheFirst = workbox.strategies.CacheFirst;
@@ -53,13 +50,15 @@ const ExpirationManager ={
         })
 };
 
+let recentlyAccessedURLS = {};
+
 function _debugCacheLog(...args) {
     if(_debugSWCacheLogs){
         console.log(...args);
     }
 }
 
-// virtual server route
+// service worker controlling route base url. This will be something like https://phcode.dev/ or http://localhost:8000/
 let baseURL = location.href;
 if(location.href.indexOf( "?")>-1){
     baseURL = location.href.substring( 0, location.href.indexOf( "?")); // remove query string params
@@ -70,27 +69,30 @@ if(location.href.indexOf( "#")>-1){
 if(location.href.indexOf( "/")>-1){
     baseURL = baseURL.substring( 0, baseURL.lastIndexOf( "/"));
 }
+if(!baseURL.endsWith('/')){
+    baseURL = baseURL + '/';
+}
+console.log("Service worker: base URL is: ", baseURL);
+
+// this is the base url where our file system virtual server lives. http://phcode.dev/phoenix/vfs in phoenix or
+// http://localhost:8000/phoenix/vfs in dev builds
+const virtualServerBaseURL = `${baseURL}${Config.route}`;
+console.log("Service worker: Virtual server base URL is: ", virtualServerBaseURL);
 
 // Route with trailing slash (i.e., /path/into/filesystem)
 const wwwRegex = new RegExp(`${Config.route}(/.*)`);
 // Route minus the trailing slash
-const wwwPartialRegex = new RegExp(`${Config.route}$`);
 
 function _isVirtualServing(url) {
-    for(let serverBaseURL of VIRTUAL_SERVER_URLS){
-        if(url.startsWith(serverBaseURL)){
-            return true;
-        }
-    }
-    return false;
+    return url.startsWith(virtualServerBaseURL);
 }
 
-function _shouldServe(request) {
+function _shouldVirtualServe(request) {
     return _isVirtualServing(request.url.href);
 }
 
 workbox.routing.registerRoute(
-    _shouldServe,
+    _shouldVirtualServe,
     ({url}) => {
         // Pull the filesystem path off the url
         let path = url.pathname.match(wwwRegex)[1];
@@ -115,7 +117,7 @@ workbox.routing.registerRoute(
 
 // Redirect if missing the / on our expected route
 workbox.routing.registerRoute(
-    _shouldServe,
+    _shouldVirtualServe,
     ({url}) => {
         url.pathname = `${Config.route}/`;
         return Promise.resolve(Response.redirect(url, 302));
@@ -135,13 +137,15 @@ function _clearCache() {
 }
 
 async function _updateTTL(cacheName, urls) {
+    // this is needed for workbox to purge cache by ttl. purge behaviour is not part of w3c spec, but done by workbox.
+    // cache.addall browser api will not update expiry ttls that workbox lib needs. So we add it here.
     console.log(`Service worker: Updating expiry for ${urls.length} urls in cache: ${cacheName}`);
     for(let url of urls){
         ExpirationManager[cacheName].updateTimestamp(url);
     }
 }
 
-function _ScheduleCacheRefresh(cacheName) {
+function _refreshCacheNow(cacheName) {
     console.log("Service worker: Refreshing cache: ", cacheName);
     caches.open(cacheName).then((cache) => {
         cache.keys().then((keys) => {
@@ -149,7 +153,10 @@ function _ScheduleCacheRefresh(cacheName) {
             keys.forEach((request, index, array) => {
                 cacheURLS.push(request.url);
             });
-            console.log(`Service worker: scheduling cache update for ${cacheURLS.length} URLS in ${cacheName}`);
+            console.log(`Service worker: Filtering caching from ${cacheURLS.length} URLS in ${cacheName}`);
+            cacheURLS = cacheURLS.filter(url => recentlyAccessedURLS[url] === true);
+            recentlyAccessedURLS = {};
+            console.log(`Service worker: scheduling cache update for ${cacheURLS.length} filtered URLS in ${cacheName}`);
             cache.addAll(cacheURLS).then(()=>{
                 console.log(`Service worker: cache refresh complete for ${cacheURLS.length} URLS in ${cacheName}`);
                 _updateTTL(cacheName, cacheURLS);
@@ -163,40 +170,27 @@ function _ScheduleCacheRefresh(cacheName) {
 function _refreshCache(event) {
     console.log("Service worker: Scheduling Refreshing cache in ms:", CACHE_REFRESH_SCHEDULE_TIME);
     setTimeout(()=>{
-        _ScheduleCacheRefresh(CACHE_NAME_EVERYTHING);
-        _ScheduleCacheRefresh(CACHE_NAME_CORE_SCRIPTS);
+        _refreshCacheNow(CACHE_NAME_EVERYTHING);
     }, CACHE_REFRESH_SCHEDULE_TIME);
     event.ports[0].postMessage("cache refresh scheduled");
 }
 
-const DONT_CACHE_BASE_URLS = [`${cacheBaseURL}/src/`, `${cacheBaseURL}/test/`, `${cacheBaseURL}/dist/`];
-
-function _registerServerURLs(event) {
-    let fsServerUrl = event.data.fsServerUrl;
-    console.log("service worker: adding virtual web server service worker: ", fsServerUrl);
-    if(!DONT_CACHE_BASE_URLS.includes(fsServerUrl)) {
-        DONT_CACHE_BASE_URLS.push(fsServerUrl);
-    }
-    if(!VIRTUAL_SERVER_URLS.includes(fsServerUrl)) {
-        VIRTUAL_SERVER_URLS.push(fsServerUrl);
-    }
-    event.ports[0].postMessage(fsServerUrl);
-    console.log("service worker: dont cache urls updates: ", DONT_CACHE_BASE_URLS);
-}
-
 addEventListener('message', (event) => {
+    // NB: Do not expect anything to persist in the service worker variables, the service worker may be reset at
+    // any time by the browser if it is not in use, and only load it when required. This means that if there is a
+    // long inactivity in the page, even if the tab is opened, the service worker will be unloaded by chrome. Then will
+    // be re-enabled when needed. Hens some of our stored variables transferred from browser tabs was being erased
+    // leading to live preview failures before. Use indexDB persistent storage only inside worker is you want to keep
+    // track of data transferred from the main browser tabs, never hold it in variables here!
     let eventType = event.data && event.data.type;
     switch (eventType) {
         case 'SKIP_WAITING': self.skipWaiting(); break;
-        case 'GET_SW_BASE_URL': event.ports[0].postMessage(cacheBaseURL); break;
+        case 'GET_SW_BASE_URL': event.ports[0].postMessage(baseURL); break;
         case 'CLEAR_CACHE': _clearCache(); break;
         case 'REFRESH_CACHE': _refreshCache(event); break;
-        case 'REGISTER_FS_SERVER_URL': _registerServerURLs(event); break;
         default: console.error("Service worker cannot process, received unknown message: ", event);
     }
 });
-
-console.log("service worker base URL:", cacheBaseURL);
 
 function _isCacheableThirdPartyUrl(url) {
     let THIRD_PARTY_URLS = [
@@ -210,6 +204,10 @@ function _isCacheableThirdPartyUrl(url) {
     return false;
 }
 
+const DONT_CACHE_BASE_URLS = [
+    `${location.origin}/src/`, `${location.origin}/test/`, `${location.origin}/dist/`, // https://phcode.dev/src or other
+    // https://phcode.dev/subfolder/src/ or other when phoenix is loaded from https://phcode.dev/subfolder/index.html
+    `${baseURL}src/`, `${baseURL}test/`, `${baseURL}dist/`];
 function _isNotCacheableUrl(url) {
     for(let start of DONT_CACHE_BASE_URLS){
         if(url.startsWith(start)){
@@ -220,8 +218,11 @@ function _isNotCacheableUrl(url) {
 }
 
 // we always try to load main worker scripts and index html from core
-const CORE_SCRIPTS_URLS = [`${cacheBaseURL}/index.html`, `${cacheBaseURL}/`,
-    `${cacheBaseURL}/virtual-server-main.js`, `${cacheBaseURL}/phoenix/virtual-server-loader.js`];
+const CORE_SCRIPTS_URLS = [`${location.origin}/index.html`, `${location.origin}/`, // https://phcode.dev/src or other
+    `${location.origin}/virtual-server-main.js`, `${location.origin}/phoenix/virtual-server-loader.js`,
+    // https://phcode.dev/subfolder/src/ or other when phoenix is loaded from https://phcode.dev/subfolder/index.html
+    `${baseURL}index.html`, `${baseURL}`,
+    `${baseURL}virtual-server-main.js`, `${baseURL}phoenix/virtual-server-loader.js`];
 function _isCoreScript(url) {
     for(let coreScript of CORE_SCRIPTS_URLS){
         if(url === coreScript){
@@ -251,7 +252,7 @@ function _shouldCache(request) {
     if(request.method === 'GET' && _isCacheableThirdPartyUrl(href)) {
         return true;
     }
-    if(request.method === 'GET' && href.startsWith(cacheBaseURL) && !disAllowedExtensions.test(href)) {
+    if(request.method === 'GET' && href.startsWith(baseURL) && !disAllowedExtensions.test(href)) {
         return true;
     }
     _debugCacheLog("Not Caching URL: ", request);
@@ -260,7 +261,11 @@ function _shouldCache(request) {
 
 // handle all document
 const allCachedRoutes = new Route(({ request }) => {
-    return _shouldCache(request);
+    let shouldCache = _shouldCache(request) && !_isVirtualServing(request.url);
+    if(shouldCache){
+        recentlyAccessedURLS[request.url] = true;
+    }
+    return shouldCache;
 }, new cacheFirst({
     cacheName: CACHE_NAME_EVERYTHING,
     plugins: [
@@ -271,8 +276,9 @@ const allCachedRoutes = new Route(({ request }) => {
     ]
 }));
 
+// core scripts route
 const freshnessPreferredRoutes = new Route(({ request }) => {
-    return _isCoreScript(request.url);
+    return _isCoreScript(request.url) && !_isVirtualServing(request.url);
 }, new StaleWhileRevalidate({
     cacheName: CACHE_NAME_CORE_SCRIPTS,
     plugins: [

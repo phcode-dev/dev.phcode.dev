@@ -30,13 +30,28 @@
 
 import {Workbox} from 'https://storage.googleapis.com/workbox-cdn/releases/6.4.1/workbox-window.prod.mjs';
 
-function getRoute(){
-    const pathName = window.location.pathname;
-    const basePath = pathName.substring(0, pathName.lastIndexOf("/"));
-    return `${basePath}/phoenix/vfs`;
+function _getBaseURL() {
+    let baseURL = window.location.href;
+    if(location.href.indexOf( "?")>-1){
+        baseURL = location.href.substring( 0, location.href.indexOf( "?")); // remove query string params
+    }
+    if(location.href.indexOf( "#")>-1){
+        baseURL = baseURL.substring( 0, baseURL.indexOf( "#")); // remove hrefs in page
+    }
+    if(location.href.indexOf( "/")>-1){
+        baseURL = baseURL.substring( 0, baseURL.lastIndexOf( "/"));
+    }
+    if(!baseURL.endsWith('/')){
+        baseURL = baseURL + '/';
+    }
+    return baseURL;
 }
 
-window.fsServerUrl = window.location.origin + getRoute();
+function getRoute(){
+    return `phoenix/vfs`;
+}
+
+window.fsServerUrl = _getBaseURL() + getRoute();
 
 function _isServiceWorkerLoaderPage() {
     // only http(s)://x.y.z/ or http(s)://x.y.z/index.html can load service worker, or localhost/src for dev builds
@@ -56,7 +71,10 @@ async function shouldUpdate() {
  */
 if (_isServiceWorkerLoaderPage() && 'serviceWorker' in navigator) {
     console.log("Service worker loader: Loading  from page...", window.location.href);
-    const wb = new Workbox(`virtual-server-main.js?debug=${window.logToConsolePref === 'true'}&route=${getRoute()}`);
+    const wb = new Workbox(`virtual-server-main.js?debug=${window.logToConsolePref === 'true'}&route=${getRoute()}`, {
+        // https://developer.chrome.com/blog/fresher-sw/#updateviacache
+        updateViaCache: 'none'
+    });
 
     function _refreshCache() {
         console.log(`Service worker loader: triggering REFRESH_CACHE`);
@@ -69,21 +87,15 @@ if (_isServiceWorkerLoaderPage() && 'serviceWorker' in navigator) {
         });
     }
 
-    function _registerVirtualServer() {
-        console.log(`Service worker loader: Registering virtual web server on url: ${window.fsServerUrl}`);
-        wb.messageSW({
-            type: 'REGISTER_FS_SERVER_URL',
-            fsServerUrl: window.fsServerUrl
-        }).then((fsServerUrl)=>{
-            console.log(`Service worker loader: Server ready! Serving files on url: ${fsServerUrl}`);
-        }).catch(err=>{
-            console.error("Service worker loader: Error while registering virtual server with service worker", err);
-        });
-    }
-
     function serverReady() {
         console.log('Service worker loader: Server ready.');
-        _registerVirtualServer();
+        wb.messageSW({
+            type: 'GET_SW_BASE_URL'
+        }).then((fsServerUrl)=>{
+            console.log(`Service worker loader: Server ready! Service worker initialised at base url: ${fsServerUrl}`);
+        }).catch(err=>{
+            console.error("Service worker loader: Error while init of service worker", err);
+        });
         _refreshCache();
     }
 
