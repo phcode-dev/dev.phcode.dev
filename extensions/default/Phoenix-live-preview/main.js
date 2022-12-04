@@ -136,11 +136,13 @@ define(function (require, exports, module) {
         urlPinned = !pinStatus;
         LiveDevelopment.setLivePreviewPinned(urlPinned);
         _loadPreview();
+        Metrics.countEvent(Metrics.EVENT_TYPE.LIVE_PREVIEW, "pinURLBtn", "click");
     }
 
     function _popoutLivePreview() {
         if(!tab || tab.closed){
             tab = open();
+            Metrics.countEvent(Metrics.EVENT_TYPE.LIVE_PREVIEW, "popoutBtn", "click");
         }
         _loadPreview(true);
     }
@@ -187,6 +189,7 @@ define(function (require, exports, module) {
             LiveDevelopment.closeLivePreview();
             LiveDevelopment.openLivePreview();
             _loadPreview(true);
+            Metrics.countEvent(Metrics.EVENT_TYPE.LIVE_PREVIEW, "reloadBtn", "click");
         });
     }
 
