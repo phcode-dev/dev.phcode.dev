@@ -104,16 +104,26 @@ define(function (require, exports, module) {
             _loadPreview(true);
         } else {
             $icon.toggleClass("active");
+            $iframe.attr('src', 'about:blank');
             panel.hide();
         }
     }
 
-    function _toggleVisibility() {
+    function _startOrStopLivePreviewIfRequired(explicitClickOnLPIcon) {
+        let visible = panel.isVisible();
+        if(visible && LiveDevelopment.isInactive()) {
+            LiveDevelopment.openLivePreview();
+        } else if(visible && explicitClickOnLPIcon) {
+            LiveDevelopment.closeLivePreview();
+            LiveDevelopment.openLivePreview();
+        } else if(!visible && LiveDevelopment.getConnectionIds().length === 0 && (!tab || tab.closed)) {
+            LiveDevelopment.closeLivePreview();
+        }
+    }
+    function _toggleVisibilityOnClick() {
         let visible = !panel.isVisible();
         _setPanelVisibility(visible);
-        if(visible) {
-            LiveDevelopment.openLivePreview();
-        }
+        _startOrStopLivePreviewIfRequired(true);
     }
 
     function _togglePinUrl() {
@@ -157,7 +167,7 @@ define(function (require, exports, module) {
         const PANEL_MIN_SIZE = 50;
         const INITIAL_PANEL_SIZE = document.body.clientWidth/2.5;
         $icon = $("#toolbar-go-live");
-        $icon.click(_toggleVisibility);
+        $icon.click(_toggleVisibilityOnClick);
         $panel = $(Mustache.render(panelHTML, templateVars));
         $iframe = $panel.find("#panel-live-preview-frame");
         $pinUrlBtn = $panel.find("#pinURLButton");
@@ -276,12 +286,11 @@ define(function (require, exports, module) {
         }
     }
 
-    let livePreviewShownOnProjectSwitch = false;
+    let livePreviewEnabledOnProjectSwitch = false;
     function _projectOpened() {
         if(urlPinned){
             _togglePinUrl();
         }
-        EditorManager.on("activeEditorChange", _activeDocChanged);
         $iframe[0].src = utils.getNoPreviewURL();
         if(tab && !tab.closed){
             tab.location = utils.getNoPreviewURL();
@@ -293,15 +302,16 @@ define(function (require, exports, module) {
     }
 
     function _projectClosed() {
-        EditorManager.off("activeEditorChange", _activeDocChanged);
         LiveDevelopment.closeLivePreview();
-        livePreviewShownOnProjectSwitch = false;
+        livePreviewEnabledOnProjectSwitch = false;
     }
 
     function _activeDocChanged() {
-        if(!livePreviewShownOnProjectSwitch) {
+        if(!LiveDevelopment.isInactive()){
+            livePreviewEnabledOnProjectSwitch = true;
+        }
+        if(!livePreviewEnabledOnProjectSwitch && (panel.isVisible() || (tab && !tab.closed))) {
             LiveDevelopment.openLivePreview();
-            livePreviewShownOnProjectSwitch = true;
         }
     }
 
@@ -345,13 +355,15 @@ define(function (require, exports, module) {
         MainViewManager.on("currentFileChange", _loadPreview);
         ProjectManager.on(ProjectManager.EVENT_PROJECT_OPEN, _projectOpened);
         ProjectManager.on(ProjectManager.EVENT_PROJECT_CLOSE, _projectClosed);
+        EditorManager.on("activeEditorChange", _activeDocChanged);
         CommandManager.register(Strings.CMD_LIVE_FILE_PREVIEW,  Commands.FILE_LIVE_FILE_PREVIEW, function () {
-            _toggleVisibility();
+            _toggleVisibilityOnClick();
         });
         let fileMenu = Menus.getMenu(Menus.AppMenuBar.FILE_MENU);
         fileMenu.addMenuItem(Commands.FILE_LIVE_FILE_PREVIEW, "");
         // We always show the live preview panel on startup if there is a preview file
         setTimeout(async ()=>{
+            LiveDevelopment.openLivePreview();
             let previewDetails = await utils.getPreviewDetails();
             if(previewDetails.filePath){
                 // only show if there is some file to preview and not the default no-preview preview on startup
@@ -359,7 +371,10 @@ define(function (require, exports, module) {
             }
         }, 1000);
         LiveDevelopment.on(LiveDevelopment.EVENT_OPEN_PREVIEW_URL, _openLivePreviewURL);
-        LiveDevelopment.openLivePreview();
+        LiveDevelopment.on(LiveDevelopment.EVENT_CONNECTION_CLOSE, function () {
+            // the connection close pool will take some time to settle
+            setTimeout(_startOrStopLivePreviewIfRequired, 15000);
+        });
     });
 });
 
