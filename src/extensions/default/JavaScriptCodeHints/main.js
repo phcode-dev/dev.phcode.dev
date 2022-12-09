@@ -718,15 +718,19 @@ define(function (require, exports, module) {
             installEditorListeners(current, previous);
         }
 
-        function setJumpPosition(curPos) {
-            EditorManager.getCurrentFullEditor().setCursorPos(curPos.line, curPos.ch, true);
-        }
-
         function JSJumpToDefProvider() {
         }
 
-        JSJumpToDefProvider.prototype.canJumpToDef = function (editor, implicitChar) {
-            return true;
+        const jumpTokenTypes = ["variable", "variable-2", "variable-3", "property", "def", "string"];
+        // defs and strings not ignored for usage in imports
+
+        JSJumpToDefProvider.prototype.canJumpToDef = function (editor, optionalPosition) {
+            let pos = optionalPosition || editor.getCursorPos();
+            let token = editor.getToken(pos);
+            if(token && token.type && jumpTokenTypes.includes(token.type)){
+                return true;
+            }
+            return false;
         };
 
         /**

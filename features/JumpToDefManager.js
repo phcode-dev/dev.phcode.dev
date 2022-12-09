@@ -39,14 +39,15 @@ define(function (require, exports, module) {
         removeJumpToDefProvider = _providerRegistrationHandler.removeProvider.bind(_providerRegistrationHandler);
 
 
-    function _getJumpToDefProvider(editor) {
+    function _getJumpToDefProvider(editor, position = null) {
         let jumpToDefProvider = null;
         let language = editor.getLanguageForSelection(),
             enabledProviders = _providerRegistrationHandler.getProvidersForLanguageId(language.getId());
 
 
         enabledProviders.some(function (item, index) {
-            if (item.provider.canJumpToDef(editor)) {
+            // position is optional
+            if (item.provider.canJumpToDef(editor, position)) {
                 jumpToDefProvider = item.provider;
                 return true;
             }
@@ -90,30 +91,20 @@ define(function (require, exports, module) {
         return result.promise();
     }
 
-    /**
-     * variable that tracks is mark is already present in editor to improve redraw performance on mousemove
-     * @type {boolean}
-     */
-    let marksPresent = false;
-
     function _clearHoverMarkers(editor) {
-        if(marksPresent && editor){
+        if(editor && editor.hoverMarksPresent){
             editor.clearAllMarks(JUMP_TO_DEF_MARKER);
-            marksPresent = false;
+            editor.hoverMarksPresent = false;
         }
     }
-
-    const tokenTypesToIgnore = ['keyword', "operator", 'meta', 'atom', 'number', 'comment'];
-    // defs and strings not ignored for usage in imports
 
     function _drawHoverMarkers(editor, pos) {
         if(editor){
             _clearHoverMarkers(editor);
-            let jumpToDefProvider = _getJumpToDefProvider(editor);
-            let token = editor.getToken(pos);
-            if(jumpToDefProvider && token.type && !tokenTypesToIgnore.includes(token.type)){
+            let jumpToDefProvider = _getJumpToDefProvider(editor, pos);
+            if(jumpToDefProvider){
                 editor.markToken(JUMP_TO_DEF_MARKER, pos, Editor.MARK_OPTION_HYPERLINK_TEXT);
-                marksPresent = true;
+                editor.hoverMarksPresent = true;
             }
         }
     }
