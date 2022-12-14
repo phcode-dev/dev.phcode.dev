@@ -45,6 +45,9 @@
  * // replace `all` with language ID(Eg. javascript) if you want to restrict the preview to js files only.
  * QuickViewManager.registerQuickViewProvider(exports, ["all"]);
  *
+ * // provide a helpful name for the QuickView. This will be useful if you implement `filterQuickView` function or
+ * // have to debug the quick view.
+ * exports.QUICK_VIEW_NAME = "extension.someName";
  * // now implement the getQuickView function that will be invoked when ever user hovers over a text in the editor.
  * exports.getQuickView = function(editor, pos, token, line) {
  *         return new Promise((resolve, reject)=>{
@@ -55,14 +58,20 @@
  *             });
  *         });
  *     };
+ * // optional filter quick view function to handle multiple quick views
+ * exports.filterQuickView = function(popovers){
+ *     // popovers will be an array of all popovers rendered by providers
+ *     return popovers; // dont filter show everything in this case
+ * }
  * ```
  *
  * ### How it works
  * When QuickViewManager determines that the user intents to see QuickView on hover, `getQuickView` function on all
  * registered QuickView providers are invoked to get the quick view popup. `getQuickView` should return a promise
  * that resolves to the popup contents if the provider has a quick view. Else just reject the promise. If multiple
- * providers returns QuickView, all of them are displayed one by one. See detailed API docs for implementation
- * details below:
+ * providers returns QuickView, all of them are displayed stacked one by one. You can alter this behavior by
+ * providing a `filterQuickView` function in the provider where you can modify what previews will be shown.
+ * See detailed API docs for implementation details below:
  *
  * ## API
  * ### registerQuickViewProvider
@@ -105,7 +114,8 @@
  *             resolve({
  *                 start: {line: pos.line, ch:token.start},
  *                 end: {line: pos.line, ch:token.end},
- *                 content: "<div>hello world</div>"
+ *                 content: "<div>hello world</div>",
+ *                 editsDoc: false // this is optional if the quick view edits the current doc
  *             });
  *         });
  *     };
@@ -124,6 +134,7 @@
  * 1. `end` : Indicates the end cursor position to which the quick view is valid. These are generally used to highlight
  *    the hovered section of the text in the editor.
  * 1. `content`: Either `HTML` as text, a `DOM Node` or a `Jquery Element`.
+ * 1. `editsDoc`: Optional, set to true if the quick view can edit the active document.
  *
  * #### Modifying the QuickView content after resolving `getQuickView` promise
  * Some advanced/interactive extensions may need to do dom operations on the quick view content.
@@ -137,8 +148,35 @@
  *    handler takes time to resolve the QuickView, resolve a dummy quick once you are sure that a QuickView needs
  *    to be shown to the user. The div contents can be later updated as and when more details are available.
  * 1. Note that the QuickView could be hidden/removed any time by the QuickViewManager.
- * 1. If multiple providers returns a valid popup, all of them are displayed.
+ * 1. If multiple providers returns a valid popup, all of them are displayed except if the `filterQuickView` modifies
+ *    the quick view render list. Note that `filterQuickView` is called only for those providers that
+ *    provided a quick view.
  *
+ * ### filterQuickView
+ * Each provider can optionally implement the `filterQuickView` function to control what among the available
+ * quick views should be rendered if multiple providers responded with a QuickView. The function will be called
+ * once all `getQuickView` providers provided a valid preview object.
+ * ```js
+ * // function signature
+ * provider.filterQuickView = function(popovers) {
+ *          for(let popover of popovers){
+ *             // here if we see that a quick view with name `exclusiveQuickView` is present, then we only show that
+ *             // QuickView. popover.providerInfo object holds details of what provider provided the quick view.
+ *             if(popover.providerInfo.provider.QUICK_VIEW_NAME === "exclusiveQuickView"){
+ *                 return [popover]
+ *             }
+ *         }
+ *         // if nothing is returned, then the `popovers` param will be used to show popover
+ *     };
+ * ```
+ *
+ * #### parameter
+ * The function will be called with the `popovers` parameter which is an array of popover objects that was returned
+ * by `getQuickView` function of all succeeded providers. Details of each provider that created a popover
+ * will be present in `popovers[i].providerInfo` object.
+ *
+ * #### return
+ * An array of popovers that needs to be rendered, or nothing(to render the original popover parameter as is).
  * @module features/QuickViewManager
  */
 
@@ -166,13 +204,13 @@ define(function (require, exports, module) {
         registerQuickViewProvider = _providerRegistrationHandler.registerProvider.bind(_providerRegistrationHandler),
         removeQuickViewProvider = _providerRegistrationHandler.removeProvider.bind(_providerRegistrationHandler);
 
-    function _getQuickViewProviders(editor) {
+    function _getQuickViewProviders(editor, pos) {
         let quickViewProviders = [];
-        let language = editor.getLanguageForSelection(),
+        let language = editor.getLanguageForPosition(pos),
             enabledProviders = _providerRegistrationHandler.getProvidersForLanguageId(language.getId());
 
         for(let item of enabledProviders){
-            quickViewProviders.push(item.provider);
+            quickViewProviders.push(item);
         }
         return quickViewProviders;
     }
@@ -323,6 +361,9 @@ define(function (require, exports, module) {
                 if(_isResultAfterPopoverEnd(editor, popover, result)){
                     popover.end = result.end;
                 }
+                if(result.editsDoc){
+                    popover.editsDoc = true;
+                }
                 popover.content.append(result.content);
             }
 
@@ -344,6 +385,36 @@ define(function (require, exports, module) {
     }
 
     /**
+     * Returns a popover array with the list of popovers to be rendered after filtering from providers.
+     * @param results
+     * @param providerInfos
+     * @return {*[]}
+     * @private
+     */
+    function _getPopover(results, providerInfos) {
+        let popovers = [], fulfilledProviderInfos = [];
+        for(let i=0; i< results.length; i++){
+            let result = results[i];
+            if(result.status === "fulfilled" && result.value){
+                let popoverResult = result.value;
+                popoverResult.providerInfo = providerInfos[i];
+                fulfilledProviderInfos.push(providerInfos[i]);
+                popovers.push(popoverResult);
+            }
+        }
+
+        // filterQuickView is called only for those providers that provided a quick view.
+        for(let providerInfo of fulfilledProviderInfos){
+            let provider = providerInfo.provider;
+            if(provider.filterQuickView){
+                popovers = provider.filterQuickView(popovers) || popovers;
+            }
+        }
+
+        return popovers;
+    }
+
+    /**
      * Returns a 'ready for use' popover state object:
      * { visible: false, editor, start, end, content, ?onShow, xpos, ytop, ybot }
      * Lacks only hoverTimer (supplied by handleMouseMove()) and marker (supplied by showPreview()).
@@ -351,23 +422,20 @@ define(function (require, exports, module) {
      */
     async function queryPreviewProviders(editor, pos, token) {
         let line = editor.document.getLine(pos.line);
-        let providers = _getQuickViewProviders(editor);
-        let popovers = [], providerPromises = [];
-        for(let provider of providers){
+        let providerInfos = _getQuickViewProviders(editor, pos);
+        let providerPromises = [], activeProviderInfos = [];
+        for(let providerInfo of providerInfos){
+            let provider = providerInfo.provider;
             if(!provider.getQuickView){
                 console.error("Quickview provider does not implement the required getQuickView function", provider);
                 continue;
             }
             providerPromises.push(provider.getQuickView(editor, pos, token, line));
+            activeProviderInfos.push(providerInfo);
         }
         let results = await Promise.allSettled(providerPromises);
-        for(let result of results){
-            if(result.status === "fulfilled" && result.value){
-                popovers.push(result.value);
-            }
-        }
 
-        return _createPopoverState(editor, popovers);
+        return _createPopoverState(editor, _getPopover(results, activeProviderInfos));
     }
 
     /**
@@ -527,16 +595,22 @@ define(function (require, exports, module) {
         }
     }
 
+    function docChanged() {
+        if(popoverState && !popoverState.editsDoc){
+            hidePreview();
+        }
+    }
+
     function onActiveEditorChange(event, current, previous) {
         // Hide preview when editor changes
         hidePreview();
 
         if (previous && previous.document) {
-            previous.document.off("change", hidePreview);
+            previous.document.off("change", docChanged);
         }
 
         if (current && current.document) {
-            current.document.on("change", hidePreview);
+            current.document.on("change", docChanged);
         }
     }
 
