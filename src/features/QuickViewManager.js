@@ -220,7 +220,8 @@ define(function (require, exports, module) {
         $previewContainer,                   // Preview container
         $previewContent,                     // Preview content holder
         _currentMousePos,
-        animationRequest;
+        animationRequest,
+        quickViewLocked = false;
 
     // Constants
     const CMD_ENABLE_QUICK_VIEW       = "view.enableQuickView",
@@ -285,6 +286,7 @@ define(function (require, exports, module) {
         }
         showPreviewQueued = false;
         mouseInPreviewContainer = false;
+        unlockQuickView();
         window.clearTimeout(popoverState.hoverTimer);
         popoverState = null;
     }
@@ -524,7 +526,7 @@ define(function (require, exports, module) {
     function processMouseMove() {
         animationRequest = null;
 
-        if (mouseInPreviewContainer) {
+        if (mouseInPreviewContainer || quickViewLocked) {
             return;
         }
 
@@ -563,7 +565,7 @@ define(function (require, exports, module) {
             // so we return from this mousemove event handler ASAP.
             popoverState.hoverTimer = window.setTimeout(function () {
                 showPreviewQueued = false;
-                if(!mouseInPreviewContainer){
+                if(!mouseInPreviewContainer && !quickViewLocked){
                     hidePreview();
                     popoverState = {};
                     showPreview(editor);
@@ -579,11 +581,14 @@ define(function (require, exports, module) {
             clientY: event.clientY
         };
 
-        if (!enabled) {
+        if (!enabled || quickViewLocked
+            || $previewContainer[0].contains(window.document.activeElement)) {
+            // activeElement check as, if the popup has an active element, say a text input, user may
+            // move the mouse outside popup to type in the input, in which case we should not close popup.
             return;
         }
 
-        if (event.buttons !== 0) {
+        if (event.buttons !== 0 && !mouseInPreviewContainer) {
             // Button is down - don't show popovers while dragging
             hidePreview();
             return;
@@ -622,7 +627,7 @@ define(function (require, exports, module) {
     let mouseInPreviewContainer = false;
     function mouseOut(_evt) {
         setTimeout(()=>{
-            if(mouseInPreviewContainer || $previewContainer[0].contains(_evt.toElement)){
+            if(mouseInPreviewContainer || $previewContainer[0].contains(_evt.toElement) || quickViewLocked){
                 return;
             }
             hidePreview();
@@ -680,7 +685,11 @@ define(function (require, exports, module) {
     }
 
     function toggleEnableQuickView() {
-        setEnabled(!enabled);
+        let enableQuickView = !enabled;
+        if(!enableQuickView){
+            unlockQuickView();
+        }
+        setEnabled(enableQuickView);
     }
 
     function _forceShow(popover) {
@@ -733,6 +742,27 @@ define(function (require, exports, module) {
         return (popoverState && popoverState.visible) || false;
     }
 
+    /**
+     * locks the current QuickView if shown to be permanently displayed on screen till the `unlockQuickView` function
+     * is called or document changes.
+     *
+     * @type {function}
+     */
+    function lockQuickView() {
+        if(isQuickViewShown()){
+            quickViewLocked = true;
+        }
+    }
+
+    /**
+     * unlocks the current QuickView locked by `lockQuickView` fucntion.
+     *
+     * @type {function}
+     */
+    function unlockQuickView() {
+        quickViewLocked = false;
+    }
+
     // For unit testing
     exports._queryPreviewProviders  = queryPreviewProviders;
     exports._forceShow              = _forceShow;
@@ -740,4 +770,6 @@ define(function (require, exports, module) {
     exports.registerQuickViewProvider = registerQuickViewProvider;
     exports.removeQuickViewProvider   = removeQuickViewProvider;
     exports.isQuickViewShown = isQuickViewShown;
+    exports.lockQuickView = lockQuickView;
+    exports.unlockQuickView = unlockQuickView;
 });

@@ -23,8 +23,6 @@
 
 define(function (require, exports, module) {
 
-    require("./thirdparty/jquery.knob.modified");
-
     // Brackets modules
     let PreferencesManager  = brackets.getModule("preferences/PreferencesManager"),
         Strings             = brackets.getModule("strings"),
@@ -106,6 +104,12 @@ define(function (require, exports, module) {
                         Metrics.countEvent(Metrics.EVENT_TYPE.QUICK_VIEW, "num", "changed");
                         changedMetricSent = true;
                     }
+                },
+                changeStart: function () {
+                    QuickView.lockQuickView();
+                },
+                changeEnd: function () {
+                    QuickView.unlockQuickView();
                 }
             });
             resolve({
