@@ -19,7 +19,7 @@
     "extension_url": "https://s3.amazonaws.com/extend.brackets/{0}/{0}-{1}.zip",
     "extension_store_url": "https://store.core.ai/src/",
     "linting.enabled_by_default": true,
-    "build_timestamp": "2022-12-22T12:37:07.338Z",
+    "build_timestamp": "2022-12-22T12:45:10.277Z",
     "googleAnalyticsID": "G-P4HJFPDB76",
     "mixPanelID": "49c4d164b592be2350fc7af06a259bf3",
     "coreAnalyticsID": "phoenix",
