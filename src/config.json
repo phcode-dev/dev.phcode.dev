@@ -19,7 +19,7 @@
     "extension_url": "https://s3.amazonaws.com/extend.brackets/{0}/{0}-{1}.zip",
     "extension_store_url": "https://store.core.ai/src/",
     "linting.enabled_by_default": true,
-    "build_timestamp": "2022-12-31T17:58:38.026Z",
+    "build_timestamp": "2022-12-31T18:24:56.269Z",
     "googleAnalyticsID": "G-P4HJFPDB76",
     "mixPanelID": "49c4d164b592be2350fc7af06a259bf3",
     "coreAnalyticsID": "phoenix",
@@ -28,7 +28,7 @@
     "buildtype": "dev"
   },
   "name": "Phoenix",
-  "version": "3.0.2-19002",
+  "version": "3.0.2-19003",
   "apiVersion": "3.0.2",
   "homepage": "https://core.ai",
   "issues": {
