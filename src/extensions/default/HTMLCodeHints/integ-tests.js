@@ -19,12 +19,13 @@
  *
  */
 
-/*global describe, it, expect, beforeAll, afterAll, awaitsForDone, awaitsForFail */
+/*global describe, it, expect, beforeAll, afterAll, awaitsForDone, awaitsForFail, awaits, awaitsFor */
 
 define(function (require, exports, module) {
     // Recommended to avoid reloading the integration test window Phoenix instance for each test.
 
-    const SpecRunnerUtils     = brackets.getModule("spec/SpecRunnerUtils");
+    const SpecRunnerUtils     = brackets.getModule("spec/SpecRunnerUtils"),
+        KeyEvent         = brackets.getModule("utils/KeyEvent");
 
     describe("integration:HTML Code Hints integration tests", function () {
 
@@ -37,18 +38,22 @@ define(function (require, exports, module) {
             testWindow,
             EditorManager,
             MainViewManager,
-            brackets;
+            brackets,
+            FileSystem,
+            $;
 
 
         beforeAll(async function () {
             testWindow = await SpecRunnerUtils.createTestWindowAndRun();
             brackets            = testWindow.brackets;
+            $                   = testWindow.$;
             FileViewController  = brackets.test.FileViewController;
             ProjectManager      = brackets.test.ProjectManager;
             CommandManager      = brackets.test.CommandManager;
             Commands            = brackets.test.Commands;
             EditorManager       = brackets.test.EditorManager;
             MainViewManager     = brackets.test.MainViewManager;
+            FileSystem          = brackets.test.FileSystem;
 
             await SpecRunnerUtils.loadProjectInTestWindow(testPath);
         }, 30000);
@@ -58,8 +63,7 @@ define(function (require, exports, module) {
             ProjectManager      = null;
             testWindow = null;
             brackets = null;
-            // comment out below line if you want to debug the test window post running tests
-            //SpecRunnerUtils.closeTestWindow();
+            SpecRunnerUtils.closeTestWindow();
         });
 
         async function closeSession() {
@@ -147,6 +151,51 @@ define(function (require, exports, module) {
             await verifySrcJumpToDef({ line: 7, ch: 20 }, "jumpToDef.html", true);
             await verifySrcJumpToDef({ line: 3, ch: 22 }, "jumpToDef.html", true);
             await closeSession();
+        });
+
+        async function _deleteFile(relativeFileName) {
+            let deleted = false;
+            FileSystem.getFileForPath(`${testPath}/${relativeFileName}`).unlink(()=>{
+                deleted = true;
+            });
+            await awaitsFor(function () {
+                return deleted;
+            }, "extension interface registration notification");
+        }
+
+        async function createAndVerifyFileContents(fileName, firstLineOfContent) {
+            await awaitsForDone(CommandManager.execute(Commands.FILE_NEW),
+                "new file");
+            await awaitsFor(function () {
+                return !!$(".jstree-rename-input")[0];
+            }, "input to come");
+            let fileNameInput = $(".jstree-rename-input");
+            expect(fileNameInput[0]).toBeDefined();
+            await _deleteFile(fileName);
+            fileNameInput.val(fileName);
+            SpecRunnerUtils.simulateKeyEvent(KeyEvent.DOM_VK_RETURN, "keydown", fileNameInput[0]);
+
+            await awaitsFor(function () {
+                return !$(".jstree-rename-input")[0];
+            }, "input to go away");
+            await awaitsFor(function () {
+                return !!EditorManager.getActiveEditor();
+            }, "wait for editor to be active");
+            expect(EditorManager.getActiveEditor().document.getText().split("\n")[0])
+                .toBe(firstLineOfContent);
+            await closeSession();
+            await _deleteFile(fileName);
+        }
+
+        it("Should creating new html and xhtml file with template contents", async function () {
+            await createAndVerifyFileContents("test1.html", "<!DOCTYPE html>");
+            await createAndVerifyFileContents("test1.xhtml",
+                "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtm" +
+                "l1/DTD/xhtml1-strict.dtd\">");
+        });
+
+        it("Should not put template contents for non html files creation", async function () {
+            await createAndVerifyFileContents("test1.txt", "");
         });
 
     });
