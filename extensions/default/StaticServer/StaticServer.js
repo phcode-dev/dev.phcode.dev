@@ -30,6 +30,7 @@ define(function (require, exports, module) {
         marked = brackets.getModule('thirdparty/marked.min'),
         DocumentManager = brackets.getModule("document/DocumentManager"),
         Mustache = brackets.getModule("thirdparty/mustache/mustache"),
+        FileSystem = brackets.getModule("filesystem/FileSystem"),
         markdownHTMLTemplate = require("text!markdown.html");
 
     const _serverBroadcastChannel = new BroadcastChannel("virtual_server_broadcast");
@@ -282,9 +283,7 @@ define(function (require, exports, module) {
             requestID = data.requestID,
             liveDocument = this._liveDocuments[path],
             virtualDocument = this._virtualServingDocuments[path];
-        let response = {
-            body: "instrumented document not found at static server"
-        };
+        let response;
 
         if (virtualDocument) {
             // virtual document overrides takes precedence over live preview docs
@@ -293,6 +292,20 @@ define(function (require, exports, module) {
             };
         } else if (liveDocument && liveDocument.getResponseData) {
             response = liveDocument.getResponseData();
+        } else {
+            const file = FileSystem.getFileForPath(data.path);
+            let docTextToSend = "instrumented document not found at static server";
+            DocumentManager.getDocumentText(file).done(function (docText) {
+                docTextToSend = docText;
+            }).always(function () {
+                _serverBroadcastChannel.postMessage({
+                    type: 'REQUEST_RESPONSE',
+                    requestID, //pass along the requestID
+                    path,
+                    contents: docTextToSend
+                });
+            });
+            return;
         }
 
         _serverBroadcastChannel.postMessage({
@@ -304,7 +317,7 @@ define(function (require, exports, module) {
     };
 
     _serverBroadcastChannel.onmessage = (event) => {
-        console.log("sss", event.data, Phoenix.PHOENIX_INSTANCE_ID);
+        window.logger.livePreview.log("Static server: ", event.data, Phoenix.PHOENIX_INSTANCE_ID);
         if (event.data.type === "getInstrumentedContent"
             && event.data.phoenixInstanceID === Phoenix.PHOENIX_INSTANCE_ID) {
             // localStorage is domain specific so when it changes in one window it changes in the other
