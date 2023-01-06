@@ -41,8 +41,8 @@
 
 define(function (require, exports, module) {
     const ProjectManager          = brackets.getModule("project/ProjectManager"),
-        DocumentManager     = brackets.getModule("document/DocumentManager"),
-        FileSystem         = brackets.getModule("filesystem/FileSystem");
+        Strings                   = brackets.getModule("strings"),
+        DocumentManager     = brackets.getModule("document/DocumentManager");
 
     function getExtension(filePath) {
         filePath = filePath || '';
@@ -50,7 +50,7 @@ define(function (require, exports, module) {
         return pathSplit && pathSplit.length>1 ? pathSplit[pathSplit.length-1] : '';
     }
 
-    function _isPreviewableFile(filePath) {
+    function isPreviewableFile(filePath) {
         let extension = getExtension(filePath);
         return ['html', 'htm', 'jpg', 'jpeg', 'png', 'svg', 'pdf', 'md', 'markdown'].includes(extension.toLowerCase());
     }
@@ -66,34 +66,9 @@ define(function (require, exports, module) {
     }
 
     function getNoPreviewURL(){
-        return `${window.Phoenix.baseURL}assets/phoenix-splash/no-preview.html`;
-    }
-
-    async function _getDefaultPreviewDetails() {
-        return new Promise(async (resolve, reject)=>{ // eslint-disable-line
-            // async is explicitly caught
-            try{
-                let projectRoot = ProjectManager.getProjectRoot().fullPath;
-                const projectRootUrl = `${window.fsServerUrl}PHOENIX_LIVE_PREVIEW_${Phoenix.PHOENIX_INSTANCE_ID}${projectRoot}`;
-                let indexFiles = ['index.html', "index.htm"];
-                for(let indexFile of indexFiles){
-                    let file = FileSystem.getFileForPath(`${projectRoot}${indexFile}`);
-                    if(await file.existsAsync()){
-                        const relativePath = path.relative(projectRoot, file.fullPath);
-                        resolve({
-                            URL: `${projectRootUrl}${relativePath}`,
-                            filePath: relativePath,
-                            fullPath: file.fullPath,
-                            isHTMLFile: _isHTMLFile(file.fullPath)
-                        });
-                        return;
-                    }
-                }
-                resolve({URL: getNoPreviewURL()});
-            } catch (e) {
-                reject(e);
-            }
-        });
+        return `${window.Phoenix.baseURL}assets/phoenix-splash/no-preview.html?jsonInput=`+
+            encodeURIComponent(`{"heading":"${Strings.DESCRIPTION_LIVEDEV_NO_PREVIEW}",`
+                +`"details":"${Strings.DESCRIPTION_LIVEDEV_NO_PREVIEW_DETAILS}"}`);
     }
 
     /**
@@ -115,7 +90,7 @@ define(function (require, exports, module) {
                     if(fullPath.startsWith("http://") || fullPath.startsWith("https://")){
                         httpFilePath = fullPath;
                     }
-                    if(_isPreviewableFile(fullPath)){
+                    if(isPreviewableFile(fullPath)){
                         const filePath = httpFilePath || path.relative(projectRoot, fullPath);
                         let URL = httpFilePath || `${projectRootUrl}${filePath}`;
                         resolve({
@@ -125,11 +100,10 @@ define(function (require, exports, module) {
                             isMarkdownFile: _isMarkdownFile(fullPath),
                             isHTMLFile: _isHTMLFile(fullPath)
                         });
-                    } else {
-                        resolve({}); // not a previewable file
+                        return;
                     }
                 }
-                resolve(await _getDefaultPreviewDetails());
+                resolve({URL: getNoPreviewURL()});
             }catch (e) {
                 reject(e);
             }
@@ -139,6 +113,7 @@ define(function (require, exports, module) {
     exports.getPreviewDetails = getPreviewDetails;
     exports.getNoPreviewURL = getNoPreviewURL;
     exports.getExtension = getExtension;
+    exports.isPreviewableFile = isPreviewableFile;
 });
 
 

@@ -52,7 +52,6 @@ define(function (require, exports, module) {
         Strings            = brackets.getModule("strings"),
         Mustache           = brackets.getModule("thirdparty/mustache/mustache"),
         Metrics            = brackets.getModule("utils/Metrics"),
-        FileViewController = brackets.getModule("project/FileViewController"),
         NotificationUI = brackets.getModule("widgets/NotificationUI"),
         LiveDevelopment = brackets.getModule("LiveDevelopment/main"),
         utils = require('utils');
@@ -179,7 +178,7 @@ define(function (require, exports, module) {
             openURL = url;
         if(details.URL !== url) {
             openURL = `${_stripURL(location.href)}LiveDevelopment/pageLoader.html?`
-                +`broadcastChannel=${LIVE_PREVIEW_NAVIGATOR_CHANNEL_ID}&URL=${url}`;
+                +`broadcastChannel=${LIVE_PREVIEW_NAVIGATOR_CHANNEL_ID}&URL=${encodeURIComponent(url)}`;
         }
         return openURL;
     }
@@ -312,6 +311,9 @@ define(function (require, exports, module) {
                 _setTitle(previewDetails.filePath);
             }
             $iframe[0].onload = function () {
+                if(!$iframe[0].contentDocument){
+                    return;
+                }
                 $iframe[0].contentDocument.savePageCtrlSDisabledByPhoenix = true;
                 $iframe[0].contentDocument.addEventListener("keydown", function(e) {
                     // inside live preview iframe, we disable ctrl-s browser save page dialog
@@ -336,7 +338,7 @@ define(function (require, exports, module) {
     }
 
     async function _projectFileChanges(evt, changedFile) {
-        if(changedFile && changedFile.isFile && changedFile.fullPath && changedFile.fullPath !== '/fs/app/state.json'){
+        if(changedFile && utils.isPreviewableFile(changedFile.fullPath)){
             // we are getting this change event somehow.
             // bug, investigate why we get this change event as a project file change.
             const previewDetails = await utils.getPreviewDetails();
@@ -357,15 +359,6 @@ define(function (require, exports, module) {
         $iframe[0].src = utils.getNoPreviewURL();
         if(!panel.isVisible()){
             return;
-        }
-        let previewDetails = await utils.getPreviewDetails();
-        if(previewDetails.fullPath && ProjectManager.isWithinProject(previewDetails.fullPath)){
-            FileViewController.openAndSelectDocument(previewDetails.fullPath, FileViewController.PROJECT_MANAGER)
-                .done(()=>{
-                    LiveDevelopment.closeLivePreview();
-                    LiveDevelopment.openLivePreview();
-                    _loadPreview(true);
-                });
         }
         _loadPreview(true);
     }
@@ -419,10 +412,16 @@ define(function (require, exports, module) {
         }
     }
 
+    function _currentFileChanged(_event, newFile) {
+        if(newFile && utils.isPreviewableFile(newFile.fullPath)){
+            _loadPreview();
+        }
+    }
+
     AppInit.appReady(function () {
         _createExtensionPanel();
         ProjectManager.on(ProjectManager.EVENT_PROJECT_FILE_CHANGED, _projectFileChanges);
-        MainViewManager.on("currentFileChange", _loadPreview);
+        MainViewManager.on("currentFileChange", _currentFileChanged);
         ProjectManager.on(ProjectManager.EVENT_PROJECT_OPEN, _projectOpened);
         ProjectManager.on(ProjectManager.EVENT_PROJECT_CLOSE, _projectClosed);
         EditorManager.on("activeEditorChange", _activeDocChanged);
