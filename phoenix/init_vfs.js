@@ -38,6 +38,7 @@ function _setupVFS(fsLib, pathLib){
         getAppSupportDir: () => '/fs/app/',
         getExtensionDir: () => '/fs/app/extensions/',
         getLocalDir: () => '/fs/local/',
+        getTempDir: () => '/temp/',
         getTrashDir: () => '/fs/trash/',
         getDefaultProjectDir: () => '/fs/local/default project/',
         getUserDocumentsDirectory: () => '/fs/local/Documents/',
@@ -57,6 +58,19 @@ function _setupVFS(fsLib, pathLib){
                     cb();
                 });
             });
+        },
+        /**
+         * Converts a phoenix virtual serving url to absolute path in file system or null
+         * http://localhost:8000/src/phoenix/vfs/fs/app/extensions/user/themesforbrackets/requirejs-config.json
+         * to /fs/app/extensions/user/themesforbrackets/requirejs-config.json
+         * @param fullPath
+         * @returns {string|null}
+         */
+        getPathForVirtualServingURL: function (fullPath) {
+            if(window.fsServerUrl && fullPath.startsWith(window.fsServerUrl)){
+                return fullPath.replace(window.fsServerUrl, "/");
+            }
+            return null;
         },
         ensureExistsDirAsync: async function (path) {
             return new Promise((resolve, reject)=>{
@@ -163,6 +177,7 @@ const _createAppDirs = function () {
         Phoenix.VFS.ensureExistsDirAsync(Phoenix.VFS.getAppSupportDir()),
         Phoenix.VFS.ensureExistsDirAsync(Phoenix.VFS.getLocalDir()),
         Phoenix.VFS.ensureExistsDirAsync(Phoenix.VFS.getTrashDir()),
+        Phoenix.VFS.ensureExistsDirAsync(Phoenix.VFS.getTempDir()),
         Phoenix.VFS.ensureExistsDirAsync(Phoenix.VFS.getExtensionDir()),
         Phoenix.VFS.ensureExistsDirAsync(Phoenix.VFS.getExtensionDir()+"user"),
         Phoenix.VFS.ensureExistsDirAsync(Phoenix.VFS.getExtensionDir()+"dev"),
