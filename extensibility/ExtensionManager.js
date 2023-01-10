@@ -20,7 +20,7 @@
  */
 
 /*jslint regexp: true */
-/*global path*/
+/*global Phoenix*/
 /*unittests: ExtensionManager*/
 
 /**
@@ -51,8 +51,10 @@ define(function (require, exports, module) {
         ThemeManager        = require("view/ThemeManager"),
         Metrics = require("utils/Metrics");
 
-    const EXTENSION_REGISTRY_LOCAL_STORAGE_KEY = "extension_registry",
-        EXTENSION_REGISTRY_LOCAL_STORAGE_VERSION_KEY = "extension_registry_version";
+    const EXTENSION_REGISTRY_LOCAL_STORAGE_KEY = Phoenix.isTestWindow ?
+            "test_extension_registry" : "extension_registry",
+        EXTENSION_REGISTRY_LOCAL_STORAGE_VERSION_KEY = Phoenix.isTestWindow ?
+            "test_extension_registry_version" : "extension_registry_version";
     // semver.browser is an AMD-compatible module
     var semver = require("thirdparty/semver.browser");
 
@@ -236,10 +238,11 @@ define(function (require, exports, module) {
      * Downloads the registry of Brackets extensions and stores the information in our
      * extension info.
      *
+     * @param {boolean} force - true to fetch registry from server fresh every time
      * @return {$.Promise} a promise that's resolved with the registry JSON data
      * or rejected if the server can't be reached.
      */
-    function downloadRegistry() {
+    function downloadRegistry(force) {
         if (pendingDownloadRegistry) {
             return pendingDownloadRegistry.promise();
         }
@@ -272,6 +275,11 @@ define(function (require, exports, module) {
                 });
         }
 
+        if(force){
+            _updateRegistry();
+            return pendingDownloadRegistry.promise();
+        }
+
         const registryJson = localStorage.getItem(EXTENSION_REGISTRY_LOCAL_STORAGE_KEY);
         if(registryJson) {
             // we always immediately but after the promise chain is setup after function return (some bug sigh)
@@ -295,13 +303,17 @@ define(function (require, exports, module) {
      * @private
      * When an extension is loaded, fetches the package.json and stores the extension in our map.
      * @param {$.Event} e The event object
-     * @param {string} path The local path of the loaded extension's folder.
+     * @param {string} baseURL The http base url from which the extension is loaded
      */
-    function _handleExtensionLoad(e, path) {
+    function _handleExtensionLoad(e, baseURL) {
         function setData(metadata) {
             let locationType,
                 id = metadata.name,
-                userExtensionPath = ExtensionLoader.getUserExtensionPath();
+                userExtensionPath = ExtensionLoader.getUserExtensionPath(),
+                path = baseURL;
+            if(Phoenix.VFS.getPathForVirtualServingURL(baseURL)){
+                path = Phoenix.VFS.getPathForVirtualServingURL(baseURL);
+            }
             metadata.title = metadata.title || metadata.name;
             if (path.indexOf(userExtensionPath) === 0) {
                 locationType = LOCATION_USER;
@@ -314,6 +326,8 @@ define(function (require, exports, module) {
                     locationType = LOCATION_DEV;
                 } else if (parent === "default") {
                     locationType = LOCATION_DEFAULT;
+                } else if (parent === "user") {
+                    locationType = LOCATION_USER;
                 } else {
                     locationType = LOCATION_UNKNOWN;
                 }
@@ -323,7 +337,7 @@ define(function (require, exports, module) {
             }
             extensions[id].installInfo = {
                 metadata: metadata,
-                path: path,
+                path: baseURL,
                 locationType: locationType,
                 status: (e.type === "loadFailed" ? START_FAILED : (e.type === "disabled" ? DISABLED : ENABLED))
             };
@@ -334,13 +348,13 @@ define(function (require, exports, module) {
         }
 
         function deduceMetadata() {
-            var match = path.match(/\/([^\/]+)$/),
-                name = (match && match[1]) || path,
+            const match = baseURL.match(/\/([^\/]+)$/),
+                name = (match && match[1]) || baseURL,
                 metadata = { name: name, title: name };
             return metadata;
         }
 
-        ExtensionUtils.loadMetadata(path)
+        ExtensionUtils.loadMetadata(baseURL)
             .done(function (metadata) {
                 setData(metadata);
             })
@@ -988,4 +1002,7 @@ define(function (require, exports, module) {
     exports._getAutoInstallFiles    = _getAutoInstallFiles;
     exports._reset                  = _reset;
     exports._setExtensions          = _setExtensions;
+    if(Phoenix.isTestWindow){
+        exports.EXTENSION_REGISTRY_LOCAL_STORAGE_KEY = EXTENSION_REGISTRY_LOCAL_STORAGE_KEY;
+    }
 });

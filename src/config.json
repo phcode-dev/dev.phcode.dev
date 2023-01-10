@@ -20,7 +20,7 @@
         "extension_url": "https://brackets-archive.github.io/brackets-extensions/extensions/{0}-{1}.zip",
         "extension_store_url": "https://store.core.ai/src/",
         "linting.enabled_by_default": true,
-        "build_timestamp": "2023-01-09T13:21:14.173Z",
+        "build_timestamp": "2023-01-10T11:31:55.127Z",
         "googleAnalyticsID": "G-P4HJFPDB76",
         "mixPanelID": "49c4d164b592be2350fc7af06a259bf3",
         "coreAnalyticsID": "phoenix",
@@ -30,7 +30,7 @@
         "bugsnagEnv": "development"
     },
     "name": "Phoenix",
-    "version": "3.0.13-19066",
+    "version": "3.0.13-19070",
     "apiVersion": "3.0.13",
     "homepage": "https://core.ai",
     "issues": {

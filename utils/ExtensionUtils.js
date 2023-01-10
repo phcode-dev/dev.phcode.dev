@@ -19,7 +19,7 @@
  *
  */
 
-/*global less */
+/*global less, path */
 // jshint ignore: start
 
 /**
@@ -28,11 +28,9 @@
 define(function (require, exports, module) {
 
 
-    var Async              = require("utils/Async"),
-        FileSystem         = require("filesystem/FileSystem"),
-        FileUtils          = require("file/FileUtils"),
+    const FileSystem         = require("filesystem/FileSystem"),
         PathUtils          = require("thirdparty/path-utils/path-utils"),
-        PreferencesManager = require("preferences/PreferencesManager");
+        Package                     = require("extensibility/Package");
 
     /**
      * Appends a <style> tag to the document's head.
@@ -226,94 +224,33 @@ define(function (require, exports, module) {
      * Loads the package.json file in the given extension folder as well as any additional
      * metadata.
      *
-     * If there's a .disabled file in the extension directory, then the content of package.json
-     * will be augmented with disabled property set to true. It will override whatever value of
-     * disabled might be set.
-     *
-     * @param {string} folder The extension folder.
-     * @return {$.Promise} A promise object that is resolved with the parsed contents of the package.json file,
-     *     or rejected if there is no package.json with the boolean indicating whether .disabled file exists.
-     */
-    function _loadLocalMetadata(folder) {
-        var packageJSONFile = FileSystem.getFileForPath(folder + "/package.json"),
-            disabledFile = FileSystem.getFileForPath(folder + "/.disabled"),
-            baseName = FileUtils.getBaseName(folder),
-            result = new $.Deferred(),
-            jsonPromise = new $.Deferred(),
-            disabledPromise = new $.Deferred(),
-            json,
-            disabled;
-        FileUtils.readAsText(packageJSONFile)
-            .then(function (text) {
-                try {
-                    json = JSON.parse(text);
-                    jsonPromise.resolve();
-                } catch (e) {
-                    jsonPromise.reject();
-                }
-            })
-            .fail(jsonPromise.reject);
-        disabledFile.exists(function (err, exists) {
-            if (err) {
-                disabled = false;
-            } else {
-                disabled = exists;
-            }
-
-            var defaultDisabled = PreferencesManager.get("extensions.default.disabled");
-            if (Array.isArray(defaultDisabled) && defaultDisabled.indexOf(folder) !== -1) {
-                console.warn("Default extension has been disabled on startup: " + baseName);
-                disabled = true;
-            }
-
-            disabledPromise.resolve();
-        });
-        Async.waitForAll([jsonPromise, disabledPromise])
-            .always(function () {
-                if (!json) {
-                    // if we don't have any metadata for the extension
-                    // we should still create an empty one, so we can attach
-                    // disabled property on it in case it's disabled
-                    json = {
-                        name: baseName
-                    };
-                }
-                json.disabled = disabled;
-                result.resolve(json);
-            });
-        return result.promise();
-    }
-    /**
-     * Loads the package.json file in the given extension folder as well as any additional
-     * metadata.
-     *
      * @param {string} baseExtensionUrl The extension folder.
      * @param {?string} extensionName optional extension name
      * @return {$.Promise} A promise object that is resolved with the parsed contents of the package.json file,
      *     or rejected if there is no package.json with the boolean indicating whether .disabled file exists.
      */
-    function _loadDefaultExtensionMetadata(baseExtensionUrl, extensionName) {
-        var packageJSONFile = baseExtensionUrl + "/package.json";
-        var result = new $.Deferred();
-        var json = {
-            name: extensionName
+    function _loadExtensionMetadata(baseExtensionUrl, extensionName) {
+        const packageJSONFile = baseExtensionUrl + "/package.json";
+        const result = new $.Deferred();
+        let json = {
+            name: extensionName || path.basename(baseExtensionUrl)
         };
         $.get(packageJSONFile)
-            .then(function (result) {
-                json = result;
+            .then(function (packageResult) {
+                json = packageResult;
             }).always(function () {
-            // if we don't have any metadata for the extension
-            // we should still create an empty one, so we can attach
-            // disabled property on it in case it's disabled
-            var disabled;
-            var defaultDisabled = PreferencesManager.get("extensions.default.disabled");
-            if (Array.isArray(defaultDisabled) && defaultDisabled.indexOf(extensionName) !== -1) {
-                console.warn("Default extension has been disabled on startup: " + baseExtensionUrl);
-                disabled = true;
-            }
-            json.disabled = disabled;
-            result.resolve(json);
-        });
+                // if we don't have any metadata for the extension
+                // we should still create an empty one, so we can attach
+                // disabled property on it in case it's disabled
+                let disabled,
+                    defaultDisabled = JSON.parse(localStorage.getItem(Package.DEFAULT_DISABLED_EXTENSIONS_KEY) || "[]");
+                if (Array.isArray(defaultDisabled) && defaultDisabled.indexOf(baseExtensionUrl) !== -1) {
+                    console.warn("Extension has been disabled on startup: " + baseExtensionUrl);
+                    disabled = true;
+                }
+                json.disabled = disabled;
+                result.resolve(json);
+            });
 
         return result.promise();
     }
@@ -326,15 +263,15 @@ define(function (require, exports, module) {
      * will be augmented with disabled property set to true. It will override whatever value of
      * disabled might be set.
      *
-     * @param {string} folder The extension folder/base url for default extensions.
+     * @param {string} metadataURL The extension folder/base url for default extensions.
      * @return {$.Promise} A promise object that is resolved with the parsed contents of the package.json file,
      *     or rejected if there is no package.json with the boolean indicating whether .disabled file exists.
      */
-    function loadMetadata(folder, extensionName) {
-        if(folder.startsWith("http://") || folder.startsWith("https://")) {
-            return _loadDefaultExtensionMetadata(folder, extensionName);
+    function loadMetadata(metadataURL, extensionName) {
+        if(metadataURL.startsWith("http://") || metadataURL.startsWith("https://")) {
+            return _loadExtensionMetadata(metadataURL, extensionName);
         }
-        return _loadLocalMetadata(folder);
+        throw new Error(`Cannot load extension metadata for ${extensionName} at path ${metadataURL}`);
     }
 
 

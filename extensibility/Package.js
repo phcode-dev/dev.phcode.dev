@@ -42,10 +42,7 @@ define(function (require, exports, module) {
         description: Strings.DESCRIPTION_PROXY
     });
 
-    var PREF_EXTENSIONS_DEFAULT_DISABLED = "extensions.default.disabled";
-    PreferencesManager.definePreference(PREF_EXTENSIONS_DEFAULT_DISABLED, "array", [], {
-        description: Strings.DESCRIPTION_DISABLED_DEFAULT_EXTENSIONS
-    });
+    const DISABLED_EXTENSIONS_KEY = "extensions.disabled";
 
     var Errors = {
         ERROR_LOADING: "ERROR_LOADING",
@@ -155,12 +152,12 @@ define(function (require, exports, module) {
      *          rejected with an error object.
      */
     function install(path, nameHint, _doUpdate) {
-        var d                       = new $.Deferred(),
+        const d                       = new $.Deferred(),
             destinationDirectory    = ExtensionLoader.getUserExtensionPath(),
             disabledDirectory       = destinationDirectory.replace(/\/user$/, "/disabled"),
             systemDirectory         = FileUtils.getNativeBracketsDirectoryPath() + "/extensions/default/";
 
-        var operation = _doUpdate ? "update" : "install";
+        const operation = _doUpdate ? "update" : "install";
         ExtensionDownloader[operation](path, destinationDirectory, {
             disabledDirectory: disabledDirectory,
             systemExtensionDirectory: systemDirectory,
@@ -233,11 +230,11 @@ define(function (require, exports, module) {
      * @return {$.Promise}
      */
     function _download(url, downloadId) {
-        var d = new $.Deferred();
+        const d = new $.Deferred();
 
         // Validate URL
         // TODO: PathUtils fails to parse URLs that are missing the protocol part (e.g. starts immediately with "www...")
-        var parsed = PathUtils.parseUrl(url);
+        const parsed = PathUtils.parseUrl(url);
         if (!parsed.hostname) {  // means PathUtils failed to parse at all
             d.reject(Errors.MALFORMED_URL);
             return d.promise();
@@ -247,20 +244,22 @@ define(function (require, exports, module) {
             return d.promise();
         }
 
-        var urlInfo = { url: url, parsed: parsed, filenameHint: parsed.filename };
+        const urlInfo = { url: url, parsed: parsed, filenameHint: parsed.filename };
         githubURLFilter(urlInfo);
 
         // Decide download destination
-        var filename = urlInfo.filenameHint;
+        let filename = urlInfo.filenameHint;
         filename = filename.replace(/[^a-zA-Z0-9_\- \(\)\.]/g, "_"); // make sure it's a valid filename
         if (!filename) {  // in case of URL ending in "/"
             filename = "extension.zip";
         }
 
         // Download the bits (using Node since brackets-shell doesn't support binary file IO)
-        var r = ExtensionDownloader.downloadFile(downloadId, urlInfo, PreferencesManager.get("proxy"));
+        const r = ExtensionDownloader.downloadFile(downloadId, urlInfo, PreferencesManager.get("proxy"));
         r.done(function (result) {
-            d.resolve({ localPath: FileUtils.convertWindowsPathToUnixPath(result), filenameHint: urlInfo.filenameHint });
+            d.resolve({
+                localPath: FileUtils.convertWindowsPathToUnixPath(result),
+                filenameHint: urlInfo.filenameHint });
         }).fail(function (err) {
             d.reject(err);
         });
@@ -294,12 +293,12 @@ define(function (require, exports, module) {
      *          install or the extension is disabled.
      */
     function installFromPath(path, filenameHint) {
-        var d = new $.Deferred();
+        const d = new $.Deferred();
 
         install(path, filenameHint)
             .done(function (result) {
 
-                var installationStatus = result.installationStatus;
+                let installationStatus = result.installationStatus;
                 if (installationStatus === InstallationStatuses.ALREADY_INSTALLED ||
                         installationStatus === InstallationStatuses.NEEDS_UPDATE ||
                         installationStatus === InstallationStatuses.SAME_VERSION ||
@@ -341,13 +340,13 @@ define(function (require, exports, module) {
      * @return {{promise: $.Promise, cancel: function():boolean}}
      */
     function installFromURL(url) {
-        var STATE_DOWNLOADING = 1,
+        const STATE_DOWNLOADING = 1,
             STATE_INSTALLING = 2,
             STATE_SUCCEEDED = 3,
             STATE_FAILED = 4;
 
-        var d = new $.Deferred();
-        var state = STATE_DOWNLOADING;
+        const d = new $.Deferred();
+        let state = STATE_DOWNLOADING;
 
         var downloadId = (_uniqueId++);
         _download(url, downloadId)
@@ -418,26 +417,21 @@ define(function (require, exports, module) {
      *     rejected if there was an error.
      */
     function remove(path) {
-        return _extensionManagerCall(function (extensionManager) {
-            return extensionManager.remove(path);
-        });
+        return ExtensionDownloader.remove(path);
     }
 
     /**
-     * This function manages the PREF_EXTENSIONS_DEFAULT_DISABLED preference
-     * holding an array of default extension paths that should not be loaded
-     * on Brackets startup
+     * function manages state weather an extension is enabled or disabled
      */
-    function toggleDefaultExtension(path, enabled) {
-        var arr = PreferencesManager.get(PREF_EXTENSIONS_DEFAULT_DISABLED);
-        if (!Array.isArray(arr)) { arr = []; }
-        var io = arr.indexOf(path);
+    function _toggleDisabledExtension(path, enabled) {
+        let arr = JSON.parse(localStorage.getItem(DISABLED_EXTENSIONS_KEY) || "[]");
+        const io = arr.indexOf(path);
         if (enabled === true && io !== -1) {
             arr.splice(io, 1);
         } else if (enabled === false && io === -1) {
             arr.push(path);
         }
-        PreferencesManager.set(PREF_EXTENSIONS_DEFAULT_DISABLED, arr);
+        localStorage.setItem(DISABLED_EXTENSIONS_KEY, JSON.stringify(arr));
     }
 
     /**
@@ -448,22 +442,9 @@ define(function (require, exports, module) {
      *      rejected if there was an error.
      */
     function disable(path) {
-        var result = new $.Deferred(),
-            file = FileSystem.getFileForPath(path + "/.disabled");
-
-        var defaultExtensionPath = ExtensionLoader.getDefaultExtensionPath();
-        if (file.fullPath.indexOf(defaultExtensionPath) === 0) {
-            toggleDefaultExtension(path, false);
-            result.resolve();
-            return result.promise();
-        }
-
-        file.write("", function (err) {
-            if (err) {
-                return result.reject(err);
-            }
-            result.resolve();
-        });
+        const result = new $.Deferred();
+        _toggleDisabledExtension(path, false);
+        result.resolve();
         return result.promise();
     }
 
@@ -475,28 +456,11 @@ define(function (require, exports, module) {
      *      rejected if there was an error.
      */
     function enable(path) {
-        var result = new $.Deferred(),
-            file = FileSystem.getFileForPath(path + "/.disabled");
-
-        function afterEnable() {
-            ExtensionLoader.loadExtension(FileUtils.getBaseName(path), { baseUrl: path }, "main")
-                .done(result.resolve)
-                .fail(result.reject);
-        }
-
-        var defaultExtensionPath = ExtensionLoader.getDefaultExtensionPath();
-        if (file.fullPath.indexOf(defaultExtensionPath) === 0) {
-            toggleDefaultExtension(path, true);
-            afterEnable();
-            return result.promise();
-        }
-
-        file.unlink(function (err) {
-            if (err) {
-                return result.reject(err);
-            }
-            afterEnable();
-        });
+        const result = new $.Deferred();
+        _toggleDisabledExtension(path, true);
+        ExtensionLoader.loadExtension(FileUtils.getBaseName(path), { baseUrl: path }, "main")
+            .done(result.resolve)
+            .fail(result.reject);
         return result.promise();
     }
 
@@ -517,7 +481,7 @@ define(function (require, exports, module) {
      *      installed or rejected if there is a problem.
      */
     function installUpdate(path, nameHint) {
-        var d = new $.Deferred();
+        const d = new $.Deferred();
         install(path, nameHint, true)
             .done(function (result) {
                 if (result.installationStatus !== InstallationStatuses.INSTALLED) {
@@ -578,4 +542,5 @@ define(function (require, exports, module) {
     exports.installUpdate           = installUpdate;
     exports.formatError             = formatError;
     exports.InstallationStatuses    = InstallationStatuses;
+    exports.DEFAULT_DISABLED_EXTENSIONS_KEY = DISABLED_EXTENSIONS_KEY;
 });

@@ -83,8 +83,11 @@ define(function (require, exports, module) {
     /**
      * Returns the path to the default extensions directory relative to Phoenix base URL
      */
+    const DEFAULT_EXTENSIONS_PATH_BASE = "/extensions/default";
     function getDefaultExtensionPath() {
-        return pathLib.normalize("/extensions/default");
+        const href = window.location.href;
+        const baseUrl = href.substring(0, href.lastIndexOf("/")); // trim all query string params
+        return baseUrl + DEFAULT_EXTENSIONS_PATH_BASE;
     }
 
     /**
@@ -156,8 +159,9 @@ define(function (require, exports, module) {
 
         // Optional JSON config for require.js
         $.get(extensionConfigFile).done(function (extensionConfig) {
-            if(!extensionConfig){
-                extensionConfig = {};
+            if(Object.keys(extensionConfig || {}).length === 0){
+                deferred.resolve(baseConfig);
+                return;
             }
             try {
                 if(!extensionConfig.paths){
@@ -174,8 +178,13 @@ define(function (require, exports, module) {
                 // Failed to parse requirejs-config.json
                 deferred.reject("failed to parse requirejs-config.json");
             }
-        }).fail(function () {
-            // If requirejs-config.json isn't specified, resolve with the baseConfig only
+        }).fail(function (err) {
+            // If requirejs-config.json isn't specified or if there is a bad config, resolve with the baseConfig
+            // to try loading the extension
+            if(err.status === 200) {
+                // we received the file, but its invalid json
+                console.error("[Extension] The require config file provided is invalid", extensionConfigFile);
+            }
             deferred.resolve(baseConfig);
         });
 
@@ -192,34 +201,7 @@ define(function (require, exports, module) {
         if(baseConfig.baseUrl.startsWith("http://") || baseConfig.baseUrl.startsWith("https://")) {
             return _mergeConfigFromURL(baseConfig);
         }
-        var deferred = new $.Deferred(),
-            extensionConfigFile = FileSystem.getFileForPath(baseConfig.baseUrl + "/requirejs-config.json");
-
-        // Optional JSON config for require.js
-        FileUtils.readAsText(extensionConfigFile).done(function (text) {
-            try {
-                var extensionConfig = JSON.parse(text);
-                if(!extensionConfig.paths){
-                    extensionConfig.paths = {};
-                }
-
-                // baseConfig.paths properties will override any extension config paths
-                _.extend(extensionConfig.paths, baseConfig.paths);
-
-                // Overwrite baseUrl, context, locale (paths is already merged above)
-                _.extend(extensionConfig, _.omit(baseConfig, "paths"));
-
-                deferred.resolve(extensionConfig);
-            } catch (err) {
-                // Failed to parse requirejs-config.json
-                deferred.reject("failed to parse requirejs-config.json");
-            }
-        }).fail(function () {
-            // If requirejs-config.json isn't specified, resolve with the baseConfig only
-            deferred.resolve(baseConfig);
-        });
-
-        return deferred.promise();
+        throw new Error("Config can only be loaded from an http url, but got" + baseConfig.baseUrl);
     }
 
     /**
@@ -482,16 +464,14 @@ define(function (require, exports, module) {
      */
     function loadAllDefaultExtensions() {
         const extensionPath = getDefaultExtensionPath();
-        const href = window.location.href;
-        const baseUrl = href.substring(0, href.lastIndexOf("/"));
-        const extensionsToLoadURL = baseUrl + extensionPath + "/DefaultExtensions.json";
+        const extensionsToLoadURL = extensionPath + "/DefaultExtensions.json";
         var result = new $.Deferred();
 
         $.get(extensionsToLoadURL).done(function (extensionNames) {
             Async.doInParallel(extensionNames, function (extensionName) {
                 logger.leaveTrail("loading default extension: " + extensionName);
                 var extConfig = {
-                    baseUrl: baseUrl + extensionPath + "/" + extensionName
+                    baseUrl: extensionPath + "/" + extensionName
                 };
                 return loadExtension(extensionName, extConfig, 'main');
             }).always(function () {
@@ -592,12 +572,11 @@ define(function (require, exports, module) {
      * @return {!$.Promise} A promise object that is resolved when all extensions complete loading.
      */
     function testAllDefaultExtensions() {
-        const extensionPath = getDefaultExtensionPath();
         const bracketsPath = FileUtils.getNativeBracketsDirectoryPath();
         const href = window.location.href;
         const baseUrl = href.substring(0, href.lastIndexOf("/"));
         const srcBaseUrl = new URL(baseUrl + '/../src').href;
-        const extensionsToLoadURL = srcBaseUrl + extensionPath + "/DefaultExtensions.json";
+        const extensionsToLoadURL = srcBaseUrl + DEFAULT_EXTENSIONS_PATH_BASE + "/DefaultExtensions.json";
         var result = new $.Deferred();
 
         $.get(extensionsToLoadURL).done(function (extensionNames) {
@@ -605,7 +584,7 @@ define(function (require, exports, module) {
                 console.log("Testing default extension: ", extensionName);
                 var extConfig = {
                     basePath: 'extensions/default',
-                    baseUrl: new URL(srcBaseUrl + extensionPath + "/" + extensionName).href,
+                    baseUrl: new URL(srcBaseUrl + DEFAULT_EXTENSIONS_PATH_BASE + "/" + extensionName).href,
                     paths: {
                         "perf": bracketsPath + "/perf",
                         "spec": bracketsPath + "/spec"
