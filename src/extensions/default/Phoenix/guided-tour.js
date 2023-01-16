@@ -33,13 +33,16 @@ define(function (require, exports, module) {
         Metrics = brackets.getModule("utils/Metrics"),
         Dialogs = brackets.getModule("widgets/Dialogs"),
         Mustache = brackets.getModule("thirdparty/mustache/mustache"),
+        PreferencesManager = brackets.getModule("preferences/PreferencesManager"),
         SurveyTemplate = require("text!html/survey-template.html"),
         NOTIFICATION_BACKOFF = 10000,
         GUIDED_TOUR_LOCAL_STORAGE_KEY = "guidedTourActions";
 
     const GITHUB_STARS_POPUP_TIME = 120000, // 2 min
+        POWER_USER_SURVEY_TIME = 180000, // 3 min
         GENERAL_SURVEY_TIME = 600000, // 10 min
-        TWO_WEEKS_IN_DAYS = 14;
+        TWO_WEEKS_IN_DAYS = 14,
+        USAGE_COUNTS_KEY    = "healthDataUsage"; // private to phoenix, set from health data extension
 
     const userAlreadyDidAction = localStorage.getItem(GUIDED_TOUR_LOCAL_STORAGE_KEY)
         ? JSON.parse(localStorage.getItem(GUIDED_TOUR_LOCAL_STORAGE_KEY)) : {
@@ -82,10 +85,12 @@ define(function (require, exports, module) {
     *     this will continue showing every session until user clicks on the new project icon
     *  4. After about 2 minutes, the GitHub stars popup will show, if not shown in the past two weeks. Repeats 2 weeks.
     *  5. After about 3 minutes, the health popup will show up.
-    *  6. After about 10 minutes, survey shows up.
+    *  6. power user survey shows up if the user has used brackets for 3 days or 8 hours in the last two weeks after 3
+    *     minutes. This will not coincide with health popup due to the power user check.
+    *  7. After about 10 minutes, survey shows up.
     *  // the rest are by user actions
-    *  7. When user clicks on live preview, we show "click here to popout live preview"
-    *  8. Beautification notification when user opened the editor context menu and have not done any beautification yet.
+    *  a. When user clicks on live preview, we show "click here to popout live preview"
+    *  b. Beautification notification when user opened the editor context menu and have not done any beautification yet.
     * */
 
     // 3. Beautification notification when user opened the editor context menu for the first time
@@ -240,6 +245,7 @@ define(function (require, exports, module) {
         let currentDate = new Date();
         if(!lastShownDate || currentDate >= nextShowDate){
             setTimeout(()=>{
+                Metrics.countEvent(Metrics.EVENT_TYPE.USER, "notify", "star", 1);
                 _openStarsPopup();
                 userAlreadyDidAction.lastShownGithubStarsDate = Date.now();
                 localStorage.setItem(GUIDED_TOUR_LOCAL_STORAGE_KEY, JSON.stringify(userAlreadyDidAction));
@@ -255,11 +261,60 @@ define(function (require, exports, module) {
                 surveyURL: "https://s.surveyplanet.com/6208d1eccd51c561fc8e59ca"
             };
             if(userAlreadyDidAction.generalSurveyShownVersion !== surveyVersion){
+                Metrics.countEvent(Metrics.EVENT_TYPE.USER, "survey", "generalShown", 1);
                 Dialogs.showModalDialogUsingTemplate(Mustache.render(SurveyTemplate, templateVars));
                 userAlreadyDidAction.generalSurveyShownVersion = surveyVersion;
                 localStorage.setItem(GUIDED_TOUR_LOCAL_STORAGE_KEY, JSON.stringify(userAlreadyDidAction));
             }
         }, GENERAL_SURVEY_TIME);
+    }
+
+    // a power user is someone who has used Phoenix at least 3 days or 8 hours in the last two weeks
+    function _isPowerUser() {
+        let usageData = PreferencesManager.getViewState(USAGE_COUNTS_KEY) || {},
+            dateKeys = Object.keys(usageData),
+            dateBefore14Days = new Date(),
+            totalUsageMinutes = 0,
+            totalUsageDays = 0;
+        dateBefore14Days.setDate(dateBefore14Days.getDate()-14);
+        for(let dateKey of dateKeys){
+            let date = new Date(dateKey);
+            if(date >= dateBefore14Days) {
+                totalUsageDays ++;
+                totalUsageMinutes = totalUsageMinutes + usageData[dateKey];
+            }
+        }
+        return totalUsageDays >= 3 || (totalUsageMinutes/60) >= 8;
+    }
+
+    function _openPowerUserSurvey() {
+        Metrics.countEvent(Metrics.EVENT_TYPE.USER, "survey", "powerShown", 1);
+        const templateVars = {
+            Strings: Strings,
+            surveyURL: "https://s.surveyplanet.com/2dgk0hbn"
+        };
+        Dialogs.showModalDialogUsingTemplate(Mustache.render(SurveyTemplate, templateVars));
+    }
+
+    function _showPowerUserSurvey() {
+        if(_isPowerUser()) {
+            Metrics.countEvent(Metrics.EVENT_TYPE.USER, "power", "user", 1);
+            let lastShownDate = userAlreadyDidAction.lastShownPowerSurveyDate;
+            let nextShowDate = new Date(lastShownDate);
+            nextShowDate.setDate(nextShowDate.getDate() + TWO_WEEKS_IN_DAYS);
+            let currentDate = new Date();
+            if(currentDate < nextShowDate){
+                return;
+            }
+            setTimeout(()=>{
+                Metrics.countEvent(Metrics.EVENT_TYPE.USER, "notify", "powerSurvey", 1);
+                let $content = $(Strings.POWER_USER_POPUP_TEXT);
+                $content.find("a").click(_openPowerUserSurvey);
+                NotificationUI.createToastFromTemplate(Strings.POWER_USER_POPUP_TITLE, $content);
+                userAlreadyDidAction.lastShownPowerSurveyDate = Date.now();
+                localStorage.setItem(GUIDED_TOUR_LOCAL_STORAGE_KEY, JSON.stringify(userAlreadyDidAction));
+            }, POWER_USER_SURVEY_TIME);
+        }
     }
 
     let tourStarted = false;
@@ -275,5 +330,6 @@ define(function (require, exports, module) {
         _showBeautifyNotification();
         _showRequestStarsPopup();
         _showGeneralSurvey();
+        _showPowerUserSurvey();
     };
 });
