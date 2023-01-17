@@ -25,6 +25,10 @@
     const isLocalHost = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
     const urlParams = new URLSearchParams(window.location.search || "");
     const isBugsnagEnabled = (!window.testEnvironment && !isLocalHost);
+    const MAX_ERR_SENT_RESET_INTERVAL = 60000,
+        MAX_ERR_SENT_FIRST_MINUTE = 10,
+        MAX_ERR_ALLOWED_IN_MINUTE = 2;
+    let firstMinuteElapsed = false, errorsSentThisMinute = 0;
 
     class CustomBugSnagError extends Error {
         constructor(message, err){
@@ -178,8 +182,11 @@
         try{
             let reportedStatus =  "Reported";
             let shouldReport = true;
-            if(logger.loggingOptions.healthDataDisabled){
-                reportedStatus = "Not Reported as health data disabled.";
+            if(logger.loggingOptions.healthDataDisabled
+                || (firstMinuteElapsed && errorsSentThisMinute > MAX_ERR_ALLOWED_IN_MINUTE)){
+                // after the first minute which allows up to 10 error reports,
+                // we restrict error reports to 2 per minute after that.
+                reportedStatus = "Not Reported as health data disabled or max reports per minute breached.";
                 shouldReport = false;
             } else if(_shouldDiscardError(event.errors)){
                 reportedStatus = "Not Reported error from user extension or fs.";
@@ -196,6 +203,9 @@
                 window.Metrics.countEvent(window.Metrics.EVENT_TYPE.ERROR, "uncaught", supportStatus);
             }
 
+            if(shouldReport){
+                errorsSentThisMinute++;
+            }
             return shouldReport;
         } catch (e) {
             console.error("exception occurred while reposting error: ", e);
@@ -259,14 +269,29 @@
             // only manual explicit privacy ready breadcrumbs are allowed
             enabledBreadcrumbTypes: ['manual'],
             // https://docs.bugsnag.com/platforms/javascript/configuration-options/#maxevents
-            maxEvents: 10,
+            maxEvents: MAX_ERR_SENT_FIRST_MINUTE,
             maxBreadcrumbs: 50,
             onError
         });
+        setInterval(()=>{
+            Bugsnag.resetEventCount();
+            firstMinuteElapsed = true;
+            errorsSentThisMinute = 0;
+        }, MAX_ERR_SENT_RESET_INTERVAL);
         if(window.cacheClearError){
             logger.reportError(window.cacheClearError);
         }
     } else {
         console.warn("Logging to Bugsnag is disabled as current environment is localhost.");
+
+        window.onerror = function (msg, url, line, ...err) {
+            console.error("Caught Critical error from: " + url + ":" + line + " message: " + msg, ...err);
+            return true; // same as preventDefault
+        };
+
+        window.addEventListener("unhandledrejection", function (event){
+            console.error("Caught unhandledrejection from: ", event);
+            return true; // same as preventDefault
+        });
     }
 }());
