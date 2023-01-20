@@ -585,6 +585,7 @@ define(function (require, exports, module) {
      */
     function ThemesViewModel() {
         ExtensionManagerViewModel.call(this);
+        this.infoMessage = Strings.EXTENSION_MANAGER_THEMES_INFO;
     }
 
     // Inheritance setup
