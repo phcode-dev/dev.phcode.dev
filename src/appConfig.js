@@ -21,7 +21,7 @@ window.AppConfig = {
         "extension_url": "https://brackets-archive.github.io/brackets-extensions/extensions/",
         "extension_store_url": "https://store.core.ai/src/",
         "linting.enabled_by_default": true,
-        "build_timestamp": "2023-01-19T11:24:21.353Z",
+        "build_timestamp": "2023-01-20T08:53:48.748Z",
         "googleAnalyticsID": "G-P4HJFPDB76",
         "mixPanelID": "49c4d164b592be2350fc7af06a259bf3",
         "coreAnalyticsID": "phoenix",
@@ -31,7 +31,7 @@ window.AppConfig = {
         "bugsnagEnv": "development"
     },
     "name": "Phoenix",
-    "version": "3.1.6-19128",
+    "version": "3.1.6-19133",
     "apiVersion": "3.1.6",
     "homepage": "https://core.ai",
     "issues": {
