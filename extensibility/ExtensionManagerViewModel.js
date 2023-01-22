@@ -143,6 +143,7 @@ define(function (require, exports, module) {
      * Unregisters listeners when we're done.
      */
     ExtensionManagerViewModel.prototype.dispose = function () {
+        this.trigger("dispose");
         ExtensionManager.off("." + this.source);
     };
 
@@ -393,6 +394,13 @@ define(function (require, exports, module) {
             self._sortFullSet();
             self._setInitialFilter();
         });
+        this.infoMessage = `<div style="display: flex; justify-content: space-between;">
+            <div style="margin-top: 3px;">${Strings.EXTENSION_MANAGER_THEMES_INFO}</div>
+            <div>
+                <button id="InstalledViewThemeRevert" class="dialog-button btn btn-mini undoTheme forced-hidden">
+                ${Strings.EXTENSION_MANAGER_THEMES_UNDO}</button>
+            </div>
+            </div>`;
     }
 
     InstalledViewModel.prototype = Object.create(ExtensionManagerViewModel.prototype);
@@ -585,7 +593,13 @@ define(function (require, exports, module) {
      */
     function ThemesViewModel() {
         ExtensionManagerViewModel.call(this);
-        this.infoMessage = Strings.EXTENSION_MANAGER_THEMES_INFO;
+        this.infoMessage = `<div style="display: flex; justify-content: space-between;">
+            <div style="margin-top: 3px;">${Strings.EXTENSION_MANAGER_THEMES_INFO}</div>
+            <div>
+                <button id="ThemeViewThemeRevert" class="dialog-button btn btn-mini undoTheme forced-hidden">
+                ${Strings.EXTENSION_MANAGER_THEMES_UNDO}</button>
+            </div>
+            </div>`;
     }
 
     // Inheritance setup

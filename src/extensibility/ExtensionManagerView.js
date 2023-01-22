@@ -156,12 +156,32 @@ define(function (require, exports, module) {
      * Attaches our event handlers. We wait to do this until we've fully fetched the extension list.
      */
     ExtensionManagerView.prototype._setupEventHandlers = function () {
-        var self = this;
+        const self = this,
+            originalTheme = ThemeManager.getCurrentTheme();
+
+        function _handleThemeChange(_event, theme) {
+            $(".current-theme-apply-hide").removeClass("current-theme-apply-hide");
+            $(`[data-extension-id="${theme.name}"].apply`).addClass("current-theme-apply-hide");
+            $(".currentThemeText").not(".forced-hidden").addClass("forced-hidden");
+            $(`[data-extension-id="${theme.name}"].currentThemeText`).removeClass("forced-hidden");
+            if(theme.name !== originalTheme.name){
+                $("#ThemeViewThemeRevert").removeClass("forced-hidden");
+                $("#InstalledViewThemeRevert").removeClass("forced-hidden");
+            } else {
+                $("#ThemeViewThemeRevert").addClass("forced-hidden");
+                $("#InstalledViewThemeRevert").addClass("forced-hidden");
+            }
+        }
+
+        ThemeManager.on(ThemeManager.EVENT_THEME_CHANGE, _handleThemeChange);
 
         // Listen for model data and filter changes.
         this.model
             .on("filter", function () {
                 self._render();
+            })
+            .on("dispose", function () {
+                ThemeManager.off(ThemeManager.EVENT_THEME_CHANGE, _handleThemeChange);
             })
             .on("change", function (e, id) {
                 var extensions = self.model.extensions,
@@ -211,6 +231,13 @@ define(function (require, exports, module) {
             .on("click", "button.update", function (e) {
                 Metrics.countEvent(Metrics.EVENT_TYPE.EXTENSIONS, "btnClick", "update");
                 self._installUsingDialog($(e.target).attr("data-extension-id"), true);
+            })
+            .on("click", "button.undoTheme", function (e) {
+                $("#ThemeViewThemeRevert").addClass("forced-hidden");
+                $("#InstalledViewThemeRevert").addClass("forced-hidden");
+                ThemeManager.setCurrentTheme(originalTheme.name);
+                e.preventDefault();
+                e.stopPropagation();
             })
             .on("click", "button.remove", function (e) {
                 Metrics.countEvent(Metrics.EVENT_TYPE.EXTENSIONS, "btnClick", "remove");
@@ -305,6 +332,8 @@ define(function (require, exports, module) {
         context.showInstallButton = (this.model.source === this.model.SOURCE_REGISTRY || this.model.source === this.model.SOURCE_THEMES) && !context.updateAvailable;
         context.showUpdateButton = context.updateAvailable && !context.isMarkedForUpdate && !context.isMarkedForRemoval;
         context.showApplyButton = !!context.metadata.theme && !context.disabled;
+        context.isCurrentTheme = entry.installInfo &&
+            (entry.installInfo.metadata.name === ThemeManager.getCurrentTheme().name);
 
         context.allowInstall = context.isCompatible && !context.isInstalled;
 
@@ -355,7 +384,7 @@ define(function (require, exports, module) {
             context.updateNotAllowedReason = isInstalledInUserFolder ? Strings.CANT_UPDATE : Strings.CANT_UPDATE_DEV;
         }
 
-        context.removalAllowed = this.model.source === "installed" &&
+        context.removalAllowed = context.isInstalled &&
             !context.failedToStart && !hasPendingAction;
         var isDefaultOrInstalled = this.model.source === "default" || this.model.source === "installed";
         var isDefaultAndTheme = this.model.source === "default" && context.metadata.theme;
