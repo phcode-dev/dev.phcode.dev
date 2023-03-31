@@ -1425,21 +1425,38 @@ define(function (require, exports, module) {
 
     function _duplicateFileCMD() {
         let context = getContext();
-        if(context){
-            let name = _getProjectRelativePathForCopy(context.fullPath);
+        let fullPath = context && context.fullPath;
+        if(!fullPath){
+            fullPath = MainViewManager.getCurrentlyViewedPath(MainViewManager.ACTIVE_PANE);
+        }
+        if(fullPath && isWithinProject(fullPath)){
+            let name = _getProjectRelativePathForCopy(fullPath);
             let message = StringUtils.format(Strings.DUPLICATING, name);
             setProjectBusy(true, message);
-            FileSystem.getFreePath(context.fullPath, (err, dupePath)=>{
-                FileSystem.copy(context.fullPath, dupePath, (err, copiedStats)=>{
+            FileSystem.getFreePath(fullPath, (err, dupePath)=>{
+                FileSystem.copy(fullPath, dupePath, (err, copiedStats)=>{
                     setProjectBusy(false, message);
                     if(err){
                         _showErrorDialog(ERR_TYPE_DUPLICATE_FAILED, false, "err",
-                            _getProjectRelativePathForCopy(context.fullPath));
+                            _getProjectRelativePathForCopy(fullPath));
                         return;
                     }
-                    queuePathForSelection = copiedStats.realPath;
+                    FileSystem.resolve(dupePath, function (err, file) {
+                        if(!err) {
+                            // we have to wait a bit for the tree to be in sync before locating file in tree
+                            setTimeout(()=>{
+                                showInTree(file);
+                            }, 200);
+                        }
+                    });
                 });
             });
+        } else {
+            Dialogs.showModalDialog(
+                DefaultDialogs.DIALOG_ID_ERROR,
+                Strings.CANNOT_DUPLICATE_TITLE,
+                Strings.ERR_TYPE_DUPLICATE_FAILED_NO_FILE
+            );
         }
     }
 
@@ -1466,23 +1483,33 @@ define(function (require, exports, module) {
 
     function _downloadCommand(entryToDownload) {
         let context = entryToDownload || getContext();
-        if(context){
-            let name = _getProjectRelativePathForCopy(context.fullPath);
-            let message = StringUtils.format(Strings.DOWNLOADING_FILE, name);
-            if(context.isFile){
-                setProjectBusy(true, message);
-                context.read({encoding: window.fs.BYTE_ARRAY_ENCODING}, function (err, blobContent) {
-                    if (err){
-                        _zipFailed(context.fullPath);
-                        return;
-                    }
-                    setProjectBusy(false, message);
-                    let blob = new Blob([blobContent], {type:"application/octet-stream"});
-                    window.saveAs(blob, path.basename(context.fullPath));
-                });
-            } else {
-                _downloadFolderCommand(context.fullPath);
-            }
+        let fullPath = context && context.fullPath;
+        if(!fullPath){
+            fullPath = MainViewManager.getCurrentlyViewedPath(MainViewManager.ACTIVE_PANE);
+        }
+        if(fullPath){
+            FileSystem.resolve(fullPath, function (err, fileOrFolder) {
+                if(err) {
+                    _zipFailed(fullPath);
+                    return;
+                }
+                let name = _getProjectRelativePathForCopy(fullPath);
+                let message = StringUtils.format(Strings.DOWNLOADING_FILE, name);
+                if(fileOrFolder.isFile){
+                    setProjectBusy(true, message);
+                    fileOrFolder.read({encoding: window.fs.BYTE_ARRAY_ENCODING}, function (err, blobContent) {
+                        if (err){
+                            _zipFailed(fullPath);
+                            return;
+                        }
+                        setProjectBusy(false, message);
+                        let blob = new Blob([blobContent], {type:"application/octet-stream"});
+                        window.saveAs(blob, path.basename(fullPath));
+                    });
+                } else {
+                    _downloadFolderCommand(fullPath);
+                }
+            });
         }
     }
 
@@ -1534,9 +1561,13 @@ define(function (require, exports, module) {
 
     function _copyProjectRelativePath() {
         let context = getContext();
-        if(context){
+        let fullPath = context && context.fullPath;
+        if(!fullPath){
+            fullPath = MainViewManager.getCurrentlyViewedPath(MainViewManager.ACTIVE_PANE);
+        }
+        if(fullPath){
             let projectRoot = getProjectRoot().fullPath;
-            let relativePath = window.path.relative(projectRoot, context.fullPath);
+            let relativePath = window.path.relative(projectRoot, fullPath);
             _addTextToSystemClipboard(relativePath);
             localStorage.setItem("phoenix.clipboard", JSON.stringify({}));
         }
@@ -1544,15 +1575,23 @@ define(function (require, exports, module) {
 
     function _cutFileCMD() {
         let context = getContext();
-        if(context){
-            _registerPathWithClipboard(context.fullPath, OPERATION_CUT);
+        let fullPath = context && context.fullPath;
+        if(!fullPath){
+            fullPath = MainViewManager.getCurrentlyViewedPath(MainViewManager.ACTIVE_PANE);
+        }
+        if(fullPath){
+            _registerPathWithClipboard(fullPath, OPERATION_CUT);
         }
     }
 
     function _copyFileCMD() {
         let context = getContext();
-        if(context){
-            _registerPathWithClipboard(context.fullPath, OPERATION_COPY);
+        let fullPath = context && context.fullPath;
+        if(!fullPath){
+            fullPath = MainViewManager.getCurrentlyViewedPath(MainViewManager.ACTIVE_PANE);
+        }
+        if(fullPath){
+            _registerPathWithClipboard(fullPath, OPERATION_COPY);
         }
     }
 
@@ -1755,6 +1794,7 @@ define(function (require, exports, module) {
     CommandManager.register(Strings.CMD_FILE_COPY_PATH, Commands.FILE_COPY_PATH, _copyProjectRelativePath);
     CommandManager.register(Strings.CMD_FILE_PASTE, Commands.FILE_PASTE, _pasteFileCMD);
     CommandManager.register(Strings.CMD_FILE_DUPLICATE, Commands.FILE_DUPLICATE, _duplicateFileCMD);
+    CommandManager.register(Strings.CMD_FILE_DUPLICATE_FILE, Commands.FILE_DUPLICATE_FILE, _duplicateFileCMD);
     CommandManager.register(Strings.CMD_FILE_DOWNLOAD_PROJECT, Commands.FILE_DOWNLOAD_PROJECT, _downloadFolderCommand);
     CommandManager.register(Strings.CMD_FILE_DOWNLOAD, Commands.FILE_DOWNLOAD, _downloadCommand);
 
