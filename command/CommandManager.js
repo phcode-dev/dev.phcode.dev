@@ -33,6 +33,9 @@ define(function (require, exports, module) {
     const EventDispatcher = require("utils/EventDispatcher");
 
     const EVENT_BEFORE_EXECUTE_COMMAND = "beforeExecuteCommand";
+    const SOURCE_KEYBOARD_SHORTCUT = "keyboardShortcut",
+        SOURCE_UI_MENU_CLICK = "uiMenuClick",
+        SOURCE_OTHER = "otherExecAction";
 
 
     /**
@@ -62,13 +65,15 @@ define(function (require, exports, module) {
      * @param {function} commandFn - the function that is called when the command is executed.
      *
      * TODO: where should this be triggered, The Command or Exports?
+     * @param [options]
      */
-    function Command(name, id, commandFn) {
+    function Command(name, id, commandFn, options= {}) {
         this._name = name;
         this._id = id;
         this._commandFn = commandFn;
         this._checked = undefined;
         this._enabled = true;
+        this._options = options;
     }
     EventDispatcher.makeEventDispatcher(Command.prototype);
 
@@ -89,8 +94,17 @@ define(function (require, exports, module) {
         if (!this._enabled) {
             return (new $.Deferred()).reject().promise();
         }
-
-        var result = this._commandFn.apply(this, arguments);
+        let args = arguments;
+        if(this._options.eventSource) {
+            // This command has been registered with the optional source details set we have to ensure the event
+            // argument is inserted first. The event source may be already injected by the executor,
+            // if not we have to do it now.
+            if(!args.length || !(typeof args[0] === 'object' && args[0].eventSource)) {
+                const event = {eventSource: SOURCE_OTHER}; // default we don't know the source
+                args = [event].concat(args);
+            }
+        }
+        let result = this._commandFn.apply(this, args);
         if (!result) {
             // If command does not return a promise, assume that it handled the
             // command and return a resolved promise
@@ -184,9 +198,13 @@ define(function (require, exports, module) {
      *     execute() (after the id) are passed as arguments to the function. If the function is asynchronous,
      *     it must return a jQuery promise that is resolved when the command completes. Otherwise, the
      *     CommandManager will assume it is synchronous, and return a promise that is already resolved.
+     * @param {Object} [options]
+     * @param {boolean} options.eventSource If set to true, the commandFn will be called with the first argument `event`
+     * with details about the source(invoker) as event.eventSource(one of the `CommandManager.SOURCE_*`) and
+     * event.sourceType(Eg. Ctrl-K) parameter.
      * @return {?Command}
      */
-    function register(name, id, commandFn) {
+    function register(name, id, commandFn, options={}) {
         if (_commands[id]) {
             console.log("Attempting to register an already-registered command: " + id);
             return null;
@@ -196,7 +214,7 @@ define(function (require, exports, module) {
             return null;
         }
 
-        var command = new Command(name, id, commandFn);
+        var command = new Command(name, id, commandFn, options);
         _commands[id] = command;
 
         exports.trigger("commandRegistered", command);
@@ -283,8 +301,18 @@ define(function (require, exports, module) {
             } catch (err) {
                 console.error(err);
             }
+            let args = Array.prototype.slice.call(arguments, 1); // remove id
+            if(command._options.eventSource) {
+                // This command has been registered with the optional source details set we have to ensure the event
+                // argument is inserted first. The event source may be already injected by the executor,
+                // if not we have to do it now.
+                if(!args.length || !(typeof args[0] === 'object' && args[0].eventSource)) {
+                    const event = {eventSource: SOURCE_OTHER}; // default we don't know the source
+                    args = [event].concat(args);
+                }
+            }
 
-            return command.execute.apply(command, Array.prototype.slice.call(arguments, 1));
+            return command.execute.apply(command, args);
         }
         return (new $.Deferred()).reject().promise();
 
@@ -301,4 +329,7 @@ define(function (require, exports, module) {
     exports._testReset          = _testReset;
     exports._testRestore        = _testRestore;
     exports.EVENT_BEFORE_EXECUTE_COMMAND = EVENT_BEFORE_EXECUTE_COMMAND;
+    exports.SOURCE_KEYBOARD_SHORTCUT = SOURCE_KEYBOARD_SHORTCUT;
+    exports.SOURCE_UI_MENU_CLICK = SOURCE_UI_MENU_CLICK;
+    exports.SOURCE_OTHER = SOURCE_OTHER;
 });
