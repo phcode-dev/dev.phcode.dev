@@ -121,11 +121,79 @@ define(function (require, exports, module) {
     }
 
     /**
+     * Returns true if is a directory exists and is empty.
+     *
+     * @return {Promise<boolean>} True if directory is empty and it exists, else false.
+     */
+    Directory.prototype.isEmptyAsync = function () {
+        let that = this;
+        return new Promise((resolve, reject)=>{
+            that.getContents((err, contents) =>{
+                if(err){
+                    reject(err);
+                    return;
+                }
+                resolve(contents.length === 0);
+            });
+        });
+    };
+
+    /**
+     * Recursively deletes all empty subdirectories within the current directory. If all subdirectories are empty,
+     * the current directory itself will be deleted.
+     * A directory is considered empty if it doesn't contain any files in its subtree.
+     *
+     * If a subtree contains a large number of nested subdirectories and no files, the whole tree will be deleted.
+     * Only branches that contain a file will be retained.
+     *
+     * @returns {Promise<void>} A Promise that resolves when the operation is finished
+     * @throws {FileSystemError} If an error occurs while accessing the filesystem
+     *
+     * @example
+     *
+     * await dir.unlinkEmptyDirectoryAsync();
+     */
+    Directory.prototype.unlinkEmptyDirectoryAsync = async function () {
+        let that = this;
+        let {entries} = await that.getContentsAsync();
+        for(let entry of entries){
+            if(entry.isDirectory) {
+                await entry.unlinkEmptyDirectoryAsync();
+            }
+        }
+        let isEmpty = await that.isEmptyAsync();
+        if(isEmpty){
+            await that.unlinkAsync();
+        }
+    };
+
+    /**
+     * Read the contents of a Directory, returns a promise. If this Directory is under a watch root,
+     * the listing will exclude any items filtered out by the watch root's filter
+     * function.
+     *
+     * @return {Promise<{entries: FileSystemEntry, contentStats: FileSystemStats, contentsStatsErrors}>} An object
+     * with attributes - entries(an array of file system entries), contentStats and contentsStatsErrors(a map from
+     * content name to error if there is any).
+     */
+    Directory.prototype.getContentsAsync = function () {
+        let that = this;
+        return new Promise((resolve, reject)=>{
+            that.getContents((err, contents, contentStats, contentsStatsErrors) =>{
+                if(err){
+                    reject(err);
+                    return;
+                }
+                resolve({entries: contents, contentStats, contentsStatsErrors});
+            });
+        });
+    };
+
+    /**
      * Read the contents of a Directory. If this Directory is under a watch root,
      * the listing will exclude any items filtered out by the watch root's filter
      * function.
      *
-     * @param {Directory} directory Directory whose contents you want to get
      * @param {function (?string, Array.<FileSystemEntry>=, Array.<FileSystemStats>=, Object.<string, string>=)} callback
      *          Callback that is passed an error code or the stat-able contents
      *          of the directory along with the stats for these entries and a
@@ -210,6 +278,24 @@ define(function (require, exports, module) {
             var callbackArgs = [err, contents, contentsStats, contentsStatsErrors];
             _applyAllCallbacks(currentCallbacks, callbackArgs);
         }.bind(this));
+    };
+
+    /**
+     * Create a directory and returns a promise that will resolve to a stat
+     *
+     * @return {Promise<FileSystemStats>} resolves to the stats of the newly created dir.
+     */
+    Directory.prototype.createAsync = function () {
+        let that = this;
+        return new Promise((resolve, reject)=>{
+            that.create((err, stat)=>{
+                if(err){
+                    reject(err);
+                    return;
+                }
+                resolve(stat);
+            });
+        });
     };
 
     /**
