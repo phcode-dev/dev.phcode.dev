@@ -54,17 +54,33 @@ define(function (require, exports, module) {
         Mustache           = brackets.getModule("thirdparty/mustache/mustache"),
         Metrics            = brackets.getModule("utils/Metrics"),
         LiveDevelopment    = brackets.getModule("LiveDevelopment/main"),
+        LiveDevServerManager = brackets.getModule("LiveDevelopment/LiveDevServerManager"),
+        LivePreviewTransport  = brackets.getModule("LiveDevelopment/MultiBrowserImpl/transports/LivePreviewTransport"),
+        StaticServer         = require("StaticServer"),
         utils = require('utils');
 
     const LIVE_PREVIEW_PANEL_ID = "live-preview-panel",
         NAVIGATOR_REDIRECT_PAGE = "REDIRECT_PAGE",
-        LIVE_PREVIEW_NAVIGATOR_CHANNEL_ID = `${Phoenix.PHOENIX_INSTANCE_ID}-nav-live-preview`,
-        _livePreviewNavigationChannel = new BroadcastChannel(LIVE_PREVIEW_NAVIGATOR_CHANNEL_ID),
+        IFRAME_EVENT_SERVER_READY = 'SERVER_READY',
         livePreviewTabs = new Map();
     window.livePreviewTabs = livePreviewTabs;
 
     ExtensionInterface.registerExtensionInterface(
         ExtensionInterface._DEFAULT_EXTENSIONS_INTERFACE_NAMES.PHOENIX_LIVE_PREVIEW, exports);
+
+    /**
+     * @private
+     * @return {StaticServerProvider} The singleton StaticServerProvider initialized
+     * on app ready.
+     */
+    function _createStaticServer() {
+        var config = {
+            pathResolver: ProjectManager.makeProjectRelativeIfPossible,
+            root: ProjectManager.getProjectRoot().fullPath
+        };
+
+        return new StaticServer.StaticServer(config);
+    }
 
     // jQuery objects
     let $icon,
@@ -75,16 +91,12 @@ define(function (require, exports, module) {
         $livePreviewPopBtn,
         $reloadBtn;
 
-    _livePreviewNavigationChannel.onmessage = (event) => {
-        const type = event.data.type;
-        switch (type) {
-        case 'TAB_ONLINE': livePreviewTabs.set(event.data.clientID, {
+    StaticServer.on('TAB_ONLINE', function(_ev, event){
+        livePreviewTabs.set(event.data.clientID, {
             lastSeen: new Date(),
             URL: event.data.URL
-        }); break;
-        default: console.error("Live Preview Navigation Channel: received unknown message:", event);
-        }
-    };
+        });
+    });
 
     // If we didn't receive heartbeat message from a tab for 5 seconds, we assume tab closed
     const TAB_HEARTBEAT_TIMEOUT = 5000; // in millis secs
@@ -180,15 +192,15 @@ define(function (require, exports, module) {
         let details = LiveDevelopment.getLivePreviewDetails(),
             openURL = url;
         if(details.URL !== url) {
-            openURL = `${_stripURL(location.href)}LiveDevelopment/pageLoader.html?`
-                +`broadcastChannel=${LIVE_PREVIEW_NAVIGATOR_CHANNEL_ID}&URL=${encodeURIComponent(url)}`;
+            openURL = `${LiveDevServerManager.getStaticServerBaseURLs().baseURL}pageLoader.html?`
+                +`broadcastChannel=${LivePreviewTransport.BROADCAST_CHANNEL_ID}&URL=${encodeURIComponent(url)}`;
         }
         return openURL;
     }
 
     function _redirectAllTabs(newURL) {
         const openURL = _getTabNavigationURL(newURL);
-        _livePreviewNavigationChannel.postMessage({
+        StaticServer.messageToLivePreviewTabs({
             type: NAVIGATOR_REDIRECT_PAGE,
             URL: openURL
         });
@@ -408,6 +420,7 @@ define(function (require, exports, module) {
 
     AppInit.appReady(function () {
         _createExtensionPanel();
+        LiveDevServerManager.registerServer({ create: _createStaticServer }, 5);
         ProjectManager.on(ProjectManager.EVENT_PROJECT_FILE_CHANGED, _projectFileChanges);
         MainViewManager.on("currentFileChange", _currentFileChanged);
         ProjectManager.on(ProjectManager.EVENT_PROJECT_OPEN, _projectOpened);
@@ -429,6 +442,9 @@ define(function (require, exports, module) {
         }, 1000);
         LiveDevelopment.on(LiveDevelopment.EVENT_OPEN_PREVIEW_URL, _openLivePreviewURL);
         LiveDevelopment.on(LiveDevelopment.EVENT_LIVE_HIGHLIGHT_PREF_CHANGED, _updateLiveHighlightToggleStatus);
+        StaticServer.on(IFRAME_EVENT_SERVER_READY, function (_evt, event) {
+            _loadPreview(true);
+        });
     });
 
     // private API to be used inside phoenix codebase only

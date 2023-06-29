@@ -33,20 +33,18 @@
     }
 
     const clientID = "" + Math.round( Math.random()*1000000000);
-    const LIVE_PREVIEW_NAVIGATOR_CHANNEL_ID = `${window.PHOENIX_INSTANCE_ID}-nav-live-preview`;
 
     const worker = new Worker(window.LIVE_DEV_REMOTE_WORKER_SCRIPTS_FILE_NAME);
     worker.onmessage = (event) => {
         const type = event.data.type;
         switch (type) {
-        case 'REDIRECT_CONTENT_FRAME': document.getElementById("contentFrame").src = event.data.URL; break;
         case 'REDIRECT_PAGE': location.href = event.data.URL; break;
         default: console.error("Live Preview page loader: received unknown message from worker:", event);
         }
     };
     worker.postMessage({
         type: "setupBroadcast",
-        broadcastChannel: LIVE_PREVIEW_NAVIGATOR_CHANNEL_ID,
+        broadcastChannel: window.LIVE_PREVIEW_BROADCAST_CHANNEL_ID,
         clientID});
 
     const WebSocketTransport = {
@@ -75,12 +73,12 @@
         },
 
         /**
-         * Connects to the ServiceWorkerTransport in Brackets at the given WebSocket URL.
+         * Connects to the LivePreviewTransport in Brackets.
          */
         connect: function () {
             const self = this;
             // message channel to phoenix connect on load itself. The channel id is injected from phoenix
-            // via ServiceWorkerTransport.js while serving the instrumented html file
+            // via LivePreviewTransport.js while serving the instrumented html file
             self._broadcastMessageChannel = new BroadcastChannel(window.LIVE_PREVIEW_BROADCAST_CHANNEL_ID);
             self._broadcastMessageChannel.postMessage({
                 type: 'BROWSER_CONNECT',
@@ -114,7 +112,6 @@
                         self._callbacks.close();
                     }
                     break;
-                default: console.error("Unknown event type for event", event);
                 }
             };
 

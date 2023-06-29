@@ -85,7 +85,7 @@ define(function (require, exports, module) {
         _                    = require("thirdparty/lodash"),
         LiveDevelopmentUtils = require("LiveDevelopment/LiveDevelopmentUtils"),
         LiveDevServerManager = require("LiveDevelopment/LiveDevServerManager"),
-        ServiceWorkerTransport  = require("LiveDevelopment/MultiBrowserImpl/transports/ServiceWorkerTransport"),
+        LivePreviewTransport  = require("LiveDevelopment/MultiBrowserImpl/transports/LivePreviewTransport"),
         LiveDevProtocol      = require("LiveDevelopment/MultiBrowserImpl/protocol/LiveDevProtocol"),
         Metrics              = require("utils/Metrics"),
         PageLoaderWorkerScript = require("text!LiveDevelopment/BrowserScripts/pageLoaderWorker.js");
@@ -798,7 +798,7 @@ define(function (require, exports, module) {
             .on("beforeProjectClose beforeAppClose", close);
 
         // Default transport for live connection messages - can be changed
-        setTransport(ServiceWorkerTransport);
+        setTransport(LivePreviewTransport);
 
         // Initialize exports.status
         _setStatus(STATUS_INACTIVE);
@@ -905,6 +905,10 @@ define(function (require, exports, module) {
         };
     }
 
+    function getLivePreviewBaseURL() {
+        return LiveDevServerManager.getStaticServerBaseURLs().projectBaseURL;
+    }
+
     EventDispatcher.makeEventDispatcher(exports);
 
     // For unit testing
@@ -932,6 +936,7 @@ define(function (require, exports, module) {
     exports.getServerBaseUrl    = getServerBaseUrl;
     exports.getCurrentLiveDoc   = getCurrentLiveDoc;
     exports.getLivePreviewDetails = getLivePreviewDetails;
+    exports.getLivePreviewBaseURL = getLivePreviewBaseURL;
     exports.getCurrentProjectServerConfig = getCurrentProjectServerConfig;
     exports.getConnectionIds = getConnectionIds;
     exports.setTransport        = setTransport;
