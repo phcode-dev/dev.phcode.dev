@@ -1,7 +1,7 @@
 {
     "config": {
-        "app_title": "Phoenix",
-        "app_name_about": "Phoenix",
+        "app_title": "Phoenix Code",
+        "app_name_about": "Phoenix Code",
         "about_icon": "styles/images/phoenix-icon.svg",
         "how_to_use_url": "https://github.com/adobe/brackets/wiki/How-to-Use-Brackets",
         "support_url": "https://github.com/phcode-dev/phoenix/discussions",
@@ -21,7 +21,7 @@
         "extension_url": "https://extensions.phcode.dev/extensions/",
         "extension_store_url": "https://store.core.ai/src/",
         "linting.enabled_by_default": true,
-        "build_timestamp": "2023-07-22T16:51:54.042Z",
+        "build_timestamp": "2023-07-26T10:47:59.558Z",
         "googleAnalyticsID": "G-P4HJFPDB76",
         "mixPanelID": "49c4d164b592be2350fc7af06a259bf3",
         "coreAnalyticsID": "phoenix",
@@ -31,7 +31,7 @@
         "bugsnagEnv": "development"
     },
     "name": "Phoenix",
-    "version": "3.2.2-19336",
+    "version": "3.2.2-19338",
     "apiVersion": "3.2.2",
     "homepage": "https://core.ai",
     "issues": {
