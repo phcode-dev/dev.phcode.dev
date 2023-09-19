@@ -57,16 +57,32 @@ define(function (require, exports, module) {
      * @type {RegExp}
      */
     var _exclusionListRegEx = /\.pyc$|^\.git$|^\.gitmodules$|^\.svn$|^\.DS_Store$|^Icon\r|^Thumbs\.db$|^\.hg$|^CVS$|^\.hgtags$|^\.idea$|^\.c9revisions$|^\.SyncArchive$|^\.SyncID$|^\.SyncIgnore$|\~$/;
-    var _cacheExcludeRegEx = /^node_modules$|^bower_components$/;
+    var _cacheExcludeFileNameRegEx = /^node_modules$|^bower_components$|^.npm$|^.yarn$|^__pycache__$/;
 
     /**
      * Glob definition of files and folders that should be excluded directly
      * inside node domain watching with chokidar
      */
-    var defaultIgnoreGlobs = [
-        "**/(.pyc|.git|.gitmodules|.svn|.DS_Store|Thumbs.db|.hg|CVS|.hgtags|.idea|.c9revisions|.SyncArchive|.SyncID|.SyncIgnore)",
-        "**/bower_components",
-        "**/node_modules"
+    const defaultIgnoreGlobs = [
+        "node_modules",
+        "bower_components",
+        ".npm",
+        ".yarn",
+        "__pycache__",
+        ".pyc",
+        ".git",
+        ".gitmodules",
+        ".svn",
+        ".DS_Store",
+        "Thumbs.db",
+        ".hg",
+        "CVS",
+        ".hgtags",
+        ".idea",
+        ".c9revisions",
+        ".SyncArchive",
+        ".SyncID",
+        ".SyncIgnore"
     ];
 
     /**
@@ -131,12 +147,13 @@ define(function (require, exports, module) {
 
     /**
      * Returns false for files and directories that should not be indexed for search or code hints.
+     * If the entry is a directory, its children should be indexed too.
      *
      * @param {!FileSystemEntry} entry File or directory to filter
      * @return {boolean} true if the file should be displayed
      */
     function shouldIndex(entry) {
-        return shouldShow(entry) && !_cacheExcludeRegEx.test(entry.name);
+        return shouldShow(entry) && !_cacheExcludeFileNameRegEx.test(entry.name);
     }
 
     // Constants used by the ProjectModel
@@ -197,17 +214,12 @@ define(function (require, exports, module) {
      * @return {$.Promise} resolved when the file or directory has been created.
      */
     function doCreate(path, isFolder) {
-        var d = new $.Deferred();
-        var filename = FileUtils.getBaseName(path);
+        const d = new $.Deferred();
+        const filename = FileUtils.getBaseName(path);
 
         // Check if filename
-        if (!isValidFilename(filename)){
-            return d.reject(ERROR_INVALID_FILENAME).promise();
-        }
-
-        // Check if fullpath with filename is valid
-        // This check is used to circumvent directory jumps (Like ../..)
-        if (!isValidPath(path)) {
+        // or Check if fullpath with filename is valid - This check is used to circumvent directory jumps (Like ../..)
+        if (!isValidFilename(filename) || !isValidPath(path)){
             return d.reject(ERROR_INVALID_FILENAME).promise();
         }
 
@@ -215,25 +227,25 @@ define(function (require, exports, module) {
             if (!err) {
                 // Item already exists, fail with error
                 d.reject(FileSystemError.ALREADY_EXISTS);
+                return;
+            }
+            if (isFolder) {
+                const directory = FileSystem.getDirectoryForPath(path);
+
+                directory.create(function (err) {
+                    if (err) {
+                        d.reject(err);
+                    } else {
+                        d.resolve(directory);
+                    }
+                });
             } else {
-                if (isFolder) {
-                    var directory = FileSystem.getDirectoryForPath(path);
+                // Create an empty file
+                const file = FileSystem.getFileForPath(path);
 
-                    directory.create(function (err) {
-                        if (err) {
-                            d.reject(err);
-                        } else {
-                            d.resolve(directory);
-                        }
-                    });
-                } else {
-                    // Create an empty file
-                    var file = FileSystem.getFileForPath(path);
-
-                    FileUtils.writeText(file, "").then(function () {
-                        d.resolve(file);
-                    }, d.reject);
-                }
+                FileUtils.writeText(file, "").then(function () {
+                    d.resolve(file);
+                }, d.reject);
             }
         });
 
