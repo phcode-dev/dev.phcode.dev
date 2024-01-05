@@ -93,7 +93,11 @@ define(function (require, exports, module) {
         if(!Phoenix.firstBoot && !window.testEnvironment){
             _showNewUpdatesIfPresent();
         }
-        Metrics.countEvent(Metrics.EVENT_TYPE.PLATFORM, "cache", "doRefresh");
-        window.refreshServiceWorkerCache(_cacheUpdatedCB);
+        if(!Phoenix.browser.isTauri && window.refreshServiceWorkerCache) {
+            // window.refreshServiceWorkerCache is only present if the page loads service worker. Not available
+            // in integ test windows as they don't load service workers.
+            Metrics.countEvent(Metrics.EVENT_TYPE.PLATFORM, "cache", "doRefresh");
+            window.refreshServiceWorkerCache(_cacheUpdatedCB);
+        }
     };
 });

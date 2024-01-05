@@ -38,12 +38,95 @@ define(function (require, exports, module) {
         EventManager = brackets.getModule("utils/EventManager"),
         ProjectManager = brackets.getModule("project/ProjectManager"),
         Strings = brackets.getModule("strings"),
+        utils = require('utils'),
+        BootstrapCSSText = require("text!../../../thirdparty/bootstrap/bootstrap.min.css"),
+        GithubCSSText = require("text!../../../thirdparty/highlight.js/styles/github.min.css"),
+        HilightJSText = require("text!../../../thirdparty/highlight.js/highlight.min.js"),
+        GFMCSSText = require("text!../../../thirdparty/gfm.min.css"),
         markdownHTMLTemplate = require("text!markdown.html"),
-        redirectionHTMLTemplate = require("text!redirectPage.html"),
-        utils = require('utils');
+        redirectionHTMLTemplate = require("text!redirectPage.html");
+
+    const EVENT_GET_PHOENIX_INSTANCE_ID = 'GET_PHOENIX_INSTANCE_ID';
+    const EVENT_GET_CONTENT = 'GET_CONTENT';
+    const EVENT_TAB_ONLINE = 'TAB_ONLINE';
+    const EVENT_REPORT_ERROR = 'REPORT_ERROR';
+    const EVENT_UPDATE_TITLE_ICON = 'UPDATE_TITLE_AND_ICON';
 
     EventDispatcher.makeEventDispatcher(exports);
     const PHCODE_LIVE_PREVIEW_QUERY_PARAM = "phcodeLivePreview";
+
+    const LOADER_BROADCAST_ID = `live-preview-loader-${Phoenix.PHOENIX_INSTANCE_ID}`;
+    const navigatorChannel = new BroadcastChannel(LOADER_BROADCAST_ID);
+
+    const livePreviewTabs = new Map();
+    navigatorChannel.onmessage = (event) => {
+        window.logger.livePreview.log("Live Preview navigator channel: Phoenix received event from tab: ", event);
+        const type = event.data.type;
+        switch (type) {
+        case 'TAB_LOADER_ONLINE':
+            livePreviewTabs.set(event.data.pageLoaderID, {
+                lastSeen: new Date(),
+                URL: event.data.URL,
+                navigationTab: true
+            });
+            return;
+        default: return; // ignore messages not intended for us.
+        }
+    };
+
+    const LIVE_PREVIEW_MESSENGER_CHANNEL = `live-preview-messenger-${Phoenix.PHOENIX_INSTANCE_ID}`;
+    const livePreviewChannel = new BroadcastChannel(LIVE_PREVIEW_MESSENGER_CHANNEL);
+
+    // this is the server tabs located at "src/live-preview.html" which embeds the `phcode.live` server and
+    // preview iframes.
+    function _sendToLivePreviewServerTabs(data, pageLoaderID=null) {
+        livePreviewChannel.postMessage({
+            pageLoaderID,
+            data
+        });
+    }
+
+    livePreviewChannel.onmessage = (event) => {
+        window.logger.livePreview.log("StaticServer: Live Preview message channel Phoenix recvd:", event);
+        const pageLoaderID = event.data.pageLoaderID;
+        const data = event.data.data;
+        const eventName =  data.eventName;
+        const message =  data.message;
+        switch (eventName) {
+        case EVENT_GET_PHOENIX_INSTANCE_ID:
+            _sendToLivePreviewServerTabs({
+                type: 'PHOENIX_INSTANCE_ID',
+                PHOENIX_INSTANCE_ID: Phoenix.PHOENIX_INSTANCE_ID
+            }, pageLoaderID);
+            return;
+        case EVENT_GET_CONTENT:
+            getContent(message.path,  message.url)
+                .then(response =>{
+                    // response has the following attributes set
+                    // response.contents: <text or arrayBuffer content>,
+                    // response.path
+                    // headers: {'Content-Type': 'text/html'} // optional headers
+                    response.type = 'REQUEST_RESPONSE';
+                    response.requestID = message.requestID;
+                    _sendToLivePreviewServerTabs(response, pageLoaderID);
+                })
+                .catch(console.error);
+            return;
+        case EVENT_TAB_ONLINE:
+            livePreviewTabs.set(message.clientID, {
+                lastSeen: new Date(),
+                URL: message.URL
+            });
+            return;
+        case EVENT_REPORT_ERROR:
+            logger.reportError(new Error(message));
+            return;
+        default:
+            exports.trigger(eventName, {
+                data
+            });
+        }
+    };
 
     let _staticServerInstance, $livepreviewServerIframe;
 
@@ -59,7 +142,6 @@ define(function (require, exports, module) {
         xhtml: false
     });
 
-    const EVENT_GET_PHOENIX_INSTANCE_ID = 'GET_PHOENIX_INSTANCE_ID';
     /**
      * @constructor
      * @extends {BaseServer}
@@ -74,7 +156,7 @@ define(function (require, exports, module) {
      */
     function StaticServer(config) {
         config.baseUrl= LiveDevServerManager.getStaticServerBaseURLs().projectBaseURL;
-        this._sendInstrumentedContent = this._sendInstrumentedContent.bind(this);
+        this._getInstrumentedContent = this._getInstrumentedContent.bind(this);
         BaseServer.call(this, config);
     }
 
@@ -200,38 +282,30 @@ define(function (require, exports, module) {
         BaseServer.prototype.clear.call(this);
     };
 
-    /**
-     * @private
-     * Send HTTP response data back to the StaticServerSomain
-     */
-    StaticServer.prototype._send = function (location, response) {
-        this._nodeDomain.exec("writeFilteredResponse", location.root, location.pathname, response);
-    };
-
-    function _sendMarkdown(fullPath, requestID) {
-        DocumentManager.getDocumentForPath(fullPath)
-            .done(function (doc) {
-                let text = doc.getText();
-                let markdownHtml = marked.parse(text);
-                let templateVars = {
-                    markdownContent: markdownHtml,
-                    BOOTSTRAP_LIB_CSS: `${window.parent.Phoenix.baseURL}thirdparty/bootstrap/bootstrap.min.css`,
-                    HIGHLIGHT_JS_CSS: `${window.parent.Phoenix.baseURL}thirdparty/highlight.js/styles/github.min.css`,
-                    HIGHLIGHT_JS: `${window.parent.Phoenix.baseURL}thirdparty/highlight.js/highlight.min.js`,
-                    GFM_CSS: `${window.parent.Phoenix.baseURL}thirdparty/gfm.min.css`
-                };
-                let html = Mustache.render(markdownHTMLTemplate, templateVars);
-                messageToLivePreviewTabs({
-                    type: 'REQUEST_RESPONSE',
-                    requestID, //pass along the requestID to call the appropriate callback at service worker
-                    fullPath,
-                    contents: html,
-                    headers: {'Content-Type': 'text/html'}
+    function _getMarkdown(fullPath) {
+        return new Promise((resolve, reject)=>{
+            DocumentManager.getDocumentForPath(fullPath)
+                .done(function (doc) {
+                    let text = doc.getText();
+                    let markdownHtml = marked.parse(text);
+                    let templateVars = {
+                        markdownContent: markdownHtml,
+                        BOOTSTRAP_LIB_CSS: BootstrapCSSText,
+                        HIGHLIGHT_JS_CSS: GithubCSSText,
+                        HIGHLIGHT_JS: HilightJSText,
+                        GFM_CSS: GFMCSSText
+                    };
+                    let html = Mustache.render(markdownHTMLTemplate, templateVars);
+                    resolve({
+                        contents: html,
+                        headers: {'Content-Type': 'text/html'},
+                        path: fullPath
+                    });
+                })
+                .fail(function (err) {
+                    reject(new Error(`Markdown rendering failed for ${fullPath}: ` + err));
                 });
-            })
-            .fail(function (err) {
-                console.error(`Markdown rendering failed for ${fullPath}: `, err);
-            });
+        });
     }
 
     function _getExtension(filePath) {
@@ -246,8 +320,9 @@ define(function (require, exports, module) {
     }
 
     /**
-     * return a page loader url after stripping the PHCODE_LIVE_PREVIEW_QUERY_PARAM
-     * "https://phcode.live/pageLoader.html?broadcastChannel=PH-697797864197_livePreview&URL=https%3A%2...
+     * return a page loader html with redirect script tag that just redirects the page to the given redirectURL.
+     * Strips the PHCODE_LIVE_PREVIEW_QUERY_PARAM in redirectURL also, indicating this is not a live previewed url.
+     *
      * @param redirectURL
      * @return {string}
      * @private
@@ -257,7 +332,7 @@ define(function (require, exports, module) {
         // strip this query param as the redirection will be done by the page loader and not the content iframe.
         url.searchParams.delete(PHCODE_LIVE_PREVIEW_QUERY_PARAM);
         let templateVars = {
-            redirectURL: utils.getPageLoaderURL(url.href)
+            redirectURL: url.href
         };
         return Mustache.render(redirectionHTMLTemplate, templateVars);
     }
@@ -267,102 +342,90 @@ define(function (require, exports, module) {
      * Events raised by broadcast channel from the service worker will be captured here. The service worker will ask
      * all phoenix instances if the url to be served should be replaced with instrumented content here or served
      * as static file from disk.
-     * @param {{hostname: string, pathname: string, port: number, root: string, id: number}} request
      */
-    StaticServer.prototype._sendInstrumentedContent = function (data) {
-        if(data.phoenixInstanceID && data.phoenixInstanceID !== Phoenix.PHOENIX_INSTANCE_ID) {
-            return;
-        }
-        let path = this._documentKey(data.path),
-            requestID = data.requestID,
-            liveDocument = this._liveDocuments[path],
-            virtualDocument = this._virtualServingDocuments[path];
-        let contents;
-        if(!ProjectManager.isWithinProject(data.path)) {
-            console.error("Security issue prevented: Live preview tried to access non project resource!!!", path);
-            messageToLivePreviewTabs({
-                type: 'REQUEST_RESPONSE',
-                requestID, //pass along the requestID
-                path,
-                contents: Strings.DESCRIPTION_LIVEDEV_SECURITY
-            });
-            return;
-        }
-
-        let url = new URL(data.url), isLivePreviewPopoutPage = false;
-        if(url.searchParams.get(PHCODE_LIVE_PREVIEW_QUERY_PARAM)) {
-            // #LIVE_PREVIEW_TAB_NAVIGATION_RACE_FIX
-            // check if this is a live preview html. If so, then if you are here, it means that users switched
-            // live preview to a different page while we are just about to serve an old live preview page that is
-            // no longer in live preview. If we just serve the raw html here, it will not have any tab navigation
-            // instrumentation on popped out tabs and live preview navigation will stop on this page. So we will
-            // use a page loader url to continue navigation.
-            isLivePreviewPopoutPage = true;
-        }
-        if (virtualDocument) {
-            // virtual document overrides takes precedence over live preview docs
-            contents = virtualDocument;
-        } else if (liveDocument && liveDocument.getResponseData) {
-            contents = liveDocument.getResponseData().body;
-            if(isLivePreviewPopoutPage && contents.indexOf(LiveDevProtocol.getRemoteScript()) === -1){
-                console.log("serving stale live preview with navigable url", url);
-                contents = _getRedirectionPage(url);
+    StaticServer.prototype._getInstrumentedContent = function (requestedPath, url) {
+        return new Promise((resolve, reject)=>{
+            let path = this._documentKey(requestedPath),
+                liveDocument = this._liveDocuments[path],
+                virtualDocument = this._virtualServingDocuments[path];
+            let contents;
+            if(!ProjectManager.isWithinProject(requestedPath)) {
+                console.error("Security issue prevented: Live preview tried to access non project resource!!!", path);
+                resolve({
+                    path,
+                    contents: Strings.DESCRIPTION_LIVEDEV_SECURITY
+                });
+                return;
             }
-        } else {
-            const file = FileSystem.getFileForPath(data.path);
-            let doc = DocumentManager.getOpenDocumentForPath(file.fullPath);
-            if (doc) {
-                // this file is open in some editor, so we sent the edited contents.
-                contents = doc.getText();
-                if(isLivePreviewPopoutPage){
+
+            url = new URL(url);
+            let isLivePreviewPopoutPage = false;
+            if(url.searchParams.get(PHCODE_LIVE_PREVIEW_QUERY_PARAM)) {
+                isLivePreviewPopoutPage = true;
+            }
+            if (virtualDocument) {
+                // virtual document overrides takes precedence over live preview docs
+                contents = virtualDocument;
+            } else if (liveDocument && liveDocument.getResponseData) {
+                contents = liveDocument.getResponseData().body;
+                if(isLivePreviewPopoutPage && contents.indexOf(LiveDevProtocol.getRemoteScript()) === -1){
+                    // #LIVE_PREVIEW_TAB_NAVIGATION_RACE_FIX
+                    // check if this is a live preview html. If so, then if you are here, it means that users switched
+                    // live preview to a different page while we are just about to serve an old live preview page that is
+                    // no longer in live preview. If we just serve the raw html here, it will not have any tab navigation
+                    // instrumentation on popped out tabs and live preview navigation will stop on this page. So we will
+                    // use a page loader url to continue navigation.
                     console.log("serving stale live preview with navigable url", url);
                     contents = _getRedirectionPage(url);
                 }
             } else {
-                fs.readFile(data.path, fs.BYTE_ARRAY_ENCODING, function (error, binContent) {
-                    if(error){
-                        contents = null;
-                    }
-                    contents = binContent;
-                    messageToLivePreviewTabs({
-                        type: 'REQUEST_RESPONSE',
-                        requestID, //pass along the requestID
-                        path,
-                        contents
+                const file = FileSystem.getFileForPath(requestedPath);
+                let doc = DocumentManager.getOpenDocumentForPath(file.fullPath);
+                if (doc) {
+                    // this file is open in some editor, so we sent the edited contents.
+                    contents = doc.getText();
+                } else {
+                    fs.readFile(requestedPath, fs.BYTE_ARRAY_ENCODING, function (error, binContent) {
+                        if(error){
+                            binContent = null;
+                        }
+                        resolve({
+                            path,
+                            contents: binContent
+                        });
                     });
-                });
-                return;
+                    return;
+                }
             }
-        }
 
-        messageToLivePreviewTabs({
-            type: 'REQUEST_RESPONSE',
-            requestID, //pass along the requestID so that the appropriate callback will be hit at the service worker
-            path,
-            contents: contents
+            resolve({
+                path,
+                contents: contents
+            });
         });
     };
 
-    function getContent(eventData) {
-        window.logger.livePreview.log("Static server: ", eventData, Phoenix.PHOENIX_INSTANCE_ID);
-        if (eventData.eventName === "GET_CONTENT"
-            && eventData.message.phoenixInstanceID === Phoenix.PHOENIX_INSTANCE_ID) {
-            // localStorage is domain specific so when it changes in one window it changes in the other
-            if(_isMarkdownFile(eventData.message.path)){
-                _sendMarkdown(eventData.message.path, eventData.message.requestID);
-                return;
-            }
-            if(_staticServerInstance){
-                _staticServerInstance._sendInstrumentedContent(eventData.message);
-            }
+    function getContent(path, url) {
+        if(!_staticServerInstance){
+            return Promise.reject("Static serve not started!");
         }
+        if(!url.startsWith(_staticServerInstance._baseUrl)) {
+            return Promise.reject("Not serving content as url belongs to another phcode instance: " + url);
+        }
+        if(_isMarkdownFile(path)){
+            return _getMarkdown(path);
+        }
+        if(_staticServerInstance){
+            return _staticServerInstance._getInstrumentedContent(path, url);
+        }
+        return Promise.reject("Cannot get content");
     };
 
     let serverStarted = false;
     /**
      * See BaseServer#start. Starts listenting to StaticServerDomain events.
      */
-    StaticServer.prototype.start = function () {
+    StaticServer.prototype.start = async function () {
         _staticServerInstance = this;
 
         // load the hidden iframe that loads the service worker server page once. we will reuse the same server
@@ -388,12 +451,27 @@ define(function (require, exports, module) {
     };
 
     EventManager.registerEventHandler("ph-liveServer", exports);
-    exports.on("REPORT_ERROR", function(_ev, event){
+    exports.on(EVENT_REPORT_ERROR, function(_ev, event){
         logger.reportError(new Error(event.data.message));
     });
-    exports.on("GET_CONTENT", function(_ev, event){
-        window.logger.livePreview.log(event.data);
-        getContent(event.data);
+    exports.on(EVENT_GET_CONTENT, function(_ev, event){
+        window.logger.livePreview.log("Static Server GET_CONTENT", event);
+        if(event.data.message && event.data.message.phoenixInstanceID === Phoenix.PHOENIX_INSTANCE_ID) {
+            const requestPath = event.data.message.path,
+                requestID = event.data.message.requestID,
+                url = event.data.message.url;
+            getContent(requestPath, url)
+                .then(response =>{
+                    // response has the following attributes set
+                    // response.contents: <text or arrayBuffer content>,
+                    // response.path
+                    // headers: {'Content-Type': 'text/html'} // optional headers
+                    response.type = 'REQUEST_RESPONSE';
+                    response.requestID = requestID;
+                    messageToLivePreviewTabs(response);
+                })
+                .catch(console.error);
+        }
     });
     exports.on(EVENT_GET_PHOENIX_INSTANCE_ID, function(_ev){
         messageToLivePreviewTabs({
@@ -402,23 +480,27 @@ define(function (require, exports, module) {
         });
     });
 
-    const livePreviewTabs = new Map();
-    exports.on('TAB_ONLINE', function(_ev, event){
+    exports.on(EVENT_TAB_ONLINE, function(_ev, event){
         livePreviewTabs.set(event.data.message.clientID, {
             lastSeen: new Date(),
             URL: event.data.message.URL
         });
     });
 
-    // If we didn't receive heartbeat message from a tab for 5 seconds, we assume tab closed
-    const TAB_HEARTBEAT_TIMEOUT = 5000; // in millis secs
+    // If we didn't receive heartbeat message from a tab for 10 seconds, we assume tab closed
+    const TAB_HEARTBEAT_TIMEOUT = 10000; // in millis secs
     setInterval(()=>{
         let endTime = new Date();
         for(let tab of livePreviewTabs.keys()){
-            let timeDiff = endTime - livePreviewTabs.get(tab).lastSeen; // in ms
+            const tabInfo = livePreviewTabs.get(tab);
+            let timeDiff = endTime - tabInfo.lastSeen; // in ms
             if(timeDiff > TAB_HEARTBEAT_TIMEOUT){
                 livePreviewTabs.delete(tab);
-                exports.trigger('BROWSER_CLOSE', { data: { message: {clientID: tab}}});
+                // the parent navigationTab `phcode.dev/live-preview-loader.html` which loads the live preview tab also
+                // is in this list. We should not raise browser close event if its just a live-preview-loader tab.
+                if(!tabInfo.navigationTab) {
+                    exports.trigger('BROWSER_CLOSE', { data: { message: {clientID: tab}}});
+                }
             }
         }
     }, 1000);
@@ -438,11 +520,53 @@ define(function (require, exports, module) {
         // `Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('http://localhost:8001')
         // does not match the recipient window's origin ('http://localhost:8000').`
         $livepreviewServerIframe && $livepreviewServerIframe[0].contentWindow.postMessage(message, '*');
+        _sendToLivePreviewServerTabs(message);
+    }
+
+    function redirectAllTabs(newURL) {
+        navigatorChannel.postMessage({
+            type: 'REDIRECT_PAGE',
+            url: newURL
+        });
+    }
+
+    function _projectOpened(_evt, projectRoot) {
+        navigatorChannel.postMessage({
+            type: 'PROJECT_SWITCH',
+            projectRoot: projectRoot.fullPath
+        });
+    }
+
+    exports.on(EVENT_UPDATE_TITLE_ICON, function(_ev, event){
+        const title = event.data.message.title;
+        const faviconBase64 = event.data.message.faviconBase64;
+        navigatorChannel.postMessage({
+            type: 'UPDATE_TITLE_ICON',
+            title,
+            faviconBase64
+        });
+    });
+
+    ProjectManager.on(ProjectManager.EVENT_PROJECT_OPEN, _projectOpened);
+
+    function getTabPopoutURL(url) {
+        let openURL = new URL(url);
+        // we tag all externally opened urls with query string parameter phcodeLivePreview="true" to address
+        // #LIVE_PREVIEW_TAB_NAVIGATION_RACE_FIX
+        openURL.searchParams.set(StaticServer.PHCODE_LIVE_PREVIEW_QUERY_PARAM, "true");
+        return  utils.getPageLoaderURL(openURL.href);
+    }
+
+    function hasActiveLivePreviews() {
+        return livePreviewTabs.size > 0;
     }
 
     LiveDevelopment.setLivePreviewTransportBridge(exports);
     exports.StaticServer = StaticServer;
     exports.messageToLivePreviewTabs = messageToLivePreviewTabs;
     exports.livePreviewTabs = livePreviewTabs;
+    exports.redirectAllTabs = redirectAllTabs;
+    exports.getTabPopoutURL = getTabPopoutURL;
+    exports.hasActiveLivePreviews = hasActiveLivePreviews;
     exports.PHCODE_LIVE_PREVIEW_QUERY_PARAM = PHCODE_LIVE_PREVIEW_QUERY_PARAM;
 });

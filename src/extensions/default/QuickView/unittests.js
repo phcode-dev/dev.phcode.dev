@@ -19,7 +19,7 @@
  *
  */
 
-/*global describe, it, expect, beforeEach, awaitsForDone, afterAll */
+/*global describe, it, expect, beforeEach, awaitsFor, awaitsForDone, afterAll */
 
 define(function (require, exports, module) {
 
@@ -28,7 +28,7 @@ define(function (require, exports, module) {
         PreferencesManager = brackets.getModule("preferences/PreferencesManager"),
         prefs              = PreferencesManager.getExtensionPrefs("quickview");
 
-    describe("extension:Quick View", function () {
+    describe("integration:Quick View", function () {
         let testFolder = SpecRunnerUtils.getTestPath("/spec/quickview-extn-test-files");
 
         // load from testWindow
@@ -76,7 +76,7 @@ define(function (require, exports, module) {
             QuickView        = null;
             MainViewManager  = null;
             await SpecRunnerUtils.closeTestWindow();
-        });
+        }, 30000);
 
         async function getPopoverAtPos(lineNum, columnNum) {
             editor  = EditorManager.getCurrentFullEditor();
@@ -344,9 +344,10 @@ define(function (require, exports, module) {
                 // Just check end of path - local drive location prefix unimportant
                 expect(imagePath.substr(imagePath.length - expectedPathEnding.length)).toBe(expectedPathEnding);
                 imagePreview.click();
-                let currentFile = MainViewManager.getCurrentlyViewedFile();
-                expect(currentFile.fullPath.endsWith(expectedPathEnding))
-                    .toBeTrue();
+                await awaitsFor(()=>{
+                    let currentFile = MainViewManager.getCurrentlyViewedFile();
+                    return currentFile.fullPath.endsWith(expectedPathEnding);
+                }, "waits for image to open");
             });
 
             it("Should show image preview for urls with http/https",async function () {

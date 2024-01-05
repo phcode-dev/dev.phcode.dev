@@ -27,7 +27,6 @@ define(function (require, exports, module) {
 
     const ProjectManager          = brackets.getModule("project/ProjectManager"),
         DocumentManager     = brackets.getModule("document/DocumentManager"),
-        EditorManager       = brackets.getModule("editor/EditorManager"),
         ExtensionUtils      = brackets.getModule("utils/ExtensionUtils"),
         Dialogs             = brackets.getModule("widgets/Dialogs"),
         Strings             = brackets.getModule("strings"),
@@ -44,15 +43,26 @@ define(function (require, exports, module) {
     let syncEnabled = false;
     let projectSyncStarted = false;
     let projectSyncCompleted = false;
-    let tab = null;
     let previewURL;
-    let previewInProgress = false;
+
+    function _fixLegacyUserContext() {
+        // In earlier versions, user context data was stored in the browser's localStorage. We have since
+        // transitioned to using PhStore for this purpose. This function helps in migrating the user context
+        // from localStorage to PhStore. This ensures that existing users don't lose access to their published projects.
+        // Note: Published projects are retained for only 30 days. This function is primarily intended to support
+        // users during the transition period and is safe to remove 3 months after the date of this implementation,
+        // as users are informed that their published projects are kept for a 30-day period only.
+        if (!PhStore.getItem(USER_CONTEXT) && localStorage.getItem(USER_CONTEXT)) {
+            PhStore.setItem(USER_CONTEXT, localStorage.getItem(USER_CONTEXT));
+        }
+    }
 
     function _setupUserContext() {
-        userContext = localStorage.getItem(USER_CONTEXT);
+        _fixLegacyUserContext();
+        userContext = PhStore.getItem(USER_CONTEXT);
         if(!userContext){
             userContext = "p-" + Math.round( Math.random()*10000000000000).toString(16);
-            localStorage.setItem(USER_CONTEXT, userContext);
+            PhStore.setItem(USER_CONTEXT, userContext);
         }
     }
 
@@ -233,7 +243,6 @@ define(function (require, exports, module) {
                 if (id === Dialogs.DIALOG_BTN_OK) {
                     syncEnabled = true;
                     _startSync(()=>{
-                        previewInProgress = true;
                         _loadPreview();
                     });
                 }
@@ -249,10 +258,7 @@ define(function (require, exports, module) {
         return false;
     }
 
-    function _loadPreview() {
-        if(!previewInProgress){
-            return;
-        }
+    async function _loadPreview() {
         let projectRootUrl = _getProjectPreviewURL();
         let currentDocument = DocumentManager.getCurrentDocument();
         let currentFile = currentDocument? currentDocument.file : ProjectManager.getSelectedItem();
@@ -268,12 +274,7 @@ define(function (require, exports, module) {
         if(!previewURL){
             previewURL = projectRootUrl;
         }
-        if(!tab || tab.closed){
-            tab = open(previewURL);
-        }
-        else {
-            tab.location = previewURL;
-        }
+        Phoenix.app.openURLInDefaultBrowser(previewURL);
     }
 
     function _addToolbarIcon() {
@@ -289,7 +290,6 @@ define(function (require, exports, module) {
         $icon.on('click', ()=>{
             Metrics.countEvent(Metrics.EVENT_TYPE.SHARING, "shareIcon", "clicked");
             if(projectSyncCompleted){
-                previewInProgress = true;
                 _setSyncInProgress();
                 let uniqueFilesToUpload = [...new Set(allChangedFiles)];
                 allChangedFiles = [];
@@ -302,20 +302,11 @@ define(function (require, exports, module) {
         });
     }
 
-    setInterval(()=>{
-        // periodically check if the preview tab is manually closed by user. We do this by light polling as
-        // we cannot attach an onTabClosed event to the tab.
-        if(previewInProgress && (!tab || tab.closed)){
-            previewInProgress = false;
-        }
-    }, 500);
-
     exports.init = function () {
         _addToolbarIcon();
         _setupUserContext();
         ProjectManager.on(ProjectManager.EVENT_PROJECT_OPEN, _projectOpened);
         ProjectManager.on(ProjectManager.EVENT_PROJECT_FILE_CHANGED, _projectFileChanged);
-        EditorManager.on("activeEditorChange", _loadPreview);
     };
 
     ExtensionUtils.loadStyleSheet(module, "styles.css");

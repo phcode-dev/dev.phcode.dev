@@ -72,7 +72,7 @@ define(function (require, exports, module) {
     function _addMenuEntries() {
         CommandManager.register(Strings.CMD_PROJECT_NEW, Commands.FILE_NEW_PROJECT, _showNewProjectDialogue);
         const fileMenu = Menus.getMenu(Menus.AppMenuBar.FILE_MENU);
-        fileMenu.addMenuItem(Commands.FILE_NEW_PROJECT, "Alt-Shift-N", Menus.AFTER, Commands.FILE_NEW);
+        fileMenu.addMenuItem(Commands.FILE_NEW_PROJECT, "", Menus.AFTER, Commands.FILE_NEW_FOLDER);
     }
 
     function closeDialogue() {
@@ -96,6 +96,15 @@ define(function (require, exports, module) {
 
     function init() {
         _addMenuEntries();
+        const shouldShowWelcome = PhStore.getItem("new-project.showWelcomeScreen") || 'Y';
+        if(shouldShowWelcome !== 'Y') {
+            Metrics.countEvent(Metrics.EVENT_TYPE.NEW_PROJECT, "dialogue", "disabled");
+            guidedTour.startTourIfNeeded();
+            return;
+        }
+        if(ProjectManager.getProjectRoot().fullPath !== ProjectManager.getWelcomeProjectPath()){
+            return;
+        }
         _showNewProjectDialogue();
     }
 
@@ -343,6 +352,10 @@ define(function (require, exports, module) {
         });
     }
 
+    function showAboutBox() {
+        CommandManager.execute(Commands.HELP_ABOUT);
+    }
+
     exports.init = init;
     exports.openFolder = openFolder;
     exports.closeDialogue = closeDialogue;
@@ -356,4 +369,8 @@ define(function (require, exports, module) {
     exports.getExploreProjectPath = ProjectManager.getExploreProjectPath;
     exports.getLocalProjectsPath = ProjectManager.getLocalProjectsPath;
     exports.getMountDir = Phoenix.VFS.getMountDir;
+    exports.path = Phoenix.path;
+    exports.getTauriDir = Phoenix.VFS.getTauriDir;
+    exports.getTauriPlatformPath = Phoenix.fs.getTauriPlatformPath;
+    exports.showAboutBox = showAboutBox;
 });

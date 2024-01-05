@@ -64,6 +64,7 @@ define(function (require, exports, module) {
     exports.FILE_OPEN_KEYMAP            = "file.openKeyMap";            // KeyBindingManager.js         _openUserKeyMap()
 
     // File shell callbacks - string must MATCH string in native code (appshell/command_callbacks.h)
+    exports.FILE_NEW_WINDOW             = "file.new_window";            // DocumentCommandHandlers.js   handleFileNewWindow()
     exports.FILE_CLOSE_WINDOW           = "file.close_window";          // DocumentCommandHandlers.js   handleFileCloseWindow()
     exports.FILE_QUIT                   = "file.quit";                  // DocumentCommandHandlers.js   handleFileQuit()
 
@@ -114,6 +115,7 @@ define(function (require, exports, module) {
     exports.VIEW_HIDE_SIDEBAR           = "view.toggleSidebar";         // SidebarView.js               toggle()
     exports.VIEW_ZOOM_IN                = "view.zoomIn";                // ViewCommandHandlers.js       _handleZoomIn()
     exports.VIEW_ZOOM_OUT               = "view.zoomOut";                // ViewCommandHandlers.js       _handleZoomOut()
+    exports.VIEW_ZOOM_SUBMENU           = "zoom-view-submenu";
     exports.VIEW_INCREASE_FONT_SIZE     = "view.increaseFontSize";      // ViewCommandHandlers.js       _handleIncreaseFontSize()
     exports.VIEW_DECREASE_FONT_SIZE     = "view.decreaseFontSize";      // ViewCommandHandlers.js       _handleDecreaseFontSize()
     exports.VIEW_RESTORE_FONT_SIZE      = "view.restoreFontSize";       // ViewCommandHandlers.js       _handleRestoreFontSize()

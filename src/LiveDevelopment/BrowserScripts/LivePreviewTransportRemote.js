@@ -46,6 +46,45 @@
         type: "setupBroadcast",
         broadcastChannel: window.LIVE_PREVIEW_BROADCAST_CHANNEL_ID,
         clientID});
+    let sentTitle, sentFavIconURL;
+
+    function convertImgToBase64(url, callback) {
+        let canvas = document.createElement('CANVAS');
+        const ctx = canvas.getContext('2d');
+        const img = new Image();
+        img.crossOrigin = 'Anonymous';
+        img.onload = function() {
+            canvas.height = img.height;
+            canvas.width = img.width;
+            ctx.drawImage(img, 0, 0);
+            const dataURL = canvas.toDataURL();
+            callback(dataURL);
+            canvas = null;
+        };
+        img.src = url;
+    }
+
+    setInterval(()=>{
+        const favIcon = document.querySelector("link[rel~='icon']");
+        const faviconUrl = favIcon && favIcon.href;
+        if(sentFavIconURL !== faviconUrl){
+            sentFavIconURL = faviconUrl;
+            convertImgToBase64(faviconUrl, function(base64) {
+                worker.postMessage({
+                    type: "updateTitleIcon",
+                    faviconBase64: base64
+                });
+            });
+        }
+
+        if(sentTitle!== document.title) {
+            sentTitle = document.title;
+            worker.postMessage({
+                type: "updateTitleIcon",
+                title: document.title
+            });
+        }
+    }, 1000);
 
     const WebSocketTransport = {
         _channelOpen: false,

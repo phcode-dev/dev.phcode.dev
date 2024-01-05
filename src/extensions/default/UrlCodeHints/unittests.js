@@ -32,7 +32,7 @@ define(function (require, exports, module) {
         UrlCodeHints              = require("main");
 
 
-    describe("extension:Url Code Hinting", function () {
+    describe("LegacyInteg:Url Code Hinting", function () {
 
         var extensionTestPath   = SpecRunnerUtils.getTestPath("/spec/extn-urlcodehints-testfiles/"),
             testHtmlPath    = extensionTestPath + "testfiles/test.html",
@@ -68,7 +68,7 @@ define(function (require, exports, module) {
 
             await awaitsFor(function () {
                 return (testDocument);
-            }, "Unable to open test document", 2000);
+            }, "Unable to open test document");
 
             // create Editor instance (containing a CodeMirror instance)
             testEditor = createMockEditor(testDocument);
@@ -106,7 +106,7 @@ define(function (require, exports, module) {
 
             await awaitsFor(function () {
                 return (!hintsObj || hintsObj.hints);
-            }, "Unable to resolve hints", 2000);
+            }, "Unable to resolve hints");
         }
 
         // Ask provider for hints at current cursor position; expect it NOT to return any
@@ -296,14 +296,18 @@ define(function (require, exports, module) {
 
                 await awaitsFor(function () {
                     return (testDocument);
-                }, "Unable to open test document", 2000);
+                }, "Unable to open test document");
 
                 MainViewManager._edit(MainViewManager.ACTIVE_PANE, testDocument);
                 testEditor = EditorManager.getCurrentFullEditor();
                 testEditor.setCursorPos({ line: 22, ch: 12 });
                 CommandManager.execute(Commands.SHOW_CODE_HINTS);
 
-                var hintList = CodeHintManager._getCodeHintList();
+                let hintList = CodeHintManager._getCodeHintList();
+                await awaitsFor(function () {
+                    hintList = CodeHintManager._getCodeHintList();
+                    return hintList.hints.includes("/testfiles/");
+                }, "waiting for code hints to be there", 5000);
                 expect(hintList).toBeTruthy();
                 expect(hintList.hints).toBeTruthy();
                 expect(hintList.hints).toContain("/testfiles/");

@@ -63,32 +63,23 @@ define(function (require, exports, module) {
         console.log(err);
     }
 
-    // Uncomment the following line to force all low level file i/o routines to complete
-    // asynchronously. This should only be done for testing/debugging.
-    // NOTE: Make sure this line is commented out again before committing!
-    //brackets.forceAsyncCallbacks = true;
-
-    // Load native shell when brackets is run in a native shell rather than the browser
-    // TODO: (issue #266) load conditionally
-    global.brackets.shellAPI = require("utils/ShellAPI");
-
     global.brackets.nativeMenus = false;
 
     // Locale-related APIs
     global.brackets.isLocaleDefault = function () {
-        return !global.localStorage.getItem("locale");
+        return !global.PhStore.getItem("locale");
     };
 
     global.brackets.getLocale = function () {
         // By default use the locale that was determined in brackets.js
-        return params.get("testEnvironment") ? "en" : (global.localStorage.getItem("locale") || global.require.s.contexts._.config.locale);
+        return params.get("testEnvironment") ? "en" : (global.PhStore.getItem("locale") || global.require.s.contexts._.config.locale);
     };
 
     global.brackets.setLocale = function (locale) {
         if (locale) {
-            global.localStorage.setItem("locale", locale);
+            global.PhStore.setItem("locale", locale);
         } else {
-            global.localStorage.removeItem("locale");
+            global.PhStore.removeItem("locale");
         }
     };
 

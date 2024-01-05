@@ -27,7 +27,7 @@ define(function (require, exports, module) {
     const SpecRunnerUtils     = brackets.getModule("spec/SpecRunnerUtils"),
         KeyEvent         = brackets.getModule("utils/KeyEvent");
 
-    describe("integration:HTML Code Hints integration tests", function () {
+    describe("LegacyInteg:HTML Code Hints integration tests", function () {
 
         const testPath = SpecRunnerUtils.getTestPath("/spec/LiveDevelopment-MultiBrowser-test-files");
 
@@ -44,7 +44,7 @@ define(function (require, exports, module) {
 
 
         beforeAll(async function () {
-            testWindow = await SpecRunnerUtils.createTestWindowAndRun();
+            testWindow = await SpecRunnerUtils.createTestWindowAndRun({forceReload: true});
             brackets            = testWindow.brackets;
             $                   = testWindow.$;
             FileViewController  = brackets.test.FileViewController;
@@ -58,13 +58,13 @@ define(function (require, exports, module) {
             await SpecRunnerUtils.loadProjectInTestWindow(testPath);
         }, 30000);
 
-        afterAll(function () {
+        afterAll(async function () {
             FileViewController  = null;
             ProjectManager      = null;
             testWindow = null;
             brackets = null;
-            SpecRunnerUtils.closeTestWindow();
-        });
+            await SpecRunnerUtils.closeTestWindow();
+        }, 30000);
 
         async function closeSession() {
             await awaitsForDone(CommandManager.execute(Commands.FILE_CLOSE_ALL, { _forceClose: true }),

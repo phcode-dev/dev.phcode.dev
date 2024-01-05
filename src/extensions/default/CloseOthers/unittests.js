@@ -33,7 +33,7 @@ define(function (require, exports, module) {
         MainViewManager,
         FileSystem;
 
-    describe("extension:CloseOthers extension", function () {
+    describe("integration:CloseOthers extension", function () {
         var testPath = SpecRunnerUtils.getTestPath("/spec/Extension-test-project-files/"),
             testWindow,
             $,
@@ -93,7 +93,7 @@ define(function (require, exports, module) {
 
             var promise = CommandManager.execute(Commands.FILE_SAVE_ALL);
             await awaitsForDone(promise, "FILE_SAVE_ALL", 5000);
-        });
+        }, 30000);
 
         afterEach(async function () {
             // Verify files exist & clean up
@@ -105,7 +105,7 @@ define(function (require, exports, module) {
             brackets      = null;
             EditorManager = null;
             await SpecRunnerUtils.closeTestWindow();
-        });
+        }, 30000);
 
 
         async function runCloseOthers() {

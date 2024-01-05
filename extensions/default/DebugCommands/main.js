@@ -19,15 +19,15 @@
  *
  */
 
-/*globals path, logger*/
+/*globals path, logger, Phoenix*/
 /*jslint regexp: true */
 
 define(function (require, exports, module) {
 
 
-    var _ = brackets.getModule("thirdparty/lodash");
+    const _ = brackets.getModule("thirdparty/lodash");
 
-    var Commands               = brackets.getModule("command/Commands"),
+    const Commands               = brackets.getModule("command/Commands"),
         CommandManager         = brackets.getModule("command/CommandManager"),
         Menus                  = brackets.getModule("command/Menus"),
         FileSystem             = brackets.getModule("filesystem/FileSystem"),
@@ -35,6 +35,7 @@ define(function (require, exports, module) {
         PerfUtils              = brackets.getModule("utils/PerfUtils"),
         StringUtils            = brackets.getModule("utils/StringUtils"),
         Dialogs                = brackets.getModule("widgets/Dialogs"),
+        DefaultDialogs         = brackets.getModule("widgets/DefaultDialogs"),
         Strings                = brackets.getModule("strings"),
         PreferencesManager     = brackets.getModule("preferences/PreferencesManager"),
         LocalizationUtils      = brackets.getModule("utils/LocalizationUtils"),
@@ -44,24 +45,22 @@ define(function (require, exports, module) {
         Mustache               = brackets.getModule("thirdparty/mustache/mustache"),
         Locales                = brackets.getModule("nls/strings"),
         ProjectManager         = brackets.getModule("project/ProjectManager"),
+        ExtensionLoader        = brackets.getModule("utils/ExtensionLoader"),
+        NodeConnector          = brackets.getModule("NodeConnector"),
         extensionDevelopment   = require("extensionDevelopment"),
         PerfDialogTemplate     = require("text!htmlContent/perf-dialog.html"),
         LanguageDialogTemplate = require("text!htmlContent/language-dialog.html");
 
-    var KeyboardPrefs = JSON.parse(require("text!keyboard.json"));
+    const KeyboardPrefs = JSON.parse(require("text!keyboard.json"));
+
+    const DIAGNOSTICS_SUBMENU = "debug-diagnostics-sub-menu";
 
     // default preferences file name
-    var DEFAULT_PREFERENCES_FILENAME = "defaultPreferences.json",
+    const DEFAULT_PREFERENCES_FILENAME = "defaultPreferences.json",
         SUPPORTED_PREFERENCE_TYPES   = ["number", "boolean", "string", "array", "object"];
 
-    var recomputeDefaultPrefs        = true,
+    let recomputeDefaultPrefs        = true,
         defaultPreferencesFullPath   = path.normalize(brackets.app.getApplicationSupportDirectory() + "/" + DEFAULT_PREFERENCES_FILENAME);
-
-    /**
-     * Brackets Application Menu Constant
-     * @const {string}
-     */
-    var DEBUG_MENU = "debug-menu";
 
      /**
       * Debug commands IDs
@@ -74,11 +73,13 @@ define(function (require, exports, module) {
         DEBUG_RUN_UNIT_TESTS                  = "debug.runUnitTests",
         DEBUG_SHOW_PERF_DATA                  = "debug.showPerfData",
         DEBUG_RELOAD_WITHOUT_USER_EXTS        = "debug.reloadWithoutUserExts",
-        DEBUG_NEW_BRACKETS_WINDOW             = "debug.newBracketsWindow",
         DEBUG_SWITCH_LANGUAGE                 = "debug.switchLanguage",
         DEBUG_ENABLE_LOGGING                  = "debug.enableLogging",
+        DEBUG_ENABLE_PHNODE_INSPECTOR         = "debug.enablePhNodeInspector",
+        DEBUG_GET_PHNODE_INSPECTOR_URL        = "debug.getPhNodeInspectorURL",
         DEBUG_LIVE_PREVIEW_LOGGING            = "debug.livePreviewLogging",
         DEBUG_OPEN_VFS                        = "debug.openVFS",
+        DEBUG_OPEN_EXTENSION_FOLDER           = "debug.openExtensionFolders",
         DEBUG_OPEN_VIRTUAL_SERVER             = "debug.openVirtualServer",
         DEBUG_OPEN_PREFERENCES_IN_SPLIT_VIEW  = "debug.openPrefsInSplitView";
 
@@ -96,7 +97,6 @@ define(function (require, exports, module) {
     });
 
     // Implements the 'Run Tests' menu to bring up the Jasmine unit test window
-    var _testWindow = null;
     function _runUnitTests(spec) {
         let queryString = spec ? "?spec=" + spec : "?suite=unit";
         let testBaseURL = "../test/SpecRunner.html";
@@ -104,16 +104,12 @@ define(function (require, exports, module) {
             // must be a deployed in phcode.dev/other sites. point to site test url
             testBaseURL = "test/SpecRunner.html";
         }
-        if (_testWindow && !_testWindow.closed) {
-            if (_testWindow.location.search !== queryString) {
-                _testWindow.location.href = testBaseURL + queryString;
-            } else {
-                _testWindow.location.reload(true);
-            }
-        } else {
-            _testWindow = window.open(testBaseURL + queryString);
-            _testWindow.location.reload(true); // if it had been opened earlier, force a reload because it will be cached
-        }
+        Phoenix.app.openURLInPhoenixWindow(testBaseURL + queryString, {
+            windowTitle: "Test Runner",
+            preferTabs: true,
+            width: 1670,
+            height: 900
+        });
     }
 
     function handleReload() {
@@ -122,10 +118,6 @@ define(function (require, exports, module) {
 
     function handleReloadWithoutUserExts() {
         CommandManager.execute(Commands.APP_RELOAD_WITHOUT_EXTS);
-    }
-
-    function handleNewBracketsWindow() {
-        window.open(window.location.href);
     }
 
     function handleShowPerfData() {
@@ -702,11 +694,36 @@ define(function (require, exports, module) {
         CommandManager.get(DEBUG_LIVE_PREVIEW_LOGGING).setEnabled(isLogging);
         logger.loggingOptions.logLivePreview = window.isLoggingEnabled(LOG_LIVE_PREVIEW_KEY);
         CommandManager.get(DEBUG_LIVE_PREVIEW_LOGGING).setChecked(logger.loggingOptions.logLivePreview);
+        CommandManager.get(DEBUG_ENABLE_PHNODE_INSPECTOR).setChecked(NodeConnector.isInspectEnabled());
     }
 
     function _handleLogging() {
         window.toggleLoggingKey(LOG_TO_CONSOLE_KEY);
         _updateLogToConsoleMenuItemChecked();
+    }
+
+    function _handlePhNodeInspectEnable() {
+        NodeConnector.setInspectEnabled(!NodeConnector.isInspectEnabled());
+        _updateLogToConsoleMenuItemChecked();
+    }
+
+    function _handleGetPhNodeInspectURL() {
+        Dialogs.showModalDialog(DefaultDialogs.DIALOG_ID_INFO, Strings.CMD_GET_PHNODE_INSPECTOR_URL,
+            `<div id="instructions">
+  <p>
+    1. Go to <a href="chrome://inspect/" target="_blank">chrome://inspect/#devices</a>
+    <button onclick="Phoenix.app.copyToClipboard('chrome://inspect/')">
+      <i class="fas fa-copy"></i> Copy
+    </button>
+  </p>
+  <p>2. Select Option 'Open dedicated DevTools for Node'</p>
+  <p>
+    3. Use the URL in connection tab'<code>localhost:${NodeConnector.getInspectPort()}</code>'
+    <button onclick="Phoenix.app.copyToClipboard('localhost:${NodeConnector.getInspectPort()}')">
+      <i class="fas fa-copy"></i> Copy
+    </button>
+  </p>
+</div>`);
     }
 
     function _handleLivePreviewLogging() {
@@ -724,8 +741,18 @@ define(function (require, exports, module) {
         ProjectManager.openProject("/");
     }
 
+    function _openExtensionsFolder() {
+        Phoenix.app.openPathInFileBrowser(ExtensionLoader.getUserExtensionPath());
+    }
+
     function _openVirtualServer() {
-        window.open(window.fsServerUrl);
+        const virtualServingURL = Phoenix.VFS.getVirtualServingURLForPath("/");
+        if(!virtualServingURL) {
+            throw new Error("Unable to find virtual server!");
+        }
+        Phoenix.app.openURLInPhoenixWindow(virtualServingURL, {
+            preferTabs: true
+        });
     }
 
     function _handleShowDeveloperTools() {
@@ -741,58 +768,82 @@ define(function (require, exports, module) {
         extensionDevelopment.unloadCurrentExtension);
     CommandManager.register(Strings.CMD_REFRESH_WINDOW,             DEBUG_REFRESH_WINDOW,           handleReload);
     CommandManager.register(Strings.CMD_RELOAD_WITHOUT_USER_EXTS,   DEBUG_RELOAD_WITHOUT_USER_EXTS, handleReloadWithoutUserExts);
-    CommandManager.register(Strings.CMD_NEW_BRACKETS_WINDOW,        DEBUG_NEW_BRACKETS_WINDOW,      handleNewBracketsWindow);
 
     // Start with the "Run Tests" item disabled. It will be enabled later if the test file can be found.
     CommandManager.register(Strings.CMD_RUN_UNIT_TESTS,       DEBUG_RUN_UNIT_TESTS,         _runUnitTests);
 
     CommandManager.register(Strings.CMD_SHOW_PERF_DATA,            DEBUG_SHOW_PERF_DATA,            handleShowPerfData);
 
-    let switchLanguageStr = Strings.CMD_SWITCH_LANGUAGE === "Switch Language" ?
+    let switchLanguageStr = Strings.CMD_SWITCH_LANGUAGE === "Switch Language\u2026" ?
         Strings.CMD_SWITCH_LANGUAGE :
         `${Strings.CMD_SWITCH_LANGUAGE} (Switch Language)`;
     CommandManager.register(switchLanguageStr,           DEBUG_SWITCH_LANGUAGE,           handleSwitchLanguage);
 
     CommandManager.register(Strings.CMD_ENABLE_LOGGING, DEBUG_ENABLE_LOGGING,   _handleLogging);
+    CommandManager.register(Strings.CMD_ENABLE_PHNODE_INSPECTOR, DEBUG_ENABLE_PHNODE_INSPECTOR, _handlePhNodeInspectEnable);
+    CommandManager.register(Strings.CMD_GET_PHNODE_INSPECTOR_URL, DEBUG_GET_PHNODE_INSPECTOR_URL, _handleGetPhNodeInspectURL);
     CommandManager.register(Strings.CMD_ENABLE_LIVE_PREVIEW_LOGS, DEBUG_LIVE_PREVIEW_LOGGING, _handleLivePreviewLogging);
     CommandManager.register(Strings.CMD_OPEN_VFS, DEBUG_OPEN_VFS,   _openVFS);
+    CommandManager.register(Strings.CMD_OPEN_EXTENSIONS_FOLDER, DEBUG_OPEN_EXTENSION_FOLDER,   _openExtensionsFolder);
     CommandManager.register(Strings.CMD_OPEN_VIRTUAL_SERVER, DEBUG_OPEN_VIRTUAL_SERVER,   _openVirtualServer);
 
     CommandManager.register(Strings.CMD_OPEN_PREFERENCES, DEBUG_OPEN_PREFERENCES_IN_SPLIT_VIEW, handleOpenPrefsInSplitView);
-    /*
-     * Debug menu
-     */
-    var menu = Menus.addMenu(Strings.DEBUG_MENU, DEBUG_MENU, Menus.BEFORE, Menus.AppMenuBar.HELP_MENU);
+    const debugMenu = Menus.getMenu(Menus.AppMenuBar.DEBUG_MENU);
+    debugMenu.addMenuItem(DEBUG_REFRESH_WINDOW, window.debugMode ? KeyboardPrefs.refreshWindow : undefined);
+    debugMenu.addMenuItem(DEBUG_RELOAD_WITHOUT_USER_EXTS, window.debugMode ? KeyboardPrefs.reloadWithoutUserExts : undefined);
+    debugMenu.addMenuItem(DEBUG_LOAD_CURRENT_EXTENSION);
+    debugMenu.addMenuItem(DEBUG_UNLOAD_CURRENT_EXTENSION, undefined, undefined, undefined, {
+        hideWhenCommandDisabled: true
+    });
+    debugMenu.addMenuItem(DEBUG_OPEN_EXTENSION_FOLDER, undefined, undefined, undefined, {
+        hideWhenCommandDisabled: true
+    });
+    debugMenu.addMenuDivider();
     // Show Developer Tools (optionally enabled)
     if(brackets.app.toggleDevtools){
         CommandManager.register(Strings.CMD_SHOW_DEV_TOOLS, DEBUG_SHOW_DEVELOPER_TOOLS, _handleShowDeveloperTools);
-        menu.addMenuItem(DEBUG_SHOW_DEVELOPER_TOOLS, KeyboardPrefs.showDeveloperTools);
+        debugMenu.addMenuItem(DEBUG_SHOW_DEVELOPER_TOOLS, KeyboardPrefs.showDeveloperTools);
     }
-    menu.addMenuItem(DEBUG_REFRESH_WINDOW, KeyboardPrefs.refreshWindow);
-    menu.addMenuItem(DEBUG_RELOAD_WITHOUT_USER_EXTS, KeyboardPrefs.reloadWithoutUserExts);
-    menu.addMenuItem(DEBUG_LOAD_CURRENT_EXTENSION);
-    menu.addMenuItem(DEBUG_UNLOAD_CURRENT_EXTENSION, undefined, undefined, undefined, {
+    const diagnosticsSubmenu = debugMenu.addSubMenu(Strings.CMD_DIAGNOSTIC_TOOLS, DIAGNOSTICS_SUBMENU);
+    diagnosticsSubmenu.addMenuItem(DEBUG_RUN_UNIT_TESTS);
+    diagnosticsSubmenu.addMenuDivider();
+    diagnosticsSubmenu.addMenuItem(DEBUG_ENABLE_LOGGING);
+    diagnosticsSubmenu.addMenuItem(DEBUG_ENABLE_PHNODE_INSPECTOR, undefined, undefined, undefined, {
         hideWhenCommandDisabled: true
     });
-    menu.addMenuItem(DEBUG_NEW_BRACKETS_WINDOW);
-    menu.addMenuDivider();
-    menu.addMenuItem(DEBUG_SWITCH_LANGUAGE);
-    menu.addMenuDivider();
-    menu.addMenuItem(DEBUG_RUN_UNIT_TESTS);
-    menu.addMenuItem(DEBUG_SHOW_PERF_DATA);
-    menu.addMenuDivider();
-    menu.addMenuItem(DEBUG_ENABLE_LOGGING);
-    menu.addMenuItem(DEBUG_LIVE_PREVIEW_LOGGING);
-    menu.addMenuDivider();
-    menu.addMenuItem(DEBUG_OPEN_VFS);
-    menu.addMenuItem(DEBUG_OPEN_VIRTUAL_SERVER);
-    menu.addMenuDivider();
-    menu.addMenuItem(DEBUG_OPEN_PREFERENCES_IN_SPLIT_VIEW); // this command will enable defaultPreferences and brackets preferences to be open side by side in split view.
-    menu.addMenuItem(Commands.FILE_OPEN_KEYMAP);      // this command is defined in core, but exposed only in Debug menu for now
+    diagnosticsSubmenu.addMenuItem(DEBUG_GET_PHNODE_INSPECTOR_URL, undefined, undefined, undefined, {
+        hideWhenCommandDisabled: true
+    });
+    diagnosticsSubmenu.addMenuItem(DEBUG_LIVE_PREVIEW_LOGGING);
+    diagnosticsSubmenu.addMenuDivider();
+    diagnosticsSubmenu.addMenuItem(DEBUG_SHOW_PERF_DATA);
+    diagnosticsSubmenu.addMenuItem(DEBUG_OPEN_VFS);
+    diagnosticsSubmenu.addMenuItem(DEBUG_OPEN_VIRTUAL_SERVER, undefined, undefined, undefined, {
+        hideWhenCommandDisabled: true
+    });
 
     CommandManager.get(DEBUG_UNLOAD_CURRENT_EXTENSION)
         .setEnabled(extensionDevelopment.isProjectLoadedAsExtension());
+    CommandManager.get(DEBUG_OPEN_EXTENSION_FOLDER)
+        .setEnabled(Phoenix.browser.isTauri); // only show in tauri
+    CommandManager.get(DEBUG_ENABLE_PHNODE_INSPECTOR)
+        .setEnabled(Phoenix.browser.isTauri); // only show in tauri
+    CommandManager.get(DEBUG_GET_PHNODE_INSPECTOR_URL)
+        .setEnabled(Phoenix.browser.isTauri); // only show in tauri
+    CommandManager.get(DEBUG_OPEN_VIRTUAL_SERVER)
+        .setEnabled(!Phoenix.browser.isTauri); // don't show in tauri as there is no virtual server in tauri
+
     _updateLogToConsoleMenuItemChecked();
+
+    const helpMenu = Menus.getMenu(Menus.AppMenuBar.HELP_MENU);
+    helpMenu.addMenuItem(DEBUG_SWITCH_LANGUAGE, "", Menus.BEFORE, Commands.HELP_ABOUT);
+
+    const fileMenu = Menus.getMenu(Menus.AppMenuBar.FILE_MENU);
+    // this command will enable defaultPreferences and brackets preferences to be open side by side in split view.
+    fileMenu.addMenuItem(DEBUG_OPEN_PREFERENCES_IN_SPLIT_VIEW, null, Menus.BEFORE, Menus.MenuSection.FILE_SETTINGS.sectionMarker);
+    // this command is defined in core, but exposed only in Debug menu for now
+    fileMenu.addMenuItem(Commands.FILE_OPEN_KEYMAP, null, Menus.BEFORE, Menus.MenuSection.FILE_SETTINGS.sectionMarker);
+
     // exposed for convenience, but not official API
     exports._runUnitTests = _runUnitTests;
 });

@@ -24,7 +24,7 @@
 // @INCLUDE_IN_API_DOCS
 
 /**
- * Implements a jQuery-like event dispatch pattern for non-DOM objects (works in web workers as well):
+ * Implements a jQuery-like event dispatch pattern for non-DOM objects (works in web workers and phoenix node as well):
  *  - Listeners are attached via on()/one() & detached via off()
  *  - Listeners can use namespaces for easy removal
  *  - Listeners can attach to multiple events at once via a space-separated list
@@ -59,23 +59,26 @@
  * const EventDispatcher = brackets.getModule("utils/EventDispatcher");
  * ```
  * ### Using the global object
- * The EventDispatcher Object is available within the global context, be it phoenix or phoenix core web workers.
+ * The EventDispatcher Object is available within the global context, be it phoenix or phoenix core web workers or node.
  * ```js
- * window.EventDispatcher.trigger("someEvent"); // within phoenix
- * self.EventDispatcher.trigger("someEvent"); // within web worker
+ * window.EventDispatcher.makeEventDispatcher(exports); // within phoenix require module
+ * self.EventDispatcher.makeEventDispatcher(object); // within web worker
+ * global.EventDispatcher.makeEventDispatcher(exports); // within node module that has an export
  * ```
  *
  * If you wish to import event dispatcher to your custom web worker, use the following
  * ```js
  * importScripts('<relative path from your extension>/utils/EventDispatcher');
  * // this will add the global EventDispatcher to your web-worker. Note that the EventDispatcher in the web worker
- * // is a separate domain and cannot raise or listen to events in phoenix/other workers
+ * // and node is a separate domain and cannot raise or listen to events in phoenix/other workers. For triggering events
+ * // between different domains like between node and phcode, see `nodeConnector.triggerPeer` or
+ * // `WorkerComm.triggerPeer` API for communication between phcode and web workers.
  * self.EventDispatcher.trigger("someEvent"); // within web worker
  * ```
  * ### Sample Usage within extension
  * ```js
  * // in your extension js file.
- * define(function (require, exports, module) {
+ * define (function (require, exports, module) {
  *     const EventDispatcher     = brackets.getModule("utils/EventDispatcher");
  *     EventDispatcher.makeEventDispatcher(exports); // This extension triggers some events
  *     let eventHandler = function (event, paramObject, paramVal) {
@@ -106,8 +109,24 @@
         globalObject = global; //nodejs
     }
 
+    function defineRequire() {
+        globalObject.EventDispatcher.requireDefined = true;
+        define(function (require, exports, module) {
+            exports.makeEventDispatcher = globalObject.EventDispatcher.makeEventDispatcher;
+            exports.triggerWithArray    = globalObject.EventDispatcher.triggerWithArray;
+            exports.on_duringInit       = globalObject.EventDispatcher.on_duringInit;
+            exports.markDeprecated      = globalObject.EventDispatcher.markDeprecated;
+            exports.setLeakThresholdForEvent = globalObject.EventDispatcher.setLeakThresholdForEvent;
+        });
+    }
+
     if(globalObject.EventDispatcher){
         // already created
+        if(globalObject.define && !globalObject.EventDispatcher.requireDefined){
+            // requirejs is present, but this module is not defined. This may happen if the module was loaded twice
+            // - once as a normal script and once as a require js lib.
+            defineRequire();
+        }
         return;
     }
 
@@ -288,13 +307,13 @@
      * @type {function}
      */
     var trigger = function (eventName) {
-        var event = { type: eventName, target: this },
-            handlerList = this._eventHandlers && this._eventHandlers[eventName],
-            i;
-
+        let handlerList = this._eventHandlers && this._eventHandlers[eventName];
         if (!handlerList) {
             return;
         }
+
+        let event = { type: eventName, target: this },
+            i;
 
         // Use a clone of the list in case handlers call on()/off() while we're still in the loop
         handlerList = handlerList.slice();
@@ -394,13 +413,7 @@
 
     if(globalObject.define){
         // for requirejs support
-        define(function (require, exports, module) {
-            exports.makeEventDispatcher = globalObject.EventDispatcher.makeEventDispatcher;
-            exports.triggerWithArray    = globalObject.EventDispatcher.triggerWithArray;
-            exports.on_duringInit       = globalObject.EventDispatcher.on_duringInit;
-            exports.markDeprecated      = globalObject.EventDispatcher.markDeprecated;
-            exports.setLeakThresholdForEvent = globalObject.EventDispatcher.setLeakThresholdForEvent;
-        });
+        defineRequire();
     }
 }());
 

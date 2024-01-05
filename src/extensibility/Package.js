@@ -34,7 +34,6 @@ define(function (require, exports, module) {
         StringUtils          = require("utils/StringUtils"),
         Strings              = require("strings"),
         ExtensionLoader      = require("utils/ExtensionLoader"),
-        NodeConnection       = require("utils/NodeConnection"),
         PreferencesManager   = require("preferences/PreferencesManager"),
         PathUtils            = require("thirdparty/path-utils/path-utils"),
         ExtensionDownloader  = require("extensibility/ExtensionDownloader");
@@ -62,71 +61,9 @@ define(function (require, exports, module) {
     };
 
     /**
-     * @private
-     * @type {NodeConnection}
-     * Connects to ExtensionManagerDomain
-     */
-    var _nodeConnection;
-
-    /**
-     * @private
-     * @type {jQuery.Deferred.<NodeConnection>}
-     * A deferred which is resolved with a NodeConnection or rejected if
-     * we are unable to connect to Node.
-     */
-    var _nodeConnectionDeferred = $.Deferred();
-
-    /**
      * @type {number} Used to generate unique download ids
      */
     var _uniqueId = 0;
-
-    function _extensionManagerCall(callback) {
-        if (_nodeConnection.domains.extensionManager) {
-            return callback(_nodeConnection.domains.extensionManager);
-        }
-        return new $.Deferred().reject("extensionManager domain is undefined").promise();
-
-    }
-
-    /**
-     * TODO: can this go away now that we never call it directly?
-     *
-     * Validates the package at the given path. The actual validation is
-     * handled by the Node server.
-     *
-     * The promise is resolved with an object:
-     * { errors: Array.<{string}>, metadata: { name:string, version:string, ... } }
-     * metadata is pulled straight from package.json and will be undefined
-     * if there are errors or null if the extension did not include package.json.
-     *
-     * @param {string} Absolute path to the package zip file
-     * @param {{requirePackageJSON: ?boolean}} validation options
-     * @return {$.Promise} A promise that is resolved with information about the package
-     */
-    function validate(path, options) {
-        return _extensionManagerCall(function (extensionManager) {
-            var d = new $.Deferred();
-
-            // make sure proxy is attached to options before calling validate
-            // so npm can use it in the domain
-            options = options || {};
-            options.proxy = PreferencesManager.get("proxy");
-
-            extensionManager.validate(path, options)
-                .done(function (result) {
-                    d.resolve({
-                        errors: result.errors,
-                        metadata: result.metadata
-                    });
-                })
-                .fail(function (error) {
-                    d.reject(error);
-                });
-
-            return d.promise();
-        });
-    }
 
     /**
      * Validates and installs the package at the given path. Validation and
@@ -176,7 +113,7 @@ define(function (require, exports, module) {
                     ExtensionLoader.loadExtension(result.name, {
                         // On Windows, it looks like Node converts Unix-y paths to backslashy paths.
                         // We need to convert them back.
-                        baseUrl: window.fsServerUrl.slice(0, -1) + result.installedTo
+                        baseUrl: window.Phoenix.VFS.getVirtualServingURLForPath(result.installedTo)
                     }, "main").then(function () {
                         d.resolve(result);
                     }, function () {
@@ -241,11 +178,12 @@ define(function (require, exports, module) {
             d.reject(Errors.MALFORMED_URL);
             return d.promise();
         }
-        if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
+        if (!(parsed.protocol === "http:" || parsed.protocol === "https:"
+            || parsed.protocol === "phtauri:" || parsed.protocol === "asset:")) {
             d.reject(Errors.UNSUPPORTED_PROTOCOL);
             return d.promise();
         }
-
+        parsed.filename = FileUtils.convertWindowsPathToUnixPath(parsed.filename);
         const urlInfo = { url: url, parsed: parsed, filenameHint: parsed.filename, destinationDirectory };
         githubURLFilter(urlInfo);
 
@@ -256,7 +194,6 @@ define(function (require, exports, module) {
             filename = "extension.zip";
         }
 
-        // Download the bits (using Node since brackets-shell doesn't support binary file IO)
         const r = ExtensionDownloader.downloadFile(downloadId, urlInfo, PreferencesManager.get("proxy"));
         r.done(function (result) {
             d.resolve({
@@ -430,14 +367,14 @@ define(function (require, exports, module) {
      * function manages state weather an extension is enabled or disabled
      */
     function _toggleDisabledExtension(path, enabled) {
-        let arr = JSON.parse(localStorage.getItem(DISABLED_EXTENSIONS_KEY) || "[]");
+        let arr = JSON.parse(PhStore.getItem(DISABLED_EXTENSIONS_KEY) || "[]");
         const io = arr.indexOf(path);
         if (enabled === true && io !== -1) {
             arr.splice(io, 1);
         } else if (enabled === false && io === -1) {
             arr.push(path);
         }
-        localStorage.setItem(DISABLED_EXTENSIONS_KEY, JSON.stringify(arr));
+        PhStore.setItem(DISABLED_EXTENSIONS_KEY, JSON.stringify(arr));
     }
 
     /**
@@ -502,45 +439,11 @@ define(function (require, exports, module) {
         return d.promise();
     }
 
-    /**
-     * Allows access to the deferred that manages the node connection. This
-     * is *only* for unit tests. Messing with this not in testing will
-     * potentially break everything.
-     *
-     * @private
-     * @return {jQuery.Deferred} The deferred that manages the node connection
-     */
-    function _getNodeConnectionDeferred() {
-        return _nodeConnectionDeferred;
-    }
-
-    // Initializes node connection
-    // TODO: duplicates code from StaticServer
-    // TODO: can this be done lazily?
     AppInit.appReady(function () {
-        _nodeConnection = new NodeConnection();
-        _nodeConnection.connect(true).then(function () {
-            var domainPath = FileUtils.getNativeBracketsDirectoryPath() + "/" + FileUtils.getNativeModuleDirectoryPath(module) + "/node/ExtensionManagerDomain";
-
-            _nodeConnection.loadDomains(domainPath, true)
-                .then(
-                    function () {
-                        _nodeConnectionDeferred.resolve();
-                    },
-                    function () { // Failed to connect
-                        console.error("[Extensions] Failed to connect to node", arguments);
-                        _nodeConnectionDeferred.reject();
-                    }
-                );
-        });
     });
-
-    // For unit tests only
-    exports._getNodeConnectionDeferred = _getNodeConnectionDeferred;
 
     exports.installFromURL          = installFromURL;
     exports.installFromPath         = installFromPath;
-    exports.validate                = validate;
     exports.install                 = install;
     exports.remove                  = remove;
     exports.disable                 = disable;

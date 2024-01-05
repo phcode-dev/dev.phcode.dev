@@ -28,7 +28,7 @@
  * to JSON.
  */
 
-/*global jasmine, jasmineReporters*/
+/*global jasmine, jasmineReporters, globalTestRunnerLogToConsole, globalTestRunnerErrorToConsole*/
 
 define(function (require, exports, module) {
 
@@ -44,7 +44,7 @@ define(function (require, exports, module) {
         "all",
         "unit",
         "integration",
-        "search",
+        "LegacyInteg",
         "livepreview",
         "mainview",
         "performance",
@@ -52,43 +52,7 @@ define(function (require, exports, module) {
         "individualrun"
     ];
 
-    let pendingConsoleLogs = [];
-    let pendingConsoleErrors = [];
-
-    function _drainPendingLogs() {
-        if(!window.testRunnerLogToConsole || !window.testRunnerErrorToConsole){
-            return;
-        }
-        for(let i=0; i<pendingConsoleLogs.length; i++){
-            const {args} = pendingConsoleLogs[i];
-            window.testRunnerLogToConsole(...args);
-        }
-        pendingConsoleLogs = [];
-
-        for(let i=0; i<pendingConsoleErrors.length; i++){
-            const {args} = pendingConsoleErrors[i];
-            window.testRunnerErrorToConsole(...args);
-        }
-        pendingConsoleErrors = [];
-        clearInterval(_darinPendingLogsIntervalTimer);
-    }
-    let _darinPendingLogsIntervalTimer = setInterval(_drainPendingLogs, 1000);
-
-    function testRunnerLogToConsole(...args) {
-        if(window.testRunnerLogToConsole) {
-            window.testRunnerLogToConsole(...args);
-        } else {
-            pendingConsoleLogs.push({args});
-        }
-    }
-
-    function testRunnerErrorToConsole(...args) {
-        if(window.testRunnerErrorToConsole) {
-            window.testRunnerErrorToConsole(...args);
-        } else {
-            pendingConsoleErrors.push({args});
-        }
-    }
+    window.globalTestRunnerLogToConsole(`Jasmine test reporters started.`);
 
     function _getKnownCategory(name) {
         name = name || '';
@@ -99,6 +63,39 @@ define(function (require, exports, module) {
             }
         }
         return '';
+    }
+
+    function quitIfNeeded(exitStatus) {
+        if(!window.__TAURI__){
+            return;
+        }
+        const WAIT_TIME_TO_COMPLETE_TEST_LOGGING_SEC = 10;
+        console.log("Scheduled Quit in Seconds: ", WAIT_TIME_TO_COMPLETE_TEST_LOGGING_SEC);
+        setTimeout(()=>{
+            window.__TAURI__.cli.getMatches().then(matches=>{
+                if(matches && matches.args["quit-when-done"] && matches.args["quit-when-done"].occurrences) {
+                    window.__TAURI__.process.exit(exitStatus);
+                }
+            });
+        }, WAIT_TIME_TO_COMPLETE_TEST_LOGGING_SEC * 1000);
+    }
+
+    function formatMilliseconds(ms) {
+        const hours = Math.floor(ms / (1000 * 60 * 60));
+        const minutes = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((ms % (1000 * 60)) / 1000);
+
+        let result = '';
+
+        if (hours) {
+            result = result + `${hours}-Hr `;
+        }
+        if (minutes) {
+            result = result + `${minutes}-Min `;
+        }
+        result = `${result}${seconds}-Sec`;
+
+        return result.trim();
     }
 
     /**
@@ -225,7 +222,7 @@ define(function (require, exports, module) {
 
         let phoenixReporter = {
             jasmineStarted: async function(suiteInfo) {
-                console.log('Running jasmine with ' + suiteInfo.totalSpecsDefined);
+                globalTestRunnerLogToConsole('Running jasmine with ' + suiteInfo.totalSpecsDefined + " tests.");
                 self.reportRunnerStarting(suiteInfo);
                 if(!self.activeSuite){
                     // no test suite is selected in url, so we don't execute anything, just show the suites
@@ -253,9 +250,9 @@ define(function (require, exports, module) {
                 if (self.specFilter(self.specIdToSpecMap[result.id])) {
                     console.log('Spec: ' + result.description + ' [status]: ' + result.status);
                     if(result.status === 'passed'){
-                        testRunnerLogToConsole(`\u2714 ${self.getTopLevelSuiteName(result)} : ${result.description} - passed`);
+                        globalTestRunnerLogToConsole(`\u2714 ${self.getTopLevelSuiteName(result)} : ${result.description} - passed (${result.duration}ms)`);
                     } else {
-                        testRunnerErrorToConsole(`\u2716 ${self.getTopLevelSuiteName(result)} : ${result.description} - failed`);
+                        globalTestRunnerErrorToConsole(`\u2716 ${self.getTopLevelSuiteName(result)} : ${result.description} - failed (${result.duration}ms)`);
                     }
                 }
                 self.reportSpecResults(result);
@@ -266,7 +263,7 @@ define(function (require, exports, module) {
                 if (self.specFilter(self.suiteIdToSuiteMap[result.id])) {
                     console.log('Suite: ' + result.description + ' [status]: ' + result.status);
                     if(result.status !== 'passed'){
-                        testRunnerLogToConsole(`\u2716 Suite failed!! ${result.description}`);
+                        globalTestRunnerLogToConsole(`\u2716 Suite failed!! ${result.description} (after ${formatMilliseconds(result.duration)})`);
                     }
                 }
                 self.reportSuiteResults(result);
@@ -274,14 +271,31 @@ define(function (require, exports, module) {
 
             jasmineDone: async function(result) {
                 console.log('Finished jasmine: ' + result.overallStatus);
-                testRunnerLogToConsole('Finished jasmine: ' + result.overallStatus);
+                globalTestRunnerLogToConsole('Finished jasmine: ' + result.overallStatus);
                 if(self.totalFailedCount === 0){
-                    testRunnerLogToConsole(`\u2714 All(${self.totalSpecCount}) tests passed.`);
+                    globalTestRunnerLogToConsole(`\u2714 All(${self.totalSpecCount}) tests passed. (in ${formatMilliseconds(result.totalTime)})`);
                     if(result.overallStatus !== 'passed') {
-                        testRunnerErrorToConsole(`\u2716 Some suites was detected to have failures outside of the suite tests. This could indicate an underlying problem. please run tests locally to debug.`);
+                        window.externalJasmineFailures = true;
+                        globalTestRunnerErrorToConsole(`\u2716 Some suites was detected to have failures outside of the suite tests. This could indicate an underlying problem. please run tests locally to debug.`);
+                        for(const element of result.failedExpectations) {
+                            let message = element.message;
+                            if(element.filename) {
+                                message = `In ${element.filename} \n${message}`;
+                            }
+                            if(element.stack){
+                                globalTestRunnerErrorToConsole(`\u2716 Runner Error: Failure: `, message,
+                                    '\nStack: ', element.stack);
+                            } else {
+                                globalTestRunnerErrorToConsole(`\u2716 Runner Error: Failure: `, message);
+                            }
+                        }
+                        quitIfNeeded(1);
+                    } else {
+                        quitIfNeeded(0);
                     }
                 } else {
-                    testRunnerErrorToConsole(`\u2716 ${self.totalFailedCount} of ${self.totalSpecCount} tests Failed, ${self.totalPassedCount} passed.`);
+                    globalTestRunnerErrorToConsole(`\u2716 ${self.totalFailedCount} of ${self.totalSpecCount} tests Failed, ${self.totalPassedCount} passed. (in ${formatMilliseconds(result.totalTime)})`);
+                    quitIfNeeded(1);
                 }
                 self.reportRunnerResults(result);
                 await _afterAllGlobal();
@@ -468,6 +482,22 @@ define(function (require, exports, module) {
     UnitTestReporter.prototype.reportRunnerResults = function (runner) {
         this.passed = (runner.overallStatus === "passed");
         this.runInfo.endTime = new Date().toString();
+        if(!this.passed){
+            globalTestRunnerErrorToConsole(`\u2716 'Test suite run failed!! with status: ` + runner.overallStatus);
+
+            for(const element of runner.failedExpectations) {
+                let message = element.message;
+                if(element.filename) {
+                    message = `In ${element.filename} \n${message}`;
+                }
+                if(element.stack){
+                    globalTestRunnerErrorToConsole(`\u2716 Runner Error: Failure: `, message,
+                        '\nStack: ', element.stack);
+                } else {
+                    globalTestRunnerErrorToConsole(`\u2716 Runner Error: Failure: `, message);
+                }
+            }
+        }
         $(this).triggerHandler("runnerEnd", [this]);
         activeReporter = null;
     };
@@ -476,15 +506,19 @@ define(function (require, exports, module) {
         let self = this;
         this.passed = (suiteResult.status === "passed");
         if(!this.passed){
-            console.error('Spec Error: ' + suiteResult.description + ' was ' + suiteResult.status);
-            testRunnerErrorToConsole(`\u2716 Suite failed!!`, suiteResult.description + ' was ' + suiteResult.status);
+            globalTestRunnerErrorToConsole(`\u2716 Suite failed!!`, suiteResult.description + ' was ' + suiteResult.status);
 
             for(const element of suiteResult.failedExpectations) {
-                console.error('Spec Error: Failure: ', element.message);
-                console.error('Spec Error: Stack: ', element.stack);
-
-                testRunnerErrorToConsole(`\u2716 'Suite Error: Failure: `, element.message);
-                testRunnerErrorToConsole('\u2716 Suite Error: Stack: ', element.stack);
+                let message = element.message;
+                if(element.filename) {
+                    message = `In ${element.filename} \n${message}`;
+                }
+                if(element.stack){
+                    globalTestRunnerErrorToConsole(`\u2716 Suite Error: Failure: `, message,
+                        '\nStack: ', element.stack);
+                } else {
+                    globalTestRunnerErrorToConsole(`\u2716 Suite Error: Failure: `, message);
+                }
             }
 
             let suiteData = this._addSuiteResults(suiteResult, this._currentPerfRecord);
@@ -507,6 +541,22 @@ define(function (require, exports, module) {
 
     UnitTestReporter.prototype.reportSpecResults = function (spec) {
         if (spec.status !== "excluded") {
+            if(spec.status !== "passed"){
+                globalTestRunnerErrorToConsole(`\u2716 Spec failed!!`, spec.description + ' was ' + spec.status);
+
+                for(const element of spec.failedExpectations) {
+                    let message = element.message;
+                    if(element.filename) {
+                        message = `In ${element.filename} \n${message}`;
+                    }
+                    if(element.stack){
+                        globalTestRunnerErrorToConsole(`\u2716 Spec Error: Failure: `, message,
+                            '\nStack: ', element.stack);
+                    } else {
+                        globalTestRunnerErrorToConsole(`\u2716 Spec Error: Failure: `, message);
+                    }
+                }
+            }
             let specData = this._addSpecResults(spec, this._currentPerfRecord);
             $(this).triggerHandler("specEnd", [this, specData, this.suites[this.getTopLevelSuiteName(spec)]]);
         }

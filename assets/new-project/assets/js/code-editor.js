@@ -24,18 +24,22 @@
 /*eslint strict: ["error", "global"]*/
 /* jshint ignore:start */
 
-function _createRecentProjectCard(projectName, fullPath, nodeId, tabIndex) {
+function _createRecentProjectCard(fullPath, displayLocation, nodeId, tabIndex) {
     let removeBtnDisableStyle = "";
     if(path.normalize(fullPath) === path.normalize(newProjectExtension.getWelcomeProjectPath())){
         removeBtnDisableStyle = "display: none;";
     }
-    return $(`<li>
+    let recentProjectListWidth = document.getElementById('recentProjectList').clientWidth;
+    const fontWidth = 6;
+    const charsToFillFontWidth = recentProjectListWidth/fontWidth;
+    // show title only if the path is longer than the inline display location.
+    const title = displayLocation.length < charsToFillFontWidth ? "" : displayLocation;
+    return $(`<li onclick="openProject('${fullPath}');_recentProjectMetric('open');" style="overflow: hidden" title="${title}">
         <a id="${nodeId}" href="#" 
         class="d-flex align-items-center justify-content-between tabable"
-        tabindex="${tabIndex}"
-        onclick="openProject('${fullPath}');_recentProjectMetric('open');">
+        tabindex="${tabIndex}">
             <div class="project-name">
-                ${projectName}
+                ${newProjectExtension.path.basename(fullPath)}
             </div>
             <button class="remove-btn" onclick="removeProject('${fullPath}');_recentProjectMetric('remove');"
             style="${removeBtnDisableStyle}">
@@ -52,6 +56,9 @@ function _createRecentProjectCard(projectName, fullPath, nodeId, tabIndex) {
                 </svg>
             </button>
         </a>
+        <div style="overflow: hidden;">
+            <p class="recent-project-metadata">${displayLocation}</p>
+        </div>
     </li>`);
 }
 
@@ -59,33 +66,32 @@ function _recentProjectMetric(type) {
     Metrics.countEvent(Metrics.EVENT_TYPE.NEW_PROJECT, "recentProject.btnClick", type);
 }
 
-function getDisplayName(projectPath) {
-    const prefixRemove = [newProjectExtension.getLocalProjectsPath(), newProjectExtension.getMountDir()];
-    for(let prefix of prefixRemove){
-        if(projectPath.startsWith(prefix)){
-            return projectPath.replace(prefix, '');
-        }
+function getDisplayLocation(projectPath) {
+    const tauriDir = newProjectExtension.getTauriDir();
+    if (projectPath.startsWith(tauriDir)) {
+        return newProjectExtension.getTauriPlatformPath(projectPath);
     }
-    return projectPath;
+    if (projectPath.startsWith(newProjectExtension.getMountDir())) {
+        return ""; // we don't show anything if it's stored on user's hard drive for better ui.
+    }
+    return Strings.PROJECT_FROM_BROWSER;
 }
-
-const DEFAULT_PROJECT_PATH = '/fs/local/default project';
 
 function _updateProjectCards() {
     let recentProjectList = $(document.getElementById('recentProjectList'));
     recentProjectList.empty();
     let recentProjects = recentProjectExtension.getRecentProjects();
-    let tabIndex = 20;
-    let defaultProjects = [DEFAULT_PROJECT_PATH, '/fs/local/explore'],
-        omitProjectsInListing = ['/fs/local/explore'],
+    let tabIndex = 1;
+    let defaultProjects = [newProjectExtension.getWelcomeProjectPath(), newProjectExtension.getExploreProjectPath()],
+        omitProjectsInListing = [newProjectExtension.getExploreProjectPath()],
         showRecentProjects = false;
     for(let recentProject of recentProjects){
         if(!defaultProjects.includes(recentProject)){
             showRecentProjects = true;
         }
         if(!omitProjectsInListing.includes(recentProject)){
-            recentProjectList.append(_createRecentProjectCard(getDisplayName(recentProject),
-                recentProject, `recent-prj-list-${tabIndex}`, tabIndex++));
+            recentProjectList.append(_createRecentProjectCard(recentProject, getDisplayLocation(recentProject),
+                `recent-prj-list-${tabIndex}`, tabIndex++));
         }
     }
     if(!showRecentProjects){
@@ -116,7 +122,7 @@ function removeProject(fullPath) {
 }
 
 function _showFirstTimeExperience() {
-    let shownBefore = localStorage.getItem('notification.defaultProject.Shown');
+    let shownBefore = PhStore.getItem('notification.defaultProject.Shown');
     if(!shownBefore){
         createNotificationFromTemplate(Strings.DEFAULT_PROJECT_NOTIFICATION,
             "defaultProjectButton", {
@@ -124,7 +130,62 @@ function _showFirstTimeExperience() {
                 autoCloseTimeS: 15,
                 dismissOnClick: true
             });
-        localStorage.setItem('notification.defaultProject.Shown', 'true');
+        PhStore.setItem('notification.defaultProject.Shown', 'true');
+    }
+}
+
+function _updateDropdown() {
+    let shouldShowWelcome = PhStore.getItem("new-project.showWelcomeScreen") || 'Y';
+    if(shouldShowWelcome === 'Y') {
+        document.getElementById("showWelcomeIndicator").style = "visibility: visible";
+    } else {
+        document.getElementById("showWelcomeIndicator").style = "visibility: hidden";
+    }
+}
+
+function _attachSettingBtnEventListeners() {
+    document.querySelector('.dropdown').addEventListener('click', function() {
+        let content = this.querySelector('.dropdown-content');
+        let dropbtn = this.querySelector('.dropbtn');
+        _updateDropdown();
+        if (content.style.display === 'block') {
+            content.style.display = 'none';
+            dropbtn.classList.remove('dropbtnActive');
+        } else {
+            content.style.display = 'block';
+            dropbtn.classList.add('dropbtnActive');
+        }
+    });
+
+    document.getElementById("showWelcome").addEventListener('click', (event)=>{
+        let shouldShowWelcome = PhStore.getItem("new-project.showWelcomeScreen") || 'Y';
+        shouldShowWelcome = shouldShowWelcome === 'Y'? 'N' : 'Y';
+        PhStore.setItem("new-project.showWelcomeScreen", shouldShowWelcome);
+    });
+
+    document.getElementById("showAbout").addEventListener('click', (event)=>{
+        newProjectExtension.showAboutBox();
+    });
+
+    // Event to close dropdown if clicked outside
+    document.addEventListener('click', function(event) {
+        let dropdown = document.querySelector('.dropdown');
+        let content = dropdown.querySelector('.dropdown-content');
+        let dropbtn = dropdown.querySelector('.dropbtn');
+
+        // If the target of the click isn't the dropdown or a descendant of the dropdown
+        if (!dropdown.contains(event.target)) {
+            content.style.display = 'none';
+            dropbtn.classList.remove('dropbtnActive');
+        }
+    });
+}
+
+function _openURLInTauri(url) {
+    // in tauri, the <a> tag will not open a browser window. So we have to use phcode apis to do it.
+    // else, the browser itself will open the url. so we dont have to do this in normal browsers.
+    if(window.top.__TAURI__) {
+        window.top.Phoenix.app.openURLInDefaultBrowser(url);
     }
 }
 
@@ -137,6 +198,17 @@ function initCodeEditor() {
         Metrics.countEvent(Metrics.EVENT_TYPE.NEW_PROJECT, "main.Click", "viewMore");
         window.location.href = 'new-project-more.html';
     };
+    document.getElementById("githubStarsButton").onclick = function() {
+        Metrics.countEvent(Metrics.EVENT_TYPE.NEW_PROJECT, "main.Click", "githubStars");
+        _openURLInTauri("https://github.com/phcode-dev/phoenix");
+    };
+    const icons = ['githubIcon', 'twitterIcon', 'youtubeIcon'];
+    for(let iconID of icons) {
+        document.getElementById(iconID).onclick = function() {
+            Metrics.countEvent(Metrics.EVENT_TYPE.NEW_PROJECT, "main.Click", iconID);
+            _openURLInTauri(document.getElementById(iconID).getAttribute('href'));
+        };
+    }
     document.getElementById("newGitHubProject").onclick = function() {
         Metrics.countEvent(Metrics.EVENT_TYPE.NEW_PROJECT, "main.Click", "github-project");
         window.location.href = 'new-project-github.html';
@@ -158,4 +230,5 @@ function initCodeEditor() {
     _updateProjectCards();
     _showFirstTimeExperience();
     $("body").append($(`<script async defer src="https://buttons.github.io/buttons.js"></script>`));
+    _attachSettingBtnEventListeners();
 }

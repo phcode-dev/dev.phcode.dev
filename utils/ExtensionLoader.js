@@ -47,10 +47,13 @@ define(function (require, exports, module) {
         FileUtils      = require("file/FileUtils"),
         Async          = require("utils/Async"),
         ExtensionUtils = require("utils/ExtensionUtils"),
+        ThemeManager   = require("view/ThemeManager"),
         UrlParams      = require("utils/UrlParams").UrlParams,
         PathUtils      = require("thirdparty/path-utils/path-utils"),
         DefaultExtensionsList = JSON.parse(require("text!extensions/default/DefaultExtensions.json"))
             .defaultExtensionsList;
+
+    const customExtensionLoadPaths = {};
 
     // default async initExtension timeout
     var EXTENSION_LOAD_TIMOUT_SECONDS = 60,
@@ -198,11 +201,12 @@ define(function (require, exports, module) {
      */
     function _mergeConfig(baseConfig) {
         if(baseConfig.baseUrl.startsWith("http://") || baseConfig.baseUrl.startsWith("https://")
-            || baseConfig.baseUrl.startsWith("tauri://") || baseConfig.baseUrl.startsWith("asset://")) {
+            || baseConfig.baseUrl.startsWith("phtauri://") || baseConfig.baseUrl.startsWith("asset://")) {
             return _mergeConfigFromURL(baseConfig);
         }
         throw new Error("Config can only be loaded from an http url, but got" + baseConfig.baseUrl);
     }
+    const savedFSlib = window.fs;
 
     /**
      * Loads the extension module that lives at baseUrl into its own Require.js context
@@ -220,7 +224,17 @@ define(function (require, exports, module) {
             baseUrl: config.baseUrl,
             paths: globalPaths,
             locale: brackets.getLocale(),
-            waitSeconds: EXTENSION_LOAD_TIMOUT_SECONDS
+            waitSeconds: EXTENSION_LOAD_TIMOUT_SECONDS,
+            config: {
+                text: {
+                    useXhr: function(_url, _protocol, _hostname, _port) {
+                        // as we load extensions in cross domain fashion, we have to use xhr
+                        // https://github.com/requirejs/text#xhr-restrictions
+                        // else user installed extension require will fail in tauri
+                        return true;
+                    }
+                }
+            }
         };
         const isDefaultExtensionModule =( extensionConfig.baseUrl
             && extensionConfig.baseUrl.startsWith(`${window.PhoenixBaseURL}extensions/default/`));
@@ -236,6 +250,13 @@ define(function (require, exports, module) {
             return extensionRequireDeferred.promise();
         }).then(function (module) {
             // Extension loaded normally
+            if(savedFSlib !== window.fs) {
+                console.error("fslib overwrite detected while loading extension. This means that" +
+                    " some extension tried to modify a core library. reverting to original lib..");
+                // note that the extension name here may not be that actual extension that did the
+                // overwrite. So we dont log the extension name here.
+                window.fs = savedFSlib;
+            }
             var initPromise;
 
             _extensions[name] = module;
@@ -379,7 +400,8 @@ define(function (require, exports, module) {
     function testExtension(name, config, entryPoint) {
         var result = new $.Deferred(),
             extensionPath = config.baseUrl + "/" + entryPoint + ".js";
-        if(extensionPath.startsWith("http://") || extensionPath.startsWith("https://")) {
+        if(extensionPath.startsWith("http://") || extensionPath.startsWith("https://")
+            || extensionPath.startsWith("phtauri://") || extensionPath.startsWith("asset://")) {
             return _testExtensionByURL(name, config, entryPoint);
         }
 
@@ -407,14 +429,13 @@ define(function (require, exports, module) {
      * @private
      * Loads a file entryPoint from each extension folder within the baseUrl into its own Require.js context
      *
-     * @param {!string} directory, an absolute native path that contains a directory of extensions.
+     * @param {!string} directory an absolute native path that contains a directory of extensions.
      *                  each subdirectory is interpreted as an independent extension
-     * @param {!{baseUrl: string}} config object with baseUrl property containing absolute path of extension folder
      * @param {!string} entryPoint Module name to load (without .js suffix)
      * @param {function} processExtension
      * @return {!$.Promise} A promise object that is resolved when all extensions complete loading.
      */
-    function _loadAll(directory, config, entryPoint, processExtension) {
+    function _loadAll(directory, entryPoint, processExtension) {
         var result = new $.Deferred();
 
         FileSystem.getDirectoryForPath(directory).getContents(function (err, contents) {
@@ -437,10 +458,9 @@ define(function (require, exports, module) {
 
                 Async.doInParallel(extensions, function (item) {
                     var extConfig = {
-                        // we load extensions in virtual file system from our virtual server URL
-                        // fsServerUrl always ends with a /
-                        baseUrl: window.fsServerUrl.slice(0, -1) + config.baseUrl + "/" + item,
-                        paths: config.paths
+                        // we load user installed extensions in file system from our virtual/asset server URL
+                        baseUrl: Phoenix.VFS.getVirtualServingURLForPath(directory + "/" + item),
+                        paths: {}
                     };
                     console.log("Loading Extension from virtual fs: ", extConfig);
                     return processExtension(item, extConfig, entryPoint);
@@ -489,18 +509,18 @@ define(function (require, exports, module) {
      * @return {!$.Promise} A promise object that is resolved when all extensions complete loading.
      */
     function loadAllExtensionsInNativeDirectory(directory) {
-        return _loadAll(directory, {baseUrl: directory}, "main", loadExtension);
+        return _loadAll(directory,  "main", loadExtension);
     }
 
     /**
-     * Loads a given extension at the path from virtual fs.
+     * Loads a given extension at the path from virtual fs. Used by `debug menu> load project as extension`
      * @param directory
      * @return {!Promise}
      */
     function loadExtensionFromNativeDirectory(directory) {
         logger.leaveTrail("loading custom extension from path: " + directory);
         const extConfig = {
-            baseUrl: window.fsServerUrl.slice(0, -1) + directory.replace(/\/$/, "")
+            baseUrl: Phoenix.VFS.getVirtualServingURLForPath(directory.replace(/\/$/, ""))
         };
         return loadExtension("ext" + directory.replace("/", "-"), // /fs/user/extpath to ext-fs-user-extpath
             extConfig, 'main');
@@ -514,21 +534,20 @@ define(function (require, exports, module) {
      * @return {!$.Promise} A promise object that is resolved when all extensions complete loading.
      */
     function testAllExtensionsInNativeDirectory(directory) {
-        var result = new $.Deferred();
-        var virtualServerURL = window.fsServerUrl,
-            extensionsDir = _getExtensionPath() + "/" + directory,
+        const result = new $.Deferred();
+        const extensionsDir = _getExtensionPath() + "/" + directory,
             config = {
-                baseUrl: virtualServerURL + extensionsDir
+                baseUrl: Phoenix.VFS.getVirtualServingURLForPath(extensionsDir)
             };
 
         config.paths = {
-            "perf": virtualServerURL + "/test/perf",
-            "spec": virtualServerURL + "/test/spec"
+            "perf": Phoenix.VFS.getVirtualServingURLForPath( "/test/perf"),
+            "spec": Phoenix.VFS.getVirtualServingURLForPath("/test/spec")
         };
 
         FileSystem.getDirectoryForPath(extensionsDir).getContents(function (err, contents) {
             if (!err) {
-                var i,
+                let i,
                     extensions = [];
 
                 for (i = 0; i < contents.length; i++) {
@@ -611,6 +630,76 @@ define(function (require, exports, module) {
         return result.promise();
     }
 
+    // eg: extensionPath = /tauri/home/home/.local/share/io.phcode.dev/assets/extensions/devTemp/theme/14/theme.css
+    // eg: customExtensionLoadPath = /tauri/home/home/.local/share/io.phcode.dev/assets/extensions/devTemp/theme/14
+    // eg: srcBasePath = /tauri/home/home/myExtension
+    function getSourcePathForExtension(extensionPath) {
+        const devTempExtDir = `${Phoenix.VFS.getDevTempExtensionDir()}/`;
+        if(extensionPath.startsWith(devTempExtDir)) {
+            for(let customExtensionLoadPath of Object.keys(customExtensionLoadPaths)){
+                let srcBasePath = customExtensionLoadPaths[customExtensionLoadPath];
+                if(extensionPath.startsWith(Phoenix.VFS.ensureTrailingSlash(customExtensionLoadPath))) {
+                    const relativePath = extensionPath.replace(Phoenix.VFS.ensureTrailingSlash(customExtensionLoadPath), "");
+                    if(!srcBasePath.endsWith("/")){
+                        srcBasePath = srcBasePath + "/";
+                    }
+                    return `${srcBasePath}${relativePath}`;
+                }
+            }
+        }
+        return extensionPath;
+    }
+
+    function _attachThemeLoadListeners() {
+        ThemeManager.off(`${ThemeManager.EVENT_THEME_LOADED}.extensionLoader`);
+        ThemeManager.on(`${ThemeManager.EVENT_THEME_LOADED}.extensionLoader`, ()=>{
+            ThemeManager.refresh(true);
+        });
+    }
+
+    function _getRandomPrefix() {
+        let uuid = crypto.randomUUID();
+        // for example "36b8f84d-df4e-4d49-b662-bcde71a8764f"
+        return uuid.split("-")[0]; // Eg. return 36b8f84d
+    }
+    function _loadCustomExtensionPath(extPath) {
+        const assetsServeDir = Phoenix.VFS.getTauriAssetServeDir();
+        if(assetsServeDir && extPath.startsWith(Phoenix.VFS.getTauriDir()) &&
+            !extPath.startsWith(assetsServeDir)) {
+            // we have to do this random number thingy as tauri caches assets and will serve stale assets.
+            // this is problematic when the user is editing extension code and he cant see the updates on reload.
+            const newExtVersionStr = _getRandomPrefix();
+            const extParentPath = `${Phoenix.VFS.getDevTempExtensionDir()}/${Phoenix.path.basename(extPath)}`;
+            const extDestPath = `${extParentPath}/${newExtVersionStr}`;
+            customExtensionLoadPaths[extDestPath] = extPath;
+            Phoenix.fs.unlink(extParentPath, ()=>{
+                // ignore any errors in delete
+                Phoenix.VFS.ensureExistsDirAsync(extParentPath)
+                    .then(()=>{
+                        Phoenix.fs.copy(extPath, extDestPath, function (err, _copiedPath) {
+                            if (err) {
+                                console.error(`Error copying extension from ${extPath} to ${extDestPath}`, err);
+                                result.reject(err);
+                            } else {
+                                _attachThemeLoadListeners();
+                                loadExtensionFromNativeDirectory(extDestPath)
+                                    .fail(console.error);
+                            }
+                        });
+                    }).catch((err)=>{
+                        console.error(`Error creating dir ${extDestPath}`, err);
+                        result.reject(err);
+                    });
+            });
+            // custom extensions are always loaded marked as resolved to prevent the main event loop from taking
+            // too long to load
+            let result = new $.Deferred();
+            result.resolve();
+            return result.promise();
+        }
+        return loadExtensionFromNativeDirectory(extPath);
+    }
+
     /**
      * Load extensions.
      *
@@ -620,6 +709,7 @@ define(function (require, exports, module) {
      * @return {!$.Promise} A promise object that is resolved when all extensions complete loading.
      */
     function init(paths) {
+        require("extensionsIntegrated/loader");
         var params = new UrlParams();
 
         if (_init) {
@@ -668,7 +758,7 @@ define(function (require, exports, module) {
             if(extPath === "default"){
                 return loadAllDefaultExtensions();
             } else if(extPath.startsWith("custom:")){
-                return loadExtensionFromNativeDirectory(extPath.replace("custom:", ""));
+                return _loadCustomExtensionPath(extPath.replace("custom:", ""));
             } else {
                 return loadAllExtensionsInNativeDirectory(extPath);
             }
@@ -693,6 +783,7 @@ define(function (require, exports, module) {
     exports.getDefaultExtensionPath = getDefaultExtensionPath;
     exports.getUserExtensionPath = getUserExtensionPath;
     exports.getRequireContextForExtension = getRequireContextForExtension;
+    exports.getSourcePathForExtension = getSourcePathForExtension;
     exports.loadExtension = loadExtension;
     exports.testExtension = testExtension;
     exports.loadAllExtensionsInNativeDirectory = loadAllExtensionsInNativeDirectory;

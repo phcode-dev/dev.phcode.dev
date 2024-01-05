@@ -243,7 +243,7 @@ define(function (require, exports, module) {
                 // we should still create an empty one, so we can attach
                 // disabled property on it in case it's disabled
                 let disabled,
-                    defaultDisabled = JSON.parse(localStorage.getItem(Package.DEFAULT_DISABLED_EXTENSIONS_KEY) || "[]");
+                    defaultDisabled = JSON.parse(PhStore.getItem(Package.DEFAULT_DISABLED_EXTENSIONS_KEY) || "[]");
                 if (Array.isArray(defaultDisabled) && defaultDisabled.indexOf(baseExtensionUrl) !== -1) {
                     console.warn("Extension has been disabled on startup: " + baseExtensionUrl);
                     disabled = true;
@@ -269,7 +269,7 @@ define(function (require, exports, module) {
      */
     function loadMetadata(metadataURL, extensionName) {
         if(metadataURL.startsWith("http://") || metadataURL.startsWith("https://")
-            || metadataURL.startsWith("tauri://") || metadataURL.startsWith("asset://")) {
+            || metadataURL.startsWith("phtauri://") || metadataURL.startsWith("asset://")) {
             return _loadExtensionMetadata(metadataURL, extensionName);
         }
         throw new Error(`Cannot load extension metadata for ${extensionName} at path ${metadataURL}`);

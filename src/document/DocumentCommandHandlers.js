@@ -21,13 +21,13 @@
 
 // jshint ignore: start
 /*jslint regexp: true */
-/*globals logger*/
+/*globals logger, Phoenix*/
 
 define(function (require, exports, module) {
 
 
     // Load dependent modules
-    var AppInit             = require("utils/AppInit"),
+    const AppInit             = require("utils/AppInit"),
         CommandManager      = require("command/CommandManager"),
         Commands            = require("command/Commands"),
         DeprecationWarning  = require("utils/DeprecationWarning"),
@@ -57,6 +57,7 @@ define(function (require, exports, module) {
         WorkspaceManager    = require("view/WorkspaceManager"),
         LanguageManager     = require("language/LanguageManager"),
         NewFileContentManager     = require("features/NewFileContentManager"),
+        NodeConnector = require("NodeConnector"),
         _                   = require("thirdparty/lodash");
 
     /**
@@ -104,7 +105,7 @@ define(function (require, exports, module) {
     * String template for window title when a file is open.
     * @type {string}
     */
-    var WINDOW_TITLE_STRING_DOC = "{0} ({1}) " + _osDash + " {2}";
+    var WINDOW_TITLE_STRING_DOC = "{0} " + _osDash + " {1}";
 
     /**
      * Container for _$titleWrapper; if changing title changes this element's height, must kick editor to resize
@@ -289,7 +290,7 @@ define(function (require, exports, module) {
             var projectName = projectRoot.name;
             // Construct shell/browser window title, e.g. "• index.html (myProject) — Brackets"
             if (currentlyViewedPath) {
-                windowTitle = StringUtils.format(WINDOW_TITLE_STRING_DOC, readOnlyString + _currentTitlePath, projectName, brackets.config.app_title);
+                windowTitle = StringUtils.format(WINDOW_TITLE_STRING_DOC, readOnlyString + projectName, _currentTitlePath);
                 // Display dirty dot when there are unsaved changes
                 if (currentDoc && currentDoc.isDirty) {
                     windowTitle = "• " + windowTitle;
@@ -299,7 +300,7 @@ define(function (require, exports, module) {
                 windowTitle = StringUtils.format(WINDOW_TITLE_STRING_NO_DOC, projectName, brackets.config.app_title);
             }
         }
-        window.document.title = windowTitle;
+        Phoenix.app.setWindowTitle(windowTitle);
     }
 
     /**
@@ -1595,14 +1596,30 @@ define(function (require, exports, module) {
     function handleFileCloseWindow(commandData) {
         return _handleWindowGoingAway(
             commandData,
-            function () {
-                window.close();
+            function (closeSuccess) {
+                console.log('close success: ', closeSuccess);
+                raceAgainstTime(window.PhStore.flushDB(), 8000)
+                    .finally(()=>{
+                        raceAgainstTime(NodeConnector.terminateNode())
+                            .finally(()=>{
+                                Phoenix.app.closeWindow();
+                            });
+                    });
             },
-            function () {
-                // if fail, tell the app to abort any pending quit operation.
-                brackets.app.abortQuit();
+            function (err) {
+                console.error("Quit failed! ", err);
             }
         );
+    }
+
+    function handleFileNewWindow() {
+        let width = window.innerWidth;
+        let height = window.innerHeight;
+        brackets.app.openURLInPhoenixWindow(location.href, {
+            width,
+            height,
+            preferTabs: true
+        });
     }
 
     /** Show a textfield to rename whatever is currently selected in the sidebar (or current doc if nothing else selected) */
@@ -1622,12 +1639,18 @@ define(function (require, exports, module) {
     function handleFileQuit(commandData) {
         return _handleWindowGoingAway(
             commandData,
-            function () {
-                brackets.app.quit();
+            function (closeSuccess) {
+                console.log('close success: ', closeSuccess);
+                raceAgainstTime(window.PhStore.flushDB(), 8000)
+                    .finally(()=>{
+                        raceAgainstTime(NodeConnector.terminateNode())
+                            .finally(()=>{
+                                Phoenix.app.closeWindow();
+                            });
+                    });
             },
-            function () {
-                // if fail, don't exit: user canceled (or asked us to save changes first, but we failed to do so)
-                brackets.app.abortQuit();
+            function (err) {
+                console.error("Quit failed! ", err);
             }
         );
     }
@@ -1738,6 +1761,25 @@ define(function (require, exports, module) {
             });
     }
 
+    /** Show the selected sidebar (tree or workingset) item in Finder/Explorer */
+    function handleShowInOS() {
+        var entry = ProjectManager.getSelectedItem();
+        if (entry) {
+            brackets.app.openPathInFileBrowser(entry.fullPath)
+                .catch(err=>console.error("Error showing '" + entry.fullPath + "' in OS folder:", err));
+        }
+    }
+
+    function raceAgainstTime(promise, timeout = 3000) {
+        const timeoutPromise = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                reject(new Error("Timed out after 3 seconds"));
+            }, timeout);
+        });
+
+        return Promise.race([promise, timeoutPromise]);
+    }
+
     /**
     * Does a full reload of the browser window
     * @param {string} href The url to reload into the window
@@ -1771,7 +1813,13 @@ define(function (require, exports, module) {
 
             // Defer for a more successful reload - issue #11539
             window.setTimeout(function () {
-                window.location.href = href;
+                raceAgainstTime(window.PhStore.flushDB()) // wither wait for flush or time this out
+                    .finally(()=>{
+                        raceAgainstTime(NodeConnector.terminateNode(), 8000)
+                            .finally(()=>{
+                                window.location.href = href;
+                            });
+                    });
             }, 1000);
         }).fail(function () {
             _isReloading = false;
@@ -1844,14 +1892,13 @@ define(function (require, exports, module) {
      * Make sure we don't attach this handler if the current window is actually a test window
     **/
 
-    var isTestWindow = (new window.URLSearchParams(window.location.search || "")).get("testEnvironment");
-    if (!isTestWindow) {
+    function attachBrowserUnloadHandler() {
         window.onbeforeunload = function(e) {
             PreferencesManager.setViewState("windowClosingTime", new Date().getTime(), {}, false);
             _handleWindowGoingAway(null, closeSuccess=>{
                 console.log('close success: ', closeSuccess);
             }, closeFail=>{
-                console.log('close success: ', closeFail);
+                console.log('close fail: ', closeFail);
             });
             var openDocs = DocumentManager.getAllOpenDocuments();
 
@@ -1868,6 +1915,41 @@ define(function (require, exports, module) {
                 return Strings.WINDOW_UNLOAD_WARNING;
             }
         };
+    }
+
+    let closeInProgress;
+    function attachTauriUnloadHandler() {
+        window.__TAURI__.window.appWindow.onCloseRequested((event)=>{
+            if(closeInProgress){
+                event.preventDefault();
+                return;
+            }
+            closeInProgress = true;
+            PreferencesManager.setViewState("windowClosingTime", new Date().getTime(), {}, false);
+            event.preventDefault();
+            _handleWindowGoingAway(null, closeSuccess=>{
+                console.log('close success: ', closeSuccess);
+                raceAgainstTime(window.PhStore.flushDB(), 8000)
+                    .finally(()=>{
+                        raceAgainstTime(NodeConnector.terminateNode())
+                            .finally(()=>{
+                                Phoenix.app.closeWindow();
+                            });
+                    });
+            }, closeFail=>{
+                console.log('close fail: ', closeFail);
+                closeInProgress = false;
+            });
+        });
+    }
+
+    let isTestWindow = (new window.URLSearchParams(window.location.search || "")).get("testEnvironment");
+    if (!isTestWindow) {
+        if(Phoenix.browser.isTauri) {
+            attachTauriUnloadHandler();
+        } else {
+            attachBrowserUnloadHandler();
+        }
     }
 
     /** Do some initialization when the DOM is ready **/
@@ -1897,9 +1979,13 @@ define(function (require, exports, module) {
     exports._parseDecoratedPath = _parseDecoratedPath;
 
     // Set some command strings
-    var quitString  = Strings.CMD_QUIT;
+    var quitString  = Strings.CMD_QUIT,
+        showInOS    = Strings.CMD_SHOW_IN_OS;
     if (brackets.platform === "win") {
         quitString  = Strings.CMD_EXIT;
+        showInOS    = Strings.CMD_SHOW_IN_EXPLORER;
+    } else if (brackets.platform === "mac") {
+        showInOS    = Strings.CMD_SHOW_IN_FINDER;
     }
 
     // Define public API
@@ -1938,6 +2024,8 @@ define(function (require, exports, module) {
     CommandManager.register(Strings.CMD_PREV_DOC_LIST_ORDER,         Commands.NAVIGATE_PREV_DOC_LIST_ORDER,   handleGoPrevDocListOrder);
 
     // Special Commands
+    CommandManager.register(showInOS,                                Commands.NAVIGATE_SHOW_IN_OS,            handleShowInOS);
+    CommandManager.register(Strings.CMD_NEW_BRACKETS_WINDOW,         Commands.FILE_NEW_WINDOW,                handleFileNewWindow);
     CommandManager.register(quitString,                              Commands.FILE_QUIT,                      handleFileQuit);
     CommandManager.register(Strings.CMD_SHOW_IN_TREE,                Commands.NAVIGATE_SHOW_IN_FILE_TREE,     handleShowInTree);
 

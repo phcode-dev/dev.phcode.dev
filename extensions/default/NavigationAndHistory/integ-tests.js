@@ -26,7 +26,7 @@ define(function (require, exports, module) {
 
     const SpecRunnerUtils     = brackets.getModule("spec/SpecRunnerUtils");
 
-    describe("integration:FileRecovery integration tests", function () {
+    describe("LegacyInteg:FileRecovery integration tests", function () {
 
         const testPathOriginal = SpecRunnerUtils.getTestPath("/spec/ProjectManager-test-files");
         const testPath = SpecRunnerUtils.getTestRoot() + "/navigationTests/";
@@ -52,8 +52,8 @@ define(function (require, exports, module) {
             await awaitsForDone(promise, "Remove " + pathToDel, 5000);
         }
 
-        async function loadTestWindow() {
-            testWindow = await SpecRunnerUtils.createTestWindowAndRun();
+        async function loadTestWindow(force) {
+            testWindow = await SpecRunnerUtils.createTestWindowAndRun({forceReload: force});
             brackets            = testWindow.brackets;
             $                   = testWindow.$;
             FileViewController  = brackets.test.FileViewController;
@@ -67,8 +67,11 @@ define(function (require, exports, module) {
             await SpecRunnerUtils.loadProjectInTestWindow(testPath);
         }
 
-        beforeAll(async function () {
-            await loadTestWindow();
+        beforeEach(async function () {
+            await closeSession();
+            await deletePath(testPath);
+            await deletePath(tempRestorePath);
+            await loadTestWindow(true);
         }, 30000);
 
         afterAll(async function () {
@@ -78,16 +81,13 @@ define(function (require, exports, module) {
             brackets = null;
             await deletePath(testPath);
             await deletePath(tempRestorePath);
-            await SpecRunnerUtils.closeTestWindow();
-        });
-
-        beforeEach(async function () {
-            await deletePath(testPath);
-            await deletePath(tempRestorePath);
-            await awaitsForDone(SpecRunnerUtils.copyPath(testPathOriginal, testPath), "copy temp files");
-        });
+            await SpecRunnerUtils.closeTestWindow(true);
+        }, 30000);
 
         async function closeSession() {
+            if(!CommandManager){
+                return;
+            }
             await awaitsForDone(CommandManager.execute(Commands.FILE_CLOSE_ALL, { _forceClose: true }),
                 "closing all file");
         }
@@ -160,8 +160,10 @@ define(function (require, exports, module) {
             await SpecRunnerUtils.waitTillPathExists(projectRestorePath.fullPath + "toDelete1/file.js", false);
 
             // backup is now present, reload the project
-            await SpecRunnerUtils.closeTestWindow();
-            await loadTestWindow();
+            testWindow.location.href = "about:blank";
+            await awaits(1000);
+            await SpecRunnerUtils.closeTestWindow(true, true);
+            await loadTestWindow(true);
             testWindow._FileRecoveryExtensionForTests.initWith(100,
                 FileSystem.getDirectoryForPath(tempRestorePath));
             await awaitsFor(()=>{
@@ -176,7 +178,7 @@ define(function (require, exports, module) {
                 return editor && editor.document.getText() === unsavedText;
             }, "waiting for restore notification", 5000);
             await closeSession();
-        }, 10000);
+        }, 30000);
 
         // below project switch test case is flakey. need to fix. disable for now.
         // it("Should show restore on project switch", async function () {

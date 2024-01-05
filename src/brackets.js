@@ -23,7 +23,7 @@
 /*eslint-env es6*/
 /*eslint no-console: 0*/
 /*eslint strict: ["error", "global"]*/
-/*global jQuery,fs */
+/*global jQuery, Phoenix*/
 
 // TODO: (issue #264) break out the definition of brackets into a separate module from the application controller logic
 
@@ -61,9 +61,10 @@ define(function (require, exports, module) {
     require("thirdparty/CodeMirror/addon/selection/mark-selection");
     require("thirdparty/CodeMirror/keymap/sublime");
 
+    require("utils/EventDispatcher");
     require("worker/WorkerComm");
-    require("utils/PhoenixComm");
     require("utils/ZipUtils");
+    require("NodeConnector");
 
     // Load dependent modules
     const AppInit             = require("utils/AppInit"),
@@ -110,9 +111,6 @@ define(function (require, exports, module) {
      */
     window.NotificationUI = NotificationUI;
 
-
-    const MainViewHTML        = require("text!htmlContent/main-view.html");
-
     // load modules for later use
     require("utils/Global");
     require("editor/CSSInlineEditor");
@@ -125,6 +123,7 @@ define(function (require, exports, module) {
     require("LiveDevelopment/main");
     require("utils/NodeConnection");
     require("utils/NodeDomain");
+    require("utils/NodeUtils");
     require("utils/ColorUtils");
     require("view/ThemeManager");
     require("thirdparty/lodash");
@@ -274,11 +273,11 @@ define(function (require, exports, module) {
             MultiRangeInlineEditor: require("editor/MultiRangeInlineEditor").MultiRangeInlineEditor,
             NativeApp: require("utils/NativeApp"),
             PerfUtils: require("utils/PerfUtils"),
-            PhoenixComm: require("utils/PhoenixComm"),
             PreferencesManager: require("preferences/PreferencesManager"),
             ProjectManager: require("project/ProjectManager"),
             QuickViewManager: require("features/QuickViewManager"),
             SelectionViewManager: require("features/SelectionViewManager"),
+            ThemeManager: require("view/ThemeManager"),
             WorkspaceManager: require("view/WorkspaceManager"),
             SearchResultsView: require("search/SearchResultsView"),
             ScrollTrackMarkers: require("search/ScrollTrackMarkers"),
@@ -407,11 +406,7 @@ define(function (require, exports, module) {
 
         // Load default languages and preferences
         Async.waitForAll([LanguageManager.ready, PreferencesManager.ready]).always(function () {
-            if(window._phoenixfsAppDirsCreatePromise){
-                window._phoenixfsAppDirsCreatePromise.finally(_startupBrackets);
-            } else {
-                _startupBrackets();
-            }
+            window._phoenixfsAppDirsCreatePromise.finally(_startupBrackets);
         });
     }
 
@@ -420,13 +415,17 @@ define(function (require, exports, module) {
      */
     function _beforeHTMLReady() {
         // Add the platform (mac, win or linux) to the body tag so we can have platform-specific CSS rules
-        $("body").addClass("platform-" + brackets.platform);
+        const $body = $("body");
+        $body.addClass("platform-" + brackets.platform);
+        if(Phoenix.browser.isTauri){
+            $body.addClass("tauri");
+        }
 
         // Browser-hosted version may also have different CSS (e.g. since '#titlebar' is shown)
         if (brackets.inBrowser) {
-            $("body").addClass("in-browser");
+            $body.addClass("in-browser");
         } else {
-            $("body").addClass("in-appshell");
+            $body.addClass("in-appshell");
         }
 
         // Use HTML Menus
@@ -441,9 +440,8 @@ define(function (require, exports, module) {
             };
         }());
 
-
-        // Localize MainViewHTML and inject into <BODY> tag
-        $("body").append(Mustache.render(MainViewHTML, { shouldAddAA: (brackets.platform === "mac"), Strings: Strings }));
+        $('#toolbar-extension-manager').prop('title', Strings.EXTENSION_MANAGER_TITLE);
+        $('#update-notification').prop('title', Strings.UPDATE_NOTIFICATION_TOOLTIP);
 
         // Update title
         $("title").text(brackets.config.app_title);

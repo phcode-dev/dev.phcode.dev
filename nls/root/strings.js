@@ -32,6 +32,7 @@ define({
     "COPYING": "Copying {0}",
     "DELETING": "Deleting {0}",
     "RENAMING": "Renaming",
+    "STORED_IN_YOUR_BROWSER": "Stored in Your Browser",
     // General file io error strings
     "GENERIC_ERROR": "(error {0})",
     "NOT_FOUND_ERR": "The file/directory could not be found.",
@@ -161,8 +162,8 @@ define({
     "EXT_DELETED_MESSAGE": "<span class='dialog-filename'>{0}</span> has been deleted on disk outside of {APP_NAME}, but has unsaved changes in {APP_NAME}.<br /><br />Do you want to keep your changes?",
 
     // Window unload warning messages
-    "WINDOW_UNLOAD_WARNING": "Are you sure you want to navigate to a different URL and leave Brackets?",
-    "WINDOW_UNLOAD_WARNING_WITH_UNSAVED_CHANGES": "You have unsaved changes! Are you sure you want to navigate to a different URL and leave Brackets?",
+    "WINDOW_UNLOAD_WARNING": "Are you sure you want to navigate to a different URL and leave {APP_NAME}?",
+    "WINDOW_UNLOAD_WARNING_WITH_UNSAVED_CHANGES": "You have unsaved changes! Are you sure you want to navigate to a different URL and leave {APP_NAME}?",
 
     // Generic dialog/button labels
     "DONE": "Done",
@@ -359,9 +360,9 @@ define({
     "CMD_FILE_COPY": "Copy",
     "CMD_FILE_COPY_PATH": "Copy Path",
     "CMD_FILE_PASTE": "Paste",
-    "CMD_PROJECT_NEW": "New Project",
+    "CMD_PROJECT_NEW": "New Project\u2026",
     "CMD_FILE_NEW_FOLDER": "New Folder",
-    "CMD_FILE_OPEN": "Open\u2026",
+    "CMD_FILE_OPEN": "Open Files\u2026",
     "CMD_RECENT_FILES_OPEN": "Recent Files\u2026",
     "CMD_ADD_TO_WORKING_SET": "Open To Working Set",
     "CMD_OPEN_DROPPED_FILES": "Open Dropped Files",
@@ -437,8 +438,10 @@ define({
     "CMD_TOGGLE_SIDEBAR": "Toggle Sidebar",
     "CMD_TOGGLE_PANELS": "Toggle Panels",
     "CMD_TOGGLE_PURE_CODE": "No Distractions",
+    "CMD_TOGGLE_FULLSCREEN": "Fullscreen",
     "CMD_ZOOM_UI": "Zoom UI and Fonts",
     "CMD_ZOOM_IN": "Zoom In",
+    "CMD_ZOOM_IN_SCALE": "Zoom In (Current: {0}%)",
     "CMD_ZOOM_OUT": "Zoom Out",
     "CMD_INCREASE_FONT_SIZE": "Increase Font Size",
     "CMD_DECREASE_FONT_SIZE": "Decrease Font Size",
@@ -478,11 +481,13 @@ define({
     "CMD_SHOW_IN_TREE": "Show in File Tree",
     "CMD_SHOW_IN_EXPLORER": "Show in Explorer",
     "CMD_SHOW_IN_FINDER": "Show in Finder",
-    "CMD_SHOW_IN_OS": "Show in OS",
+    "CMD_SHOW_IN_OS": "Show in OS Files",
     "CMD_SWITCH_PANE_FOCUS": "Switch Pane Focus",
 
     // Debug menu commands
     "CMD_OPEN_VFS": "Open Virtual File System",
+    "CMD_DIAGNOSTIC_TOOLS": "{APP_NAME} Diagnostic Tools",
+    "CMD_OPEN_EXTENSIONS_FOLDER": "Open Extensions Folder\u2026",
     "CMD_OPEN_VIRTUAL_SERVER": "Open Virtual Server",
 
     // Help menu commands
@@ -494,7 +499,7 @@ define({
     "CMD_RELEASE_NOTES": "Release Notes",
     "CMD_GET_INVOLVED": "Get Involved",
     "CMD_SHOW_EXTENSIONS_FOLDER": "Show Extensions Folder",
-    "CMD_HEALTH_DATA_STATISTICS": "Health Report",
+    "CMD_HEALTH_DATA_STATISTICS": "Health Report\u2026",
     "CMD_HOMEPAGE": "{APP_NAME} Homepage",
     "CMD_TWITTER": "{TWITTER_NAME} on Twitter",
     "CMD_ABOUT": "About {APP_TITLE}",
@@ -605,6 +610,8 @@ define({
     // For NOT_FOUND_ERR, see generic strings above
     "EXTENSION_MANAGER_TITLE": "Extension Manager",
     "EXTENSION_MANAGER_ERROR_LOAD": "Unable to access the extension registry. Please try again later.",
+    "EXTENSION_UPDATE_RESTART_TITLE": "Restart To Update",
+    "EXTENSION_UPDATE_RESTART_MESSAGE": "To load updated extensions, please close all running instances of {APP_NAME} and restart the application.",
     "INSTALL_EXTENSION_DRAG": "Drag .zip here or",
     "INSTALL_EXTENSION_DROP": "Drop .zip to install",
     "INSTALL_EXTENSION_DROP_ERROR": "Install/Update aborted due to the following errors:",
@@ -680,18 +687,20 @@ define({
     // extensions/default/DebugCommands
     "DEBUG_MENU": "Debug",
     "ERRORS": "Errors",
-    "CMD_SHOW_DEV_TOOLS": "Show Developer Tools",
+    "CMD_SHOW_DEV_TOOLS": "{APP_NAME} Developer Tools",
     "CMD_REFRESH_WINDOW": "Reload With Extensions",
     "CMD_LOAD_CURRENT_EXTENSION": "Load Project As Extension",
     "CMD_RELOAD_CURRENT_EXTENSION": "Reload Project As Extension",
     "CMD_UNLOAD_CURRENT_EXTENSION": "Unload Project As Extension",
     "CMD_RELOAD_WITHOUT_USER_EXTS": "Reload Without Extensions",
-    "CMD_NEW_BRACKETS_WINDOW": "New {APP_NAME} Window",
+    "CMD_NEW_BRACKETS_WINDOW": "New Window",
     "CMD_LAUNCH_SCRIPT_MAC": "Install Command Line Shortcut",
-    "CMD_SWITCH_LANGUAGE": "Switch Language",
-    "CMD_RUN_UNIT_TESTS": "Run Tests",
+    "CMD_SWITCH_LANGUAGE": "Switch Language\u2026",
+    "CMD_RUN_UNIT_TESTS": "Run {APP_NAME} Tests",
     "CMD_SHOW_PERF_DATA": "Show Performance Data",
     "CMD_ENABLE_LOGGING": "Enable Detailed Logs",
+    "CMD_ENABLE_PHNODE_INSPECTOR": "Enable PhNode Inspector",
+    "CMD_GET_PHNODE_INSPECTOR_URL": "How to Inspect PhNode",
     "CMD_ENABLE_LIVE_PREVIEW_LOGS": "Live Preview Logs",
     "CMD_OPEN_BRACKETS_SOURCE": "Open {APP_NAME} Source",
 
@@ -873,6 +882,7 @@ define({
     "DESCRIPTION_USE_THEME_SCROLLBARS": "true to allow custom scroll bars",
     "DESCRIPTION_LINTING_COLLAPSED": "true to collapse linting panel",
     "DESCRIPTION_FONT_FAMILY": "Change font family",
+    "DESCRIPTION_DESKTOP_ZOOM_SCALE": "Choose a zoom scale factor ranging from 0.1 (for a more compact view) to 2 (for a larger, more magnified view). Available in desktop apps only",
     "DESCRIPTION_FONT_SIZE": "Change font size; e.g. 13px",
     "DESCRIPTION_FIND_IN_FILES_NODE": "true to enable node based search",
     "DESCRIPTION_FIND_IN_FILES_INSTANT": "true to enable instant search",
@@ -894,6 +904,8 @@ define({
     "DESCRIPTION_LIVEDEV_MAIN_HEADING": "Uh Oh! <br>Your current browser doesn't support live preview.",
     "DESCRIPTION_LIVEDEV_MAIN_SPAN": "Get the best live preview experience by downloading our native apps for Windows, Mac, and Linux from <a href=\"https://phcode.io\" style=\"color: white\">phcode.io</a>.<br>",
     "DESCRIPTION_LIVEDEV_SECURITY": "Security Warning from phcode.dev<br><br> This live preview attempted to access a non-project file. Access was denied for your safety. Please exercise caution when working on untrusted projects.",
+    "DESCRIPTION_LIVEDEV_SECURITY_POPOUT_MESSAGE": "You are about to open a file for live preview. Please proceed only if you trust the source of this project. Click 'Trust Project' to continue, or close this window if you do not trust the source.",
+    "TRUST_PROJECT": "Trust Project",
 
     // Strings for Auto Update
     "DOWNLOAD_FAILED": "Download failed.",
@@ -1011,7 +1023,7 @@ define({
     "PREVIEW": "Preview",
     "BUILD_WEBSITE": "Build Website",
     "VIEW_MORE": "View More...",
-    "NEW_PROJECT_NOTIFICATION": "Click this icon to<br/>create a new project. </br> <a href='#' style='float:right;'>ok</a>",
+    "NEW_PROJECT_NOTIFICATION": "Click this icon to create a new project. </br> <img src=\"extensions/default/Phoenix/images/new_project.png\">  <br/> <a href='#' style='float:right;'>ok</a>",
     "BEAUTIFY_CODE_NOTIFICATION": "Click here or press <b>`{0}`</b> to Beautify code. </br> <img src=\"extensions/default/Phoenix/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>ok</a>",
     "DEFAULT_PROJECT_NOTIFICATION": "Click here to open the <br/><b>default project</b> in phoenix. </br> <a href='#' style='float:right;'>ok</a>",
     "DIRECTORY_REPLACE_MESSAGE": "The selected folder <span class='dialog-filename'>{0}</span> is not empty. Are you sure you want to replace the folder contents with the project?",
@@ -1026,6 +1038,9 @@ define({
     "WEBPAGE_BOOTSTRAP_EXAMPLES": "Bootstrap Examples",
     "PROJECTS_AT_A_GLANCE": "Your Projects at a glance",
     "PROJECT_AT_GLANCE_DESCRIPTION": "Watch video to get started.",
+    "PROJECT_FROM_BROWSER": "Stored in Your Browser",
+    "PROJECT_FROM_BROWSER_TERSE": "Browser Storage",
+    "PROJECT_SHOW_ON_STARTUP": "Show This Dialogue On Startup",
     // Guided tour
     "GUIDED_LIVE_PREVIEW": "Make some code changes in the HTML file to see live preview. </br> <a href='#' style='float:right;'>ok</a>",
     "GUIDED_LIVE_PREVIEW_POPOUT": "Click this button to popout live preview to a new tab. </br> <a href='#' style='float:right;'>ok</a>",

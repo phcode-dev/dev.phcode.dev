@@ -55,18 +55,18 @@ define(function (require, exports, module) {
         Metrics            = brackets.getModule("utils/Metrics"),
         LiveDevelopment    = brackets.getModule("LiveDevelopment/main"),
         LiveDevServerManager = brackets.getModule("LiveDevelopment/LiveDevServerManager"),
-        StaticServer         = require("StaticServer"),
+        NativeApp            = brackets.getModule("utils/NativeApp"),
+        StaticServer   = require("StaticServer"),
         utils = require('utils');
 
     const LIVE_PREVIEW_PANEL_ID = "live-preview-panel",
-        NAVIGATOR_REDIRECT_PAGE = "REDIRECT_PAGE",
         IFRAME_EVENT_SERVER_READY = 'SERVER_READY';
     let serverReady = false;
     const LIVE_PREVIEW_IFRAME_HTML = `
     <iframe id="panel-live-preview-frame" title="Live Preview" style="border: none"
              width="100%" height="100%" seamless="true"
              src='about:blank'
-             sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals allow-pointer-lock allow-presentation">
+             sandbox="allow-same-origin allow-scripts allow-forms allow-modals allow-pointer-lock">
     </iframe>
     `;
 
@@ -133,7 +133,8 @@ define(function (require, exports, module) {
         } else if(visible && explicitClickOnLPIcon) {
             LiveDevelopment.closeLivePreview();
             LiveDevelopment.openLivePreview();
-        } else if(!visible && LiveDevelopment.isActive() && StaticServer.livePreviewTabs.size === 0) {
+        } else if(!visible && LiveDevelopment.isActive()
+            && !StaticServer.hasActiveLivePreviews()) {
             LiveDevelopment.closeLivePreview();
         }
     }
@@ -170,31 +171,10 @@ define(function (require, exports, module) {
         Metrics.countEvent(Metrics.EVENT_TYPE.LIVE_PREVIEW, "HighlightBtn", "click");
     }
 
-    function _getTabNavigationURL(url) {
-        let details = LiveDevelopment.getLivePreviewDetails(),
-            openURL = new URL(url);
-        // we tag all externally opened urls with query string parameter phcodeLivePreview="true" to address
-        // #LIVE_PREVIEW_TAB_NAVIGATION_RACE_FIX
-        openURL.searchParams.set(StaticServer.PHCODE_LIVE_PREVIEW_QUERY_PARAM, "true");
-        openURL = openURL.href;
-        if(details.URL !== url) {
-            openURL = utils.getPageLoaderURL(url);
-        }
-        return openURL;
-    }
-
-    function _redirectAllTabs(newURL) {
-        const openURL = _getTabNavigationURL(newURL);
-        StaticServer.messageToLivePreviewTabs({
-            type: NAVIGATOR_REDIRECT_PAGE,
-            URL: openURL
-        });
-    }
-
     function _popoutLivePreview() {
         // We cannot use $iframe.src here if panel is hidden
-        const openURL = _getTabNavigationURL(currentLivePreviewURL);
-        open(openURL, "livePreview", "noopener,noreferrer");
+        const openURL = StaticServer.getTabPopoutURL(currentLivePreviewURL);
+        NativeApp.openURLInDefaultBrowser(openURL, "livePreview");
         Metrics.countEvent(Metrics.EVENT_TYPE.LIVE_PREVIEW, "popoutBtn", "click");
         _loadPreview(true);
         _setPanelVisibility(false);
@@ -234,7 +214,8 @@ define(function (require, exports, module) {
             $iframe.attr('srcdoc', null);
         };
 
-        const popoutSupported = Phoenix.browser.isTauri || Phoenix.browser.desktop.isChromeBased;
+        const popoutSupported = Phoenix.browser.isTauri
+            || Phoenix.browser.desktop.isChromeBased || Phoenix.browser.desktop.isFirefox;
         if(!popoutSupported){
             // live preview can be popped out currently in only chrome based browsers. The cross domain iframe
             // that serves the live preview(phcode.live) is sandboxed to the tab in which phcode.dev resides.
@@ -264,7 +245,7 @@ define(function (require, exports, module) {
     async function _loadPreview(force) {
         // we wait till the first server ready event is received till we render anything. else a 404-page may
         // briefly flash on first load of phoenix as we try to load the page before the server is available.
-        const isPreviewLoadable = serverReady && (panel.isVisible() || StaticServer.livePreviewTabs.size > 0);
+        const isPreviewLoadable = serverReady && (panel.isVisible() || StaticServer.hasActiveLivePreviews());
         if(!isPreviewLoadable){
             return;
         }
@@ -284,12 +265,11 @@ define(function (require, exports, module) {
             newIframe.insertAfter($iframe);
             $iframe.remove();
             $iframe = newIframe;
-            const iframeURL = utils.isImage(previewDetails.fullPath) ? _getTabNavigationURL(newSrc) : newSrc;
-            $iframe.attr('src', iframeURL);
+            $iframe.attr('src', newSrc);
         }
         Metrics.countEvent(Metrics.EVENT_TYPE.LIVE_PREVIEW, "render",
             utils.getExtension(previewDetails.fullPath));
-        _redirectAllTabs(newSrc);
+        StaticServer.redirectAllTabs(newSrc);
     }
 
     async function _projectFileChanges(evt, changedFile) {
@@ -306,7 +286,7 @@ define(function (require, exports, module) {
     }
 
     let livePreviewEnabledOnProjectSwitch = false;
-    async function _projectOpened() {
+    async function _projectOpened(_evt) {
         if(urlPinned){
             _togglePinUrl();
         }
@@ -324,7 +304,7 @@ define(function (require, exports, module) {
 
     function _activeDocChanged() {
         if(!LiveDevelopment.isActive() && !livePreviewEnabledOnProjectSwitch
-            && (panel.isVisible() || (StaticServer.livePreviewTabs.size > 0))) {
+            && (panel.isVisible() || StaticServer.hasActiveLivePreviews())) {
             // we do this only once after project switch if live preview for a doc is not active.
             LiveDevelopment.closeLivePreview();
             LiveDevelopment.openLivePreview();
@@ -369,7 +349,8 @@ define(function (require, exports, module) {
             _toggleVisibilityOnClick();
         });
         let fileMenu = Menus.getMenu(Menus.AppMenuBar.FILE_MENU);
-        fileMenu.addMenuItem(Commands.FILE_LIVE_FILE_PREVIEW, "");
+        fileMenu.addMenuItem(Commands.FILE_LIVE_FILE_PREVIEW, "", Menus.AFTER, Commands.FILE_EXTENSION_MANAGER);
+        fileMenu.addMenuDivider(Menus.BEFORE, Commands.FILE_LIVE_FILE_PREVIEW);
         // We always show the live preview panel on startup if there is a preview file
         setTimeout(async ()=>{
             LiveDevelopment.openLivePreview();
@@ -381,6 +362,14 @@ define(function (require, exports, module) {
         }, 1000);
         LiveDevelopment.on(LiveDevelopment.EVENT_OPEN_PREVIEW_URL, _openLivePreviewURL);
         LiveDevelopment.on(LiveDevelopment.EVENT_LIVE_HIGHLIGHT_PREF_CHANGED, _updateLiveHighlightToggleStatus);
+        LiveDevelopment.on(LiveDevelopment.EVENT_LIVE_PREVIEW_RELOAD, ()=>{
+            // Usually, this event is listened by live preview iframes/tabs and they initiate a location.reload.
+            // But in firefox, the embedded iframe will throw a 404 when we try to reload from within the iframe as
+            // in firefox security posture, the third party live preview iframe phcode.live itself cannot activate
+            // the service worker. So we have to reload the iframe from its parent- ie. phcode.dev. This is not
+            // required in chrome, but we just keep it just for all platforms behaving the same.
+            _loadPreview(true);
+        });
         StaticServer.on(IFRAME_EVENT_SERVER_READY, function (_evt, event) {
             serverReady = true;
             _loadPreview(true);
@@ -388,7 +377,7 @@ define(function (require, exports, module) {
 
         let consecutiveEmptyClientsCount = 0;
         setInterval(()=>{
-            if(StaticServer.livePreviewTabs.size === 0){
+            if(!StaticServer.hasActiveLivePreviews()){
                 consecutiveEmptyClientsCount ++;
             } else {
                 consecutiveEmptyClientsCount = 0;
