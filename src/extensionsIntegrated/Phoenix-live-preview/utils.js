@@ -40,11 +40,11 @@
 //jshint-ignore:no-start
 
 define(function (require, exports, module) {
-    const ProjectManager          = brackets.getModule("project/ProjectManager"),
-        Strings                   = brackets.getModule("strings"),
-        DocumentManager     = brackets.getModule("document/DocumentManager"),
-        LiveDevelopment    = brackets.getModule("LiveDevelopment/main"),
-        LiveDevServerManager = brackets.getModule("LiveDevelopment/LiveDevServerManager");
+    const ProjectManager          = require("project/ProjectManager"),
+        Strings                   = require("strings"),
+        DocumentManager     = require("document/DocumentManager"),
+        LiveDevelopment    = require("LiveDevelopment/main"),
+        LiveDevServerManager = require("LiveDevelopment/LiveDevServerManager");
 
     function getExtension(filePath) {
         filePath = filePath || '';
@@ -91,6 +91,7 @@ define(function (require, exports, module) {
             +`virtualServerURL=${encodeURIComponent(LiveDevServerManager.getStaticServerBaseURLs().baseURL)}`
             +`&phoenixInstanceID=${Phoenix.PHOENIX_INSTANCE_ID}&initialURL=${encodeURIComponent(url)}`
             +`&localMessage=${encodeURIComponent(Strings.DESCRIPTION_LIVEDEV_SECURITY_POPOUT_MESSAGE)}`
+            +`&appName=${encodeURIComponent(Strings.APP_NAME)}`
             +`&initialProjectRoot=${encodeURIComponent(ProjectManager.getProjectRoot().fullPath)}`
             +`&okMessage=${encodeURIComponent(Strings.TRUST_PROJECT)}`;
     }

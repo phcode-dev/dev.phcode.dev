@@ -36,32 +36,35 @@
  */
 
 /*jslint vars: true, plusplus: true, devel: true, nomen: true, regexp: true, indent: 4, maxerr: 50 */
-/*global Phoenix*/
+/*global path*/
 //jshint-ignore:no-start
 
 define(function (require, exports, module) {
-    const ExtensionUtils   = brackets.getModule("utils/ExtensionUtils"),
-        EditorManager      = brackets.getModule("editor/EditorManager"),
-        ExtensionInterface = brackets.getModule("utils/ExtensionInterface"),
-        CommandManager     = brackets.getModule("command/CommandManager"),
-        Commands           = brackets.getModule("command/Commands"),
-        Menus              = brackets.getModule("command/Menus"),
-        WorkspaceManager   = brackets.getModule("view/WorkspaceManager"),
-        AppInit            = brackets.getModule("utils/AppInit"),
-        ProjectManager     = brackets.getModule("project/ProjectManager"),
-        MainViewManager    = brackets.getModule("view/MainViewManager"),
-        Strings            = brackets.getModule("strings"),
-        Mustache           = brackets.getModule("thirdparty/mustache/mustache"),
-        Metrics            = brackets.getModule("utils/Metrics"),
-        LiveDevelopment    = brackets.getModule("LiveDevelopment/main"),
-        LiveDevServerManager = brackets.getModule("LiveDevelopment/LiveDevServerManager"),
-        NativeApp            = brackets.getModule("utils/NativeApp"),
-        FileUtils           = brackets.getModule("file/FileUtils"),
-        StaticServer   = require("StaticServer"),
-        utils = require('utils');
+    const ExtensionUtils   = require("utils/ExtensionUtils"),
+        EditorManager      = require("editor/EditorManager"),
+        ExtensionInterface = require("utils/ExtensionInterface"),
+        CommandManager     = require("command/CommandManager"),
+        Commands           = require("command/Commands"),
+        Menus              = require("command/Menus"),
+        WorkspaceManager   = require("view/WorkspaceManager"),
+        AppInit            = require("utils/AppInit"),
+        ProjectManager     = require("project/ProjectManager"),
+        MainViewManager    = require("view/MainViewManager"),
+        Strings            = require("strings"),
+        Mustache           = require("thirdparty/mustache/mustache"),
+        Metrics            = require("utils/Metrics"),
+        LiveDevelopment    = require("LiveDevelopment/main"),
+        LiveDevServerManager = require("LiveDevelopment/LiveDevServerManager"),
+        NativeApp           = require("utils/NativeApp"),
+        StringUtils         = require("utils/StringUtils"),
+        FileSystem          = require("filesystem/FileSystem"),
+        StaticServer  = require("./StaticServer"),
+        TrustProjectHTML    = require("text!./trust-project.html"),
+        panelHTML       = require("text!./panel.html"),
+        utils = require('./utils');
 
     const PREVIEW_TRUSTED_PROJECT_KEY = "preview_trusted";
-    const moduleDir = FileUtils.getNativeModuleDirectoryPath(module);
+    const PREVIEW_PROJECT_README_KEY = "preview_readme";
 
     const LIVE_PREVIEW_PANEL_ID = "live-preview-panel";
     const LIVE_PREVIEW_IFRAME_HTML = `
@@ -73,10 +76,13 @@ define(function (require, exports, module) {
     `;
 
     function _getTrustProjectPage() {
-        return `${moduleDir}/trust-project.html?`
-            +`&localMessage=${encodeURIComponent(Strings.DESCRIPTION_LIVEDEV_SECURITY_TRUST_MESSAGE)}`
-            +`&initialProjectRoot=${encodeURIComponent(ProjectManager.getProjectRoot().fullPath)}`
-            +`&okMessage=${encodeURIComponent(Strings.TRUST_PROJECT)}`;
+        const trustProjectMessage = StringUtils.format(Strings.TRUST_PROJECT,
+            path.basename(ProjectManager.getProjectRoot().fullPath));
+        const templateVars = {
+            trustProjectMessage,
+            Strings: Strings
+        };
+        return Mustache.render(TrustProjectHTML, templateVars);
     }
 
     function _isProjectPreviewTrusted() {
@@ -102,11 +108,24 @@ define(function (require, exports, module) {
     }
 
     window._trustCurrentProjectForLivePreview = function () {
+        $iframe.attr('srcdoc', null);
         const projectPath = ProjectManager.getProjectRoot().fullPath;
         const isTrustedProjectKey = `${PREVIEW_TRUSTED_PROJECT_KEY}-${projectPath}`;
         PhStore.setItem(isTrustedProjectKey, true);
         _loadPreview(true);
     };
+
+    function _setProjectReadmePreviewdOnce() {
+        const projectPath = ProjectManager.getProjectRoot().fullPath;
+        const previewReadmeKey = `${PREVIEW_PROJECT_README_KEY}-${projectPath}`;
+        PhStore.setItem(previewReadmeKey, true);
+    }
+
+    function _isProjectReadmePreviewdOnce() {
+        const projectPath = ProjectManager.getProjectRoot().fullPath;
+        const previewReadmeKey = `${PREVIEW_PROJECT_README_KEY}-${projectPath}`;
+        return !!PhStore.getItem(previewReadmeKey);
+    }
 
     ExtensionInterface.registerExtensionInterface(
         ExtensionInterface._DEFAULT_EXTENSIONS_INTERFACE_NAMES.PHOENIX_LIVE_PREVIEW, exports);
@@ -136,7 +155,6 @@ define(function (require, exports, module) {
 
 
     // Templates
-    let panelHTML       = require("text!panel.html");
     ExtensionUtils.loadStyleSheet(module, "live-preview.css");
     // Other vars
     let panel,
@@ -152,8 +170,10 @@ define(function (require, exports, module) {
         $iframe = newIframe;
     }
 
+    let panelShownOnce = false;
     function _setPanelVisibility(isVisible) {
         if (isVisible) {
+            panelShownOnce = true;
             $icon.toggleClass("active");
             panel.show();
             _loadPreview(true);
@@ -166,10 +186,7 @@ define(function (require, exports, module) {
 
     function _startOrStopLivePreviewIfRequired(explicitClickOnLPIcon) {
         let visible = panel && panel.isVisible();
-        if(visible && LiveDevelopment.isInactive()) {
-            LiveDevelopment.openLivePreview();
-        } else if(visible && explicitClickOnLPIcon) {
-            LiveDevelopment.closeLivePreview();
+        if(visible && (LiveDevelopment.isInactive() || explicitClickOnLPIcon)) {
             LiveDevelopment.openLivePreview();
         } else if(!visible && LiveDevelopment.isActive()
             && !StaticServer.hasActiveLivePreviews()) {
@@ -273,7 +290,6 @@ define(function (require, exports, module) {
         $highlightBtn.click(_toggleLiveHighlights);
         $livePreviewPopBtn.click(_popoutLivePreview);
         $reloadBtn.click(()=>{
-            LiveDevelopment.closeLivePreview();
             LiveDevelopment.openLivePreview();
             _loadPreview(true);
             Metrics.countEvent(Metrics.EVENT_TYPE.LIVE_PREVIEW, "reloadBtn", "click");
@@ -293,6 +309,10 @@ define(function (require, exports, module) {
             return;
         }
         let newSrc = encodeURI(previewDetails.URL);
+        if($iframe.attr('src') === newSrc && !force){
+            // we already have this url loaded in previews!
+            return;
+        }
         _setTitle(previewDetails.filePath);
         // we have to create a new iframe on every switch as we use cross domain iframes for phcode.live which
         // the browser sandboxes strictly and sometimes it wont allow a src change on our iframe causing live
@@ -306,7 +326,7 @@ define(function (require, exports, module) {
             if(_isProjectPreviewTrusted()){
                 $iframe.attr('src', newSrc);
             } else {
-                $iframe.attr('src', _getTrustProjectPage());
+                $iframe.attr('srcdoc', _getTrustProjectPage());
             }
         }
         Metrics.countEvent(Metrics.EVENT_TYPE.LIVE_PREVIEW, "render",
@@ -327,8 +347,26 @@ define(function (require, exports, module) {
         }
     }
 
-    let livePreviewEnabledOnProjectSwitch = false;
+    function _openReadmeMDIfFirstTime() {
+        if(!_isProjectReadmePreviewdOnce() && !Phoenix.isTestWindow){
+            const readmePath = `${ProjectManager.getProjectRoot().fullPath}README.md`;
+            const fileEntry = FileSystem.getFileForPath(readmePath);
+            fileEntry.exists(function (err, exists) {
+                if (!err && exists) {
+                    CommandManager.execute(Commands.FILE_ADD_TO_WORKING_SET, {fullPath: readmePath});
+                    _setProjectReadmePreviewdOnce();
+                }
+            });
+        }
+    }
+
     async function _projectOpened(_evt) {
+        _openReadmeMDIfFirstTime();
+        if(!LiveDevelopment.isActive()
+            && (panel.isVisible() || StaticServer.hasActiveLivePreviews())) {
+            // we do this only once after project switch if live preview for a doc is not active.
+            LiveDevelopment.openLivePreview();
+        }
         if(urlPinned){
             _togglePinUrl();
         }
@@ -341,16 +379,13 @@ define(function (require, exports, module) {
 
     function _projectClosed() {
         LiveDevelopment.closeLivePreview();
-        livePreviewEnabledOnProjectSwitch = false;
     }
 
     function _activeDocChanged() {
-        if(!LiveDevelopment.isActive() && !livePreviewEnabledOnProjectSwitch
+        if(!LiveDevelopment.isActive()
             && (panel.isVisible() || StaticServer.hasActiveLivePreviews())) {
             // we do this only once after project switch if live preview for a doc is not active.
-            LiveDevelopment.closeLivePreview();
             LiveDevelopment.openLivePreview();
-            livePreviewEnabledOnProjectSwitch = true;
         }
     }
 
@@ -380,7 +415,11 @@ define(function (require, exports, module) {
     }
 
     AppInit.appReady(function () {
+        if(Phoenix.isSpecRunnerWindow){
+            return;
+        }
         _createExtensionPanel();
+        StaticServer.init();
         LiveDevServerManager.registerServer({ create: _createStaticServer }, 5);
         ProjectManager.on(ProjectManager.EVENT_PROJECT_FILE_CHANGED, _projectFileChanges);
         MainViewManager.on("currentFileChange", _currentFileChanged);
@@ -407,11 +446,11 @@ define(function (require, exports, module) {
         StaticServer.on(StaticServer.EVENT_SERVER_READY, function (_evt, event) {
             // We always show the live preview panel on startup if there is a preview file
             utils.getPreviewDetails().then(previewDetails =>{
-                if(previewDetails.filePath){
+                if(previewDetails.filePath && !panelShownOnce){
                     // only show if there is some file to preview and not the default no-preview preview on startup
                     _setPanelVisibility(true);
-                    _loadPreview(true);
                 }
+                _loadPreview(true);
             });
         });
 
@@ -426,6 +465,7 @@ define(function (require, exports, module) {
                 _startOrStopLivePreviewIfRequired();
             }
         }, 1000);
+        _projectOpened();
     });
 
     // private API to be used inside phoenix codebase only

@@ -25,26 +25,26 @@
 
 define(function (require, exports, module) {
 
-    const BaseServer = brackets.getModule("LiveDevelopment/Servers/BaseServer").BaseServer,
-        LiveDevelopmentUtils = brackets.getModule("LiveDevelopment/LiveDevelopmentUtils"),
-        LiveDevelopment    = brackets.getModule("LiveDevelopment/main"),
-        LiveDevServerManager = brackets.getModule("LiveDevelopment/LiveDevServerManager"),
-        LiveDevProtocol = brackets.getModule("LiveDevelopment/MultiBrowserImpl/protocol/LiveDevProtocol"),
-        marked = brackets.getModule('thirdparty/marked.min'),
-        DocumentManager = brackets.getModule("document/DocumentManager"),
-        Mustache = brackets.getModule("thirdparty/mustache/mustache"),
-        FileSystem = brackets.getModule("filesystem/FileSystem"),
-        EventDispatcher = brackets.getModule("utils/EventDispatcher"),
-        EventManager = brackets.getModule("utils/EventManager"),
-        ProjectManager = brackets.getModule("project/ProjectManager"),
-        Strings = brackets.getModule("strings"),
-        utils = require('utils'),
-        BootstrapCSSText = require("text!../../../thirdparty/bootstrap/bootstrap.min.css"),
-        GithubCSSText = require("text!../../../thirdparty/highlight.js/styles/github.min.css"),
-        HilightJSText = require("text!../../../thirdparty/highlight.js/highlight.min.js"),
-        GFMCSSText = require("text!../../../thirdparty/gfm.min.css"),
-        markdownHTMLTemplate = require("text!markdown.html"),
-        redirectionHTMLTemplate = require("text!redirectPage.html");
+    const BaseServer = require("LiveDevelopment/Servers/BaseServer").BaseServer,
+        LiveDevelopmentUtils = require("LiveDevelopment/LiveDevelopmentUtils"),
+        LiveDevelopment    = require("LiveDevelopment/main"),
+        LiveDevServerManager = require("LiveDevelopment/LiveDevServerManager"),
+        LiveDevProtocol = require("LiveDevelopment/MultiBrowserImpl/protocol/LiveDevProtocol"),
+        marked = require('thirdparty/marked.min'),
+        DocumentManager = require("document/DocumentManager"),
+        Mustache = require("thirdparty/mustache/mustache"),
+        FileSystem = require("filesystem/FileSystem"),
+        EventDispatcher = require("utils/EventDispatcher"),
+        EventManager = require("utils/EventManager"),
+        ProjectManager = require("project/ProjectManager"),
+        Strings = require("strings"),
+        utils = require('./utils'),
+        BootstrapCSSText = require("text!thirdparty/bootstrap/bootstrap.min.css"),
+        GithubCSSText = require("text!thirdparty/highlight.js/styles/github.min.css"),
+        HilightJSText = require("text!thirdparty/highlight.js/highlight.min.js"),
+        GFMCSSText = require("text!thirdparty/gfm.min.css"),
+        markdownHTMLTemplate = require("text!./markdown.html"),
+        redirectionHTMLTemplate = require("text!./redirectPage.html");
 
     const EVENT_GET_PHOENIX_INSTANCE_ID = 'GET_PHOENIX_INSTANCE_ID';
     const EVENT_GET_CONTENT = 'GET_CONTENT';
@@ -54,29 +54,33 @@ define(function (require, exports, module) {
     const EVENT_SERVER_READY = 'SERVER_READY';
 
     EventDispatcher.makeEventDispatcher(exports);
-    const PHCODE_LIVE_PREVIEW_QUERY_PARAM = "phcodeLivePreview";
-
-    const LOADER_BROADCAST_ID = `live-preview-loader-${Phoenix.PHOENIX_INSTANCE_ID}`;
-    const navigatorChannel = new BroadcastChannel(LOADER_BROADCAST_ID);
 
     const livePreviewTabs = new Map();
-    navigatorChannel.onmessage = (event) => {
-        window.logger.livePreview.log("Live Preview navigator channel: Phoenix received event from tab: ", event);
-        const type = event.data.type;
-        switch (type) {
-        case 'TAB_LOADER_ONLINE':
-            livePreviewTabs.set(event.data.pageLoaderID, {
-                lastSeen: new Date(),
-                URL: event.data.URL,
-                navigationTab: true
-            });
-            return;
-        default: return; // ignore messages not intended for us.
-        }
-    };
+    const PHCODE_LIVE_PREVIEW_QUERY_PARAM = "phcodeLivePreview";
 
+    const NAVIGATOR_CHANNEL_ID = `live-preview-loader-${Phoenix.PHOENIX_INSTANCE_ID}`;
+    let navigatorChannel;
     const LIVE_PREVIEW_MESSENGER_CHANNEL = `live-preview-messenger-${Phoenix.PHOENIX_INSTANCE_ID}`;
-    const livePreviewChannel = new BroadcastChannel(LIVE_PREVIEW_MESSENGER_CHANNEL);
+    let livePreviewChannel;
+    let _staticServerInstance, $livepreviewServerIframe;
+
+    function _initNavigatorChannel() {
+        navigatorChannel = new BroadcastChannel(NAVIGATOR_CHANNEL_ID);
+        navigatorChannel.onmessage = (event) => {
+            window.logger.livePreview.log("Live Preview navigator channel: Phoenix received event from tab: ", event);
+            const type = event.data.type;
+            switch (type) {
+            case 'TAB_LOADER_ONLINE':
+                livePreviewTabs.set(event.data.pageLoaderID, {
+                    lastSeen: new Date(),
+                    URL: event.data.URL,
+                    navigationTab: true
+                });
+                return;
+            default: return; // ignore messages not intended for us.
+            }
+        };
+    }
 
     // this is the server tabs located at "src/live-preview.html" which embeds the `phcode.live` server and
     // preview iframes.
@@ -87,49 +91,50 @@ define(function (require, exports, module) {
         });
     }
 
-    livePreviewChannel.onmessage = (event) => {
-        window.logger.livePreview.log("StaticServer: Live Preview message channel Phoenix recvd:", event);
-        const pageLoaderID = event.data.pageLoaderID;
-        const data = event.data.data;
-        const eventName =  data.eventName;
-        const message =  data.message;
-        switch (eventName) {
-        case EVENT_GET_PHOENIX_INSTANCE_ID:
-            _sendToLivePreviewServerTabs({
-                type: 'PHOENIX_INSTANCE_ID',
-                PHOENIX_INSTANCE_ID: Phoenix.PHOENIX_INSTANCE_ID
-            }, pageLoaderID);
-            return;
-        case EVENT_GET_CONTENT:
-            getContent(message.path,  message.url)
-                .then(response =>{
-                    // response has the following attributes set
-                    // response.contents: <text or arrayBuffer content>,
-                    // response.path
-                    // headers: {'Content-Type': 'text/html'} // optional headers
-                    response.type = 'REQUEST_RESPONSE';
-                    response.requestID = message.requestID;
-                    _sendToLivePreviewServerTabs(response, pageLoaderID);
-                })
-                .catch(console.error);
-            return;
-        case EVENT_TAB_ONLINE:
-            livePreviewTabs.set(message.clientID, {
-                lastSeen: new Date(),
-                URL: message.URL
-            });
-            return;
-        case EVENT_REPORT_ERROR:
-            logger.reportError(new Error(message));
-            return;
-        default:
-            exports.trigger(eventName, {
-                data
-            });
-        }
-    };
-
-    let _staticServerInstance, $livepreviewServerIframe;
+    function _initLivePreviewChannel() {
+        livePreviewChannel = new BroadcastChannel(LIVE_PREVIEW_MESSENGER_CHANNEL);
+        livePreviewChannel.onmessage = (event) => {
+            window.logger.livePreview.log("StaticServer: Live Preview message channel Phoenix recvd:", event);
+            const pageLoaderID = event.data.pageLoaderID;
+            const data = event.data.data;
+            const eventName =  data.eventName;
+            const message =  data.message;
+            switch (eventName) {
+            case EVENT_GET_PHOENIX_INSTANCE_ID:
+                _sendToLivePreviewServerTabs({
+                    type: 'PHOENIX_INSTANCE_ID',
+                    PHOENIX_INSTANCE_ID: Phoenix.PHOENIX_INSTANCE_ID
+                }, pageLoaderID);
+                return;
+            case EVENT_GET_CONTENT:
+                getContent(message.path,  message.url)
+                    .then(response =>{
+                        // response has the following attributes set
+                        // response.contents: <text or arrayBuffer content>,
+                        // response.path
+                        // headers: {'Content-Type': 'text/html'} // optional headers
+                        response.type = 'REQUEST_RESPONSE';
+                        response.requestID = message.requestID;
+                        _sendToLivePreviewServerTabs(response, pageLoaderID);
+                    })
+                    .catch(console.error);
+                return;
+            case EVENT_TAB_ONLINE:
+                livePreviewTabs.set(message.clientID, {
+                    lastSeen: new Date(),
+                    URL: message.URL
+                });
+                return;
+            case EVENT_REPORT_ERROR:
+                logger.reportError(new Error(message));
+                return;
+            default:
+                exports.trigger(eventName, {
+                    data
+                });
+            }
+        };
+    }
 
     // see markdown advanced rendering options at https://marked.js.org/using_advanced
     marked.setOptions({
@@ -156,7 +161,7 @@ define(function (require, exports, module) {
      *        root           - Native path to the project root (and base URL)
      */
     function StaticServer(config) {
-        config.baseUrl= LiveDevServerManager.getStaticServerBaseURLs().projectBaseURL;
+        config.baseUrl= LiveDevServerManager.getStaticServerBaseURLs().previewBaseURL;
         this._getInstrumentedContent = this._getInstrumentedContent.bind(this);
         BaseServer.call(this, config);
     }
@@ -422,26 +427,16 @@ define(function (require, exports, module) {
         return Promise.reject("Cannot get content");
     };
 
-    let serverStarted = false;
     /**
      * See BaseServer#start. Starts listenting to StaticServerDomain events.
      */
     StaticServer.prototype.start = async function () {
         _staticServerInstance = this;
+        // in browsers, the virtual server is always loaded permanently in iframe.
+    };
 
-        // load the hidden iframe that loads the service worker server page once. we will reuse the same server
-        // as this is a cross-origin server phcode.live, the browser will identify it as a security issue
-        // if we continuously reload the service worker loader page frequently and it will stop working.
-        if(serverStarted){
-            return;
-        }
-        if(!Phoenix.browser.isTauri) {
-            $livepreviewServerIframe = $("#live-preview-server-iframe");
-            let url = LiveDevServerManager.getStaticServerBaseURLs().baseURL +
-                `?parentOrigin=${location.origin}`;
-            $livepreviewServerIframe.attr("src", url);
-            serverStarted = true;
-        }
+    StaticServer.prototype.isActive = function () {
+        return _staticServerInstance === this;
     };
 
     /**
@@ -451,7 +446,6 @@ define(function (require, exports, module) {
         _staticServerInstance = undefined;
     };
 
-    EventManager.registerEventHandler("ph-liveServer", exports);
     exports.on(EVENT_REPORT_ERROR, function(_ev, event){
         logger.reportError(new Error(event.data.message));
     });
@@ -488,23 +482,25 @@ define(function (require, exports, module) {
         });
     });
 
-    // If we didn't receive heartbeat message from a tab for 10 seconds, we assume tab closed
-    const TAB_HEARTBEAT_TIMEOUT = 10000; // in millis secs
-    setInterval(()=>{
-        let endTime = new Date();
-        for(let tab of livePreviewTabs.keys()){
-            const tabInfo = livePreviewTabs.get(tab);
-            let timeDiff = endTime - tabInfo.lastSeen; // in ms
-            if(timeDiff > TAB_HEARTBEAT_TIMEOUT){
-                livePreviewTabs.delete(tab);
-                // the parent navigationTab `phcode.dev/live-preview-loader.html` which loads the live preview tab also
-                // is in this list. We should not raise browser close event if its just a live-preview-loader tab.
-                if(!tabInfo.navigationTab) {
-                    exports.trigger('BROWSER_CLOSE', { data: { message: {clientID: tab}}});
+    function _startHeartBeatListeners() {
+        // If we didn't receive heartbeat message from a tab for 10 seconds, we assume tab closed
+        const TAB_HEARTBEAT_TIMEOUT = 10000; // in millis secs
+        setInterval(()=>{
+            let endTime = new Date();
+            for(let tab of livePreviewTabs.keys()){
+                const tabInfo = livePreviewTabs.get(tab);
+                let timeDiff = endTime - tabInfo.lastSeen; // in ms
+                if(timeDiff > TAB_HEARTBEAT_TIMEOUT){
+                    livePreviewTabs.delete(tab);
+                    // the parent navigationTab `phcode.dev/live-preview-loader.html` which loads the live preview tab
+                    // is in the list too. We should not raise browser close for a live-preview-loader tab.
+                    if(!tabInfo.navigationTab) {
+                        exports.trigger('BROWSER_CLOSE', { data: { message: {clientID: tab}}});
+                    }
                 }
             }
-        }
-    }, 1000);
+        }, 1000);
+    }
 
     /**
      * The message should be and object of the form: {type, ...}. a type attribute is mandatory
@@ -548,8 +544,6 @@ define(function (require, exports, module) {
         });
     });
 
-    ProjectManager.on(ProjectManager.EVENT_PROJECT_OPEN, _projectOpened);
-
     function getTabPopoutURL(url) {
         let openURL = new URL(url);
         // we tag all externally opened urls with query string parameter phcodeLivePreview="true" to address
@@ -562,7 +556,25 @@ define(function (require, exports, module) {
         return livePreviewTabs.size > 0;
     }
 
+    function init() {
+        if(!Phoenix.browser.isTauri) {
+            // load the hidden iframe that loads the service worker server page once. we will reuse the same server
+            // as this is a cross-origin server phcode.live, the browser will identify it as a security issue
+            // if we continuously reload the service worker loader page frequently and it will stop working.
+            $livepreviewServerIframe = $("#live-preview-server-iframe");
+            let url = LiveDevServerManager.getStaticServerBaseURLs().baseURL +
+                `?parentOrigin=${location.origin}`;
+            $livepreviewServerIframe.attr("src", url);
+        }
+        _initNavigatorChannel();
+        _initLivePreviewChannel();
+        EventManager.registerEventHandler("ph-liveServer", exports);
+        ProjectManager.on(ProjectManager.EVENT_PROJECT_OPEN, _projectOpened);
+        _startHeartBeatListeners();
+    }
+
     LiveDevelopment.setLivePreviewTransportBridge(exports);
+    exports.init = init;
     exports.StaticServer = StaticServer;
     exports.messageToLivePreviewTabs = messageToLivePreviewTabs;
     exports.livePreviewTabs = livePreviewTabs;
