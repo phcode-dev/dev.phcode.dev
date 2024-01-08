@@ -58,10 +58,13 @@ define(function (require, exports, module) {
         NativeApp           = require("utils/NativeApp"),
         StringUtils         = require("utils/StringUtils"),
         FileSystem          = require("filesystem/FileSystem"),
-        StaticServer  = require("./StaticServer"),
+        BrowserStaticServer  = require("./BrowserStaticServer"),
+        NodeStaticServer  = require("./NodeStaticServer"),
         TrustProjectHTML    = require("text!./trust-project.html"),
         panelHTML       = require("text!./panel.html"),
         utils = require('./utils');
+
+    const StaticServer = Phoenix.browser.isTauri? NodeStaticServer : BrowserStaticServer;
 
     const PREVIEW_TRUSTED_PROJECT_KEY = "preview_trusted";
     const PREVIEW_PROJECT_README_KEY = "preview_readme";
@@ -86,18 +89,20 @@ define(function (require, exports, module) {
     }
 
     function _isProjectPreviewTrusted() {
-        // In desktop builds, each project is securely sandboxed in its own live preview server:port domain.
-        // This setup ensures security within the browser sandbox, eliminating the need for a trust
-        // confirmation dialog. We can display the live preview immediately.
-        if(Phoenix.browser.isTauri || Phoenix.isTestWindow){ // for test windows, we trust all test files
+        // We show a trust project window before executing a live preview as it may call websites on project open
+        // or send analytics data from live preview. The live preview can also instruct phoenix to change project
+        // code. So, do not execute any live preview code even in a browser sandbox without asking the user first.
+        if(Phoenix.isTestWindow){ // for test windows, we trust all test files
             return true;
         }
-        // In browsers, since all live previews for all projects uses the same phcode.live domain,
-        // untrusted projects can access data of past opened projects. So we have to show a trust project?
-        // dialog in live preview in browser.
-        // Future plans for browser versions include adopting a similar approach to dynamically generate
-        // URLs in the format `project-name.phcode.live`. This will streamline the workflow by removing
-        // the current reliance on users to manually verify and trust each project in the browser.
+        // In browsers, The url bar will show up as phcode.dev for live previews and there is a chance that
+        // a malicious project can appear as `phcode.dev` when user live previews. So for every live preview
+        // popout tab which shows `phcode.dev` in browser address bar, we will show a trust live preview
+        // confirm dialog every single time when user opens live preivew project.
+        // Further, since all live previews for all projects uses the same phcode.live domain,
+        // untrusted projects can access data of past opened projects. Future plans for browser versions
+        // include adopting a similar approach to desktop to dynamically generate URLs in the format
+        // `project-name.phcode.live` preventing the past data access problem in browser.
         const projectPath = ProjectManager.getProjectRoot().fullPath;
         if(projectPath === ProjectManager.getWelcomeProjectPath() ||
             projectPath === ProjectManager.getExploreProjectPath()){
@@ -305,7 +310,7 @@ define(function (require, exports, module) {
             return;
         }
         // panel-live-preview-title
-        let previewDetails = await utils.getPreviewDetails();
+        let previewDetails = await StaticServer.getPreviewDetails();
         if(urlPinned && !force) {
             return;
         }
@@ -342,7 +347,7 @@ define(function (require, exports, module) {
         if(changedFile && utils.isPreviewableFile(changedFile.fullPath)){
             // we are getting this change event somehow.
             // bug, investigate why we get this change event as a project file change.
-            const previewDetails = await utils.getPreviewDetails();
+            const previewDetails = await StaticServer.getPreviewDetails();
             if(!(LiveDevelopment.isActive() && previewDetails.isHTMLFile)) {
                 // We force reload live preview on save for all non html preview-able file or
                 // if html file and live preview isnt active.
@@ -374,7 +379,7 @@ define(function (require, exports, module) {
         if(urlPinned){
             _togglePinUrl();
         }
-        $iframe.attr('src', utils.getNoPreviewURL());
+        $iframe.attr('src', StaticServer.getNoPreviewURL());
         if(!panel.isVisible()){
             return;
         }
@@ -408,7 +413,7 @@ define(function (require, exports, module) {
      */
     async function _openLivePreviewURL(_event, previewDetails) {
         _loadPreview(true);
-        const currentPreviewDetails = await utils.getPreviewDetails();
+        const currentPreviewDetails = await StaticServer.getPreviewDetails();
         if(currentPreviewDetails.isHTMLFile && currentPreviewDetails.fullPath !== previewDetails.fullPath){
             console.error("Live preview URLs differ between phoenix live preview extension and core live preview",
                 currentPreviewDetails, previewDetails);
@@ -452,7 +457,7 @@ define(function (require, exports, module) {
         });
         StaticServer.on(StaticServer.EVENT_SERVER_READY, function (_evt, event) {
             // We always show the live preview panel on startup if there is a preview file
-            utils.getPreviewDetails().then(previewDetails =>{
+            StaticServer.getPreviewDetails().then(previewDetails =>{
                 if(previewDetails.filePath && !panelShownOnce){
                     // only show if there is some file to preview and not the default no-preview preview on startup
                     _setPanelVisibility(true);
