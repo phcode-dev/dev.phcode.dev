@@ -46,15 +46,24 @@ define(function (require, exports, module) {
         redirectionHTMLTemplate = require("text!./redirectPage.html");
 
     const LIVE_SERVER_NODE_CONNECTOR_ID = "ph_live_server";
+    const PREVIEW_PORT_KEY = "preview_port";
     let liveServerConnector;
-    let staticServerURL;
+    let staticServerURL, livePreviewCommURL;
+
+    function _getProjectPreferredPort(projectPath) {
+        const preferredPortKey = `${PREVIEW_PORT_KEY}-${projectPath}`;
+        return PhStore.getItem(preferredPortKey);
+    }
+
+    function _setProjectPreferredPort(projectPath, port) {
+        const preferredPortKey = `${PREVIEW_PORT_KEY}-${projectPath}`;
+        PhStore.setItem(preferredPortKey, port);
+    }
 
 
     const EVENT_GET_PHOENIX_INSTANCE_ID = 'GET_PHOENIX_INSTANCE_ID';
-    const EVENT_GET_CONTENT = 'GET_CONTENT';
     const EVENT_TAB_ONLINE = 'TAB_ONLINE';
     const EVENT_REPORT_ERROR = 'REPORT_ERROR';
-    const EVENT_UPDATE_TITLE_ICON = 'UPDATE_TITLE_AND_ICON';
     const EVENT_SERVER_READY = 'SERVER_READY';
 
     EventDispatcher.makeEventDispatcher(exports);
@@ -62,20 +71,10 @@ define(function (require, exports, module) {
     const livePreviewTabs = new Map();
     const PHCODE_LIVE_PREVIEW_QUERY_PARAM = "phcodeLivePreview";
 
-    const NAVIGATOR_CHANNEL_ID = `live-preview-loader-${Phoenix.PHOENIX_INSTANCE_ID}`;
-    let navigatorChannel;
     const LIVE_PREVIEW_MESSENGER_CHANNEL = `live-preview-messenger-${Phoenix.PHOENIX_INSTANCE_ID}`;
     let livePreviewChannel;
     let _staticServerInstance, $livepreviewServerIframe;
-
-    function getStaticServerBaseURLs() {
-        return {
-            baseURL: "http://localhost:port/", // to dynamic for project
-            origin: "http://localhost:port",
-            previewBaseURL:
-                `http://localhost:port/vfs/PHOENIX_LIVE_PREVIEW_${Phoenix.PHOENIX_INSTANCE_ID}`
-        };
-    }
+    let projectServerPort = 0;
 
     function getNoPreviewURL(){
         return `${staticServerURL}phoenix-splash/no-preview.html?jsonInput=`+
@@ -83,26 +82,13 @@ define(function (require, exports, module) {
                 +`"details":"${Strings.DESCRIPTION_LIVEDEV_NO_PREVIEW_DETAILS}"}`);
     }
 
-    function getLivePreviewBaseURL() {
-        return getStaticServerBaseURLs().previewBaseURL;
-    }
-
-    function _initNavigatorChannel() {
-        navigatorChannel = new BroadcastChannel(NAVIGATOR_CHANNEL_ID);
-        navigatorChannel.onmessage = (event) => {
-            window.logger.livePreview.log("Live Preview navigator channel: Phoenix received event from tab: ", event);
-            const type = event.data.type;
-            switch (type) {
-            case 'TAB_LOADER_ONLINE':
-                livePreviewTabs.set(event.data.pageLoaderID, {
-                    lastSeen: new Date(),
-                    URL: event.data.URL,
-                    navigationTab: true
-                });
-                return;
-            default: return; // ignore messages not intended for us.
-            }
-        };
+    async function tabLoaderOnline(data) {
+        window.logger.livePreview.log("Live Preview navigator channel: tabLoaderOnline: ", data);
+        livePreviewTabs.set(data.pageLoaderID, {
+            lastSeen: new Date(),
+            URL: data.URL,
+            navigationTab: true
+        });
     }
 
     // this is the server tabs located at "src/live-preview.html" which embeds the `phcode.live` server and
@@ -128,19 +114,6 @@ define(function (require, exports, module) {
                     type: 'PHOENIX_INSTANCE_ID',
                     PHOENIX_INSTANCE_ID: Phoenix.PHOENIX_INSTANCE_ID
                 }, pageLoaderID);
-                return;
-            case EVENT_GET_CONTENT:
-                getContent(message.path,  message.url)
-                    .then(response =>{
-                        // response has the following attributes set
-                        // response.contents: <text or arrayBuffer content>,
-                        // response.path
-                        // headers: {'Content-Type': 'text/html'} // optional headers
-                        response.type = 'REQUEST_RESPONSE';
-                        response.requestID = message.requestID;
-                        _sendToLivePreviewServerTabs(response, pageLoaderID);
-                    })
-                    .catch(console.error);
                 return;
             case EVENT_TAB_ONLINE:
                 livePreviewTabs.set(message.clientID, {
@@ -184,7 +157,17 @@ define(function (require, exports, module) {
      *        root           - Native path to the project root (and base URL)
      */
     function StaticServer(config) {
-        this._baseUrl       = getStaticServerBaseURLs().previewBaseURL;
+        const self = this;
+        this._serverStartPromise = liveServerConnector.execPeer('startStaticServer', {
+            projectRoot: config.root,
+            preferredPort: _getProjectPreferredPort(config.root)
+        }).then((projectConfig)=>{
+            projectServerPort = projectConfig.port;
+            self._baseUrl       = `http://localhost:${projectServerPort}`;
+            if(!_getProjectPreferredPort(config.root)){
+                _setProjectPreferredPort(config.root, projectConfig.port);
+            }
+        });
         this._getInstrumentedContent = this._getInstrumentedContent.bind(this);
         BaseServer.call(this, config);
     }
@@ -274,7 +257,11 @@ define(function (require, exports, module) {
      *     the server is ready/failed.
      */
     StaticServer.prototype.readyToServe = function () {
-        return $.Deferred().resolve().promise(); // virtual server is always assumed present in phoenix
+        const result = new $.Deferred();
+        this._serverStartPromise
+            .then(result.resolve)
+            .catch(result.reject);
+        return result.promise();
     };
 
     /**
@@ -338,7 +325,7 @@ define(function (require, exports, module) {
                     };
                     let html = Mustache.render(markdownHTMLTemplate, templateVars);
                     resolve({
-                        contents: html,
+                        textContents: html,
                         headers: {'Content-Type': 'text/html'},
                         path: fullPath
                     });
@@ -383,7 +370,7 @@ define(function (require, exports, module) {
                 console.error("Security issue prevented: Live preview tried to access non project resource!!!", path);
                 resolve({
                     path,
-                    contents: Strings.DESCRIPTION_LIVEDEV_SECURITY
+                    textContents: Strings.DESCRIPTION_LIVEDEV_SECURITY
                 });
                 return;
             }
@@ -417,11 +404,15 @@ define(function (require, exports, module) {
                 } else {
                     fs.readFile(requestedPath, fs.BYTE_ARRAY_ENCODING, function (error, binContent) {
                         if(error){
-                            binContent = null;
+                            resolve({
+                                path,
+                                is404: true
+                            });
+                            return;
                         }
                         resolve({
                             path,
-                            contents: binContent
+                            buffer: binContent
                         });
                     });
                     return;
@@ -430,23 +421,26 @@ define(function (require, exports, module) {
 
             resolve({
                 path,
-                contents: contents
+                textContents: contents
             });
         });
     };
 
-    function getContent(path, url) {
+    function getContent(url) {
+        const currentDocument = DocumentManager.getCurrentDocument();
+        const currentFile = currentDocument? currentDocument.file : ProjectManager.getSelectedItem();
         if(!_staticServerInstance){
             return Promise.reject("Static serve not started!");
         }
         if(!url.startsWith(_staticServerInstance.getBaseUrl())) {
-            return Promise.reject("Not serving content as url belongs to another phcode instance: " + url);
+            return Promise.reject("Not serving content as url invalid: " + url);
         }
-        if(utils.isMarkdownFile(path)){
-            return _getMarkdown(path);
+        const filePath = _staticServerInstance.urlToPath(url);
+        if(utils.isMarkdownFile(filePath) && currentFile && currentFile.fullPath === filePath){
+            return _getMarkdown(filePath);
         }
         if(_staticServerInstance){
-            return _staticServerInstance._getInstrumentedContent(path, url);
+            return _staticServerInstance._getInstrumentedContent(filePath, url);
         }
         return Promise.reject("Cannot get content");
     };
@@ -473,25 +467,7 @@ define(function (require, exports, module) {
     exports.on(EVENT_REPORT_ERROR, function(_ev, event){
         logger.reportError(new Error(event.data.message));
     });
-    exports.on(EVENT_GET_CONTENT, function(_ev, event){
-        window.logger.livePreview.log("Static Server GET_CONTENT", event);
-        if(event.data.message && event.data.message.phoenixInstanceID === Phoenix.PHOENIX_INSTANCE_ID) {
-            const requestPath = event.data.message.path,
-                requestID = event.data.message.requestID,
-                url = event.data.message.url;
-            getContent(requestPath, url)
-                .then(response =>{
-                    // response has the following attributes set
-                    // response.contents: <text or arrayBuffer content>,
-                    // response.path
-                    // headers: {'Content-Type': 'text/html'} // optional headers
-                    response.type = 'REQUEST_RESPONSE';
-                    response.requestID = requestID;
-                    messageToLivePreviewTabs(response);
-                })
-                .catch(console.error);
-        }
-    });
+
     exports.on(EVENT_GET_PHOENIX_INSTANCE_ID, function(_ev){
         messageToLivePreviewTabs({
             type: 'PHOENIX_INSTANCE_ID',
@@ -545,39 +521,27 @@ define(function (require, exports, module) {
     }
 
     function redirectAllTabs(newURL) {
-        navigatorChannel.postMessage({
+        liveServerConnector.execPeer('navRedirectAllTabs', {
             type: 'REDIRECT_PAGE',
             url: newURL
         });
     }
 
     function _projectOpened(_evt, projectRoot) {
-        navigatorChannel.postMessage({
+        liveServerConnector.execPeer('navMessageProjectOpened', {
             type: 'PROJECT_SWITCH',
             projectRoot: projectRoot.fullPath
         });
-    }
-
-    exports.on(EVENT_UPDATE_TITLE_ICON, function(_ev, event){
-        const title = event.data.message.title;
-        const faviconBase64 = event.data.message.faviconBase64;
-        navigatorChannel.postMessage({
-            type: 'UPDATE_TITLE_ICON',
-            title,
-            faviconBase64
-        });
-    });
-
-    function _getPageLoaderURL(url) {
-        return `${staticServerURL}live-preview-loader.html`;
     }
 
     function getTabPopoutURL(url) {
         let openURL = new URL(url);
         // we tag all externally opened urls with query string parameter phcodeLivePreview="true" to address
         // #LIVE_PREVIEW_TAB_NAVIGATION_RACE_FIX
-        openURL.searchParams.set(StaticServer.PHCODE_LIVE_PREVIEW_QUERY_PARAM, "true");
-        return  _getPageLoaderURL(openURL.href);
+        openURL.searchParams.set(PHCODE_LIVE_PREVIEW_QUERY_PARAM, "true");
+        return `${staticServerURL}live-preview-navigator.html?initialURL=${encodeURIComponent(openURL.href)}`
+            + `&livePreviewCommURL=${encodeURIComponent(livePreviewCommURL)}`
+            + `&isLoggingEnabled=${logger.loggingOptions.logLivePreview}`;
     }
 
     function hasActiveLivePreviews() {
@@ -593,33 +557,32 @@ define(function (require, exports, module) {
         return new Promise(async (resolve, reject)=>{ // eslint-disable-line
             // async is explicitly caught
             try {
-                const projectRoot = ProjectManager.getProjectRoot().fullPath;
-                const projectRootUrl = `${getLivePreviewBaseURL()}${projectRoot}`;
                 const currentDocument = DocumentManager.getCurrentDocument();
                 const currentFile = currentDocument? currentDocument.file : ProjectManager.getSelectedItem();
-                if(currentFile){
-                    let fullPath = currentFile.fullPath;
-                    let httpFilePath = null;
-                    if(fullPath.startsWith("http://") || fullPath.startsWith("https://")){
-                        httpFilePath = fullPath;
-                    }
-                    if(utils.isPreviewableFile(fullPath)){
-                        const filePath = httpFilePath || path.relative(projectRoot, fullPath);
-                        let URL = httpFilePath || `${projectRootUrl}${filePath}`;
-                        resolve({
-                            URL,
-                            filePath: filePath,
-                            fullPath: fullPath,
-                            isMarkdownFile: utils.isMarkdownFile(fullPath),
-                            isHTMLFile: utils.isHTMLFile(fullPath)
-                        });
-                        return;
-                    }
+                if(!currentFile || !_staticServerInstance || !_staticServerInstance.getBaseUrl()){
+                    resolve({
+                        URL: getNoPreviewURL(),
+                        isNoPreview: true
+                    });
                 }
-                resolve({
-                    URL: getNoPreviewURL(),
-                    isNoPreview: true
-                });
+                const projectRoot = ProjectManager.getProjectRoot().fullPath;
+                const projectRootUrl = `${_staticServerInstance.getBaseUrl()}${projectRoot}`;
+                let fullPath = currentFile.fullPath;
+                let httpFilePath = null;
+                if(fullPath.startsWith("http://") || fullPath.startsWith("https://")){
+                    httpFilePath = fullPath;
+                }
+                if(utils.isPreviewableFile(fullPath)){
+                    const filePath = httpFilePath || path.relative(projectRoot, fullPath);
+                    let URL = httpFilePath || `${projectRootUrl}${filePath}`;
+                    resolve({
+                        URL,
+                        filePath: filePath,
+                        fullPath: fullPath,
+                        isMarkdownFile: utils.isMarkdownFile(fullPath),
+                        isHTMLFile: utils.isHTMLFile(fullPath)
+                    });
+                }
             }catch (e) {
                 reject(e);
             }
@@ -629,11 +592,10 @@ define(function (require, exports, module) {
     function init() {
         window.nodeSetupDonePromise.then(nodeConfig =>{
             staticServerURL = `${nodeConfig.staticServerURL}/`;
-            console.error(staticServerURL);
+            livePreviewCommURL = `${nodeConfig.livePreviewCommURL}`;
         });
         liveServerConnector = NodeConnector.createNodeConnector(LIVE_SERVER_NODE_CONNECTOR_ID, exports);
         LiveDevelopment.setLivePreviewTransportBridge(exports);
-        _initNavigatorChannel();
         _initLivePreviewChannel();
         ProjectManager.on(ProjectManager.EVENT_PROJECT_OPEN, _projectOpened);
         _startHeartBeatListeners();
@@ -648,6 +610,9 @@ define(function (require, exports, module) {
     exports.hasActiveLivePreviews = hasActiveLivePreviews;
     exports.getNoPreviewURL = getNoPreviewURL;
     exports.getPreviewDetails = getPreviewDetails;
+    // node apis
+    exports.tabLoaderOnline = tabLoaderOnline;
+    exports.getContent = getContent;
     exports.PHCODE_LIVE_PREVIEW_QUERY_PARAM = PHCODE_LIVE_PREVIEW_QUERY_PARAM;
     exports.EVENT_SERVER_READY = EVENT_SERVER_READY;
 });

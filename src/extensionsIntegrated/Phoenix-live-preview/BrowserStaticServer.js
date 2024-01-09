@@ -500,13 +500,15 @@ define(function (require, exports, module) {
     };
 
     function getContent(path, url) {
+        const currentDocument = DocumentManager.getCurrentDocument();
+        const currentFile = currentDocument? currentDocument.file : ProjectManager.getSelectedItem();
         if(!_staticServerInstance){
             return Promise.reject("Static serve not started!");
         }
         if(!url.startsWith(_staticServerInstance.getBaseUrl())) {
             return Promise.reject("Not serving content as url belongs to another phcode instance: " + url);
         }
-        if(utils.isMarkdownFile(path)){
+        if(utils.isMarkdownFile(path) && currentFile && currentFile.fullPath === path){
             return _getMarkdown(path);
         }
         if(_staticServerInstance){
@@ -646,7 +648,7 @@ define(function (require, exports, module) {
         let openURL = new URL(url);
         // we tag all externally opened urls with query string parameter phcodeLivePreview="true" to address
         // #LIVE_PREVIEW_TAB_NAVIGATION_RACE_FIX
-        openURL.searchParams.set(StaticServer.PHCODE_LIVE_PREVIEW_QUERY_PARAM, "true");
+        openURL.searchParams.set(PHCODE_LIVE_PREVIEW_QUERY_PARAM, "true");
         return  getPageLoaderURL(openURL.href);
     }
 
