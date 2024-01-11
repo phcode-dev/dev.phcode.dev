@@ -337,9 +337,11 @@ define(function (require, exports, module) {
         // preview breaks sporadically. to alleviate this, we create a new iframe every time.
         if(!urlPinned) {
             currentLivePreviewURL = newSrc;
-            currentPreviewFile = previewDetails.filePath;
+            currentPreviewFile = previewDetails.fullPath;
         }
-        _setTitle(currentPreviewFile);
+        let relativeOrFullPath= ProjectManager.makeProjectRelativeIfPossible(currentPreviewFile);
+        relativeOrFullPath = Phoenix.app.getDisplayPath(relativeOrFullPath);
+        _setTitle(relativeOrFullPath);
         if(panel.isVisible()) {
             let newIframe = $(LIVE_PREVIEW_IFRAME_HTML);
             newIframe.insertAfter($iframe);
