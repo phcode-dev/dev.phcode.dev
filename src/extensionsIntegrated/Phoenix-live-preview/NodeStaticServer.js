@@ -158,8 +158,7 @@ define(function (require, exports, module) {
         // See if base url has been specified and path is within project
         if (relativePath !== path) {
             // Map to server url. Base url is already encoded, so don't encode again.
-
-            return `${baseUrl}${encodeURI(path)}`;
+            return `${baseUrl}/${encodeURI(relativePath)}`;
         }
 
         return null;
@@ -173,11 +172,19 @@ define(function (require, exports, module) {
      */
     StaticServer.prototype.urlToPath = function (url) {
         let baseUrl = this.getBaseUrl() || "";
+        const projectRoot = this.getProjectRoot();
 
         if (baseUrl !== "" && url.startsWith(baseUrl)) {
             const urlObj = new URL(url);
 
-            return decodeURI(urlObj.pathname);
+            let relativePath = decodeURI(urlObj.pathname);
+            if(relativePath.startsWith("/")){
+                // security: prevent path leak out of project when /path/../../../another folder/ is given
+                relativePath = path.normalize(relativePath);
+                // remove starting slash
+                relativePath = relativePath.slice(1);
+            }
+            return `${projectRoot}${relativePath}`;
         }
 
         return null;
@@ -312,7 +319,7 @@ define(function (require, exports, module) {
         // strip this query param as the redirection will be done by the page loader and not the content iframe.
         url.searchParams.delete(PHCODE_LIVE_PREVIEW_QUERY_PARAM);
         let templateVars = {
-            redirectURL: url.href
+            redirectURL: _getPageLoaderURL(url.href)
         };
         return Mustache.render(redirectionHTMLTemplate, templateVars);
     }
@@ -474,7 +481,7 @@ define(function (require, exports, module) {
     function redirectAllTabs(newURL) {
         liveServerConnector.execPeer('navRedirectAllTabs', {
             type: 'REDIRECT_PAGE',
-            url: newURL
+            URL: getTabPopoutURL(newURL)
         });
     }
 
@@ -485,14 +492,22 @@ define(function (require, exports, module) {
         });
     }
 
+    function _getPageLoaderURL(url) {
+        return `${staticServerURL}live-preview-navigator.html?initialURL=${encodeURIComponent(url)}`
+            + `&livePreviewCommURL=${encodeURIComponent(livePreviewCommURL)}`
+            + `&isLoggingEnabled=${logger.loggingOptions.logLivePreview}`;
+    }
+
     function getTabPopoutURL(url) {
         let openURL = new URL(url);
         // we tag all externally opened urls with query string parameter phcodeLivePreview="true" to address
         // #LIVE_PREVIEW_TAB_NAVIGATION_RACE_FIX
         openURL.searchParams.set(PHCODE_LIVE_PREVIEW_QUERY_PARAM, "true");
-        return `${staticServerURL}live-preview-navigator.html?initialURL=${encodeURIComponent(openURL.href)}`
-            + `&livePreviewCommURL=${encodeURIComponent(livePreviewCommURL)}`
-            + `&isLoggingEnabled=${logger.loggingOptions.logLivePreview}`;
+        if(utils.isHTMLFile(openURL.pathname) && url.startsWith(_staticServerInstance.getBaseUrl())){
+            // this is a live preview html with in built navigation, so we can sever it as is.
+            return openURL.href;
+        }
+        return _getPageLoaderURL(openURL.href);
     }
 
     function hasActiveLivePreviews() {
@@ -517,18 +532,17 @@ define(function (require, exports, module) {
                     });
                 }
                 const projectRoot = ProjectManager.getProjectRoot().fullPath;
-                const projectRootUrl = `${_staticServerInstance.getBaseUrl()}${projectRoot}`;
                 let fullPath = currentFile.fullPath;
                 let httpFilePath = null;
                 if(fullPath.startsWith("http://") || fullPath.startsWith("https://")){
                     httpFilePath = fullPath;
                 }
                 if(utils.isPreviewableFile(fullPath)){
-                    const filePath = httpFilePath || path.relative(projectRoot, fullPath);
-                    let URL = httpFilePath || `${projectRootUrl}${filePath}`;
+                    const relativeFilePath = httpFilePath || path.relative(projectRoot, fullPath);
+                    let URL = httpFilePath || decodeURI(_staticServerInstance.pathToUrl(fullPath));
                     resolve({
                         URL,
-                        filePath: filePath,
+                        filePath: relativeFilePath,
                         fullPath: fullPath,
                         isMarkdownFile: utils.isMarkdownFile(fullPath),
                         isHTMLFile: utils.isHTMLFile(fullPath)

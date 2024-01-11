@@ -466,7 +466,7 @@ define(function (require, exports, module) {
                 console.error("Security issue prevented: Live preview tried to access non project resource!!!", path);
                 resolve({
                     path,
-                    contents: Strings.DESCRIPTION_LIVEDEV_SECURITY
+                    contents: null // 404. the user doesnt need to know this, might be a mistake too
                 });
                 return;
             }
@@ -632,7 +632,7 @@ define(function (require, exports, module) {
     function redirectAllTabs(newURL) {
         navigatorChannel.postMessage({
             type: 'REDIRECT_PAGE',
-            url: newURL
+            URL: newURL
         });
     }
 
