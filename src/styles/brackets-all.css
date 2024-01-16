@@ -8928,25 +8928,31 @@ ins.jstree-icon {
 .dark.platform-linux .quiet-scrollbars :focus::-webkit-scrollbar-thumb:horizontal {
   min-width: 20px;
 }
-.platform-linux ::-webkit-scrollbar {
+.platform-linux ::-webkit-scrollbar,
+.platform-mac ::-webkit-scrollbar {
   width: 12px;
   height: 12px;
 }
-.platform-linux ::-webkit-scrollbar-track:vertical {
+.platform-linux ::-webkit-scrollbar-track:vertical,
+.platform-mac ::-webkit-scrollbar-track:vertical {
   margin: 0 0 8px 0;
 }
-.platform-linux ::-webkit-scrollbar-track:horizontal {
+.platform-linux ::-webkit-scrollbar-track:horizontal,
+.platform-mac ::-webkit-scrollbar-track:horizontal {
   margin: 0 8px 0 0;
 }
-.platform-linux ::-webkit-scrollbar-thumb {
+.platform-linux ::-webkit-scrollbar-thumb,
+.platform-mac ::-webkit-scrollbar-thumb {
   border-radius: 999px;
-  box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.24) inset;
+  box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.24) inset;
   border: 2px solid transparent;
 }
-.platform-linux ::-webkit-scrollbar-corner {
+.platform-linux ::-webkit-scrollbar-corner,
+.platform-mac ::-webkit-scrollbar-corner {
   background: none;
 }
-.platform-linux ::-webkit-scrollbar-thumb:window-inactive {
+.platform-linux ::-webkit-scrollbar-thumb:window-inactive,
+.platform-mac ::-webkit-scrollbar-thumb:window-inactive {
   box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.12) inset;
 }
 .platform-win ::-webkit-scrollbar {
@@ -8995,13 +9001,17 @@ ins.jstree-icon {
   box-shadow: 0 0 0 12px #a9a9a9 inset;
 }
 .dark.platform-linux .CodeMirror-scrollbar-filler,
-.dark.platform-linux .CodeMirror-gutter-filler {
+.dark.platform-mac .CodeMirror-scrollbar-filler,
+.dark.platform-linux .CodeMirror-gutter-filler,
+.dark.platform-mac .CodeMirror-gutter-filler {
   background-color: #1d1f21;
 }
-.dark.platform-linux ::-webkit-scrollbar-thumb {
-  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.24) inset;
+.dark.platform-linux ::-webkit-scrollbar-thumb,
+.dark.platform-mac ::-webkit-scrollbar-thumb {
+  box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.24) inset;
 }
-.dark.platform-linux ::-webkit-scrollbar-thumb:window-inactive {
+.dark.platform-linux ::-webkit-scrollbar-thumb:window-inactive,
+.dark.platform-mac ::-webkit-scrollbar-thumb:window-inactive {
   box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.12) inset;
 }
 /*
