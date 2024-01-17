@@ -3,17 +3,14 @@
 
 define(function (require, exports, module) {
 
-    let extensionUtils = brackets.getModule('utils/ExtensionUtils'),
-        fileUtils = brackets.getModule('file/FileUtils'),
-        ProjectManager = brackets.getModule('project/ProjectManager'),
-        LanguageManager = brackets.getModule("language/LanguageManager");
-
-    extensionUtils.loadStyleSheet(module, 'css/main.css');
+    let fileUtils = require('file/FileUtils'),
+        ProjectManager = require('project/ProjectManager'),
+        LanguageManager = require("language/LanguageManager");
 
     // use this cheetsheet for fontawesome icons https://fontawesome.com/v5/cheatsheet/free/brands
     // or https://fontawesome.com/v5/cheatsheet/free/solid or https://fontawesome.com/v5/cheatsheet/free/regular
     // or https://devicon.dev/
-    var languages = {
+    const languagesOrModes = {
         folder: "fa-folder fa-solid",
 
         css: "devicon-css3-plain",
@@ -26,6 +23,7 @@ define(function (require, exports, module) {
         'css.map': "fa-map-signs fa-solid",
         xml: 'fa-code fa-solid',
         jsx: 'fa-react fa-brands',
+        tsx: 'devicon-typescript-plain',
         hbs: "devicon-handlebars-plain",
         eot: "fa-font fa-solid",
         woff: "fa-font fa-solid",
@@ -67,6 +65,7 @@ define(function (require, exports, module) {
 
         c: "devicon-c-plain nocolor",
         cpp: "devicon-cplusplus-plain nocolor",
+        'c++': "devicon-cplusplus-plain nocolor",
         'objective-c': "devicon-objectivec-plain nocolor",
         kotlin: "devicon-kotlin-plain",
         'c#': "devicon-csharp-plain",
@@ -92,6 +91,8 @@ define(function (require, exports, module) {
 
         clojure: "devicon-clojure-plain",
 
+        rust: "devicon-rust-plain nocolor",
+
         styl: "devicon-stylus-original nocolor",
 
         dart: "devicon-dart-plain",
@@ -110,6 +111,10 @@ define(function (require, exports, module) {
 
         hs: 'devicon-haskell-plain nocolor',
         lhs: 'devicon-haskell-plain nocolor',
+
+        // latex
+        latex: "devicon-latex-original nocolor",
+        tex: "devicon-latex-original nocolor",
 
         psd: 'devicon-photoshop-plain',
         ai: 'devicon-illustrator-plain',
@@ -167,7 +172,7 @@ define(function (require, exports, module) {
 
         if (!entry.isFile) {
             el.removeClass('fa-solid fa-file');
-            el.addClass(languages.folder);
+            el.addClass(languagesOrModes.folder);
             return span;
         }
 
@@ -180,20 +185,20 @@ define(function (require, exports, module) {
             if(!files[filename].includes('nocolor') && color){
                 el.addClass('colored');
             }
-        } else if (languages[ext]) {
+        } else if (languagesOrModes[ext]) {
             el.removeClass('fa-solid fa-file');
-            el.addClass(languages[ext]);
-            if(!languages[ext].includes('nocolor') && color){
+            el.addClass(languagesOrModes[ext]);
+            if(!languagesOrModes[ext].includes('nocolor') && color){
                 el.addClass('colored');
             }
         } else{
             let lang = LanguageManager.getLanguageForPath(entry.fullPath).getName().toLowerCase();
-            if(!languages[lang]){
+            if(!languagesOrModes[lang]){
                 return span;
             }
             el.removeClass('fa-solid fa-file');
-            el.addClass(languages[lang]);
-            if(!languages[lang].includes('nocolor') && color){
+            el.addClass(languagesOrModes[lang]);
+            if(!languagesOrModes[lang].includes('nocolor') && color){
                 el.addClass('colored');
             }
         }
