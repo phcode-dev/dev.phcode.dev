@@ -19,6 +19,8 @@
  *
  */
 
+/*global path*/
+
 /**
  * WorkingSetView generates the UI for the list of the files user is editing based on the model provided by EditorManager.
  * The UI allows the user to see what files are open/dirty and allows them to close files and specify the current editor.
@@ -31,6 +33,7 @@ define(function (require, exports, module) {
     var AppInit               = require("utils/AppInit"),
         DocumentManager       = require("document/DocumentManager"),
         MainViewManager       = require("view/MainViewManager"),
+        ProjectManager        = require("project/ProjectManager"),
         CommandManager        = require("command/CommandManager"),
         Commands              = require("command/Commands"),
         Menus                 = require("command/Menus"),
@@ -880,7 +883,7 @@ define(function (require, exports, module) {
         } else {
             this.$openFilesContainer.show();
             this.$workingSetListViewHeader.show();
-            this._checkForDuplicatesInWorkingTree();
+            this._checkForDuplicateAndNonProjectFiles();
         }
     };
 
@@ -990,6 +993,32 @@ define(function (require, exports, module) {
     };
 
     /**
+     * Adds full directory names to elements representing passed files in working tree
+     * @private
+     * @param {Array.<string>} filesPathList - list of fullPath strings
+     */
+    WorkingSetView.prototype._addFullDirectoryNamesToWorkingTreeFiles = function (filesPathList) {
+        // filesList must have at least two files in it for this to make sense
+        if (!filesPathList.length) {
+            return;
+        }
+
+        // Go through open files and add directories to appropriate entries
+        this.$openFilesContainer.find("ul > li").each(function () {
+            const $li = $(this);
+            let filePath = $li.data(_FILE_KEY).fullPath;
+            const io = filesPathList.indexOf(filePath);
+            if (io !== -1) {
+                let dirPath = path.dirname(filePath);
+                dirPath = Phoenix.app.getDisplayPath(dirPath);
+                const $dir = $(`<span title='${Phoenix.app.getDisplayPath(filePath)}' class='directory'/>`)
+                    .html(" &mdash; " + dirPath);
+                $li.children("a").append($dir);
+            }
+        });
+    };
+
+    /**
      * Adds directory names to elements representing passed files in working tree
      * @private
      * @param {Array.<File>} filesList - list of Files with the same filename
@@ -1023,9 +1052,10 @@ define(function (require, exports, module) {
      * and adds a parent directory name to them
      * @private
      */
-    WorkingSetView.prototype._checkForDuplicatesInWorkingTree = function () {
-        var self = this,
+    WorkingSetView.prototype._checkForDuplicateAndNonProjectFiles = function () {
+        let self = this,
             map = {},
+            externalProjectFiles = [],
             fileList = MainViewManager.getWorkingSet(MainViewManager.ALL_PANES);
 
         // We need to always clear current directories as files could be removed from working tree.
@@ -1034,13 +1064,19 @@ define(function (require, exports, module) {
         // Go through files and fill map with arrays of files.
         fileList.forEach(function (file) {
             // Use the same function that is used to create html for file.
-            var displayHtml = ViewUtils.getFileEntryDisplay(file);
+            const displayName = path.basename(file.fullPath);
 
-            if (!map[displayHtml]) {
-                map[displayHtml] = [];
+            if (!map[displayName]) {
+                map[displayName] = [];
             }
-            map[displayHtml].push(file);
+            if(ProjectManager.isWithinProject(file)){
+                map[displayName].push(file);
+            } else {
+                externalProjectFiles.push(file.fullPath);
+            }
         });
+
+        self._addFullDirectoryNamesToWorkingTreeFiles(externalProjectFiles);
 
         // Go through the map and solve the arrays with length over 1. Ignore the rest.
         _.forEach(map, function (value) {
@@ -1237,7 +1273,7 @@ define(function (require, exports, module) {
         if (paneId === this.paneId) {
             this._rebuildViewList(true);
         } else {
-            this._checkForDuplicatesInWorkingTree();
+            this._checkForDuplicateAndNonProjectFiles();
         }
     };
 
@@ -1252,7 +1288,7 @@ define(function (require, exports, module) {
         if (paneId === this.paneId) {
             this._rebuildViewList(true);
         } else {
-            this._checkForDuplicatesInWorkingTree();
+            this._checkForDuplicateAndNonProjectFiles();
         }
     };
 
@@ -1292,10 +1328,10 @@ define(function (require, exports, module) {
             /*
              * When this event is handled by a pane that is not being updated then
              * the suppressRedraw flag does not need to be respected.
-             * _checkForDuplicatesInWorkingTree() does not remove any entries so it's
+             * _checkForDuplicateAndNonProjectFiles() does not remove any entries so it's
              * safe to call at any time.
              */
-            this._checkForDuplicatesInWorkingTree();
+            this._checkForDuplicateAndNonProjectFiles();
         }
     };
 
@@ -1318,7 +1354,7 @@ define(function (require, exports, module) {
 
             this._redraw();
         } else {
-            this._checkForDuplicatesInWorkingTree();
+            this._checkForDuplicateAndNonProjectFiles();
         }
     };
 
@@ -1358,7 +1394,7 @@ define(function (require, exports, module) {
         if (this.paneId === paneId) {
             this._rebuildViewList(true);
         } else {
-            this._checkForDuplicatesInWorkingTree();
+            this._checkForDuplicateAndNonProjectFiles();
         }
     };
 
