@@ -35,8 +35,12 @@ define(function (require, exports, module) {
         FileSystem = require("filesystem/FileSystem"),
         EventDispatcher = require("utils/EventDispatcher"),
         ProjectManager = require("project/ProjectManager"),
+        EventManager = require("utils/EventManager"),
         Strings = require("strings"),
         utils = require('./utils'),
+        NativeApp = require("utils/NativeApp"),
+        Dialogs = require("widgets/Dialogs"),
+        StringUtils         = require("utils/StringUtils"),
         BootstrapCSSText = require("text!thirdparty/bootstrap/bootstrap.min.css"),
         GithubCSSText = require("text!thirdparty/highlight.js/styles/github.min.css"),
         HilightJSText = require("text!thirdparty/highlight.js/highlight.min.js"),
@@ -47,6 +51,7 @@ define(function (require, exports, module) {
 
     const LIVE_SERVER_NODE_CONNECTOR_ID = "ph_live_server";
     const PREVIEW_PORT_KEY = "preview_port";
+    const EVENT_EMBEDDED_IFRAME_HREF_CLICK = 'embeddedIframeHrefClick';
     let liveServerConnector;
     let staticServerURL, livePreviewCommURL;
 
@@ -228,10 +233,14 @@ define(function (require, exports, module) {
         this._serverStartPromise
             .then(()=>{
                 exports.trigger(EVENT_SERVER_READY);
+                const baseUrl = this.getBaseUrl();
+                EventManager.setTrustedOrigin(baseUrl, true);
                 result.resolve();
             })
             .catch((err)=>{
                 logger.reportError(err);
+                const baseUrl = this.getBaseUrl();
+                EventManager.setTrustedOrigin(baseUrl, false);
                 result.reject();
             });
         return result.promise();
@@ -294,7 +303,8 @@ define(function (require, exports, module) {
                         BOOTSTRAP_LIB_CSS: BootstrapCSSText,
                         HIGHLIGHT_JS_CSS: GithubCSSText,
                         HIGHLIGHT_JS: HilightJSText,
-                        GFM_CSS: GFMCSSText
+                        GFM_CSS: GFMCSSText,
+                        PARENT_ORIGIN: location.origin
                     };
                     let html = Mustache.render(markdownHTMLTemplate, templateVars);
                     resolve({
@@ -652,6 +662,36 @@ define(function (require, exports, module) {
         return `TRANSPORT_CONFIG.LIVE_PREVIEW_WEBSOCKET_CHANNEL_URL = "${livePreviewCommURL}";\n`;
     }
 
+    let urlsOpenedInLast5Secs = 0;
+    const MAX_URLS_OPEN_BEFORE_CONFIRM = 4;
+    setInterval(()=>{
+        urlsOpenedInLast5Secs = 0;
+    }, 5000);
+    let dialogIsShown = false;
+    exports.on(EVENT_EMBEDDED_IFRAME_HREF_CLICK, function(_ev, event){
+        if(dialogIsShown) {
+            return;
+        }
+        // only in tauri, as in browsers, browser will open the href urls unlike tauri and
+        // manage too many popups case as well.
+        const href = event.data.href;
+        urlsOpenedInLast5Secs ++;
+        if(urlsOpenedInLast5Secs >= MAX_URLS_OPEN_BEFORE_CONFIRM) {
+            dialogIsShown = true;
+            Dialogs.showConfirmDialog(Strings.CONFIRM_EXTERNAL_BROWSER_TITLE,
+                StringUtils.format(Strings.CONFIRM_EXTERNAL_BROWSER_MESSAGE, href))
+                .done(id=>{
+                    if (id === Dialogs.DIALOG_BTN_OK) {
+                        urlsOpenedInLast5Secs = 0;
+                        href && NativeApp.openURLInDefaultBrowser(href);
+                    }
+                    dialogIsShown = false;
+                });
+        } else {
+            href && NativeApp.openURLInDefaultBrowser(href);
+        }
+    });
+
     function init() {
         window.nodeSetupDonePromise.then(nodeConfig =>{
             staticServerURL = `${nodeConfig.staticServerURL}/`;
@@ -661,6 +701,7 @@ define(function (require, exports, module) {
         LiveDevelopment.setLivePreviewTransportBridge(exports);
         ProjectManager.on(ProjectManager.EVENT_PROJECT_OPEN, _projectOpened);
         _startHeartBeatListeners();
+        EventManager.registerEventHandler("ph-liveServer", exports);
     }
 
     exports.init = init;
