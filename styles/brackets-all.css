@@ -10775,6 +10775,11 @@ img {
 #selection-view-container.preview-bubble-below:after {
   display: none;
 }
+.sticky-li-top {
+  position: sticky;
+  top: 0;
+  background: #f6a644;
+}
 /* Modal bar for Find/Quick Open */
 .modal-bar {
   display: block;
