@@ -12,7 +12,7 @@ define(function (require, exports, module) {
         PreferencesManager          = brackets.getModule("preferences/PreferencesManager"),
         Strings                     = brackets.getModule("strings"),
         prefs                       = PreferencesManager.getExtensionPrefs("code-folding"),
-        FOLDS_PREF_KEY              = "code-folding.folds",
+        FOLDS_PREF_KEY              = "code-folding-folds",
         // preference key strings are here for now since they are not used in any UI
         ENABLE_CODE_FOLDING         = "Enable code folding",
         MIN_FOLD_SIZE               = "Minimum fold size",
@@ -79,24 +79,12 @@ define(function (require, exports, module) {
     }
 
     /**
-     * Returns a 'context' object for getting/setting project-specific view state preferences.
-     * Similar to code in MultiRangeInlineEditor._getPrefsContext()...
-     */
-    function getViewStateContext() {
-        var projectRoot = ProjectManager.getProjectRoot();  // note: null during unit tests!
-        return { location: { scope: "user",
-            layer: "project",
-            layerID: projectRoot && projectRoot.fullPath } };
-    }
-
-    /**
       * Gets the line folds saved for the specified path.
       * @param {string} path the document path
       * @return {Object} the line folds for the document at the specified path
       */
     function getFolds(path) {
-        var context = getViewStateContext();
-        var folds = PreferencesManager.getViewState(FOLDS_PREF_KEY, context);
+        var folds = PreferencesManager.getViewState(FOLDS_PREF_KEY, PreferencesManager.STATE_PROJECT_CONTEXT);
         return inflate(folds[path]);
     }
 
@@ -106,10 +94,9 @@ define(function (require, exports, module) {
       * @param {Object} folds the fold ranges to save for the current document
       */
     function setFolds(path, folds) {
-        var context = getViewStateContext();
-        var allFolds = PreferencesManager.getViewState(FOLDS_PREF_KEY, context);
+        const allFolds = PreferencesManager.getViewState(FOLDS_PREF_KEY, PreferencesManager.STATE_PROJECT_CONTEXT);
         allFolds[path] = simplify(folds);
-        PreferencesManager.setViewState(FOLDS_PREF_KEY, allFolds, context);
+        PreferencesManager.setViewState(FOLDS_PREF_KEY, allFolds, PreferencesManager.STATE_PROJECT_CONTEXT);
     }
 
     /**
