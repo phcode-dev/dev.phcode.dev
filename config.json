@@ -22,7 +22,7 @@
         "extension_store_url": "https://store.core.ai/src/",
         "app_notification_url": "assets/notifications/dev/",
         "linting.enabled_by_default": true,
-        "build_timestamp": "2024-01-30T10:42:22.226Z",
+        "build_timestamp": "2024-01-30T16:19:07.228Z",
         "googleAnalyticsID": "G-P4HJFPDB76",
         "googleAnalyticsIDDesktop": "G-VE5BXWJ0HF",
         "mixPanelID": "49c4d164b592be2350fc7af06a259bf3",
@@ -33,7 +33,7 @@
         "bugsnagEnv": "development"
     },
     "name": "Phoenix",
-    "version": "3.2.24-19794",
+    "version": "3.2.24-19796",
     "apiVersion": "3.2.24",
     "homepage": "https://core.ai",
     "issues": {
