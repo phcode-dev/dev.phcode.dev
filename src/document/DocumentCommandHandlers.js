@@ -1633,8 +1633,7 @@ define(function (require, exports, module) {
 
     async function _singleInstanceHandler(args) {
         const isPrimary = await Phoenix.app.isPrimaryDesktopPhoenixWindow();
-        const bootTimeMacOsFlag = (args[0] === "macOSBootTimeDeepLink");
-        if(!bootTimeMacOsFlag && !isPrimary){
+        if(!isPrimary){
             // only primary phoenix windows can open a new window, else every window is going to make its own
             // window and cause a runaway phoenix window explosion.
             return;
@@ -1651,8 +1650,6 @@ define(function (require, exports, module) {
         }
         newPhoenixWindow(args);
     }
-
-    Phoenix.app.setSingleInstanceCLIArgsHandler(_singleInstanceHandler);
 
     function handleFileNewWindow() {
         newPhoenixWindow();
@@ -2030,6 +2027,10 @@ define(function (require, exports, module) {
         _$titleWrapper = $(".title-wrapper", _$titleContainerToolbar);
         _$title = $(".title", _$titleWrapper);
         _$dirtydot = $(".dirty-dot", _$titleWrapper);
+    });
+
+    AppInit.appReady(function () {
+        Phoenix.app.setSingleInstanceCLIArgsHandler(_singleInstanceHandler);
     });
 
     // Exported for unit testing only
