@@ -155,6 +155,12 @@ define(function (require, exports, module) {
     let menuItemMap = {};
 
     /**
+     * Maps menuItemID's to ContextMenu objects
+     * @type {Object.<string, ContextMenu>}
+     */
+    let subMenuItemMap = {};
+
+    /**
      * Retrieves the Menu object for the corresponding id.
      * @param {string} id
      * @return {Menu}
@@ -587,8 +593,14 @@ define(function (require, exports, module) {
         } else {
             // Create the HTML Menu
             $menuItem = $("<li><a href='#' class='menuAnchor' id='" + id + "'> <span class='menu-name'></span></a></li>");
+            const $menuAnchor = $menuItem.find(".menuAnchor");
 
-            $menuItem.on("click", function () {
+            $menuItem.on("click", function (event) {
+                if($menuAnchor.hasClass('disabled')){
+                    event.preventDefault();
+                    event.stopPropagation();
+                    return true;
+                }
                 Metrics.countEvent(Metrics.EVENT_TYPE.UI_MENU, "click", menuItem._command.getID());
                 logger.leaveTrail("UI Menu Click: " + menuItem._command.getID());
                 MainViewManager.focusActivePane();
@@ -606,7 +618,9 @@ define(function (require, exports, module) {
             $menuItem.on("mouseenter", function () {
                 self.closeSubMenu();
                 $menuItem.parent().find(".menuAnchor").removeClass("selected");
-                $menuItem.find(".menuAnchor").addClass("selected");
+                if(!$menuAnchor.hasClass('disabled')){
+                    $menuAnchor.addClass("selected");
+                }
             });
             $menuItem.on("mouseleave", function () {
                 self.closeSubMenu();
@@ -755,12 +769,13 @@ define(function (require, exports, module) {
         // create MenuItem
         let menuItem = new MenuItem(menuItemID, SUBMENU);
         menuItemMap[menuItemID] = menuItem;
+        subMenuItemMap[menuItemID] = menu;
 
         menu.parentMenuItem = menuItem;
 
         // create MenuItem DOM
         // Create the HTML MenuItem
-        let $menuItem = $("<li><a href='#' id='" + menuItemID + "'> "   +
+        let $menuItem = $("<li><a class='sub-menu-item menuAnchor' href='#' id='" + menuItemID + "'> "   +
                          "<span class='menu-name'>" + name + "</span>" +
                          "<span style='float: right'>&rtrif;</span>"   +
                          "</a></li>");
@@ -773,6 +788,12 @@ define(function (require, exports, module) {
             self.closeSubMenu();
             self.openSubMenu = menu;
             menu.open();
+            $menuItem.parent().find(".menuAnchor").removeClass("selected");
+            $menuItem.find(".menuAnchor").addClass("selected");
+        });
+
+        $menuItem.on("mouseleave", function () {
+            $menuItem.find(".menuAnchor").removeClass("selected");
         });
 
         // Insert menu item
@@ -835,6 +856,7 @@ define(function (require, exports, module) {
 
 
         delete menuItemMap[parentMenuItem.id];
+        delete subMenuItemMap[parentMenuItem.id];
         delete contextMenuMap[subMenuID];
     };
 
@@ -982,6 +1004,12 @@ define(function (require, exports, module) {
         $(".dropdown").removeClass("open");
     }
 
+    function _closeAllSubMenus() {
+        for(let menu of Object.values(menuMap)){
+            menu.closeSubMenu();
+        }
+    }
+
     /**
      * Adds a top-level menu to the application menu bar which may be native or HTML-based.
      *
@@ -1023,6 +1051,7 @@ define(function (require, exports, module) {
             $newMenu = $dropdown.append($toggle).append($popUp);
 
         $toggle.on("mouseenter", function() {
+            _closeAllSubMenus();
             const $this = $(this); // Cache the jQuery object of the current element
 
             // Check if '#titlebar' or any of its descendants has focus
@@ -1058,16 +1087,20 @@ define(function (require, exports, module) {
     function _switchMenus($menuDropdownToggle, event) {
         // remove the class 'open' from its parent element
         $menuDropdownToggle.parent().removeClass('open');
+        const menuID = $menuDropdownToggle.parent().get(0).id;
+        const mainMenu = menuMap[menuID];
         const $dropdownToggles = $('#titlebar .dropdown-toggle');
         let currentIndex = $dropdownToggles.index($menuDropdownToggle);
         currentIndex = event.key === KEY.ARROW_LEFT ? currentIndex - 1 : currentIndex + 1;
         const nextIndex = currentIndex % $dropdownToggles.length;
         $dropdownToggles.eq(nextIndex).parent().addClass('open');
         $dropdownToggles.eq(nextIndex).focus();
+        mainMenu && mainMenu.closeSubMenu();
     }
 
     function _switchMenuItems($menuDropdownToggle, event) {
         // change code such that if event.key is KEY.ARROW_UP or KEY.ARROW_DOWN, the selection will move formward or back
+        const menuID = $menuDropdownToggle.parent().get(0).id;
         const $dropdownMenu = $menuDropdownToggle.parent().find(".dropdown-menu");
         const $selected = $dropdownMenu.find('li a.selected');
         if ($selected.length === 0) {
@@ -1103,6 +1136,18 @@ define(function (require, exports, module) {
 
             // Add the 'selected' class to the next item
             $next.addClass('selected');
+            const mainMenu = menuMap[menuID];
+            if($next.hasClass("sub-menu-item")){
+                const submenuID = $next.get(0).id;
+                const submenu = subMenuItemMap[submenuID];
+                if(submenu){
+                    mainMenu.closeSubMenu();
+                    mainMenu.openSubMenu = submenu;
+                    submenu.open();
+                }
+            } else {
+                mainMenu.closeSubMenu();
+            }
         }
     }
     
@@ -1110,7 +1155,6 @@ define(function (require, exports, module) {
         // change code such that if event.key is KEY.ARROW_UP or KEY.ARROW_DOWN, the selection will move formward or back
         const $dropdownMenu = $menuDropdownToggle.parent().find(".dropdown-menu");
         const $selected = $dropdownMenu.find('li a.selected');
-        console.log("checking selected");
         if ($selected.length === 1 && $dropdownMenu.is(':visible')) {
             // something is selected
             MainViewManager.focusActivePane();
@@ -1128,7 +1172,6 @@ define(function (require, exports, module) {
             return;
         }
         if ($('#titlebar, #titlebar *').is(':focus')) {
-            console.log("checking selected");
             // If '#titlebar' or a descendant has focus, add 'selected' class and focus the current element
             if(event.key === KEY.ESCAPE){
                 MainViewManager.focusActivePane();
