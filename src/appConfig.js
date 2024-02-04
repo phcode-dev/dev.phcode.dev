@@ -23,7 +23,7 @@ window.AppConfig = {
         "extension_store_url": "https://store.core.ai/src/",
         "app_notification_url": "assets/notifications/dev/",
         "linting.enabled_by_default": true,
-        "build_timestamp": "2024-02-03T18:15:44.918Z",
+        "build_timestamp": "2024-02-04T06:27:22.043Z",
         "googleAnalyticsID": "G-P4HJFPDB76",
         "googleAnalyticsIDDesktop": "G-VE5BXWJ0HF",
         "mixPanelID": "49c4d164b592be2350fc7af06a259bf3",
@@ -34,7 +34,7 @@ window.AppConfig = {
         "bugsnagEnv": "development"
     },
     "name": "Phoenix",
-    "version": "3.2.25-19815",
+    "version": "3.2.25-19817",
     "apiVersion": "3.2.25",
     "homepage": "https://core.ai",
     "issues": {
