@@ -9545,8 +9545,7 @@ body.dark {
   /* Align to top edge */
   left: 0;
   /* Align to left edge */
-  color: #FFF;
-  /* Text and icon color, white for contrast */
+  color: #444444;
   text-align: center;
   /* Align text centrally */
   padding: 20px;
@@ -9554,6 +9553,9 @@ body.dark {
   box-sizing: border-box;
   /* Include padding in width/height calculations */
   z-index: 10000;
+}
+.dark #ctrl-nav-overlay {
+  color: #FFF;
 }
 .arrowDivs {
   /* Flex container for the icon - though not necessary if only one icon */
@@ -9575,6 +9577,8 @@ body.dark {
   /* Font size for the instruction text */
   max-width: 80%;
   /* Max width of the text to maintain readability */
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
 }
 .hide-cursor {
   cursor: none !important;
