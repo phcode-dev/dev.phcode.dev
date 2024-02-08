@@ -6291,12 +6291,52 @@ body.tauri #titlebar .dirty-dot {
 .dark .inlinemenu-menu .dropdown-menu .divider {
   background-color: #343434;
 }
+.toolbar .nav .menuAnchor,
+.context-menu .menuAnchor,
+.codehint-menu .menuAnchor,
+.inlinemenu-menu .menuAnchor {
+  display: flex;
+  align-items: center;
+  /* Vertically center the items */
+}
+.toolbar .nav .menu-name,
+.context-menu .menu-name,
+.codehint-menu .menu-name,
+.inlinemenu-menu .menu-name {
+  /* Ensures the menu name stays on the left and takes up only the necessary space */
+  white-space: nowrap;
+  /* Prevents the text from wrapping */
+}
+.toolbar .nav .right-pusher,
+.context-menu .right-pusher,
+.codehint-menu .right-pusher,
+.inlinemenu-menu .right-pusher {
+  margin-left: auto;
+  /* Pushes itself and subsequent items to the right */
+  visibility: hidden;
+}
+.toolbar .nav .keyboard-icon,
+.context-menu .keyboard-icon,
+.codehint-menu .keyboard-icon,
+.inlinemenu-menu .keyboard-icon {
+  visibility: hidden;
+}
 .toolbar .nav .menu-shortcut,
 .context-menu .menu-shortcut,
 .codehint-menu .menu-shortcut,
 .inlinemenu-menu .menu-shortcut {
-  float: right;
   margin-left: 15px;
+  /* Spacing between the icon and the shortcut text */
+}
+.menuAnchor.selected .menu-shortcut:not(.fixed-shortcut) {
+  display: none;
+}
+.menuAnchor.selected .keyboard-icon {
+  cursor: pointer;
+  visibility: visible;
+}
+.menuAnchor.selected .keyboard-icon:hover {
+  color: #74B120;
 }
 /* Context menu styles */
 .context-menu,
@@ -7413,7 +7453,7 @@ input[type="color"]:focus,
 .dark .uneditable-input:focus {
   background-color: #555;
   border: 1px solid #2893ef;
-  box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.06), 0 0 0 1px transparent;
+  box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.06), 0 0 0 1px #94ceff;
 }
 textarea:disabled,
 input[type="text"]:disabled,
@@ -7544,12 +7584,12 @@ input[type="color"]:disabled,
   border: 1px solid #202020;
   box-shadow: inset 0 1px rgba(255, 255, 255, 0.06);
 }
-.btn:hover {
-  background-color: #e5e9e9;
+.btn:not(:disabled):not(.disabled):hover {
+  background-color: #f3f5f5;
   color: #333;
 }
-.dark .btn:hover {
-  background-color: #3f3f3f;
+.dark .btn:not(:disabled):not(.disabled):hover {
+  background-color: #595959;
   color: #ccc;
 }
 .btn:focus {
@@ -7560,7 +7600,7 @@ input[type="color"]:disabled,
 }
 .dark .btn:focus {
   border: 1px solid #2893ef;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 0 0 1px transparent;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 0 0 1px #94ceff;
   color: #ccc;
 }
 .btn.active:active {
@@ -7609,7 +7649,7 @@ input[type="color"]:disabled,
 }
 .dark .btn.primary {
   background-color: #016dc4;
-  border: 1px solid #202020;
+  border: 1px solid #1474bf;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
   color: #fff;
 }
@@ -7626,14 +7666,22 @@ input[type="color"]:disabled,
   box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.06);
   color: #fff;
 }
+.btn.primary:not(:disabled):not(.disabled):hover {
+  background-color: #54a5e6;
+  color: #fff;
+}
+.dark .btn.primary:not(:disabled):not(.disabled):hover {
+  background-color: #0189f7;
+  color: #fff;
+}
 .btn.primary:focus {
   border: 1px solid #1474bf;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 0 0 1px #94ceff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 0 0 1px #1473e6;
   outline: none;
 }
 .dark .btn.primary:focus {
-  border: 1px solid #202020;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 0 0 1px transparent;
+  border: 1px solid #1474bf;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 0 0 1px #94ceff;
 }
 .btn.update {
   background-color: #91cc41;
@@ -7650,6 +7698,14 @@ input[type="color"]:disabled,
   color: #fff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.06);
 }
+.btn.update:not(:disabled):not(.disabled):hover {
+  background-color: #9dd155;
+  color: #fff;
+}
+.dark .btn.update:not(:disabled):not(.disabled):hover {
+  background-color: #6ab800;
+  color: #fff;
+}
 .btn.update:active {
   background-color: #82b839;
   border-color: #74B120;
@@ -7660,6 +7716,17 @@ input[type="color"]:disabled,
   background-color: #437900;
   border-color: #202020;
   box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.06);
+  color: #fff;
+}
+.btn.update:focus {
+  border: 1px solid #1474bf;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 0 0 1px #94ceff;
+  outline: none;
+  color: #fff;
+}
+.dark .btn.update:focus {
+  border: 1px solid #1474bf;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 0 0 1px #94ceff;
   color: #fff;
 }
 .btn.danger {
@@ -7675,6 +7742,13 @@ input[type="color"]:disabled,
   border-color: #202020;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
+.btn.danger:not(:disabled):not(.disabled):hover {
+  background-color: #de3037;
+  color: #fff;
+}
+.dark .btn.danger:not(:disabled):not(.disabled):hover {
+  background-color: #de3037;
+}
 .btn.danger:active {
   background-color: #BF4945;
   border-color: #d43f3a;
@@ -7685,6 +7759,16 @@ input[type="color"]:disabled,
   background-color: #CB2027;
   border-color: #202020;
   box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.06);
+}
+.btn.danger:focus {
+  border: 1px solid #1474bf;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 0 0 1px #94ceff;
+  outline: none;
+  color: #fff;
+}
+.dark .btn.danger:focus {
+  border: 1px solid #1474bf;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 0 0 1px #94ceff;
 }
 .btn.large {
   font-size: 14px;
@@ -7720,7 +7804,7 @@ input[type="color"]:disabled,
 }
 .dark .btn-mini:focus {
   border: 1px solid #2893ef;
-  box-shadow: 0 0 0 1px transparent;
+  box-shadow: 0 0 0 1px #94ceff;
 }
 /* Tables */
 .table th,
@@ -7863,7 +7947,7 @@ input[type="checkbox"]:focus {
 .dark select:focus,
 .dark input[type="checkbox"]:focus {
   border: 1px solid #2893ef;
-  box-shadow: 0 0 0 1px transparent;
+  box-shadow: 0 0 0 1px #94ceff;
 }
 select {
   background: #e5e9e9 url("images/select-triangles.svg") no-repeat right 7px center;
@@ -8150,7 +8234,7 @@ code {
 }
 .dark .inline-widget .btn:focus {
   border: 1px solid #2893ef;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 0 0 1px transparent;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 0 0 1px #94ceff;
   color: #ccc;
 }
 .dark .inline-widget .btn:active:not([disabled]) {
