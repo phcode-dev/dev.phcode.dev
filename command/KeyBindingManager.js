@@ -1612,6 +1612,26 @@ define(function (require, exports, module) {
     };
 
     /**
+     * resets all user defined shortcuts
+     * @return {Promise|Promise<void>|*}
+     */
+    function resetUserShortcutsAsync() {
+        return new Promise((resolve, reject)=>{
+            let userKeyMapPath = _getUserKeyMapFilePath(),
+                file = FileSystem.getFileForPath(userKeyMapPath);
+            let defaultContent = "{\n    \"documentation\": \"https://github.com/phcode-dev/phoenix/wiki/User-%60keymap.json%60\"," +
+                "\n    \"overrides\": {" +
+                "\n        \n    }\n}\n";
+
+            return FileUtils.writeText(file, defaultContent, true).done(()=>{
+                _loadUserKeyMapImmediate()
+                    .then(resolve)
+                    .catch(reject);
+            }).fail(reject);
+        });
+    }
+
+    /**
      * @private
      *
      * Opens the existing key map file or creates a new one with default content
@@ -1624,14 +1644,9 @@ define(function (require, exports, module) {
             if (doesExist) {
                 CommandManager.execute(Commands.FILE_OPEN, { fullPath: userKeyMapPath });
             } else {
-                let defaultContent = "{\n    \"documentation\": \"https://github.com/phcode-dev/phoenix/wiki/User-%60keymap.json%60\"," +
-                                     "\n    \"overrides\": {" +
-                                     "\n        \n    }\n}\n";
-
-                FileUtils.writeText(file, defaultContent, true)
-                    .done(function () {
-                        CommandManager.execute(Commands.FILE_OPEN, { fullPath: userKeyMapPath });
-                    });
+                resetUserShortcutsAsync().finally(function () {
+                    CommandManager.execute(Commands.FILE_OPEN, { fullPath: userKeyMapPath });
+                });
             }
         });
     }
@@ -1747,9 +1762,11 @@ define(function (require, exports, module) {
         keyboardShortcutDialog = null,
         capturedShortcut = null;
     function showShortcutSelectionDialog(command) {
+        Metrics.countEvent(Metrics.EVENT_TYPE.KEYBOARD, 'shortcut', "DialogShown");
         if(_isSpecialCommand(command.getID())){
             return;
         }
+        const panelCommand = CommandManager.get(Commands.HELP_TOGGLE_SHORTCUTS_PANEL);
         capturedShortcut = null;
         const keyBindings = getKeyBindings(command);
         let currentShortcut = Strings.KEYBOARD_SHORTCUT_NONE;
@@ -1767,11 +1784,20 @@ define(function (require, exports, module) {
         if(currentShortcut === Strings.KEYBOARD_SHORTCUT_NONE){
             $(".change-shortcut-dialog .Remove").addClass("forced-hidden");
         }
+        if(panelCommand && panelCommand.getChecked()){
+            $(".change-shortcut-dialog .Show").addClass("forced-hidden");
+        }
         keyboardShortcutDialog.done((closeReason)=>{
             if(closeReason === 'remove' && currentShortcut){
                 _addToUserKeymapFile(currentShortcut, null);
+                Metrics.countEvent(Metrics.EVENT_TYPE.KEYBOARD, 'shortcut', "removed");
             } else if(closeReason === Dialogs.DIALOG_BTN_OK && currentShortcut){
                 _addToUserKeymapFile(capturedShortcut, command.getID());
+                Metrics.countEvent(Metrics.EVENT_TYPE.KEYBOARD, 'shortcut', "changed");
+            } else if(closeReason === 'show'){
+                if(!panelCommand.getChecked()){
+                    panelCommand.execute();
+                }
             }
             capturedShortcut = null;
             keyboardShortcutCaptureInProgress = null;
@@ -1809,6 +1835,7 @@ define(function (require, exports, module) {
     exports.addGlobalKeydownHook = addGlobalKeydownHook;
     exports.removeGlobalKeydownHook = removeGlobalKeydownHook;
     exports.isInOverlayMode = isInOverlayMode;
+    exports.resetUserShortcutsAsync = resetUserShortcutsAsync;
     exports.showShortcutSelectionDialog = showShortcutSelectionDialog;
 
     // public constants
