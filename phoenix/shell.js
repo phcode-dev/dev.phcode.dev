@@ -95,24 +95,6 @@ async function openURLInPhoenixWindow(url, {
     return nativeWindow;
 }
 
-function _linuxOpenFileOrFolderLocation(platformPath) {
-    const NodeUtils = window.NodeUtils;
-    return new Promise((resolve, reject)=>{
-        NodeUtils.showInLinuxFileExplorer(platformPath)
-            .then(resolve)
-            .catch((err)=>{
-                console.error("Error NodeUtils.showInLinuxFileExplorer, trying tauri api", err);
-                window.__TAURI__.tauri
-                    .invoke('show_in_folder', {path: platformPath})
-                    .then(resolve)
-                    .catch((err1)=>{
-                        // linux and appimages bad. Try to show parent dir with xdg open as file open failed
-                        console.error("Failed to open NodeUtils.showInLinuxFileExplorer", err1);
-                    });
-            });
-    });
-}
-
 Phoenix.app = {
     getNodeState: function (cbfn){
         cbfn(new Error('Node cannot be run in phoenix browser mode'));
@@ -346,14 +328,10 @@ Phoenix.app = {
                 return;
             }
             const platformPath = Phoenix.fs.getTauriPlatformPath(fullVFSPath);
-            const nodeReady = window.NodeUtils && window.NodeUtils.isNodeReady();
-            if(Phoenix.platform !== "linux" || !nodeReady) {
-                window.__TAURI__.tauri
-                    .invoke('show_in_folder', {path: platformPath})
-                    .then(resolve)
-                    .catch(reject);
-            }
-            _linuxOpenFileOrFolderLocation(platformPath);
+            window.__TAURI__.tauri
+                .invoke('show_in_folder', {path: platformPath})
+                .then(resolve)
+                .catch(reject);
         });
     },
     openURLInDefaultBrowser: function (url, tabIdentifier='_blank'){
@@ -366,16 +344,7 @@ Phoenix.app = {
                 reject("openURLInDefaultBrowser: URL should be http or https, but was " + url);
                 return;
             }
-            const NodeUtils = window.NodeUtils;
-            if(NodeUtils && NodeUtils.isNodeReady() && Phoenix.platform === "linux"){
-                // node has first preference as appimages cannot work reliably with tauri open in browser xdg-open
-                // api across various linux distributions
-                NodeUtils.openURLInDefaultLinuxBrowser(url)
-                    .then(resolve)
-                    .catch(reject);
-                return;
-            }
-            window.__TAURI__.invoke('open_url_in_browser', {url: url})
+            window.__TAURI__.shell.open(url)
                 .then(resolve)
                 .catch(reject);
         });

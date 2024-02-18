@@ -55,14 +55,6 @@ define(function (require, exports, module) {
         return true;
     }
 
-    function openURLInDefaultLinuxBrowser(url) {
-        return utilsConnector.execPeer("openURLInDefaultLinuxBrowser", url);
-    }
-
-    function showInLinuxFileExplorer(fileOrFolderPath) {
-        return utilsConnector.execPeer("showInLinuxFileExplorer", fileOrFolderPath);
-    }
-
     if(NodeConnector.isNodeAvailable()) {
         // todo we need to update the strings if a user extension adds its translations. Since we dont support
         // node extensions for now, should consider when we support node extensions.
@@ -71,8 +63,6 @@ define(function (require, exports, module) {
 
     exports.fetchURLText = fetchURLText;
     exports.updateNodeLocaleStrings = updateNodeLocaleStrings;
-    exports.openURLInDefaultLinuxBrowser = openURLInDefaultLinuxBrowser;
-    exports.showInLinuxFileExplorer = showInLinuxFileExplorer;
     exports.isNodeReady = NodeConnector.isNodeReady;
 
     window.NodeUtils = exports;
