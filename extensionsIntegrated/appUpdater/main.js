@@ -38,7 +38,6 @@ define(function (require, exports, module) {
         TaskManager = require("features/TaskManager"),
         StringUtils         = require("utils/StringUtils"),
         NativeApp           = require("utils/NativeApp"),
-        DocumentCommandHandlers = require("document/DocumentCommandHandlers"),
         PreferencesManager  = require("preferences/PreferencesManager");
     let updaterWindow, updateTask, updatePendingRestart, updateFailed;
 
@@ -271,6 +270,54 @@ define(function (require, exports, module) {
         _sendUpdateCommand(UPDATE_COMMANDS.GET_STATUS);
     }
 
+    async function launchWindowsInstaller() {
+        return new Promise((resolve, reject)=>{
+            const appdataDir = window._tauriBootVars.appLocalDir;
+            window.__TAURI__.path.resolveResource("src-node/installer/launch-windows-installer.js")
+                .then(async nodeSrcPath=>{
+                    // this is not supposed to work in linux.
+                    const argsArray = [nodeSrcPath, appdataDir];
+                    const command = window.__TAURI__.shell.Command.sidecar('phnode', argsArray);
+                    command.on('close', data => {
+                        console.log(`PhNode: command finished with code ${data.code} and signal ${data.signal}`);
+                        if(data.code !== 0) {
+                            console.error("Install failed");
+                            reject();
+                            return;
+                        }
+                        resolve();
+                    });
+                    command.on('error', error => {
+                        console.error(`PhNode: command error: "${error}"`);
+                        reject();
+                    });
+                    command.stdout.on('data', line => {
+                        console.log(`PhNode: ${line}`);
+                    });
+                    command.stderr.on('data', line => console.error(`PhNode: ${line}`));
+                    command.spawn();
+                });
+        });
+    }
+
+    let installerLocation;
+    async function quitTimeAppUpdateHandler() {
+        if(!installerLocation){
+            return;
+        }
+        console.log("Installing update from: ", installerLocation);
+        return new Promise(resolve=>{
+            // this should never reject as it happens in app quit. rejecting wont affect quit, but its unnecessary.
+            if (brackets.platform === "win") {
+                launchWindowsInstaller()
+                    .then(resolve)
+                    .catch(resolve);
+            } else {
+                resolve();
+            }
+        });
+    }
+
     let updateInstalledDialogShown = false, updateFailedDialogShown = false;
     AppInit.appReady(function () {
         if(!Phoenix.browser.isTauri || Phoenix.isTestWindow) {
@@ -326,7 +373,8 @@ define(function (require, exports, module) {
                     Math.floor(fileSize*progressPercent/100),
                     fileSize));
             } else if(eventName === UPDATE_EVENT.INSTALLER_LOCATION) {
-                DocumentCommandHandlers._setWindowsUpdateInstallerLocation(data);
+                installerLocation = data;
+                Phoenix.app.registerQuitTimeAppUpdateHandler(quitTimeAppUpdateHandler);
             } else if(eventName === UPDATE_EVENT.LOG_ERROR) {
                 logger.reportErrorMessage(data);
             }
