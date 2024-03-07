@@ -344,7 +344,28 @@
         }());
     </script>
     <script src="phoenix/virtualfs.js"></script>
+
+    <!-- load bugsnag error reporter as soon as cache handling code is done-->
+    <script src="thirdparty/bugsnag.min.js"></script>
+    <script src="appConfig.js"></script>
+    <script type="module">
+        import BugsnagPerformance from "./thirdparty/bugsnag-performance.min.js";
+        BugsnagPerformance.start({
+            apiKey: '94ef94f4daf871ca0f2fc912c6d4764d',
+            appVersion: AppConfig.version,
+            releaseStage: window.__TAURI__ ? `tauri-${AppConfig.config.bugsnagEnv}-${Phoenix.platform}` : AppConfig.config.bugsnagEnv,
+            autoInstrumentRouteChanges: false,
+            autoInstrumentNetworkRequests: false,
+            autoInstrumentFullPageLoads: false
+        });
+        window.BugsnagPerformance = BugsnagPerformance;
+    </script>
+    <script src="loggerSetup.js"></script>
+    <script src="utils/EventDispatcher.js"></script>
+
     <script>
+        window.splashScreenPresent = true;
+
         /*Bootstrap cache check. since index.html is always loaded network first, the cache reset code will always
         be guaranteed to be hit on app update.
         Note that this cannot be moved to a separate file and should be in index.html due to above reason.
@@ -355,6 +376,46 @@
             // first boot, no cache
             localStorage.setItem(window._CURRENT_CACHE_VERSION_KEY, PHOENIX_APP_CACHE_VERSION);
         }
+
+        function _loadPhoenixMain() {
+            if(window._phoenixMainLoaded){
+                return;
+            }
+            window._phoenixMainLoaded = true;
+            const loadJS = function(url, implementationCode, location, dataMainValue){
+                //url is URL of external file, implementationCode is the code
+                //to be called from the file, location is the location to
+                //insert the <script> element
+
+                const scriptTag = document.createElement('script');
+                if(dataMainValue){
+                    scriptTag.setAttribute('data-main', dataMainValue);
+                }
+                scriptTag.onload = implementationCode;
+                scriptTag.onreadystatechange = implementationCode;
+                scriptTag.src = url;
+
+                location.appendChild(scriptTag);
+            };
+            function _requireDone() {
+                loadJS('verify-dependencies-loaded.js', null, document.body);
+            }
+
+            function _startRequireLoop() {
+                loadJS('thirdparty/requirejs/require.js', _requireDone, document.body, "main");
+            }
+            if(window.PhStore){
+                window.PhStore.storageReadyPromise.finally(_startRequireLoop);
+            } else {
+                const interval = setInterval(()=>{
+                    if(window.PhStore){
+                        clearInterval(interval);
+                        PhStore.storageReadyPromise.finally(_startRequireLoop);
+                    }
+                }, 50);
+            }
+        }
+
         async function _resetCacheIfNeeded(force) {
             if(Phoenix.browser.isTauri || Phoenix.isTestWindow) {
                 // no web cache in desktop builds ot test windows
@@ -421,16 +482,25 @@
             }
 
             async function updateCache(newCacheName, oldCacheName, defaultCacheName) {
-                let newCacheManifest = await fetch(`web-cache/${newCacheName}/cacheManifest.json`);
-                newCacheManifest = await newCacheManifest.json();
-                _showUpdateMessage("Migrating default caches...");
-                if(await caches.has(defaultCacheName)){
-                    await migrate(defaultCacheName, newCacheName, newCacheManifest);
+                try{
+                    let newCacheManifest = await fetch(`web-cache/${newCacheName}/cacheManifest.json`);
+                    if(!newCacheManifest.ok){
+                        return false;
+                    }
+                    newCacheManifest = await newCacheManifest.json();
+                    _showUpdateMessage("Migrating default caches...");
+                    if(await caches.has(defaultCacheName)){
+                        await migrate(defaultCacheName, newCacheName, newCacheManifest);
+                    }
+                    _showUpdateMessage("Migrating last version caches...");
+                    if(oldCacheName && await caches.has(oldCacheName)){
+                        await migrate(oldCacheName, newCacheName, newCacheManifest);
+                    }
+                    return true;
+                } catch (e) {
+                    console.error("Error updating cache: ", e);
                 }
-                _showUpdateMessage("Migrating last version caches...");
-                if(oldCacheName && await caches.has(oldCacheName)){
-                    await migrate(oldCacheName, newCacheName, newCacheManifest);
-                }
+                return false;
             }
 
             const LESS_REFRESH_SCHEDULED_KEY = "lessRefreshScheduled";
@@ -516,39 +586,22 @@
                 // This is an upgrade we could in the future use the cacheManifest.json to increase update speed
                 // by only selectively updating the changed files.
                 console.warn("Old version cache detected", currentCacheName, "updating to", PHOENIX_APP_CACHE_VERSION);
-                await updateCache(PHOENIX_APP_CACHE_VERSION, currentCacheName, CACHE_NAME_EVERYTHING);
-                await _writeFileSafe(WEB_CACHE_FILE_PATH, PHOENIX_APP_CACHE_VERSION);
-                localStorage.setItem(window._CURRENT_CACHE_VERSION_KEY, PHOENIX_APP_CACHE_VERSION);
-                localStorage.setItem(LESS_REFRESH_SCHEDULED_KEY, "yes");
-                if(!force){
-                    location.reload();
-                    // force reload handlers should reload themselves.
+                const cacheUpdated = await updateCache(PHOENIX_APP_CACHE_VERSION, currentCacheName, CACHE_NAME_EVERYTHING);
+                if(cacheUpdated){
+                    await _writeFileSafe(WEB_CACHE_FILE_PATH, PHOENIX_APP_CACHE_VERSION);
+                    localStorage.setItem(window._CURRENT_CACHE_VERSION_KEY, PHOENIX_APP_CACHE_VERSION);
+                    localStorage.setItem(LESS_REFRESH_SCHEDULED_KEY, "yes");
+                    if(!force){
+                        location.reload();
+                        // force reload handlers should reload themselves.
+                    }
+                } else if(location.href.endsWith("/src/") || location.href.endsWith("/dist/") || location.href.endsWith("index.html")){
+                    // load phoenix if its any of the non-cached urls.
+                    _loadPhoenixMain();
                 }
             }
         }
         _resetCacheIfNeeded();
-    </script>
-
-    <!-- load bugsnag error reporter as soon as cache handling code is done-->
-    <script src="thirdparty/bugsnag.min.js"></script>
-    <script src="appConfig.js"></script>
-    <script type="module">
-        import BugsnagPerformance from "./thirdparty/bugsnag-performance.min.js";
-        BugsnagPerformance.start({
-            apiKey: '94ef94f4daf871ca0f2fc912c6d4764d',
-            appVersion: AppConfig.version,
-            releaseStage: window.__TAURI__ ? `tauri-${AppConfig.config.bugsnagEnv}-${Phoenix.platform}` : AppConfig.config.bugsnagEnv,
-            autoInstrumentRouteChanges: false,
-            autoInstrumentNetworkRequests: false,
-            autoInstrumentFullPageLoads: false
-        });
-        window.BugsnagPerformance = BugsnagPerformance;
-    </script>
-    <script src="loggerSetup.js"></script>
-    <script src="utils/EventDispatcher.js"></script>
-
-    <script>
-        window.splashScreenPresent = true;
 
         function _addOrRemoveSplashScreenIfNeeded() {
             if(!window.__TAURI__) {
@@ -569,52 +622,22 @@
                 document.body.classList.add('dark'); // This will later be overridden by the theme manager as required.
             }
             _addOrRemoveSplashScreenIfNeeded();
-            var loadJS = function(url, implementationCode, location, dataMainValue){
-                //url is URL of external file, implementationCode is the code
-                //to be called from the file, location is the location to
-                //insert the <script> element
-
-                const scriptTag = document.createElement('script');
-                if(dataMainValue){
-                    scriptTag.setAttribute('data-main', dataMainValue);
-                }
-                scriptTag.onload = implementationCode;
-                scriptTag.onreadystatechange = implementationCode;
-                scriptTag.src = url;
-
-                location.appendChild(scriptTag);
-            };
-            function _requireDone() {
-                loadJS('verify-dependencies-loaded.js', null, document.body);
-            }
-            function _loadPhoenix() {
-                if(!Phoenix.browser.isTauri) {
-                    const currentCacheVersion = localStorage.getItem(window._CURRENT_CACHE_VERSION_KEY);
-                    if(currentCacheVersion !== PHOENIX_APP_CACHE_VERSION){
-                        // dont load phoenix as the cache is inconsistent, the updater will reload after fixing cache
-                        let splashScreenFrame = document.getElementById("splash-screen-frame");
-                        if(!splashScreenFrame){
-                            return;
-                        }
-                        let displayBtn1 = splashScreenFrame.contentDocument.getElementById("load-status-display-btn");
-                        let displayText2 = splashScreenFrame.contentDocument.getElementById("load-status-display-text");
-                        displayBtn1 && (displayBtn1.textContent = "Updating app...");
-                        displayText2 && (displayText2.textContent = "Please wait....");
+            if(!Phoenix.browser.isTauri) {
+                const currentCacheVersion = localStorage.getItem(window._CURRENT_CACHE_VERSION_KEY);
+                if(currentCacheVersion !== PHOENIX_APP_CACHE_VERSION){
+                    // dont load phoenix as the cache is inconsistent, the updater will reload after fixing cache
+                    let splashScreenFrame = document.getElementById("splash-screen-frame");
+                    if(!splashScreenFrame){
                         return;
                     }
+                    let displayBtn1 = splashScreenFrame.contentDocument.getElementById("load-status-display-btn");
+                    let displayText2 = splashScreenFrame.contentDocument.getElementById("load-status-display-text");
+                    displayBtn1 && (displayBtn1.textContent = "Updating app...");
+                    displayText2 && (displayText2.textContent = "Please wait....");
+                    return;
                 }
-                loadJS('thirdparty/requirejs/require.js', _requireDone, document.body, "main");
             }
-            if(window.PhStore){
-                window.PhStore.storageReadyPromise.finally(_loadPhoenix);
-            } else {
-                const interval = setInterval(()=>{
-                    if(window.PhStore){
-                        clearInterval(interval);
-                        PhStore.storageReadyPromise.finally(_loadPhoenix);
-                    }
-                }, 50);
-            }
+            _loadPhoenixMain();
         }
     </script>
 
