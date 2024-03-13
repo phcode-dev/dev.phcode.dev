@@ -51,6 +51,8 @@ define(function (require, exports, module) {
         lastQueriedText = "",
         lastTypedText = "",
         lastTypedTextWasRegexp = false;
+    const MAX_HISTORY_RESULTS = 50;
+    const PREF_MAX_HISTORY = "maxSearchHistory";
 
     const INSTANT_SEARCH_INTERVAL_MS = 50;
 
@@ -226,16 +228,11 @@ define(function (require, exports, module) {
         }
     };
 
-    /**
-     * @private
-     * Adds element to the search history queue.
-     * @param {string} search string that needs to be added to history.
-     */
-    FindBar.prototype._addElementToSearchHistory = function (searchVal) {
+    function _updateHistory(whichHistory, searchVal) {
         if (searchVal) {
-            var searchHistory = PreferencesManager.getViewState("searchHistory");
-            var maxCount = PreferencesManager.get("maxSearchHistory");
-            var searchQueryIndex = searchHistory.indexOf(searchVal);
+            let searchHistory = PreferencesManager.getViewState(whichHistory);
+            const maxCount = PreferencesManager.get(PREF_MAX_HISTORY);
+            const searchQueryIndex = searchHistory.indexOf(searchVal);
             if (searchQueryIndex !== -1) {
                 searchHistory.splice(searchQueryIndex, 1);
             } else {
@@ -244,8 +241,19 @@ define(function (require, exports, module) {
                 }
             }
             searchHistory.unshift(searchVal);
-            PreferencesManager.setViewState("searchHistory", searchHistory);
+            PreferencesManager.setViewState(whichHistory, searchHistory);
         }
+    }
+
+    /**
+     * @private
+     * Adds element to the search history queue.
+     * @param {string} searchVal string that needs to be added to search history.
+     * @param {string} filterVal string that needs to be added to filter  history.
+     */
+    FindBar.prototype._addElementToSearchHistory = function (searchVal, filterVal) {
+        _updateHistory("searchHistory", searchVal);
+        _updateHistory("filterHistory", filterVal);
     };
 
     /**
@@ -290,8 +298,32 @@ define(function (require, exports, module) {
         }
         window.document.body.addEventListener("keydown", _handleKeydown, true);
 
+        function _keydownHookForCtrlSpace(event) {
+            const ctrlSpaceEvent = (event.ctrlKey === true || event.metaKey === true) &&
+                (event.keyCode === KeyEvent.DOM_VK_SPACE);
+            if(!ctrlSpaceEvent){
+                return;
+            }
+            if($("#find-what").is(":focus")){
+                self.showSearchHints();
+                event.stopPropagation();
+                event.preventDefault();
+                return true;
+            }
+            if($("#fif-filter-input").is(":focus")){
+                self.showFilterHints();
+                event.stopPropagation();
+                event.preventDefault();
+                return true;
+            }
+            return false;
+        }
+
+        KeyBindingManager.addGlobalKeydownHook(_keydownHookForCtrlSpace);
+
         // When the ModalBar closes, clean ourselves up.
         this._modalBar.on("close", function (event) {
+            KeyBindingManager.removeGlobalKeydownHook(_keydownHookForCtrlSpace);
             window.document.body.removeEventListener("keydown", _handleKeydown, true);
 
             // Hide error popup, since it hangs down low enough to make the slide-out look awkward
@@ -305,6 +337,9 @@ define(function (require, exports, module) {
             self.trigger("close");
             if (self.searchField) {
                 self.searchField.destroy();
+            }
+            if (self.filterField) {
+                self.filterField.destroy();
             }
         });
 
@@ -349,23 +384,48 @@ define(function (require, exports, module) {
                     self.trigger("doFind");
                 }
             })
-            .on("click", ".dropdown-icon", function (e) {
-                var quickSearchContainer = $(".quick-search-container");
-                if (!self.searchField) {
-                    self.showSearchHints();
-                } else if (quickSearchContainer.is(':visible')) {
-                    quickSearchContainer.hide();
+            .on("focusout", "#find-what", function (e) {
+                setTimeout(()=>{
+                    if (self.searchField && !$("#find-what").is(":focus")) {
+                        self.searchField.destroy();
+                        self.searchField = null;
+                    }
+                }, 100); // on clicking the item in history popup, commit is called after focusout which
+                // means that if we destroy it here, the commit will never be called. so the delay timer.
+            })
+            .on("focusout", "#fif-filter-input", function (e) {
+                setTimeout(()=>{
+                    if (self.filterField && !$("#fif-filter-input").is(":focus")) {
+                        self.filterField.destroy();
+                        self.filterField = null;
+                    }
+                }, 100); // on clicking the item in history popup, commit is called after focusout which
+                // means that if we destroy it here, the commit will never be called. so the delay timer.
+            })
+            .on("click", ".search-input-container .dropdown-icon", function (e) {
+                if (self.searchField) {
+                    self.searchField.destroy();
+                    self.searchField = null;
                 } else {
-                    self.searchField.setText(self.$("#find-what").val());
-                    quickSearchContainer.show();
+                    self.showSearchHints(true);
                 }
                 self.$("#find-what").focus();
             })
-            .on("keydown", "#find-what, #replace-with", function (e) {
+            .on("click", ".filter-container .filter-dropdown-icon", function (e) {
+                if (self.filterField) {
+                    self.filterField.destroy();
+                    self.filterField = null;
+                } else {
+                    self.showFilterHints(true);
+                }
+                self.$("#fif-filter-input").focus();
+            })
+            .on("keydown", "#find-what, #replace-with, #fif-filter-input", function (e) {
                 if (e.keyCode === KeyEvent.DOM_VK_RETURN) {
                     e.preventDefault();
                     e.stopPropagation();
-                    self._addElementToSearchHistory(self.$("#find-what").val());
+                    self._addElementToSearchHistory(
+                        self.$("#find-what").val(), self.$("#fif-filter-input").val());
                     if (self._options.multifile) {
                         if ($(e.target).is("#find-what")) {
                             if (self._options.replace) {
@@ -466,39 +526,81 @@ define(function (require, exports, module) {
         this.focusQuery();
     };
 
-    /**
-     * @private
-     * Shows the search History in dropdown.
-     */
-    FindBar.prototype.showSearchHints = function () {
-        var self = this;
-        var searchFieldInput = self.$("#find-what");
-        this.searchField = new QuickSearchField(searchFieldInput, {
-            verticalAdjust: searchFieldInput.offset().top > 0 ? 0 : this._modalBar.getRoot().outerHeight(),
-            maxResults: 20,
+    FindBar.prototype._showHintsInternal = function (inputElemId, stateVarName, fieldName, dontFilterHistory) {
+        const self = this;
+        self._dontFilterHistory = dontFilterHistory;
+        let inputField = self.$(inputElemId);
+        const maxCount = PreferencesManager.get(PREF_MAX_HISTORY);
+        this[fieldName] = new QuickSearchField(inputField, {
+            verticalAdjust: inputField.offset().top > 0 ? 0 : this._modalBar.getRoot().outerHeight(),
+            maxResults: maxCount,
             firstHighlightIndex: null,
             resultProvider: function (query) {
-                var asyncResult = new $.Deferred();
-                asyncResult.resolve(PreferencesManager.getViewState("searchHistory"));
+                query = query || "";
+                const asyncResult = new $.Deferred();
+                let history = PreferencesManager.getViewState(stateVarName) || [];
+                if(!self._dontFilterHistory){
+                    history = history.filter(historyItem=> {
+                        return historyItem.toLowerCase().includes(query.toLowerCase());
+                    });
+                }
+                self._dontFilterHistory = false;
+                asyncResult.resolve(history);
                 return asyncResult.promise();
             },
             formatter: function (item, query) {
                 return "<li>" + item + "</li>";
             },
-            onCommit: function (selectedItem, query) {
+            onCommit: function (selectedItem, query, itemIndex) {
                 if (selectedItem) {
-                    self.$("#find-what").val(selectedItem);
-                    self.trigger("queryChange");
+                    self.$(inputElemId).val(selectedItem);
+                    self.$(inputElemId).val(selectedItem).trigger('input');
                 } else if (query.length) {
-                    self.searchField.setText(query);
+                    self[fieldName].setText(query);
                 }
-                self.$("#find-what").focus();
-                $(".quick-search-container").hide();
+                self.$(inputElemId).focus();
+                self[fieldName].destroy();
+                self[fieldName] = null;
+                // now move the committed item to top of history as its most recent
+                if(itemIndex){
+                    let history = PreferencesManager.getViewState(stateVarName) || [];
+                    let deletedItem = history.splice(itemIndex, 1);
+                    history.unshift(deletedItem[0]);
+                    PreferencesManager.setViewState(stateVarName, history);
+                }
+            },
+            onDismiss: function () {
+                if(self[fieldName]){
+                    self[fieldName].destroy();
+                    self[fieldName] = null;
+                }
+            },
+            onDelete: function (deletedIndex) {
+                let history = PreferencesManager.getViewState(stateVarName) || [];
+                history.splice(deletedIndex, 1);
+                PreferencesManager.setViewState(stateVarName, history);
             },
             onHighlight: function (selectedItem, query, explicit) {},
-            highlightZeroResults: false
+            highlightZeroResults: false,
+            focusLastActiveElementOnClose: true
         });
-        this.searchField.setText(searchFieldInput.val());
+        this[fieldName].setText(inputField.val());
+    };
+
+    /**
+     * @private
+     * Shows the search History in dropdown.
+     */
+    FindBar.prototype.showSearchHints = function (dontFilterHistory) {
+        return this._showHintsInternal("#find-what", "searchHistory", "searchField", dontFilterHistory);
+    };
+
+    /**
+     * @private
+     * Shows the filter History in dropdown.
+     */
+    FindBar.prototype.showFilterHints = function (dontFilterHistory) {
+        return this._showHintsInternal("#fif-filter-input", "filterHistory", "filterField", dontFilterHistory);
     };
 
     /**
@@ -508,6 +610,7 @@ define(function (require, exports, module) {
     FindBar.prototype.close = function (suppressAnimation) {
         lastQueriedText = "";
         if (this._modalBar) {
+            this._addElementToSearchHistory($("#find-what").val(), $("#fif-filter-input").val());
             // 1st arg = restore scroll pos; 2nd arg = no animation, since getting replaced immediately
             this._modalBar.close(true, !suppressAnimation);
         }
@@ -543,9 +646,14 @@ define(function (require, exports, module) {
      * Show or clear an error message related to the query.
      * @param {?string} error The error message to show, or null to hide the error display.
      * @param {boolean=} isHTML Whether the error message is HTML that should remain unescaped.
+     * @param {boolean=} isFilterError Whether the error related to file filters
      */
-    FindBar.prototype.showError = function (error, isHTML) {
-        var $error = this.$(".error");
+    FindBar.prototype.showError = function (error, isHTML, isFilterError) {
+        const $findError = this.$(".error"),
+            $filterError = this.$(".error-filter");
+        const $error = isFilterError ? $filterError : $findError;
+        $findError.hide();
+        $filterError.hide();
         if (error) {
             if (isHTML) {
                 $error.html(error);
@@ -553,8 +661,6 @@ define(function (require, exports, module) {
                 $error.text(error);
             }
             $error.show();
-        } else {
-            $error.hide();
         }
     };
 
@@ -573,7 +679,15 @@ define(function (require, exports, module) {
      * @param {boolean} showMessage
      */
     FindBar.prototype.showNoResults = function (showIndicator, showMessage) {
-        ViewUtils.toggleClass(this.$("#find-what"), "no-results", showIndicator);
+        const $filterInput = this.$("#fif-filter-input");
+        const $findWhat = this.$("#find-what");
+        $filterInput.removeClass("no-results");
+        $findWhat.removeClass("no-results");
+        let $borderEl = $findWhat;
+        if($filterInput.is(":focus")){
+            $borderEl = $filterInput;
+        }
+        ViewUtils.toggleClass($borderEl, "no-results", showIndicator);
 
         var $msg = this.$(".no-results-message");
         if (showMessage) {
@@ -603,7 +717,10 @@ define(function (require, exports, module) {
     };
 
     FindBar.prototype.focus = function (enable) {
-        this.$("#find-what").focus();
+        if(!this.$("#fif-filter-input").is(':focus')){
+            // the filter find bar text input already has focus
+            this.$("#find-what").focus();
+        }
     };
 
     /**
@@ -744,7 +861,8 @@ define(function (require, exports, module) {
     PreferencesManager.stateManager.definePreference("caseSensitive", "boolean", false);
     PreferencesManager.stateManager.definePreference("regexp", "boolean", false);
     PreferencesManager.stateManager.definePreference("searchHistory", "array", []);
-    PreferencesManager.definePreference("maxSearchHistory", "number", 10, {
+    PreferencesManager.stateManager.definePreference("filterHistory", "array", []);
+    PreferencesManager.definePreference(PREF_MAX_HISTORY, "number", MAX_HISTORY_RESULTS, {
         description: Strings.FIND_HISTORY_MAX_COUNT
     });
 
