@@ -9721,6 +9721,9 @@ html.dark,
 body.dark {
   color: #ccc;
 }
+#phcode-io-main-nav {
+  color: #6bbeff;
+}
 #ctrl-nav-overlay {
   position: absolute;
   display: flex;
