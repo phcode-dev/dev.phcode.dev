@@ -124,6 +124,7 @@ define(function (require, exports, module) {
         scss: "scss",
         javascript: "babel",
         jsx: "babel",
+        tsx: "babel",
         json: "json-stringify",
         typescript: "typescript",
         php: "php",
@@ -216,7 +217,6 @@ define(function (require, exports, module) {
         return new Promise((resolve, reject)=>{
             let filepath = editor.document.file.fullPath;
             let languageId = LanguageManager.getLanguageForPath(filepath).getId();
-            _loadPlugins(languageId);
             console.log("Beautifying with language id: ", languageId);
 
             let selection = editor.getSelections();
@@ -228,12 +228,13 @@ define(function (require, exports, module) {
 
             let options = prefs.get("options");
             let indentWithTabs = Editor.getUseTabChar(filepath);
+            options._usePlugin = parsersForLanguage[languageId];
             Object.assign(options, {
                 parser: parsersForLanguage[languageId],
                 tabWidth: indentWithTabs ? Editor.getTabSize() : Editor.getSpaceUnits(),
                 useTabs: indentWithTabs,
                 filepath: filepath,
-                endOfLine: Phoenix.platform === 'win' ? "crlf": "lf"
+                endOfLine: "lf" // codemirror always does lf and only crlf before disk write in windows.
             });
             let prettierParams ={
                 text: editor.document.getText(),
@@ -245,6 +246,7 @@ define(function (require, exports, module) {
                     reject(error);
                 });
             } else {
+                options.cursorOffset = editor.indexFromPos(editor.getCursorPos());
                 ExtensionsWorker.execPeer("prettify", prettierParams).then(response=>{
                     if(!response){
                         reject();
@@ -252,7 +254,8 @@ define(function (require, exports, module) {
                     }
                     resolve({
                         originalText: prettierParams.text,
-                        changedText: response.text
+                        changedText: response.text,
+                        cursorOffset: response.cursorOffset
                     });
                 }).catch(err=>{
                     console.log("Could not prettify text", err);
@@ -262,28 +265,18 @@ define(function (require, exports, module) {
         });
     }
 
-    let loadedPlugins = {};
-    function _loadPlugins(languageId) {
-        if(!loadedPlugins[languageId] && parsersForLanguage[languageId]){
-            ExtensionsWorker.execPeer("loadPrettierPlugin", parsersForLanguage[languageId]).catch(err=>{
-                console.error("Error Loading Prettier Plugin", err);
-            });
-        }
-        loadedPlugins[languageId] = true;
-    }
-
     AppInit.appReady(function () {
-        ExtensionsWorker.loadScriptInWorker(`${module.uri}/../worker/prettier-helper.js`);
+        ExtensionsWorker.loadScriptInWorker(`${module.uri}/../worker/prettier-helper.js`, true);
         BeautificationManager.registerBeautificationProvider(exports, Object.keys(parsersForLanguage));
     });
 
     function beautifyTextProvider(textToBeautify, filePathOrFileName) {
         return new Promise((resolve, reject)=>{
             let languageId = LanguageManager.getLanguageForPath(filePathOrFileName).getId();
-            _loadPlugins(languageId);
             console.log("Beautifying text with language id: ", languageId);
             let options = prefs.get("options");
             let indentWithTabs = Editor.getUseTabChar(filePathOrFileName);
+            options._usePlugin = parsersForLanguage[languageId];
             Object.assign(options, {
                 parser: parsersForLanguage[languageId],
                 tabWidth: indentWithTabs ? Editor.getTabSize() : Editor.getSpaceUnits(),

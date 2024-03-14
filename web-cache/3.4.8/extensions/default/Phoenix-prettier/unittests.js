@@ -267,6 +267,12 @@ define(function (require, exports, module) {
                 expect(testEditor.document.getText()).toBe('const element = <h1>Hello, {name}</h1>;\n');
             });
 
+            it("should beautify editor for tsx", async function () {
+                createMockEditor("const element = <h1>\nHello, {name}</h1>;", "tsx", "/test.tsx");
+                await BeautificationManager.beautifyEditor(testEditor);
+                expect(testEditor.document.getText()).toBe('const element = <h1>Hello, {name}</h1>;\n');
+            });
+
             it("should beautify editor for typescript", async function () {
                 createMockEditor("function x(){x;}", "typescript", "/test.ts");
                 await BeautificationManager.beautifyEditor(testEditor);
@@ -281,7 +287,19 @@ define(function (require, exports, module) {
                     "?> ", "php", "/test.php");
                 await BeautificationManager.beautifyEditor(testEditor);
                 expect(testEditor.document.getText()).toBe("<?php\n" +
-                    "echo \"Hello World!\"; ?>  ?>");
+                    "echo \"Hello World!\"; ?> ");
+            });
+
+            it("should beautify editor restore cursor position", async function () {
+                createMockEditor("function x(){x;}", "typescript", "/test.ts");
+                testEditor.setCursorPos(0, 13);
+                await BeautificationManager.beautifyEditor(testEditor);
+                expect(testEditor.document.getText()).toBe('function x() {\n' +
+                    '    x;\n' +
+                    '}\n');
+                const cursor = testEditor.getCursorPos();
+                expect(cursor.line).toBe(1);
+                expect(cursor.ch).toBe(4);
             });
         });
     });
