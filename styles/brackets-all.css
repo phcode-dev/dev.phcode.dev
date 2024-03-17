@@ -12366,17 +12366,37 @@ label input {
 .notification-popup-container.style-danger {
   background: var(--bc-toast-danger-bg-color);
 }
+.notification-popup-container.style-danger a {
+  color: white;
+  cursor: pointer;
+}
 .notification-popup-container.style-error {
   background: var(--bc-toast-error-bg-color);
+}
+.notification-popup-container.style-error a {
+  color: white;
+  cursor: pointer;
 }
 .notification-popup-container.style-info {
   background: var(--bc-toast-info-bg-color);
 }
+.notification-popup-container.style-info a {
+  color: blue;
+  cursor: pointer;
+}
 .notification-popup-container.style-success {
   background: var(--bc-toast-success-bg-color);
 }
+.notification-popup-container.style-success a {
+  color: darkblue;
+  cursor: pointer;
+}
 .notification-popup-container.style-warning {
   background: var(--bc-toast-warning-bg-color);
+}
+.notification-popup-container.style-warning a {
+  color: white;
+  cursor: pointer;
 }
 .notification-popup-container.animateOpen {
   opacity: 1;
