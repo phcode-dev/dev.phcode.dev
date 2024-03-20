@@ -917,24 +917,74 @@ define(function (require, exports, module) {
         return getWelcomeProjectPath();
     }
 
+    function _mergeProjectGitIgnores(rootPath, gitIgnoreFilters) {
+        // this is an approximation to the gitIgnore spec to transform child git ignores to be
+        // relative to the project root.
+        let mergedGitIgnoreFile= "";
+        for(let filter of gitIgnoreFilters){
+            if(!filter.gitIgnoreContent){
+                continue;
+            }
+            const projectRelativePath = makeProjectRelativeIfPossible(filter.basePath);
+            if(!projectRelativePath){
+                // this is the .gitignore file in the root folder, do nothing.
+                mergedGitIgnoreFile = `${mergedGitIgnoreFile}\n${filter.gitIgnoreContent}`;
+            } else {
+                let lines =[];
+                // Transform each line to be relative to the project directory
+                for(let line of filter.gitIgnoreContent.split('\n')) {
+                    if (!line.trim() || line.startsWith('#')){
+                        lines.push(line); // empty lines and comments push as is
+                    } else {
+                        // Handle negated patterns like `!node_modules`
+                        const isNegated = line.startsWith('!');
+                        const pattern = isNegated ? line.substring(1) : line;
+                        // Patterns starting with a slash are relative to the .gitignore's directory
+                        if (line.startsWith('/')) {
+                            // Remove the leading '/' to correct the path for the new location
+                            lines.push(`${isNegated ? '!' : ''}${projectRelativePath}${pattern.substring(1)}`);
+                        } else {
+                            // For patterns without a leading '/', check if it's a directory-specific pattern
+                            if (line.endsWith('/') && (line.match(/\//g) || []).length === 1) {
+                                // This checks both if the line ends with a slash
+                                // and if there's only one slash in the line, indicating it's
+                                // a top-level directory pattern.. Eg. `dir/`
+                                lines.push(`${isNegated ? '!' : ''}${projectRelativePath}**/${pattern}`);
+                            } else {
+                                // 1. this is a rule of the form `sub/dir/`, which should match exact sub dir
+                                // and children according to git spec
+                                // 2. For global patterns like `sub/dir/other` or `sub/dir/other.txt`
+                                lines.push(`${isNegated ? '!' : ''}${projectRelativePath}${pattern}`);
+                            }
+                        }
+                    }
+                }
+                mergedGitIgnoreFile = `${mergedGitIgnoreFile}\n${lines.join('\n')}`;
+            }
+        }
+        return mergedGitIgnoreFile;
+    }
+
     /**
      * @private
      *
      * Watches the project for filesystem changes so that the tree can be updated.
      */
-    function _watchProjectRoot(rootPath) {
+    async function _watchProjectRoot(rootPath) {
         FileSystem.on("change", _fileSystemChange);
         FileSystem.on("rename", _fileSystemRename);
-
-        FileSystem.watch(FileSystem.getDirectoryForPath(rootPath), ProjectModel._shouldShowName, ProjectModel.defaultIgnoreGlobs, function (err) {
-            if (err === FileSystemError.TOO_MANY_ENTRIES) {
-                if (!_projectWarnedForTooManyFiles) {
-                    _showErrorDialog(ERR_TYPE_MAX_FILES);
-                    _projectWarnedForTooManyFiles = true;
+        let gitIgnoreContent = _mergeProjectGitIgnores(rootPath, await model.computeProjectGitIgnoreAsync());
+        const gitIgnoreFilter = `${gitIgnoreContent}\n${ProjectModel.defaultIgnoreGlobs.join("\n")}`;
+        FileSystem.watch(FileSystem.getDirectoryForPath(rootPath),
+            ProjectModel._shouldShowName, gitIgnoreFilter, function (err) {
+                if (err === FileSystemError.TOO_MANY_ENTRIES) {
+                    if (!_projectWarnedForTooManyFiles) {
+                        _showErrorDialog(ERR_TYPE_MAX_FILES);
+                        _projectWarnedForTooManyFiles = true;
+                    }
+                } else if (err) {
+                    console.error("Error watching project root: ", rootPath, err);
                 }
-            } else if (err) {
-                console.error("Error watching project root: ", rootPath, err);
-            }
         });
 
         // Reset allFiles cache
@@ -1069,52 +1119,42 @@ define(function (require, exports, module) {
      *
      * @param {!string} rootPath  Absolute path to the root folder of the project.
      *  A trailing "/" on the path is optional (unlike many Brackets APIs that assume a trailing "/").
-     * @param {boolean=} isUpdating  If true, indicates we're just updating the tree;
-     *  if false, a different project is being loaded.
      * @return {$.Promise} A promise object that will be resolved when the
      *  project is loaded and tree is rendered, or rejected if the project path
      *  fails to load.
      */
-    function _loadProject(rootPath, isUpdating) {
+    function _loadProject(rootPath) {
         var result = new $.Deferred(),
             startLoad = new $.Deferred();
 
         // Some legacy code calls this API with a non-canonical path
         rootPath = ProjectModel._ensureTrailingSlash(rootPath);
 
-        if (isUpdating) {
-            // We're just refreshing. Don't need to unwatch the project root, so we can start loading immediately.
-            startLoad.resolve();
-        } else {
-            if (model.projectRoot && model.projectRoot.fullPath === rootPath) {
-                return (new $.Deferred()).resolve().promise();
-            }
-
-            // About to close current project (if any)
-            if (model.projectRoot) {
-                exports.trigger(EVENT_PROJECT_BEFORE_CLOSE, model.projectRoot);
-            }
-
-            // close all the old files
-            MainViewManager._closeAll(MainViewManager.ALL_PANES);
-
-            _unwatchProjectRoot().fail(console.error);
-
-            if (model.projectRoot) {
-                LanguageManager._resetPathLanguageOverrides();
-                PreferencesManager._reloadUserPrefs(model.projectRoot);
-                exports.trigger(EVENT_PROJECT_CLOSE, model.projectRoot);
-            }
-
-            startLoad.resolve();
+        if (model.projectRoot && model.projectRoot.fullPath === rootPath) {
+            return (new $.Deferred()).resolve().promise();
         }
+
+        // About to close current project (if any)
+        if (model.projectRoot) {
+            exports.trigger(EVENT_PROJECT_BEFORE_CLOSE, model.projectRoot);
+        }
+
+        // close all the old files
+        MainViewManager._closeAll(MainViewManager.ALL_PANES);
+
+        _unwatchProjectRoot().fail(console.error);
+
+        if (model.projectRoot) {
+            LanguageManager._resetPathLanguageOverrides();
+            PreferencesManager._reloadUserPrefs(model.projectRoot);
+            exports.trigger(EVENT_PROJECT_CLOSE, model.projectRoot);
+        }
+
+        startLoad.resolve();
 
         startLoad.done(function () {
             // Populate file tree as long as we aren't running in the browser
             if (!brackets.inBrowser) {
-                if (!isUpdating) {
-                    _watchProjectRoot(rootPath);
-                }
                 // Point at a real folder structure on local disk
                 var rootEntry = FileSystem.getDirectoryForPath(rootPath);
                 rootEntry.exists(function (err, exists) {
@@ -1134,6 +1174,7 @@ define(function (require, exports, module) {
                                 _reloadProjectPreferencesScope();
                                 PreferencesManager._setCurrentFile(rootPath);
                             }
+                            _watchProjectRoot(rootPath);
 
                             // If this is the most current welcome project, record it. In future launches, we want
                             // to substitute the latest welcome project from the current build instead of using an
@@ -1259,7 +1300,7 @@ define(function (require, exports, module) {
             .done(function () {
                 if (path) {
                     // use specified path
-                    _loadProject(path, false).then(result.resolve, result.reject);
+                    _loadProject(path).then(result.resolve, result.reject);
                 } else {
                     // Pop up a folder browse dialog
                     FileSystem.showOpenDialog(false, true, Strings.CHOOSE_FOLDER, model.projectRoot.fullPath, null, function (err, files) {
@@ -2094,6 +2135,7 @@ define(function (require, exports, module) {
     exports.deleteItem                    = deleteItem;
     exports.forceFinishRename             = forceFinishRename;
     exports.showInTree                    = showInTree;
+    exports.shouldShowFileNameInTree      = ProjectModel._shouldShowName;
     exports.refreshFileTree               = refreshFileTree;
     exports.getAllFiles                   = getAllFiles;
     exports.getLanguageFilter             = getLanguageFilter;

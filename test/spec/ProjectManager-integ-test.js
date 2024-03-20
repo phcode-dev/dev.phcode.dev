@@ -19,7 +19,7 @@
  *
  */
 
-/*global describe, it, expect, afterEach, awaitsFor, awaitsForDone, beforeAll, afterAll, awaits, Phoenix */
+/*global describe, it, expect, afterEach, awaitsFor, awaitsForDone, beforeAll, afterAll, awaits, jsPromise */
 
 define(function (require, exports, module) {
 
@@ -30,6 +30,7 @@ define(function (require, exports, module) {
         Dialogs             = require("widgets/Dialogs"),
         Commands            = require("command/Commands"),
         FileSystemError     = require("filesystem/FileSystemError"),
+        StringUtils         = require("utils/StringUtils"),
         SpecRunnerUtils     = require("spec/SpecRunnerUtils"),
         _                   = require("thirdparty/lodash");
 
@@ -483,7 +484,7 @@ define(function (require, exports, module) {
         });
 
         describe("File Display", function () {
-            it("should not show useless directory entries", function () {
+            it("should filter useless directory entries", function () {
                 var shouldShow = ProjectManager.shouldShow;
                 var makeEntry = function (name) {
                     return { name: name };
@@ -495,17 +496,103 @@ define(function (require, exports, module) {
                 expect(shouldShow(makeEntry("Thumbs.db"))).toBe(false);
                 expect(shouldShow(makeEntry(".hg"))).toBe(false);
                 expect(shouldShow(makeEntry(".gitmodules"))).toBe(false);
-                expect(shouldShow(makeEntry(".gitignore"))).toBe(true);
-                expect(shouldShow(makeEntry("foobar"))).toBe(true);
-                expect(shouldShow(makeEntry("pyc.py"))).toBe(true);
                 expect(shouldShow(makeEntry("module.pyc"))).toBe(false);
-                expect(shouldShow(makeEntry(".gitattributes"))).toBe(true);
                 expect(shouldShow(makeEntry("CVS"))).toBe(false);
-                expect(shouldShow(makeEntry(".cvsignore"))).toBe(true);
-                expect(shouldShow(makeEntry(".hgignore"))).toBe(true);
                 expect(shouldShow(makeEntry(".hgtags"))).toBe(false);
 
             });
+
+            it("should not show useless directory entries in ui", async function () {
+                const entries = [".git", ".svn", ".DS_Store", "Thumbs.db",
+                    ".hg", ".gitmodules", "module.pyc", "CVS", ".hgtags"];
+
+                let count = 0;
+                for(let entry of entries) {
+                    count ++;
+                    const textPath = `${tempDir}/${entry}`;
+                    let controlFileName = `control_${count}_file`;
+                    const controlPath = `${tempDir}/${controlFileName}`;
+                    await SpecRunnerUtils.deletePathAsync(textPath, true, FileSystem);
+                    await SpecRunnerUtils.deletePathAsync(controlPath, true, FileSystem);
+                    await jsPromise(SpecRunnerUtils.createTextFile(textPath, "hello", FileSystem));
+                    await jsPromise(SpecRunnerUtils.createTextFile(controlPath, "control-group", FileSystem));
+                    // eslint-disable-next-line no-loop-func
+                    await awaitsFor(()=>{
+                        return testWindow.$(`.jstree-brackets span:contains("${controlFileName}")`).length;
+                    }, `waiting for control file for ${entry} to be shown in ui`, 10000);
+                    await awaits(100); // just give some time for watchers to be extra sure.
+                    if(testWindow.$(`.jstree-brackets span`).text().includes(entry)){
+                        expect(entry).not.toBeDefined();
+                    }
+                    await SpecRunnerUtils.deletePathAsync(textPath, true, FileSystem);
+                    await SpecRunnerUtils.deletePathAsync(controlPath, true, FileSystem);
+                }
+            }, 20000);
+
+            it("should ProjectManager.getAllFiles honor gitIgnore filters", async function () {
+                const gitIgnoreFilePath = `${tempDir}/.gitignore`;
+                const newFilePath = `${tempDir}/newFile`;
+                await SpecRunnerUtils.deletePathAsync(gitIgnoreFilePath, true, FileSystem);
+                await jsPromise(SpecRunnerUtils.createTextFile(newFilePath, "newFile", FileSystem));
+                await awaitsFor(async ()=>{
+                    const allFiles = await jsPromise(ProjectManager.getAllFiles());
+                    for(let file of allFiles) {
+                        if(file.name === 'newFile'){
+                            return true;
+                        }
+                    }
+                    return false;
+                }, "Getting all files without gitignore", 2000, 100);
+                await jsPromise(SpecRunnerUtils.createTextFile(gitIgnoreFilePath, "newFile", FileSystem));
+                await awaitsFor(async ()=>{
+                    const allFiles = await jsPromise(ProjectManager.getAllFiles());
+                    for(let file of allFiles) {
+                        if(file.name === 'newFile'){
+                            return false;
+                        }
+                    }
+                    return true;
+                }, "Getting all files with gitignore", 2000, 100);
+                await SpecRunnerUtils.deletePathAsync(gitIgnoreFilePath, true, FileSystem);
+                await SpecRunnerUtils.deletePathAsync(newFilePath, true, FileSystem);
+            }, 10000);
+
+            it("should ProjectManager.getAllFiles honor nested gitIgnore filters", async function () {
+                const gitIgnoreFilePath = `${tempDir}/.gitignore`;
+                const anotherGitIgnoreFilePath = `${tempDir}/directory/.gitignore`;
+                const newFilePath = `${tempDir}/newFile`;
+                const anotherFilePath = `${tempDir}/directory/anotherFile`;
+                await SpecRunnerUtils.deletePathAsync(gitIgnoreFilePath, true, FileSystem);
+                await SpecRunnerUtils.deletePathAsync(anotherGitIgnoreFilePath, true, FileSystem);
+                await jsPromise(SpecRunnerUtils.createTextFile(newFilePath, "newFile", FileSystem));
+                await jsPromise(SpecRunnerUtils.createTextFile(anotherFilePath, "anotherFile", FileSystem));
+                await awaitsFor(async ()=>{
+                    const allFiles = await jsPromise(ProjectManager.getAllFiles());
+                    let foundItems = 0;
+                    for(let file of allFiles) {
+                        if(file.name === 'newFile' || file.name === 'anotherFile'){
+                            foundItems++;
+                        }
+                    }
+                    return foundItems === 2;
+                }, "Getting all files without nested gitignore", 2000, 100);
+                await jsPromise(SpecRunnerUtils.createTextFile(gitIgnoreFilePath, "newFile", FileSystem));
+                await jsPromise(SpecRunnerUtils.createTextFile(anotherGitIgnoreFilePath, "anotherFile", FileSystem));
+                await awaitsFor(async ()=>{
+                    const allFiles = await jsPromise(ProjectManager.getAllFiles());
+                    let foundItems = 0;
+                    for(let file of allFiles) {
+                        if(file.name === 'newFile' || file.name === 'anotherFile'){
+                            foundItems++;
+                        }
+                    }
+                    return foundItems === 0;
+                }, "Getting all files with nested gitignore", 2000, 100);
+                await SpecRunnerUtils.deletePathAsync(gitIgnoreFilePath, true, FileSystem);
+                await SpecRunnerUtils.deletePathAsync(anotherGitIgnoreFilePath, true, FileSystem);
+                await SpecRunnerUtils.deletePathAsync(newFilePath, true, FileSystem);
+                await SpecRunnerUtils.deletePathAsync(anotherFilePath, true, FileSystem);
+            }, 10000);
         });
 
         describe("Project, file and folder download", function () {
@@ -514,6 +601,9 @@ define(function (require, exports, module) {
                 return;
             }
             it("should download project command work", async function () {
+                const hiddenFilePath = `${tempDir}/.git`;
+                await SpecRunnerUtils.deletePathAsync(hiddenFilePath, true, FileSystem);
+                await jsPromise(SpecRunnerUtils.createTextFile(hiddenFilePath, "hello", FileSystem));
                 let restore = testWindow.saveAs;
                 let blob, name;
                 testWindow.saveAs =  function (b, n) {
@@ -522,7 +612,7 @@ define(function (require, exports, module) {
                 CommandManager.execute(Commands.FILE_DOWNLOAD_PROJECT);
                 await awaitsFor(()=>{
                     return !!blob;
-                }, "download project");
+                }, "download project", 10000);
                 expect(name).toBe("temp.zip");
                 expect(blob).toBeDefined();
                 const zipContent = new testWindow.JSZip();
@@ -530,8 +620,10 @@ define(function (require, exports, module) {
                 expect(zip.files["directory/"].dir).toBeTrue();
                 expect(zip.files["directory/interiorfile.js"].dir).toBeFalse();
                 expect(zip.files["file.js"].dir).toBeFalse();
+                expect(zip.files[".git"].dir).toBeFalse(); // the git folder and other hidden folders should be in the
+                // download folder as well
                 testWindow.saveAs = restore;
-            });
+            }, 10000);
 
             it("should download a file", async function () {
                 let restore = testWindow.saveAs;

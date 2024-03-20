@@ -407,30 +407,6 @@ define(function (require, exports, module) {
     };
 
     /**
-     * Returns true if the given path should be automatically added to the index & watch list when one of its ancestors
-     * is a watch-root. (Files are added automatically when the watch-root is first established, or later when a new
-     * directory is created and its children enumerated).
-     *
-     * Entries explicitly created via FileSystem.getFile/DirectoryForPath() are *always* added to the index regardless
-     * of this filtering - but they will not be watched if the watch-root's filter excludes them.
-     *
-     * @param {string} path Full path
-     * @param {string} name Name portion of the path
-     */
-    FileSystem.prototype._indexFilter = function (path, name) {
-        var parentRoot = this._findWatchedRootForPath(path);
-
-        if (parentRoot) {
-            return parentRoot.filter(name, path);
-        }
-
-        // It might seem more sensible to return false (exclude) for files outside the watch roots, but
-        // that would break usage of appFileSystem for 'system'-level things like enumerating extensions.
-        // (Or in general, Directory.getContents() for any Directory outside the watch roots).
-        return true;
-    };
-
-    /**
      * Indicates that a filesystem-mutating operation has begun. As long as there
      * are changes taking place, change events from the external watchers are
      * blocked and queued, to be handled once changes have finished. This is done
@@ -987,11 +963,14 @@ define(function (require, exports, module) {
     };
 
     /**
-     * Recursively gets all files and directories given a root path.
+     * Recursively gets all files and directories given a root path. It filters out all files
+     * that are not shown in the file tree by default, unless the filterNothing option is specified.
      * @param {Directory} directory To get all descendant contents from
+     * @param {boolean} filterNothing - if specified, will return every thing, including system locations like `.git`
+     *    Use this option to take full backups, or entire disc read workflows.
      * @return {Promise<Array[File|Directory]>} A promise that resolves with the file and directory contents
      */
-    FileSystem.prototype.getAllDirectoryContents = function (directory) {
+    FileSystem.prototype.getAllDirectoryContents = function (directory, filterNothing = false) {
         return new Promise((resolve, reject)=>{
             let contents = [];
             function visitor(entry) {
@@ -1000,7 +979,7 @@ define(function (require, exports, module) {
                 }
                 return true;
             }
-            directory.visit(visitor, (err)=>{
+            directory.visit(visitor, {visitHiddenTree: filterNothing}, (err)=>{
                 if(err){
                     reject(err);
                     return;
@@ -1231,6 +1210,14 @@ define(function (require, exports, module) {
             return true; // Always claim true, we are the default adpaters
         }
     };
+
+    // private api
+    function setFileTreeFilter(filter) {
+        exports.fileTreeFilter = filter;
+    }
+
+    // private API
+    exports.setFileTreeFilter = setFileTreeFilter;
 
     // Register the custom object as HTTP and HTTPS protocol adapter
     registerProtocolAdapter(HTTP_PROTOCOL, protocolAdapter);

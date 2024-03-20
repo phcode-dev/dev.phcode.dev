@@ -21,6 +21,8 @@
 
 /* unittests: ProjectModel */
 
+/*global fs, path, jsPromise*/
+
 /**
  * Provides the data source for a project and manages the view model for the FileTreeView.
  */
@@ -32,6 +34,7 @@ define(function (require, exports, module) {
         FileUtils           = require("file/FileUtils"),
         _                   = require("thirdparty/lodash"),
         FileSystem          = require("filesystem/FileSystem"),
+        DocumentManager     = require("document/DocumentManager"),
         FileSystemError     = require("filesystem/FileSystemError"),
         FileTreeViewModel   = require("project/FileTreeViewModel"),
         Async               = require("utils/Async"),
@@ -64,10 +67,10 @@ define(function (require, exports, module) {
      * inside node domain watching with chokidar
      */
     const defaultIgnoreGlobs = [
-        "node_modules",
-        "**/node_modules",
-        "bower_components",
-        "**/bower_components",
+        "node_modules/**",
+        "**/node_modules/**",
+        "bower_components/**",
+        "**/bower_components/**",
         ".npm",
         ".yarn",
         "__pycache__",
@@ -136,6 +139,8 @@ define(function (require, exports, module) {
     function _shouldShowName(name) {
         return !_exclusionListRegEx.test(name);
     }
+
+    FileSystem.setFileTreeFilter(_shouldShowName);
 
     /**
      * Returns false for files and directories that are not commonly useful to display.
@@ -451,6 +456,79 @@ define(function (require, exports, module) {
         return path;
     };
 
+    function _getGitIgnoreFileContent(fullPath) {
+        return new Promise(resolve=>{
+            DocumentManager.getDocumentForPath(fullPath)
+                .done(function (doc) {
+                    resolve(doc.getText()||"");
+                })
+                .fail(function () {
+                    resolve(null);
+                });
+        });
+    }
+
+    function _gitIgnores(entry, gitIgnoreFilters) {
+        try{
+            for(let filter of gitIgnoreFilters) {
+                const relativePath = path.relative(filter.basePath, entry.fullPath);
+                if(relativePath && !relativePath.startsWith("..") &&
+                    filter.gitIgnore.ignores(relativePath)){
+                    return true;
+                }
+            }
+        } catch (e) {
+            console.error("Error while filtering get all files: ", e);
+        }
+        return false;
+    }
+
+    async function _updateGitIgnoreFromPath(gitIgnorePath, parentFullPath, gitIgnoreSearchedInDir, gitIgnoreFilters) {
+        const gitIgnoreContent = await _getGitIgnoreFileContent(gitIgnorePath);
+        gitIgnoreSearchedInDir[parentFullPath] = true;
+        if(gitIgnoreContent){
+            gitIgnoreFilters.push({
+                basePath: parentFullPath,
+                gitIgnore: fs.utils.ignore().add(gitIgnoreContent),
+                gitIgnoreContent
+            });
+        }
+    }
+
+    async function _updateGitIgnore(entry, siblingEntries, gitIgnoreSearchedInDir, gitIgnoreFilters) {
+        const parentFullPath = `${path.dirname(entry.fullPath)}/`; // Eg. /path/to/dir/
+        if(!gitIgnoreSearchedInDir[parentFullPath] && siblingEntries) {
+            // we have to check for gitIgnoreFile in this level is present or not.
+            for(let sibling of siblingEntries) {
+                if(sibling.isFile && sibling.name === ".gitignore") {
+                    await _updateGitIgnoreFromPath(sibling.fullPath, parentFullPath,
+                        gitIgnoreSearchedInDir, gitIgnoreFilters);
+                }
+            }
+        }
+    }
+
+    /**
+     * Scans the whole project folder and computes the project wide git ignore
+     * filters to use. If there are nested .gitignore folders in project, that will also be detected.
+     * @return {Promise<{basePath: string, gitIgnore: object, gitIgnoreContent:string}>} returns an array with
+     *          basePath - the parent directory housing the git ignore file Eg: `/tauri/projectRoot/parent/`
+     *          gitIgnore - the git ignore filter fn that can be used to test if a path is ignored by calling
+     *             gitIgnore.ignores(relativePathToBasePath)
+     *          gitIgnoreContent - the textual content of the git ignore file.
+     */
+    ProjectModel.prototype.computeProjectGitIgnoreAsync = async function () {
+        let self = this;
+        return new Promise(resolve=>{
+            let gitIgnoreFilters = [];
+            jsPromise(self._getAllFilesCache(false, gitIgnoreFilters))
+                .catch(console.error)
+                .finally(()=>{
+                    resolve(gitIgnoreFilters);
+                });
+        });
+    };
+
     /**
      * @private
      *
@@ -464,12 +542,20 @@ define(function (require, exports, module) {
      * @param {boolean} sort true to sort files by their paths
      * @return {$.Promise.<Array.<File>>}
      */
-    ProjectModel.prototype._getAllFilesCache = function _getAllFilesCache(sort) {
+    ProjectModel.prototype._getAllFilesCache = function _getAllFilesCache(sort, _gitIgnoreFiltersOut) {
+        let self = this;
         if (!this._allFilesCachePromise) {
-            var deferred = new $.Deferred(),
+            let gitIgnoreFilters = _gitIgnoreFiltersOut || [], gitIgnoreSearchedInDir = {};
+
+            let deferred = new $.Deferred(),
                 allFiles = [],
-                allFilesVisitor = function (entry) {
-                    if (shouldIndex(entry)) {
+                allFilesVisitor = async function (entry, siblingEntries) {
+                    if(entry.isDirectory && self.projectRoot.fullPath === entry.fullPath) {
+                        await _updateGitIgnoreFromPath(`${entry.fullPath}.gitignore`, entry.fullPath,
+                            gitIgnoreSearchedInDir, gitIgnoreFilters);
+                    }
+                    await _updateGitIgnore(entry, siblingEntries, gitIgnoreSearchedInDir, gitIgnoreFilters);
+                    if (shouldIndex(entry) && !_gitIgnores(entry, gitIgnoreFilters)) {
                         if (entry.isFile) {
                             allFiles.push(entry);
                         }
@@ -509,10 +595,17 @@ define(function (require, exports, module) {
         }
         if (!this._allFilesScopeCachePromise || this._allFilesScope !== scope) {
             this._allFilesScope = scope;
+            let gitIgnoreFilters = [], gitIgnoreSearchedInDir = {};
             const deferred = new $.Deferred(),
                 allFiles = [],
-                allFilesVisitor = function (entry) {
-                    if (shouldIndex(entry) || entry.fullPath === scope.fullPath) {
+                allFilesVisitor = async function (entry, siblingEntries) {
+                    if(entry.isDirectory && self.projectRoot.fullPath === entry.fullPath) {
+                        await _updateGitIgnoreFromPath(`${entry.fullPath}.gitignore`, entry.fullPath,
+                            gitIgnoreSearchedInDir, gitIgnoreFilters);
+                    }
+                    await _updateGitIgnore(entry, siblingEntries, gitIgnoreSearchedInDir, gitIgnoreFilters);
+                    if ((shouldIndex(entry) && !_gitIgnores(entry, gitIgnoreFilters)) ||
+                        entry.fullPath === scope.fullPath) {
                         if (entry.isFile) {
                             allFiles.push(entry);
                         }
@@ -1433,6 +1526,7 @@ define(function (require, exports, module) {
         return welcomeProjects.indexOf(pathNoSlash) !== -1;
     }
 
+    // private APIs
     exports._getWelcomeProjectPath  = _getWelcomeProjectPath;
     exports._addWelcomeProjectPath  = _addWelcomeProjectPath;
     exports._isWelcomeProjectPath   = _isWelcomeProjectPath;
