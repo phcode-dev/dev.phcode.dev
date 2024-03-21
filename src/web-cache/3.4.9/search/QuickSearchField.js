@@ -164,9 +164,13 @@ define(function (require, exports, module) {
             if (this.options.onDelete && this._$dropdown && this._highlightIndex !== null) {
                 this.options.onDelete(this._highlightIndex);
                 this.updateResults();
+                event.stopPropagation();
+                event.preventDefault();
             }
-            event.stopPropagation();
-            event.preventDefault(); // treated as Home key otherwise
+            // if there is nothing selected, we should not preventDefault the delete key event as it
+            // will make delete key not work in the search text box text! Eg. Ctrl-shift-o, type text,
+            // press delete key to remove text chars will fail is we prevent default here without
+            // a valid selection.
         } else if (event.keyCode === KeyEvent.DOM_VK_DOWN) {
             // Highlight changes are always done synchronously on the currently shown result list. If the list
             // later changes, the highlight is reset to the top
