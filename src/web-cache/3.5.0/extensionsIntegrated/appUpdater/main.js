@@ -26,6 +26,8 @@
 define(function (require, exports, module) {
     const AppInit = require("utils/AppInit"),
         Metrics = require("utils/Metrics"),
+        FileSystem    = require("filesystem/FileSystem"),
+        FileUtils   = require("file/FileUtils"),
         Commands = require("command/Commands"),
         CommandManager  = require("command/CommandManager"),
         Menus = require("command/Menus"),
@@ -334,13 +336,56 @@ define(function (require, exports, module) {
         return null;
     }
 
+    async function _extractMacInstaller() {
+        const appdataDir = window._tauriBootVars.appLocalDir;
+        let extractPlatformPath = path.join(appdataDir, 'installer', "extracted");
+        // extract the .app file
+        const extractCommand = new window.__TAURI__.shell
+            .Command(`tar-unix`, ['-xzf', installerLocation, "-C", extractPlatformPath]);
+        let result = await extractCommand.execute();
+        if(result.code !== 0){
+            console.error("Could not extract installer at", installerLocation, "to", extractPlatformPath);
+            throw new Error("Could not extract installer at " + installerLocation + " to " + extractPlatformPath);
+        }
+        // remove the quarantine flag
+        const removeAttrCommand = new window.__TAURI__.shell
+            .Command(`mac-remove-quarantine`, ["-rd", "com.apple.quarantine", extractPlatformPath]);
+        result = await removeAttrCommand.execute();
+        if(result.code !== 0){
+            console.error("Could not remove quarantine attribute for", extractPlatformPath, "ignoring...");
+            // we can ignore this failure as the user will be asked for permission by os on clicking anyway.
+        }
+        // now get the .app path from extracted path
+        const extractedVirtualPath = window.fs.getTauriVirtualPath(extractPlatformPath);
+        let directory = FileSystem.getDirectoryForPath(extractedVirtualPath);
+        const {entries} = await directory.getContentsAsync();
+        if(entries.length !== 1 || !entries[0].fullPath.includes(".app")){
+            throw new Error("Could not resolve .app to update from extracted folder" + extractedVirtualPath);
+        }
+        installerLocation = FileUtils.stripTrailingSlash(
+            window.fs.getTauriPlatformPath(entries[0].fullPath));
+    }
+
+    function _cleanExtractedFolderSilent() {
+        return new Promise(resolve=>{
+            const appdataDir = window._tauriBootVars.appLocalDir;
+            let extractPlatformPath = path.join(appdataDir, 'installer', "extracted");
+            const extractedVirtualPath = window.fs.getTauriVirtualPath(extractPlatformPath);
+            let directory = FileSystem.getDirectoryForPath(extractedVirtualPath);
+            directory.unlinkAsync()
+                .catch(console.error)
+                .finally(resolve);
+        });
+    }
+
     async function doMacUpdate() {
+        await _extractMacInstaller();
         const currentAppPath = await getCurrentMacAppPath();
         if(!currentAppPath || !installerLocation || !currentAppPath.endsWith(".app") ||
             !installerLocation.endsWith(".app")){
             throw new Error("Cannot resolve .app location to copy.");
         }
-        const removeCommand = new window.__TAURI__.shell
+        let removeCommand = new window.__TAURI__.shell
             .Command(`recursive-rm-unix`, ['-r', currentAppPath]);
         let result = await removeCommand.execute();
         if(result.code !== 0){
@@ -353,6 +398,8 @@ define(function (require, exports, module) {
         if(result.code !== 0){
             throw new Error("Update script exit with non-0 exit code: " + result.code);
         }
+        // now remove the original .app
+        await _cleanExtractedFolderSilent();
     }
 
     let installerLocation;
@@ -360,6 +407,10 @@ define(function (require, exports, module) {
         if(!installerLocation){
             return;
         }
+        // at this time, the node process have exited and we need to force use tauri apis. This would
+        // normally happen as node responds as terminated, but for updates, this is at quit time and we
+        // cant wait any longer.
+        window.fs.forceUseNodeWSEndpoint(false);
         console.log("Installing update from: ", installerLocation);
         return new Promise(resolve=>{
             // this should never reject as it happens in app quit. rejecting wont affect quit, but its unnecessary.
@@ -412,6 +463,19 @@ define(function (require, exports, module) {
         if(!Phoenix.browser.isTauri || Phoenix.isTestWindow) {
             // app updates are only for desktop builds
             return;
+        }
+        if (brackets.platform === "mac") {
+            // in mac, the `update.app.tar.gz` is downloaded, and only extracted on app quit.
+            // we do this only in mac as the `.app` file is extracted only at app quit and deleted
+            // and if we see the `extracted file` at app boot, it means the update was broken,and we clear
+            // the updated folder. if not, the extracted app may be corrupt, or mac will show that app
+            // too in the finder `open with` section.
+            // in windows, the `setup.exe.zip` is downloaded and extracted to `setup.exe`. The exe is executed
+            // only on app quit. so if we do this in windows, the extracted installer.exe will be
+            // deleted on new widow create and the final update will fail if other windows were opened
+            // after the installer was downloaded and extracted.
+            // in Linux, it is an online installer, nothing is downloaded.
+            _cleanExtractedFolderSilent();
         }
         updaterWindow = window.__TAURI__.window.WebviewWindow.getByLabel(TAURI_UPDATER_WINDOW_LABEL);
         window.__TAURI__.event.listen("updater-event", (receivedEvent)=> {
