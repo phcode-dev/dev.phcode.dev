@@ -25,9 +25,23 @@
                 return; // Ignore messages from unexpected origins
             }
 
-            window.__PHOENIX_EMBED_INFO = {
-                isTauri: event.data.isTauri
-            };
+            if(event.data.type === "WHO_AM_I_RESPONSE") {
+                window.__PHOENIX_EMBED_INFO = {
+                    isTauri: event.data.isTauri
+                };
+            } else if(event.data.type === "_TEST_FOCUS_CLICK") { // for integ tests
+                document.body.click();
+            }  else if(event.data.type === "_TEST_SELECT_TEXT_AND_CLICK") { // for integ tests
+                const selection = window.getSelection();
+                const range = document.createRange();
+                range.selectNodeContents(document.body);
+                selection.removeAllRanges(); // Clear any existing selections
+                selection.addRange(range);
+                document.body.click();
+            }  else if(event.data.type === "_TEST_UNSELECT_TEXT_AND_CLICK") { // for integ tests
+                window.getSelection().removeAllRanges();
+                document.body.click();
+            }
         });
         if(window.self !== window.parent){
             // in an iframe
@@ -61,7 +75,7 @@
             }, false);
             function getAbsoluteUrl(url) {
                 // Check if the URL is already absolute
-                if (/^(?:[a-z]+:)?\/\//i.test(url)) {
+                if (new RegExp("^(?:[a-z]+:)?\\/\\/", "i").test(url)) {
                     return url; // The URL is already absolute
                 }
 
@@ -70,6 +84,20 @@
                 return absoluteUrl.href;
             }
             document.addEventListener('click', function(event) {
+                // Get the user's current selection
+                const selection = window.getSelection();
+
+                // Check if there is a selection
+                if (selection.toString().length === 0) {
+                    // there may be selection like text or others Eg: user may select some text
+                    // in live preview to copy, in which case we should not treat it as a live select.
+                    // if there is no selection, then we have set the focus to the editor
+                    window.parent.postMessage({
+                        handlerName: "ph-liveServer",
+                        eventName: 'embeddedIframeFocusEditor',
+                        href: location.href
+                    }, "{{{PARENT_ORIGIN}}}");
+                }
                 // in desktop phoenix builds, tauri will not open anchor tags in browser if it is in
                 // an iframe(except for the intel mac bug)
                 // in normal browsers, we dont need to do this.
