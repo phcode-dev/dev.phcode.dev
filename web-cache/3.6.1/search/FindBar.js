@@ -37,6 +37,7 @@ define(function (require, exports, module) {
         Strings            = require("strings"),
         ViewUtils          = require("utils/ViewUtils"),
         FindUtils          = require("search/FindUtils"),
+        FileUtils          = require("file/FileUtils"),
         QuickSearchField   = require("search/QuickSearchField").QuickSearchField,
         Metrics            = require("utils/Metrics");
 
@@ -384,7 +385,14 @@ define(function (require, exports, module) {
                     self.trigger("doFind");
                 }
             })
+            .on("click", "#find-counter", function (e) {
+                $("#find-what").focus();
+            })
+            .on("focusin", "#find-what", function (e) {
+                $(".find-what-wrapper").addClass("find-what-wrapper-focused");
+            })
             .on("focusout", "#find-what", function (e) {
+                $(".find-what-wrapper").removeClass("find-what-wrapper-focused");
                 setTimeout(()=>{
                     if (self.searchField && !$("#find-what").is(":focus")) {
                         self.searchField.destroy();
@@ -422,6 +430,11 @@ define(function (require, exports, module) {
             })
             .on("keydown", "#find-what, #replace-with, #fif-filter-input", function (e) {
                 if (e.keyCode === KeyEvent.DOM_VK_RETURN) {
+                    if(self._options.multifile && e.shiftKey) {
+                        // In multi file search, if we press shift+return key, we enter the multi line ssearch mode and
+                        // the text input will receive the enter key to create a new line in text field.
+                        return;
+                    }
                     e.preventDefault();
                     e.stopPropagation();
                     self._addElementToSearchHistory(
@@ -526,7 +539,7 @@ define(function (require, exports, module) {
         this.focusQuery();
     };
 
-    FindBar.prototype._showHintsInternal = function (inputElemId, stateVarName, fieldName, dontFilterHistory) {
+    FindBar.prototype._showHintsInternal = function (positionElement, inputElemId, stateVarName, fieldName, dontFilterHistory) {
         const self = this;
         self._dontFilterHistory = dontFilterHistory;
         let inputField = self.$(inputElemId);
@@ -535,13 +548,15 @@ define(function (require, exports, module) {
             verticalAdjust: inputField.offset().top > 0 ? 0 : this._modalBar.getRoot().outerHeight(),
             maxResults: maxCount,
             firstHighlightIndex: null,
+            $positionEl: positionElement ? self.$(positionElement) : null,
             resultProvider: function (query) {
                 query = query || "";
                 const asyncResult = new $.Deferred();
                 let history = PreferencesManager.getViewState(stateVarName) || [];
                 if(!self._dontFilterHistory){
                     history = history.filter(historyItem=> {
-                        return historyItem.toLowerCase().includes(query.toLowerCase());
+                        return ((typeof historyItem === 'string') &&
+                            historyItem.toLowerCase().includes(query.toLowerCase()));
                     });
                 }
                 self._dontFilterHistory = false;
@@ -549,7 +564,9 @@ define(function (require, exports, module) {
                 return asyncResult.promise();
             },
             formatter: function (item, query) {
-                return "<li>" + item + "</li>";
+                const $li = $("<li></li>");
+                $li.text(item);
+                return $li;
             },
             onCommit: function (selectedItem, query, itemIndex) {
                 if (selectedItem) {
@@ -592,7 +609,7 @@ define(function (require, exports, module) {
      * Shows the search History in dropdown.
      */
     FindBar.prototype.showSearchHints = function (dontFilterHistory) {
-        return this._showHintsInternal("#find-what", "searchHistory", "searchField", dontFilterHistory);
+        return this._showHintsInternal(".find-what-wrapper", "#find-what", "searchHistory", "searchField", dontFilterHistory);
     };
 
     /**
@@ -600,7 +617,7 @@ define(function (require, exports, module) {
      * Shows the filter History in dropdown.
      */
     FindBar.prototype.showFilterHints = function (dontFilterHistory) {
-        return this._showHintsInternal("#fif-filter-input", "filterHistory", "filterField", dontFilterHistory);
+        return this._showHintsInternal(null, "#fif-filter-input", "filterHistory", "filterField", dontFilterHistory);
     };
 
     /**
@@ -634,9 +651,14 @@ define(function (require, exports, module) {
      * Returns the current query and parameters.
      * @return {{query: string, caseSensitive: boolean, isRegexp: boolean}}
      */
-    FindBar.prototype.getQueryInfo = function () {
+    FindBar.prototype.getQueryInfo = function (usePlatformLineEndings = true) {
+        let query = this.$("#find-what").val() || "";
+        const lineEndings = FileUtils.sniffLineEndings(query);
+        if(usePlatformLineEndings && lineEndings === FileUtils.LINE_ENDINGS_LF && brackets.platform === "win") {
+            query = query.replace(/\n/g, "\r\n");
+        }
         return {
-            query: this.$("#find-what").val() || "",
+            query: query,
             isCaseSensitive: this.$("#find-case-sensitive").is(".active"),
             isRegexp: this.$("#find-regexp").is(".active")
         };
@@ -669,7 +691,9 @@ define(function (require, exports, module) {
      * @param {string} count The find count message to show. Can be the empty string to hide it.
      */
     FindBar.prototype.showFindCount = function (count) {
-        this.$("#find-counter").text(count);
+        this.$("#find-counter")
+            .text(count)
+            .attr('title', count);
     };
 
     /**
@@ -680,7 +704,7 @@ define(function (require, exports, module) {
      */
     FindBar.prototype.showNoResults = function (showIndicator, showMessage) {
         const $filterInput = this.$("#fif-filter-input");
-        const $findWhat = this.$("#find-what");
+        const $findWhat = this.$(".find-what-wrapper");
         $filterInput.removeClass("no-results");
         $findWhat.removeClass("no-results");
         let $borderEl = $findWhat;
@@ -813,11 +837,10 @@ define(function (require, exports, module) {
      * @return {string} first line of primary selection to populate the find bar
      */
     FindBar._getInitialQueryFromSelection = function(editor) {
-        var selectionText = editor.getSelectedText();
+        const selectionText = editor.document.getSelectedText(true);
         if (selectionText) {
             return selectionText
-                .replace(/^\n*/, "") // Trim possible newlines at the very beginning of the selection
-                .split("\n")[0];
+                .replace(/^\n*/, ""); // Trim possible newlines at the very beginning of the selection
         }
         return "";
     };

@@ -76,6 +76,7 @@ define(function (require, exports, module) {
      *          Number of pixels to position the popup below where $input is when constructor is called. Useful
      *          if UI is going to animate position after construction, but QuickSearchField may receive input
      *          before the animation is done.
+     * @param {jQueryObject} options.$positionEl if provided, the popup will be positioned based on this
      * @param {?number} options.firstHighlightIndex
      *          Index of the result that is highlighted by default. null to not highlight any result.
      * @param {?number} options.focusLastActiveElementOnClose if set to true, focuses the last active element on close.
@@ -85,6 +86,7 @@ define(function (require, exports, module) {
     function QuickSearchField($input, options) {
         this.$input = $input;
         this.options = options || {};
+        this.$positionEl = options.$positionEl;
 
         options.maxResults = options.maxResults || 10;
 
@@ -130,6 +132,9 @@ define(function (require, exports, module) {
     /** @type {!jQueryObject} */
     QuickSearchField.prototype.$input = null;
 
+    /** @type {!jQueryObject} */
+    QuickSearchField.prototype.$positionEl = null;
+
 
     /** When text field changes, update results list */
     QuickSearchField.prototype._handleInput = function () {
@@ -149,6 +154,10 @@ define(function (require, exports, module) {
 
     /** Handle special keys: Enter, Up/Down */
     QuickSearchField.prototype._handleKeyDown = function (event) {
+        let popupVisible = false;
+        if(this._$dropdown && this._$dropdown.is(":visible")){
+            popupVisible = true;
+        }
         if (event.keyCode === KeyEvent.DOM_VK_RETURN) {
             // Enter should always act on the latest results. If input has changed and we're still waiting for
             // new results, just flag the 'commit' for later
@@ -160,7 +169,7 @@ define(function (require, exports, module) {
                 // Once the current wait resolves, _render() will run the commit
                 this._commitPending = true;
             }
-        } else if (event.keyCode === KeyEvent.DOM_VK_DELETE) {
+        } else if (event.keyCode === KeyEvent.DOM_VK_DELETE && popupVisible) {
             if (this.options.onDelete && this._$dropdown && this._highlightIndex !== null) {
                 this.options.onDelete(this._highlightIndex);
                 this.updateResults();
@@ -171,7 +180,7 @@ define(function (require, exports, module) {
             // will make delete key not work in the search text box text! Eg. Ctrl-shift-o, type text,
             // press delete key to remove text chars will fail is we prevent default here without
             // a valid selection.
-        } else if (event.keyCode === KeyEvent.DOM_VK_DOWN) {
+        } else if (event.keyCode === KeyEvent.DOM_VK_DOWN && popupVisible) {
             // Highlight changes are always done synchronously on the currently shown result list. If the list
             // later changes, the highlight is reset to the top
             if (this._displayedResults && this._displayedResults.length) {
@@ -185,7 +194,7 @@ define(function (require, exports, module) {
             event.stopPropagation();
             event.preventDefault(); // treated as Home key otherwise
 
-        } else if (event.keyCode === KeyEvent.DOM_VK_UP) {
+        } else if (event.keyCode === KeyEvent.DOM_VK_UP && popupVisible) {
             if (this._displayedResults && this._displayedResults.length) {
                 if (this._highlightIndex === null || this._highlightIndex === 0) {
                     this._highlightIndex = this._displayedResults.length - 1;
@@ -274,18 +283,19 @@ define(function (require, exports, module) {
 
     /**
      * Open dropdown result list & populate with the given content
-     * @param {!string} htmlContent
+     * @param {!string|jQueryObject} htmlContent
      */
     QuickSearchField.prototype._openDropdown = function (htmlContent) {
         const self = this;
         this._$currentlyFocusedElement = $(document.activeElement);
         if (!this._$dropdown) {
+            let $positioningElement = this.$positionEl ? this.$positionEl : this.$input;
             this._$dropdown = $("<ol class='quick-search-container'/>").appendTo("body")
                 .css({
                     position: "absolute",
                     top: this._dropdownTop,
-                    left: this.$input.offset().left,
-                    width: this.$input.outerWidth()
+                    left: $positioningElement.offset().left,
+                    width: $positioningElement.outerWidth()
                 })
                 .click(function (event) {
                     // Unlike the Enter key, where we wait to catch up with typing, clicking commits immediately
@@ -341,13 +351,21 @@ define(function (require, exports, module) {
                 this.$input.removeClass("no-results");
             }
 
-            var count = Math.min(results.length, this.options.maxResults),
-                html = "",
+            const createdJqObj = $();
+            let count = Math.min(results.length, this.options.maxResults),
                 i;
             for (i = 0; i < count; i++) {
-                html += this.options.formatter(results[i], query);
+                const result = this.options.formatter(results[i], query);
+                if (typeof result === 'string') {
+                    createdJqObj.push($(result).get(0));
+                } else if (result instanceof $) {
+                    createdJqObj.push(result.get(0));
+                } else {
+                    console.error("QuickSearchFiled formatter should return a string html/jquery object; but got",
+                        result);
+                }
             }
-            this._openDropdown(html);
+            this._openDropdown(createdJqObj);
 
             this._updateHighlight(false);
         }

@@ -11539,7 +11539,8 @@ body:not(.has-appshell-menus) .modal-bar {
   transition: -webkit-transform 266ms cubic-bezier(0, 0.56, 0, 1);
   transition: transform 266ms cubic-bezier(0, 0.56, 0, 1);
 }
-.modal-bar input {
+.modal-bar input,
+.modal-bar textarea {
   font-family: 'SourceSansPro', Helvetica, Arial, "Meiryo UI", "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
   outline: none;
   width: 20em;
@@ -11547,11 +11548,13 @@ body:not(.has-appshell-menus) .modal-bar {
   position: relative;
   top: -3px;
 }
-.modal-bar input.no-results {
+.modal-bar input.no-results,
+.modal-bar textarea.no-results {
   border: 1px solid #fa689d;
   box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.06), 0 0 0 1px #ffb0cd;
 }
-.dark .modal-bar input.no-results {
+.dark .modal-bar input.no-results,
+.dark .modal-bar textarea.no-results {
   border: 1px solid #fa689d;
   box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.06), 0 0 0 1px transparent;
 }
@@ -11563,6 +11566,60 @@ body:not(.has-appshell-menus) .modal-bar {
 .modal-bar .filter-container {
   position: relative;
   display: inline;
+  resize: none;
+}
+.modal-bar .search-input-container .find-what-wrapper,
+.modal-bar .filter-container .find-what-wrapper {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 1px;
+  margin-left: 5px;
+}
+.modal-bar .search-input-container .find-what-wrapper-focused,
+.modal-bar .filter-container .find-what-wrapper-focused {
+  margin-top: 1px;
+  margin-left: 5px;
+  margin-right: 0;
+  outline: 0;
+  text-shadow: none;
+  border: 1px solid #2893ef;
+  border-radius: 3px;
+  box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.06), 0 0 0 1px #94ceff;
+}
+.no-results .modal-bar .search-input-container .find-what-wrapper-focused,
+.no-results .modal-bar .filter-container .find-what-wrapper-focused {
+  border: 1px solid #fa689d;
+  box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.06), 0 0 0 1px #ffb0cd;
+}
+.dark .no-results .modal-bar .search-input-container .find-what-wrapper-focused,
+.dark .no-results .modal-bar .filter-container .find-what-wrapper-focused {
+  border: 1px solid #fa689d;
+  box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.06), 0 0 0 1px transparent;
+}
+.dark .modal-bar .search-input-container .find-what-wrapper-focused,
+.dark .modal-bar .filter-container .find-what-wrapper-focused {
+  margin-top: 0;
+  margin-right: -2px;
+  border: 1px solid #2893ef;
+  box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.06), 0 0 0 1px #94ceff;
+}
+.modal-bar .search-input-container .find-what-wrapper-focused #find-what,
+.modal-bar .filter-container .find-what-wrapper-focused #find-what,
+.modal-bar .search-input-container .find-what-wrapper-focused #find-counter,
+.modal-bar .filter-container .find-what-wrapper-focused #find-counter,
+.modal-bar .search-input-container .find-what-wrapper-focused .dropdown-icon,
+.modal-bar .filter-container .find-what-wrapper-focused .dropdown-icon {
+  border: none;
+}
+.modal-bar .search-input-container .no-results,
+.modal-bar .filter-container .no-results {
+  border: 1px solid #fa689d;
+  box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.06), 0 0 0 1px #ffb0cd;
+}
+.dark .modal-bar .search-input-container .no-results,
+.dark .modal-bar .filter-container .no-results {
+  border: 1px solid #fa689d;
+  box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.06), 0 0 0 1px transparent;
 }
 .modal-bar .search-input-container .error,
 .modal-bar .filter-container .error,
@@ -11588,10 +11645,28 @@ body:not(.has-appshell-menus) .modal-bar {
   color: #fff;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
+.modal-bar .search-input-container .error-filter,
+.modal-bar .filter-container .error-filter {
+  min-width: 276px;
+  left: 9px;
+}
 .modal-bar .search-input-container #find-what,
 .modal-bar .filter-container #find-what {
-  padding-right: 78px;
-  width: 239px;
+  top: 0;
+  width: 215px;
+  margin: 0;
+  height: 18px;
+  resize: none;
+  white-space: nowrap;
+  overflow-x: hidden;
+  border: 1px solid #b2b5b5;
+  border-right: none;
+  box-shadow: none;
+}
+.dark .modal-bar .search-input-container #find-what,
+.dark .modal-bar .filter-container #find-what {
+  border: 1px solid #202020;
+  border-right: none;
 }
 .modal-bar .search-input-container .dropdown-icon,
 .modal-bar .filter-container .dropdown-icon,
@@ -11604,27 +11679,69 @@ body:not(.has-appshell-menus) .modal-bar {
 }
 .modal-bar .search-input-container #find-counter,
 .modal-bar .filter-container #find-counter,
-.modal-bar .search-input-container #filter-counter,
-.modal-bar .filter-container #filter-counter,
 .modal-bar .search-input-container .dropdown-icon,
-.modal-bar .filter-container .dropdown-icon,
-.modal-bar .search-input-container .filter-dropdown-icon,
-.modal-bar .filter-container .filter-dropdown-icon {
-  position: absolute;
+.modal-bar .filter-container .dropdown-icon {
+  background-color: white;
   color: #777;
-  top: 1px;
-  right: 2px;
   font-size: 12px;
 }
 .dark .modal-bar .search-input-container #find-counter,
 .dark .modal-bar .filter-container #find-counter,
+.dark .modal-bar .search-input-container .dropdown-icon,
+.dark .modal-bar .filter-container .dropdown-icon {
+  background-color: #555;
+  color: #bbb;
+}
+.modal-bar .search-input-container #find-counter,
+.modal-bar .filter-container #find-counter {
+  font-weight: 500;
+  padding: 0 5px;
+  width: 50px;
+  height: 26px;
+  margin: 0;
+  border: 1px solid #b2b5b5;
+  border-left: none;
+  border-right: none;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+.dark .modal-bar .search-input-container #find-counter,
+.dark .modal-bar .filter-container #find-counter {
+  border: 1px solid #202020;
+  border-left: none;
+  border-right: none;
+}
+.modal-bar .search-input-container .dropdown-icon,
+.modal-bar .filter-container .dropdown-icon {
+  margin: 0;
+  border: 1px solid #b2b5b5;
+  border-left: none;
+  height: 26px;
+}
+.dark .modal-bar .search-input-container .dropdown-icon,
+.dark .modal-bar .filter-container .dropdown-icon {
+  border: 1px solid #202020;
+  border-left: none;
+}
+.modal-bar .search-input-container #filter-counter,
+.modal-bar .filter-container #filter-counter,
+.modal-bar .search-input-container .filter-dropdown-icon,
+.modal-bar .filter-container .filter-dropdown-icon {
+  top: 1px;
+  position: absolute;
+  color: #777;
+  right: 2px;
+  font-size: 12px;
+}
 .dark .modal-bar .search-input-container #filter-counter,
 .dark .modal-bar .filter-container #filter-counter,
-.dark .modal-bar .search-input-container .dropdown-icon,
-.dark .modal-bar .filter-container .dropdown-icon,
 .dark .modal-bar .search-input-container .filter-dropdown-icon,
 .dark .modal-bar .filter-container .filter-dropdown-icon {
   color: #bbb;
+}
+.modal-bar .search-input-container {
+  display: inline-flex;
 }
 .modal-bar .filter-container {
   margin-left: -11px;
@@ -11715,6 +11832,10 @@ body:not(.has-appshell-menus) .modal-bar {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   margin-left: 5px;
+  margin-top: 0;
+}
+.modal-bar #find-next {
+  margin-top: 0;
 }
 .modal-bar #find-prev,
 .modal-bar #replace-yes,
@@ -11749,7 +11870,16 @@ body:not(.has-appshell-menus) .modal-bar {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
-.modal-bar #find-case-sensitive,
+.modal-bar #find-case-sensitive {
+  border-left: none;
+  margin-left: -3px;
+  margin-top: 0;
+  border-radius: 0;
+}
+.modal-bar #find-regexp {
+  margin-left: -3px;
+  margin-top: 0;
+}
 .modal-bar #replace-yes {
   border-left: none;
   margin-left: 0;
@@ -11805,6 +11935,7 @@ li:hover .filter-edit-icon {
 }
 button.file-filter-picker {
   margin-left: 10px;
+  margin-top: 1px;
 }
 input.exclusions-name {
   display: block;
@@ -11862,11 +11993,6 @@ textarea.exclusions-editor {
 .CodeMirror-searching.searching-last {
   border-top-right-radius: 2px;
   border-bottom-right-radius: 2px;
-}
-#find-counter {
-  font-weight: 500;
-  padding: 0 5px;
-  margin-right: 17px;
 }
 .tickmark-track {
   position: absolute;

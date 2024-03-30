@@ -47,13 +47,13 @@ define(function (require, exports, module) {
      * Maximum file size to search within (in chars)
      * @const {number}
      */
-    var FIND_MAX_FILE_SIZE  = 500000;
+    const FIND_MAX_FILE_SIZE  = 16000000; // 16MB files limit
 
     /**
      * If the number of matches exceeds this limit, inline text highlighting and scroll-track tickmarks are disabled
      * @const {number}
      */
-    var FIND_HIGHLIGHT_MAX  = 2000;
+    const FIND_HIGHLIGHT_MAX  = 5000;
 
     /**
      * Currently open Find or Find/Replace bar, if any
@@ -495,7 +495,7 @@ define(function (require, exports, module) {
 
         function indicateHasMatches(numResults) {
             // Make the field red if it's not blank and it has no matches (which also covers invalid regexes)
-            findBar.showNoResults(!state.foundAny && findBar.getQueryInfo().query);
+            findBar.showNoResults(!state.foundAny && findBar.getQueryInfo(false).query);
 
             // Navigation buttons enabled if we have a query and more than one match
             findBar.enableNavigation(state.foundAny && numResults > 1);
@@ -571,7 +571,7 @@ define(function (require, exports, module) {
      *     In that case, we don't want to change the selection unnecessarily.
      */
     function handleQueryChange(editor, state, initial) {
-        setQueryInfo(state, findBar.getQueryInfo());
+        setQueryInfo(state, findBar.getQueryInfo(false));
         updateResultSet(editor);
 
         if (state.parsedQuery) {
