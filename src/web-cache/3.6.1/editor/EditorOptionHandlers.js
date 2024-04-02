@@ -22,33 +22,49 @@
 define(function (require, exports, module) {
 
 
-    var AppInit             = require("utils/AppInit"),
+    const AppInit             = require("utils/AppInit"),
         Editor              = require("editor/Editor").Editor,
         Commands            = require("command/Commands"),
         CommandManager      = require("command/CommandManager"),
         PreferencesManager  = require("preferences/PreferencesManager"),
         Strings             = require("strings"),
+        EditorManager       = require("editor/EditorManager"),
+        ThemeManager        = require("view/ThemeManager"),
         _                   = require("thirdparty/lodash");
 
     // Constants for the preferences referred to in this file
-    var SHOW_LINE_NUMBERS = "showLineNumbers",
+    const SHOW_LINE_NUMBERS = "showLineNumbers",
         STYLE_ACTIVE_LINE = "styleActiveLine",
         WORD_WRAP         = "wordWrap",
         CLOSE_BRACKETS    = "closeBrackets",
         AUTO_HIDE_SEARCH  = "autoHideSearch";
 
+    const PREFERENCES_EDITOR_RULERS = "editor.rulers",
+        PREFERENCES_EDITOR_RULER_COLORS = "editor.rulerColors",
+        PREFERENCES_EDITOR_RULERS_ENABLED = "editor.rulersEnabled";
+    PreferencesManager.definePreference(PREFERENCES_EDITOR_RULERS_ENABLED, "boolean", true, {
+        description: Strings.DESCRIPTION_RULERS_ENABLED
+    });
+    PreferencesManager.definePreference(PREFERENCES_EDITOR_RULERS, "array", [120], {
+        description: Strings.DESCRIPTION_RULERS_COLUMNS
+    });
+    PreferencesManager.definePreference(PREFERENCES_EDITOR_RULER_COLORS, "array", [], {
+        description: Strings.DESCRIPTION_RULERS_COLORS
+    });
 
+    let _currentTheme;
     /**
      * @private
      *
      * Maps from preference names to the command names needed to update the checked status.
      */
-    var _optionMapping = {};
+    let _optionMapping = {};
     _optionMapping[SHOW_LINE_NUMBERS] = Commands.TOGGLE_LINE_NUMBERS;
     _optionMapping[STYLE_ACTIVE_LINE] = Commands.TOGGLE_ACTIVE_LINE;
     _optionMapping[WORD_WRAP] = Commands.TOGGLE_WORD_WRAP;
     _optionMapping[CLOSE_BRACKETS] = Commands.TOGGLE_CLOSE_BRACKETS;
     _optionMapping[AUTO_HIDE_SEARCH] = Commands.TOGGLE_SEARCH_AUTOHIDE;
+    _optionMapping[PREFERENCES_EDITOR_RULERS_ENABLED] = Commands.TOGGLE_RULERS;
 
 
 
@@ -86,6 +102,51 @@ define(function (require, exports, module) {
         };
     }
 
+    function _createRulers(editor) {
+        const rulerColumns = PreferencesManager.get(PREFERENCES_EDITOR_RULERS) || [];
+        const rulerColors = PreferencesManager.get(PREFERENCES_EDITOR_RULER_COLORS) || [];
+        const rulersEnabled = PreferencesManager.get(PREFERENCES_EDITOR_RULERS_ENABLED);
+        if( !rulersEnabled || !rulerColumns.length || !editor){
+            return;
+        }
+
+        if(!_currentTheme){
+            _currentTheme = ThemeManager.getCurrentTheme();
+        }
+        const defaultColor = (_currentTheme && _currentTheme.dark) ? "#4b4b4b" : "#d0d0d0";
+
+        if(!editor._codeMirror.getOption("rulers")){
+            let rulerOptions = [];
+            for(let i=0; i<rulerColumns.length; i++) {
+                rulerOptions.push({
+                    color: rulerColors[i] ? rulerColors[i]: defaultColor,
+                    column: rulerColumns[i],
+                    lineStyle: "solid !important"
+                });
+            }
+            editor._codeMirror.setOption("rulers", rulerOptions);
+        }
+    }
+
+    function _resetRulers() {
+        Editor.forEveryEditor(function (editor) {
+            editor._codeMirror.setOption("rulers", null);
+            _createRulers(editor);
+        });
+    }
+
+    function _handleThemeChange() {
+        _currentTheme = ThemeManager.getCurrentTheme();
+        _resetRulers();
+    }
+
+    CommandManager.register(Strings.CMD_TOGGLE_LINE_NUMBERS, Commands.TOGGLE_LINE_NUMBERS, _getToggler(SHOW_LINE_NUMBERS));
+    CommandManager.register(Strings.CMD_TOGGLE_ACTIVE_LINE, Commands.TOGGLE_ACTIVE_LINE, _getToggler(STYLE_ACTIVE_LINE));
+    CommandManager.register(Strings.CMD_TOGGLE_WORD_WRAP, Commands.TOGGLE_WORD_WRAP, _getToggler(WORD_WRAP));
+    CommandManager.register(Strings.CMD_TOGGLE_CLOSE_BRACKETS, Commands.TOGGLE_CLOSE_BRACKETS, _getToggler(CLOSE_BRACKETS));
+    CommandManager.register(Strings.CMD_TOGGLE_SEARCH_AUTOHIDE, Commands.TOGGLE_SEARCH_AUTOHIDE, _getToggler(AUTO_HIDE_SEARCH));
+    CommandManager.register(Strings.CMD_TOGGLE_RULERS, Commands.TOGGLE_RULERS, _getToggler(PREFERENCES_EDITOR_RULERS_ENABLED));
+
     function _init() {
         _.each(_optionMapping, function (commandName, prefName) {
             CommandManager.get(commandName).setChecked(PreferencesManager.get(prefName));
@@ -94,13 +155,17 @@ define(function (require, exports, module) {
         if (!Editor.getShowLineNumbers()) {
             Editor._toggleLinePadding(true);
         }
-    }
 
-    CommandManager.register(Strings.CMD_TOGGLE_LINE_NUMBERS, Commands.TOGGLE_LINE_NUMBERS, _getToggler(SHOW_LINE_NUMBERS));
-    CommandManager.register(Strings.CMD_TOGGLE_ACTIVE_LINE, Commands.TOGGLE_ACTIVE_LINE, _getToggler(STYLE_ACTIVE_LINE));
-    CommandManager.register(Strings.CMD_TOGGLE_WORD_WRAP, Commands.TOGGLE_WORD_WRAP, _getToggler(WORD_WRAP));
-    CommandManager.register(Strings.CMD_TOGGLE_CLOSE_BRACKETS, Commands.TOGGLE_CLOSE_BRACKETS, _getToggler(CLOSE_BRACKETS));
-    CommandManager.register(Strings.CMD_TOGGLE_SEARCH_AUTOHIDE, Commands.TOGGLE_SEARCH_AUTOHIDE, _getToggler(AUTO_HIDE_SEARCH));
+        // fires for inline editor creation;
+        EditorManager.on('activeEditorChange', (_event, newActiveEditor)=>{
+            _createRulers(newActiveEditor);
+        });
+        PreferencesManager.on("change", PREFERENCES_EDITOR_RULERS_ENABLED, _resetRulers);
+        PreferencesManager.on("change", PREFERENCES_EDITOR_RULERS, _resetRulers);
+        PreferencesManager.on("change", PREFERENCES_EDITOR_RULER_COLORS, _resetRulers);
+        ThemeManager.on(ThemeManager.EVENT_THEME_CHANGE, _handleThemeChange);
+        _resetRulers();
+    }
 
     AppInit.htmlReady(_init);
 });

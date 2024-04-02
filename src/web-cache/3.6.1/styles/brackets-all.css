@@ -10425,6 +10425,9 @@ img {
 #editor-holder .pane-header.always-show-header-buttons > .pane-header-close-btn {
   display: inline;
 }
+#editor-holder .CodeMirror-ruler {
+  z-index: 1;
+}
 #editor-holder .active-pane .pane-header {
   opacity: 1;
   color: #000;
