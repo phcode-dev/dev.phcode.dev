@@ -11549,7 +11549,7 @@ body:not(.has-appshell-menus) .modal-bar {
   width: 20em;
   margin: 5px 5px 0;
   position: relative;
-  top: -3px;
+  top: -4px;
 }
 .modal-bar input.no-results,
 .modal-bar textarea.no-results {
@@ -11769,7 +11769,6 @@ body:not(.has-appshell-menus) .modal-bar {
 }
 .modal-bar .scope-group {
   display: inline-block;
-  margin-left: 10px;
 }
 .modal-bar .scope-group .file-filter-picker {
   min-width: 150px;
@@ -11782,10 +11781,6 @@ body:not(.has-appshell-menus) .modal-bar {
   display: inline-block;
   font-style: italic;
   margin-left: 5px;
-}
-.modal-bar .message,
-.modal-bar .no-results-message {
-  display: inline-block;
 }
 .modal-bar #find-case-sensitive,
 .modal-bar #find-regexp {
@@ -11857,6 +11852,7 @@ body:not(.has-appshell-menus) .modal-bar {
 .modal-bar #replace-batch {
   border-radius: 0;
   margin-left: 0;
+  margin-top: -1px;
 }
 .modal-bar #replace-batch.solo {
   border-top-right-radius: 3px;
@@ -11887,6 +11883,10 @@ body:not(.has-appshell-menus) .modal-bar {
   border-left: none;
   margin-left: 0;
   border-radius: 0;
+  margin-top: -1px;
+}
+.modal-bar #replace-all {
+  margin-top: -1px;
 }
 .modal-bar .close {
   position: absolute;
@@ -11937,8 +11937,8 @@ li:hover .filter-edit-icon {
   color: #bbb;
 }
 button.file-filter-picker {
-  margin-left: 10px;
-  margin-top: 1px;
+  margin-left: 5px;
+  margin-top: 0;
 }
 input.exclusions-name {
   display: block;
