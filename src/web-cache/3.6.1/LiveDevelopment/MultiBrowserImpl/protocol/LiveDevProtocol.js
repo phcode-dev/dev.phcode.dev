@@ -44,13 +44,15 @@ define(function (require, exports, module) {
     // Text of the script we'll inject into the browser that handles protocol requests.
     const LiveDevProtocolRemote = require("text!LiveDevelopment/BrowserScripts/LiveDevProtocolRemote.js"),
         DocumentObserver      = require("text!LiveDevelopment/BrowserScripts/DocumentObserver.js"),
+        LanguageManager     = require("language/LanguageManager"),
         RemoteFunctions       = require("text!LiveDevelopment/BrowserScripts/RemoteFunctions.js"),
         EditorManager         = require("editor/EditorManager"),
         LiveDevMultiBrowser   = require("LiveDevelopment/LiveDevMultiBrowser"),
         PreferencesManager  = require("preferences/PreferencesManager"),
         HTMLInstrumentation   = require("LiveDevelopment/MultiBrowserImpl/language/HTMLInstrumentation"),
         StringUtils = require("utils/StringUtils"),
-        FileViewController    = require("project/FileViewController");
+        FileViewController    = require("project/FileViewController"),
+        MainViewManager     = require("view/MainViewManager");
 
     const LIVE_DEV_REMOTE_SCRIPTS_FILE_NAME = `phoenix_live_preview_scripts_instrumented_${StringUtils.randomString(8)}.js`;
     const LIVE_DEV_REMOTE_WORKER_SCRIPTS_FILE_NAME = `pageLoaderWorker_${StringUtils.randomString(8)}.js`;
@@ -107,38 +109,96 @@ define(function (require, exports, module) {
         editor.focus();
     }
 
-    function _tagSelectedInLivePreview(tagId, nodeName, contentEditable) {
+    const cssLangIDS = ["css", "scss", "sass", "less"];
+    const lessLangIDS = ["scss", "sass", "less"];
+    function _isLessOrSCSS(editor) {
+        if(!editor){
+            return false;
+        }
+        const language = LanguageManager.getLanguageForPath(editor.document.file.fullPath);
+        return language && lessLangIDS.includes(language.getId());
+    }
+
+    function _searchAndCursorIfCSS(editor, allSelectors, nodeName) {
+        const codeMirror =  editor._codeMirror;
+        const language = LanguageManager.getLanguageForPath(editor.document.file.fullPath);
+        if(!language || !cssLangIDS.includes(language.getId())){
+            return;
+        }
+
+        // this is a css file
+        if(allSelectors && allSelectors.length){
+            // check if we can find a class selector
+            for(let selector of allSelectors){
+                const cursor = codeMirror.getSearchCursor(selector);
+                const found = cursor.findNext();
+                if (found) {
+                    editor.setCursorPos(cursor.from().line, cursor.from().ch, true);
+                    return;
+                }
+            }
+        }
+        // check if we can do tag matching, html tag selectors are not case-sensitive
+        const htmlTagSearch = new RegExp(nodeName, "i");
+        const cursor = codeMirror.getSearchCursor(htmlTagSearch);
+        const found = cursor.findNext();
+        if (found) {
+            editor.setCursorPos(cursor.from().line, cursor.from().ch, true);
+        }
+    }
+
+    function _tagSelectedInLivePreview(tagId, nodeName, contentEditable, allSelectors) {
         const highlightPref = PreferencesManager.getViewState("livedevHighlight");
         if(!highlightPref){
             // live preview highlight and reverse highlight feature is disabled
             return;
         }
         const liveDoc = LiveDevMultiBrowser.getCurrentLiveDoc(),
-            editor = EditorManager.getActiveEditor();
+            activeEditor = EditorManager.getActiveEditor(), // this can be an inline editor
+            activeFullEditor = EditorManager.getCurrentFullEditor();
         const liveDocPath = liveDoc ? liveDoc.doc.file.fullPath : null,
-            activeEditorDocPath = editor ? editor.document.file.fullPath : null;
-        function selectInActiveDocument() {
-            // activeEditor can be either a full or inline(Eg. css inline within html) editor
-            const activeEditor = EditorManager.getActiveEditor();
-            const activeFullEditor = EditorManager.getCurrentFullEditor(); // always full editor
-            const position = HTMLInstrumentation.getPositionFromTagId(activeFullEditor, parseInt(tagId, 10));
-            // should we scan all editors for the file path and update selections on every editor?
-            // currently we do it only for active / full editor.
-            if(position &&
-                activeEditor && activeEditor.document.file.fullPath === activeFullEditor.document.file.fullPath) {
-                activeEditor.setCursorPos(position.line, position.ch, true);
-                _focusEditorIfNeeded(activeEditor, nodeName, contentEditable);
-            }
-            if(position && activeFullEditor) {
-                activeFullEditor.setCursorPos(position.line, position.ch, true);
-                _focusEditorIfNeeded(activeFullEditor, nodeName, contentEditable);
+            activeEditorPath = activeEditor ? activeEditor.document.file.fullPath : null,
+            activeFullEditorPath = activeFullEditor ? activeFullEditor.document.file.fullPath : null;
+        if(!liveDocPath){
+            activeEditor && activeEditor.focus(); // restore focus from live preview
+            return;
+        }
+        const openFullEditors = MainViewManager.findInOpenPane(liveDocPath);
+        const openLiveDocEditor = openFullEditors.length ? openFullEditors[0].editor : null;
+        function selectInHTMLEditor(fullHtmlEditor) {
+            const position = HTMLInstrumentation.getPositionFromTagId(fullHtmlEditor, parseInt(tagId, 10));
+            if(position && fullHtmlEditor) {
+                const masterEditor = fullHtmlEditor.document._masterEditor || fullHtmlEditor;
+                masterEditor.setCursorPos(position.line, position.ch, true);
+                _focusEditorIfNeeded(masterEditor, nodeName, contentEditable);
             }
         }
-        if(liveDocPath && liveDocPath !== activeEditorDocPath) {
-            FileViewController.openAndSelectDocument(liveDocPath, FileViewController.PROJECT_MANAGER)
-                .done(selectInActiveDocument);
+        if(liveDocPath === activeFullEditorPath) {
+            // if the active pane is the html being live previewed, select that.
+            selectInHTMLEditor(activeFullEditor);
+        } else if(liveDoc.isRelated(activeEditorPath) || _isLessOrSCSS(activeEditor)) {
+            // the active editor takes the priority in the workflow. If a css related file is active,
+            // then we dont need to open the html live doc. For less files, we dont check if its related as
+            // its not directly linked usually and needs a compile step. so we just do a fuzzy search.
+            activeEditor.focus();
+            _searchAndCursorIfCSS(activeEditor, allSelectors, nodeName);
+            // in this case, see if we need to do any css reverse highlight magic here
+        } else if(openLiveDocEditor) {
+            // If we are on multi pane mode, the html doc was open in an inactive unfocused editor.
+            selectInHTMLEditor(openLiveDocEditor);
         } else {
-            selectInActiveDocument();
+            // no open editor for the live doc in panes, check if there is one in the working set.
+            const foundInWorkingSetPane = MainViewManager.findInAllWorkingSets(liveDocPath);
+            const paneToUse = foundInWorkingSetPane.length ?
+                foundInWorkingSetPane[0].paneId:
+                MainViewManager.ACTIVE_PANE; // if pane id is active pane, then the file is not open in working set
+            const viewToUse = (paneToUse === MainViewManager.ACTIVE_PANE) ?
+                FileViewController.PROJECT_MANAGER:
+                FileViewController.WORKING_SET_VIEW;
+            FileViewController.openAndSelectDocument(liveDocPath, viewToUse, paneToUse)
+                .done(()=>{
+                    selectInHTMLEditor(EditorManager.getActiveEditor());
+                });
         }
     }
 
@@ -168,7 +228,7 @@ define(function (require, exports, module) {
                 }
             }
         } else if (msg.clicked && msg.tagId) {
-            _tagSelectedInLivePreview(msg.tagId, msg.nodeName, msg.contentEditable);
+            _tagSelectedInLivePreview(msg.tagId, msg.nodeName, msg.contentEditable, msg.allSelectors);
             exports.trigger(EVENT_LIVE_PREVIEW_CLICKED, msg);
         } else {
             // enrich received message with clientId

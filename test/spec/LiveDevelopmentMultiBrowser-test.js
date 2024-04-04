@@ -54,6 +54,7 @@ define(function (require, exports, module) {
             CommandManager,
             BeautificationManager,
             Commands,
+            MainViewManager,
             WorkspaceManager,
             PreferencesManager,
             Dialogs,
@@ -102,6 +103,7 @@ define(function (require, exports, module) {
                 PreferencesManager       = brackets.test.PreferencesManager;
                 NativeApp       = brackets.test.NativeApp;
                 Dialogs       = brackets.test.Dialogs;
+                MainViewManager       = brackets.test.MainViewManager;
                 savedNativeAppOpener = NativeApp.openURLInDefaultBrowser;
 
                 await SpecRunnerUtils.loadProjectInTestWindow(testFolder);
@@ -121,6 +123,14 @@ define(function (require, exports, module) {
             CommandManager      = null;
             Commands            = null;
             EditorManager       = null;
+            MainViewManager = null;
+            savedNativeAppOpener = null;
+            Dialogs = null;
+            NativeApp = null;
+            PreferencesManager = null;
+            BeautificationManager = null;
+            DocumentManager = null;
+            WorkspaceManager = null;
         }, 30000);
 
         async function _enableLiveHighlights(enable) {
@@ -988,6 +998,165 @@ define(function (require, exports, module) {
                 });
             expect(editor.getCursorPos()).toEql({ line: 12, ch: 0, sticky: null });
 
+            await endPreviewSession();
+        }, 30000);
+
+        async function _forSelection(id, editor, cursor) {
+            await awaitsFor(()=>{
+                const cursorPos = editor.getCursorPos();
+                return cursorPos && cursorPos.line === cursor.line && cursorPos.ch === cursor.ch;
+            }, "waiting for editor reverse selection on "+ id);
+        }
+
+        async function _verifyCssReverseHighlight(fileName) {
+            await awaitsForDone(SpecRunnerUtils.openProjectFiles(["cssLivePreview.html"]),
+                "SpecRunnerUtils.openProjectFiles cssLivePreview.html");
+
+            await waitsForLiveDevelopmentToOpen();
+            await awaits(500);
+
+            // now open the css file
+            await awaitsForDone(SpecRunnerUtils.openProjectFiles([fileName]),
+                `SpecRunnerUtils.openProjectFiles ${fileName}`);
+
+            let editor = EditorManager.getActiveEditor();
+            expect(editor.document.file.name).toBe(fileName);
+
+            await forRemoteExec(`document.getElementById("testId").click()`);
+            editor = EditorManager.getActiveEditor();
+            expect(editor.document.file.name).toBe(fileName);
+            await _forSelection("#testId", editor, { line: 6, ch: 0, sticky: null });
+            await forRemoteExec(`document.getElementById("testId2").click()`);
+            editor = EditorManager.getActiveEditor();
+            expect(editor.document.file.name).toBe(fileName);
+            await _forSelection("#testId2", editor, { line: 9, ch: 0, sticky: null });
+            await forRemoteExec(`document.getElementsByTagName("span")[0].click()`);
+            editor = EditorManager.getActiveEditor();
+            expect(editor.document.file.name).toBe(fileName);
+            await _forSelection("span", editor, { line: 11, ch: 0, sticky: null });
+            await forRemoteExec(`document.getElementsByClassName("notInCss")[0].click()`);
+            editor = EditorManager.getActiveEditor();
+            expect(editor.document.file.name).toBe(fileName);
+            await _forSelection("span", editor, { line: 2, ch: 0, sticky: null });
+
+            await endPreviewSession();
+        }
+
+        it("should reverse highlight on related CSS on clicking live preview", async function () {
+            await _verifyCssReverseHighlight("cssLive.css");
+        }, 30000);
+
+        it("should reverse highlight on unrelated less on clicking live preview", async function () {
+            // for less files we dont do the related file check as its is not usually directly linked into the css DOM.
+            await _verifyCssReverseHighlight("cssLive1.less");
+        }, 30000);
+
+        it("should reverse highlight on unrelated scss on clicking live preview", async function () {
+            // for scss files we dont do the related file check as its is not usually directly linked into the css DOM.
+            await _verifyCssReverseHighlight("cssLive1.scss");
+        }, 30000);
+
+        it("should reverse highlight on unrelated sass on clicking live preview", async function () {
+            // for sass files we dont do the related file check as its is not usually directly linked into the css DOM.
+            await _verifyCssReverseHighlight("cssLive1.sass");
+        }, 30000);
+
+        it("should open document on clicking on html live preview if no file is present", async function () {
+            await awaitsForDone(SpecRunnerUtils.openProjectFiles(["cssLivePreview.html"]),
+                "SpecRunnerUtils.openProjectFiles cssLivePreview.html");
+
+            await waitsForLiveDevelopmentToOpen();
+
+            await awaitsForDone(CommandManager.execute(Commands.FILE_CLOSE_ALL, { _forceClose: true }),
+                "closing all file");
+
+            await forRemoteExec(`document.getElementById("testId").click()`);
+            await awaitsFor(()=>{
+                return !!EditorManager.getActiveEditor();
+            }, "Editor to be opened");
+            let editor = EditorManager.getActiveEditor();
+            expect(editor.document.file.name).toBe("cssLivePreview.html");
+            await endPreviewSession();
+        }, 30000);
+
+        it("should not open document on clicking live preview if related file is present and html not present", async function () {
+            await awaitsForDone(SpecRunnerUtils.openProjectFiles(["cssLivePreview.html"]),
+                "SpecRunnerUtils.openProjectFiles cssLivePreview.html");
+
+            await waitsForLiveDevelopmentToOpen();
+
+            await awaitsForDone(CommandManager.execute(Commands.FILE_CLOSE_ALL, { _forceClose: true }),
+                "closing all file");
+            await awaitsForDone(SpecRunnerUtils.openProjectFiles(["cssLive.css"]),
+                "SpecRunnerUtils.openProjectFiles cssLive.css");
+
+            await forRemoteExec(`document.getElementById("testId").click()`);
+            await awaits(100); // just wait for some time to verify html file is not opened
+            let editor = EditorManager.getActiveEditor();
+            expect(editor.document.file.name).toBe("cssLive.css");
+            await endPreviewSession();
+        }, 30000);
+
+        it("should not focus html on clicking live preview if related css is open in split pane", async function () {
+            MainViewManager.setLayoutScheme(1, 2);
+            MainViewManager.setActivePaneId(MainViewManager.FIRST_PANE);
+            await awaitsForDone(SpecRunnerUtils.openProjectFiles(["cssLivePreview.html"], MainViewManager.FIRST_PANE),
+                "SpecRunnerUtils.openProjectFiles cssLivePreview.html");
+
+            await waitsForLiveDevelopmentToOpen();
+
+            await awaitsForDone(SpecRunnerUtils.openProjectFiles(["cssLive.css"], MainViewManager.SECOND_PANE),
+                "SpecRunnerUtils.openProjectFiles cssLive.css");
+
+            MainViewManager.setActivePaneId(MainViewManager.SECOND_PANE);
+            let editor = EditorManager.getActiveEditor();
+            editor.setCursorPos(0, 0);
+            await forRemoteExec(`document.getElementById("testId").click()`);
+            await _forSelection("#testId", editor, { line: 6, ch: 0, sticky: null });
+            editor = EditorManager.getActiveEditor();
+            expect(editor.document.file.name).toBe("cssLive.css");
+
+            MainViewManager.setActivePaneId(MainViewManager.FIRST_PANE);
+            editor = EditorManager.getActiveEditor();
+            editor.setCursorPos(0, 0);
+            await forRemoteExec(`document.getElementById("testId2").click()`);
+            await _forSelection("#testId", editor, { line: 13, ch: 4, sticky: null });
+            editor = EditorManager.getActiveEditor();
+            expect(editor.document.file.name).toBe("cssLivePreview.html");
+
+            MainViewManager.setLayoutScheme(1, 1);
+            await endPreviewSession();
+        }, 30000);
+
+        it("should open html in correct pane on clicking live preview in split pane", async function () {
+            MainViewManager.setLayoutScheme(1, 2);
+            MainViewManager.setActivePaneId(MainViewManager.FIRST_PANE);
+            await awaitsForDone(SpecRunnerUtils.openProjectFiles(["cssLivePreview.html"], MainViewManager.FIRST_PANE),
+                "SpecRunnerUtils.openProjectFiles cssLivePreview.html");
+
+            await waitsForLiveDevelopmentToOpen();
+
+            await awaitsForDone(SpecRunnerUtils.openProjectFiles(["simple1.css"], MainViewManager.SECOND_PANE),
+                "SpecRunnerUtils.openProjectFiles simple1.css"); // non related file
+            await awaitsForDone(SpecRunnerUtils.openProjectFiles(["blank.css"], MainViewManager.FIRST_PANE),
+                "SpecRunnerUtils.openProjectFiles blank.css");  // non related file
+
+            // now the live preview page's editor is not visible in any panes, but is already open in first pane
+            // so, on clicking live preview, it should open the file in first pane
+            MainViewManager.setActivePaneId(MainViewManager.SECOND_PANE);
+
+            await forRemoteExec(`document.getElementById("testId2").click()`);
+            let editor = EditorManager.getActiveEditor();
+            await awaitsFor(()=>{
+                editor = EditorManager.getActiveEditor();
+                return editor && editor.document.file.name === "cssLivePreview.html";
+            }, "cssLivePreview.html to open as active editor");
+            await _forSelection("#testId", editor, { line: 13, ch: 4, sticky: null });
+            editor = EditorManager.getActiveEditor();
+            expect(editor.document.file.name).toBe("cssLivePreview.html");
+            expect(MainViewManager.getActivePaneId()).toBe(MainViewManager.FIRST_PANE);
+
+            MainViewManager.setLayoutScheme(1, 1);
             await endPreviewSession();
         }, 30000);
 
