@@ -54,6 +54,9 @@
  * - "navigated_away" (The browser changed to a location outside of the project)
  * - "detached_target_closed" (The tab or window was closed)
  */
+
+/*global jsPromise */
+
 define(function (require, exports, module) {
 
 
@@ -521,13 +524,7 @@ define(function (require, exports, module) {
             isViewable = _server && _server.canServe(doc.file.fullPath);
 
         if (_liveDocument && _liveDocument.doc.url !== docUrl && isViewable) {
-            // clear live doc and related docs
-            _closeDocuments();
-            // create new live doc
-            _createLiveDocumentForFrame(doc);
-            _setStatus(STATUS_RESTARTING);
-            _open(doc);
-
+            open();
         }
     }
 
@@ -535,10 +532,10 @@ define(function (require, exports, module) {
     /**
      * Open a live preview on the current docuemnt.
      */
-    function open() {
+    async function open() {
         let doc = DocumentManager.getCurrentDocument();
         if(livePreviewUrlPinned){
-            doc = DocumentManager.getDocumentForPath(currentPreviewFilePath);
+            doc = await jsPromise(DocumentManager.getDocumentForPath(currentPreviewFilePath));
         }
 
         // wait for server (StaticServer, Base URL or file:)
@@ -548,6 +545,9 @@ define(function (require, exports, module) {
                     return;
                 }
                 _setStatus(STATUS_CONNECTING);
+                // clear live doc and related docs
+                _closeDocuments();
+                // create new live doc
                 doc && _createLiveDocumentForFrame(doc);
                 if(_server.isActive()){
                     doc && _open(doc);
