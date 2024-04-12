@@ -33,7 +33,7 @@ define({
     "DELETING": "Deleting {0}",
     "RENAMING": "Renaming",
     "STORED_IN_YOUR_BROWSER": "Stored in Your Browser",
-    "SUPPORT_US_OPEN_COLLECTIVE": "Support us on Open Collective",
+    "SUPPORT_US_OPEN_COLLECTIVE": "Support us on GitHub Sponsors",
     // General file io error strings
     "GENERIC_ERROR": "(error {0})",
     "NOT_FOUND_ERR": "The file/directory could not be found.",
@@ -1147,7 +1147,7 @@ define({
     "GUIDED_LIVE_PREVIEW": "Make some code changes in the HTML file to see live preview. </br> <a href='#' style='float:right;'>ok</a>",
     "GUIDED_LIVE_PREVIEW_POPOUT": "Click this button to popout live preview to a new tab. </br> <a href='#' style='float:right;'>ok</a>",
     "ENJOYING_APP": "Enjoying {APP_NAME}?",
-    "GITHUB_STARS_POPUP": "<div>Your reviews keep our small team motivated to make <b>phcode.dev</b> even better.<br/>Please star us on GitHub:",
+    "GITHUB_STARS_POPUP": "<div>Your support helps our small team motivated to make <b style='color: darkblue'>phcode.dev</b> even better.<br/>Please star us or consider sponsoring us on GitHub:",
     "GITHUB_STARS_POPUP_TWITTER": "Give feedback or spread the word on Twitter:",
     "TEST_TRANSLATE": "use this to test translations",
     //beautify extension
