@@ -62,6 +62,7 @@ define(function (require, exports, module) {
         FileSystem          = require("filesystem/FileSystem"),
         BrowserStaticServer  = require("./BrowserStaticServer"),
         NodeStaticServer  = require("./NodeStaticServer"),
+        LivePreviewSettings  = require("./LivePreviewSettings"),
         NodeUtils = require("utils/NodeUtils"),
         TrustProjectHTML    = require("text!./trust-project.html"),
         panelHTML       = require("text!./panel.html"),
@@ -89,6 +90,7 @@ define(function (require, exports, module) {
 
     // jQuery objects
     let $icon,
+        $settingsIcon,
         $iframe,
         $panel,
         $pinUrlBtn,
@@ -224,10 +226,10 @@ define(function (require, exports, module) {
         $iframe = newIframe;
     }
 
-    let panelShownOnce = false;
+    let panelShownAtStartup;
     function _setPanelVisibility(isVisible) {
         if (isVisible) {
-            panelShownOnce = true;
+            panelShownAtStartup = true;
             $icon.toggleClass("active");
             panel.show();
             _loadPreview(true);
@@ -308,14 +310,17 @@ define(function (require, exports, module) {
         }
     }
 
-    function _setTitle(fileName, fullPath) {
+    function _setTitle(fileName, fullPath, currentLivePreviewURL) {
         let message = Strings.LIVE_DEV_SELECT_FILE_TO_PREVIEW,
             tooltip = message;
         if(fileName){
             message = `${fileName} - ${Strings.LIVE_DEV_STATUS_TIP_OUT_OF_SYNC}`;
             tooltip = StringUtils.format(Strings.LIVE_DEV_TOOLTIP_SHOW_IN_EDITOR, fileName);
         }
-        $panelTitle.text(message);
+        if(currentLivePreviewURL){
+            tooltip = `${tooltip}\n${currentLivePreviewURL}`;
+        }
+        $panelTitle.text(currentLivePreviewURL || message);
         $panelTitle.attr("title", tooltip);
         $panelTitle.attr("data-fullPath", fullPath);
     }
@@ -349,6 +354,7 @@ define(function (require, exports, module) {
             livePreview: Strings.LIVE_DEV_STATUS_TIP_OUT_OF_SYNC,
             clickToReload: Strings.LIVE_DEV_CLICK_TO_RELOAD_PAGE,
             toggleLiveHighlight: Strings.LIVE_DEV_TOGGLE_LIVE_HIGHLIGHT,
+            livePreviewSettings: Strings.LIVE_DEV_SETTINGS,
             clickToPopout: Strings.LIVE_DEV_CLICK_POPOUT,
             openInChrome: Strings.LIVE_DEV_OPEN_CHROME,
             openInSafari: Strings.LIVE_DEV_OPEN_SAFARI,
@@ -376,6 +382,7 @@ define(function (require, exports, module) {
         $edgeButtonBallast = $panel.find("#edgeButtonBallast");
         $firefoxButtonBallast = $panel.find("#firefoxButtonBallast");
         $panelTitle = $panel.find("#panel-live-preview-title");
+        $settingsIcon = $panel.find("#livePreviewSettingsBtn");
         $iframe[0].onload = function () {
             $iframe.attr('srcdoc', null);
         };
@@ -401,6 +408,10 @@ define(function (require, exports, module) {
             _popoutLivePreview("firefox");
         });
         _showOpenBrowserIcons();
+        $settingsIcon.click(()=>{
+            CommandManager.execute(Commands.FILE_LIVE_FILE_PREVIEW_SETTINGS);
+            Metrics.countEvent(Metrics.EVENT_TYPE.LIVE_PREVIEW, "settingsBtn", "click");
+        });
 
         const popoutSupported = Phoenix.browser.isTauri
             || Phoenix.browser.desktop.isChromeBased || Phoenix.browser.desktop.isFirefox;
@@ -463,7 +474,8 @@ define(function (require, exports, module) {
         }
         let relativeOrFullPath= ProjectManager.makeProjectRelativeIfPossible(currentPreviewFile);
         relativeOrFullPath = Phoenix.app.getDisplayPath(relativeOrFullPath);
-        _setTitle(relativeOrFullPath, currentPreviewFile);
+        _setTitle(relativeOrFullPath, currentPreviewFile,
+            previewDetails.isCustomServer ? currentLivePreviewURL : "");
         if(panel.isVisible()) {
             let newIframe = $(LIVE_PREVIEW_IFRAME_HTML);
             newIframe.insertAfter($iframe);
@@ -481,17 +493,25 @@ define(function (require, exports, module) {
         }
         Metrics.countEvent(Metrics.EVENT_TYPE.LIVE_PREVIEW, "render",
             utils.getExtension(previewDetails.fullPath));
-        StaticServer.redirectAllTabs(currentLivePreviewURL);
+        StaticServer.redirectAllTabs(currentLivePreviewURL, force);
     }
 
     async function _projectFileChanges(evt, changedFile) {
-        if(changedFile && utils.isPreviewableFile(changedFile.fullPath)){
+        if(changedFile && (utils.isPreviewableFile(changedFile.fullPath) ||
+            utils.isServerRenderedFile(changedFile.fullPath))){
             // we are getting this change event somehow.
             // bug, investigate why we get this change event as a project file change.
             const previewDetails = await StaticServer.getPreviewDetails();
-            if(!(LiveDevelopment.isActive() && previewDetails.isHTMLFile)) {
+            let shouldReload = false;
+            if(previewDetails.isCustomServer && !previewDetails.serverSupportsHotReload){
+                shouldReload = true;
+            }
+            if(!previewDetails.isCustomServer && !(LiveDevelopment.isActive() && previewDetails.isHTMLFile)) {
                 // We force reload live preview on save for all non html preview-able file or
                 // if html file and live preview isnt active.
+                shouldReload = true;
+            }
+            if(shouldReload) {
                 _loadPreview(true);
             }
         }
@@ -503,6 +523,7 @@ define(function (require, exports, module) {
             const fileEntry = FileSystem.getFileForPath(readmePath);
             fileEntry.exists(function (err, exists) {
                 if (!err && exists) {
+                    _setPanelVisibility(true);
                     CommandManager.execute(Commands.FILE_ADD_TO_WORKING_SET, {fullPath: readmePath});
                     _setProjectReadmePreviewdOnce();
                 }
@@ -521,7 +542,7 @@ define(function (require, exports, module) {
             _togglePinUrl();
         }
         $iframe.attr('src', StaticServer.getNoPreviewURL());
-        if(!panelShownOnce && !isBrowser){
+        if(!panelShownAtStartup && !isBrowser){
             // we dont do this in browser as the virtual server may not yet be started on app start
             // project open and a 404 page will briefly flash in the browser!
             const currentDocument = DocumentManager.getCurrentDocument();
@@ -545,7 +566,7 @@ define(function (require, exports, module) {
     }
 
     function _activeDocChanged() {
-        if(!LiveDevelopment.isActive()
+        if(!LivePreviewSettings.isUsingCustomServer() && !LiveDevelopment.isActive()
             && (panel.isVisible() || StaticServer.hasActiveLivePreviews())) {
             // we do this only once after project switch if live preview for a doc is not active.
             LiveDevelopment.openLivePreview();
@@ -563,6 +584,9 @@ define(function (require, exports, module) {
      * @private
      */
     async function _openLivePreviewURL(_event, previewDetails) {
+        if(LivePreviewSettings.isUsingCustomServer()){
+            return;
+        }
         _loadPreview(true);
         const currentPreviewDetails = await StaticServer.getPreviewDetails();
         if(currentPreviewDetails.isHTMLFile && currentPreviewDetails.fullPath !== previewDetails.fullPath){
@@ -571,30 +595,31 @@ define(function (require, exports, module) {
         }
     }
 
-    function _currentFileChanged(_event, newFile) {
-        if(newFile && utils.isPreviewableFile(newFile.fullPath)){
-            if(!panelShownOnce){
+    async function _currentFileChanged(_event, changedFile) {
+        if(urlPinned){
+            return;
+        }
+        if(changedFile && (utils.isPreviewableFile(changedFile.fullPath) ||
+            utils.isServerRenderedFile(changedFile.fullPath))){
+            if(!panelShownAtStartup){
                 _setPanelVisibility(true);
             }
             _loadPreview();
         }
     }
 
-    function _showLivePreviewPanelIfNeeded(previewDetails) {
-        // we show the live preview
-        // in browser, we always show the live preview on startup even if its a no preview page
-        // Eg. in mac safari browser we show mac doesnt support live preview page in live preview.
-        if(previewDetails.URL && (isBrowser || !previewDetails.isNoPreview) && !panelShownOnce){
-            // only show if there is some file to preview and not the default no-preview preview on startup
-            _setPanelVisibility(true);
-        }
-        _loadPreview(true);
+    function _showSettingsDialog() {
+        LivePreviewSettings.showSettingsDialog()
+            .then(()=>{
+                _loadPreview();
+            });
     }
-    
+
     AppInit.appReady(function () {
         if(Phoenix.isSpecRunnerWindow){
             return;
         }
+        panelShownAtStartup = !LivePreviewSettings.shouldShowLivePreviewAtStartup();
         _createExtensionPanel();
         StaticServer.init();
         LiveDevServerManager.registerServer({ create: _createStaticServer }, 5);
@@ -606,8 +631,12 @@ define(function (require, exports, module) {
         CommandManager.register(Strings.CMD_LIVE_FILE_PREVIEW,  Commands.FILE_LIVE_FILE_PREVIEW, function () {
             _toggleVisibilityOnClick();
         });
+        CommandManager.register(Strings.CMD_LIVE_FILE_PREVIEW_SETTINGS,
+            Commands.FILE_LIVE_FILE_PREVIEW_SETTINGS, _showSettingsDialog);
         let fileMenu = Menus.getMenu(Menus.AppMenuBar.FILE_MENU);
         fileMenu.addMenuItem(Commands.FILE_LIVE_FILE_PREVIEW, "", Menus.AFTER, Commands.FILE_EXTENSION_MANAGER);
+        fileMenu.addMenuItem(Commands.FILE_LIVE_FILE_PREVIEW_SETTINGS, "",
+            Menus.AFTER, Commands.FILE_LIVE_FILE_PREVIEW);
         fileMenu.addMenuDivider(Menus.BEFORE, Commands.FILE_LIVE_FILE_PREVIEW);
         LiveDevelopment.openLivePreview();
         LiveDevelopment.on(LiveDevelopment.EVENT_OPEN_PREVIEW_URL, _openLivePreviewURL);
@@ -620,10 +649,33 @@ define(function (require, exports, module) {
             // required in chrome, but we just keep it just for all platforms behaving the same.
             _loadPreview(true);
         });
+
+        function refreshPreview() {
+            StaticServer.getPreviewDetails().then((previewDetails)=>{
+                _openReadmeMDIfFirstTime();
+                if(!LivePreviewSettings.shouldShowLivePreviewAtStartup()){
+                    return;
+                }
+                // we show the live preview
+                // in browser, we always show the live preview on startup even if its a no preview page
+                // Eg. in mac safari browser we show mac doesnt support live preview page in live preview.
+                if(previewDetails.URL && (isBrowser || !previewDetails.isNoPreview) && !panelShownAtStartup){
+                    // only show if there is some file to preview and not the default no-preview preview on startup
+                    _setPanelVisibility(true);
+                }
+                _loadPreview(true);
+            });
+        }
+
+        let customServerRefreshedOnce = false;
         StaticServer.on(StaticServer.EVENT_SERVER_READY, function (_evt, event) {
-            // We always show the live preview panel on startup if there is a preview file
-            StaticServer.getPreviewDetails().then(_showLivePreviewPanelIfNeeded);
+            if(LivePreviewSettings.isUsingCustomServer() && customServerRefreshedOnce){
+                return;
+            }
+            customServerRefreshedOnce = true;
+            refreshPreview();
         });
+        LivePreviewSettings.on(LivePreviewSettings.EVENT_SERVER_CHANGED, refreshPreview);
 
         let consecutiveEmptyClientsCount = 0;
         setInterval(()=>{

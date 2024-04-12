@@ -34,6 +34,7 @@ define(function (require, exports, module) {
         Mustache = require("thirdparty/mustache/mustache"),
         FileSystem = require("filesystem/FileSystem"),
         EventDispatcher = require("utils/EventDispatcher"),
+        LivePreviewSettings  = require("./LivePreviewSettings"),
         ProjectManager = require("project/ProjectManager"),
         EventManager = require("utils/EventManager"),
         CommandManager     = require("command/CommandManager"),
@@ -564,10 +565,11 @@ define(function (require, exports, module) {
         }
     }
 
-    function redirectAllTabs(newURL) {
+    function redirectAllTabs(newURL, force) {
         liveServerConnector.execPeer('navRedirectAllTabs', {
             type: 'REDIRECT_PAGE',
-            URL: getTabPopoutURL(newURL)
+            URL: getTabPopoutURL(newURL),
+            force
         });
     }
 
@@ -646,7 +648,20 @@ define(function (require, exports, module) {
                 if(fullPath.startsWith("http://") || fullPath.startsWith("https://")){
                     httpFilePath = fullPath;
                 }
-                if(utils.isPreviewableFile(fullPath)){
+                const customServeURL = LivePreviewSettings.getCustomServerConfig(fullPath);
+                if(customServeURL){
+                    const relativePath = path.relative(projectRoot, fullPath);
+                    resolve({
+                        URL: customServeURL,
+                        filePath: relativePath,
+                        fullPath: fullPath,
+                        isMarkdownFile: utils.isMarkdownFile(fullPath),
+                        isHTMLFile: utils.isHTMLFile(fullPath),
+                        isCustomServer: true,
+                        serverSupportsHotReload: LivePreviewSettings.serverSupportsHotReload()
+                    });
+                    return;
+                } else if(utils.isPreviewableFile(fullPath)){
                     const relativeFilePath = httpFilePath || path.relative(projectRoot, fullPath);
                     let URL = httpFilePath || decodeURI(_staticServerInstance.pathToUrl(fullPath));
                     resolve({

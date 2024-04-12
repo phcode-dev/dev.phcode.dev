@@ -45,11 +45,14 @@ define(function (require, exports, module) {
     }
 
     function isPreviewableFile(filePath) {
-        let extension = getExtension(filePath);
         // only svg images should appear in the live preview as it needs text editor.
         // All other image types should appear in the image previewer
-        return isSVG(filePath) || isMarkdownFile(filePath) || isHTMLFile(filePath) ||
-            ['pdf'].includes(extension.toLowerCase());
+        return isSVG(filePath) || isMarkdownFile(filePath) || isHTMLFile(filePath) || isPDF(filePath);
+    }
+
+    function isPDF(filePath) {
+        let extension = getExtension(filePath);
+        return extension === "pdf";
     }
 
     function isSVG(filePath) {
@@ -65,12 +68,28 @@ define(function (require, exports, module) {
 
     function isMarkdownFile(filePath) {
         let extension = getExtension(filePath);
-        return ['md', 'markdown'].includes(extension.toLowerCase());
+        return ['md', 'markdown', 'mdx'].includes(extension.toLowerCase());
     }
 
     function isHTMLFile(filePath) {
         let extension = getExtension(filePath);
         return ['html', 'htm', 'xhtml'].includes(extension.toLowerCase());
+    }
+
+    function isServerRenderedFile(filePath) {
+        let extension = getExtension(filePath);
+        return [
+            "asp",
+            "aspx",
+            "php",
+            "jsp",
+            "jspx",
+            "cfm",
+            "cfc", // ColdFusion Component
+            "rb", // Ruby file, used in Ruby on Rails for views with ERB
+            "erb", // Embedded Ruby, used in Ruby on Rails views
+            "py" // Python file, used in web frameworks like Django or Flask for views
+        ].includes(extension.toLowerCase());
     }
 
     function focusActiveEditorIfFocusInLivePreview() {
@@ -86,7 +105,10 @@ define(function (require, exports, module) {
     exports.getExtension = getExtension;
     exports.isPreviewableFile = isPreviewableFile;
     exports.isImage = isImage;
+    exports.isPDF = isPDF;
+    exports.isSVG = isSVG;
     exports.isHTMLFile = isHTMLFile;
+    exports.isServerRenderedFile = isServerRenderedFile;
     exports.isMarkdownFile = isMarkdownFile;
     exports.focusActiveEditorIfFocusInLivePreview = focusActiveEditorIfFocusInLivePreview;
 });

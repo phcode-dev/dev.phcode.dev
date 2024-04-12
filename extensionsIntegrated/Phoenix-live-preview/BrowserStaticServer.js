@@ -37,6 +37,7 @@ define(function (require, exports, module) {
         CommandManager     = require("command/CommandManager"),
         Commands           = require("command/Commands"),
         EventManager = require("utils/EventManager"),
+        LivePreviewSettings  = require("./LivePreviewSettings"),
         ProjectManager = require("project/ProjectManager"),
         Strings = require("strings"),
         utils = require('./utils'),
@@ -151,7 +152,20 @@ define(function (require, exports, module) {
                     if(fullPath.startsWith("http://") || fullPath.startsWith("https://")){
                         httpFilePath = fullPath;
                     }
-                    if(utils.isPreviewableFile(fullPath)){
+                    const customServeURL = LivePreviewSettings.getCustomServerConfig(fullPath);
+                    if(customServeURL){
+                        const relativePath = path.relative(projectRoot, fullPath);
+                        resolve({
+                            URL: customServeURL,
+                            filePath: relativePath,
+                            fullPath: fullPath,
+                            isMarkdownFile: utils.isMarkdownFile(fullPath),
+                            isHTMLFile: utils.isHTMLFile(fullPath),
+                            isCustomServer: true,
+                            serverSupportsHotReload: LivePreviewSettings.serverSupportsHotReload()
+                        });
+                        return;
+                    } else if(utils.isPreviewableFile(fullPath)){
                         const filePath = httpFilePath || path.relative(projectRoot, fullPath);
                         let URL = httpFilePath || `${projectRootUrl}${filePath}`;
                         resolve({
@@ -197,6 +211,9 @@ define(function (require, exports, module) {
             window.logger.livePreview.log("Live Preview navigator channel: Phoenix received event from tab: ", event);
             const type = event.data.type;
             switch (type) {
+            case 'GET_INITIAL_URL':
+                _sendInitialURL(event.data.pageLoaderID);
+                return;
             case 'TAB_LOADER_ONLINE':
                 livePreviewTabs.set(event.data.pageLoaderID, {
                     lastSeen: new Date(),
@@ -652,10 +669,24 @@ define(function (require, exports, module) {
         _sendToLivePreviewServerTabs(message);
     }
 
-    function redirectAllTabs(newURL) {
+    let currentPopoutURL;
+    function _sendInitialURL(pageLoaderID) {
+        if(!currentPopoutURL){
+            return;
+        }
+        navigatorChannel.postMessage({
+            type: 'INITIAL_URL_NAVIGATE',
+            URL: currentPopoutURL,
+            pageLoaderID: pageLoaderID
+        });
+    }
+
+    function redirectAllTabs(newURL, force) {
+        currentPopoutURL = newURL;
         navigatorChannel.postMessage({
             type: 'REDIRECT_PAGE',
-            URL: newURL
+            URL: newURL,
+            force
         });
     }
 
