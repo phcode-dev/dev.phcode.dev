@@ -25,11 +25,8 @@ define(function (require, exports, module) {
 
 
     var AppInit             = brackets.getModule("utils/AppInit"),
-        ExtensionUtils      = brackets.getModule("utils/ExtensionUtils"),
         CodeHintManager     = brackets.getModule("editor/CodeHintManager"),
         CSSUtils            = brackets.getModule("language/CSSUtils"),
-        HTMLUtils           = brackets.getModule("language/HTMLUtils"),
-        LanguageManager     = brackets.getModule("language/LanguageManager"),
         PreferencesManager  = brackets.getModule("preferences/PreferencesManager"),
         TokenUtils          = brackets.getModule("utils/TokenUtils"),
         StringMatch         = brackets.getModule("utils/StringMatch"),
@@ -38,6 +35,8 @@ define(function (require, exports, module) {
         CSSProperties       = require("text!CSSProperties.json"),
         properties          = JSON.parse(CSSProperties);
 
+
+    const cssWideKeywords = ['initial', 'inherit', 'unset', 'var()', 'calc()'];
 
     PreferencesManager.definePreference("codehint.CssPropHints", "boolean", true, {
         description: Strings.DESCRIPTION_CSS_PROP_HINTS
@@ -56,56 +55,6 @@ define(function (require, exports, module) {
         this.secondaryTriggerKeys = ":";
         this.exclusion = null;
     }
-
-    /**
-     * Get the CSS style text of the file open in the editor for this hinting session.
-     * For a CSS file, this is just the text of the file. For an HTML file,
-     * this will be only the text in the <style> tags.
-     *
-     * @return {string} the "css" text that can be sent to CSSUtils to extract all named flows.
-     */
-    CssPropHints.prototype.getCssStyleText = function () {
-        if (LanguageManager.getLanguageForPath(this.editor.document.file.fullPath).getId() === "html") {
-            // Collect text in all style blocks
-            var text = "",
-                styleBlocks = HTMLUtils.findBlocks(this.editor, "css");
-
-            styleBlocks.forEach(function (styleBlock) {
-                text += styleBlock.text;
-            });
-
-            return text;
-        }
-            // css file, just return the text
-        return this.editor.document.getText();
-
-    };
-
-    /**
-     * Extract all the named flows from any "flow-from" or "flow-into" properties
-     * in the current document. If we have the cached list of named flows and the
-     * cursor is still on the same line as the cached cursor, then the cached list
-     * is returned. Otherwise, we recollect all named flows and update the cache.
-     *
-     * @return {Array.<string>} All named flows available in the current document.
-     */
-    CssPropHints.prototype.getNamedFlows = function () {
-        if (this.namedFlowsCache) {
-            // If the cursor is no longer on the same line, then the cache is stale.
-            // Delete cache so we can extract all named flows again.
-            if (this.namedFlowsCache.cursor.line !== this.cursor.line) {
-                this.namedFlowsCache = null;
-            }
-        }
-
-        if (!this.namedFlowsCache) {
-            this.namedFlowsCache = {};
-            this.namedFlowsCache.flows = CSSUtils.extractAllNamedFlows(this.getCssStyleText());
-            this.namedFlowsCache.cursor = { line: this.cursor.line, ch: this.cursor.ch };
-        }
-
-        return this.namedFlowsCache.flows;
-    };
 
     /**
      * Check whether the exclusion is still the same as text after the cursor.
@@ -179,29 +128,47 @@ define(function (require, exports, module) {
         return true;
     };
 
+    function vendorPrefixesAndGenericToEnd(hints) {
+        // Two arrays to hold strings: one for non-dash strings, one for dash-starting strings
+        const nonDashHints = [];
+        const dashHints = [];
+
+        // Iterate through the array and partition the strings into the two arrays based on the starting character
+        hints.forEach(hint => {
+            if (hint.label.startsWith('-') || cssWideKeywords.includes(hint.label)) {
+                dashHints.push(hint);
+            } else {
+                nonDashHints.push(hint);
+            }
+        });
+
+        // Concatenate the non-dash array with the dash array to form the final sorted array
+        return nonDashHints.concat(dashHints);
+    }
+
+
     /**
      * Returns a sorted and formatted list of hints with the query substring
      * highlighted.
      *
      * @param {Array.<Object>} hints - the list of hints to format
-     * @param {string} query - querystring used for highlighting matched
-     *      portions of each hint
      * @return {Array.jQuery} sorted Array of jQuery DOM elements to insert
      */
-    function formatHints(hints, query) {
+    function formatHints(hints) {
         var hasColorSwatch = hints.some(function (token) {
             return token.color;
         });
 
         StringMatch.basicMatchSort(hints);
+        hints = vendorPrefixesAndGenericToEnd(hints);
         return hints.map(function (token) {
-            var $hintObj = $("<span>").addClass("brackets-css-hints");
+            var $hintObj = $(`<span data-val='${token.label || token.value}'></span>`).addClass("brackets-css-hints brackets-hints");
 
             // highlight the matched portion of each hint
             if (token.stringRanges) {
                 token.stringRanges.forEach(function (item) {
                     if (item.matched) {
-                        $hintObj.append($("<span>")
+                        $hintObj.append($(`<span>`)
                             .text(item.text)
                             .addClass("matched-hint"));
                     } else {
@@ -215,9 +182,26 @@ define(function (require, exports, module) {
             if (hasColorSwatch) {
                 $hintObj = ColorUtils.formatColorHint($hintObj, token.color);
             }
+            if(token.MDN_URL) {
+                const $mdn = $(`<a class="css-code-hint-info" style="text-decoration: none;"
+                href="${token.MDN_URL}" title="${Strings.DOCS_MORE_LINK_MDN_TITLE}">
+                <i class="fa-solid fa-circle-info"></i></a>`);
+                $hintObj = $(`<span data-val='${token.label || token.value}'></span>`).append($hintObj).append($mdn);
+            }
+
+            $hintObj.attr("data-val", token.value);
 
             return $hintObj;
         });
+    }
+
+    function uniqueMerge(arr1, arr2) {
+        arr2.forEach(item => {
+            if (!arr1.includes(item)) {
+                arr1.push(item);
+            }
+        });
+        return arr1;
     }
 
     /**
@@ -248,12 +232,11 @@ define(function (require, exports, module) {
         this.cursor = this.editor.getCursorPos();
         this.info = CSSUtils.getInfoAtPos(this.editor, this.cursor);
 
-        var needle = this.info.name,
+        let needle = this.info.name,
             valueNeedle = "",
             context = this.info.context,
             valueArray,
             type,
-            namedFlows,
             result,
             selectInitial = false;
 
@@ -289,19 +272,13 @@ define(function (require, exports, module) {
                 valueNeedle = valueNeedle.substr(0, this.info.offset);
             }
 
+            if(!properties[needle].injectedCSSDefaults){
+                uniqueMerge(properties[needle].values, cssWideKeywords);
+                properties[needle].injectedCSSDefaults = true;
+            }
             valueArray = properties[needle].values;
             type = properties[needle].type;
-            if (type === "named-flow") {
-                namedFlows = this.getNamedFlows();
-
-                if (valueNeedle.length === this.info.offset && namedFlows.indexOf(valueNeedle) !== -1) {
-                    // Exclude the partially typed named flow at cursor since it
-                    // is not an existing one used in other css rule.
-                    namedFlows.splice(namedFlows.indexOf(valueNeedle), 1);
-                }
-
-                valueArray = valueArray.concat(namedFlows);
-            } else if (type === "color") {
+            if (type === "color") {
                 valueArray = valueArray.concat(ColorUtils.COLOR_NAMES.map(function (color) {
                     return { text: color, color: color };
                 }));
@@ -320,7 +297,7 @@ define(function (require, exports, module) {
             });
 
             return {
-                hints: formatHints(result, valueNeedle),
+                hints: formatHints(result),
                 match: null, // the CodeHintManager should not format the results
                 selectInitial: selectInitial
             };
@@ -343,12 +320,15 @@ define(function (require, exports, module) {
             result = $.map(properties, function (pvalues, pname) {
                 var result = StringMatch.stringMatch(pname, needle, stringMatcherOptions);
                 if (result) {
+                    if(properties[pname].MDN_URL){
+                        result.MDN_URL = properties[pname].MDN_URL;
+                    }
                     return result;
                 }
             });
 
             return {
-                hints: formatHints(result, needle),
+                hints: formatHints(result),
                 match: null, // the CodeHintManager should not format the results
                 selectInitial: selectInitial,
                 handleWideResults: false
@@ -378,7 +358,7 @@ define(function (require, exports, module) {
             ctx;
 
         if (hint.jquery) {
-            hint = hint.text();
+            hint = hint.data("val");
         }
 
         if (this.info.context !== CSSUtils.PROP_NAME && this.info.context !== CSSUtils.PROP_VALUE) {
@@ -467,8 +447,6 @@ define(function (require, exports, module) {
     AppInit.appReady(function () {
         var cssPropHints = new CssPropHints();
         CodeHintManager.registerHintProvider(cssPropHints, ["css", "scss", "less"], 1);
-
-        ExtensionUtils.loadStyleSheet(module, "styles/brackets-css-hints.css");
 
         // For unit testing
         exports.cssPropHintProvider = cssPropHints;

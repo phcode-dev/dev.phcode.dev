@@ -6451,6 +6451,19 @@ body.tauri #titlebar .dirty-dot {
 .inlinemenu.apply-transition {
   transition: right 167ms, left 167ms;
 }
+.css-code-hint-info {
+  visibility: hidden;
+}
+.highlight .css-code-hint-info {
+  visibility: visible;
+  position: absolute;
+  right: 0;
+  margin-top: -2px;
+  color: #2ea56c !important;
+}
+.dark.highlight .css-code-hint-info {
+  color: #146a41 !important;
+}
 #codehint-desc {
   background: #e6e6e6;
   position: absolute;
@@ -8388,12 +8401,10 @@ span.cm-def {
   color: #8757ad;
 }
 span.cm-variable {
-  color: #CC62AC;
-  font-weight: bold;
-  font-size: 97%;
+  color: #A9478E;
 }
 span.cm-variable-2 {
-  color: #8757ad;
+  color: #7554A0;
 }
 span.cm-variable-3 {
   color: #8757ad;
