@@ -105,7 +105,10 @@ define(function (require, exports, module) {
 
     function _saveProjectPreferences(useCustomServer, liveServerURL, serveRoot, hotReloadSupported, framework) {
         PreferencesManager.set(PREFERENCE_PROJECT_SERVER_ENABLED, useCustomServer, PreferencesManager.PROJECT_SCOPE);
-        PreferencesManager.set(PREFERENCE_PROJECT_SERVER_URL, liveServerURL, PreferencesManager.PROJECT_SCOPE);
+        if(PreferencesManager.get(PREFERENCE_PROJECT_SERVER_URL, PreferencesManager.PROJECT_SCOPE) !== liveServerURL){
+            // we check for change as a change event handler is attached to this property
+            PreferencesManager.set(PREFERENCE_PROJECT_SERVER_URL, liveServerURL, PreferencesManager.PROJECT_SCOPE);
+        }
         PreferencesManager.set(PREFERENCE_PROJECT_SERVER_PATH, serveRoot, PreferencesManager.PROJECT_SCOPE);
         PreferencesManager.set(PREFERENCE_PROJECT_SERVER_HOT_RELOAD_SUPPORTED, hotReloadSupported, PreferencesManager.PROJECT_SCOPE);
         PreferencesManager.set(PREFERENCE_PROJECT_PREVIEW_FRAMEWORK, framework, PreferencesManager.PROJECT_SCOPE);
@@ -211,6 +214,10 @@ define(function (require, exports, module) {
         return PreferencesManager.get(PREFERENCE_PROJECT_SERVER_PATH) || "/";
     }
 
+    function getCustomServeBaseURL() {
+        return PreferencesManager.get(PREFERENCE_PROJECT_SERVER_URL) || "";
+    }
+
     function getCustomServerConfig(fullPath) {
         const customServer = _resolveServer();
         if(!customServer || !ProjectManager.isWithinProject(fullPath)) {
@@ -260,6 +267,7 @@ define(function (require, exports, module) {
 
     exports.showSettingsDialog = showSettingsDialog;
     exports.getCustomServerConfig = getCustomServerConfig;
+    exports.getCustomServeBaseURL = getCustomServeBaseURL;
     exports.getCustomServeRoot = getCustomServeRoot;
     exports.isUsingCustomServer = isUsingCustomServer;
     exports.getCustomServerFramework = getCustomServerFramework;
