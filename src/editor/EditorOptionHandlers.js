@@ -113,7 +113,11 @@ define(function (require, exports, module) {
         if(!_currentTheme){
             _currentTheme = ThemeManager.getCurrentTheme();
         }
-        const defaultColor = (_currentTheme && _currentTheme.dark) ? "#4b4b4b" : "#d0d0d0";
+        if(!_currentTheme){
+            // theme manager can return a null current theme at startup before themes load!
+            return;
+        }
+        const defaultColor = (_currentTheme && _currentTheme.dark) ? "#333333" : "#e0e0e0";
 
         if(!editor._codeMirror.getOption("rulers")){
             let rulerOptions = [];
@@ -167,5 +171,5 @@ define(function (require, exports, module) {
         _resetRulers();
     }
 
-    AppInit.htmlReady(_init);
+    AppInit.appReady(_init);
 });
