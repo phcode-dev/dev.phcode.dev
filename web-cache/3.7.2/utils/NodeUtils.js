@@ -46,7 +46,7 @@ define(function (require, exports, module) {
      * updates the localized strings in brackets `Strings` to node.
      * @return {Promise<boolean>} Promise resolves to true if strings was updated in node, else false(in browser.)
      */
-    async function updateNodeLocaleStrings() {
+    async function _updateNodeLocaleStrings() {
         if(!Phoenix.isNativeApp) {
             // this does nothing in browser builds.
             return false;
@@ -78,14 +78,32 @@ define(function (require, exports, module) {
         return utilsConnector.execPeer("openUrlInBrowser", {url, browserName});
     }
 
+    async function _loadNodeExtensionModule(moduleNativeDir) {
+        if(!Phoenix.isNativeApp) {
+            throw new Error("_loadNodeExtensionModule not available in browser");
+        }
+        return utilsConnector.execPeer("_loadNodeExtensionModule", {moduleNativeDir});
+    }
+
+    async function _npmInstallInFolder(moduleNativeDir) {
+        if(!Phoenix.isNativeApp) {
+            throw new Error("_npmInstallInFolder not available in browser");
+        }
+        return utilsConnector.execPeer("_npmInstallInFolder", {moduleNativeDir});
+    }
+
     if(NodeConnector.isNodeAvailable()) {
         // todo we need to update the strings if a user extension adds its translations. Since we dont support
         // node extensions for now, should consider when we support node extensions.
-        updateNodeLocaleStrings();
+        _updateNodeLocaleStrings();
     }
 
+    // private apis
+    exports._loadNodeExtensionModule = _loadNodeExtensionModule;
+    exports._npmInstallInFolder = _npmInstallInFolder;
+
+    // public apis
     exports.fetchURLText = fetchURLText;
-    exports.updateNodeLocaleStrings = updateNodeLocaleStrings;
     exports.getPhoenixBinaryVersion = getPhoenixBinaryVersion;
     exports.getLinuxOSFlavorName = getLinuxOSFlavorName;
     exports.openUrlInBrowser = openUrlInBrowser;
