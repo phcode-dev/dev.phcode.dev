@@ -34,12 +34,28 @@ define(function (require, exports, module) {
         Strings             = brackets.getModule("strings"),
         KeyEvent            = brackets.getModule("utils/KeyEvent"),
         LiveDevelopment     = brackets.getModule("LiveDevelopment/main"),
+        Metrics             = brackets.getModule("utils/Metrics"),
         CSSProperties       = require("text!CSSProperties.json"),
         properties          = JSON.parse(CSSProperties);
 
     require("./css-lint");
 
+    const BOOSTED_PROPERTIES = [
+        "display", "position", "margin", "padding", "width", "height",
+        "background", "background-color", "color",
+        "font-size", "font-family",
+        "text-align",
+        "line-height",
+        "border", "border-radius", "box-shadow",
+        "transition", "animation", "transform",
+        "overflow",
+        "cursor",
+        "z-index",
+        "flex", "grid"
+    ];
+    const MAX_CSS_HINTS = 250;
     const cssWideKeywords = ['initial', 'inherit', 'unset', 'var()', 'calc()'];
+    let computedProperties, computerPropertyKeys;
 
     PreferencesManager.definePreference("codehint.CssPropHints", "boolean", true, {
         description: Strings.DESCRIPTION_CSS_PROP_HINTS
@@ -155,15 +171,14 @@ define(function (require, exports, module) {
      * highlighted.
      *
      * @param {Array.<Object>} hints - the list of hints to format
+     * @param isColorSwatch
      * @return {Array.jQuery} sorted Array of jQuery DOM elements to insert
      */
-    function formatHints(hints) {
-        var hasColorSwatch = hints.some(function (token) {
-            return token.color;
-        });
-
-        StringMatch.basicMatchSort(hints);
+    function formatHints(hints, isColorSwatch) {
         hints = vendorPrefixesAndGenericToEnd(hints);
+        if(hints.length > MAX_CSS_HINTS) {
+            hints = hints.splice(0, MAX_CSS_HINTS);
+        }
         return hints.map(function (token) {
             var $hintObj = $(`<span data-val='${token.label || token.value}'></span>`).addClass("brackets-css-hints brackets-hints");
 
@@ -179,11 +194,11 @@ define(function (require, exports, module) {
                     }
                 });
             } else {
-                $hintObj.text(token.value);
+                $hintObj.text(token.label || token.value);
             }
 
-            if (hasColorSwatch) {
-                $hintObj = ColorUtils.formatColorHint($hintObj, token.color);
+            if (isColorSwatch) {
+                $hintObj = ColorUtils.formatColorHint($hintObj, token.label || token.value);
             }
             if(token.MDN_URL) {
                 const $mdn = $(`<a class="css-code-hint-info" style="text-decoration: none;"
@@ -205,6 +220,29 @@ define(function (require, exports, module) {
             }
         });
         return arr1;
+    }
+
+    function _computeProperties() {
+        const blacklistedValues = {
+            none: true,
+            auto: true
+        };
+        computedProperties = {};
+        for(let propertyKey of Object.keys(properties)) {
+            const property = properties[propertyKey];
+            if(property.type === "color" || !property.values || !property.values.length
+                || propertyKey === "font-family") {
+                computedProperties[propertyKey] = propertyKey;
+                continue;
+            }
+            computedProperties[propertyKey] = propertyKey;
+            for(let value of property.values) {
+                if(!blacklistedValues[value]){
+                    computedProperties[`${propertyKey}: ${value};`] = propertyKey;
+                }
+            }
+        }
+        computerPropertyKeys = Object.keys(computedProperties);
     }
 
     /**
@@ -281,26 +319,25 @@ define(function (require, exports, module) {
             }
             valueArray = properties[needle].values;
             type = properties[needle].type;
+            let isColorSwatch = false;
             if (type === "color") {
+                isColorSwatch = true;
                 valueArray = valueArray.concat(ColorUtils.COLOR_NAMES.map(function (color) {
                     return { text: color, color: color };
                 }));
                 valueArray.push("transparent", "currentColor");
             }
 
-            result = $.map(valueArray, function (pvalue) {
-                var result = StringMatch.stringMatch(pvalue.text || pvalue, valueNeedle, stringMatcherOptions);
-                if (result) {
-                    if (pvalue.color) {
-                        result.color = pvalue.color;
-                    }
-
-                    return result;
-                }
+            valueArray = $.map(valueArray, function (pvalue) {
+                return pvalue.text || pvalue;
+            });
+            result = StringMatch.rankMatchingStrings(valueNeedle, valueArray, {
+                scorer: StringMatch.RANK_MATCH_SCORER.CODE_HINTS,
+                limit: MAX_CSS_HINTS
             });
 
             return {
-                hints: formatHints(result),
+                hints: formatHints(result, isColorSwatch),
                 match: null, // the CodeHintManager should not format the results
                 selectInitial: selectInitial
             };
@@ -319,16 +356,22 @@ define(function (require, exports, module) {
 
             lastContext = CSSUtils.PROP_NAME;
             needle = needle.substr(0, this.info.offset);
+            if(!computedProperties){
+                _computeProperties();
+            }
 
-            result = $.map(properties, function (pvalues, pname) {
-                var result = StringMatch.stringMatch(pname, needle, stringMatcherOptions);
-                if (result) {
-                    if(properties[pname].MDN_URL){
-                        result.MDN_URL = properties[pname].MDN_URL;
-                    }
-                    return result;
-                }
+            result = StringMatch.rankMatchingStrings(needle, computerPropertyKeys, {
+                scorer: StringMatch.RANK_MATCH_SCORER.CODE_HINTS,
+                limit: MAX_CSS_HINTS,
+                boostPrefixList: BOOSTED_PROPERTIES
             });
+
+            for(let resultItem of result) {
+                const propertyKey = computerPropertyKeys[resultItem.sourceIndex];
+                if(properties[propertyKey] && properties[propertyKey].MDN_URL){
+                    resultItem.MDN_URL = properties[propertyKey].MDN_URL;
+                }
+            }
 
             return {
                 hints: formatHints(result),
@@ -343,7 +386,6 @@ define(function (require, exports, module) {
     let hintSessionId = 0, isInLiveHighlightSession = false;
 
     CssPropHints.prototype.onClose = function () {
-        console.error("closing hints");
         if(isInLiveHighlightSession) {
             this.editor.restoreHistoryPoint(`Live_hint_${hintSessionId}`);
             isInLiveHighlightSession = false;
@@ -388,6 +430,7 @@ define(function (require, exports, module) {
             event.keyCode === KeyEvent.DOM_VK_PAGE_DOWN)){
             return;
         }
+        Metrics.countEvent(Metrics.EVENT_TYPE.LIVE_PREVIEW, "cssHint", "preview");
         const $hintItem = $highlightedEl.find(".brackets-css-hints");
         const highligtedValue = $highlightedEl.find(".brackets-css-hints").data("val");
         if(!highligtedValue || !$hintItem.is(":visible")){
@@ -468,7 +511,7 @@ define(function (require, exports, module) {
                     if (TokenUtils.moveNextToken(ctx) && ctx.token.string.length > 0 && !/\S/.test(ctx.token.string)) {
                         newCursor.ch += ctx.token.string.length;
                     }
-                } else {
+                } else if(!hint.endsWith(";")){
                     hint += ": ";
                 }
             }
@@ -494,8 +537,9 @@ define(function (require, exports, module) {
 
         if(isLiveHighlight) {
             // this is via user press up and down arrows when code hints is visible
-            if(this.info.context !== CSSUtils.PROP_VALUE) {
+            if(this.info.context !== CSSUtils.PROP_VALUE && !hint.endsWith(";")) {
                 // we only do live hints for css property values. else UX is jarring.
+                // property full statements hints like "display: flex;" will be live previewed tho
                 return keepHints;
             }
             if(!this.editor.hasSelection()){
@@ -512,7 +556,6 @@ define(function (require, exports, module) {
             hintSessionId++;
         }
 
-        console.error("commit hints, this.editor.hasSelection()", this.editor.hasSelection());
         if(this.editor.hasSelection()){
             // this is when user commits
             this.editor.replaceSelection(hint, 'end');
