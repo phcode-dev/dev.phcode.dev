@@ -55,7 +55,7 @@ define(function (require, exports, module) {
     ];
     const MAX_CSS_HINTS = 250;
     const cssWideKeywords = ['initial', 'inherit', 'unset', 'var()', 'calc()'];
-    let computedProperties, computerPropertyKeys;
+    let computedProperties, computedPropertyKeys, compiledPropertyKeys;
 
     PreferencesManager.definePreference("codehint.CssPropHints", "boolean", true, {
         description: Strings.DESCRIPTION_CSS_PROP_HINTS
@@ -63,8 +63,7 @@ define(function (require, exports, module) {
 
     // Context of the last request for hints: either CSSUtils.PROP_NAME,
     // CSSUtils.PROP_VALUE or null.
-    var lastContext,
-        stringMatcherOptions = { preferPrefixMatches: true };
+    var lastContext;
 
     /**
      * @constructor
@@ -242,7 +241,8 @@ define(function (require, exports, module) {
                 }
             }
         }
-        computerPropertyKeys = Object.keys(computedProperties);
+        computedPropertyKeys = Object.keys(computedProperties);
+        compiledPropertyKeys = StringMatch.compileForRankMatcher(computedPropertyKeys, BOOSTED_PROPERTIES);
     }
 
     /**
@@ -360,14 +360,13 @@ define(function (require, exports, module) {
                 _computeProperties();
             }
 
-            result = StringMatch.rankMatchingStrings(needle, computerPropertyKeys, {
+            result = StringMatch.rankMatchingStrings(needle, compiledPropertyKeys, {
                 scorer: StringMatch.RANK_MATCH_SCORER.CODE_HINTS,
-                limit: MAX_CSS_HINTS,
-                boostPrefixList: BOOSTED_PROPERTIES
+                limit: MAX_CSS_HINTS
             });
 
             for(let resultItem of result) {
-                const propertyKey = computerPropertyKeys[resultItem.sourceIndex];
+                const propertyKey = computedPropertyKeys[resultItem.sourceIndex];
                 if(properties[propertyKey] && properties[propertyKey].MDN_URL){
                     resultItem.MDN_URL = properties[propertyKey].MDN_URL;
                 }

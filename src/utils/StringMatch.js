@@ -769,16 +769,76 @@ define(function (require, exports, module) {
     };
 
     /**
+     * Compiles the given `choices` array to be used in rankMatchingStrings() for improved performance
+     * if you are using the same choices array repeatedly. For one of cases, this compilation is
+     * not necessary and probably will add more time to process.
+     *
+     * @param {Array<string>} choices - An array containing the choices to be compiled.
+     * @param {Array[string]} [boostPrefixList] - Optional, Will rank matching items in the choices to top
+     *          if query starts with the array. EG: on typing b, we have to show background-color
+     *          to top. So we pass in ["background-color"] as boost prefix option along with other
+     *          css properties that we want to boost.
+     * @returns {{compiledChoices: Array<{model:string}>}}
+     */
+    function compileForRankMatcher(choices, boostPrefixList) {
+        const compiledChoices = [];
+        let choice;
+        for (let i=0; i<choices.length; i++) {
+            choice = choices[i];
+            compiledChoices.push({
+                i, // we store the index in source choices list too.
+                model: choice,
+                proc_sorted: fuzzball.process_and_sort(fuzzball.full_process(choice))
+            });
+        }
+        return {
+            compiledChoices,
+            boostPrefixListLower: boostPrefixList ?
+                boostPrefixList.map(prefix => prefix.toLowerCase()) : null
+        };
+    }
+
+    function _matchForEmptyQuery(choices, options) {
+        // everything is a 100% match if nothing is specified
+        let choiceArray = [];
+        if(!choices.compiledChoices){ // this is a string array
+            for (let i=0; i<choices.length; i++) {
+                choiceArray.push({i, model: choices[i]});
+            }
+            choiceArray = [...choiceArray].sort((a, b) => a.model.localeCompare(b.model));
+        } else {
+            if(!choices.compiledChoicesSorted) {
+                choices.compiledChoicesSorted = [...choices.compiledChoices]
+                    .sort((a, b) => a.model.localeCompare(b.model));
+            }
+            choiceArray = choices.compiledChoicesSorted;
+        }
+        const searchResults = [];
+        for(let i=0; i<choiceArray.length; i++) {
+            if(options.limit && i>= options.limit){
+                break;
+            }
+            let result = new SearchResult(choiceArray[i].model);
+            result.matchGoodness = 100;
+            result.sourceIndex = choiceArray[i].i;
+            searchResults.push(result);
+        }
+        return searchResults;
+    }
+
+    /**
      * Ranks the matching strings based on the query.
      *
      * @param {string} query - The query string to match against.
-     * @param {Array<string>} choices - The list of strings to rank.
+     * @param {Array<string> | Object} choices - The list of strings to rank or a compiled choices
+     *         list obtained by executing compileForRankMatcher().
      * @param {{scorer: string}|{}} options - Additional options for ranking.
      * @param {string} options.scorer - The scoring algorithm to use.
      *          one of StringMatch.RANK_MATCH_SCORER.* constants
      * @param {number} options.cutoff - The scoring cutoff below which results are
      *          treated as no match. default is 0.
      * @param {number} options.limit - The maximum number of results to return. Default is all.
+     * @param {boolean} options.excludeStringRanges - If set to true, string ranges won't be included in result
      * @param {Array[string]} options.boostPrefixList - Will rank matching items in the choices to top
      *          if query starts with the array. EG: on typing b, we have to show background-color
      *          to top. So we pass in ["background-color"] as boost prefix option along with other
@@ -792,28 +852,25 @@ define(function (require, exports, module) {
 
         let searchResults = [];
         if(!query) {
-            // everything is a 100% match if nothing is specified
-            choices = [...choices].sort(); // we still need to sort, not in-place, so cloning
-            for(let i=0; i<choices.length; i++) {
-                if(options.limit && i>= options.limit){
-                    break;
-                }
-                let result = new SearchResult(choices[i]);
-                result.matchGoodness = 100;
-                result.sourceIndex = i;
-                searchResults.push(result);
-            }
-            return searchResults;
+            return _matchForEmptyQuery(choices, options);
         }
 
         if(options.scorer === RANK_MATCH_SCORER.CODE_HINTS) {
             return _rankCodeHints(query, choices, options);
         }
-
-        const rankedResult = fuzzball.extract(query, choices, {
+        const fuzzballOptions = {
             scorer: fuzzball[options.scorer],
             limit: options.limit
-        });
+        };
+        let fuzzQuery = query;
+        let fuzzChoices = choices;
+        if(choices.compiledChoices) {
+            fuzzChoices = choices.compiledChoices;
+            fuzzballOptions.processor = choice => choice.model;
+            fuzzQuery = fuzzball.full_process(query);
+        }
+
+        const rankedResult = fuzzball.extract(fuzzQuery, fuzzChoices, fuzzballOptions);
         // "pointer", ["pointer: none;", "cursor: pointer;", "pointer-events: none;"]
         // sample output is of the form:
         //   [choice, score, index in original array] eg:
@@ -825,22 +882,71 @@ define(function (require, exports, module) {
             if(score < options.cutoff) {
                 continue;
             }
-            let result = new SearchResult(rankResult[0]);
+            const resultValue = rankResult[0].model ? rankResult[0].model : rankResult[0];
+            let result = new SearchResult(resultValue);
             result.matchGoodness = rankResult[1];
             result.sourceIndex = rankResult[2];
+            if(!options.excludeStringRanges) {
+                result.stringRanges = _computeMatchingRanges(query, resultValue);
+            }
             searchResults.push(result);
         }
+        if(choices.boostPrefixListLower && options.boostPrefixList) {
+            throw new Error("Cannot specify options.boostPrefixList, it's already in the compiled choices");
+        }
+        let boostPrefixListLower = choices.boostPrefixListLower;
         if(options.boostPrefixList) {
-            searchResults = _boostPrefixList(searchResults, query, options.boostPrefixList);
+            boostPrefixListLower = options.boostPrefixList.map(prefix => prefix.toLowerCase());
+        }
+        if(boostPrefixListLower) {
+            searchResults = _boostPrefixList(searchResults, query.toLowerCase(), boostPrefixListLower);
         }
         return searchResults;
     }
 
-    function _computeMatchingRanges(query, searchString) {
-        let index = searchString.indexOf(query);
+    function _maybeHyphenatedSegments(query, searchString) {
+        // an exact match was not found. but maybe there are hyphenated segments. Eg.
+        // `borderroundcolor` should match `<border>-backg<round>-<color>`.
+        // const searchWithoutHyphens = searchString.replaceAll(/[-_]/g, "");
+        // todo implement
+        return null;
+    }
+
+    /**
+     * Computes matching ranges within a search string based on the provided query.
+     *
+     * @param {string} query - The query to find in the search string.
+     * @param {string} searchString - The string to find the query in.
+     *
+     * @returns {Array<{text: string, matched: boolean}>} An array of objects, where each object represents
+     *          a part of the search string. Each object has two properties: 'text' and 'matched'.
+     *          'text' is a segment of the search string, and 'matched' is a boolean indicating whether
+     *           that segment matches the query.
+     *
+     * @example // Let's assume that we have the following parameters:
+     * // query = 'color'
+     * // searchString = 'background-color: blue;'
+     * // Then, the _computeMatchingRanges() should return the following:
+     * //    [
+     * //      {
+     * //          text: 'background-', matched: false
+     * //      },
+     * //      {
+     * //          text: 'color', matched: true
+     * //      },
+     * //      {
+     * //          text: ': blue;', matched: false
+     * //      },
+     * //   ]
+     * @private
+     */
+    function _computeMatchingRanges(query= "", searchString = "") {
+        let index = searchString.toLowerCase().indexOf(query.toLowerCase());
 
         if (index === -1) {
-            return null;
+            // an exact match was not found. but maybe there are hyphenated segments. Eg.
+            // `roundcolor` should match `backg<round>-<color>`.
+            return _maybeHyphenatedSegments(query, searchString);
         }
         // now we have to find segment that matches the given query. Eg:
         // Eg: background-color: blue;
@@ -857,10 +963,10 @@ define(function (require, exports, module) {
             // query = backgou , can be split into 2 parts <backgro>und-color: blue;
             // match is at beginning
             return [{
-                text: searchString.substr(0, query.length),
+                text: searchString.slice(0, query.length),
                 matched: true
             }, {
-                text: searchString.substr(query.length),
+                text: searchString.slice(query.length),
                 matched: false
             }];
         }
@@ -868,42 +974,42 @@ define(function (require, exports, module) {
             // query = blue; , can be split into 2 parts: background-color: <blue;>
             // match is at the end
             return [{
-                text: searchString.substr(0, index),
+                text: searchString.slice(0, index),
                 matched: false
             }, {
-                text: searchString.substr(index),
+                text: searchString.slice(index),
                 matched: true
             }];
         }
         // query = color , can be split into 3 parts: background-<color>: blue;
         // middle match
         return [{
-            text: searchString.substr(0, index),
+            text: searchString.slice(0, index),
             matched: false
         }, {
             text: searchString.substring(index, index + query.length),
             matched: true
         }, {
-            text: searchString.substr(index +  query.length),
+            text: searchString.slice(index +  query.length),
             matched: false
         }];
     }
 
-    function _boostPrefixList(result, query, prefixList) {
-        if(!prefixList){
+    function _boostPrefixList(result, queryLower, prefixListLower) {
+        if(!prefixListLower){
             return result;
         }
-        const filteredPrefixMap = {};
-        for(let prefix of prefixList){
-            if(prefix.startsWith(query)){
-                filteredPrefixMap[prefix] = true;
+        const filteredPrefixMapLower = {};
+        for(let prefixLower of prefixListLower){
+            if(prefixLower.startsWith(queryLower)){
+                filteredPrefixMapLower[prefixLower] = true;
             }
         }
         const resultsWithoutPrefix = [], resultsWithPrefix = {};
-        for(let i=0; i<result.length; i++) {
-            const resultItem = result[i];
-            if(filteredPrefixMap[resultItem.label]) { // if result matches one of the prefix
-                resultsWithPrefix[resultItem.label] = resultItem;
+        for(const resultItem of result) {
+            const resultItemLabelLower = resultItem.label.toLowerCase();
+            if(filteredPrefixMapLower[resultItemLabelLower]) { // if result matches one of the prefix
+                resultsWithPrefix[resultItemLabelLower] = resultItem;
                 resultItem.matchGoodness = 100; // boosted match
             } else {
                 resultsWithoutPrefix.push(resultItem);
@@ -912,48 +1018,98 @@ define(function (require, exports, module) {
         // we have to maintain the ordering of the items in prefix list in
         // items in the result.
         const orderedPrefixResults = [];
-        for(let prefixItem of prefixList) {
-            if(resultsWithPrefix[prefixItem]){
-                orderedPrefixResults.push(resultsWithPrefix[prefixItem]);
+        for(let prefixItemLower of prefixListLower) {
+            if(resultsWithPrefix[prefixItemLower]){
+                orderedPrefixResults.push(resultsWithPrefix[prefixItemLower]);
             }
         }
         return [...orderedPrefixResults, ...resultsWithoutPrefix];
     }
 
+    /**
+     * Computationally very expensive!!: checks weather query is contained in the given choice with or without
+     * hyphens- and _underscores
+     * Eg: query "bgcol" should match choice "bg-col"
+     *
+     * @param {string} choiceValLower - The lowercase choice value to test.
+     * @param {string} queryLower - The lowercase query to test against.
+     * @returns {boolean} - True if the choice value includes a continuous alphanumeric substring
+     *                      after stripping any symbols and matching the query, false otherwise.
+     * @private
+     */
+    function _hyphenatedOrSimilar(choiceValLower, queryLower) {
+        // tests for any continuous alphanumeric substrings after stripping any symbols
+        // Eg, query bgcol should match bg_col, bg-col, etc...
+        const strippedQuery = queryLower.replace(/[_-]/g, ""); // strip _ and -
+        const strippedChoice = choiceValLower.replace(/[_-]/g, ""); // strip _ and -
+        return strippedChoice.includes(strippedQuery);
+    }
+
     function _rankCodeHints(query, choices, options) {
-        query = query || "";
-        let filteredChoices = [];
-        let filteredIndices;
+        // this function is not optimized for readability and mostly optimized for
+        // fast execution. So this is a bit more complex than I like.
         if(!query){
-            filteredChoices = choices;
-        } else {
-            filteredIndices = [];
-            const queryLower = query.toLowerCase();
-            choices.forEach((choice, index) => {
-                if (choice.toLowerCase().includes(queryLower)) {
-                    filteredChoices.push(choice);
-                    filteredIndices.push(index);
-                }
-            });
+            return _matchForEmptyQuery(choices, options);
+        }
+        let filteredChoices = [];
+        let filteredIndices = [];
+        const queryLower = query.toLowerCase();
+        let choiceValLower;
+        let choiceSourceArray = choices;
+        if(choices.compiledChoices) {
+            choiceSourceArray = choices.compiledChoices;
+        }
+        choiceSourceArray.forEach((choice, index) => {
+            // if we got a compiled choice, it will have model prop which is the choice value else,
+            // choice itself is the value string
+            choiceValLower = (choice.model || choice).toLowerCase();
+            if (choiceValLower.includes(queryLower) /*_lowPassSimilarityTest(choiceValLower, queryLower)*/) {
+                filteredChoices.push(choice);
+                filteredIndices.push(index);
+            }
+        });
+        if(!filteredChoices.length){
+            return [];
         }
 
+        if(choices.compiledChoices) {
+            // recreate the filtered compiled choice if it's a compiled choice object
+            filteredChoices = {
+                compiledChoices: filteredChoices,
+                boostPrefixListLower: choices.boostPrefixListLower
+            };
+        }
+
+        // the rank matcher is very faster than our filtration for low pass similarity, so we execute the
+        // rank matcher without limits, then execute _lowPassSimilarityTest on the result till options.limit
+        // results are found.
         let results = rankMatchingStrings(query, filteredChoices, {
             scorer: RANK_MATCH_SCORER.RATIO,
-            cutoff: 0,
-            limit: options.limit
+            cutoff: options.cutoff,
+            boostPrefixList: options.boostPrefixList,
+            excludeStringRanges: true
         });
+        let choiceAtSource;
+        const finalResults = [];
         if(filteredIndices){
-            for(let i=0; i<results.length; i++) {
-                const result = results[i];
+            for(const result of results) {
+                if(finalResults.length >= options.limit) {
+                    break;
+                }
+                if(!_hyphenatedOrSimilar(result.label.toLowerCase(), queryLower)) {
+                    // not similar strings for code hints purposes.
+                    continue;
+                }
                 result.sourceIndex = filteredIndices[result.sourceIndex];
-                // now find the matching segments.
+                choiceAtSource = choiceSourceArray[result.sourceIndex];
+                if(choiceAtSource.model){ // this was a compiled choice list that was passed in
+                    result.sourceIndex =  choiceAtSource.i;
+                }
                 result.stringRanges = _computeMatchingRanges(query, result.label);
+                finalResults.push(result);
             }
         }
-        if(options.boostPrefixList) {
-            results = _boostPrefixList(results, query, options.boostPrefixList);
-        }
-        return results;
+        return finalResults;
     }
 
     /*
@@ -1213,5 +1369,6 @@ define(function (require, exports, module) {
     exports.multiFieldSort          = multiFieldSort;
     exports.StringMatcher           = StringMatcher;
     exports.rankMatchingStrings     = rankMatchingStrings;
+    exports.compileForRankMatcher   = compileForRankMatcher;
     exports.RANK_MATCH_SCORER = RANK_MATCH_SCORER;
 });
