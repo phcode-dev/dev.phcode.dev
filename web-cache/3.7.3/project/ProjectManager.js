@@ -739,7 +739,11 @@ define(function (require, exports, module) {
      * @return {!string} fullPath reference
      */
     function getWelcomeProjectPath() {
-        return ProjectModel._getWelcomeProjectPath(Urls.GETTING_STARTED, Phoenix.VFS.getDefaultProjectDir());
+        return ProjectModel._ensureTrailingSlash(Phoenix.VFS.getDefaultProjectDir());
+    }
+
+    function getPlaceholderProjectPath() {
+        return "/no_project_loaded/";
     }
 
     function getExploreProjectPath() {
@@ -786,53 +790,6 @@ define(function (require, exports, module) {
         }
         return path;
 
-    }
-
-    /**
-     * After failing to load a project, this function determines which project path to fallback to.
-     * @return {$.Promise} Promise that resolves to a project path {string}
-     */
-    function _getFallbackProjectPath() {
-        var fallbackPaths = [],
-            recentProjects = PreferencesManager.getViewState("recentProjects") || [],
-            deferred = new $.Deferred();
-
-        // Build ordered fallback path array
-        if (recentProjects.length > 1) {
-            // *Most* recent project is the one that just failed to load, so use second most recent
-            fallbackPaths.push(recentProjects[1]);
-        }
-
-        // Next is Getting Started project
-        fallbackPaths.push(getWelcomeProjectPath());
-
-        // Helper func for Async.firstSequentially()
-        function processItem(path) {
-            var deferred = new $.Deferred(),
-                fileEntry = FileSystem.getDirectoryForPath(path);
-
-            fileEntry.exists(function (err, exists) {
-                if (!err && exists) {
-                    deferred.resolve();
-                } else {
-                    deferred.reject();
-                }
-            });
-
-            return deferred.promise();
-        }
-
-        // Find first path that exists
-        Async.firstSequentially(fallbackPaths, processItem)
-            .done(function (fallbackPath) {
-                deferred.resolve(fallbackPath);
-            })
-            .fail(function () {
-                // Last resort is Brackets source folder which is guaranteed to exist
-                deferred.resolve(FileUtils.getNativeBracketsDirectoryPath());
-            });
-
-        return deferred.promise();
     }
 
     /**
@@ -1115,6 +1072,157 @@ define(function (require, exports, module) {
             });
     }
 
+    function _loadExistingProject(rootEntry) {
+        const rootPath = rootEntry.fullPath;
+        const result = new $.Deferred();
+        var projectRootChanged = (!model.projectRoot || !rootEntry) ||
+            model.projectRoot.fullPath !== rootEntry.fullPath;
+
+        // Success!
+        var perfTimerName = PerfUtils.markStart("Load Project: " + rootPath);
+
+        _projectWarnedForTooManyFiles = false;
+
+        _setProjectRoot(rootEntry).always(function () {
+            model.setBaseUrl(PreferencesManager.getViewState("project.baseUrl", PreferencesManager.STATE_PROJECT_CONTEXT) || "");
+
+            if (projectRootChanged) {
+                _reloadProjectPreferencesScope();
+                PreferencesManager._setCurrentFile(rootPath);
+            }
+            _watchProjectRoot(rootPath);
+
+            // If this is the most current welcome project, record it. In future launches, we want
+            // to substitute the latest welcome project from the current build instead of using an
+            // outdated one (when loading recent projects or the last opened project).
+            if (rootPath === getWelcomeProjectPath()) {
+                addWelcomeProjectPath(rootPath);
+            }
+
+            if (projectRootChanged) {
+                // Allow asynchronous event handlers to finish before resolving result by collecting promises from them
+                exports.trigger(EVENT_PROJECT_OPEN, model.projectRoot);
+                result.resolve();
+                exports.trigger(EVENT_AFTER_PROJECT_OPEN, model.projectRoot);
+            } else {
+                exports.trigger(EVENT_PROJECT_REFRESH, model.projectRoot);
+                result.resolve();
+            }
+            let projectLoadTime = PerfUtils.addMeasurement(perfTimerName);
+            Metrics.valueEvent(Metrics.EVENT_TYPE.PERFORMANCE, "projectLoad",
+                "timeMs", Number(projectLoadTime));
+        });
+        return result.promise();
+    }
+
+        const _SAMPLE_HTML = `<!DOCTYPE html>
+<html>
+    <head>
+        <title>Phoenix Editor for the web</title>
+    </head>
+
+    <body>
+        <h1>Welcome to Phoenix</h1>
+        <p> Modern, Open-source, IDE For The Web.</p>
+    </body>
+</html>`;
+
+    function _createDefaultProject() {
+        // Create phoenix app dirs
+        // Create Phoenix default project if it doesnt exist
+        return new Promise((resolve, reject)=>{
+            let projectDir = getWelcomeProjectPath();
+            Phoenix.VFS.exists(projectDir, (exists)=>{
+                if(exists) {
+                    resolve();
+                    return;
+                }
+                Phoenix.VFS.ensureExistsDir(projectDir, (err)=>{
+                    if(err){
+                        window.logger.reportError(err, "Error creating default project");
+                        reject(err);
+                        return;
+                    }
+                    let indexFile = Phoenix.VFS.path.normalize(`${projectDir}/index.html`);
+                    Phoenix.VFS.fs.writeFile(indexFile, _SAMPLE_HTML, 'utf8', ()=>{});
+                    resolve();
+                });
+            });
+        });
+    }
+
+    function _loadWelcomeProject() {
+        const welcomeProjectPath = getWelcomeProjectPath();
+        const result = new $.Deferred();
+        const rootEntry = FileSystem.getDirectoryForPath(welcomeProjectPath);
+        function _loadRootEntry() {
+            _loadExistingProject(rootEntry)
+                .done(result.resolve)
+                .fail(result.reject);
+        }
+        function _loadPlaceholderProject() {
+            // default project could not be created. As a last ditch effort to continue boot, we will
+            // use a vfs path `/no_project_loaded` to continue boot.
+            Phoenix.VFS.ensureExistsDir(getPlaceholderProjectPath(), (placeHolderErr)=>{
+                if(placeHolderErr){
+                    window.logger.reportError(placeHolderErr, "Error creating /no_project_loaded");
+                    alert("Unrecoverable error, startup project could not be created.");
+                    return;
+                }
+                const placeholderProject = FileSystem.getDirectoryForPath(getPlaceholderProjectPath());
+                _loadExistingProject(placeholderProject)
+                    .done(result.resolve)
+                    .fail(result.reject);
+            });
+        }
+        rootEntry.exists(function (err, exists) {
+            if (exists) {
+                _loadRootEntry();
+            } else {
+                // create the welcome project only on first boot in desktop builds. The user may delete the phoenix
+                // project directory as he doesn't want phoenix folders in his documents. we should respect that.
+                if(Phoenix.isNativeApp && !Phoenix.firstBoot) {
+                    _loadPlaceholderProject();
+                    return;
+                }
+                _createDefaultProject()
+                    .then(_loadRootEntry)
+                    .catch(_loadPlaceholderProject);
+            }
+        });
+        return result.promise();
+    }
+
+    function _loadProjectInternal(rootPath) {
+        const result = new $.Deferred();
+        const rootEntry = FileSystem.getDirectoryForPath(rootPath);
+        rootEntry.exists(function (err, exists) {
+            if (exists) {
+                _loadExistingProject(rootEntry)
+                    .done(result.resolve)
+                    .fail(result.reject);
+            } else {
+                console.error("error loading project");
+                exports.trigger(EVENT_PROJECT_OPEN_FAILED, rootPath);
+                _showErrorDialog(ERR_TYPE_LOADING_PROJECT_NATIVE, true, FileSystemError.NOT_FOUND, rootPath)
+                    .done(function () {
+                        // Reset _projectRoot to null so that the following _loadProject call won't
+                        // run the 'beforeProjectClose' event a second time on the original project,
+                        // which is now partially torn down (see #6574).
+                        model.projectRoot = null;
+
+                        _loadProject(getWelcomeProjectPath()).always(function () {
+                            // Make sure not to reject the original deferred until the fallback
+                            // project is loaded, so we don't violate expectations that there is always
+                            // a current project before continuing after _loadProject().
+                            result.reject();
+                        });
+                    });
+            }
+        });
+        return result.promise();
+    }
+
     /**
      * Loads the given folder as a project. Does NOT prompt about any unsaved changes - use openProject()
      * instead to check for unsaved changes and (optionally) let the user choose the folder to open.
@@ -1126,8 +1234,6 @@ define(function (require, exports, module) {
      *  fails to load.
      */
     function _loadProject(rootPath) {
-        var result = new $.Deferred(),
-            startLoad = new $.Deferred();
 
         Metrics.valueEvent(Metrics.EVENT_TYPE.PROJECT, "Load",
             isWelcomeProjectPath(rootPath) ? "default":"other", 1);
@@ -1154,82 +1260,11 @@ define(function (require, exports, module) {
             PreferencesManager._reloadUserPrefs(model.projectRoot);
             exports.trigger(EVENT_PROJECT_CLOSE, model.projectRoot);
         }
-
-        startLoad.resolve();
-
-        startLoad.done(function () {
-            // Populate file tree as long as we aren't running in the browser
-            if (!brackets.inBrowser) {
-                // Point at a real folder structure on local disk
-                var rootEntry = FileSystem.getDirectoryForPath(rootPath);
-                rootEntry.exists(function (err, exists) {
-                    if (exists) {
-                        var projectRootChanged = (!model.projectRoot || !rootEntry) ||
-                            model.projectRoot.fullPath !== rootEntry.fullPath;
-
-                        // Success!
-                        var perfTimerName = PerfUtils.markStart("Load Project: " + rootPath);
-
-                        _projectWarnedForTooManyFiles = false;
-
-                        _setProjectRoot(rootEntry).always(function () {
-                            model.setBaseUrl(PreferencesManager.getViewState("project.baseUrl", PreferencesManager.STATE_PROJECT_CONTEXT) || "");
-
-                            if (projectRootChanged) {
-                                _reloadProjectPreferencesScope();
-                                PreferencesManager._setCurrentFile(rootPath);
-                            }
-                            _watchProjectRoot(rootPath);
-
-                            // If this is the most current welcome project, record it. In future launches, we want
-                            // to substitute the latest welcome project from the current build instead of using an
-                            // outdated one (when loading recent projects or the last opened project).
-                            if (rootPath === getWelcomeProjectPath()) {
-                                addWelcomeProjectPath(rootPath);
-                            }
-
-                            if (projectRootChanged) {
-                                // Allow asynchronous event handlers to finish before resolving result by collecting promises from them
-                                exports.trigger(EVENT_PROJECT_OPEN, model.projectRoot);
-                                result.resolve();
-                                exports.trigger(EVENT_AFTER_PROJECT_OPEN, model.projectRoot);
-                            } else {
-                                exports.trigger(EVENT_PROJECT_REFRESH, model.projectRoot);
-                                result.resolve();
-                            }
-                            let projectLoadTime = PerfUtils.addMeasurement(perfTimerName);
-                            Metrics.valueEvent(Metrics.EVENT_TYPE.PERFORMANCE, "projectLoad",
-                                "timeMs", Number(projectLoadTime));
-                        });
-                    } else {
-                        console.error("error loading project");
-                        exports.trigger(EVENT_PROJECT_OPEN_FAILED, rootPath);
-                        _showErrorDialog(ERR_TYPE_LOADING_PROJECT_NATIVE, true, err || FileSystemError.NOT_FOUND, rootPath)
-                            .done(function () {
-                                // Reset _projectRoot to null so that the following _loadProject call won't
-                                // run the 'beforeProjectClose' event a second time on the original project,
-                                // which is now partially torn down (see #6574).
-                                model.projectRoot = null;
-
-                                // The project folder stored in preference doesn't exist, so load the default
-                                // project directory.
-                                // TODO (issue #267): When Brackets supports having no project directory
-                                // defined this code will need to change
-                                _getFallbackProjectPath().done(function (path) {
-                                    _loadProject(path).always(function () {
-                                        // Make sure not to reject the original deferred until the fallback
-                                        // project is loaded, so we don't violate expectations that there is always
-                                        // a current project before continuing after _loadProject().
-                                        result.reject();
-                                    });
-                                });
-                            });
-                    }
-                });
-            }
-        });
-
-        return result.promise();
+        if(rootPath === getWelcomeProjectPath()) {
+            // welcome project path is always guaranteed to be present!
+            return _loadWelcomeProject();
+        }
+        return _loadProjectInternal(rootPath);
     }
 
     /**
@@ -1949,17 +1984,22 @@ define(function (require, exports, module) {
     function _flagProjectNotExitedSafely(projectRootPath) {
         // we store this in local storage as these checks happen in app exit/startup flows where
         // phstore is not reliable. It's ok to lose this data.
-        localStorage.setItem(UNSAFE_PROJECT_EXIT_PREFIX+projectRootPath, "true");
+        PhStore.setItem(UNSAFE_PROJECT_EXIT_PREFIX+projectRootPath, true);
+        PhStore.persistDBForReboot(); // promise is ignored here.
     }
     function _flagProjectExitedSafely(projectRootPath) {
-        localStorage.removeItem(UNSAFE_PROJECT_EXIT_PREFIX+projectRootPath);
+        PhStore.removeItem(UNSAFE_PROJECT_EXIT_PREFIX+projectRootPath);
     }
     function _isProjectSafeToStartup(projectRootPath) {
         // In some cases, For eg: user tries to open a whole drive with phcode (or any project that makes phcode crash),
         // phoenix may get stuck and never open again with the bad project as we try to open the same bad project
         // on restart. So we keep a safe exit flag with each project. We only start the project on boot if it has
         // been marked safe at previous exit or project switch. So on unsafe exit, the default project will be opened.
-        const unsafeExit = (localStorage.getItem(UNSAFE_PROJECT_EXIT_PREFIX+projectRootPath) === "true");
+        const unsafeExit = (PhStore.getItem(UNSAFE_PROJECT_EXIT_PREFIX+projectRootPath) === true);
+        if(unsafeExit){
+            console.error(`Project ${projectRootPath} marked as not safe to startup during`+
+                `previous exit. Starting default project`);
+        }
         return !unsafeExit;
     }
 
@@ -2187,6 +2227,7 @@ define(function (require, exports, module) {
     exports.getStartupProjectPath         = getStartupProjectPath;
     exports.getProjectRelativePath        = getProjectRelativePath;
     exports.getWelcomeProjectPath         = getWelcomeProjectPath;
+    exports.getPlaceholderProjectPath     = getPlaceholderProjectPath;
     exports.getExploreProjectPath         = getExploreProjectPath;
     exports.getLocalProjectsPath          = getLocalProjectsPath;
     exports.isWelcomeProjectPath          = isWelcomeProjectPath;

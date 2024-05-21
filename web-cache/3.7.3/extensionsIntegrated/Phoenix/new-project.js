@@ -41,6 +41,7 @@ define(function (require, exports, module) {
         createProjectDialogue = require("text!./html/create-project-dialogue.html"),
         replaceProjectDialogue = require("text!./html/replace-project-dialogue.html"),
         replaceKeepProjectDialogue = require("text!./html/replace-keep-project-dialogue.html"),
+        defaultProjects   = require("./default-projects"),
         guidedTour = require("./guided-tour");
 
     EventDispatcher.makeEventDispatcher(exports);
@@ -56,6 +57,9 @@ define(function (require, exports, module) {
 
     function _showNewProjectDialogue() {
         if(window.testEnvironment){
+            return;
+        }
+        if(newProjectDialogueObj && newProjectDialogueObj.isVisible()){
             return;
         }
         let templateVars = {
@@ -116,6 +120,14 @@ define(function (require, exports, module) {
         }
         return true;
     }
+
+    function projectOpened() {
+        if(ProjectManager.getProjectRoot().fullPath === ProjectManager.getPlaceholderProjectPath()){
+            _showNewProjectDialogue();
+        }
+    }
+
+    ProjectManager.on(ProjectManager.EVENT_AFTER_PROJECT_OPEN, projectOpened);
 
     function init() {
         _addMenuEntries();
@@ -386,6 +398,8 @@ define(function (require, exports, module) {
     exports.downloadAndOpenProject = downloadAndOpenProject;
     exports.showFolderSelect = showFolderSelect;
     exports.showErrorDialogue = showErrorDialogue;
+    exports.setupExploreProject = defaultProjects.setupExploreProject;
+    exports.setupStartupProject = defaultProjects.setupStartupProject;
     exports.alreadyExists = window.Phoenix.VFS.existsAsync;
     exports.Metrics = Metrics;
     exports.EVENT_NEW_PROJECT_DIALOGUE_CLOSED = "newProjectDlgClosed";

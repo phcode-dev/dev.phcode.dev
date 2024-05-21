@@ -25,8 +25,15 @@ define(function (require, exports, module) {
         Strings     = require("strings"),
         ZipUtils = require("utils/ZipUtils");
 
-    async function _setupStartupProject() {
+    async function setupStartupProject(forceCreate) {
         console.log("setting up startup project", ProjectManager.getWelcomeProjectPath());
+        if(!forceCreate){
+            let exists = await Phoenix.VFS.existsAsync(ProjectManager.getWelcomeProjectPath());
+            if(exists){
+                console.log("Startup project already exists, using", ProjectManager.getWelcomeProjectPath());
+                return;
+            }
+        }
         await ZipUtils.unzipURLToLocation('assets/default-project/en.zip', ProjectManager.getWelcomeProjectPath());
         const indexHtmlPath = `${ProjectManager.getWelcomeProjectPath()}index.html`;
         fs.readFile(indexHtmlPath, 'utf8', function (err, text) {
@@ -45,7 +52,7 @@ define(function (require, exports, module) {
             });
         });
     }
-    async function _setupExploreProject() {
+    async function setupExploreProject() {
         let exploreProjectPath = ProjectManager.getExploreProjectPath();
         let exists = await Phoenix.VFS.existsAsync(exploreProjectPath);
         if(!exists){
@@ -54,10 +61,19 @@ define(function (require, exports, module) {
         }
     }
 
+    exports.setupExploreProject = setupExploreProject;
+    exports.setupStartupProject = setupStartupProject;
+
     exports.init = async function () {
         if(Phoenix.firstBoot){
-            _setupStartupProject();
+            setupStartupProject(true);
         }
-        _setupExploreProject();
+        if(!Phoenix.isNativeApp) {
+            // in browsers, we do this as the user wont see the explore project in documents folder anyway and will
+            // help in improved ux of fast project open. In desktop, we got complaint that users document dir is getting
+            // polluted with unwanted projects, so we dont do this on desktop and only create this when user explicitly
+            // clicks to open explore project.
+            setupExploreProject();
+        }
     };
 });

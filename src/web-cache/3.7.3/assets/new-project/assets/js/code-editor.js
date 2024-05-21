@@ -214,11 +214,17 @@ function initCodeEditor() {
     };
     document.getElementById("exploreBtn").onclick = function() {
         Metrics.countEvent(Metrics.EVENT_TYPE.NEW_PROJECT, "main.Click", "games");
-        openProject(newProjectExtension.getExploreProjectPath());
+        newProjectExtension.setupExploreProject()
+            .then(()=>{
+                openProject(newProjectExtension.getExploreProjectPath());
+            }).catch(console.error);
     };
     document.getElementById("defaultProjectButton").onclick = function() {
         Metrics.countEvent(Metrics.EVENT_TYPE.NEW_PROJECT, "main.Click", "default-project");
-        openProject(newProjectExtension.getWelcomeProjectPath());
+        newProjectExtension.setupStartupProject()
+            .then(()=>{
+                openProject(newProjectExtension.getWelcomeProjectPath());
+            }).catch(console.error);
     };
 
     const banner = document.getElementById("download-phcode-banner");
