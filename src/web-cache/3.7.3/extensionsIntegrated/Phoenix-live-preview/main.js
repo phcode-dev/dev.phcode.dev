@@ -249,7 +249,7 @@ define(function (require, exports, module) {
             panelShownAtStartup = true;
             $icon.toggleClass("active");
             panel.show();
-            _loadPreview(true);
+            _loadPreview(true, true);
             _showCustomServerBannerIfNeeded();
         } else {
             $icon.toggleClass("active");
@@ -575,7 +575,8 @@ define(function (require, exports, module) {
         }
     }
 
-    async function _projectOpened(_evt) {
+    let startupFilesLoadHandled = false;
+    async function _projectOpened() {
         customLivePreviewBannerShown = false;
         $panel.find(".live-preview-custom-banner").addClass("forced-hidden");
         _openReadmeMDIfFirstTime();
@@ -589,10 +590,43 @@ define(function (require, exports, module) {
             _togglePinUrl();
         }
         $iframe.attr('src', StaticServer.getNoPreviewURL());
+        if(!panelShownAtStartup && !isBrowser && ProjectManager.isStartupFilesLoaded()){
+            // we dont do this in browser as the virtual server may not yet be started on app start
+            // project open and a 404 page will briefly flash in the browser!
+            // this mainly applies when phoenix is started with a preview file already open in previous exit
+            startupFilesLoadHandled = true;
+            const currentDocument = DocumentManager.getCurrentDocument();
+            const currentFile = currentDocument? currentDocument.file : ProjectManager.getSelectedItem();
+            const isPreviewable = currentFile ? utils.isPreviewableFile(currentFile.fullPath) : false;
+            if(isPreviewable){
+                _setPanelVisibility(true);
+            }
+        }
         if(!panel.isVisible()){
             return;
         }
         _loadPreview(true);
+    }
+
+    function _startupFilesLoaded() {
+        if(startupFilesLoadHandled) {
+            return;
+            // we have to use this handled flag as there is no ordering of EVENT_AFTER_STARTUP_FILES_LOADED
+            // and EVENT_PROJECT_OPEN. if _projectOpened has already shown the live preview panel when it saw that
+            // ProjectManager.isStartupFilesLoaded() is true, we should not call project opened again at boot.
+        }
+        if(!panelShownAtStartup && !isBrowser && ProjectManager.isStartupFilesLoaded()){
+            // we dont do this in browser as the virtual server may not yet be started on app start
+            // project open and a 404 page will briefly flash in the browser!
+            // this mainly applies when phoenix is started with a preview file already open in previous exit
+            const currentDocument = DocumentManager.getCurrentDocument();
+            const currentFile = currentDocument? currentDocument.file : ProjectManager.getSelectedItem();
+            const isPreviewable = currentFile ? utils.isPreviewableFile(currentFile.fullPath) : false;
+            if(isPreviewable){
+                _setPanelVisibility(true);
+                _loadPreview(true, true);
+            }
+        }
     }
 
     function _projectClosed() {
@@ -637,7 +671,7 @@ define(function (require, exports, module) {
     }
 
     async function _currentFileChanged(_event, changedFile) {
-        if(!changedFile || !changedFile.fullPath){
+        if(!changedFile || !changedFile.fullPath || !ProjectManager.isStartupFilesLoaded()){
             return;
         }
         const fullPath = changedFile.fullPath;
@@ -652,7 +686,7 @@ define(function (require, exports, module) {
         if(changedFile && (utils.isPreviewableFile(fullPath) ||
             utils.isServerRenderedFile(fullPath))){
             _loadPreview();
-            if(!panelShownAtStartup){
+            if(!panelShownAtStartup && ProjectManager.isStartupFilesLoaded()){
                 let previewDetails = await StaticServer.getPreviewDetails();
                 if(previewDetails && !previewDetails.isNoPreview) {
                     _setPanelVisibility(true);
@@ -748,10 +782,26 @@ define(function (require, exports, module) {
         StaticServer.init();
         LiveDevServerManager.registerServer({ create: _createStaticServer }, 5);
         ProjectManager.on(ProjectManager.EVENT_PROJECT_FILE_CHANGED, _projectFileChanges);
-        MainViewManager.on("currentFileChange", _currentFileChanged);
         ProjectManager.on(ProjectManager.EVENT_PROJECT_OPEN, _projectOpened);
         ProjectManager.on(ProjectManager.EVENT_PROJECT_CLOSE, _projectClosed);
         EditorManager.on("activeEditorChange", _activeDocChanged);
+        ProjectManager.on(ProjectManager.EVENT_AFTER_STARTUP_FILES_LOADED, _startupFilesLoaded);
+        let fileChangeListenerStartDelay = 0;
+        if(Phoenix.isNativeApp && Phoenix.platform === "mac") {
+            // in mac, if we do the `open with Phoenix Code` from finder, then, the open with events come as events
+            // after app start. This causes a problem where if we open a txt file with open with, and an html file was
+            // open previously, then currentFileChange listener will see the html file at first and open the live
+            // preview panel, and immediately, the txt file event will be sent by os resulting in a no preview page.
+            // we should not show a no preview page for opening txt / non-previewable files. So, we dont attach the
+            // change listener in macos for a second to give some time for the os event to reach.
+            fileChangeListenerStartDelay = 600;
+        }
+        setTimeout(()=>{
+            MainViewManager.on("currentFileChange", _currentFileChanged);
+            if(Phoenix.isNativeApp && Phoenix.platform === "mac" && MainViewManager.getCurrentlyViewedFile()) {
+                _currentFileChanged(null, MainViewManager.getCurrentlyViewedFile());
+            }
+        }, fileChangeListenerStartDelay);
         CommandManager.register(Strings.CMD_LIVE_FILE_PREVIEW,  Commands.FILE_LIVE_FILE_PREVIEW, function () {
             _toggleVisibilityOnClick();
         });
@@ -787,7 +837,10 @@ define(function (require, exports, module) {
                     // only show if there is some file to preview and not the default no-preview preview on startup
                     _setPanelVisibility(true);
                 }
-                _loadPreview(true);
+                // in browsers, the static server is not reset on every call to open live preview, so its safe to reload
+                // we need to reload once as
+                const shouldReload = !Phoenix.isNativeApp;
+                _loadPreview(true, shouldReload);
             });
         }
 

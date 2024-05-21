@@ -37,8 +37,7 @@ define(function (require, exports, module) {
         LanguageManager   = require("language/LanguageManager"),
         FileTreeViewModel = require("project/FileTreeViewModel"),
         ViewUtils         = require("utils/ViewUtils"),
-        KeyEvent          = require("utils/KeyEvent"),
-        PreferencesManager  = require("preferences/PreferencesManager");
+        KeyEvent          = require("utils/KeyEvent");
 
     var DOM = Preact.DOM;
 
@@ -1331,4 +1330,5 @@ define(function (require, exports, module) {
     exports.addIconProvider = addIconProvider;
     exports.addClassesProvider = addClassesProvider;
     exports.render = render;
+
 });
