@@ -21,6 +21,8 @@
 
 // Parts of this file is adapted from https://github.com/cfjedimaster/brackets-jshint
 
+/*global path*/
+
 /**
  * Provides JSLint results via the core linting extension point
  */
@@ -29,18 +31,27 @@ define(function (require, exports, module) {
     // Load dependent modules
     const _                = brackets.getModule("thirdparty/lodash"),
         CodeInspection     = brackets.getModule("language/CodeInspection"),
+        FileSystemError    = brackets.getModule("filesystem/FileSystemError"),
         AppInit            = brackets.getModule("utils/AppInit"),
         PreferencesManager = brackets.getModule("preferences/PreferencesManager"),
+        DocumentManager    = brackets.getModule("document/DocumentManager"),
         Strings            = brackets.getModule("strings"),
         ProjectManager     = brackets.getModule("project/ProjectManager"),
         FileSystem         = brackets.getModule("filesystem/FileSystem"),
         IndexingWorker     = brackets.getModule("worker/IndexingWorker");
 
+    if(Phoenix.isTestWindow) {
+        IndexingWorker.on("JsHint_extension_Loaded", ()=>{
+            window._JsHintExtensionReadyToIntegTest = true;
+        });
+    }
     IndexingWorker.loadScriptInWorker(`${module.uri}/../worker/jshint-helper.js`);
 
     let prefs = PreferencesManager.getExtensionPrefs("jshint"),
         projectSpecificOptions = null,
         jsHintConfigFileErrorMessage = null;
+
+    const PREFS_JSHINT_DISABLED = "disabled";
 
     // We don't provide default options in the preferences as preferences will try to mixin default options with
     // user defined options leading to unexpected results. Either we take user defined options or default, no mixin.
@@ -54,8 +65,8 @@ define(function (require, exports, module) {
         "devel": false
     };
 
-    prefs.definePreference("options", "object", {}, {
-        description: Strings.DESCRIPTION_JSHINT_OPTIONS
+    prefs.definePreference(PREFS_JSHINT_DISABLED, "boolean", false, {
+        description: Strings.DESCRIPTION_JSHINT_DISABLE
     }).on("change", function () {
         CodeInspection.requestRun(Strings.JSHINT_NAME);
     });
@@ -82,9 +93,7 @@ define(function (require, exports, module) {
             // If a line contains only whitespace (here spaces or tabs), remove the whitespace
             text = text.replace(/^[ \t]+$/gm, "");
 
-            let userPrefOptions = _.isEmpty(prefs.get("options")) ? DEFAULT_OPTIONS : prefs.get("options");
-
-            let options = projectSpecificOptions || userPrefOptions;
+            let options = projectSpecificOptions || DEFAULT_OPTIONS;
 
             IndexingWorker.execPeer("jsHint", {
                 text,
@@ -149,21 +158,19 @@ define(function (require, exports, module) {
     function _readConfig(dir, configFileName) {
         return new Promise((resolve, reject)=>{
             configFileName = configFileName || CONFIG_FILE_NAME;
-            let file = FileSystem.getFileForPath(dir + configFileName);
-            file.read(function (err, content) {
-                if (err) {
-                    resolve(null); // no config file is a valid case. we just resolve with null
-                    return;
-                }
+            const configFilePath = path.join(dir, configFileName);
+            let displayPath = ProjectManager.makeProjectRelativeIfPossible(configFilePath);
+            displayPath = Phoenix.app.getDisplayPath(displayPath);
+            DocumentManager.getDocumentForPath(configFilePath).done(function (configDoc) {
                 let config;
+                const content = configDoc.getText();
                 try {
                     config = JSON.parse(removeComments(content));
-                    console.log("JSHint: loaded config file for project " + file.fullPath);
+                    console.log("JSHint: loaded config file for project " + configFilePath);
                 } catch (e) {
-                    console.log("JSHint: error parsing " + file.fullPath);
+                    console.log("JSHint: error parsing " + configFilePath);
                     // just log and return as this is an expected failure for us while the user edits code
-                    reject("Error parsing JSHint config file:    "
-                        + ProjectManager.getProjectRelativePath(file.fullPath));
+                    reject("Error parsing JSHint config file:    " + displayPath);
                     return;
                 }
                 // Load any base config defined by "extends".
@@ -171,7 +178,7 @@ define(function (require, exports, module) {
                 // jslints -> cli.js -> loadConfig -> if (config['extends'])...
                 // https://jshint.com/docs/cli/ > Special Options
                 if (config.extends) {
-                    let extendFile = FileSystem.getFileForPath(dir + config.extends);
+                    let extendFile = FileSystem.getFileForPath(path.join(dir, config.extends));
                     _readConfig(extendFile.parentPath, extendFile.name).then(baseConfigResult=>{
                         delete config.extends;
                         let mergedConfig = $.extend({}, baseConfigResult, config);
@@ -180,13 +187,21 @@ define(function (require, exports, module) {
                         }
                         resolve(mergedConfig);
                     }).catch(()=>{
-                        reject("Error parsing JSHint config file:    "
-                            + ProjectManager.getProjectRelativePath(extendFile.name));
+                        let extendDisplayPath = ProjectManager.makeProjectRelativeIfPossible(extendFile.fullPath);
+                        extendDisplayPath = Phoenix.app.getDisplayPath(extendDisplayPath);
+                        reject("Error parsing JSHint config file: " + extendDisplayPath);
                     });
                 }
                 else {
                     resolve(config);
                 }
+            }).fail((err)=>{
+                if(err === FileSystemError.NOT_FOUND){
+                    resolve(null); // no config file is a valid case. we just resolve with null
+                    return;
+                }
+                console.error("Error reading JSHint Config File", configFilePath, err);
+                reject("Error reading JSHint Config File", displayPath);
             });
         });
     }
@@ -222,6 +237,7 @@ define(function (require, exports, module) {
             _reloadOptions();
         } else if(_isFileInArray(configFilePath, removed)){
             projectSpecificOptions = null;
+            jsHintConfigFileErrorMessage = null;
         }
     }
 
@@ -236,7 +252,8 @@ define(function (require, exports, module) {
         name: Strings.JSHINT_NAME,
         scanFileAsync: lintOneFile,
         canInspect: function (fullPath) {
-            return fullPath && !fullPath.endsWith(".min.js");
+            return !prefs.get(PREFS_JSHINT_DISABLED) && (projectSpecificOptions || jsHintConfigFileErrorMessage)
+                && fullPath && !fullPath.endsWith(".min.js");
         }
     });
 });
