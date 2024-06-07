@@ -9847,6 +9847,9 @@ body.dark {
   display: inline-block;
   position: relative;
 }
+.dark .editor-text-fragment-warn.editor-text-fragment-warn.editor-text-fragment-warn {
+  border-bottom: 2px dotted #8c7d00;
+}
 .editor-text-fragment-warn.editor-text-fragment-warn.editor-text-fragment-warn:after {
   content: '';
   width: 100%;
@@ -9855,6 +9858,9 @@ body.dark {
   display: block;
   bottom: -3px;
   left: 2px;
+}
+.dark .editor-text-fragment-warn.editor-text-fragment-warn.editor-text-fragment-warn:after {
+  border-bottom: 2px dotted #8c7d00;
 }
 .editor-text-fragment-info {
   border-bottom: 2px dotted #6bbeff;
