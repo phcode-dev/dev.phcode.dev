@@ -1137,19 +1137,44 @@ define(function (require, exports, module) {
         return this._codeMirror.operation(execFn);
     };
 
-    const MARK_OPTION_UNDERLINE_ERROR = {
+    function getMarkOptionUnderlineError() {
+        return {
             className: "editor-text-fragment-error"
-        }, MARK_OPTION_UNDERLINE_WARN = {
+        };
+    }
+
+    function getMarkOptionUnderlineWarn() {
+        return {
             className: "editor-text-fragment-warn"
-        }, MARK_OPTION_UNDERLINE_INFO = {
+        };
+    }
+
+    function getMarkOptionUnderlineInfo() {
+        return {
             className: "editor-text-fragment-info"
-        }, MARK_OPTION_UNDERLINE_SPELLCHECK = {
+        };
+    }
+
+    function getMarkOptionUnderlineSpellcheck() {
+        return {
             className: "editor-text-fragment-spell-error"
-        }, MARK_OPTION_HYPERLINK_TEXT = {
+        };
+    }
+
+    function getMarkOptionHyperlinkText() {
+        return {
             className: "editor-text-fragment-hover"
-        }, MARK_OPTION_MATCHING_REFS = {
+        };
+    }
+
+    function getMarkOptionMatchingRefs() {
+        return {
             className: "editor-text-fragment-matching-refs"
-        }, MARK_OPTION_RENAME_OUTLINE ={
+        };
+    }
+
+    function getMarkOptionRenameOutline() {
+        return {
             className: "editor-text-rename-outline",
             startStyle: "editor-text-rename-outline-left",
             endStyle: "editor-text-rename-outline-right",
@@ -1157,6 +1182,18 @@ define(function (require, exports, module) {
             inclusiveLeft: true,
             inclusiveRight: true
         };
+    }
+
+    /**
+     * Mark options to use with API with Editor.markText or Editor.markToken.
+     */
+    Editor.getMarkOptionUnderlineError = getMarkOptionUnderlineError;
+    Editor.getMarkOptionUnderlineWarn = getMarkOptionUnderlineWarn;
+    Editor.getMarkOptionUnderlineInfo = getMarkOptionUnderlineInfo;
+    Editor.getMarkOptionUnderlineSpellcheck = getMarkOptionUnderlineSpellcheck;
+    Editor.getMarkOptionHyperlinkText = getMarkOptionHyperlinkText;
+    Editor.getMarkOptionMatchingRefs = getMarkOptionMatchingRefs;
+    Editor.getMarkOptionRenameOutline = getMarkOptionRenameOutline;
 
     /**
      * Can be used to mark a range of text with a specific CSS class name. cursorFrom and cursorTo should be {line, ch}
@@ -1168,6 +1205,7 @@ define(function (require, exports, module) {
      * @param {Object} [options] - When given, it should be  one of the predefined `Editor.MARK_OPTION_UNDERLINE*` or
      * it should be an object that may contain the following configuration options:
      *
+     * @param {string} [options.metadata] - If you want to store any metadata object with the mark, use this.
      * @param {string} [options.className] -Assigns a CSS class to the marked stretch of text.
      * @param {string} [options.css] -A string of CSS to be applied to the covered text. For example "color: #fe3".
      * @param {string} [options.startStyle] -Can be used to specify an extra CSS class to be applied to the leftmost
@@ -1226,6 +1264,7 @@ define(function (require, exports, module) {
     Editor.prototype.markText = function (markType, cursorFrom, cursorTo, options) {
         let newMark = this._codeMirror.markText(cursorFrom, cursorTo, options);
         newMark.markType = markType;
+        newMark.metadata = options && options.metadata;
         return newMark;
     };
 
@@ -1311,10 +1350,24 @@ define(function (require, exports, module) {
      * @param {string} [markType] - Optional, if given will only delete marks of that type. Else delete everything.
      */
     Editor.prototype.clearAllMarks = function (markType) {
-        let marks = this.getAllMarks(markType);
-        for(let mark of marks){
-            mark.clear();
-        }
+        const self = this;
+        self._codeMirror.operation(function () {
+            let marks = self.getAllMarks(markType);
+            for(let mark of marks){
+                mark.clear();
+            }
+        });
+    };
+
+    /**
+     * Checks if two positions in the editor are the same.
+     *
+     * @param {{line: number, ch: number}} position1 - cursor position
+     * @param {{line: number, ch: number}} position2 - cursor position
+     * @returns {boolean} True if both positions are the same, false otherwise.
+     */
+    Editor.prototype.isSamePosition = function (position1, position2){
+        return position1.line === position2.line && position1.ch === position2.ch;
     };
 
     /**
@@ -1422,6 +1475,18 @@ define(function (require, exports, module) {
     };
 
     /**
+     * Replaces the content of multiple selections with the strings in the array. The length of the given
+     * array should be the same as the number of active selections.
+     * @param {Array<string>} replacement the text array to replace the current selections with
+     * @param {string} [select] The optional select argument can be used to change selection. Passing "around"
+     * will cause the new text to be selected, passing "start" will collapse the selection to the start
+     * of the inserted text.
+     */
+    Editor.prototype.replaceSelections = function (replacement, select) {
+        this._codeMirror.replaceSelections(replacement, select);
+    };
+
+    /**
      * Replace the part of the document between from and to with the given string.
      * @param {string} replacement the text to replace the current selection
      * @param {{line:number, ch:number}} from the strat position to replace
@@ -1433,6 +1498,40 @@ define(function (require, exports, module) {
      */
     Editor.prototype.replaceRange = function (replacement, from, to, origin) {
         this._codeMirror.replaceRange(replacement, from, to, origin);
+    };
+
+
+    /**
+     * Replaces multiple ranges in the editor with the specified texts.
+     *
+     * @method
+     * @param {Array} ranges - An array of range objects, each containing `from`, `to`, and `text` properties.
+     * @param {Object} ranges[].from - The start position of the range to be replaced. It should have `line` and `ch` properties.
+     * @param {Object} ranges[].to - The end position of the range to be replaced. It should have `line` and `ch` properties.
+     * @param {string} ranges[].text - The text to replace the specified range.
+     * @param {string} [origin] - An optional origin identifier to be associated with the changes.
+     * @example
+     * editor.replaceMultipleRanges([
+     *   { from: { line: 0, ch: 0 }, to: { line: 0, ch: 5 }, text: 'Hello' },
+     *   { from: { line: 1, ch: 0 }, to: { line: 1, ch: 4 }, text: 'World' }
+     * ], 'exampleOrigin');
+     */
+    Editor.prototype.replaceMultipleRanges = function (ranges, origin) {
+        // Sort ranges in descending order by start position so that they dont step over each other
+        let self = this;
+        self.operation(()=>{
+            ranges.sort((a, b) => {
+                if (a.from.line === b.from.line) {
+                    return b.from.ch - a.from.ch;
+                }
+                return b.from.line - a.from.line;
+            });
+
+            // Replace each range with its corresponding replacement text
+            ranges.forEach(range => {
+                self.replaceRange(range.text, range.from, range.to, origin);
+            });
+        });
     };
 
     /**
@@ -2574,17 +2673,6 @@ define(function (require, exports, module) {
 
     Editor.LINE_NUMBER_GUTTER_PRIORITY = LINE_NUMBER_GUTTER_PRIORITY;
     Editor.CODE_FOLDING_GUTTER_PRIORITY = CODE_FOLDING_GUTTER_PRIORITY;
-
-    /**
-     * Mark options to use with API with Editor.markText or Editor.markToken.
-     */
-    Editor.MARK_OPTION_UNDERLINE_ERROR = MARK_OPTION_UNDERLINE_ERROR;
-    Editor.MARK_OPTION_UNDERLINE_WARN = MARK_OPTION_UNDERLINE_WARN;
-    Editor.MARK_OPTION_UNDERLINE_INFO = MARK_OPTION_UNDERLINE_INFO;
-    Editor.MARK_OPTION_UNDERLINE_SPELLCHECK = MARK_OPTION_UNDERLINE_SPELLCHECK;
-    Editor.MARK_OPTION_HYPERLINK_TEXT = MARK_OPTION_HYPERLINK_TEXT;
-    Editor.MARK_OPTION_MATCHING_REFS = MARK_OPTION_MATCHING_REFS;
-    Editor.MARK_OPTION_RENAME_OUTLINE = MARK_OPTION_RENAME_OUTLINE;
 
     /**
      * Each Editor instance object dispatches the following events:

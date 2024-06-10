@@ -19,7 +19,7 @@
  *
  */
 
-/*global jsPromise*/
+/*global jsPromise, path*/
 
 /**
  * Manages linters and other code inspections on a per-language basis. Provides a UI and status indicator for
@@ -43,6 +43,7 @@ define(function (require, exports, module) {
         CommandManager          = require("command/CommandManager"),
         DocumentManager         = require("document/DocumentManager"),
         EditorManager           = require("editor/EditorManager"),
+        Dialogs                 = require("widgets/Dialogs"),
         Editor                  = require("editor/Editor").Editor,
         MainViewManager         = require("view/MainViewManager"),
         LanguageManager         = require("language/LanguageManager"),
@@ -60,6 +61,8 @@ define(function (require, exports, module) {
 
     const CODE_INSPECTION_GUTTER_PRIORITY      = 500,
         CODE_INSPECTION_GUTTER = "code-inspection-gutter";
+
+    const EDIT_ORIGIN_LINT_FIX = "lint_fix";
 
     const INDICATOR_ID = "status-inspection";
 
@@ -115,6 +118,8 @@ define(function (require, exports, module) {
      * @type {$.Element}
      */
     var $problemsPanel;
+
+    let $fixAllBtn;
 
     /**
      * @private the panelView
@@ -344,8 +349,10 @@ define(function (require, exports, module) {
      * @param {Number} numProblems - total number of problems across all providers
      * @param {Array.<{name:string, scanFileAsync:?function(string, string):!{$.Promise}, scanFile:?function(string, string):Object}>} providersReportingProblems - providers that reported problems
      * @param {boolean} aborted - true if any provider returned a result with the 'aborted' flag set
+     * @param fileName
      */
-    function updatePanelTitleAndStatusBar(numProblems, providersReportingProblems, aborted) {
+    function updatePanelTitleAndStatusBar(numProblems, providersReportingProblems, aborted, fileName) {
+        $fixAllBtn.addClass("forced-hidden");
         var message, tooltip;
 
         if (providersReportingProblems.length === 1) {
@@ -354,13 +361,20 @@ define(function (require, exports, module) {
             $problemsPanelTable.find("tr").removeClass("forced-hidden");
 
             if (numProblems === 1 && !aborted) {
-                message = StringUtils.format(Strings.SINGLE_ERROR, providersReportingProblems[0].name);
+                message = documentFixes.size ?
+                    StringUtils.format(Strings.SINGLE_ERROR_FIXABLE, providersReportingProblems[0].name,
+                        documentFixes.size, fileName):
+                    StringUtils.format(Strings.SINGLE_ERROR, providersReportingProblems[0].name, fileName);
             } else {
                 if (aborted) {
                     numProblems += "+";
                 }
 
-                message = StringUtils.format(Strings.MULTIPLE_ERRORS, providersReportingProblems[0].name, numProblems);
+                message = documentFixes.size ?
+                    StringUtils.format(Strings.MULTIPLE_ERRORS_FIXABLE, numProblems,
+                        providersReportingProblems[0].name, documentFixes.size, fileName):
+                    StringUtils.format(Strings.MULTIPLE_ERRORS, numProblems,
+                        providersReportingProblems[0].name, fileName);
             }
         } else if (providersReportingProblems.length > 1) {
             $problemsPanelTable.find(".inspector-section").show();
@@ -369,21 +383,30 @@ define(function (require, exports, module) {
                 numProblems += "+";
             }
 
-            message = StringUtils.format(Strings.ERRORS_PANEL_TITLE_MULTIPLE, numProblems);
+            message = documentFixes.size ?
+                StringUtils.format(Strings.ERRORS_PANEL_TITLE_MULTIPLE_FIXABLE, numProblems,
+                    documentFixes.size, fileName):
+                StringUtils.format(Strings.ERRORS_PANEL_TITLE_MULTIPLE, numProblems, fileName);
         } else {
             return;
         }
 
         $problemsPanel.find(".title").text(message);
         tooltip = StringUtils.format(Strings.STATUSBAR_CODE_INSPECTION_TOOLTIP, message);
-        StatusBar.updateIndicator(INDICATOR_ID, true, "inspection-errors", tooltip);
+        let iconType = "inspection-errors";
+        if(documentFixes.size){
+            iconType =  "inspection-repair";
+            $fixAllBtn.removeClass("forced-hidden");
+        }
+
+        StatusBar.updateIndicator(INDICATOR_ID, true, iconType, tooltip);
     }
 
     function _getMarkOptions(error){
         switch (error.type) {
-        case Type.ERROR: return Editor.MARK_OPTION_UNDERLINE_ERROR;
-        case Type.WARNING: return Editor.MARK_OPTION_UNDERLINE_WARN;
-        case Type.META: return Editor.MARK_OPTION_UNDERLINE_INFO;
+        case Type.ERROR: return Editor.getMarkOptionUnderlineError();
+        case Type.WARNING: return Editor.getMarkOptionUnderlineWarn();
+        case Type.META: return Editor.getMarkOptionUnderlineInfo();
         }
     }
 
@@ -485,18 +508,62 @@ define(function (require, exports, module) {
         _populateDummyGutterElements(editor, from, to);
     }
 
+    function _scrollToTableLine(lineNumber) {
+        const $lineElement = $problemsPanelTable.find('td.line-number[data-line="' + lineNumber + '"]');
+        if ($lineElement.length) {
+            $lineElement[0].scrollIntoView({ behavior: 'instant', block: 'start' });
+        }
+    }
+
+
     function getQuickView(editor, pos, token, line) {
         return new Promise((resolve, reject)=>{
             let codeInspectionMarks = editor.findMarksAt(pos, CODE_MARK_TYPE_INSPECTOR) || [];
-            let hoverMessage = '';
+            let $hoverMessage = $(`<div class="code-inspection-item"></div>`);
+            let $problemView, quickViewPresent;
+            let startPos = {line: pos.line, ch: token.start},
+                endPos = {line: pos.line, ch: token.end};
             for(let mark of codeInspectionMarks){
-                hoverMessage = `${hoverMessage}${mark.message}<br/>`;
+                quickViewPresent = true;
+                const fixID = `${mark.metadata}`;
+                if(documentFixes.get(fixID)){
+                    $problemView = $(`<div>
+                        <button class="btn btn-mini primary fix-problem-btn" style="margin-right: 5px;">Fix</button>
+                        ${mark.message}<br/>
+                    </div>`);
+                    $problemView.find(".fix-problem-btn").click(()=>{
+                        _scrollToTableLine(pos.line);
+                        _fixProblem(fixID);
+                    });
+                    $hoverMessage.append($problemView);
+                } else {
+                    $problemView = $(`<div>${mark.message}<br/></div>`);
+                    $hoverMessage.append($problemView);
+                }
+                // eslint-disable-next-line no-loop-func
+                $problemView.click(function () {
+                    toggleCollapsed(false);
+                    _scrollToTableLine(pos.line);
+                });
+                const markPos = mark.find();
+                if(markPos.from && markPos.from.line < startPos.line){
+                    startPos.line = markPos.from.line;
+                }
+                if(markPos.from && markPos.from.ch < startPos.ch){
+                    startPos.ch = markPos.from.ch;
+                }
+                if(markPos.to && markPos.to.line > endPos.line){
+                    endPos.line = markPos.to.line;
+                }
+                if(markPos.to && markPos.to.ch > endPos.ch){
+                    endPos.ch = markPos.to.ch;
+                }
             }
-            if(hoverMessage){
+            if(quickViewPresent){
                 resolve({
-                    start: {line: pos.line, ch: token.start},
-                    end: {line: pos.line, ch: token.end},
-                    content: `<div class="code-inspection-item">${hoverMessage}</div>`
+                    start: startPos,
+                    end: endPos,
+                    content: $hoverMessage
                 });
                 return;
             }
@@ -504,20 +571,35 @@ define(function (require, exports, module) {
         });
     }
 
+    let fixIDCounter = 1;
+    let documentFixes = new Map(), lastDocumentScanTimeStamp;
+    function _registerNewFix(editor, fix) {
+        if(!editor || !fix || !fix.rangeOffset) {
+            return null;
+        }
+        if(editor.document.lastChangeTimestamp !== lastDocumentScanTimeStamp){
+            // the document changed from the last time the fixes where registered, we have to
+            // invalidate all existing fixes in that case.
+            lastDocumentScanTimeStamp = editor.document.lastChangeTimestamp;
+            documentFixes.clear();
+        }
+        fixIDCounter++;
+        documentFixes.set(`${fixIDCounter}`, fix);
+        return fixIDCounter;
+    }
 
     /**
      * Adds gutter icons and squiggly lines under err/warn/info to editor after lint.
+     * also updates  the passed in resultProviderEntries with fixes that can be applied.
      * @param resultProviderEntries
      * @private
      */
-    function _updateEditorMarks(resultProviderEntries) {
+    function _updateEditorMarksAndFixResults(resultProviderEntries) {
         let editor = EditorManager.getCurrentFullEditor();
         if(!(editor && resultProviderEntries && resultProviderEntries.length)) {
             return;
         }
         editor.operation(function () {
-            editor.clearAllMarks(CODE_MARK_TYPE_INSPECTOR);
-            editor.clearGutter(CODE_INSPECTION_GUTTER);
             editor.off("viewportChange.codeInspection");
             editor.on("viewportChange.codeInspection", _editorVieportChangeHandler);
             let gutterErrorMessages = {};
@@ -532,11 +614,16 @@ define(function (require, exports, module) {
                     // add squiggly lines
                     if (_shouldMarkTokenAtPosition(editor, error)) {
                         let mark;
-                        if(error.endPos){
-                            mark = editor.markText(CODE_MARK_TYPE_INSPECTOR, error.pos, error.endPos,
-                                _getMarkOptions(error));
+                        const markOptions = _getMarkOptions(error);
+                        const fixID = _registerNewFix(editor, error.fix);
+                        if(fixID) {
+                            markOptions.metadata = fixID;
+                            error.fix.id = fixID;
+                        }
+                        if(error.endPos && !editor.isSamePosition(error.pos, error.endPos)) {
+                            mark = editor.markText(CODE_MARK_TYPE_INSPECTOR, error.pos, error.endPos, markOptions);
                         } else {
-                            mark = editor.markToken(CODE_MARK_TYPE_INSPECTOR, error.pos, _getMarkOptions(error));
+                            mark = editor.markToken(CODE_MARK_TYPE_INSPECTOR, error.pos, markOptions);
                         }
                         mark.type = error.type;
                         mark.message = error.message;
@@ -546,6 +633,8 @@ define(function (require, exports, module) {
             _updateGutterMarks(editor, gutterErrorMessages);
         });
     }
+
+    const scrollPositionMap = new Map();
 
     /**
      * Run inspector applicable to current document. Updates status bar indicator and refreshes error list in
@@ -574,17 +663,26 @@ define(function (require, exports, module) {
             return !provider.canInspect || provider.canInspect(currentDoc.file.fullPath);
         });
 
+        let editor = EditorManager.getCurrentFullEditor(), fullFilePath;
+        if(editor){
+            lastDocumentScanTimeStamp = editor.document.lastChangeTimestamp;
+            documentFixes.clear();
+            fullFilePath = editor.document.file.fullPath;
+        }
+
         if (providerList && providerList.length) {
-            var numProblems = 0;
-            var aborted = false;
-            var allErrors = [];
-            var html;
-            var providersReportingProblems = [];
-            $problemsPanelTable.empty();
+            let numProblems = 0,
+                aborted = false,
+                allErrors = [],
+                html,
+                providersReportingProblems = [];
+            scrollPositionMap.set($problemsPanelTable.lintFilePath || fullFilePath, $problemsPanelTable.scrollTop());
 
             // run all the providers registered for this file type
             (_currentPromise = inspectFile(currentDoc.file, providerList)).then(function (results) {
-                _updateEditorMarks(results);
+                editor.clearAllMarks(CODE_MARK_TYPE_INSPECTOR);
+                editor.clearGutter(CODE_INSPECTION_GUTTER);
+                _updateEditorMarksAndFixResults(results);
                 // check if promise has not changed while inspectFile was running
                 if (this !== _currentPromise) {
                     return;
@@ -656,16 +754,19 @@ define(function (require, exports, module) {
                 // Update results table
                 html = Mustache.render(ResultsTemplate, {Strings: Strings, reportList: allErrors});
 
+                const scrollPosition = scrollPositionMap.get(fullFilePath) || 0;
+                $problemsPanelTable.lintFilePath = fullFilePath;
                 $problemsPanelTable
                     .empty()
                     .append(html)
-                    .scrollTop(0);  // otherwise scroll pos from previous contents is remembered
+                    .scrollTop(scrollPosition);  // otherwise scroll pos from previous contents is remembered
 
                 if (!_collapsed) {
                     problemsPanel.show();
                 }
 
-                updatePanelTitleAndStatusBar(numProblems, providersReportingProblems, aborted);
+                updatePanelTitleAndStatusBar(numProblems, providersReportingProblems, aborted,
+                    path.basename(fullFilePath));
                 setGotoEnabled(true);
 
                 PerfUtils.addMeasurement(perfTimerDOM);
@@ -675,6 +776,8 @@ define(function (require, exports, module) {
             // No provider for current file
             _hasErrors = false;
             _currentPromise = null;
+            updatePanelTitleAndStatusBar(0, [], false,
+                fullFilePath ? path.basename(fullFilePath) : Strings.ERRORS_NO_FILE);
             if(problemsPanel){
                 problemsPanel.hide();
             }
@@ -708,9 +811,18 @@ define(function (require, exports, module) {
      * @param {{name:string, scanFileAsync:?function(string, string):!{$.Promise},
      *         scanFile:?function(string, string):?{errors:!Array, aborted:boolean}}} provider
      *
-     * Each error is: { pos:{line,ch}, endPos:?{line,ch}, message:string, type:?Type }
+     * Each error is: { pos:{line,ch}, endPos:?{line,ch}, message:string, htmlMessage:string, type:?Type ,
+     *                     fix: { // an optional fix, if present will show the fix button
+     *                     replace: "text to replace the offset given below",
+     *                     rangeOffset: {
+     *                         start: number,
+     *                         end: number
+     *                     }}}
      * If type is unspecified, Type.WARNING is assumed.
      * If no errors found, return either null or an object with a zero-length `errors` array.
+     * `message` will be printed as text as is. This is needed when the error text contains HTML that may be
+     * mis interpreted as html to display. If you want to display html, pass in `htmlMessage`. Both can be used
+     * at the same time, in which case both will be displayed.
      */
     function register(languageId, provider) {
         if (!_providers[languageId]) {
@@ -804,6 +916,21 @@ define(function (require, exports, module) {
         run();
     }
 
+    let lastRunTime;
+    $(window.document).on("mousemove", ()=>{
+        const editor = EditorManager.getCurrentFullEditor();
+        if(!editor || editor.document.lastChangeTimestamp === lastDocumentScanTimeStamp) {
+            return;
+        }
+        const currentTime = Date.now();
+        if(lastRunTime && (currentTime - lastRunTime) < 1000) {
+            // we dont run the linter on mouse operations more than 1 times a second.
+            return;
+        }
+        lastRunTime = currentTime;
+        run();
+    });
+
     /**
      * Toggle the collapsed state for the panel. This explicitly collapses the panel (as opposed to
      * the auto collapse due to files with no errors & filetypes with no provider). When explicitly
@@ -876,6 +1003,45 @@ define(function (require, exports, module) {
         description: Strings.DESCRIPTION_USE_PREFERED_ONLY
     });
 
+    function _fixProblem(fixID) {
+        const fixDetails = documentFixes.get(fixID);
+        const editor = EditorManager.getCurrentFullEditor();
+        if(!editor || !fixDetails || editor.document.lastChangeTimestamp !== lastDocumentScanTimeStamp) {
+            Dialogs.showErrorDialog(Strings.CANNOT_FIX_TITLE, Strings.CANNOT_FIX_MESSAGE);
+        } else {
+            const from = editor.posFromIndex(fixDetails.rangeOffset.start),
+                to =  editor.posFromIndex(fixDetails.rangeOffset.end);
+            editor.setSelection(from, to, true, Editor.BOUNDARY_BULLSEYE, EDIT_ORIGIN_LINT_FIX);
+            editor.replaceSelection(fixDetails.replaceText, "around");
+        }
+        MainViewManager.focusActivePane();
+        run();
+    }
+
+    function _fixAllProblems() {
+        const editor = EditorManager.getCurrentFullEditor();
+        if(!editor || editor.document.lastChangeTimestamp !== lastDocumentScanTimeStamp) {
+            Dialogs.showErrorDialog(Strings.CANNOT_FIX_TITLE, Strings.CANNOT_FIX_MESSAGE);
+            return;
+        }
+        if(!documentFixes.size){
+            return;
+        }
+        const replacements = [];
+        for(let fixDetails of documentFixes.values()){
+            replacements.push({
+                from: editor.posFromIndex(fixDetails.rangeOffset.start),
+                to: editor.posFromIndex(fixDetails.rangeOffset.end),
+                text: fixDetails.replaceText
+            });
+        }
+        editor.replaceMultipleRanges(replacements, EDIT_ORIGIN_LINT_FIX);
+        const finalCursor = replacements[replacements.length - 1].from;
+        editor.setCursorPos(finalCursor.line, finalCursor.ch);
+        MainViewManager.focusActivePane();
+        run();
+    }
+
     // Initialize items dependent on HTML DOM
     AppInit.htmlReady(function () {
         Editor.registerGutter(CODE_INSPECTION_GUTTER, CODE_INSPECTION_GUTTER_PRIORITY);
@@ -883,6 +1049,8 @@ define(function (require, exports, module) {
         var panelHtml = Mustache.render(PanelTemplate, Strings);
         problemsPanel = WorkspaceManager.createBottomPanel("errors", $(panelHtml), 100);
         $problemsPanel = $("#problems-panel");
+        $fixAllBtn = $problemsPanel.find(".problems-fix-all-btn");
+        $fixAllBtn.click(_fixAllProblems);
 
         function checkSelectionInsideElement(range, element) {
             if(!range || range.endOffset === range.startOffset) {
@@ -898,11 +1066,23 @@ define(function (require, exports, module) {
         var $selectedRow;
         $problemsPanelTable = $problemsPanel.find(".table-container")
             .on("click", "tr", function (e) {
-                if ($(e.target).hasClass('table-copy-err-button')) {
+                if ($(e.target).hasClass('ph-copy-problem')) {
                     // Retrieve the message from the data attribute of the clicked element
                     const message = $(e.target).parent().parent().find(".line-text").text();
                     message && Phoenix.app.copyToClipboard(message);
+                    e.preventDefault();
+                    e.stopPropagation();
+                    MainViewManager.focusActivePane();
+                    return;
                 }
+                if ($(e.target).hasClass('ph-fix-problem')) {
+                    // Retrieve the message from the data attribute of the clicked element
+                    _fixProblem("" + $(e.target).data("fixid"));
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return;
+                }
+
                 if ($selectedRow) {
                     $selectedRow.removeClass("selected");
                 }
@@ -975,6 +1155,14 @@ define(function (require, exports, module) {
             getQuickView,
             QUICK_VIEW_NAME: "CodeInspection"
         }, ["all"]);
+    });
+
+    AppInit.appReady(function () {
+        // on boot the linter is not somehow showing the lint editor underlines at first time. So we trigger a run
+        // after 2 seconds
+        if(!Phoenix.isTestWindow) {
+            setTimeout(run, 2000);
+        }
     });
 
     // Testing
