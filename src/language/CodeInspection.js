@@ -508,11 +508,13 @@ define(function (require, exports, module) {
         _populateDummyGutterElements(editor, from, to);
     }
 
-    function _scrollToTableLine(lineNumber) {
+    function scrollToProblem(lineNumber) {
         const $lineElement = $problemsPanelTable.find('td.line-number[data-line="' + lineNumber + '"]');
         if ($lineElement.length) {
             $lineElement[0].scrollIntoView({ behavior: 'instant', block: 'start' });
+            return true;
         }
+        return false;
     }
 
 
@@ -532,7 +534,7 @@ define(function (require, exports, module) {
                         ${mark.message}<br/>
                     </div>`);
                     $problemView.find(".fix-problem-btn").click(()=>{
-                        _scrollToTableLine(pos.line);
+                        scrollToProblem(pos.line);
                         _fixProblem(fixID);
                     });
                     $hoverMessage.append($problemView);
@@ -543,7 +545,7 @@ define(function (require, exports, module) {
                 // eslint-disable-next-line no-loop-func
                 $problemView.click(function () {
                     toggleCollapsed(false);
-                    _scrollToTableLine(pos.line);
+                    scrollToProblem(pos.line);
                 });
                 const markPos = mark.find();
                 if(markPos.from && markPos.from.line < startPos.line){
@@ -573,7 +575,7 @@ define(function (require, exports, module) {
 
     let fixIDCounter = 1;
     let documentFixes = new Map(), lastDocumentScanTimeStamp;
-    function _registerNewFix(editor, fix) {
+    function _registerNewFix(editor, fix, providerName, maxOffset) {
         if(!editor || !fix || !fix.rangeOffset) {
             return null;
         }
@@ -583,7 +585,11 @@ define(function (require, exports, module) {
             lastDocumentScanTimeStamp = editor.document.lastChangeTimestamp;
             documentFixes.clear();
         }
+        if(_isInvalidFix(fix, maxOffset)){
+            return null;
+        }
         fixIDCounter++;
+        fix.providerName = providerName;
         documentFixes.set(`${fixIDCounter}`, fix);
         return fixIDCounter;
     }
@@ -599,6 +605,7 @@ define(function (require, exports, module) {
         if(!(editor && resultProviderEntries && resultProviderEntries.length)) {
             return;
         }
+        const maxOffset = editor.document.getText().length;
         editor.operation(function () {
             editor.off("viewportChange.codeInspection");
             editor.on("viewportChange.codeInspection", _editorVieportChangeHandler);
@@ -615,7 +622,7 @@ define(function (require, exports, module) {
                     if (_shouldMarkTokenAtPosition(editor, error)) {
                         let mark;
                         const markOptions = _getMarkOptions(error);
-                        const fixID = _registerNewFix(editor, error.fix);
+                        const fixID = _registerNewFix(editor, error.fix, resultProvider.provider.name, maxOffset);
                         if(fixID) {
                             markOptions.metadata = fixID;
                             error.fix.id = fixID;
@@ -635,6 +642,25 @@ define(function (require, exports, module) {
     }
 
     const scrollPositionMap = new Map();
+
+    function _noProviderReturnedResults(currentDoc, fullFilePath) {
+        // No provider for current file
+        _hasErrors = false;
+        _currentPromise = null;
+        updatePanelTitleAndStatusBar(0, [], false,
+            fullFilePath ? path.basename(fullFilePath) : Strings.ERRORS_NO_FILE);
+        if(problemsPanel){
+            problemsPanel.hide();
+        }
+        const language = currentDoc && LanguageManager.getLanguageForPath(currentDoc.file.fullPath);
+        if (language) {
+            StatusBar.updateIndicator(INDICATOR_ID, true, "inspection-disabled",
+                StringUtils.format(Strings.NO_LINT_AVAILABLE, language.getName()));
+        } else {
+            StatusBar.updateIndicator(INDICATOR_ID, true, "inspection-disabled", Strings.NOTHING_TO_LINT);
+        }
+        setGotoEnabled(false);
+    }
 
     /**
      * Run inspector applicable to current document. Updates status bar indicator and refreshes error list in
@@ -680,6 +706,14 @@ define(function (require, exports, module) {
 
             // run all the providers registered for this file type
             (_currentPromise = inspectFile(currentDoc.file, providerList)).then(function (results) {
+                // filter out any ignored results
+                results = results.filter(function (providerResult) {
+                    return !providerResult.result || !providerResult.result.isIgnored;
+                });
+                if(!results.length) {
+                    _noProviderReturnedResults(currentDoc, fullFilePath);
+                    return;
+                }
                 editor.clearAllMarks(CODE_MARK_TYPE_INSPECTOR);
                 editor.clearGutter(CODE_INSPECTION_GUTTER);
                 _updateEditorMarksAndFixResults(results);
@@ -754,12 +788,10 @@ define(function (require, exports, module) {
                 // Update results table
                 html = Mustache.render(ResultsTemplate, {Strings: Strings, reportList: allErrors});
 
-                const scrollPosition = scrollPositionMap.get(fullFilePath) || 0;
                 $problemsPanelTable.lintFilePath = fullFilePath;
                 $problemsPanelTable
                     .empty()
-                    .append(html)
-                    .scrollTop(scrollPosition);  // otherwise scroll pos from previous contents is remembered
+                    .append(html);  // otherwise scroll pos from previous contents is remembered
 
                 if (!_collapsed) {
                     problemsPanel.show();
@@ -769,60 +801,79 @@ define(function (require, exports, module) {
                     path.basename(fullFilePath));
                 setGotoEnabled(true);
 
+                const scrollPosition = scrollPositionMap.get(fullFilePath) || 0;
+                $problemsPanelTable.scrollTop(scrollPosition);
                 PerfUtils.addMeasurement(perfTimerDOM);
             });
 
         } else {
-            // No provider for current file
-            _hasErrors = false;
-            _currentPromise = null;
-            updatePanelTitleAndStatusBar(0, [], false,
-                fullFilePath ? path.basename(fullFilePath) : Strings.ERRORS_NO_FILE);
-            if(problemsPanel){
-                problemsPanel.hide();
-            }
-            var language = currentDoc && LanguageManager.getLanguageForPath(currentDoc.file.fullPath);
-            if (language) {
-                StatusBar.updateIndicator(INDICATOR_ID, true, "inspection-disabled", StringUtils.format(Strings.NO_LINT_AVAILABLE, language.getName()));
-            } else {
-                StatusBar.updateIndicator(INDICATOR_ID, true, "inspection-disabled", Strings.NOTHING_TO_LINT);
-            }
-            setGotoEnabled(false);
+            _noProviderReturnedResults(currentDoc, fullFilePath);
         }
     }
 
     let gutterRegistrationInProgress = false;
 
     /**
-     * The provider is passed the text of the file and its fullPath. Providers should not assume
-     * that the file is open (i.e. DocumentManager.getOpenDocumentForPath() may return null) or
-     * that the file on disk matches the text given (file may have unsaved changes).
+     * Registers a provider for a specific language to inspect files and provide linting results.
+     *
+     * The provider is passed the text of the file and its full path. Providers should not assume that
+     * the file is open (i.e., `DocumentManager.getOpenDocumentForPath()` may return `null`) or that the
+     * file on disk matches the text given (the file may have unsaved changes).
      *
      * Registering any provider for the "javascript" language automatically unregisters the built-in
-     * Brackets JSLint provider. This is a temporary convenience until UI exists for disabling
+     * Brackets JSLint provider. This is a temporary convenience until a UI exists for disabling
      * registered providers.
      *
-     * Providers implement scanFile() if results are available synchronously, or scanFileAsync() if results
-     * may require an async wait (if both are implemented, scanFile() is ignored). scanFileAsync() returns
-     * a {$.Promise} object resolved with the same type of value as scanFile() is expected to return.
-     * Rejecting the promise is treated as an internal error in the provider.
+     * Providers must implement `canInspect()`, `scanFile()`, or `scanFileAsync()`. If both `scanFile()`
+     * and `scanFileAsync()` are implemented, `scanFile()` is ignored.
      *
-     * @param {string} languageId
-     * @param {{name:string, scanFileAsync:?function(string, string):!{$.Promise},
-     *         scanFile:?function(string, string):?{errors:!Array, aborted:boolean}}} provider
+     * - `canInspect(fullPath)`: A synchronous call to determine if the file can be scanned by this provider.
+     * - `scanFile(text, fullPath)`: A synchronous function returning linting results or `null`.
+     * - `scanFileAsync(text, fullPath)`: An asynchronous function returning a jQuery Promise resolved with
+     *   the same type of value as `scanFile()`. Rejecting the promise is treated as an internal error in the provider.
      *
-     * Each error is: { pos:{line,ch}, endPos:?{line,ch}, message:string, htmlMessage:string, type:?Type ,
-     *                     fix: { // an optional fix, if present will show the fix button
+     * Each error object in the results should have the following structure:
+     *              { pos:{line,ch},
+     *                endPos:?{line,ch},
+     *                message:string,
+     *                htmlMessage:string,
+     *                type:?Type ,
+     *                fix: { // an optional fix, if present will show the fix button
      *                     replace: "text to replace the offset given below",
      *                     rangeOffset: {
      *                         start: number,
      *                         end: number
-     *                     }}}
-     * If type is unspecified, Type.WARNING is assumed.
-     * If no errors found, return either null or an object with a zero-length `errors` array.
-     * `message` will be printed as text as is. This is needed when the error text contains HTML that may be
-     * mis interpreted as html to display. If you want to display html, pass in `htmlMessage`. Both can be used
-     * at the same time, in which case both will be displayed.
+     *                }}}
+     * @typedef {Object} Error
+     * @property {Object} pos - The start position of the error.
+     * @property {number} pos.line - The line number (0-based).
+     * @property {number} pos.ch - The character position within the line (0-based).
+     * @property {?Object} endPos - The end position of the error.
+     * @property {number} endPos.line - The end line number (0-based).
+     * @property {number} endPos.ch - The end character position within the line (0-based).
+     * @property {string} message - The error message to be displayed as text.
+     * @property {string} htmlMessage - The error message to be displayed as HTML.
+     * @property {?Type} type - The type of the error. Defaults to `Type.WARNING` if unspecified.
+     * @property {?Object} fix - An optional fix object.
+     * @property {string} fix.replace - The text to replace the error with.
+     * @property {Object} fix.rangeOffset - The range within the text to replace.
+     * @property {number} fix.rangeOffset.start - The start offset of the range.
+     * @property {number} fix.rangeOffset.end - The end offset of the range.
+     *
+     * If no errors are found, return either `null`(treated as file is problem free) or an object with a
+     * zero-length `errors` array. Always use `message` to safely display the error as text. If you want to display HTML
+     * error message, then explicitly use `htmlMessage` to display it. Both `message` and `htmlMessage` can
+     * be used simultaneously.
+     *
+     * After scanning the file, if you need to omit the lint result, return or resolve with `{isIgnored: true}`.
+     * This prevents the file from being marked with a no errors tick mark in the status bar and excludes the linter
+     * from the problems panel.
+     *
+     * @param {string} languageId - The language ID for which the provider is registered.
+     * @param {Object} provider - The provider object.
+     * @param {string} provider.name - The name of the provider.
+     * @param {?function(string, string): { errors: Array<Error>, aborted: boolean }} provider.scanFile - Synchronous scan function.
+     * @param {?function(string, string): jQuery.Promise} provider.scanFileAsync - Asynchronous scan function returning a Promise.
      */
     function register(languageId, provider) {
         if (!_providers[languageId]) {
@@ -918,6 +969,9 @@ define(function (require, exports, module) {
 
     let lastRunTime;
     $(window.document).on("mousemove", ()=>{
+        if(Phoenix.isTestWindow){
+            return;
+        }
         const editor = EditorManager.getCurrentFullEditor();
         if(!editor || editor.document.lastChangeTimestamp === lastDocumentScanTimeStamp) {
             return;
@@ -1003,11 +1057,21 @@ define(function (require, exports, module) {
         description: Strings.DESCRIPTION_USE_PREFERED_ONLY
     });
 
+    function _isInvalidFix(fixDetails, maxOffset) {
+        return (!_.isNumber(fixDetails.rangeOffset.start) || !_.isNumber(fixDetails.rangeOffset.end) ||
+            fixDetails.rangeOffset.start < 0 || fixDetails.rangeOffset.end < 0 ||
+            fixDetails.rangeOffset.start > maxOffset || fixDetails.rangeOffset.end > maxOffset ||
+            typeof fixDetails.replaceText !== "string");
+    }
+
     function _fixProblem(fixID) {
         const fixDetails = documentFixes.get(fixID);
         const editor = EditorManager.getCurrentFullEditor();
+        const maxOffset = editor.document.getText().length;
         if(!editor || !fixDetails || editor.document.lastChangeTimestamp !== lastDocumentScanTimeStamp) {
             Dialogs.showErrorDialog(Strings.CANNOT_FIX_TITLE, Strings.CANNOT_FIX_MESSAGE);
+        } else if(_isInvalidFix(fixDetails, maxOffset)){
+            console.error("Invalid fix:", fixDetails); // this should never happen as we filter the fix while inserting
         } else {
             const from = editor.posFromIndex(fixDetails.rangeOffset.start),
                 to =  editor.posFromIndex(fixDetails.rangeOffset.end);
@@ -1028,7 +1092,11 @@ define(function (require, exports, module) {
             return;
         }
         const replacements = [];
+        const maxOffset = editor.document.getText().length;
         for(let fixDetails of documentFixes.values()){
+            if(_isInvalidFix(fixDetails, maxOffset)){
+                console.error("Invalid fix:", fixDetails); // this should never happen
+            }
             replacements.push({
                 from: editor.posFromIndex(fixDetails.rangeOffset.start),
                 to: editor.posFromIndex(fixDetails.rangeOffset.end),
@@ -1180,4 +1248,5 @@ define(function (require, exports, module) {
     exports.requestRun                  = run;
     exports.getProvidersForPath         = getProvidersForPath;
     exports.getProviderIDsForLanguage   = getProviderIDsForLanguage;
+    exports.scrollToProblem             = scrollToProblem;
 });

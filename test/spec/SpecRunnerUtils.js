@@ -34,6 +34,7 @@ define(function (require, exports, module) {
         MainViewManager     = require("view/MainViewManager"),
         FileSystemError     = require("filesystem/FileSystemError"),
         FileSystem          = require("filesystem/FileSystem"),
+        KeyEvent            = require("utils/KeyEvent"),
         WorkspaceManager    = require("view/WorkspaceManager"),
         UrlParams           = require("utils/UrlParams").UrlParams,
         StringUtils         = require("utils/StringUtils"),
@@ -725,6 +726,14 @@ define(function (require, exports, module) {
         return _testWindow;
     }
 
+    async function parkProject(closeAll) {
+        if(closeAll){
+            _testWindow.brackets.test.MainViewManager._closeAll(_testWindow.brackets.test.MainViewManager.ALL_PANES);
+        }
+        await window.Phoenix.VFS.ensureExistsDirAsync("/test/parked");
+        await loadProjectInTestWindow("/test/parked");
+    }
+
     async function closeTestWindow(force, blankTestWindow) {
         //we need to mark the documents as not dirty before we close
         //or the window will stay open prompting to save
@@ -1187,6 +1196,32 @@ define(function (require, exports, module) {
     }
 
     /**
+     * shows the quick view at given position and returns $popover if present. use dismissQuickView($popover) to dismiss
+     * @param line
+     * @param ch
+     * @returns {Promise<*>}
+     */
+    async function showQuickViewAtPos(line, ch) {
+        const editor  = _testWindow.brackets.test.EditorManager.getCurrentFullEditor();
+        editor.setCursorPos(line, ch, true);
+        const QuickViewManager= _testWindow.brackets.test.QuickViewManager;
+        let cm = editor._codeMirror,
+            pos = { line, ch },
+            token;
+
+        editor.setCursorPos(pos);
+        token = cm.getTokenAt(pos, true);
+
+        const popoverInfo = await QuickViewManager._queryPreviewProviders(editor, pos, token);
+        QuickViewManager._forceShow(popoverInfo);
+        return _testWindow.$("#quick-view-container"); // returns $popover
+    }
+
+    function dismissQuickView($popover) {
+        simulateKeyEvent(KeyEvent.DOM_VK_ESCAPE, "keydown", $popover[0]);
+    }
+
+    /**
      * Simulate a key event.
      * @param {Number} key Key code
      * @param (String) event Key event to simulate
@@ -1480,6 +1515,9 @@ define(function (require, exports, module) {
     exports.removeTempDirectory             = removeTempDirectory;
     exports.setUnitTestReporter             = setUnitTestReporter;
     exports.resizeEditor                    = resizeEditor;
-    exports.editorHasCursorPosition            = editorHasCursorPosition;
+    exports.editorHasCursorPosition         = editorHasCursorPosition;
+    exports.showQuickViewAtPos              = showQuickViewAtPos;
+    exports.dismissQuickView                = dismissQuickView;
+    exports.parkProject                     = parkProject;
     exports.jsPromise                       = jsPromise;
 });

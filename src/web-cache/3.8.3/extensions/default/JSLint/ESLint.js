@@ -38,6 +38,7 @@ define(function (require, exports, module) {
         StringUtils        = brackets.getModule("utils/StringUtils"),
         ProjectManager     = brackets.getModule("project/ProjectManager"),
         FileSystem         = brackets.getModule("filesystem/FileSystem"),
+        LanguageManager    = brackets.getModule("language/LanguageManager"),
         NodeUtils          = brackets.getModule("utils/NodeUtils");
 
     let prefs = PreferencesManager.getExtensionPrefs("ESLint"),
@@ -125,6 +126,18 @@ define(function (require, exports, module) {
         });
     }
 
+    function _isEslintSupportsJSX(config) {
+        if(!config){
+            return false;
+        }
+        let parserOptions = config.parserOptions; // es 7, 8
+        if(!parserOptions && config.languageOptions && config.languageOptions.parserOptions){
+            // this is for es9 and later
+            parserOptions = config.languageOptions.parserOptions;
+        }
+        return parserOptions && parserOptions.ecmaFeatures && parserOptions.ecmaFeatures.jsx;
+    }
+
     /**
      * Run JSLint on the current document. Reports results to the main UI. Displays
      * a gold star when no errors are found.
@@ -136,12 +149,17 @@ define(function (require, exports, module) {
                 return;
             }
             NodeUtils.ESLintFile(text, fullPath, ProjectManager.getProjectRoot().fullPath).then(esLintResult =>{
-                if (esLintResult.result && esLintResult.result.messages && esLintResult.result.messages.length) {
+                const language = LanguageManager.getLanguageForPath(fullPath).getId();
+                if(language === "jsx" && !_isEslintSupportsJSX(esLintResult.config)){
+                    resolve({isIgnored: true});
+                } else if (esLintResult.result && esLintResult.result.messages && esLintResult.result.messages.length) {
                     esLintServiceFailed = false;
                     resolve({ errors: _getErrors(esLintResult.result.messages) });
                 } else if(esLintResult.isError) {
                     esLintServiceFailed = true;
                     resolve({ errors: _getLintError(esLintResult.errorCode, esLintResult.errorMessage) });
+                } else if(esLintResult.isPathIgnored) {
+                    resolve({isIgnored: true});
                 } else {
                     esLintServiceFailed = false;
                     if(!esLintResult.result){
@@ -234,15 +252,18 @@ define(function (require, exports, module) {
         _reloadOptions();
     });
 
-    // Register for JS files
-    CodeInspection.register("javascript", {
+    const esLintProvider = {
         name: Strings.ESLINT_NAME,
         scanFileAsync: lintOneFile,
         canInspect: function (fullPath) {
             return !prefs.get(PREFS_ESLINT_DISABLED) && fullPath && !fullPath.endsWith(".min.js")
                 && useESLintFromProject;
         }
-    });
+    };
+
+    // Register for JS files
+    CodeInspection.register("javascript", esLintProvider);
+    CodeInspection.register("jsx", esLintProvider);
 
     function isESLintActive() {
         return useESLintFromProject && Phoenix.isNativeApp && !esLintServiceFailed;

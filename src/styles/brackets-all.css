@@ -9841,7 +9841,7 @@ body.dark {
   text-decoration-line: underline;
   text-decoration-skip-ink: none;
   text-decoration-thickness: 1px;
-  text-underline-offset: 2px;
+  text-underline-offset: 1px;
   text-decoration-color: #ff5388;
 }
 .editor-text-fragment-warn.editor-text-fragment-warn.editor-text-fragment-warn {
@@ -9849,7 +9849,7 @@ body.dark {
   text-decoration-line: underline;
   text-decoration-skip-ink: none;
   text-decoration-thickness: 1px;
-  text-underline-offset: 2px;
+  text-underline-offset: 1px;
   text-decoration-color: #ffc600;
 }
 .dark .editor-text-fragment-warn.editor-text-fragment-warn.editor-text-fragment-warn {
@@ -9860,7 +9860,7 @@ body.dark {
   text-decoration-line: underline;
   text-decoration-skip-ink: none;
   text-decoration-thickness: 1px;
-  text-underline-offset: 2px;
+  text-underline-offset: 1px;
   text-decoration-color: #82b839;
 }
 .editor-text-fragment-info {
@@ -9868,7 +9868,7 @@ body.dark {
   text-decoration-line: underline;
   text-decoration-skip-ink: none;
   text-decoration-thickness: 1px;
-  text-underline-offset: 2px;
+  text-underline-offset: 1px;
   text-decoration-color: #6bbeff;
 }
 .hidden-element {
