@@ -114,6 +114,8 @@ define(function (require, exports, module) {
                     }
                 };
             }
+            // todo , the results have a set of suggestion suggestions which we can display to user as a set of
+            //  suggestions for a line.
             return {
                 pos: { line: _0Based(lintError.line), ch: _0Based(lintError.column)},
                 endPos: {
@@ -234,7 +236,7 @@ define(function (require, exports, module) {
             if(scanningProjectPath !== ProjectManager.getProjectRoot().fullPath){
                 return;
             }
-            Metrics.countEvent(Metrics.EVENT_TYPE.LINT, "eslintErr", "project");
+            Metrics.countEvent(Metrics.EVENT_TYPE.LINT, "eslintConfig", "error");
             useESLintFromProject = false;
             CodeInspection.requestRun(Strings.ESLINT_NAME);
         });
@@ -267,6 +269,8 @@ define(function (require, exports, module) {
             if(!Phoenix.isNativeApp) {
                 return;
             }
+            // just do a dummy eslint to warm up/load the eslint runner service for the project and dispose old service
+            // on project switch.
             NodeUtils.ESLintFile("console.log();", "a.js", ProjectManager.getProjectRoot().fullPath)
                 .catch(e=>{
                     console.error(`Error warming up ESLint service`, e);

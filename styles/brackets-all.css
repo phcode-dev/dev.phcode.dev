@@ -12441,6 +12441,12 @@ textarea.exclusions-editor {
 #problems-panel .inspector-line:hover .table-copy-err-button {
   visibility: visible;
 }
+.code-inspection-quick-view-item .copy-qv-error-text-btn {
+  visibility: hidden;
+}
+.code-inspection-quick-view-item:hover .copy-qv-error-text-btn {
+  visibility: visible;
+}
 /* Line up label text and input text */
 label input {
   position: relative;

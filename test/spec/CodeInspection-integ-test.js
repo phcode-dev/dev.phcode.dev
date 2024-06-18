@@ -139,8 +139,8 @@ define(function (require, exports, module) {
             testWindow.Phoenix.app.copyToClipboard = savedCopyFn;
         });
 
-        afterEach(function () {
-            testWindow.closeAllFiles();
+        afterEach(async function () {
+            await testWindow.closeAllFiles();
         });
 
         afterAll(async function () {
@@ -536,7 +536,7 @@ define(function (require, exports, module) {
 
                 expect($("#problems-panel").is(":visible")).toBe(true);
                 let marks = EditorManager.getActiveEditor().getGutterMarker(1, CodeInspection.CODE_INSPECTION_GUTTER);
-                expect(marks.title).toBe('\nSome errors here and there at column: 4');
+                expect(marks.title).toBe('Some errors here and there at column: 4');
                 marks = $(marks);
                 expect(marks.find('span').hasClass(expectedClass)).toBeTrue();
                 return marks;
@@ -1125,6 +1125,7 @@ define(function (require, exports, module) {
                     copiedVal = val;
                 };
                 const $copyBtnElems = $problemLine.find(".ph-copy-problem");
+                expect($copyBtnElems.length >= 1).toBeTrue();
                 for(let i=0; i<$copyBtnElems.length; i++) {
                     copiedVal = null;
                     $copyBtnElems[i].click();

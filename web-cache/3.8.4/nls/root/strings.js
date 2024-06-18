@@ -421,14 +421,14 @@ define({
     "LINT_DISABLED": "Linting is disabled",
     "NO_LINT_AVAILABLE": "No linter available for {0}",
     "NOTHING_TO_LINT": "Nothing to lint",
-    "COPY_ERROR": "Copy Error Message",
-    "FIX_ERROR": "Fix Problem",
+    "COPY_ERROR": "Copy problem",
     "FIX": "Fix",
     "CANNOT_FIX_TITLE": "Failed to Apply Fix",
     "CANNOT_FIX_SOME_TITLE": "Failed to Apply Some Fixes",
     "CANNOT_FIX_MESSAGE": "The document has been modified since the fix was prepared. Please try again.",
     "LINTER_TIMED_OUT": "{0} has timed out after waiting for {1} ms",
     "LINTER_FAILED": "{0} terminated with error: {1}",
+    "CLICK_VIEW_PROBLEM": "Click to view problem in panel",
 
     /**
      * Command Name Constants
@@ -897,10 +897,17 @@ define({
 
     // extensions/default/JSLint
     "JSHINT_NAME": "JSHint",
+    "JSHINT_CONFIG_ERROR": "Error reading JSHint config file: {0}",
+    "JSHINT_CONFIG_JSON_ERROR": "Error: JSHint config file `{0}` is not valid JSON",
     "ESLINT_NAME": "ESLint",
 
     // extension css code hints
-    "CSS_LINT_NAME": "{0} Lint",
+    "CSS_LINT_NAME": "{0}",
+
+    // html lint
+    "HTML_LINT_NAME": "HTML",
+    "HTML_LINT_CONFIG_JSON_ERROR": "Error: HTML Validator config file `{0}` is not valid JSON",
+    "HTML_LINT_CONFIG_UNSUPPORTED": "Error: Unsupported config format `{0}`. Use JSON config `.htmlvalidate.json`",
 
     // Features/QuickView and quick view extensions
     "CMD_ENABLE_QUICK_VIEW": "Quick View on Hover",
@@ -966,6 +973,7 @@ define({
     "DESCRIPTION_NO_HINTS_ON_DOT": "true to not automatically show JS code hints when . is typed",
     "DESCRIPTION_JSHINT_DISABLE": "true to disable JSHints linter in problems panel",
     "DESCRIPTION_ESLINT_DISABLE": "true to disable ESLint linter in problems panel",
+    "DESCRIPTION_HTML_LINT_DISABLE": "true to disable HTML linter in problems panel",
     "DESCRIPTION_ESLINT_FAILED": "ESLint Failed ({0}). Make sure the project contains valid <a href='https://eslint.org/docs/latest/use/configure/configuration-files'>Configuration Files</a>",
     "DESCRIPTION_ESLINT_USE_NATIVE_APP": "ESLint is only available in the Desktop app. Download it from <a href='https://phcode.io'>phcode.io</a>",
     "DESCRIPTION_ESLINT_LOAD_FAILED": "Failed to load ESLint for this project. {APP_NAME} supports only ESLint versions above 7.",

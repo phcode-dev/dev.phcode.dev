@@ -92,8 +92,12 @@ define(function (require, exports, module) {
         EVENT_AFTER_STARTUP_FILES_LOADED = "startupFilesLoaded",
         EVENT_PROJECT_REFRESH = "projectRefresh",
         EVENT_CONTENT_CHANGED = "contentChanged",
+        // This will capture all file/folder changes in projects except renames. If you want to track renames,
+        // use EVENT_PROJECT_PATH_CHANGED_OR_RENAMED to track all changes or EVENT_PROJECT_FILE_RENAMED too.
         EVENT_PROJECT_FILE_CHANGED = "projectFileChanged",
-        EVENT_PROJECT_FILE_RENAMED = "projectFileRenamed";
+        EVENT_PROJECT_FILE_RENAMED = "projectFileRenamed",
+        // the path changed event differs in the sense that all events returned by this will be a path.
+        EVENT_PROJECT_CHANGED_OR_RENAMED_PATH = "projectChangedPath";
 
     EventDispatcher.setLeakThresholdForEvent(EVENT_PROJECT_OPEN, 25);
 
@@ -578,6 +582,19 @@ define(function (require, exports, module) {
      */
     function makeProjectRelativeIfPossible(absPath) {
         return model.makeProjectRelativeIfPossible(absPath);
+    }
+
+    /**
+     * Gets a generally displayable path that can be shown to the user in most cases.
+     * Gets the project relative path if possible. If paths is not in project, then if its a platform path(Eg. in tauri)
+     * it will return the full platform path. If not, then it will return a mount relative path for fs access mount
+     * folders opened in the bowser. at last, falling back to vfs path. This should only be used for display purposes
+     * as this path will be changed by phcode depending on the situation in the future.
+     * @param fullPath
+     * @returns {string}
+     */
+    function getProjectRelativeOrDisplayPath(fullPath) {
+        return Phoenix.app.getDisplayPath(makeProjectRelativeIfPossible(fullPath));
     }
 
     /**
@@ -2008,6 +2025,41 @@ define(function (require, exports, module) {
         return !unsafeExit;
     }
 
+    function _entryToPathSet(entryArray) {
+        if (!entryArray || !entryArray.length) {
+            return new Set();
+        }
+        return new Set(entryArray.map(entry => path.normalize(entry.fullPath)));
+    }
+
+    exports.on(EVENT_PROJECT_FILE_CHANGED, (_evt, entry, addedInProject, removedInProject)=>{
+        if(!entry && !addedInProject && !removedInProject){
+            // when clearing the cached files forcefully, empty change events may get trigerred, in which case ignore.
+            return;
+        }
+        const addedSet = _entryToPathSet(addedInProject);
+        const removedSet = _entryToPathSet(removedInProject);
+        if(!entry && !addedSet.size && !removedSet.size){
+            return;
+        }
+        exports.trigger(EVENT_PROJECT_CHANGED_OR_RENAMED_PATH, entry && path.normalize(entry.fullPath),
+            addedSet, removedSet);
+    });
+    exports.on(EVENT_PROJECT_FILE_RENAMED, (_evt, oldPath, newPath)=>{
+        oldPath = path.normalize(oldPath);
+        newPath = path.normalize(newPath);
+        if(oldPath === newPath){
+            return; // no change
+        }
+        const oldParent = path.dirname(oldPath), newParent = path.dirname(newPath);
+        if(oldParent === newParent) {
+            exports.trigger(EVENT_PROJECT_CHANGED_OR_RENAMED_PATH, newParent, new Set([newPath]), new Set([oldPath]));
+        } else {
+            exports.trigger(EVENT_PROJECT_CHANGED_OR_RENAMED_PATH, oldParent, new Set(), new Set([oldPath]));
+            exports.trigger(EVENT_PROJECT_CHANGED_OR_RENAMED_PATH, newParent, new Set([newPath]), new Set());
+        }
+    });
+
     exports.on(EVENT_PROJECT_OPEN, (_evt, projectRoot)=>{
         _reloadProjectPreferencesScope();
         _saveProjectPath();
@@ -2239,6 +2291,7 @@ define(function (require, exports, module) {
     exports.getInitialProjectPath         = getInitialProjectPath;
     exports.getStartupProjectPath         = getStartupProjectPath;
     exports.getProjectRelativePath        = getProjectRelativePath;
+    exports.getProjectRelativeOrDisplayPath = getProjectRelativeOrDisplayPath;
     exports.getWelcomeProjectPath         = getWelcomeProjectPath;
     exports.getPlaceholderProjectPath     = getPlaceholderProjectPath;
     exports.getExploreProjectPath         = getExploreProjectPath;
@@ -2271,5 +2324,6 @@ define(function (require, exports, module) {
     exports.EVENT_CONTENT_CHANGED = EVENT_CONTENT_CHANGED;
     exports.EVENT_PROJECT_FILE_CHANGED = EVENT_PROJECT_FILE_CHANGED;
     exports.EVENT_PROJECT_FILE_RENAMED = EVENT_PROJECT_FILE_RENAMED;
+    exports.EVENT_PROJECT_CHANGED_OR_RENAMED_PATH = EVENT_PROJECT_CHANGED_OR_RENAMED_PATH;
     exports.EVENT_PROJECT_OPEN_FAILED = EVENT_PROJECT_OPEN_FAILED;
 });
