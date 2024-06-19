@@ -17698,6 +17698,17 @@ async function $bd5c47de9e98f4fa$var$rename(oldPath, newPath, cb) {
         }, 0);
     });
 }
+// this is when in windows/macos, the fs is not case-sensitive, you have to rename "a.txt" to "A.TXT".
+// We have to have an intermediate name
+async function $bd5c47de9e98f4fa$var$renameSameNameDiffCase(oldPath, newPath, cb) {
+    const tempPath = globalObject.path.normalize(oldPath) + "_" + Math.floor(Math.random() * 4294967296);
+    $bd5c47de9e98f4fa$var$rename(oldPath, tempPath, (err)=>{
+        if (err) cb(err);
+        else setTimeout(()=>{
+            $bd5c47de9e98f4fa$var$rename(tempPath, newPath, cb);
+        }, 0);
+    });
+}
 function $bd5c47de9e98f4fa$var$mountNativeFolder(...args) {
     $bd5c47de9e98f4fa$require$Mounts.mountNativeFolder(...args);
 }
@@ -17714,7 +17725,8 @@ const $bd5c47de9e98f4fa$var$NativeFS = {
     writeFile: $bd5c47de9e98f4fa$var$writeFile,
     unlink: $bd5c47de9e98f4fa$var$unlink,
     copy: $bd5c47de9e98f4fa$var$copy,
-    rename: $bd5c47de9e98f4fa$var$rename
+    rename: $bd5c47de9e98f4fa$var$rename,
+    renameSameNameDiffCase: $bd5c47de9e98f4fa$var$renameSameNameDiffCase
 };
 $bd5c47de9e98f4fa$exports = {
     NativeFS: $bd5c47de9e98f4fa$var$NativeFS
@@ -19752,6 +19764,12 @@ const $e3f139c5065f0041$var$fileSystemLib = {
         } else if ($e3f139c5065f0041$require$TauriFS.isTauriPath(oldPath) || $e3f139c5065f0041$require$TauriFS.isTauriPath(newPath)) {
             cb(new $e3f139c5065f0041$require$Errors.EPERM("Tauri root directory cannot be renamed."));
             return;
+        }
+        if (oldPath !== newPath && oldPath.toLowerCase() === newPath.toLowerCase()) {
+            // in windows, we should be able to rename "a.txt" to "A.txt". Since windows is case-insensitive,
+            // the below stat(A.txt) will return a stat for "a.txt" which is not what we want.
+            if ($e3f139c5065f0041$require$TauriFS.isTauriSubPath(oldPath) && $e3f139c5065f0041$require$TauriFS.isTauriSubPath(newPath)) return $e3f139c5065f0041$require$TauriFS.rename(oldPath, newPath, callbackInterceptor);
+            else if ($e3f139c5065f0041$require$Mounts.isMountSubPath(oldPath) && $e3f139c5065f0041$require$Mounts.isMountSubPath(newPath)) return $e3f139c5065f0041$require$NativeFS.renameSameNameDiffCase(oldPath, newPath, callbackInterceptor);
         }
         $e3f139c5065f0041$var$fileSystemLib.stat(newPath, (err)=>{
             if (!err) {
