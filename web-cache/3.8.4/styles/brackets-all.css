@@ -9837,39 +9837,23 @@ body.dark {
   border-right: 2px #1474bf solid;
 }
 .editor-text-fragment-error.editor-text-fragment-error.editor-text-fragment-error.editor-text-fragment-error {
-  text-decoration-style: wavy;
-  text-decoration-line: underline;
-  text-decoration-skip-ink: none;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 1px;
-  text-decoration-color: #ff5388;
+  padding-bottom: 1px;
+  background: url('images/wavy-error.svg') repeat-x bottom left;
 }
 .editor-text-fragment-warn.editor-text-fragment-warn.editor-text-fragment-warn {
-  text-decoration-style: wavy;
-  text-decoration-line: underline;
-  text-decoration-skip-ink: none;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 1px;
-  text-decoration-color: #ffc600;
+  padding-bottom: 1px;
+  background: url('images/wavy-warn.svg') repeat-x bottom left;
 }
 .dark .editor-text-fragment-warn.editor-text-fragment-warn.editor-text-fragment-warn {
-  text-decoration-color: #8c7d00;
+  background: url('images/wavy-warn-dark.svg') repeat-x bottom left;
 }
 .editor-text-fragment-spell-error.editor-text-fragment-spell-error {
-  text-decoration-style: wavy;
-  text-decoration-line: underline;
-  text-decoration-skip-ink: none;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 1px;
-  text-decoration-color: #82b839;
+  padding-bottom: 1px;
+  background: url('images/wavy-spell-error.svg') repeat-x bottom left;
 }
 .editor-text-fragment-info {
-  text-decoration-style: wavy;
-  text-decoration-line: underline;
-  text-decoration-skip-ink: none;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 1px;
-  text-decoration-color: #6bbeff;
+  padding-bottom: 1px;
+  background: url('images/wavy-info.svg') repeat-x bottom left;
 }
 .hidden-element {
   display: none !important;
@@ -11499,7 +11483,10 @@ img {
   display: none;
 }
 .quick-view-highlight {
-  background-color: rgba(200, 200, 150, 0.4);
+  background-color: rgba(200, 200, 150, 0.4) !important;
+}
+.dark .quick-view-highlight {
+  background-color: rgba(150, 150, 50, 0.3) !important;
 }
 #selection-view-container {
   display: none;
