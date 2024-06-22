@@ -22,17 +22,24 @@
 define(function (require, exports, module) {
 
 
-    var Async           = require("utils/Async"),
+    const Async           = require("utils/Async"),
         CommandManager  = require("command/CommandManager"),
         Commands        = require("command/Commands"),
         Dialogs         = require("widgets/Dialogs"),
         DefaultDialogs  = require("widgets/DefaultDialogs"),
         MainViewManager = require("view/MainViewManager"),
         FileSystem      = require("filesystem/FileSystem"),
+        PreferencesManager  = require("preferences/PreferencesManager"),
         FileUtils       = require("file/FileUtils"),
         ProjectManager  = require("project/ProjectManager"),
         Strings         = require("strings"),
+        Metrics = require("utils/Metrics"),
         StringUtils     = require("utils/StringUtils");
+
+    const _PREF_DRAG_AND_DROP = "dragAndDrop"; // used in debug menu
+    PreferencesManager.definePreference(_PREF_DRAG_AND_DROP, "boolean",
+        Phoenix.isNativeApp && Phoenix.platform !== "linux", {description: Strings.DESCRIPTION_DRAG_AND_DROP_ENABLED}
+    );
 
     /**
      * Returns true if the drag and drop items contains valid drop objects.
@@ -111,6 +118,7 @@ define(function (require, exports, module) {
                         }
                     }
 
+                    Metrics.countEvent(Metrics.EVENT_TYPE.PLATFORM, "dragAndDrop", "fileOpen");
                     CommandManager.execute(Commands.CMD_ADD_TO_WORKINGSET_AND_OPEN,
                         {fullPath: path, silent: true})
                         .done(function () {
@@ -122,6 +130,7 @@ define(function (require, exports, module) {
                         });
                 } else if (!err && item.isDirectory && paths.length === 1) {
                     // One folder was dropped, open it.
+                    Metrics.countEvent(Metrics.EVENT_TYPE.PLATFORM, "dragAndDrop", "projectOpen");
                     ProjectManager.openProject(path)
                         .done(function () {
                             result.resolve();
@@ -185,6 +194,7 @@ define(function (require, exports, module) {
                 || payload.windowLabelOfListener !== window.__TAURI__.window.appWindow.label){
                 return;
             }
+            Metrics.countEvent(Metrics.EVENT_TYPE.PLATFORM, "dragAndDrop", "any");
             const droppedVirtualPaths = [];
             for(const droppedPath of payload.pathList) {
                 try{
@@ -265,7 +275,7 @@ define(function (require, exports, module) {
             var files = event.dataTransfer.files;
 
             stopURIListPropagation(files, event);
-            if(Phoenix.isNativeApp && Phoenix.platform !== "linux" &&
+            if(PreferencesManager.get(_PREF_DRAG_AND_DROP) &&
                 event.dataTransfer.types && event.dataTransfer.types.includes("Files")){
                 // in linux, there is a bug in ubuntu 24 where dropping a file will cause a ghost icon which only
                 // goes away on reboot. So we dont support drop files in linux for now.
@@ -289,7 +299,8 @@ define(function (require, exports, module) {
         function handleDrop(event) {
             event = event.originalEvent || event;
 
-            var files = event.dataTransfer.files;
+            const files = event.dataTransfer.files;
+            Metrics.countEvent(Metrics.EVENT_TYPE.PLATFORM, "dragAndDrop", "any");
 
             stopURIListPropagation(files, event);
 
@@ -333,4 +344,7 @@ define(function (require, exports, module) {
     exports.attachHandlers      = attachHandlers;
     exports.isValidDrop         = isValidDrop;
     exports.openDroppedFiles    = openDroppedFiles;
+
+    // private exports
+    exports._PREF_DRAG_AND_DROP = _PREF_DRAG_AND_DROP;
 });
