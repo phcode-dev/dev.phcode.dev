@@ -207,16 +207,39 @@ define(function (require, exports, module) {
         });
     }
 
-    async function showAndResizeFileDropWindow(event) {
-        // Get the current window
+    const MAC_TITLE_BAR_HEIGHT = 28;
+    async function _computeNewPositionAndSizeWebkit() {
         const currentWindow = window.__TAURI__.window.getCurrent();
+        const newSize = await currentWindow.innerSize();
+        const newPosition = await currentWindow.innerPosition();
+        if(Phoenix.platform === "mac") {
+            // in mac we somehow get the top left of the window including the title bar even though we are calling the
+            // tauri innerPosition api. So we just adjust for a generally constant title bar height of mac that is 28px.
+            newPosition.y = newPosition.y + MAC_TITLE_BAR_HEIGHT;
+            newSize.height = newSize.height - MAC_TITLE_BAR_HEIGHT;
+        }
+        return {newSize, newPosition};
+    }
 
-        // Get the bounds of the current window
-        const size = await currentWindow.innerSize();
-        // in mac, the innerSize api in tauri gets the full size including titlebar. Since our sidebar is full size
-        const titlebarHeightIfAny = size.height - window.innerHeight;
-        const currentWindowPos = await currentWindow.innerPosition();
+    async function _computeNewPositionAndSizeWindows() {
+        // Note that the drop window may be on different screens if multi window setup. in windows os, there can be
+        // of different scale factors like 1x and 1.5x on another monitor. Additionally, we may apply our own zoom
+        // settings. So its is always better to just use the tauri provided positions. the tauri api returned values
+        // will position the window to the correct monitor as well.
+        const currentWindow = window.__TAURI__.window.getCurrent();
+        const newSize = await currentWindow.innerSize();
+        const newPosition = await currentWindow.innerPosition();
+        return {newSize, newPosition};
+    }
 
+    async function _computeNewPositionAndSize() {
+        if(Phoenix.platform === "win") {
+            return _computeNewPositionAndSizeWindows();
+        }
+        return _computeNewPositionAndSizeWebkit();
+    }
+
+    async function showAndResizeFileDropWindow(event) {
         let $activeElement;
         const fileDropWindow = window.__TAURI__.window.WebviewWindow.getByLabel('fileDrop');
         if($("#editor-holder").has(event.target).length) {
@@ -230,14 +253,7 @@ define(function (require, exports, module) {
             return;
         }
 
-        const offset = $activeElement.offset();
-        const width = $activeElement.outerWidth();
-        const height = $activeElement.outerHeight();
-        const x = currentWindowPos.x + offset.left,
-            y =currentWindowPos.y + titlebarHeightIfAny + offset.top;
-        const newSize = new window.__TAURI__.window.LogicalSize(width, height);
-        const newPosition = new window.__TAURI__.window.LogicalPosition(x, y);
-
+        const {newSize, newPosition} = await _computeNewPositionAndSize();
         const currentSize = await fileDropWindow.innerSize();
         const currentPosition = await fileDropWindow.innerPosition();
         const isSameSize = currentSize.width === newSize.width && currentSize.height === newSize.height;
@@ -247,7 +263,8 @@ define(function (require, exports, module) {
             dropMessage: Strings.DROP_TO_OPEN_FILES,
             dropMessageOneFile: Strings.DROP_TO_OPEN_FILE,
             dropProjectMessage: Strings.DROP_TO_OPEN_PROJECT,
-            windowLabelOfListener: window.__TAURI__.window.appWindow.label
+            windowLabelOfListener: window.__TAURI__.window.appWindow.label,
+            platform: Phoenix.platform
         });
         if (isSameSize && isSamePosition && (await fileDropWindow.isVisible())) {
             return; // Do nothing if the window is already at the correct size and position and visible
