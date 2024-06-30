@@ -715,7 +715,8 @@ define(function (require, exports, module) {
 
         if (!CommandManager.get(SHOW_RECENT_FILES)) {
             CommandManager.register(Strings.CMD_RECENT_FILES_OPEN, SHOW_RECENT_FILES, _showRecentFileList);
-            KeyBindingManager.addBinding(SHOW_RECENT_FILES, KeyboardPrefs[SHOW_RECENT_FILES]);
+            KeyBindingManager.addBinding(SHOW_RECENT_FILES,
+                Phoenix.isNativeApp ? "Ctrl-R" : "Ctrl-Alt-Shift-O");
         }
 
         // Keyboard only - Navigate to the next doc in MROF list
@@ -731,7 +732,7 @@ define(function (require, exports, module) {
         KeyBindingManager.addBinding(PREV_IN_RECENT_FILES, KeyboardPrefs[PREV_IN_RECENT_FILES]);
 
         var menu = Menus.getMenu(Menus.AppMenuBar.FILE_MENU);
-        menu.addMenuItem(SHOW_RECENT_FILES, "", Menus.AFTER, Commands.FILE_OPEN_FOLDER);
+        menu.addMenuItem(SHOW_RECENT_FILES, "", Menus.AFTER, Commands.FILE_REOPEN_CLOSED);
     }
 
     function _initDefaultNavigationCommands() {

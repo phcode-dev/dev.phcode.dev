@@ -75,6 +75,9 @@ define(function (require, exports, module) {
     const fileCloseAllShortcut = isDesktop ? "Ctrl-Shift-W" : ""; // Ctrl-Alt-Shift-W` universal shortcut is set in keyboard.json
     const openFileShortcut = isDesktop ? "Ctrl-O" : "";
     const openFolderShortcut = isBrowser ? "Ctrl-O" : "";
+    const reopenClosedShortcut = isBrowser ? "" : "Ctrl-Shift-T";
+    const nextDocShortcut = isBrowser ? "Alt-PageDown" : "Ctrl-PageDown";
+    const prevDocShortcut = isBrowser ? "Alt-PageUp" : "Ctrl-PageUp";
 
     AppInit.htmlReady(function () {
         /**
@@ -119,6 +122,7 @@ define(function (require, exports, module) {
         menu.addMenuItem(Commands.FILE_OPEN_FOLDER, openFolderShortcut);
         menu.addMenuItem(Commands.FILE_CLOSE, fileCloseShortcut);
         menu.addMenuItem(Commands.FILE_CLOSE_ALL, fileCloseAllShortcut);
+        menu.addMenuItem(Commands.FILE_REOPEN_CLOSED, reopenClosedShortcut);
         menu.addMenuDivider();
         menu.addMenuItem(Commands.FILE_SAVE);
         menu.addMenuItem(Commands.FILE_SAVE_ALL);
@@ -219,6 +223,7 @@ define(function (require, exports, module) {
         menu.addMenuDivider();
         menu.addMenuItem(Commands.FILE_LIVE_HIGHLIGHT);
         menu.addMenuDivider();
+        menu.addMenuItem(Commands.VIEW_TOGGLE_PROBLEMS);
         menu.addMenuItem(Commands.VIEW_TOGGLE_INSPECTION);
 
         /*
@@ -234,8 +239,8 @@ define(function (require, exports, module) {
         menu.addMenuDivider();
         menu.addMenuItem(Commands.NAVIGATE_NEXT_DOC);
         menu.addMenuItem(Commands.NAVIGATE_PREV_DOC);
-        menu.addMenuItem(Commands.NAVIGATE_NEXT_DOC_LIST_ORDER);
-        menu.addMenuItem(Commands.NAVIGATE_PREV_DOC_LIST_ORDER);
+        menu.addMenuItem(Commands.NAVIGATE_NEXT_DOC_LIST_ORDER, nextDocShortcut);
+        menu.addMenuItem(Commands.NAVIGATE_PREV_DOC_LIST_ORDER, prevDocShortcut);
         menu.addMenuDivider();
         menu.addMenuItem(Commands.NAVIGATE_SHOW_IN_FILE_TREE);
         menu.addMenuDivider();

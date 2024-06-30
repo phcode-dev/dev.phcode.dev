@@ -290,8 +290,8 @@
     "navigate.gotoDefinition":  [
         "Ctrl-T"
     ],
-    "navigate.gotoDefinitionInProject":  [
-        "Ctrl-Shift-T"
+    "view.toggleProblems":  [
+        "Ctrl-Shift-M"
     ],
     "navigate.jumptoDefinition":  [
         "Ctrl-J"
