@@ -941,6 +941,15 @@ define(function (require, exports, module) {
     };
 
     /**
+     * Check if the editor has multiple cursors or selections
+     * @returns {boolean}
+     */
+    Editor.prototype.hasMultipleCursors = function () {
+        const selections = this._codeMirror.listSelections();
+        return selections.length > 1;
+    };
+
+    /**
      * Takes the given selections, and expands each selection so it encompasses whole lines. Merges
      * adjacent line selections together. Keeps track of each original selection associated with a given
      * line selection (there might be multiple if individual selections were merged into a single line selection).
@@ -1054,6 +1063,40 @@ define(function (require, exports, module) {
         let token = TokenUtils.getTokenAt(cm, cursor, precise);
         token.line = cursor.line;
         return token;
+    };
+
+    /**
+     * Retrieves a single character from the specified position in the editor.
+     * x|y where `|` is the cursor, will return y
+     * @param {CodeMirror.Position} pos - The position from which to retrieve the character.
+     *                                    This should be an object with `line` and `ch` properties.
+     * @returns {string|null} The character at the given position if within bounds,
+     *                        otherwise `null` if the position is out of range.
+     */
+    Editor.prototype.getCharacterAtPosition = function (pos) {
+        const cm = this._codeMirror;
+        let lineText = cm.getLine(pos.line);
+        if (pos.ch >= lineText.length || pos.line >= cm.lineCount()) {
+            return null;
+        }
+
+        return cm.getRange(pos, {line: pos.line, ch: pos.ch + 1});
+    };
+
+    /**
+     * Retrieves a single character previous to the specified position in the editor in the same line if possible.
+     * x|y where `|` is the cursor, will return x
+     *
+     * @param {CodeMirror.Position} pos - The position from which to retrieve the character.
+     *                                    This should be an object with `line` and `ch` properties.
+     * @returns {string|null} The character previous to the given position if within bounds,
+     *                        otherwise `null` if the position is out of range.
+     */
+    Editor.prototype.getPrevCharacterAtPosition = function (pos) {
+        if(pos.ch === 0) {
+            return null;
+        }
+        return this.getCharacterAtPosition({line: pos.line, ch: pos.ch-1});
     };
 
     /**
