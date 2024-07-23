@@ -77,26 +77,31 @@ define(function (require, exports, module) {
     function _getTagToken(cursor) {
         let curChar = activeEditor.getCharacterAtPosition(cursor);
         if(curChar === "<"){ // <|<  or <div>|</div> is not a valid tag edit point
-            return null;
+            return {};
         }
         let token = activeEditor.getToken(cursor);
         if(token && token.string === "<>"){
             // empty tags are not syncable if they are not being edited
-            return null;
+            return {};
         }
         if(token && token.type === "tag bracket" && token.string !== ">") {
             // the cursosr is just before the tag like: <|tag or </|tag or <|/tag ; but not <tag|>
             // move one step to <t|ag or </t|ag or </|tag ; position </|tag is still invalid tough
             cursor.ch++;
             token = activeEditor.getToken(cursor);
-        } else if(langType === "xml" && token && (curChar === ">" || curChar === " ") && cursor.ch >= 1){
-            // usually in xml <tag|> or <tag| > position, the ast will give > or " "
-            token = activeEditor.getToken({line: cursor.line, ch: cursor.ch -1});
+        } else if(langType === "xml" && token && curChar === " " && cursor.ch >= 1){
+            const previousChar = activeEditor.getCharacterAtPosition({line: cursor.line, ch: cursor.ch - 1});
+            // in xml, thers AST behaves differently where if there is a space after `<tag>| ` or `</tag>| `, then at
+            // the end cursor location shown, get token will still return the "tag" token, though its outside the tag.
+            // so we consider the case differently.
+            if(previousChar === ">") {
+                return {clearMarks: true};
+            }
         }
         if(!token || !(token.type === "tag" || token.type === "tag error")) {
-            return null;
+            return {};
         }
-        return token;
+        return {token};
     }
 
     function _replaceMarkText(markType, text, editOrigin) {
@@ -244,9 +249,9 @@ define(function (require, exports, module) {
             // or end tag and we need to sync update in change handler.
             return;
         }
-        let token = _getTagToken(cursor);
+        let {token, clearMarks} = _getTagToken(cursor);
         if(!token) {
-            if(!_isEditingEmptyTag()){
+            if(!_isEditingEmptyTag() || clearMarks){
                 clearRenameMarkers();
             }
             return;
@@ -302,7 +307,7 @@ define(function (require, exports, module) {
         cursorActivity();
     }
 
-    function _handleEscapeKeyEvent(event) {
+    function _handleEscapeKeyEvent(_event) {
         if(!marksPresent || !activeEditor){
             return false;
         }
@@ -338,14 +343,3 @@ define(function (require, exports, module) {
         WorkspaceManager.addEscapeKeyEventHandler("tagSyncEdit", _handleEscapeKeyEvent);
     });
 });
-
-// todo tests
-// delete key tests
-// empty by delete tests
-// backspace key tests
-// empty by backspace tests
-// copy paste on tag
-// multi cursor disable
-// click on div tag with syc edit. Now click on another unrelated `tag>|` at cursor. the original underline should go
-// cursor positons after edit should be as expected. test for <d| <|d <dd|dd <|dddd <dddd| and </ countearpart
-// escape key handling
