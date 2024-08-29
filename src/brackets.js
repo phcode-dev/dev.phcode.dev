@@ -69,12 +69,12 @@ define(function (require, exports, module) {
     require("NodeConnector");
     require("command/KeyboardOverlayMode");
     require("editor/EditorManager");
+    require("project/FileViewController");
 
     // Load dependent modules
     const AppInit             = require("utils/AppInit"),
         LanguageManager     = require("language/LanguageManager"),
         ProjectManager      = require("project/ProjectManager"),
-        FileViewController  = require("project/FileViewController"),
         FileSyncManager     = require("project/FileSyncManager"),
         Commands            = require("command/Commands"),
         CommandManager      = require("command/CommandManager"),
@@ -95,8 +95,8 @@ define(function (require, exports, module) {
         DeprecationWarning  = require("utils/DeprecationWarning"),
         ViewCommandHandlers = require("view/ViewCommandHandlers"),
         NotificationUI      = require("widgets/NotificationUI"),
-        MainViewManager     = require("view/MainViewManager"),
         Metrics             = require("utils/Metrics");
+    require("view/MainViewManager");
 
     window.EventManager = EventManager; // Main event intermediary between brackets and other web pages.
     /**
@@ -361,34 +361,19 @@ define(function (require, exports, module) {
                         if (PreferencesManager._isUserScopeCorrupt()) {
                             const userPrefFullPath = PreferencesManager.getUserPrefFile();
                             // user scope can get corrupt only if the file exists, is readable,
-                            // but malformed. no need to check for its existance.
-                            const info = MainViewManager.findInAllWorkingSets(userPrefFullPath);
-                            let paneId;
-                            if (info.length) {
-                                paneId = info[0].paneId;
-                            }
+                            // but malformed. no need to check for its existence.
                             Metrics.countEvent(Metrics.EVENT_TYPE.STORAGE, "prefs.corrupt", "startup");
-                            FileViewController.openFileAndAddToWorkingSet(userPrefFullPath, paneId)
-                                .done(function () {
-                                    Dialogs.showModalDialog(
-                                        DefaultDialogs.DIALOG_ID_ERROR,
-                                        Strings.ERROR_PREFS_CORRUPT_TITLE,
-                                        Strings.ERROR_PREFS_CORRUPT
-                                    ).done(function () {
-                                        // give the focus back to the editor with the pref file
-                                        MainViewManager.focusActivePane();
-                                    });
-                                });
+                            let file = FileSystem.getFileForPath(userPrefFullPath);
+                            file.unlinkAsync().finally(function () {
+                                Dialogs.showModalDialog(
+                                    DefaultDialogs.DIALOG_ID_ERROR,
+                                    Strings.ERROR_PREFS_RESET_TITLE,
+                                    Strings.ERROR_PREFS_CORRUPT_RESET
+                                );
+                            });
                         }
                     });
                 });
-
-                // See if any startup files were passed to the application
-                if (brackets.app.getPendingFilesToOpen) {
-                    brackets.app.getPendingFilesToOpen(function (err, paths) {
-                        DragAndDrop.openDroppedFiles(paths);
-                    });
-                }
             });
         });
     }
