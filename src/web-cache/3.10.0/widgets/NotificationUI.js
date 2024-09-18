@@ -45,7 +45,7 @@
  * // note that you can even provide an HTML Element node with
  * // custom event handlers directly here instead of HTML text.
  * let notification1 = NotificationUI.createFromTemplate(
- *   "<div>Click me to </br>locate the file in file tree</div>", "showInfileTree",{
+ *   "<div>Click me to locate the file in file tree</div>", "showInfileTree",{
  *       allowedPlacements: ['top', 'bottom'],
  *       dismissOnClick: false,
  *       autoCloseTimeS: 300 // auto close the popup after 5 minutes
@@ -94,7 +94,6 @@ define(function (require, exports, module) {
      * This is an instance of the notification returned by the `createFromTemplate` call. The object can be used to
      * control the created notification. See Notification docs below.
      * @type {Object}
-     * @name Notification
      */
 
     /**
@@ -179,7 +178,7 @@ define(function (require, exports, module) {
      * // note that you can even provide an HTML Element node with
      * // custom event handlers directly here instead of HTML text.
      * let notification1 = NotificationUI.createFromTemplate(
-     *   "<div>Click me to </br>locate the file in file tree</div>", "showInfileTree",{
+     *   "<div>Click me to locate the file in file tree</div>", "showInfileTree",{
      *       allowedPlacements: ['top', 'bottom'],
      *       dismissOnClick: false,
      *       autoCloseTimeS: 300 // auto close the popup after 5 minutes
@@ -306,7 +305,7 @@ define(function (require, exports, module) {
      * // note that you can even provide an HTML Element node with
      * // custom event handlers directly here instead of HTML text.
      * let notification1 = NotificationUI.createToastFromTemplate( "Title here",
-     *   "<div>Click me to </br>locate the file in file tree</div>", {
+     *   "<div>Click me to locate the file in file tree</div>", {
      *       dismissOnClick: false,
      *       autoCloseTimeS: 300 // auto close the popup after 5 minutes
      *   });
