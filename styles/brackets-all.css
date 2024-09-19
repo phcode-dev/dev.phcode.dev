@@ -8645,6 +8645,11 @@ span.cm-emstrong {
   font-style: normal;
   font-weight: normal;
 }
+.cm-phcode-indent-guides {
+  position: relative;
+  background-repeat: repeat-y;
+  background-image: url('images/indent-guide-line.svg');
+}
 /*
  * GNU AGPL-3.0 License
  *
