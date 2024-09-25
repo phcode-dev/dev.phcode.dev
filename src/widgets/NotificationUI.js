@@ -31,6 +31,7 @@
  * ### Simple example
  * For Eg. Let's say we have to create a popup notification over the HTML element with ID `showInfileTree`.
  * We can do this with the following
+ * @example
  * ```js
  * const NotificationUI = brackets.getModule("widgets/NotificationUI");
  * // or use window.NotificationUI global object has the same effect.
@@ -41,6 +42,7 @@
  * ```
  * ### Advanced example
  * Another advanced example where you can specify html and interactive components in the notification
+ * @example
  * ```js
  * // note that you can even provide an HTML Element node with
  * // custom event handlers directly here instead of HTML text.
@@ -55,7 +57,7 @@
  *     console.log("notification is closed in ui reason:", closeReason);
  * })
  * ```
- * The [createFromTemplate]() API can be configured with numerous options. See API options below.
+ * The [createFromTemplate](1) API can be configured with numerous options. See API options below.
  * @module widgets/NotificationUI
  */
 
@@ -159,7 +161,7 @@ define(function (require, exports, module) {
     /**
      * Adds a done callback to the Notification promise. The promise will be resolved
      * when the Notification is dismissed. Never rejected.
-     * @example <caption>Print the close reason on console when the notification closes</caption>
+     * Print the close reason on console when the notification closes
      * notificationInstance.done((closeReason)=>{
      *     console.log(closeReason)
      * })
@@ -174,7 +176,7 @@ define(function (require, exports, module) {
      * Creates a new notification popup from given template.
      * The template can either be a string or a jQuery object representing a DOM node that is *not* in the current DOM.
      *
-     * @example <caption>Creating a notification popup</caption>
+     * Creating a notification popup
      * // note that you can even provide an HTML Element node with
      * // custom event handlers directly here instead of HTML text.
      * let notification1 = NotificationUI.createFromTemplate(
@@ -301,7 +303,7 @@ define(function (require, exports, module) {
      * Creates a new toast notification popup from given title and html message.
      * The message can either be a string or a jQuery object representing a DOM node that is *not* in the current DOM.
      *
-     * @example <caption>Creating a toast notification popup</caption>
+     * Creating a toast notification popup
      * // note that you can even provide an HTML Element node with
      * // custom event handlers directly here instead of HTML text.
      * let notification1 = NotificationUI.createToastFromTemplate( "Title here",

@@ -28,19 +28,21 @@
  * This can be used to provide interactive editor controls on a selected element.
  *
  * Extensions can register to provide previews with `SelectionViewManager.registerSelectionViewProvider` API.
- * ![image](https://user-images.githubusercontent.com/5336369/186434397-3db55789-6077-4d02-b4e2-78ef3f663399.png)
- * ![selection view](https://user-images.githubusercontent.com/5336369/186434671-c1b263e5-19a9-4a9d-8f90-507df5f881b5.gif)
+ * <img src = "https://user-images.githubusercontent.com/5336369/186434397-3db55789-6077-4d02-b4e2-78ef3f663399.png" alt="Phoenix code selection view" />
+ * <img src = "https://user-images.githubusercontent.com/5336369/186434671-c1b263e5-19a9-4a9d-8f90-507df5f881b5.gif" />
  *
  * ### See Related: QuickViewManager
  * [features/QuickViewManager](https://github.com/phcode-dev/phoenix/wiki/QuickViewManager-API) is similar to
  * SelectionViewManager API.
  * * SelectionViews popup only once user selects a text by mouse or hover over a region with text selection.
  * * Quickviews popup on mouse hover.
- * ![quick-view-youtube.png](https://docs-images.phcode.dev/phcode-sdk/quick-view-youtube.png)
+ * <img src = "https://docs-images.phcode.dev/phcode-sdk/quick-view-youtube.png" alt="Phoenix code selection view Youtube image" />
  *
  * ## Usage
  * Lets build a "hello world" extension that displays "hello world" above selected text in the editor.
  * In your extension file, add the following code:
+ *
+ * @example
  * ```js
  * const SelectionViewManager = brackets.getModule("features/SelectionViewManager");
  * // replace `all` with language ID(Eg. javascript) if you want to restrict the preview to js files only.
@@ -69,6 +71,7 @@
  * ### registerSelectionViewProvider
  * Register a SelectionView provider with this api.
  *
+ * @example
  * ```js
  * // syntax
  * SelectionViewManager.registerSelectionViewProvider(provider, supportedLanguages);
@@ -78,6 +81,7 @@
  * 1. `supportedLanguages`: An array of languages that the SelectionView supports. If `["all"]` is supplied, then the
  *    SelectionView will be invoked for all languages. Restrict to specific languages: Eg: `["javascript", "html", "php"]`
  *
+ * @example
  * ```js
  * // to register a provider that will be invoked for all languages. where provider is any object that implements
  * // a getSelectionView function
@@ -89,6 +93,8 @@
  *
  * ### removeSelectionViewProvider
  * Removes a registered SelectionView provider. The API takes the same arguments as `registerSelectionViewProvider`.
+ *
+ * @example
  * ```js
  * // syntax
  * SelectionViewManager.removeSelectionViewProvider(provider, supportedLanguages);
@@ -99,6 +105,8 @@
  * ### getSelectionView
  * Each provider must implement the `getSelectionView` function that returns a promise. The promise either resolves with
  * the Selection View details object(described below) or rejects if there is no preview for the position.
+ *
+ * @example
  * ```js
  * // function signature
  * provider.getSelectionView = function(editor, selections) {

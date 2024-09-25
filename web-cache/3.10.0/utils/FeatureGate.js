@@ -33,6 +33,7 @@
  * so that only people who want to test the extension will be able to use it.
  *
  * ### creating a feature gate
+ * @example
  * ```js
  * // within extensions
  * const FeatureGate = brackets.getModule("utils/FeatureGate"); // replace with `require` for core modules.
@@ -44,6 +45,7 @@
  * Once the feature is registered, use the below code to check if the feature can be safely enabled. For Eg., if
  * you want to enable fancy colors based on the example above:
  *
+ * @example
  * ```js
  * if(FeatureGate.isFeatureEnabled(FEATURE_NEW_COLORS)){
  *    // do fancy colors here
@@ -68,7 +70,7 @@ define(function (require, exports, module) {
 
     /**
      * Registers a named feature with the default enabled state.
-     * @example <caption>To register a feature gate with name `myExtension.newColors`</caption>
+     * To register a feature gate with name `myExtension.newColors`
      * const FEATURE_NEW_COLORS = 'myExtension.newColors';
      * FeatureGate.registerFeatureGate(FEATURE_NEW_COLORS, false); // false is the default value here
      *
@@ -96,7 +98,7 @@ define(function (require, exports, module) {
 
     /**
      * Returns true is an featureGate is enabled either by default or overridden by the user using local storage.
-     * @example <caption>To check if the feature `myExtension.newColors` is enabled</caption>
+     * To check if the feature `myExtension.newColors` is enabled
      * const FEATURE_NEW_COLORS = 'myExtension.newColors';
      * if(FeatureGate.isFeatureEnabled(FEATURE_NEW_COLORS)){
      *    // do fancy colors here

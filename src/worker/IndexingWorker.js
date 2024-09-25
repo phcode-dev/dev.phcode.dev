@@ -33,6 +33,7 @@
  *   [worker/WorkerComm](WorkerComm-API) to communicate with the web worker.
  *
  * ## Import
+ * @example
  * ```js
  * // usage within extensions:
  * const IndexingWorker = brackets.getModule("worker/IndexingWorker");
@@ -46,6 +47,7 @@
  * │  main.js
  * ```
  * In `main.js` extension module, we can import `my_worker.js` script into `IndexingWorker` by:
+ * @example
  * ```js
  * let ExtensionUtils = brackets.getModule("utils/ExtensionUtils");
  * let workerPath = ExtensionUtils.getModulePath(module, "my_worker.js")
@@ -91,7 +93,7 @@ define(function (require, exports, module) {
      *
      * See [worker/WorkerComm](WorkerComm-API) for detailed API docs.
      *
-     * @example <caption>To Execute a named function `extensionName.sayHello` in the worker from phoenix</caption>
+     * To Execute a named function `extensionName.sayHello` in the worker from phoenix
      * // in my_worker.js. It is a good practice to prefix your `[extensionName]`
      * // to exec handler to prevent name collisions with other extensions.
      * WorkerComm.setExecHandler("extensionName.sayHello", (arg)=>{

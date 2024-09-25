@@ -28,6 +28,7 @@
  *`Status: Internal - Not to be used by third party extensions.`
  *
  * ### Import
+ * @example
  * ```js
  * // usage within core:
  * const Metrics = require("utils/Metrics");
@@ -335,7 +336,7 @@ define(function (require, exports, module) {
 
     /**
      * log a numeric count >=0
-     * @example <caption>To log that user clicked searchButton 5 times:</caption>
+     * To log that user clicked searchButton 5 times:
      * Metrics.countEvent(Metrics.EVENT_TYPE.UI, "searchButton", "click");
      * Metrics.countEvent(Metrics.EVENT_TYPE.UI, "searchButton", "click", 5);
      *
@@ -364,7 +365,7 @@ define(function (require, exports, module) {
 
     /**
      * log a numeric value (number).
-     * @example <caption>To log that startup time is 200ms:</caption>
+     * To log that startup time is 200ms:
      * Metrics.valueEvent(Metrics.EVENT_TYPE.PERFORMANCE, "startupTime", "ms", 200);
      *
      * @param {EVENT_TYPE|string} eventType The kind of Event Type that needs to be logged- should be a js var compatible string.
