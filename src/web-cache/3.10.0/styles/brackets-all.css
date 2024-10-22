@@ -9982,8 +9982,6 @@ img {
 }
 #status-info {
   color: #333;
-  left: 10px;
-  position: absolute;
   white-space: nowrap;
 }
 .dark #status-info {
