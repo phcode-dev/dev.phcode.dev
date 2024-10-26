@@ -13091,6 +13091,7 @@ define("document/Document", function (require, exports, module) {
     /**
      * Number of clients who want this Document to stay alive. The Document is listed in
      * DocumentManager._openDocuments whenever refCount > 0.
+     * @private
      */
     Document.prototype._refCount = 0;
 
@@ -13146,12 +13147,14 @@ define("document/Document", function (require, exports, module) {
 
     /**
      * True while refreshText() is in progress and change notifications shouldn't trip the dirty flag.
+     * @private
      * @type {boolean}
      */
     Document.prototype._refreshInProgress = false;
 
     /**
      * The text contents of the file, or null if our backing model is _masterEditor.
+     * @private
      * @type {?string}
      */
     Document.prototype._text = null;
@@ -13160,6 +13163,7 @@ define("document/Document", function (require, exports, module) {
      * Editor object representing the full-size editor UI for this document. May be null if Document
      * has not yet been modified or been the currentDocument; in that case, our backing model is the
      * string _text.
+     * @private
      * @type {?Editor}
      */
     Document.prototype._masterEditor = null;
@@ -13167,6 +13171,7 @@ define("document/Document", function (require, exports, module) {
     /**
      * The content's line-endings style. If a Document is created on empty text, or text with
      * inconsistent line endings, defaults to the current platform's standard endings.
+     * @private
      * @type {FileUtils.LINE_ENDINGS_CRLF|FileUtils.LINE_ENDINGS_LF}
      */
     Document.prototype._lineEndings = null;
@@ -13204,6 +13209,7 @@ define("document/Document", function (require, exports, module) {
      * Attach a backing Editor to the Document, enabling setText() to be called. Assumes Editor has
      * already been initialized with the value of getText(). ONLY Editor should call this (and only
      * when EditorManager has told it to act as the master editor).
+     * @private
      * @param {!Editor} masterEditor
      */
     Document.prototype._makeEditable = function (masterEditor) {
@@ -13218,6 +13224,7 @@ define("document/Document", function (require, exports, module) {
      * Detach the backing Editor from the Document, disallowing setText(). The text content is
      * stored back onto _text so other Document clients continue to have read-only access. ONLY
      * Editor.destroy() should call this.
+     * @private
      */
     Document.prototype._makeNonEditable = function () {
         if (!this._masterEditor) {
@@ -13239,6 +13246,7 @@ define("document/Document", function (require, exports, module) {
     /**
      * Toggles the master editor which has gained focus from a pool of full editors
      * To be used internally by Editor only
+     * @private
      */
     Document.prototype._toggleMasterEditor = function (masterEditor) {
         // Do a check before processing the request to ensure inline editors are not being set as master editor
@@ -13250,6 +13258,7 @@ define("document/Document", function (require, exports, module) {
 
     /**
      * Checks and returns if a full editor exists for the provided pane attached to this document
+     * @private
      * @param {String} paneId
      * @return {Editor} Attached editor bound to the provided pane id
      */
@@ -13268,6 +13277,7 @@ define("document/Document", function (require, exports, module) {
     /**
      * Disassociates an editor from this document if present in the associated editor list
      * To be used internally by Editor only when destroyed and not the current master editor for the document
+     * @private
      */
     Document.prototype._disassociateEditor = function (editor) {
         // Do a check before processing the request to ensure inline editors are not being handled
@@ -13279,6 +13289,7 @@ define("document/Document", function (require, exports, module) {
     /**
      * Aassociates a full editor to this document
      * To be used internally by Editor only when pane marking happens
+     * @private
      */
     Document.prototype._associateEditor = function (editor) {
         // Do a check before processing the request to ensure inline editors are not being handled
@@ -13291,6 +13302,7 @@ define("document/Document", function (require, exports, module) {
      * Guarantees that _masterEditor is non-null. If needed, asks EditorManager to create a new master
      * editor bound to this Document (which in turn causes Document._makeEditable() to be called).
      * Should ONLY be called by Editor and Document.
+     * @private
      */
     Document.prototype._ensureMasterEditor = function () {
         if (!this._masterEditor) {
@@ -13606,6 +13618,7 @@ define("document/Document", function (require, exports, module) {
     /**
      * Like _.each(), but if given a single item not in an array, acts as
      * if it were an array containing just that item.
+     * @private
      */
     function oneOrEach(itemOrArr, cb) {
         if (Array.isArray(itemOrArr)) {
@@ -13774,6 +13787,7 @@ define("document/Document", function (require, exports, module) {
 
     /**
      * Updates the language to match the current mapping given by LanguageManager
+     * @private
      */
     Document.prototype._updateLanguage = function () {
         var oldLanguage = this.language;
@@ -13783,7 +13797,10 @@ define("document/Document", function (require, exports, module) {
         }
     };
 
-    /** Called when Document.file has been modified (due to a rename) */
+    /**
+     * Called when Document.file has been modified (due to a rename)
+     * @private
+     */
     Document.prototype._notifyFilePathChanged = function () {
         // File extension may have changed
         this._updateLanguage();
@@ -16253,13 +16270,50 @@ define("document/DocumentManager", function (require, exports, module) {
         ProjectManager      = require("project/ProjectManager"),
         Strings             = require("strings");
 
-    const EVENT_AFTER_DOCUMENT_CREATE = "afterDocumentCreate",
-        EVENT_PATH_DELETED = "pathDeleted",
-        EVENT_FILE_NAME_CHANGE = "fileNameChange",
-        EVENT_BEFORE_DOCUMENT_DELETE = "beforeDocumentDelete",
-        EVENT_DOCUMENT_REFRESHED = "documentRefreshed",
-        EVENT_DOCUMENT_CHANGE = "documentChange",
-        EVENT_DIRTY_FLAG_CHANGED = "dirtyFlagChange";
+    /**
+     * Event triggered after a document is created.
+     * @constant {string}
+     */
+    const EVENT_AFTER_DOCUMENT_CREATE = "afterDocumentCreate";
+
+    /**
+     * Event triggered when a file or folder path is deleted.
+     * @constant {string}
+     */
+    const EVENT_PATH_DELETED = "pathDeleted";
+
+    /**
+     * Event triggered when a file's name changes.
+     * @constant {string}
+     */
+    const EVENT_FILE_NAME_CHANGE = "fileNameChange";
+
+    /**
+     * Event triggered before a document is deleted.
+     * @constant {string}
+     */
+    const EVENT_BEFORE_DOCUMENT_DELETE = "beforeDocumentDelete";
+
+    /**
+     * Event triggered when a document is refreshed.
+     * @constant {string}
+     */
+    const EVENT_DOCUMENT_REFRESHED = "documentRefreshed";
+
+    /**
+     * Event triggered when a document's content changes.
+     * @constant {string}
+     */
+    const EVENT_DOCUMENT_CHANGE = "documentChange";
+
+    /**
+     * Event triggered when the document's dirty flag changes,
+     * indicating if the document has unsaved changes.
+     * @constant {string}
+     */
+    const EVENT_DIRTY_FLAG_CHANGED = "dirtyFlagChange";
+
+
 
 
     /**
@@ -16300,6 +16354,8 @@ define("document/DocumentManager", function (require, exports, module) {
 
     /**
      * Returns the Document that is currently open in the editor UI. May be null.
+     * @private
+     * @deprecated
      * @return {?Document}
      */
     function getCurrentDocument() {
@@ -16315,6 +16371,7 @@ define("document/DocumentManager", function (require, exports, module) {
 
     /**
      * Returns a list of items in the working set in UI list order. May be 0-length, but never null.
+     * @private
      * @deprecated Use MainViewManager.getWorkingSet() instead
      * @return {Array.<File>}
      */
@@ -16329,6 +16386,7 @@ define("document/DocumentManager", function (require, exports, module) {
 
     /**
      * Returns the index of the file matching fullPath in the working set.
+     * @private
      * @deprecated Use MainViewManager.findInWorkingSet() instead
      * @param {!string} fullPath
      * @return {number} index, -1 if not found
@@ -16358,6 +16416,7 @@ define("document/DocumentManager", function (require, exports, module) {
 
     /**
      * Adds the given file to the end of the working set list.
+     * @private
      * @deprecated Use MainViewManager.addToWorkingSet() instead
      * @param {!File} file
      * @param {number=} index  Position to add to list (defaults to last); -1 is ignored
@@ -16370,6 +16429,7 @@ define("document/DocumentManager", function (require, exports, module) {
     }
 
     /**
+     * @private
      * @deprecated Use MainViewManager.addListToWorkingSet() instead
      * Adds the given file list to the end of the working set list.
      * If a file in the list has its own custom viewer, then it
@@ -16387,6 +16447,7 @@ define("document/DocumentManager", function (require, exports, module) {
 
     /**
      * closes a list of files
+     * @private
      * @deprecated Use CommandManager.execute(Commands.FILE_CLOSE_LIST) instead
      * @param {!Array.<File>} list - list of File objectgs to close
      */
@@ -16397,6 +16458,7 @@ define("document/DocumentManager", function (require, exports, module) {
 
     /**
      * closes all open files
+     * @private
      * @deprecated CommandManager.execute(Commands.FILE_CLOSE_ALL) instead
      */
     function closeAll() {
@@ -16406,6 +16468,7 @@ define("document/DocumentManager", function (require, exports, module) {
 
     /**
      * closes the specified file file
+     * @private
      * @deprecated use CommandManager.execute(Commands.FILE_CLOSE, {File: file}) instead
      * @param {!File} file - the file to close
      */
@@ -16416,6 +16479,7 @@ define("document/DocumentManager", function (require, exports, module) {
 
     /**
      * opens the specified document for editing in the currently active pane
+     * @private
      * @deprecated use CommandManager.execute(Commands.CMD_OPEN, {fullPath: doc.file.fullPath}) instead
      * @param {!Document} document  The Document to make current.
      */
@@ -16427,6 +16491,7 @@ define("document/DocumentManager", function (require, exports, module) {
 
     /**
      * freezes the Working Set MRU list
+     * @private
      * @deprecated use MainViewManager.beginTraversal() instead
      */
     function beginDocumentNavigation() {
@@ -16436,6 +16501,7 @@ define("document/DocumentManager", function (require, exports, module) {
 
     /**
      * ends document navigation and moves the current file to the front of the MRU list in the Working Set
+     * @private
      * @deprecated use MainViewManager.endTraversal() instead
      */
     function finalizeDocumentNavigation() {
@@ -16446,6 +16512,7 @@ define("document/DocumentManager", function (require, exports, module) {
     /**
      * Get the next or previous file in the working set, in MRU order (relative to currentDocument). May
      * return currentDocument itself if working set is length 1.
+     * @private
      * @deprecated use MainViewManager.traverseToNextViewByMRU() instead
      */
     function getNextPrevFile(inc) {
@@ -16462,6 +16529,7 @@ define("document/DocumentManager", function (require, exports, module) {
      * rooted in the UI anywhere. This can happen if the Editor is auto-created via Document APIs that
      * trigger _ensureMasterEditor() without making it dirty. E.g. a command invoked on the focused
      * inline editor makes no-op edits or does a read-only operation.
+     * @private
      */
     function _gcDocuments() {
         getAllOpenDocuments().forEach(function (doc) {
@@ -16636,6 +16704,7 @@ define("document/DocumentManager", function (require, exports, module) {
      *        without warning in a future release.
      *
      * @param {!File} file
+     * @private
      */
     function notifyFileDeleted(file) {
         // Notify all editors to close as well
@@ -16658,6 +16727,7 @@ define("document/DocumentManager", function (require, exports, module) {
      * for updating underlying model data and notifying all views of the change.
      *
      * @param {string} fullPath The path of the file/folder that has been deleted
+     * @private
      */
     function notifyPathDeleted(fullPath) {
         // FileSyncManager.syncOpenDocuments() does all the work prompting
@@ -16684,6 +16754,7 @@ define("document/DocumentManager", function (require, exports, module) {
      *
      * @param {string} oldName The old name of the file/folder
      * @param {string} newName The new name of the file/folder
+     * @private
      */
     function notifyPathNameChanged(oldName, newName) {
         // Notify all open documents
@@ -17118,6 +17189,7 @@ define("document/TextRange", function (require, exports, module) {
     /**
      * Applies a single Document change object (out of the linked list of multiple such objects)
      * to this range.
+     * @private
      * @param {Object} change The CodeMirror change record.
      * @return {{hasChanged: boolean, hasContentChanged: boolean}} Whether the range boundary
      *     and/or content has changed.
@@ -17187,6 +17259,7 @@ define("document/TextRange", function (require, exports, module) {
      * Updates the range based on the changeList from a Document "change" event. Dispatches a
      * "change" event if the range was adjusted at all. Dispatches a "lostSync" event instead if the
      * range can no longer be accurately maintained.
+     * @private
      */
     TextRange.prototype._applyChangesToRange = function (changeList) {
         var hasChanged = false, hasContentChanged = false;
