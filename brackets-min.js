@@ -46201,6 +46201,7 @@ define("features/TaskManager", function (require, exports, module) {
     /**
      * determines what the spinner icon to show(green-for success), red-fail, blue normal based on the active
      * tasks in list and renders. IF the active tasks has already  been notified, it wont notify again.
+     * @private
      */
     function renderSpinnerIcon(showNormalSpinnerIfNone) {
         let unackSuccessTaskFound = false;
