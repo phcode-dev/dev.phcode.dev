@@ -47328,6 +47328,7 @@ define("filesystem/Directory", function (require, exports, module) {
 
     /**
      * The contents of this directory. This "private" property is used by FileSystem.
+     * @private
      * @type {Array<FileSystemEntry>}
      */
     Directory.prototype._contents = null;
@@ -47335,12 +47336,14 @@ define("filesystem/Directory", function (require, exports, module) {
     /**
      * The stats for the contents of this directory, such that this._contentsStats[i]
      * corresponds to this._contents[i].
+     * @private
      * @type {Array.<FileSystemStats>}
      */
     Directory.prototype._contentsStats = null;
 
     /**
      * The stats errors for the contents of this directory.
+     * @private
      * @type {Object.<string, string>} Full paths are mapped to FileSystemError strings.
      */
     Directory.prototype._contentsStatsErrors = null;
@@ -47933,7 +47936,7 @@ define("filesystem/FileIndex", function (require, exports, module) {
 
     /**
      * Master index
-     *
+     * @private
      * @type {Object.<string, File|Directory>} Maps a fullPath to a File or Directory object
      */
     FileIndex.prototype._index = null;
@@ -48229,6 +48232,7 @@ define("filesystem/FileSystem", function (require, exports, module) {
     }
 
     /**
+     * @private
      * @param {string} protocol ex: "https:"|"http:"|"ftp:"|"file:"
      * @param {string} filePath fullPath of the file
      * @return adapter adapter wrapper over file implementation
@@ -48251,6 +48255,7 @@ define("filesystem/FileSystem", function (require, exports, module) {
 
     /**
      * The FileSystem is not usable until init() signals its callback.
+     * @private
      * @constructor
      */
     function FileSystem() {
@@ -48271,11 +48276,13 @@ define("filesystem/FileSystem", function (require, exports, module) {
     /**
      * The low-level file system implementation used by this object.
      * This is set in the init() function and cannot be changed.
+     * @private
      */
     FileSystem.prototype._impl = null;
 
     /**
      * The FileIndex used by this object. This is initialized in the constructor.
+     * @private
      */
     FileSystem.prototype._index = null;
 
@@ -48285,6 +48292,7 @@ define("filesystem/FileSystem", function (require, exports, module) {
      * until after index fixups, operation-specific callbacks, and internal change
      * events are complete. (This is important for distinguishing rename from
      * an unrelated delete-add pair).
+     * @private
      * @type {number}
      */
     FileSystem.prototype._activeChangeCount = 0;
@@ -48297,11 +48305,15 @@ define("filesystem/FileSystem", function (require, exports, module) {
     /**
      * Queue of arguments with which to invoke _handleExternalChanges(); triggered
      * once _activeChangeCount drops to zero.
+     * @private
      * @type {!{path:?string, stat:FileSystemStats}}
      */
     FileSystem.prototype._externalChanges = null;
 
-    /** Process all queued watcher results, by calling _handleExternalChange() on each */
+    /**
+     * Process all queued watcher results, by calling _handleExternalChange() on each
+     * @private
+     */
     FileSystem.prototype._triggerExternalChangesNow = function () {
         this._externalChanges.forEach(function (info) {
             this._handleExternalChange(info.path, info.stat);
@@ -48313,6 +48325,7 @@ define("filesystem/FileSystem", function (require, exports, module) {
      * Receives a result from the impl's watcher callback, and either processes it
      * immediately (if _activeChangeCount is 0) or otherwise stores it for later
      * processing.
+     * @private
      * @param {?string} path The fullPath of the changed entry
      * @param {FileSystemStats=} stat An optional stat object for the changed entry
      */
@@ -48326,12 +48339,14 @@ define("filesystem/FileSystem", function (require, exports, module) {
 
     /**
      * The queue of pending watch/unwatch requests.
+     * @private
      * @type {{fn: function(), cb: function()}} Array
      */
     FileSystem.prototype._watchRequests = null;
 
     /**
      * Dequeue and process all pending watch/unwatch requests
+     * @private
      */
     FileSystem.prototype._dequeueWatchRequest = function () {
         if (this._watchRequests.length > 0) {
@@ -48353,7 +48368,7 @@ define("filesystem/FileSystem", function (require, exports, module) {
 
     /**
      * Enqueue a new watch/unwatch request.
-     *
+     * @private
      * @param {function()} fn - The watch/unwatch request function.
      * @param {callback()} cb - The callback for the provided watch/unwatch
      *      request function.
@@ -48372,7 +48387,7 @@ define("filesystem/FileSystem", function (require, exports, module) {
      * The set of watched roots, encoded as a mapping from full paths to WatchedRoot
      * objects which contain a file entry, filter function, and an indication of
      * whether the watched root is inactive, starting up or fully active.
-     *
+     * @private
      * @type {Object.<string, WatchedRoot>}
      */
     FileSystem.prototype._watchedRoots = null;
@@ -48380,7 +48395,7 @@ define("filesystem/FileSystem", function (require, exports, module) {
     /**
     * Finds a parent watched root for a given path, or returns null if a parent
     * watched root does not exist.
-    *
+    * @private
     * @param {string} fullPath The child path for which a parent watched root is to be found.
     * @return {?{entry: FileSystemEntry, filter: function(string): boolean}} The parent
     *      watched root, if it exists, or null.
@@ -48515,6 +48530,7 @@ define("filesystem/FileSystem", function (require, exports, module) {
      *
      * All operations that mutate the file system MUST begin with a call to
      * _beginChange and must end with a call to _endChange.
+     * @private
      */
     FileSystem.prototype._beginChange = function () {
         this._activeChangeCount++;
@@ -48524,6 +48540,7 @@ define("filesystem/FileSystem", function (require, exports, module) {
     /**
      * Indicates that a filesystem-mutating operation has completed. See
      * FileSystem._beginChange above.
+     * @private
      */
     FileSystem.prototype._endChange = function () {
         this._activeChangeCount--;
@@ -48557,6 +48574,7 @@ define("filesystem/FileSystem", function (require, exports, module) {
     /**
      * Returns a canonical version of the path: no duplicated "/"es, no ".."s,
      * and directories guaranteed to end in a trailing "/"
+     * @private
      * @param {!string} path  Absolute path, using "/" as path separator
      * @param {boolean=} isDirectory
      * @return {!string}
@@ -48903,7 +48921,7 @@ define("filesystem/FileSystem", function (require, exports, module) {
 
     /**
      * Fire a rename event. Clients listen for these events using FileSystem.on.
-     *
+     * @private
      * @param {string} oldPath The entry's previous fullPath
      * @param {string} newPath The entry's current fullPath
      */
@@ -48913,7 +48931,7 @@ define("filesystem/FileSystem", function (require, exports, module) {
 
     /**
      * Fire a change event. Clients listen for these events using FileSystem.on.
-     *
+     * @private
      * @param {File|Directory} entry The entry that has changed
      * @param {Array<File|Directory>=} added If the entry is a directory, this
      *      is a set of new entries in the directory.
@@ -48943,7 +48961,7 @@ define("filesystem/FileSystem", function (require, exports, module) {
      * removed entries. Mutating FileSystemEntry operations should call this method before
      * applying the operation's callback, and pass along the resulting change sets in the
      * internal change event.
-     *
+     * @private
      * @param {Directory} directory The directory that has changed.
      * @param {function(Array<File|Directory>=, Array<File|Directory>=)} callback
      *      The callback that will be applied to a set of added and a set of removed
@@ -49449,60 +49467,70 @@ define("filesystem/FileSystemEntry", function (require, exports, module) {
 
     /**
      * Cached stat object for this file.
+     * @private
      * @type {?FileSystemStats}
      */
     FileSystemEntry.prototype._stat = null;
 
     /**
      * Parent file system.
+     * @private
      * @type {!FileSystem}
      */
     FileSystemEntry.prototype._fileSystem = null;
 
     /**
      * The path of this entry.
+     * @private
      * @type {string}
      */
     FileSystemEntry.prototype._path = null;
 
     /**
      * The name of this entry.
+     * @private
      * @type {string}
      */
     FileSystemEntry.prototype._name = null;
 
     /**
      * The parent of this entry.
+     * @private
      * @type {string}
      */
     FileSystemEntry.prototype._parentPath = null;
 
     /**
      * Whether or not the entry is a file
+     * @private
      * @type {boolean}
      */
     FileSystemEntry.prototype._isFile = false;
 
     /**
      * Whether or not the entry is a directory
+     * @private
      * @type {boolean}
      */
     FileSystemEntry.prototype._isDirectory = false;
 
     /**
     * Cached copy of this entry's watched root.
+     * @private
     * @type {{entry: (File|Directory), filter: function(FileSystemEntry): boolean, active: boolean}}
     */
     FileSystemEntry.prototype._watchedRoot = undefined;
 
     /**
      * Cached result of _watchedRoot.filter(this.name, this.parentPath).
+     * @private
      * @type {boolean}
      */
     FileSystemEntry.prototype._watchedRootFilterResult = undefined;
 
     /**
      * Determines whether or not the entry is watched.
+     * @private
      * @param {boolean=} relaxed If falsey, the method will only return true if
      *      the watched root is fully active. If true, the method will return
      *      true if the watched root is either starting up or fully active.
