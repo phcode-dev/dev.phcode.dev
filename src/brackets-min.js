@@ -150535,6 +150535,11 @@ define("view/MainViewManager", function (require, exports, module) {
         Pane = require("view/Pane").Pane,
         KeyBindingManager = brackets.getModule("command/KeyBindingManager");
 
+    /**
+     * Event current file change
+     * @const
+     * @type {string}
+     */
     const EVENT_CURRENT_FILE_CHANGE = "currentFileChange";
 
     /**
@@ -150658,6 +150663,7 @@ define("view/MainViewManager", function (require, exports, module) {
     /**
      * The global MRU list (for traversing)
      * @type {Array.<file:File, paneId:string>}
+     * @private
      */
     var _mruList = [];
 
@@ -150731,6 +150737,7 @@ define("view/MainViewManager", function (require, exports, module) {
      * Resolve paneId to actual pane.
      * @param {?string} paneId - id of the desired pane. May be symbolic or null (to indicate current pane)
      * @return {string} id of the pane in which to open the document
+     * @private
      */
     function _resolvePaneId(paneId) {
         if (!paneId || paneId === ACTIVE_PANE) {
@@ -150767,6 +150774,7 @@ define("view/MainViewManager", function (require, exports, module) {
      * Determines if the pane id is a special pane id
      * @param {!string} paneId - the id to test
      * @return {boolean} true if the pane id is a special identifier, false if not
+     * @private
      */
     function _isSpecialPaneId(paneId) {
         return paneId === ACTIVE_PANE || paneId === ALL_PANES;
@@ -150847,6 +150855,7 @@ define("view/MainViewManager", function (require, exports, module) {
 
     /**
      * Retrieves the Pane ID for the specified container
+     * @private
      * @param {!jQuery} $el - the element of the pane to fetch
      * @return {?string} the id of the pane that matches the container or undefined if a pane doesn't exist for that container
      */
@@ -151591,6 +151600,7 @@ define("view/MainViewManager", function (require, exports, module) {
 
     /**
      * Updates the header text for all panes
+     * @private
      */
     function _updatePaneHeaders() {
         _forEachPaneOrPanes(ALL_PANES, function (pane) {
@@ -151729,6 +151739,7 @@ define("view/MainViewManager", function (require, exports, module) {
     /**
      * Opens a file in the specified pane this can be used to open a file with a custom viewer
      * or a document for editing.  If it's a document for editing, edit is called on the document
+     * @private
      * @param {!string} paneId - id of the pane in which to open the document
      * @param {!File} file - file to open
      * @param {{noPaneActivate:boolean=}=} optionsIn - options
@@ -151854,7 +151865,7 @@ define("view/MainViewManager", function (require, exports, module) {
 
     /**
      * Closes a file in the specified pane or panes.
-     * 
+     * @private
      * @param {!string} paneId - The ID of the pane in which to close the document.
      * @param {!File} file - The file to close.
      * @param {Object} [optionsIn] - Optional parameters for the close operation.
@@ -151875,6 +151886,7 @@ define("view/MainViewManager", function (require, exports, module) {
 
     /**
      * Closes a list of file in the specified pane or panes
+     * @private
      * @param {!string} paneId - id of the pane in which to open the document
      * @param {!Array.<File>} fileList - files to close
      * This function does not fail if the file is not open
@@ -151892,6 +151904,7 @@ define("view/MainViewManager", function (require, exports, module) {
 
     /**
      * Closes all files in the specified pane or panes
+     * @private
      * @param {!string} paneId - id of the pane in which to open the document
      * This function does not fail if the file is not open
      */
@@ -151931,7 +151944,8 @@ define("view/MainViewManager", function (require, exports, module) {
 
     /**
      * Destroys an editor object if a document is no longer referenced
-     * @param {!Document} doc - document to destroy
+     * @private
+     * @param {!Document} document - document to destroy
      */
     function _destroyEditorIfNotNeeded(document) {
         if (!(document instanceof DocumentManager.Document)) {
@@ -151956,7 +151970,7 @@ define("view/MainViewManager", function (require, exports, module) {
 
 
     /**
-     * Loads the workingset state
+     * Loads the working set state
      * @private
      */
     function _loadViewState(e) {
@@ -151981,7 +151995,7 @@ define("view/MainViewManager", function (require, exports, module) {
                 }
             };
 
-            // Add all files to the workingset without verifying that
+            // Add all files to the working set without verifying that
             // they still exist on disk (for faster project switching)
             files.forEach(function (value) {
                 result.panes[FIRST_PANE].push(value);
@@ -152071,7 +152085,7 @@ define("view/MainViewManager", function (require, exports, module) {
     }
 
     /**
-     * Saves the workingset state
+     * Saves the working set state
      * @private
      */
     function _saveViewState() {
@@ -152491,6 +152505,7 @@ define("view/Pane", function (require, exports, module) {
 
     /**
      * Make an index request object
+     * @private
      * @param {boolean} requestIndex - true to request an index, false if not
      * @param {number} index - the index to request
      * @return {{indexRequested: boolean, index: number}} An object that can be passed to
@@ -152755,18 +152770,21 @@ define("view/Pane", function (require, exports, module) {
 
     /**
      * The list of files views
+     * @private
      * @type {Array.<File>}
      */
     Pane.prototype._viewList = [];
 
     /**
      * The list of files views in MRU order
+     * @private
      * @type {Array.<File>}
      */
     Pane.prototype._viewListMRUOrder = [];
 
     /**
      * The list of files views in Added order
+     * @private
      * @type {Array.<File>}
      */
     Pane.prototype._viewListAddedOrder = [];
@@ -152832,6 +152850,7 @@ define("view/Pane", function (require, exports, module) {
     /**
      * Hides the current view if there is one, shows the
      *  interstitial screen and notifies that the view changed
+     *  @private
      */
     Pane.prototype._hideCurrentView = function () {
         if (this._currentView) {
@@ -152932,7 +152951,7 @@ define("view/Pane", function (require, exports, module) {
 
     /**
      * Merges the another Pane object's contents into this Pane
-     * @param {!Pane} Other - Pane from which to copy
+     * @param {!Pane} other - Pane from which to copy
      */
     Pane.prototype.mergeFrom = function (other) {
         // save this because we're setting it to null and we
@@ -153181,6 +153200,7 @@ define("view/Pane", function (require, exports, module) {
 
     /**
      * Dispatches a currentViewChange event
+     * @private
      * @param {?View} newView - the view become the current view
      * @param {?View} oldView - the view being replaced
      */
@@ -153507,6 +153527,7 @@ define("view/Pane", function (require, exports, module) {
 
     /**
      * Update header and content height
+     * @private
      */
     Pane.prototype._updateHeaderHeight = function () {
         var paneContentHeight = this.$el.height();
@@ -153624,6 +153645,7 @@ define("view/Pane", function (require, exports, module) {
 
     /**
      * Executes a FILE_OPEN command to open a file
+     * @private
      * @param  {!string} fullPath - path of the file to open
      * @return {jQuery.promise} promise that will resolve when the file is opened
      */
@@ -153774,6 +153796,7 @@ define("view/Pane", function (require, exports, module) {
 
     /**
      * MainViewManager.activePaneChange handler
+     * @private
      * @param {jQuery.event} e - event data
      * @param {!string} activePaneId - the new active pane id
      */
@@ -153897,6 +153920,7 @@ define("view/Pane", function (require, exports, module) {
  *
  */
 
+// @INCLUDE_IN_API_DOCS
 
 /*global fs, Phoenix, process*/
 /*eslint no-console: 0*/
@@ -153906,10 +153930,29 @@ define("view/Pane", function (require, exports, module) {
 define("view/PanelView", function (require, exports, module) {
 
     const EventDispatcher = require("utils/EventDispatcher"),
-        Resizer = require("utils/Resizer"),
-        EVENT_PANEL_HIDDEN = 'panelHidden',
-        EVENT_PANEL_SHOWN = 'panelShown',
-        PANEL_TYPE_BOTTOM_PANEL = "bottomPanel";
+        Resizer = require("utils/Resizer");
+    
+    /**
+     * Event when panel is hidden
+     * @type {string}
+     * @constant
+     */
+    const EVENT_PANEL_HIDDEN = 'panelHidden';
+
+    /**
+     * Event when panel is shown
+     * @type {string}
+     * @constant
+     */
+    const EVENT_PANEL_SHOWN = 'panelShown';
+
+    /**
+     * type for bottom panel
+     * @type {string}
+     * @constant
+     */
+    const PANEL_TYPE_BOTTOM_PANEL = 'bottomPanel';
+
 
     /**
      * Represents a panel below the editor area (a child of ".content").
@@ -153994,7 +154037,7 @@ define("view/PanelView", function (require, exports, module) {
     };
 
     /**
-     * gets the Panle's type
+     * gets the Panel's type
      * @return {string}
      */
     Panel.prototype.getPanelType = function () {
@@ -154029,6 +154072,7 @@ define("view/PanelView", function (require, exports, module) {
  *
  */
 
+// @INCLUDE_IN_API_DOCS
 
 /*global fs, Phoenix, process*/
 /*eslint no-console: 0*/
@@ -154037,10 +154081,28 @@ define("view/PanelView", function (require, exports, module) {
 
 define("view/PluginPanelView", function (require, exports, module) {
 
-    const EventDispatcher = require("utils/EventDispatcher"),
-        EVENT_PANEL_SHOWN = "panelShown",
-        EVENT_PANEL_HIDDEN = "panelHidden",
-        PANEL_TYPE_PLUGIN_PANEL = "pluginPanel";
+    const EventDispatcher = require("utils/EventDispatcher");
+
+    /**
+     * Event when panel is hidden
+     * @type {string}
+     * @constant
+     */
+    const EVENT_PANEL_HIDDEN = 'panelHidden';
+
+    /**
+     * Event when panel is shown
+     * @type {string}
+     * @constant
+     */
+    const EVENT_PANEL_SHOWN = 'panelShown';
+
+    /**
+     * type for plugin panel
+     * @type {string}
+     * @constant
+     */
+    const PANEL_TYPE_PLUGIN_PANEL = 'pluginPanel';
 
     /**
      * Represents a panel below the editor area (a child of ".content").
@@ -154138,7 +154200,7 @@ define("view/PluginPanelView", function (require, exports, module) {
     };
 
     /**
-     * gets the Panle's type
+     * gets the Panel's type
      * @return {string}
      */
     Panel.prototype.getPanelType = function () {
@@ -154178,6 +154240,8 @@ define("view/PluginPanelView", function (require, exports, module) {
  *
  */
 
+// @INCLUDE_IN_API_DOCS
+
 /*jslint regexp: true */
 /*global less, path, Phoenix */
 
@@ -154205,8 +154269,19 @@ define("view/ThemeManager", function (require, exports, module) {
         scrollbarsRegex = /((?:[^}|,]*)::-webkit-scrollbar(?:[^{]*)[{](?:[^}]*?)[}])/mgi,
         stylesPath      = FileUtils.getNativeBracketsDirectoryPath() + "/styles/";
 
-    const EVENT_THEME_CHANGE = "themeChange",
-        EVENT_THEME_LOADED = "themeLoaded";
+    /**
+     * Event when theme is changed
+     * @type {string}
+     * @const
+     */
+    const EVENT_THEME_CHANGE = "themeChange";
+
+    /**
+     * Event when theme is loaded
+     * @type {string}
+     * @const
+     */
+    const EVENT_THEME_LOADED = "themeLoaded";
 
     /**
      * @private
@@ -154228,6 +154303,7 @@ define("view/ThemeManager", function (require, exports, module) {
 
     /**
      * @constructor
+     * @private
      * Theme contains all the essential bit to load a theme from disk, display a theme in the settings
      * dialog, and to properly add a theme into CodeMirror along with the rest of brackets.
      *
@@ -154532,7 +154608,7 @@ define("view/ThemeManager", function (require, exports, module) {
 
     /**
      * Loads a theme from a url.
-     *
+     * @private
      * @param {string} url is the full http/https url of the theme file
      * @param {Object} options is an optional parameter to specify metadata
      *    for the theme.
@@ -155093,6 +155169,8 @@ define("view/ThemeView", function (require, exports, module) {
  *
  */
 
+// @INCLUDE_IN_API_DOCS
+
 /*global less, Phoenix */
 
 /**
@@ -155189,12 +155267,14 @@ span.brackets-js-hints-with-type-details {
     /**
      * @const
      * @type {string}
+     * @private
      */
     var DYNAMIC_FONT_STYLE_ID = "codemirror-dynamic-fonts";
 
     /**
      * @const
      * @type {string}
+     * @private
      */
     var DYNAMIC_FONT_FAMILY_ID = "codemirror-dynamic-font-family";
 
@@ -155454,7 +155534,10 @@ span.brackets-js-hints-with-type-details {
         return true;
     }
 
-    /** Increases the font size by 1 */
+    /**
+     * Increases the font size by 1
+     * @private
+     */
     function _handleIncreaseFontSize() {
         _adjustFontSize(1);
     }
@@ -155499,12 +155582,18 @@ span.brackets-js-hints-with-type-details {
         }
     }
 
-    /** Decreases the font size by 1 */
+    /**
+     * Decreases the font size by 1
+     * @private
+     */
     function _handleDecreaseFontSize() {
         _adjustFontSize(-1);
     }
 
-    /** Restores the font size to the original size */
+    /**
+     * Restores the font size to the original size
+     * @private
+     */
     function _handleRestoreFontSize() {
         setFontSize(DEFAULT_FONT_SIZE + "px");
     }
@@ -155532,6 +155621,7 @@ span.brackets-js-hints-with-type-details {
 
     /**
      * Initializes the different settings that need to loaded
+     * @private
      */
     function init() {
         currFontFamily = prefs.get("fontFamily");
@@ -155651,17 +155741,26 @@ span.brackets-js-hints-with-type-details {
         editor.setScrollPos(scrollInfo.left, (textHeight * lines) + removedScroll);
     }
 
-    /** Scrolls one line up */
+    /**
+     * Scrolls one line up
+     * @private
+     */
     function _handleScrollLineUp() {
         _scrollLine(-1);
     }
 
-    /** Scrolls one line down */
+    /**
+     * Scrolls one line down
+     * @private
+     */
     function _handleScrollLineDown() {
         _scrollLine(1);
     }
 
-    /** Open theme settings dialog */
+    /**
+     * Open theme settings dialog
+     * @private
+     */
     function _handleThemeSettings() {
         ThemeSettings.showDialog();
     }
@@ -155776,7 +155875,8 @@ define("view/ViewStateManager", function (require, exports, module) {
     }
 
     /**
-     * Sets the view state for the specfied file
+     * Sets the view state for the specified file
+     * @private
      * @param {!File} file - the file to record the view state for
      * @param {?*} viewState - any data that the view needs to restore the view state.
      */
@@ -155868,21 +155968,43 @@ define("view/WorkspaceManager", function (require, exports, module) {
         EditorManager           = require("editor/EditorManager"),
         KeyEvent                = require("utils/KeyEvent");
 
-    //constants
-    const EVENT_WORKSPACE_UPDATE_LAYOUT  = "workspaceUpdateLayout",
-        EVENT_WORKSPACE_PANEL_SHOWN    = PanelView.EVENT_PANEL_SHOWN,
-        EVENT_WORKSPACE_PANEL_HIDDEN   = PanelView.EVENT_PANEL_HIDDEN,
-        MAIN_TOOLBAR_WIDTH = 30;
+
+    /**
+     * Event triggered when the workspace layout updates.
+     * @const
+     */
+    const EVENT_WORKSPACE_UPDATE_LAYOUT = "workspaceUpdateLayout";
+
+    /**
+     * Event triggered when a panel is shown.
+     * @const
+     */
+    const EVENT_WORKSPACE_PANEL_SHOWN = PanelView.EVENT_PANEL_SHOWN;
+
+    /**
+     * Event triggered when a panel is hidden.
+     * @const
+     */
+    const EVENT_WORKSPACE_PANEL_HIDDEN = PanelView.EVENT_PANEL_HIDDEN;
+
+    /**
+     * Width of the main toolbar in pixels.
+     * @const
+     * @private
+     */
+    const MAIN_TOOLBAR_WIDTH = 30;
 
     /**
      * The ".content" vertical stack (editor + all header/footer panels)
      * @type {jQueryObject}
+     * @private
      */
     var $windowContent;
 
     /**
      * The "#editor-holder": has only one visible child, the current CodeMirror instance (or the no-editor placeholder)
      * @type {jQueryObject}
+     * @private
      */
     var $editorHolder;
 
@@ -155890,28 +156012,33 @@ define("view/WorkspaceManager", function (require, exports, module) {
     /**
      * The "#main-toolbay": to the right side holding plugin panels and icons
      * @type {jQueryObject}
+     * @private
      */
     var $mainToolbar;
 
     /**
      * The "#main-plugin-panel": The plugin panel main container
      * @type {jQueryObject}
+     * @private
      */
     let $mainPluginPanel;
 
     /**
      * The "#plugin-icons-bar": holding all the plugin icons
      * @type {jQueryObject}
+     * @private
      */
     let $pluginIconsBar;
 
     /**
-     * A map from panel ID's to all reated panels
+     * A map from panel ID's to all related panels
+     * @private
      */
     var panelIDMap = {};
 
     /**
      * Have we already started listening for the end of the ongoing window resize?
+     * @private
      * @type {boolean}
      */
     var windowResizing = false;
@@ -155924,6 +156051,7 @@ define("view/WorkspaceManager", function (require, exports, module) {
      * Calculates the available height for the full-size Editor (or the no-editor placeholder),
      * accounting for the current size of all visible panels, toolbar, & status bar.
      * @return {number}
+     * @private
      */
     function calcAvailableHeight() {
         var availableHt = $windowContent.height();
@@ -155939,7 +156067,10 @@ define("view/WorkspaceManager", function (require, exports, module) {
         return Math.max(availableHt, 0);
     }
 
-    /** Updates panel resize limits to disallow making panels big enough to shrink editor area below 0 */
+    /**
+     * Updates panel resize limits to disallow making panels big enough to shrink editor area below 0
+     * @private
+     */
     function updateResizeLimits() {
         var editorAreaHeight = $editorHolder.height();
 
@@ -155959,7 +156090,7 @@ define("view/WorkspaceManager", function (require, exports, module) {
     /**
      * Calculates a new size for editor-holder and resizes it accordingly, then and dispatches the "workspaceUpdateLayout"
      * event. (The editors within are resized by EditorManager, in response to that event).
-     *
+     * @private
      * @param {boolean=} refreshHint  true to force a complete refresh
      */
     function triggerUpdateLayout(refreshHint) {
@@ -155976,7 +156107,10 @@ define("view/WorkspaceManager", function (require, exports, module) {
     }
 
 
-    /** Trigger editor area resize whenever the window is resized */
+    /**
+     * Trigger editor area resize whenever the window is resized
+     * @private
+     */
     function handleWindowResize() {
         // These are not initialized in Jasmine Spec Runner window until a test
         // is run that creates a mock document.
@@ -156001,7 +156135,8 @@ define("view/WorkspaceManager", function (require, exports, module) {
     }
 
     /** Trigger editor area resize whenever the given panel is shown/hidden/resized
-     *  @param {!jQueryObject} $panel the jquery object in which to attach event handlers
+     * @private
+     * @param {!jQueryObject} $panel the jquery object in which to attach event handlers
      */
     function listenToResize($panel) {
         // Update editor height when shown/hidden, & continuously as panel is resized
@@ -156118,7 +156253,10 @@ define("view/WorkspaceManager", function (require, exports, module) {
         listenToResize($("#main-toolbar"));
     });
 
-    /* Unit test only: allow passing in mock DOM notes, e.g. for use with SpecRunnerUtils.createMockEditor() */
+    /**
+     * Unit test only: allow passing in mock DOM notes, e.g. for use with SpecRunnerUtils.createMockEditor()
+     * @private
+     */
     function _setMockDOM($mockWindowContent, $mockEditorHolder, $mockMainToolbar, $mockMainPluginPanel, $mockPluginIconsBar) {
         $windowContent = $mockWindowContent;
         $editorHolder = $mockEditorHolder;
@@ -156196,6 +156334,12 @@ define("view/WorkspaceManager", function (require, exports, module) {
         exports.trigger(EVENT_WORKSPACE_PANEL_HIDDEN, panelID);
     });
 
+    /**
+     * Responsible to check if the panel is visible or not.
+     * Returns true if visible else false.
+     * @param panelID
+     * @returns {boolean}
+     */
     function isPanelVisible(panelID) {
         let panel = getPanelForID(panelID);
         if(panel && panel.isVisible()){
@@ -156328,7 +156472,17 @@ define("view/WorkspaceManager", function (require, exports, module) {
     exports.EVENT_WORKSPACE_UPDATE_LAYOUT   = EVENT_WORKSPACE_UPDATE_LAYOUT;
     exports.EVENT_WORKSPACE_PANEL_SHOWN     = EVENT_WORKSPACE_PANEL_SHOWN;
     exports.EVENT_WORKSPACE_PANEL_HIDDEN    = EVENT_WORKSPACE_PANEL_HIDDEN;
+
+    /**
+     * Constant representing the type of bottom panel
+     * @type {string}
+     */
     exports.PANEL_TYPE_BOTTOM_PANEL         = PanelView.PANEL_TYPE_BOTTOM_PANEL;
+
+    /**
+     * Constant representing the type of plugin panel
+     * @type {string}
+     */
     exports.PANEL_TYPE_PLUGIN_PANEL         = PluginPanelView.PANEL_TYPE_PLUGIN_PANEL;
 });
 
@@ -156353,17 +156507,51 @@ define("view/WorkspaceManager", function (require, exports, module) {
  *
  */
 
+// @INCLUDE_IN_API_DOCS
+
 define("widgets/DefaultDialogs", function (require, exports, module) {
 
+    /**
+     * Constants representing dialog IDs
+     * These IDs are used to identify different types of dialogs
+     *
+     * @module DefaultDialogs
+     */
 
     /**
-     * List of constants for the default dialogs IDs.
+     * ID for error dialog
+     * @constant {string}
      */
-    exports.DIALOG_ID_ERROR             = "error-dialog";
-    exports.DIALOG_ID_INFO              = "error-dialog"; // uses the same template for now--could be different in future
-    exports.DIALOG_ID_SAVE_CLOSE        = "save-close-dialog";
-    exports.DIALOG_ID_EXT_CHANGED       = "ext-changed-dialog";
-    exports.DIALOG_ID_EXT_DELETED       = "ext-deleted-dialog";
+    exports.DIALOG_ID_ERROR = "error-dialog";
+
+    /**
+     * ID for information dialog (currently uses the same template as DIALOG_ID_ERROR)
+     * @constant {string}
+     */
+    exports.DIALOG_ID_INFO = "error-dialog"; // uses the same template for now--could be different in future
+
+    /**
+     * ID for save and close dialog
+     * @constant {string}
+     */
+    exports.DIALOG_ID_SAVE_CLOSE = "save-close-dialog";
+
+    /**
+     * ID for `external change detected` dialog
+     * @constant {string}
+     */
+    exports.DIALOG_ID_EXT_CHANGED = "ext-changed-dialog";
+
+    /**
+     * ID for `external deletion detected` dialog
+     * @constant {string}
+     */
+    exports.DIALOG_ID_EXT_DELETED = "ext-deleted-dialog";
+
+    /**
+     * ID for `change extensions` dialog
+     * @constant {string}
+     */
     exports.DIALOG_ID_CHANGE_EXTENSIONS = "change-marked-extensions";
 });
 
@@ -156387,6 +156575,8 @@ define("widgets/DefaultDialogs", function (require, exports, module) {
  * along with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
  *
  */
+
+// @INCLUDE_IN_API_DOCS
 
 /**
  * Utilities for creating and managing standard modal dialogs.
@@ -156420,27 +156610,72 @@ define("widgets/Dialogs", function (require, exports, module) {
         Mustache          = require("thirdparty/mustache/mustache");
 
     /**
-     * Dialog Buttons IDs
-     * @const {string}
+     * `CANCEL` dialog button ID
+     * @type {string}
+     * @const
      */
-    let DIALOG_BTN_CANCEL           = "cancel",
-        DIALOG_BTN_OK               = "ok",
-        DIALOG_BTN_DONTSAVE         = "dontsave",
-        DIALOG_BTN_SAVE_AS          = "save_as",
-        DIALOG_CANCELED             = "_canceled",
-        DIALOG_BTN_DOWNLOAD         = "download";
+    let DIALOG_BTN_CANCEL = "cancel";
 
     /**
-     * Dialog Buttons Class Names
-     * @const {string}
+     * `OK` dialog button ID
+     * @type {string}
+     * @const
      */
-    let DIALOG_BTN_CLASS_PRIMARY    = "primary",
-        DIALOG_BTN_CLASS_NORMAL     = "",
-        DIALOG_BTN_CLASS_LEFT       = "left";
+    let DIALOG_BTN_OK = "ok";
+
+    /**
+     * `DONT SAVE` dialog button ID
+     * @type {string}
+     * @const
+     */
+    let DIALOG_BTN_DONTSAVE = "dontsave";
+
+    /**
+     * `SAVE AS` dialog button ID
+     * @type {string}
+     * @const
+     */
+    let DIALOG_BTN_SAVE_AS = "save_as";
+
+    /**
+     * `CANCELED` dialog button ID
+     * @type {string}
+     * @const
+     */
+    let DIALOG_CANCELED = "_canceled";
+
+    /**
+     * `DOWNLOAD` dialog button ID
+     * @type {string}
+     * @const
+     */
+    let DIALOG_BTN_DOWNLOAD = "download";
+
+    /**
+     * Primary button class name
+     * @type {string}
+     * @const
+     */
+    let DIALOG_BTN_CLASS_PRIMARY = "primary";
+
+    /**
+     * Normal button class name
+     * @type {string}
+     * @const
+     */
+    let DIALOG_BTN_CLASS_NORMAL = "";
+
+    /**
+     * Left-aligned button class name
+     * @type {string}
+     * @const
+     */
+     let DIALOG_BTN_CLASS_LEFT = "left";
 
     /**
      * The z-index used for the dialogs. Each new dialog increase this number by 2
      * @type {number}
+     * @private
      */
     let zIndex = 1050;
 
@@ -156456,7 +156691,7 @@ define("widgets/Dialogs", function (require, exports, module) {
 
     /**
      * @private
-     * Dismises a modal dialog
+     * Dismisses a modal dialog
      * @param {$.Element} $dlg
      * @param {string} buttonId
      */
@@ -156533,6 +156768,7 @@ define("widgets/Dialogs", function (require, exports, module) {
 
     /**
      * Handles the keyDown event for the dialogs
+     * @private
      * @param {$.Event} e
      * @param {boolean} autoDismiss
      * @return {boolean}
@@ -156622,6 +156858,7 @@ define("widgets/Dialogs", function (require, exports, module) {
     /**
      * The dialog jQuery element
      * @type {$.Element}
+     * @private
      */
     Dialog.prototype.getElement = function () {
         return this._$dlg;
@@ -156630,7 +156867,7 @@ define("widgets/Dialogs", function (require, exports, module) {
     /**
      * Determines whether the dialog is currently shown. Note that even if other dialogs occlude this dialog when
      * multiple dialogs are shown, this will still return true.
-     *
+     * @private
      * @returns {boolean} true if the dialog is visible, false otherwise.
      */
     Dialog.prototype.isVisible = function () {
@@ -156639,6 +156876,7 @@ define("widgets/Dialogs", function (require, exports, module) {
 
     /**
      * The dialog promise
+     * @private
      * @type {$.Promise}
      */
     Dialog.prototype.getPromise = function () {
@@ -156647,6 +156885,7 @@ define("widgets/Dialogs", function (require, exports, module) {
 
     /**
      * Closes the dialog if is visible
+     * @private
      */
     Dialog.prototype.close = function () {
         if (this._$dlg.is(":visible")) {   // Bootstrap breaks if try to hide dialog that's already hidden
@@ -156656,6 +156895,7 @@ define("widgets/Dialogs", function (require, exports, module) {
 
     /**
      * Adds a done callback to the dialog promise
+     * @private
      */
     Dialog.prototype.done = function (callback) {
         this._promise.done(callback);
@@ -156664,6 +156904,7 @@ define("widgets/Dialogs", function (require, exports, module) {
 
     /**
      * Don't allow dialog to exceed viewport size
+     * @private
      */
     function setDialogMaxSize() {
         let maxWidth, maxHeight,
@@ -156817,6 +157058,14 @@ define("widgets/Dialogs", function (require, exports, module) {
         return showModalDialogUsingTemplate(template, autoDismiss);
     }
 
+    /**
+     * Display a confirmation dialog with `OK` and `CANCEL` button
+     *
+     * @param {string} title dialog title
+     * @param {string} message message to display in the dialog
+     * @param {boolean=} autoDismiss whether to automatically dismiss the dialog or not
+     * @return {Dialog} the created dialog instance
+     */
     function showConfirmDialog(title, message, autoDismiss) {
         const buttons = [
             { className: DIALOG_BTN_CLASS_NORMAL, id: DIALOG_BTN_CANCEL, text: Strings.CANCEL },
@@ -156826,10 +157075,26 @@ define("widgets/Dialogs", function (require, exports, module) {
         return showModalDialog(DefaultDialogs.DIALOG_ID_INFO, title, message, buttons, autoDismiss);
     }
 
+    /**
+     * Display information dialog
+     *
+     * @param {string} title dialog title
+     * @param {string} message message to display in the dialog
+     * @param {boolean=} autoDismiss whether to automatically dismiss the dialog or not
+     * @return {Dialog} the created dialog instance
+     */
     function showInfoDialog(title, message, autoDismiss) {
         return showModalDialog(DefaultDialogs.DIALOG_ID_INFO, title, message, null, autoDismiss);
     }
 
+    /**
+     * Display error dialog
+     *
+     * @param {string} title dialog title
+     * @param {string} message message to display in the dialog
+     * @param {boolean=} autoDismiss whether to automatically dismiss the dialog or not
+     * @return {Dialog} the created dialog instance
+     */
     function showErrorDialog(title, message, autoDismiss) {
         return showModalDialog(DefaultDialogs.DIALOG_ID_ERROR, title, message, null, autoDismiss);
     }
@@ -156948,10 +157213,33 @@ define("widgets/DropdownButton", function (require, exports, module) {
         ViewUtils = require("utils/ViewUtils"),
         _ = require("thirdparty/lodash");
 
-    const EVENT_SELECTED = "select",
-        EVENT_LIST_RENDERED = "listRendered",
-        EVENT_DROPDOWN_SHOWN = "shown",
-        EVENT_DROPDOWN_CLOSED = "closed";
+    /**
+     * Event triggered when an item is selected.
+     * @type {string}
+     * @const
+     */
+    const EVENT_SELECTED = "select";
+
+    /**
+     * Event triggered when the list is rendered.
+     * @type {string}
+     * @const
+     */
+    const EVENT_LIST_RENDERED = "listRendered";
+
+    /**
+     * Event triggered when the dropdown is shown.
+     * @type {string}
+     * @const
+     */
+    const EVENT_DROPDOWN_SHOWN = "shown";
+
+    /**
+     * Event triggered when the dropdown is closed.
+     * @type {string}
+     * @const
+     */
+    const EVENT_DROPDOWN_CLOSED = "closed";
 
     /**
      * Creates a single dropdown-button instance. The DOM node is created but not attached to
@@ -157038,7 +157326,6 @@ define("widgets/DropdownButton", function (require, exports, module) {
      */
     DropdownButton.prototype._dropdownEventHandler = null;
 
-
     /**
      * @private
      * Handle clicking button
@@ -157086,6 +157373,7 @@ define("widgets/DropdownButton", function (require, exports, module) {
 
     /**
      * Converts the list of item objects into HTML list items in format required by DropdownEventHandler
+     * @private
      * @param {!jQueryObject} $parent The dropdown element
      * @return {!jQueryObject} The dropdown element with the rendered list items appended.
      */
@@ -157207,7 +157495,9 @@ define("widgets/DropdownButton", function (require, exports, module) {
         });
     };
 
-    /** Pops open the dropdown if currently closed. Does nothing if items.length == 0 */
+    /**
+     * Pops open the dropdown if currently closed. Does nothing if items.length == 0
+     */
     DropdownButton.prototype.showDropdown = function () {
         // Act like a plain old button if no items to show
         if (!this.items.length) {
@@ -157956,11 +158246,13 @@ define("widgets/ModalBar", function (require, exports, module) {
 
     /**
      * A jQuery object containing the root node of the ModalBar.
+     * @private
      */
     ModalBar.prototype._$root = null;
 
     /**
      * True if this ModalBar is set to autoclose.
+     * @private
      */
     ModalBar.prototype._autoClose = false;
 
@@ -158078,6 +158370,7 @@ define("widgets/ModalBar", function (require, exports, module) {
 
     /**
      * If autoClose is set, close the bar when Escape is pressed
+     * @private
      */
     ModalBar.prototype._handleKeydown = function (e) {
         if (e.keyCode === KeyEvent.DOM_VK_ESCAPE) {
@@ -158091,6 +158384,7 @@ define("widgets/ModalBar", function (require, exports, module) {
      * If autoClose is set, detects when something other than the modal bar is getting focus and
      * dismisses the modal bar. DOM nodes with "attached-to" jQuery metadata referencing an element
      * within the ModalBar are allowed to take focus without closing it.
+     * @private
      */
     ModalBar.prototype._handleFocusChange = function (e) {
         if (this.isLockedOpen && this.isLockedOpen()) {
@@ -158201,6 +158495,11 @@ define("widgets/NotificationUI", function (require, exports, module) {
     const NOTIFICATION_TYPE_ARROW = "arrow",
         NOTIFICATION_TYPE_TOAST = "toast";
 
+    /**
+     * CSS class names for notification styles.
+     * @enum {string}
+     * @const
+     */
     const NOTIFICATION_STYLES_CSS_CLASS = {
         INFO: "style-info",
         WARNING: "style-warning",
@@ -158209,6 +158508,11 @@ define("widgets/NotificationUI", function (require, exports, module) {
         DANGER: "style-danger"
     };
 
+    /**
+     * Closing notification reason.
+     * @enum {string}
+     * @const
+     */
     const CLOSE_REASON ={
         TIMEOUT: 'closeTimeout',
         CLICK_DISMISS: 'clickDismiss',
@@ -158592,7 +158896,7 @@ define("widgets/PopUpManager", function (require, exports, module) {
     /**
      * Remove Esc key handling for a pop-up. Removes the pop-up from the DOM
      * if the pop-up is currently visible and was not originally attached.
-     *
+     * @private
      * @param {KeyboardEvent=} keyEvent (optional)
      */
     function removeCurrentPopUp(keyEvent) {
@@ -158646,6 +158950,7 @@ define("widgets/PopUpManager", function (require, exports, module) {
 
     /**
      * A menu is being popped up, so remove any menu that is currently popped up
+     * @private
      */
     function _beforeMenuPopup() {
         removeCurrentPopUp();

@@ -48,10 +48,33 @@ define(function (require, exports, module) {
         ViewUtils = require("utils/ViewUtils"),
         _ = require("thirdparty/lodash");
 
-    const EVENT_SELECTED = "select",
-        EVENT_LIST_RENDERED = "listRendered",
-        EVENT_DROPDOWN_SHOWN = "shown",
-        EVENT_DROPDOWN_CLOSED = "closed";
+    /**
+     * Event triggered when an item is selected.
+     * @type {string}
+     * @const
+     */
+    const EVENT_SELECTED = "select";
+
+    /**
+     * Event triggered when the list is rendered.
+     * @type {string}
+     * @const
+     */
+    const EVENT_LIST_RENDERED = "listRendered";
+
+    /**
+     * Event triggered when the dropdown is shown.
+     * @type {string}
+     * @const
+     */
+    const EVENT_DROPDOWN_SHOWN = "shown";
+
+    /**
+     * Event triggered when the dropdown is closed.
+     * @type {string}
+     * @const
+     */
+    const EVENT_DROPDOWN_CLOSED = "closed";
 
     /**
      * Creates a single dropdown-button instance. The DOM node is created but not attached to
@@ -138,7 +161,6 @@ define(function (require, exports, module) {
      */
     DropdownButton.prototype._dropdownEventHandler = null;
 
-
     /**
      * @private
      * Handle clicking button
@@ -186,6 +208,7 @@ define(function (require, exports, module) {
 
     /**
      * Converts the list of item objects into HTML list items in format required by DropdownEventHandler
+     * @private
      * @param {!jQueryObject} $parent The dropdown element
      * @return {!jQueryObject} The dropdown element with the rendered list items appended.
      */
@@ -307,7 +330,9 @@ define(function (require, exports, module) {
         });
     };
 
-    /** Pops open the dropdown if currently closed. Does nothing if items.length == 0 */
+    /**
+     * Pops open the dropdown if currently closed. Does nothing if items.length == 0
+     */
     DropdownButton.prototype.showDropdown = function () {
         // Act like a plain old button if no items to show
         if (!this.items.length) {
