@@ -124249,6 +124249,7 @@ define("project/FileSyncManager", function (require, exports, module) {
 
     /**
      * Guard to spot re-entrancy while syncOpenDocuments() is still in progress
+     * @private
      * @type {boolean}
      */
     var _alreadyChecking = false;
@@ -124256,27 +124257,32 @@ define("project/FileSyncManager", function (require, exports, module) {
     /**
      * If true, we should bail from the syncOpenDocuments() process and then re-run it. See
      * comments in syncOpenDocuments() for how this works.
+     * @private
      * @type {boolean}
      */
     var _restartPending = false;
 
     /**
      * @type {Array.<Document>}
+     * @private
      */
     var toReload;
 
     /**
      * @type {Array.<Document>}
+     * @private
      */
     var toClose;
 
     /**
      * @type {{doc: Document, fileTime: number}} Array
+     * @private
      */
     var editConflicts;
 
     /**
      * @type {{doc: Document, fileTime: number}} Array
+     * @private
      */
     var deleteConflicts;
 
@@ -124288,6 +124294,7 @@ define("project/FileSyncManager", function (require, exports, module) {
      *  toClose         - deleted on disk; unchanged within Brackets
      *  editConflicts   - changed on disk; also dirty in Brackets
      *  deleteConflicts - deleted on disk; also dirty in Brackets
+     *  @private
      *
      * @param {!Array.<Document>} docs
      * @return {$.Promise}  Resolved when all scanning done, or rejected immediately if there's any
@@ -124370,6 +124377,7 @@ define("project/FileSyncManager", function (require, exports, module) {
     /**
      * Scans all the files in the working set that do not have Documents (and thus were not scanned
      * by findExternalChanges()). If any were deleted on disk, removes them from the working set.
+     * @private
      */
     function syncUnopenWorkingSet() {
         // We only care about working set entries that have never been open (have no Document).
@@ -124406,7 +124414,7 @@ define("project/FileSyncManager", function (require, exports, module) {
 
     /**
      * Reloads the Document's contents from disk, discarding any unsaved changes in the editor.
-     *
+     * @private
      * @param {!Document} doc
      * @return {$.Promise} Resolved after editor has been refreshed; rejected if unable to load the
      *      file's new content. Errors are logged but no UI is shown.
@@ -124427,6 +124435,7 @@ define("project/FileSyncManager", function (require, exports, module) {
     /**
      * Reloads all the documents in "toReload" silently (no prompts). The operations are all run
      * in parallel.
+     * @private
      * @return {$.Promise} Resolved/rejected after all reloads done; will be rejected if any one
      *      file's reload failed. Errors are logged (by reloadDoc()) but no UI is shown.
      */
@@ -124436,6 +124445,7 @@ define("project/FileSyncManager", function (require, exports, module) {
     }
 
     /**
+     * @private
      * @param {FileError} error
      * @param {!Document} doc
      * @return {Dialog}
@@ -124455,6 +124465,7 @@ define("project/FileSyncManager", function (require, exports, module) {
 
     /**
      * Closes all the documents in "toClose" silently (no prompts). Completes synchronously.
+     * @private
      */
     function closeDeletedDocs() {
         toClose.forEach(function (doc) {
@@ -124467,7 +124478,7 @@ define("project/FileSyncManager", function (require, exports, module) {
      * Walks through all the documents in "editConflicts" & "deleteConflicts" and prompts the user
      * about each one. Processing is sequential: if the user chooses to reload a document, the next
      * prompt is not shown until after the reload has completed.
-     *
+     * @private
      * @param {string} title Title of the dialog.
      * @return {$.Promise} Resolved/rejected after all documents have been prompted and (if
      *      applicable) reloaded (and any resulting error UI has been dismissed). Rejected if any
@@ -124779,10 +124790,12 @@ define("project/FileTreeView", function (require, exports, module) {
 
     /**
      * Mixin that allows a component to compute the full path to its directory entry.
+     * @private
      */
     var pathComputer = {
         /**
          * Computes the full path of the file represented by this input.
+         * @private
          */
         myPath: function () {
             var result = this.props.parentPath + this.props.name;
@@ -124849,11 +124862,13 @@ define("project/FileTreeView", function (require, exports, module) {
     /**
      * This is a mixin that provides rename input behavior. It is responsible for taking keyboard input
      * and invoking the correct action based on that input.
+     * @private
      */
     var renameBehavior = {
         /**
          * Stop clicks from propagating so that clicking on the rename input doesn't
          * cause directories to collapse.
+         * @private
          */
         handleClick: function (e) {
             e.stopPropagation();
@@ -124865,6 +124880,7 @@ define("project/FileTreeView", function (require, exports, module) {
         /**
          * If the user presses enter or escape, we either successfully complete or cancel, respectively,
          * the rename or create operation that is underway.
+         * @private
          */
         handleKeyDown: function (e) {
             this.props.actions.setRenameValue(this.props.parentPath + this.refs.name.value.trim());
@@ -124878,6 +124894,7 @@ define("project/FileTreeView", function (require, exports, module) {
         /**
          * The rename or create operation can be completed or canceled by actions outside of
          * this component, so we keep the model up to date by sending every update via an action.
+         * @private
          */
         handleInput: function (e) {
             this.props.actions.setRenameValue(this.props.parentPath + this.refs.name.value.trim());
@@ -124893,6 +124910,7 @@ define("project/FileTreeView", function (require, exports, module) {
 
         /**
          * If we leave the field for any reason, complete the rename.
+         * @private
          */
         handleBlur: function () {
             this.props.actions.performRename();
@@ -124901,6 +124919,7 @@ define("project/FileTreeView", function (require, exports, module) {
 
     /**
      * This is a mixin that provides drag and drop move function.
+     * @private
      */
     var dragAndDrop = {
         handleDrag: function(e) {
@@ -125091,13 +125110,14 @@ define("project/FileTreeView", function (require, exports, module) {
     /**
      * Mixin for components that support the "icons" and "addClass" extension points.
      * `fileNode` and `directoryNode` support this.
+     * @private
      */
     var extendable = {
 
         /**
          * Calls the icon providers to get the collection of icons (most likely just one) for
          * the current file or directory.
-         *
+         * @private
          * @return {Array.<PreactComponent>} icon components to render
          */
         getIcons: function () {
@@ -125139,7 +125159,7 @@ define("project/FileTreeView", function (require, exports, module) {
         /**
          * Calls the addClass providers to get the classes (in string form) to add for the current
          * file or directory.
-         *
+         * @private
          * @param {string} classes Initial classes for this node
          * @return {string} classes for the current node
          */
@@ -125198,6 +125218,7 @@ define("project/FileTreeView", function (require, exports, module) {
         /**
          * Thanks to immutable objects, we can just do a start object identity check to know
          * whether or not we need to re-render.
+         * @private
          */
         shouldComponentUpdate: function (nextProps, nextState) {
             return nextProps.forceRender ||
@@ -125208,6 +125229,7 @@ define("project/FileTreeView", function (require, exports, module) {
         /**
          * If this node is newly selected, scroll it into view. Also, move the selection or
          * context boxes as appropriate.
+         * @private
          */
         componentDidUpdate: function (prevProps, prevState) {
             var wasSelected = prevProps.entry.get("selected"),
@@ -125232,6 +125254,7 @@ define("project/FileTreeView", function (require, exports, module) {
         /**
          * When the user clicks on the node, we'll either select it or, if they've clicked twice
          * with a bit of delay in between, we'll invoke the `startRename` action.
+         * @private
          */
         handleClick: function (e) {
             // If we're renaming, allow the click to go through to the rename input.
@@ -125263,6 +125286,7 @@ define("project/FileTreeView", function (require, exports, module) {
         /**
          * select the current node in the file tree on mouse down event on files.
          * This is to increase click responsiveness of file tree.
+         * @private
          */
         selectNode: function (e) {
             if (e.button !== LEFT_MOUSE_BUTTON) {
@@ -125285,6 +125309,7 @@ define("project/FileTreeView", function (require, exports, module) {
         /**
          * When the user double clicks, we will select this file and add it to the working
          * set (via the `selectInWorkingSet` action.)
+         * @private
          */
         handleDoubleClick: function () {
             if (!this.props.entry.get("rename")) {
@@ -125300,7 +125325,7 @@ define("project/FileTreeView", function (require, exports, module) {
 
         /**
          * Create the data object to pass to extensions.
-         *
+         * @private
          * @return {!{name:string, isFile:boolean, fullPath:string}} Data for extensions
          */
         getDataForExtension: function () {
@@ -125495,6 +125520,7 @@ define("project/FileTreeView", function (require, exports, module) {
          * We need to update this component if the sort order changes or our entry object
          * changes. Thanks to immutability, if any of the directory contents change, our
          * entry object will change.
+         * @private
          */
         shouldComponentUpdate: function (nextProps, nextState) {
             return nextProps.forceRender ||
@@ -125506,6 +125532,7 @@ define("project/FileTreeView", function (require, exports, module) {
 
         /**
          * If you click on a directory, it will toggle between open and closed.
+         * @private
          */
         handleClick: function (event) {
             if (this.props.entry.get("rename")) {
@@ -125547,6 +125574,7 @@ define("project/FileTreeView", function (require, exports, module) {
 
         /**
          * select the current node in the file tree
+         * @private
          */
         selectNode: function (e) {
             // Do nothing for folders on keydown event. Only expand the file tree on click event
@@ -125557,6 +125585,7 @@ define("project/FileTreeView", function (require, exports, module) {
          * Create the data object to pass to extensions.
          *
          * @return {{name: {string}, isFile: {boolean}, fullPath: {string}}} Data for extensions
+         * @private
          */
         getDataForExtension: function () {
             return {
@@ -125726,6 +125755,7 @@ define("project/FileTreeView", function (require, exports, module) {
      * * selectionViewInfo: Immutable.Map with width, scrollTop, scrollLeft and offsetTop for the tree container
      * * visible: should this be visible now
      * * selectedClassName: class name applied to the element that is selected
+     * @private
      */
     var fileSelectionBox = Preact.createFactory(Preact.createClass({
         /**
@@ -125775,6 +125805,7 @@ define("project/FileTreeView", function (require, exports, module) {
      * * visible: should this be visible now
      * * selectedClassName: class name applied to the element that is selected
      * * className: class to be applied to the extension element
+     * @private
      */
     var selectionExtension = Preact.createFactory(Preact.createClass({
         /**
@@ -126071,7 +126102,10 @@ define("project/FileTreeViewModel", function (require, exports, module) {
         EventDispatcher     = require("utils/EventDispatcher"),
         FileUtils           = require("file/FileUtils");
 
-    // Constants
+    /**
+     * @const
+     * @type {string}
+     */
     var EVENT_CHANGE = "change";
 
     /**
@@ -126609,7 +126643,7 @@ define("project/FileTreeViewModel", function (require, exports, module) {
 
     /**
      * Returns the object at the given file path.
-     *
+     * @private
      * @param {string} path Path to the object
      * @return {Immutable.Map=} directory or file object from the tree. Null if it's not found.
      */
@@ -126623,7 +126657,7 @@ define("project/FileTreeViewModel", function (require, exports, module) {
 
     /**
      * Closes a subtree path, given by an object path.
-     *
+     * @private
      * @param {Immutable.Map} directory Current directory
      * @return {Immutable.Map} new directory
      */
@@ -127256,7 +127290,17 @@ define("project/FileViewController", function (require, exports, module) {
      * @private
      */
     var _curDocChangedDueToMe = false;
+
+    /**
+     * view managing working set.
+     * @type {string}
+     */
     var WORKING_SET_VIEW = "WorkingSetView";
+
+    /**
+     * manager handling project-related operations.
+     * @type {string}
+     */
     var PROJECT_MANAGER = "ProjectManager";
 
     /**
@@ -127268,6 +127312,7 @@ define("project/FileViewController", function (require, exports, module) {
     // Due to circular dependencies, not safe to call on() directly
     /**
      * Change the doc selection to the working set when ever a new file is added to the working set
+     * @private
      */
     EventDispatcher.on_duringInit(MainViewManager, "workingSetAdd", function (event, addedFile) {
         _fileSelectionFocus = WORKING_SET_VIEW;
@@ -127276,6 +127321,7 @@ define("project/FileViewController", function (require, exports, module) {
 
     /**
      * Update the file selection focus whenever the contents of the editor area change
+     * @private
      */
     EventDispatcher.on_duringInit(MainViewManager, "currentFileChange", function (event, file, paneId) {
         var perfTimerName;
@@ -127431,6 +127477,7 @@ define("project/FileViewController", function (require, exports, module) {
     /**
      * Opens the specified document if it's not already open, adds it to the working set,
      * and selects it in the WorkingSetView
+     * @private
      * @deprecated use FileViewController.openFileAndAddToWorkingSet() instead
      * @param {!fullPath}
      * @return {!$.Promise}
@@ -127564,24 +127611,83 @@ define("project/ProjectManager", function (require, exports, module) {
     // See #10115
     require("command/DefaultMenus");
 
-    const EVENT_PROJECT_BEFORE_CLOSE = "beforeProjectClose",
-        EVENT_PROJECT_CLOSE = "projectClose",
-        EVENT_PROJECT_OPEN_FAILED = "projectFileOpenFailed",
-        EVENT_PROJECT_OPEN = "projectOpen",
-        EVENT_AFTER_PROJECT_OPEN = "afterProjectOpen",
-        // on boot, we load files that have been passed in from os either with `open with` from os file explorer or
-        // as cli from terminal. EVENT_AFTER_STARTUP_FILES_LOADED is trigerred after those files have been loaded.
-        // Note that this may be trigerred before any extensions get loaded, so always a good idea to check for
-        // isStartupFilesLoaded()
-        EVENT_AFTER_STARTUP_FILES_LOADED = "startupFilesLoaded",
-        EVENT_PROJECT_REFRESH = "projectRefresh",
-        EVENT_CONTENT_CHANGED = "contentChanged",
-        // This will capture all file/folder changes in projects except renames. If you want to track renames,
-        // use EVENT_PROJECT_PATH_CHANGED_OR_RENAMED to track all changes or EVENT_PROJECT_FILE_RENAMED too.
-        EVENT_PROJECT_FILE_CHANGED = "projectFileChanged",
-        EVENT_PROJECT_FILE_RENAMED = "projectFileRenamed",
-        // the path changed event differs in the sense that all events returned by this will be a path.
-        EVENT_PROJECT_CHANGED_OR_RENAMED_PATH = "projectChangedPath";
+    /**
+     * Triggered before the project closes.
+     * @type {string}
+     */
+    const EVENT_PROJECT_BEFORE_CLOSE = "beforeProjectClose";
+
+    /**
+     * Triggered when the project has closed.
+     * @type {string}
+     */
+    const EVENT_PROJECT_CLOSE = "projectClose";
+
+    /**
+     * Triggered when opening a project file fails.
+     * @type {string}
+     */
+    const EVENT_PROJECT_OPEN_FAILED = "projectFileOpenFailed";
+
+    /**
+     * Triggered when a project is opened.
+     * @type {string}
+     */
+    const EVENT_PROJECT_OPEN = "projectOpen";
+
+    /**
+     * Triggered after a project is successfully opened.
+     * @type {string}
+     */
+    const EVENT_AFTER_PROJECT_OPEN = "afterProjectOpen";
+
+    /**
+     * Triggered after startup files (from OS or CLI) are loaded.
+     * Note: This may occur before extensions are loaded, so check `isStartupFilesLoaded()`.
+     * @type {string}
+     */
+    const EVENT_AFTER_STARTUP_FILES_LOADED = "startupFilesLoaded";
+
+
+    // on boot, we load files that have been passed in from os either with `open with` from os file explorer or
+    // as cli from terminal. EVENT_AFTER_STARTUP_FILES_LOADED is trigerred after those files have been loaded.
+    // Note that this may be trigerred before any extensions get loaded, so always a good idea to check for
+    // isStartupFilesLoaded()
+    /**
+     * Triggered when the project is refreshed.
+     * @type {string}
+     */
+    const EVENT_PROJECT_REFRESH = "projectRefresh";
+
+    /**
+     * Triggered when content in the project changes.
+     * @type {string}
+     */
+    const EVENT_CONTENT_CHANGED = "contentChanged";
+
+
+    // This will capture all file/folder changes in projects except renames. If you want to track renames,
+    // use EVENT_PROJECT_PATH_CHANGED_OR_RENAMED to track all changes or EVENT_PROJECT_FILE_RENAMED too.
+    /**
+     * Triggered when any file or folder in the project changes, excluding renames.
+     * @type {string}
+     */
+    const EVENT_PROJECT_FILE_CHANGED = "projectFileChanged";
+
+    /**
+     * Triggered specifically when a project file is renamed.
+     * @type {string}
+     */
+    const EVENT_PROJECT_FILE_RENAMED = "projectFileRenamed";
+
+
+    // the path changed event differs in the sense that all events returned by this will be a path.
+    /**
+     * Triggered when paths in the project are changed or renamed.
+     * @type {string}
+     */
+    const EVENT_PROJECT_CHANGED_OR_RENAMED_PATH = "projectChangedPath";
+
 
     EventDispatcher.setLeakThresholdForEvent(EVENT_PROJECT_OPEN, 25);
 
@@ -127597,7 +127703,7 @@ define("project/ProjectManager", function (require, exports, module) {
 
     /**
      * Name of the preferences for sorting directories first
-     *
+     * @private
      * @type {string}
      */
     var SORT_DIRECTORIES_FIRST = "sortDirectoriesFirst";
@@ -127776,6 +127882,7 @@ define("project/ProjectManager", function (require, exports, module) {
      * Sets the directory at the given path to open in the tree and saves the open nodes to view state.
      *
      * See `ProjectModel.setDirectoryOpen`
+     * @private
      */
     ActionCreator.prototype.setDirectoryOpen = function (path, open) {
         this.model.setDirectoryOpen(path, open).then(_saveTreeState);
@@ -127783,6 +127890,7 @@ define("project/ProjectManager", function (require, exports, module) {
 
     /**
      * See `ProjectModel.setSelected`
+     * @private
      */
     ActionCreator.prototype.setSelected = function (path, doNotOpen) {
         this.model.setSelected(path, doNotOpen);
@@ -127790,6 +127898,7 @@ define("project/ProjectManager", function (require, exports, module) {
 
     /**
      * See `ProjectModel.selectInWorkingSet`
+     * @private
      */
     ActionCreator.prototype.selectInWorkingSet = function (path) {
         this.model.selectInWorkingSet(path);
@@ -127797,6 +127906,7 @@ define("project/ProjectManager", function (require, exports, module) {
 
     /**
      * See `FileViewController.openWithExternalApplication`
+     * @private
      */
     ActionCreator.prototype.openWithExternalApplication = function (path) {
         FileViewController.openWithExternalApplication(path);
@@ -127805,6 +127915,7 @@ define("project/ProjectManager", function (require, exports, module) {
 
     /**
      * See `ProjectModel.setContext`
+     * @private
      */
     ActionCreator.prototype.setContext = function (path) {
         this.model.setContext(path);
@@ -127812,6 +127923,7 @@ define("project/ProjectManager", function (require, exports, module) {
 
     /**
      * See `ProjectModel.restoreContext`
+     * @private
      */
     ActionCreator.prototype.restoreContext = function () {
         this.model.restoreContext();
@@ -127819,6 +127931,7 @@ define("project/ProjectManager", function (require, exports, module) {
 
     /**
      * See `ProjectModel.startRename`
+     * @private
      */
     ActionCreator.prototype.startRename = function (path, isMoved) {
         // This is very not Flux-like, which is a sign that Flux may not be the
@@ -127830,6 +127943,7 @@ define("project/ProjectManager", function (require, exports, module) {
 
     /**
      * See `ProjectModel.setRenameValue`
+     * @private
      */
     ActionCreator.prototype.setRenameValue = function (path) {
         this.model.setRenameValue(path);
@@ -127837,6 +127951,7 @@ define("project/ProjectManager", function (require, exports, module) {
 
     /**
      * See `ProjectModel.cancelRename`
+     * @private
      */
     ActionCreator.prototype.cancelRename = function () {
         this.model.cancelRename();
@@ -127844,6 +127959,7 @@ define("project/ProjectManager", function (require, exports, module) {
 
     /**
      * See `ProjectModel.performRename`
+     * @private
      */
     ActionCreator.prototype.performRename = function () {
         return this.model.performRename();
@@ -127851,6 +127967,7 @@ define("project/ProjectManager", function (require, exports, module) {
 
     /**
      * See `ProjectModel.startCreating`
+     * @private
      */
     ActionCreator.prototype.startCreating = function (basedir, newName, isFolder) {
         return this.model.startCreating(basedir, newName, isFolder);
@@ -127858,6 +127975,7 @@ define("project/ProjectManager", function (require, exports, module) {
 
     /**
      * See `ProjectModel.setSortDirectoriesFirst`
+     * @private
      */
     ActionCreator.prototype.setSortDirectoriesFirst = function (sortDirectoriesFirst) {
         this.model.setSortDirectoriesFirst(sortDirectoriesFirst);
@@ -127865,6 +127983,7 @@ define("project/ProjectManager", function (require, exports, module) {
 
     /**
      * See `ProjectModel.setFocused`
+     * @private
      */
     ActionCreator.prototype.setFocused = function (focused) {
         this.model.setFocused(focused);
@@ -127872,6 +127991,7 @@ define("project/ProjectManager", function (require, exports, module) {
 
     /**
      * See `ProjectModel.setCurrentFile`
+     * @private
      */
     ActionCreator.prototype.setCurrentFile = function (curFile) {
         this.model.setCurrentFile(curFile);
@@ -127879,6 +127999,7 @@ define("project/ProjectManager", function (require, exports, module) {
 
     /**
      * See `ProjectModel.toggleSubdirectories`
+     * @private
      */
     ActionCreator.prototype.toggleSubdirectories = function (path, openOrClose) {
         this.model.toggleSubdirectories(path, openOrClose).then(_saveTreeState);
@@ -127886,6 +128007,7 @@ define("project/ProjectManager", function (require, exports, module) {
 
     /**
      * See `ProjectModel.closeSubtree`
+     * @private
      */
     ActionCreator.prototype.closeSubtree = function (path) {
         this.model.closeSubtree(path);
@@ -127907,6 +128029,7 @@ define("project/ProjectManager", function (require, exports, module) {
 
     /**
      * Moves the item in the oldPath to the newDirectory directory
+     * @private
      */
     ActionCreator.prototype.moveItem = function (oldPath, newDirectory) {
         var fileName = FileUtils.getBaseName(oldPath),
@@ -127932,6 +128055,7 @@ define("project/ProjectManager", function (require, exports, module) {
 
     /**
      * See `ProjectModel.refresh`
+     * @private
      */
     ActionCreator.prototype.refresh = function () {
         this.model.refresh();
@@ -128236,7 +128360,6 @@ define("project/ProjectManager", function (require, exports, module) {
     _renderTree = _.debounce(_renderTreeSync, _RENDER_DEBOUNCE_TIME);
 
     /**
-     * @private
      *
      * Returns the full path to the welcome project, which we open on first launch.
      *
@@ -128257,7 +128380,7 @@ define("project/ProjectManager", function (require, exports, module) {
     }
 
     /**
-     * The flder where all the system managed projects live
+     * The folder where all the system managed projects live
      * @returns {string}
      */
     function getLocalProjectsPath() {
@@ -128266,7 +128389,7 @@ define("project/ProjectManager", function (require, exports, module) {
 
     /**
      * Adds the path to the list of welcome projects we've ever seen, if not on the list already.
-     *
+     * @private
      * @param {string} path Path to possibly add
      */
     function addWelcomeProjectPath(path) {
@@ -128302,6 +128425,7 @@ define("project/ProjectManager", function (require, exports, module) {
      * @deprecated use getStartupProjectPath instead. Can be removed anytime after 2-Apr-2023.
      * Initial project path is stored in prefs, which defaults to the welcome project on
      * first launch.
+     * @private
      */
     function getInitialProjectPath() {
         return updateWelcomeProjectPath(PreferencesManager.getViewState("projectPath"));
@@ -128732,7 +128856,7 @@ define("project/ProjectManager", function (require, exports, module) {
     /**
      * Loads the given folder as a project. Does NOT prompt about any unsaved changes - use openProject()
      * instead to check for unsaved changes and (optionally) let the user choose the folder to open.
-     *
+     * @private
      * @param {!string} rootPath  Absolute path to the root folder of the project.
      *  A trailing "/" on the path is optional (unlike many Brackets APIs that assume a trailing "/").
      * @return {$.Promise} A promise object that will be resolved when the
@@ -128869,6 +128993,7 @@ define("project/ProjectManager", function (require, exports, module) {
 
     /**
      * Invoke project settings dialog.
+     * @private
      * @return {$.Promise}
      */
     function _projectSettings() {
@@ -129856,15 +129981,54 @@ define("project/ProjectModel", function (require, exports, module) {
         Async               = require("utils/Async"),
         PerfUtils           = require("utils/PerfUtils");
 
-    // Constants
-    var EVENT_CHANGE            = "change",
-        EVENT_SHOULD_SELECT     = "select",
-        EVENT_SHOULD_FOCUS      = "focus",
-        EVENT_FS_RENAME_STARTED = "mvStart",
-        EVENT_FS_RENAME_END     = "mvEnd",
-        ERROR_CREATION          = "creationError",
-        ERROR_INVALID_FILENAME  = "invalidFilename",
-        ERROR_NOT_IN_PROJECT    = "notInProject";
+
+    /**
+     * Triggered when change occurs.
+     * @type {string}
+     */
+    const EVENT_CHANGE = "change";
+
+    /**
+     * Triggered when item should be selected.
+     * @type {string}
+     */
+    const EVENT_SHOULD_SELECT = "select";
+
+    /**
+     * Triggered when item should receive focus.
+     * @type {string}
+     */
+    const EVENT_SHOULD_FOCUS = "focus";
+
+    /**
+     * Triggered when file system rename operation starts.
+     * @type {string}
+     */
+    const EVENT_FS_RENAME_STARTED = "mvStart";
+
+    /**
+     * Triggered when file system rename operation ends.
+     * @type {string}
+     */
+    const EVENT_FS_RENAME_END = "mvEnd";
+
+    /**
+     * Error during creation.
+     * @type {string}
+     */
+    const ERROR_CREATION = "creationError";
+
+    /**
+     * Error because of Invalid filename
+     * @type {string}
+     */
+    const ERROR_INVALID_FILENAME = "invalidFilename";
+
+    /**
+     * Error when an item is not in a project
+     * @type {string}
+     */
+    const ERROR_NOT_IN_PROJECT = "notInProject";
 
     /**
      * @private
@@ -129979,11 +130143,26 @@ define("project/ProjectModel", function (require, exports, module) {
         return shouldShow(entry) && !_cacheExcludeFileNameRegEx.test(entry.name);
     }
 
-    // Constants used by the ProjectModel
+    /**
+     * File renaming
+     * @const
+     * @type {number}
+     */
+    const FILE_RENAMING = 0;
 
-    var FILE_RENAMING     = 0,
-        FILE_CREATING     = 1,
-        RENAME_CANCELLED  = 2;
+    /**
+     * File creating
+     * @const
+     * @type {number}
+     */
+    const FILE_CREATING = 1;
+
+    /**
+     * Rename cancelled
+     * @const
+     * @type {number}
+     */
+    const RENAME_CANCELLED = 2;
 
 
     /**
@@ -131058,6 +131237,7 @@ define("project/ProjectModel", function (require, exports, module) {
     /**
      * Cancels the creation process that is underway. The original promise returned will be resolved with the
      * RENAME_CANCELLED value. The temporary entry added to the file tree will be deleted.
+     * @private
      */
     ProjectModel.prototype._cancelCreating = function () {
         var renameInfo = this._selections.rename;
@@ -131268,6 +131448,7 @@ define("project/ProjectModel", function (require, exports, module) {
     /**
      * Although Brackets is generally standardized on folder paths with a trailing "/", some APIs here
      * receive project paths without "/" due to legacy preference storage formats, etc.
+     * @private
      * @param {!string} fullPath  Path that may or may not end in "/"
      * @return {!string} Path that ends in "/"
      */
@@ -131307,7 +131488,7 @@ define("project/ProjectModel", function (require, exports, module) {
     /**
      * Returns true if the given path is the same as one of the welcome projects we've previously opened,
      * or the one for the current build.
-     *
+     * @private
      * @param {string} path Path to check to see if it's a welcome project
      * @param {string} welcomeProjectPath Current welcome project path
      * @param {Array.<string>=} welcomeProjects All known welcome projects
@@ -131605,6 +131786,7 @@ define("project/SidebarView", function (require, exports, module) {
 
     /**
      * Register Command Handlers
+     * @private
      */
     _cmdSplitNone       = CommandManager.register(Strings.CMD_SPLITVIEW_NONE,       Commands.CMD_SPLITVIEW_NONE,       _handleSplitViewNone);
     _cmdSplitVertical   = CommandManager.register(Strings.CMD_SPLITVIEW_VERTICAL,   Commands.CMD_SPLITVIEW_VERTICAL,   _handleSplitViewVertical);
@@ -131661,6 +131843,7 @@ define("project/WorkingSetSort", function (require, exports, module) {
 
     /**
      * List of sorting method objects
+     *
      * @private
      * @type {Array.<Sort>}
      */
@@ -131668,6 +131851,7 @@ define("project/WorkingSetSort", function (require, exports, module) {
 
     /**
      * Denotes the current sort method object
+     *
      * @private
      * @type {Sort}
      */
@@ -131675,6 +131859,7 @@ define("project/WorkingSetSort", function (require, exports, module) {
 
     /**
      * Denotes if automatic sorting is enabled or not
+     *
      * @private
      * @type {boolean}
      */
@@ -131696,6 +131881,7 @@ define("project/WorkingSetSort", function (require, exports, module) {
 
     /**
      * Events which the sort command will listen for to trigger a sort
+     *
      * @constant {string}
      * @private
      */
@@ -131703,6 +131889,7 @@ define("project/WorkingSetSort", function (require, exports, module) {
 
     /**
      * Preference name
+     *
      * @constant {string}
      * @private
      */
@@ -131710,6 +131897,7 @@ define("project/WorkingSetSort", function (require, exports, module) {
 
     /**
      * Legacy preference name
+     *
      * @constant {string}
      * @private
      */
@@ -131717,6 +131905,7 @@ define("project/WorkingSetSort", function (require, exports, module) {
 
     /**
      * Retrieves a Sort object by id
+     *
      * @param {(string|Command)} command A command ID or a command object.
      * @return {?Sort}
      */
@@ -131737,6 +131926,7 @@ define("project/WorkingSetSort", function (require, exports, module) {
 
     /**
      * Converts the old brackets working set sort preference into the modern paneview sort preference
+     *
      * @private
      * @param {!string} sortMethod - sort preference to convert
      * @return {?string} new sort preference string or undefined if an sortMethod is not found
@@ -131765,6 +131955,7 @@ define("project/WorkingSetSort", function (require, exports, module) {
 
     /**
      * Removes the sort listeners.
+     *
      * @private
      */
     function _removeListeners() {
@@ -131773,6 +131964,7 @@ define("project/WorkingSetSort", function (require, exports, module) {
 
     /**
      * Enables/Disables Automatic Sort depending on the value.
+     *
      * @param {boolean} enable True to enable, false to disable.
      */
     function setAutomatic(enable) {
@@ -131790,6 +131982,7 @@ define("project/WorkingSetSort", function (require, exports, module) {
 
     /**
      * Adds the current sort MainViewManager listeners.
+     *
      * @private
      */
     function _addListeners() {
@@ -131807,6 +132000,7 @@ define("project/WorkingSetSort", function (require, exports, module) {
 
     /**
      * Sets the current sort method and checks it on the context menu.
+     *
      * @private
      * @param {Sort} newSort
      */
@@ -131842,6 +132036,7 @@ define("project/WorkingSetSort", function (require, exports, module) {
 
     /**
      * The Command ID
+     *
      * @return {string}
      */
     Sort.prototype.getCommandID = function () {
@@ -131850,6 +132045,7 @@ define("project/WorkingSetSort", function (require, exports, module) {
 
     /**
      * The compare function
+     *
      * @return {function(File, File): number}
      */
     Sort.prototype.getCompareFn = function () {
@@ -131858,6 +132054,7 @@ define("project/WorkingSetSort", function (require, exports, module) {
 
     /**
      * Gets the event that this sort object is listening to
+     *
      * @return {string}
      */
     Sort.prototype.getEvents = function () {
@@ -131866,6 +132063,7 @@ define("project/WorkingSetSort", function (require, exports, module) {
 
     /**
      * Checks/Unchecks the command which will show a check in the menu
+     *
      * @param {boolean} value
      */
     Sort.prototype.setChecked = function (value) {
@@ -131897,6 +132095,7 @@ define("project/WorkingSetSort", function (require, exports, module) {
 
     /**
      * Registers a working set sort method.
+     *
      * @param {(string|Command)} command A command ID or a command object
      * @param {function(File, File): number} compareFn The function that
      *      will be used inside JavaScript's sort function. The return a value
@@ -131946,6 +132145,7 @@ define("project/WorkingSetSort", function (require, exports, module) {
 
     /**
      * Command Handler for CMD_WORKING_SORT_TOGGLE_AUTO
+     *
      * @private
      */
     function _handleToggleAutoSort() {
@@ -131954,6 +132154,7 @@ define("project/WorkingSetSort", function (require, exports, module) {
 
     /**
      * Command Handler for CMD_WORKINGSET_SORT_BY_*
+     *
      * @private
      * @param {!string} commandId identifies the sort method to use
      */
@@ -132001,12 +132202,16 @@ define("project/WorkingSetSort", function (require, exports, module) {
 
     /**
      * Initialize default values for sorting preferences
+     *
+     * @private
      */
     PreferencesManager.stateManager.definePreference("automaticSort", "boolean", false);
 
     /**
      * Define a default sort method that's empty so that we
      *   just convert and use the legacy sort method
+     *
+     *  @private
      */
     PreferencesManager.stateManager.definePreference(_WORKING_SET_SORT_PREF, "string", "");
 
@@ -132028,6 +132233,8 @@ define("project/WorkingSetSort", function (require, exports, module) {
 
     /**
      * Initialize items dependent on extensions/workingSetList
+     *
+     * @private
      */
     AppInit.appReady(function () {
         var sortMethod = initSortMethod(),
@@ -132141,11 +132348,13 @@ define("project/WorkingSetView", function (require, exports, module) {
     /**
      * #working-set-list-container
      * @type {jQuery}
+     * @private
      */
     var $workingFilesContainer;
 
     /**
      * Constants for event.which values
+     * @private
      * @enum {number}
      */
     var LEFT_BUTTON = 1,
@@ -132162,6 +132371,7 @@ define("project/WorkingSetView", function (require, exports, module) {
     /**
      * Constants for hitTest.where
      * @enum {string}
+     * @private
      */
     var NOMANSLAND = "nomansland",
         NOMOVEITEM = "nomoveitem",
@@ -132175,6 +132385,7 @@ define("project/WorkingSetView", function (require, exports, module) {
     /**
      * Drag an item has to move 3px before dragging starts
      * @constant
+     * @private
      */
     var _DRAG_MOVE_DETECTION_START = 3;
 
@@ -132916,8 +133127,9 @@ define("project/WorkingSetView", function (require, exports, module) {
         });
     }
 
-    /*
+    /**
      * WorkingSetView constructor
+     * @private
      * @constructor
      * @param {!jQuery} $container - owning container
      * @param {!string} paneId - paneId of this view pertains to
@@ -132935,8 +133147,9 @@ define("project/WorkingSetView", function (require, exports, module) {
         this.init();
     }
 
-    /*
+    /**
      * Hides or shows the WorkingSetView
+     * @private
      */
     WorkingSetView.prototype._updateVisibility = function () {
         var fileList = MainViewManager.getWorkingSet(this.paneId);
@@ -132950,7 +133163,7 @@ define("project/WorkingSetView", function (require, exports, module) {
         }
     };
 
-    /*
+    /**
      * paneLayoutChange event listener
      * @private
      */
@@ -132990,7 +133203,7 @@ define("project/WorkingSetView", function (require, exports, module) {
         return result;
     };
 
-    /*
+    /**
      * creates a name that is namespaced to this pane
      * @param {!string} name - name of the event to create.
      * use an empty string to get just the event name to turn off all events in the namespace
@@ -133464,6 +133677,7 @@ define("project/WorkingSetView", function (require, exports, module) {
 
     /**
      * Initializes the WorkingSetView object
+     * @private
      */
     WorkingSetView.prototype.init = function () {
         this.$openFilesContainer = this.$el.find(".open-files-container");
@@ -133502,6 +133716,7 @@ define("project/WorkingSetView", function (require, exports, module) {
 
     /**
      * Destroys the WorkingSetView DOM element and removes all event handlers
+     * @private
      */
     WorkingSetView.prototype.destroy = function () {
         ViewUtils.removeScrollerShadow(this.$openFilesContainer[0], null);
@@ -133582,10 +133797,11 @@ define("project/WorkingSetView", function (require, exports, module) {
         });
     });
 
-    /*
+    /**
      * To be used by other modules/default-extensions which needs to borrow working set entry icons
      * @param {!object} data - contains file info {fullPath, name, isFile}
      * @param {!jQuery} $element - jquery fn wrap for the list item
+     * @private
      */
     function useIconProviders(data, $element) {
         for(let provider of _iconProviders){
@@ -133601,10 +133817,11 @@ define("project/WorkingSetView", function (require, exports, module) {
         }
     }
 
-    /*
+    /**
      * To be used by other modules/default-extensions which needs to borrow working set entry custom classes
      * @param {!object} data - contains file info {fullPath, name, isFile}
      * @param {!jQuery} $element - jquery fn wrap for the list item
+     * @private
      */
     function useClassProviders(data, $element) {
         let succeededPriority = null;
