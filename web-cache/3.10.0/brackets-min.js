@@ -121441,9 +121441,6 @@ $3132870559d60e53$require$initFsLib($8adf1cfaed2eb5b1$exports);
 /*global appshell */
 /*unittests: Preferences Base */
 
-// @INCLUDE_IN_API_DOCS
-
-
 /**
  * Infrastructure for the preferences system.
  *
@@ -121550,6 +121547,7 @@ define("preferences/PreferencesBase", function (require, exports, module) {
      * Error type for problems parsing preference files.
      *
      * @constructor
+     * @private
      * @param {string} message Error message
      */
     function ParsingError(message) {
@@ -122441,7 +122439,7 @@ define("preferences/PreferencesBase", function (require, exports, module) {
 
     /**
      * Represents a single, known Preference.
-     *
+     * @private
      * @constructor
      * @param {Object} properties Information about the Preference that is stored on this object
      */
@@ -122456,6 +122454,7 @@ define("preferences/PreferencesBase", function (require, exports, module) {
      * Utility for PreferencesSystem & PrefixedPreferencesSystem -- attach EventDispatcher's on()/off()
      * implementation as private _on_internal()/_off_internal() methods, so the custom on()/off() APIs
      * these classes use can leverage EventDispatcher code internally. Also attach the regular public trigger().
+     * @private
      */
     function _addEventDispatcherImpl(proto) {
         var temp = {};
@@ -122468,7 +122467,7 @@ define("preferences/PreferencesBase", function (require, exports, module) {
     /**
      * Provides a subset of the PreferencesSystem functionality with preference
      * access always occurring with the given prefix.
-     *
+     * @private
      * @constructor
      * @param {PreferencesSystem} base The real PreferencesSystem that is backing this one
      * @param {string} prefix Prefix that is used for preferences lookup. Any separator characters should already be added.
@@ -122482,7 +122481,7 @@ define("preferences/PreferencesBase", function (require, exports, module) {
     PrefixedPreferencesSystem.prototype = {
         /**
          * Defines a new (prefixed) preference.
-         *
+         * @private
          * @param {string} id unprefixed identifier of the preference. Generally a dotted name.
          * @param {string} type Data type for the preference (generally, string, boolean, number)
          * @param {Object} initial Default value for the preference
@@ -122503,7 +122502,7 @@ define("preferences/PreferencesBase", function (require, exports, module) {
 
         /**
          * Get the prefixed preference object
-         *
+         * @private
          * @param {string} id ID of the pref to retrieve.
          */
         getPreference: function (id) {
@@ -122512,7 +122511,7 @@ define("preferences/PreferencesBase", function (require, exports, module) {
 
         /**
          * Gets the prefixed preference
-         *
+         * @private
          * @param {string} id Name of the preference for which the value should be retrieved
          * @param {Object=} context Optional context object to change the preference lookup
          */
@@ -122523,7 +122522,7 @@ define("preferences/PreferencesBase", function (require, exports, module) {
 
         /**
          * Gets the location in which the value of a prefixed preference has been set.
-         *
+         * @private
          * @param {string} id Name of the preference for which the value should be retrieved
          * @param {Object=} context Optional context object to change the preference lookup
          * @return {{scope: string, layer: ?string, layerID: ?object}} Object describing where the preferences came from
@@ -122534,7 +122533,7 @@ define("preferences/PreferencesBase", function (require, exports, module) {
 
         /**
        * Sets the prefixed preference.
-       *
+       * @private
        * @param {string} id - The identifier of the preference to set.
        * @param {Object} value - The new value for the preference.
        * @param {{location: ?Object, context: ?Object}=} options - Specific location to set the value or context for the operation.
@@ -122587,7 +122586,7 @@ define("preferences/PreferencesBase", function (require, exports, module) {
         /**
          * Sets up a listener for events for this PrefixedPreferencesSystem. Only prefixed events
          * will notify. Optionally, you can set up a listener for a specific preference.
-         *
+         * @private
          * @param {string} event Name of the event to listen for
          * @param {string|Function} preferenceID Name of a specific preference or the handler function
          * @param {?Function} handler Handler for the event
@@ -122610,7 +122609,7 @@ define("preferences/PreferencesBase", function (require, exports, module) {
         /**
          * Turns off the event handlers for a given event, optionally for a specific preference
          * or a specific handler function.
-         *
+         * @private
          * @param {string} event Name of the event for which to turn off listening
          * @param {string|Function} preferenceID Name of a specific preference or the handler function
          * @param {?Function} handler Specific handler which should stop being notified
@@ -122632,7 +122631,7 @@ define("preferences/PreferencesBase", function (require, exports, module) {
         /**
          * Saves the preferences. If a save is already in progress, a Promise is returned for
          * that save operation.
-         *
+         * @private
          * @return {Promise} Resolved when the preferences are done saving.
          */
         save: function () {
@@ -123396,9 +123395,6 @@ define("preferences/PreferencesBase", function (require, exports, module) {
  *
  */
 
-// @INCLUDE_IN_API_DOCS
-
-
 /**
  * PreferencesDialogs
  *
@@ -123434,6 +123430,7 @@ define("preferences/PreferencesDialogs", function (require, exports, module) {
 
     /**
      * Validate that text string is a valid base url which should map to a server folder
+     * @private
      * @param {string} url
      * @return {string} Empty string if valid, otherwise error string
      */
@@ -123545,6 +123542,8 @@ define("preferences/PreferencesDialogs", function (require, exports, module) {
  *
  */
 
+// @INCLUDE_IN_API_DOCS
+
 /*global define, console */
 /*unittests: Preferences Manager */
 
@@ -123646,6 +123645,7 @@ define("preferences/PreferencesManager", function (require, exports, module) {
 
     /**
      * Context to look up preferences in the current project.
+     *
      * @type {Object}
      */
     var CURRENT_PROJECT = {};
@@ -123746,6 +123746,7 @@ define("preferences/PreferencesManager", function (require, exports, module) {
 
     /**
      * @private
+     *
      * This function is used internally to set the current language of the document.
      * Both at the moment of opening the file and when the language is manually
      * overriden.
@@ -123839,9 +123840,33 @@ define("preferences/PreferencesManager", function (require, exports, module) {
 
     // Context names for preference lookups
     exports.CURRENT_PROJECT     = CURRENT_PROJECT;
+
+    /**
+     * State project context
+     *
+     * @type {string}
+     */
     exports.STATE_PROJECT_CONTEXT = StateManager.PROJECT_CONTEXT;
+
+    /**
+     * State global context
+     *
+     * @type {string}
+     */
     exports.STATE_GLOBAL_CONTEXT = StateManager.GLOBAL_CONTEXT;
+
+    /**
+     * Project then global context
+     *
+     * @type {string}
+     */
     exports.STATE_PROJECT_THEN_GLOBAL_CONTEXT = StateManager.PROJECT_THEN_GLOBAL_CONTEXT;
+
+    /**
+     * Project scope
+     *
+     * @type {Object}
+     */
     exports.PROJECT_SCOPE = { location: { scope: "project" } };
 
     exports.ready               = PreferencesImpl.managerReady;
@@ -123900,9 +123925,27 @@ define("preferences/StateManager", function (require, exports, module) {
         EventDispatcher = require("utils/EventDispatcher"),
         ProjectManager = require("project/ProjectManager");
 
+    /**
+     * Project specific context
+     * @const
+     * @type {string}
+     */
     const PROJECT_CONTEXT = "project";
+
+    /**
+     * Global context
+     * @const
+     * @type {string}
+     */
     const GLOBAL_CONTEXT = "global";
+
+    /**
+     * Project or global context
+     * @const
+     * @type {string}
+     */
     const PROJECT_THEN_GLOBAL_CONTEXT = "any";
+
     const PHSTORE_STATEMANAGER_PREFIX = "STATE_";
     const transformDotsInID = {};
 
@@ -124052,6 +124095,12 @@ define("preferences/StateManager", function (require, exports, module) {
         return preference;
     }
 
+    /**
+     * Get the preference instance for the given ID.
+     *
+     * @param {string} id
+     * @returns {{}}
+     */
     function getPreferenceInternal(id) {
         if(!definedPreferences[id]){
             throw new Error("getPreference " + id + " no such preference defined.");
@@ -124060,6 +124109,19 @@ define("preferences/StateManager", function (require, exports, module) {
     }
 
     const knownExtensions = {};
+
+    /**
+     * create a state manager for an extension.
+     * ensure that the IDs are unique.
+     *
+     * @param {string} extensionID
+     * @returns {object} Object with methods to manage the extension's state and preferences.
+     * - `get(id, context)`: Get the value from the extension's state.
+     * - `set(id, value, context)`: Set the value in the extension's state.
+     * - `definePreference(id, type, initial, options)`: define a preference for the extension.
+     * - `getPreference(id)`: retrieve a defined preference.
+     * - `PROJECT_CONTEXT`, `GLOBAL_CONTEXT`, `PROJECT_THEN_GLOBAL_CONTEXT`: constant for context management.
+     */
     function createExtensionStateManager(extensionID) {
         let i=0;
         if(extensionID.includes(".")){

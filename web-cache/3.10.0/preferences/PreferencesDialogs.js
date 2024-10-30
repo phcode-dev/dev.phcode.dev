@@ -19,9 +19,6 @@
  *
  */
 
-// @INCLUDE_IN_API_DOCS
-
-
 /**
  * PreferencesDialogs
  *
@@ -40,6 +37,7 @@ define(function (require, exports, module) {
 
     /**
      * Validate that text string is a valid base url which should map to a server folder
+     * @private
      * @param {string} url
      * @return {string} Empty string if valid, otherwise error string
      */
