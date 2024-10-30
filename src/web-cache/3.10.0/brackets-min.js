@@ -133623,19 +133623,36 @@ define("search/FileFilters", function (require, exports, module) {
 
     const PREFS_CURRENT_FILTER_STRING = "FIND_IN_FILES_CURRENT_FILTER_STRING";
 
-    const FILTER_TYPE_EXCLUDE = "excludeFilter",
-        FILTER_TYPE_INCLUDE = "includeFilter",
-        FILTER_TYPE_NO_FILTER = "noFilter";
+    /**
+     * @const
+     * @type {string}
+     */
+    const FILTER_TYPE_EXCLUDE = "excludeFilter";
+
+    /**
+     * @const
+     * @type {string}
+     */
+    const FILTER_TYPE_INCLUDE = "includeFilter";
+
+    /**
+     * @const
+     * @type {string}
+     */
+    const FILTER_TYPE_NO_FILTER = "noFilter";
+
 
     let currentFilter = null,
         currentFilterType = FILTER_TYPE_NO_FILTER;
 
     /**
      * @type {DropdownButton}
+     * @private
      */
     let _picker = null;
     /**
      * @type { jQuery }
+     * @private
      */
     let $filterContainer = null;
 
@@ -134869,8 +134886,9 @@ define("search/FindBar", function (require, exports, module) {
         this.trigger("doFind");
     };
 
-    /*
+    /**
      * Returns the string used to prepopulate the find bar
+     * @private
      * @param {!Editor} editor
      * @return {string} first line of primary selection to populate the find bar
      */
@@ -134885,7 +134903,7 @@ define("search/FindBar", function (require, exports, module) {
 
     /**
      * Retrieves the appropriate query and replacement text to prepopulate the Find Bar.
-     *
+     * @private
      * @static
      * @param {?FindBar} currentFindBar - The currently open Find Bar, if any.
      * @param {?Editor} activeEditor - The active editor, if any.
@@ -135004,6 +135022,7 @@ define("search/FindInFiles", function (require, exports, module) {
     /**
      * Maximum length of text displayed in search results panel
      * @const
+     * @private
      */
     var MAX_DISPLAY_LENGTH = 200;
 
@@ -135027,17 +135046,24 @@ define("search/FindInFiles", function (require, exports, module) {
      * Waits for FS changes to stack up until processing them
      * (scripts like npm install can do a lot of movements on the disk)
      * @const
+     * @private
      */
     var FILE_SYSTEM_EVENT_DEBOUNCE_TIME = 100;
 
-    /** Remove the listeners that were tracking potential search result changes */
+    /**
+     * Remove the listeners that were tracking potential search result changes
+     * @private
+     */
     function _removeListeners() {
         DocumentModule.off("documentChange", _documentChangeHandler);
         FileSystem.off("change", _debouncedFileSystemChangeHandler);
         DocumentManager.off("fileNameChange", _fileNameChangeHandler);
     }
 
-    /** Add listeners to track events that might change the search result set */
+    /**
+     * Add listeners to track events that might change the search result set
+     * @private
+     */
     function _addListeners() {
         // Avoid adding duplicate listeners - e.g. if a 2nd search is run without closing the old results panel first
         _removeListeners();
@@ -135260,7 +135286,7 @@ define("search/FindInFiles", function (require, exports, module) {
     /**
      * Checks that the file matches the given subtree scope. To fully check whether the file
      * should be in the search set, use _inSearchScope() instead - a supserset of this.
-     *
+     * @private
      * @param {!File} file
      * @param {?FileSystemEntry} scope Search scope, or null if whole project
      * @return {boolean}
@@ -135280,6 +135306,7 @@ define("search/FindInFiles", function (require, exports, module) {
 
     /**
      * Filters out files that are known binary types.
+     * @private
      * @param {string} fullPath
      * @return {boolean} True if the file's contents can be read as text
      */
@@ -135315,6 +135342,7 @@ define("search/FindInFiles", function (require, exports, module) {
      * file exclusion filters, and isn't binary). Used when updating results incrementally - during the
      * initial search, these checks are done in bulk via getCandidateFiles() and the filterFileList() call
      * after it.
+     * @private
      * @param {!File} file
      * @return {boolean}
      */
@@ -135614,6 +135642,7 @@ define("search/FindInFiles", function (require, exports, module) {
 
     /**
      * Notify worker that the results should be collapsed
+     * @private
      */
     function _searchcollapseResults() {
         IndexingWorker.execPeer("collapseResults", FindUtils.isCollapsedResults());
@@ -135622,6 +135651,7 @@ define("search/FindInFiles", function (require, exports, module) {
     /**
      * Inform worker that the list of files has changed.
      * @param {array} fileList The list of files that changed.
+     * @private
      */
     function filesChanged(fileList) {
         if (!fileList || fileList.length === 0) {
@@ -135640,6 +135670,7 @@ define("search/FindInFiles", function (require, exports, module) {
     /**
      * Inform worker that the list of files have been removed.
      * @param {array} fileList The list of files that was removed.
+     * @private
      */
     function filesRemoved(fileList) {
         if (!fileList || fileList.length === 0) {
@@ -135818,12 +135849,14 @@ define("search/FindInFiles", function (require, exports, module) {
 
     /**
      * This stores file system events emitted by watchers that were not yet processed
+     * @private
      */
     var _cachedFileSystemEvents = [];
 
     /**
      * Debounced function to process emitted file system events
      * for cases when there's a lot of fs events emitted in a very short period of time
+     * @private
      */
     _processCachedFileSystemEvents = _.debounce(function () {
         // we need to reduce _cachedFileSystemEvents not to contain duplicates!
@@ -135847,6 +135880,7 @@ define("search/FindInFiles", function (require, exports, module) {
     /**
      * Wrapper function for _fileSystemChangeHandler which handles all incoming fs events
      * putting them to cache and executing a debounced function
+     * @private
      */
     _debouncedFileSystemChangeHandler = function (event, entry, added, removed) {
         // normalize this here so we don't need to handle null later
@@ -135872,6 +135906,7 @@ define("search/FindInFiles", function (require, exports, module) {
      *
      * This should never be called directly and only called via _scheduleCacheInit() below
      * to not affect project load performance.
+     * @private
      */
     var _initCache = function () {
         projectIndexingComplete = false;
@@ -135939,6 +135974,10 @@ define("search/FindInFiles", function (require, exports, module) {
         return searchDeferred.promise();
     }
 
+    /**
+     * Get all the search results.
+     * @return {object} A promise that's resolved with the search results or rejected when the find competes.
+     */
     function getAllSearchResults() {
         var searchDeferred = $.Deferred();
         if (searchModel.allResultsAvailable) {
@@ -136605,8 +136644,6 @@ define("search/FindInFilesUI", function (require, exports, module) {
  */
 
 /*unittests: FindReplace*/
-
-// @INCLUDE_IN_API_DOCS
 
 /**
  * Adds Find and Replace commands
@@ -137395,10 +137432,37 @@ define("search/FindUtils", function (require, exports, module) {
         StringUtils = require("utils/StringUtils"),
         _ = require("thirdparty/lodash");
 
-    var instantSearchDisabled = false,
-        indexingInProgress = false,
-        workerSearchCount = 0,
-        collapseResults = false;
+    /**
+     * if instant search is disabled, defaults to false
+     *
+     * @private
+     * @type {boolean}
+     */
+    let instantSearchDisabled = false;
+
+    /**
+     * if indexing in progress, defaults to false
+     *
+     * @private
+     * @type {boolean}
+     */
+    let indexingInProgress = false;
+
+    /**
+     * count of worker search, defaults to 0
+     *
+     * @private
+     * @type {number}
+     */
+    let workerSearchCount = 0;
+
+    /**
+     * if collapse results, defaults to false
+     *
+     * @private
+     * @type {boolean}
+     */
+    let collapseResults = false;
 
     EventDispatcher.makeEventDispatcher(exports);
 
@@ -137407,6 +137471,7 @@ define("search/FindUtils", function (require, exports, module) {
      * regexp match info.
      * NOTE: we can't just use the ordinary replace() function here because the string has been
      * extracted from the original text and so might be missing some context that the regexp matched.
+     *
      * @param {string} replaceWith The string containing the $-expressions.
      * @param {Object} match The match data from the regexp.
      * @return {string} The replace text with the $-expressions substituted.
@@ -137438,6 +137503,8 @@ define("search/FindUtils", function (require, exports, module) {
 
     /**
      * Does a set of replacements in a single document in memory.
+     *
+     * @private
      * @param {!Document} doc The document to do the replacements in.
      * @param {Object} matchInfo The match info for this file, as returned by `_addSearchMatches()`. Might be mutated.
      * @param {string} replaceText The text to replace each result with.
@@ -137470,6 +137537,8 @@ define("search/FindUtils", function (require, exports, module) {
 
     /**
      * Does a set of replacements in a single file on disk.
+     *
+     * @private
      * @param {string} fullPath The full path to the file.
      * @param {Object} matchInfo The match info for this file, as returned by `_addSearchMatches()`.
      * @param {string} replaceText The text to replace each result with.
@@ -137511,6 +137580,8 @@ define("search/FindUtils", function (require, exports, module) {
     /**
      * Does a set of replacements in a single file. If the file is already open in a Document in memory,
      * will do the replacement there, otherwise does it directly on disk.
+     *
+     * @private
      * @param {string} fullPath The full path to the file.
      * @param {Object} matchInfo The match info for this file, as returned by `_addSearchMatches()`.
      * @param {string} replaceText The text to replace each result with.
@@ -137619,6 +137690,7 @@ define("search/FindUtils", function (require, exports, module) {
 
     /**
      * Returns label text to indicate the search scope. Already HTML-escaped.
+     *
      * @param {?Entry} scope
      * @return {string}
      */
@@ -137637,6 +137709,7 @@ define("search/FindUtils", function (require, exports, module) {
 
     /**
      * Parses the given query into a regexp, and returns whether it was valid or not.
+     *
      * @param {{query: string, caseSensitive: boolean, isRegexp: boolean}} queryInfo
      * @return {{queryExpr: RegExp, valid: boolean, empty: boolean, error: string}}
      *      queryExpr - the regexp representing the query
@@ -137675,6 +137748,7 @@ define("search/FindUtils", function (require, exports, module) {
 
     /**
     * Prioritizes the open file and then the working set files to the starting of the list of files
+     *
     * @param {Array.<*>} files An array of file paths or file objects to sort
     * @param {?string} firstFile If specified, the path to the file that should be sorted to the top.
     * @return {Array.<*>}
@@ -137719,6 +137793,7 @@ define("search/FindUtils", function (require, exports, module) {
 
     /**
      * Returns the path of the currently open file or null if there isn't one open
+     *
      * @return {?string}
      */
     function getOpenFilePath() {
@@ -137728,6 +137803,7 @@ define("search/FindUtils", function (require, exports, module) {
 
     /**
      * enable/disable instant search
+     *
      * @param {boolean} disable true to disable web worker based search
      */
     function setInstantSearchDisabled(disable) {
@@ -137736,6 +137812,7 @@ define("search/FindUtils", function (require, exports, module) {
 
     /**
      * if instant search is disabled, this will return true we can only do instant search through worker
+     *
      * @return {boolean}
      */
     function isInstantSearchDisabled() {
@@ -137744,6 +137821,7 @@ define("search/FindUtils", function (require, exports, module) {
 
     /**
      * check if a search is progressing in worker
+     *
      * @return {Boolean} true if search is processing in worker
      */
     function isWorkerSearchInProgress() {
@@ -137810,6 +137888,7 @@ define("search/FindUtils", function (require, exports, module) {
 
     /**
      * Return true if indexing is in progress in worker
+     *
      * @return {boolean} true if files are being indexed in worker
      */
     function isIndexingInProgress() {
@@ -137818,6 +137897,7 @@ define("search/FindUtils", function (require, exports, module) {
 
     /**
      * Set if we need to collapse all results in the results pane
+     *
      * @param {boolean} collapse true to collapse
      */
     function setCollapseResults(collapse) {
@@ -137827,6 +137907,7 @@ define("search/FindUtils", function (require, exports, module) {
 
     /**
      * check if results should be collapsed
+     *
      * @return {boolean} true if results should be collapsed
      */
     function isCollapsedResults() {
@@ -137919,6 +138000,10 @@ define("search/QuickOpen", function (require, exports, module) {
     var _providerRegistrationHandler = new ProviderRegistrationHandler(),
         _registerQuickOpenProvider = _providerRegistrationHandler.registerProvider.bind(_providerRegistrationHandler);
 
+    /**
+     * Represents the symbol kind
+     * @type {Object}
+     */
     var SymbolKind = {
         "1": "File",
         "2": "Module",
@@ -137950,25 +138035,34 @@ define("search/QuickOpen", function (require, exports, module) {
 
     /**
      * The regular expression to check the cursor position
+     * @private
      * @const {RegExp}
      */
     var CURSOR_POS_EXP = new RegExp(":([^,]+)?(,(.+)?)?");
 
     /**
      * Current plugin
+     * @private
      * @type {QuickOpenPlugin}
      */
     var currentPlugin = null;
 
-    /** @type {Array.<File>} */
+    /**
+     *  @type {Array.<File>}
+     *  @private
+     */
     var fileList;
 
-    /** @type {$.Promise} */
+    /**
+     * @type {$.Promise}
+     * @private
+     */
     var fileListPromise;
 
     /**
      * The currently open (or last open) QuickNavigateDialog
      * @type {?QuickNavigateDialog}
+     * @private
      */
     var _curDialog;
 
@@ -138050,6 +138144,7 @@ define("search/QuickOpen", function (require, exports, module) {
 
     /**
      * QuickNavigateDialog class
+     * @private
      * @constructor
      */
     function QuickNavigateDialog() {
@@ -138075,6 +138170,7 @@ define("search/QuickOpen", function (require, exports, module) {
      * True if the search bar is currently open. Note that this is set to false immediately
      * when the bar starts closing; it doesn't wait for the ModalBar animation to finish.
      * @type {boolean}
+     * @private
      */
     QuickNavigateDialog.prototype.isOpen = false;
 
@@ -138145,7 +138241,7 @@ define("search/QuickOpen", function (require, exports, module) {
     /**
      * Attempts to extract a line number from the query where the line number
      * is followed by a colon. Callers should explicitly test result with isNaN()
-     *
+     * @private
      * @param {string} query string to extract line number from
      * @return {{query: string, local: boolean, line: number, ch: number}} An object with
      *      the extracted line and column numbers, and two additional fields: query with the original position
@@ -138177,6 +138273,7 @@ define("search/QuickOpen", function (require, exports, module) {
      * Note, if selectedItem is null quick search should inspect $searchField for text
      * that may have not matched anything in the list, but may have information
      * for carrying out an action (e.g. go to line).
+     * @private
      */
     QuickNavigateDialog.prototype._handleItemSelect = function (selectedItem, query) {
 
@@ -138225,6 +138322,7 @@ define("search/QuickOpen", function (require, exports, module) {
     /**
      * Opens the file specified by selected item if there is no current plug-in, otherwise defers handling
      * to the currentPlugin
+     * @private
      */
     QuickNavigateDialog.prototype._handleItemHighlight = function (selectedItem, query, explicit) {
         if (currentPlugin && currentPlugin.itemFocus) {
@@ -138236,6 +138334,7 @@ define("search/QuickOpen", function (require, exports, module) {
      * Closes the search bar; if search bar is already closing, returns the Promise that is tracking the
      * existing close activity.
      * @return {$.Promise} Resolved when the search bar is entirely closed.
+     * @private
      */
     QuickNavigateDialog.prototype.close = function () {
         if (!this.isOpen) {
@@ -138330,8 +138429,8 @@ define("search/QuickOpen", function (require, exports, module) {
     /**
      * Handles changes to the current query in the search field.
      * @param {string} query The new query.
-     * @return {$.Promise|Array.<*>|{error:?string}} The filtered list of results, an error object, or a Promise that
-     *                                               yields one of those
+     * @return {$.Promise|Array.<*>|{error:?string}} The filtered list of results, an error object, or a Promise that yields one of those
+     * @private
      */
     QuickNavigateDialog.prototype._filterCallback = function (query) {
         // Re-evaluate which plugin is active each time query string changes
@@ -138456,6 +138555,7 @@ define("search/QuickOpen", function (require, exports, module) {
 
     /**
      * Formats the entry for the given item to be displayed in the dropdown.
+     * @private
      * @param {Object} item The item to be displayed.
      * @return {string} The HTML to be displayed.
      */
@@ -138475,6 +138575,7 @@ define("search/QuickOpen", function (require, exports, module) {
     /**
      * Sets the value in the search field, updating the current mode and label based on the
      * given prefix.
+     * @private
      * @param {string} prefix The prefix that determines which mode we're in: must be empty (for file search),
      *      "@" for go to definition, or ":" for go to line.
      * @param {string} initialString The query string to search for (without the prefix).
@@ -138492,6 +138593,7 @@ define("search/QuickOpen", function (require, exports, module) {
 
     /**
      * Sets the dialog label based on the current plugin (if any) and the current query.
+     * @private
      * @param {Object} plugin The current Quick Open plugin, or none if there is none.
      * @param {string} query The user's current query.
      */
@@ -138523,6 +138625,7 @@ define("search/QuickOpen", function (require, exports, module) {
 
     /**
      * Shows the search dialog and initializes the auto suggestion list with filenames from the current project
+     * @private
      */
     QuickNavigateDialog.prototype.showDialog = function (prefix, initialString) {
         if (this.isOpen) {
@@ -138839,7 +138942,7 @@ define("search/QuickOpenHelper", function (require, exports, module) {
 
 // @INCLUDE_IN_API_DOCS
 
-/*
+/**
  * Text field with attached dropdown list that is updated (based on a provider) whenever the text changes.
  *
  * For styling, the DOM structure of the popup is as follows:
@@ -138932,32 +139035,57 @@ define("search/QuickSearchField", function (require, exports, module) {
     /** @type {!Object} */
     QuickSearchField.prototype.options = null;
 
-    /** @type {?$.Promise} Promise corresponding to latest resultProvider call. Any earlier promises ignored */
+    /**
+     * @type {?$.Promise} Promise corresponding to latest resultProvider call. Any earlier promises ignored
+     * @private
+     */
     QuickSearchField.prototype._pending = null;
 
-    /** @type {boolean} True if Enter already pressed & just waiting for results to arrive before committing */
+    /**
+     * @type {boolean} True if Enter already pressed & just waiting for results to arrive before committing
+     * @private
+     */
     QuickSearchField.prototype._commitPending = false;
 
-    /** @type {?string} Value of $input corresponding to the _displayedResults list */
+    /**
+     * @type {?string} Value of $input corresponding to the _displayedResults list
+     * @private
+     */
     QuickSearchField.prototype._displayedQuery = null;
 
-    /** @type {?Array.<*>}  Latest resultProvider result */
+    /**
+     * @type {?Array.<*>}  Latest resultProvider result
+     * @private
+     */
     QuickSearchField.prototype._displayedResults = null;
 
-    /** @type {?number} */
+    /**
+     * @type {?number}
+     * @private
+     */
     QuickSearchField.prototype._highlightIndex = null;
 
-    /** @type {?jQueryObject} Dropdown's "ol", while open; null while closed */
+    /**
+     * @type {?jQueryObject} Dropdown's "ol", while open; null while closed
+     * @private
+     */
     QuickSearchField.prototype._$dropdown = null;
 
-    /** @type {!jQueryObject} */
+    /**
+     * @type {!jQueryObject}
+     */
     QuickSearchField.prototype.$input = null;
 
-    /** @type {!jQueryObject} */
+    /**
+     * @type {!jQueryObject}
+     */
     QuickSearchField.prototype.$positionEl = null;
 
 
-    /** When text field changes, update results list */
+    /**
+     * When text field changes, update results list
+     * @private
+     */
     QuickSearchField.prototype._handleInput = function () {
         this._pending = null;  // immediately invalidate any previous Promise
 
@@ -138973,7 +139101,10 @@ define("search/QuickSearchField", function (require, exports, module) {
         }, 0);
     };
 
-    /** Handle special keys: Enter, Up/Down */
+    /**
+     * Handle special keys: Enter, Up/Down
+     * @private
+     */
     QuickSearchField.prototype._handleKeyDown = function (event) {
         let popupVisible = false;
         if (this._$dropdown && this._$dropdown.is(":visible")) {
@@ -139029,7 +139160,10 @@ define("search/QuickSearchField", function (require, exports, module) {
         }
     };
 
-    /** Call onCommit() immediately */
+    /**
+     * Call onCommit() immediately
+     * @private
+     */
     QuickSearchField.prototype._doCommit = function (index) {
         var item;
         if (this._displayedResults && this._displayedResults.length) {
@@ -139042,7 +139176,10 @@ define("search/QuickSearchField", function (require, exports, module) {
         this.options.onCommit(item, this._displayedQuery, this._highlightIndex);
     };
 
-    /** Update display to reflect value of _highlightIndex, & call onHighlight() */
+    /**
+     * Update display to reflect value of _highlightIndex, & call onHighlight()
+     * @private
+     */
     QuickSearchField.prototype._updateHighlight = function (explicit) {
         if (this._$dropdown) {
             var $items = this._$dropdown.find("li");
@@ -139090,7 +139227,10 @@ define("search/QuickSearchField", function (require, exports, module) {
     };
 
 
-    /** Close dropdown result list if visible */
+    /**
+     * Close dropdown result list if visible
+     * @private
+     */
     QuickSearchField.prototype._closeDropdown = function () {
         if (this._$dropdown) {
             this._$dropdown.remove();
@@ -139104,6 +139244,7 @@ define("search/QuickSearchField", function (require, exports, module) {
 
     /**
      * Open dropdown result list & populate with the given content
+     * @private
      * @param {!string|jQueryObject} htmlContent
      */
     QuickSearchField.prototype._openDropdown = function (htmlContent) {
@@ -139140,6 +139281,7 @@ define("search/QuickSearchField", function (require, exports, module) {
     /**
      * Given finished provider result, format it into HTML and show in dropdown, and update "no-results" style.
      * If an Enter key commit was pending from earlier, process it now.
+     * @private
      * @param {!Array.<*>} results
      * @param {!string} query
      */
@@ -139246,8 +139388,6 @@ define("search/QuickSearchField", function (require, exports, module) {
  *
  */
 
-// @INCLUDE_IN_API_DOCS
-
 /**
  * Manages tickmarks shown along the scrollbar track.
  * NOT yet intended for use by anyone other than the FindReplace module.
@@ -139264,36 +139404,42 @@ define("search/ScrollTrackMarkers", function (require, exports, module) {
     /**
      * Editor the markers are currently shown for, or null if not shown
      * @type {?Editor}
+     * @private
      */
     var editor;
 
     /**
      * Top of scrollbar track area, relative to top of scrollbar
      * @type {number}
+     * @private
      */
     var trackOffset;
 
     /**
      * Height of scrollbar track area
      * @type {number}
+     * @private
      */
     var trackHt;
 
     /**
      * Text positions of markers
      * @type {!{line: number, ch: number}} Array
+     * @private
      */
     var marks = [];
 
     /**
      * Tickmark markCurrent() last called on, or null if never called / called with -1.
      * @type {?jQueryObject}
+     * @private
      */
     var $markedTickmark;
 
     /**
      * Vertical space above and below the scrollbar
      * @type {number}
+     * @private
      */
     var scrollbarTrackOffset;
 
@@ -139332,7 +139478,10 @@ define("search/ScrollTrackMarkers", function (require, exports, module) {
         return $(editor.getRootElement()).children(".CodeMirror-vscrollbar");
     }
 
-    /** Measure scrollbar track */
+    /**
+     * Measure scrollbar track
+     * @private
+     */
     function _calcScaling() {
         var $sb = _getScrollbar(editor);
 
@@ -139349,7 +139498,10 @@ define("search/ScrollTrackMarkers", function (require, exports, module) {
         }
     }
 
-    /** Add all the given tickmarks to the DOM in a batch */
+    /**
+     * Add all the given tickmarks to the DOM in a batch
+     * @private
+     */
     function _renderMarks(posArray) {
         var html = "",
             cm = editor._codeMirror,
@@ -139396,7 +139548,9 @@ define("search/ScrollTrackMarkers", function (require, exports, module) {
         }
     }
 
-    /** Add or remove the tickmark track from the editor's UI */
+    /**
+     * Add or remove the tickmark track from the editor's UI
+     */
     function setVisible(curEditor, visible) {
         // short-circuit no-ops
         if ((visible && curEditor === editor) || (!visible && !editor)) {
@@ -139448,7 +139602,9 @@ define("search/ScrollTrackMarkers", function (require, exports, module) {
         _renderMarks(posArray);
     }
 
-    /** @param {number} index Either -1, or an index into the array passed to addTickmarks() */
+    /**
+     * @param {number} index Either -1, or an index into the array passed to addTickmarks()
+     */
     function markCurrent(index) {
         // Remove previous highlight first
         if ($markedTickmark) {
@@ -139863,6 +140019,7 @@ define("search/SearchResultsView", function (require, exports, module) {
      * @const
      * The maximum results to show per page.
      * @type {number}
+     * @private
      */
     var RESULTS_PER_PAGE = 100;
 
@@ -139870,6 +140027,7 @@ define("search/SearchResultsView", function (require, exports, module) {
      * @const
      * Debounce time for document changes updating the search results view.
      * @type {number}
+     * @private
      */
     var UPDATE_TIMEOUT   = 400;
 
@@ -139917,40 +140075,71 @@ define("search/SearchResultsView", function (require, exports, module) {
     }
     EventDispatcher.makeEventDispatcher(SearchResultsView.prototype);
 
-    /** @type {SearchModel} The search results model we're viewing. */
+    /**
+     * @type {SearchModel} The search results model we're viewing.
+     * @private
+     */
     SearchResultsView.prototype._model = null;
 
     /**
      * Array with content used in the Results Panel
      * @type {Array.<{fileIndex: number, filename: string, fullPath: string, items: Array.<Object>}>}
+     * @private
      */
     SearchResultsView.prototype._searchList = [];
 
-    /** @type {Panel} Bottom panel holding the search results */
+    /**
+     * @type {Panel} Bottom panel holding the search results
+     * @private
+     */
     SearchResultsView.prototype._panel = null;
 
-    /** @type {?string} The full path of the file that was open in the main editor on the initial search */
+    /**
+     * @type {?string} The full path of the file that was open in the main editor on the initial search
+     * @private
+     */
     SearchResultsView.prototype._initialFilePath = null;
 
-    /** @type {number} The index of the first result that is displayed */
+    /**
+     * @type {number} The index of the first result that is displayed
+     * @private
+     */
     SearchResultsView.prototype._currentStart = 0;
 
-    /** @type {boolean} Used to remake the replace all summary after it is changed */
+    /**
+     * @type {boolean} Used to remake the replace all summary after it is changed
+     * @private
+     */
     SearchResultsView.prototype._allChecked = false;
 
-    /** @type {$.Element} The currently selected row */
+    /**
+     * @type {$.Element} The currently selected row
+     * @private
+     */
     SearchResultsView.prototype._$selectedRow = null;
 
-    /** @type {$.Element} The element where the title is placed */
+    /**
+     * @type {$.Element} The element where the title is placed
+     * @private
+     */
     SearchResultsView.prototype._$summary = null;
 
-    /** @type {$.Element} The table that holds the results */
+    /**
+     * @type {$.Element} The table that holds the results
+     * @private
+     */
     SearchResultsView.prototype._$table = null;
 
-    /** @type {number} The ID we use for timeouts when handling model changes. */
+    /**
+     * @type {number} The ID we use for timeouts when handling model changes.
+     * @private
+     */
     SearchResultsView.prototype._timeoutID = null;
 
-    /** @type {string} The Id we use to check if it is reference search or match search */
+    /**
+     * @type {string} The Id we use to check if it is reference search or match search
+     * @private
+     */
     SearchResultsView.prototype._searchResultsType = null;
 
     /**
@@ -140507,6 +140696,7 @@ define("search/SearchResultsView", function (require, exports, module) {
 
     /**
      * Updates the results view after a model change, preserving scroll position and selection.
+     * @private
      */
     SearchResultsView.prototype._updateResults = function () {
         // In general this shouldn't get called if the panel is closed, but in case some
