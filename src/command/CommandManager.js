@@ -34,16 +34,36 @@ define(function (require, exports, module) {
 
     const EventDispatcher = require("utils/EventDispatcher");
 
+    /**
+     * Event triggered before command executes.
+     * @constant {string}
+     */
     const EVENT_BEFORE_EXECUTE_COMMAND = "beforeExecuteCommand";
-    const SOURCE_KEYBOARD_SHORTCUT = "keyboardShortcut",
-        SOURCE_UI_MENU_CLICK = "uiMenuClick",
-        SOURCE_OTHER = "otherExecAction";
+
+    /**
+     * Keyboard shortcut trigger.
+     * @constant {string}
+     */
+    const SOURCE_KEYBOARD_SHORTCUT = "keyboardShortcut";
+
+    /**
+     * UI menu click trigger.
+     * @constant {string}
+     */
+    const SOURCE_UI_MENU_CLICK = "uiMenuClick";
+
+    /**
+     * Other trigger types.
+     * @constant {string}
+     */
+    const SOURCE_OTHER = "otherExecAction";
 
 
     /**
      * Map of all registered global commands
      * @type {Object} CommandMap
      * @property {Object.<string, Command>} commands - A map of command IDs to Command objects.
+     * @private
      */
     let _commands = {};
 
@@ -52,6 +72,7 @@ define(function (require, exports, module) {
      * TODO (issue #1039): implement separate require contexts for unit tests
      * @type {Object} CommandMap
      * @property {Object.<string, Command>} commands - A map of command IDs to Command objects.
+     * @private
      */
     let _commandsOriginal = {};
 
@@ -63,7 +84,6 @@ define(function (require, exports, module) {
      * - keyBindingRemoved
      *
      * @constructor
-     * @private
      * @param {string} name - text that will be displayed in the UI to represent command
      * @param {string} id
      * @param {function} commandFn - the function that is called when the command is executed.
@@ -83,6 +103,7 @@ define(function (require, exports, module) {
 
     /**
      * Get command id
+     *
      * @return {string}
      */
     Command.prototype.getID = function () {
@@ -120,6 +141,7 @@ define(function (require, exports, module) {
 
     /**
      * Is command enabled?
+     *
      * @return {boolean}
      */
     Command.prototype.getEnabled = function () {
@@ -129,6 +151,7 @@ define(function (require, exports, module) {
     /**
      * Sets enabled state of Command and dispatches "enabledStateChange"
      * when the enabled state changes.
+     *
      * @param {boolean} enabled
      */
     Command.prototype.setEnabled = function (enabled) {
@@ -143,6 +166,7 @@ define(function (require, exports, module) {
     /**
      * Sets enabled state of Command and dispatches "checkedStateChange"
      * when the enabled state changes.
+     *
      * @param {boolean} checked
      */
     Command.prototype.setChecked = function (checked) {
@@ -156,6 +180,7 @@ define(function (require, exports, module) {
 
     /**
      * Is command checked?
+     *
      * @return {boolean}
      */
     Command.prototype.getChecked = function () {
@@ -183,6 +208,7 @@ define(function (require, exports, module) {
 
     /**
      * Get command name
+     *
      * @return {string}
      */
     Command.prototype.getName = function () {
@@ -193,6 +219,7 @@ define(function (require, exports, module) {
 
     /**
      * Registers a global command.
+     *
      * @param {string} name - text that will be displayed in the UI to represent command
      * @param {string} id - unique identifier for command.
      *      Core commands in Brackets use a simple command title as an id, for example "open.file".
@@ -228,6 +255,7 @@ define(function (require, exports, module) {
 
     /**
      * Registers a global internal only command.
+     *
      * @param {string} id - unique identifier for command.
      *      Core commands in Brackets use a simple command title as an id, for example "app.abort_quit".
      *      Extensions should use the following format: "author.myextension.mycommandname".
@@ -259,6 +287,7 @@ define(function (require, exports, module) {
     /**
      * Clear all commands for unit testing, but first make copy of commands so that
      * they can be restored afterward
+     * @private
      */
     function _testReset() {
         _commandsOriginal = _commands;
@@ -267,6 +296,7 @@ define(function (require, exports, module) {
 
     /**
      * Restore original commands after test and release copy
+     * @private
      */
     function _testRestore() {
         _commands = _commandsOriginal;

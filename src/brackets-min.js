@@ -7858,16 +7858,36 @@ define("command/CommandManager", function (require, exports, module) {
 
     const EventDispatcher = require("utils/EventDispatcher");
 
+    /**
+     * Event triggered before command executes.
+     * @constant {string}
+     */
     const EVENT_BEFORE_EXECUTE_COMMAND = "beforeExecuteCommand";
-    const SOURCE_KEYBOARD_SHORTCUT = "keyboardShortcut",
-        SOURCE_UI_MENU_CLICK = "uiMenuClick",
-        SOURCE_OTHER = "otherExecAction";
+
+    /**
+     * Keyboard shortcut trigger.
+     * @constant {string}
+     */
+    const SOURCE_KEYBOARD_SHORTCUT = "keyboardShortcut";
+
+    /**
+     * UI menu click trigger.
+     * @constant {string}
+     */
+    const SOURCE_UI_MENU_CLICK = "uiMenuClick";
+
+    /**
+     * Other trigger types.
+     * @constant {string}
+     */
+    const SOURCE_OTHER = "otherExecAction";
 
 
     /**
      * Map of all registered global commands
      * @type {Object} CommandMap
      * @property {Object.<string, Command>} commands - A map of command IDs to Command objects.
+     * @private
      */
     let _commands = {};
 
@@ -7876,6 +7896,7 @@ define("command/CommandManager", function (require, exports, module) {
      * TODO (issue #1039): implement separate require contexts for unit tests
      * @type {Object} CommandMap
      * @property {Object.<string, Command>} commands - A map of command IDs to Command objects.
+     * @private
      */
     let _commandsOriginal = {};
 
@@ -7887,7 +7908,6 @@ define("command/CommandManager", function (require, exports, module) {
      * - keyBindingRemoved
      *
      * @constructor
-     * @private
      * @param {string} name - text that will be displayed in the UI to represent command
      * @param {string} id
      * @param {function} commandFn - the function that is called when the command is executed.
@@ -7907,6 +7927,7 @@ define("command/CommandManager", function (require, exports, module) {
 
     /**
      * Get command id
+     *
      * @return {string}
      */
     Command.prototype.getID = function () {
@@ -7944,6 +7965,7 @@ define("command/CommandManager", function (require, exports, module) {
 
     /**
      * Is command enabled?
+     *
      * @return {boolean}
      */
     Command.prototype.getEnabled = function () {
@@ -7953,6 +7975,7 @@ define("command/CommandManager", function (require, exports, module) {
     /**
      * Sets enabled state of Command and dispatches "enabledStateChange"
      * when the enabled state changes.
+     *
      * @param {boolean} enabled
      */
     Command.prototype.setEnabled = function (enabled) {
@@ -7967,6 +7990,7 @@ define("command/CommandManager", function (require, exports, module) {
     /**
      * Sets enabled state of Command and dispatches "checkedStateChange"
      * when the enabled state changes.
+     *
      * @param {boolean} checked
      */
     Command.prototype.setChecked = function (checked) {
@@ -7980,6 +8004,7 @@ define("command/CommandManager", function (require, exports, module) {
 
     /**
      * Is command checked?
+     *
      * @return {boolean}
      */
     Command.prototype.getChecked = function () {
@@ -8007,6 +8032,7 @@ define("command/CommandManager", function (require, exports, module) {
 
     /**
      * Get command name
+     *
      * @return {string}
      */
     Command.prototype.getName = function () {
@@ -8017,6 +8043,7 @@ define("command/CommandManager", function (require, exports, module) {
 
     /**
      * Registers a global command.
+     *
      * @param {string} name - text that will be displayed in the UI to represent command
      * @param {string} id - unique identifier for command.
      *      Core commands in Brackets use a simple command title as an id, for example "open.file".
@@ -8052,6 +8079,7 @@ define("command/CommandManager", function (require, exports, module) {
 
     /**
      * Registers a global internal only command.
+     *
      * @param {string} id - unique identifier for command.
      *      Core commands in Brackets use a simple command title as an id, for example "app.abort_quit".
      *      Extensions should use the following format: "author.myextension.mycommandname".
@@ -8083,6 +8111,7 @@ define("command/CommandManager", function (require, exports, module) {
     /**
      * Clear all commands for unit testing, but first make copy of commands so that
      * they can be restored afterward
+     * @private
      */
     function _testReset() {
         _commandsOriginal = _commands;
@@ -8091,6 +8120,7 @@ define("command/CommandManager", function (require, exports, module) {
 
     /**
      * Restore original commands after test and release copy
+     * @private
      */
     function _testRestore() {
         _commands = _commandsOriginal;
@@ -8183,186 +8213,453 @@ define("command/CommandManager", function (require, exports, module) {
  *
  */
 
-define("command/Commands", function (require, exports, module) {
+// @INCLUDE_IN_API_DOCS
 
+define("command/Commands", function (require, exports, module) {
 
     var DeprecationWarning = require("utils/DeprecationWarning");
 
-    /**
-     * List of constants for global command IDs.
-     */
-
-    // FILE
+    /** Creates a new untitled document */
     exports.FILE_NEW_UNTITLED           = "file.newDoc";                // DocumentCommandHandlers.js   handleFileNew()
+
+    /** Creates a new file in the current project */
     exports.FILE_NEW                    = "file.newFile";               // DocumentCommandHandlers.js   handleFileNewInProject()
+
+    /** Creates a new project */
     exports.FILE_NEW_PROJECT            = "file.newProject";            // Phoenix extension: new-project.js
+
+    /** Creates a new folder in the current project */
     exports.FILE_NEW_FOLDER             = "file.newFolder";             // DocumentCommandHandlers.js   handleNewFolderInProject()
+
+    /** Duplicates the selected file or folder */
     exports.FILE_DUPLICATE              = "file.duplicate";             // ProjectManager.js
+
+    /** Duplicates the selected file */
     exports.FILE_DUPLICATE_FILE         = "file.duplicateFile";             // ProjectManager.js
+
+    /** Downloads the selected file */
     exports.FILE_DOWNLOAD               = "file.download";              // ProjectManager.js
+
+    /** Downloads the entire project */
     exports.FILE_DOWNLOAD_PROJECT       = "file.downloadProject";              // ProjectManager.js
+
+    /** Cuts the selected file or folder to clipboard */
     exports.FILE_CUT                    = "file.cut";                   // ProjectManager.js
+
+    /** Copies the selected file or folder to clipboard */
     exports.FILE_COPY                   = "file.copy";                  // ProjectManager.js
+
+    /** Copies the path of selected file or folder */
     exports.FILE_COPY_PATH              = "file.copy.path";             // ProjectManager.js
+
+    /** Pastes file or folder from clipboard */
     exports.FILE_PASTE                  = "file.paste";                 // ProjectManager.js
+
+    /** Opens a file */
     exports.FILE_OPEN                   = "file.open";                  // DocumentCommandHandlers.js   handleDocumentOpen()
+
+    /** Opens a folder as a project */
     exports.FILE_OPEN_FOLDER            = "file.openFolder";            // ProjectManager.js            openProject()
+
+    /** Saves the current file */
     exports.FILE_SAVE                   = "file.save";                  // DocumentCommandHandlers.js   handleFileSave()
+
+    /** Saves all open files */
     exports.FILE_SAVE_ALL               = "file.saveAll";               // DocumentCommandHandlers.js   handleFileSaveAll()
+
+    /** Saves current file with a new name */
     exports.FILE_SAVE_AS                = "file.saveAs";                // DocumentCommandHandlers.js   handleFileSaveAs()
+
+    /** Closes the current file */
     exports.FILE_CLOSE                  = "file.close";                 // DocumentCommandHandlers.js   handleFileClose()
+
+    /** Closes all open files */
     exports.FILE_CLOSE_ALL              = "file.close_all";             // DocumentCommandHandlers.js   handleFileCloseAll()
+
+    /** Closes files from list */
     exports.FILE_CLOSE_LIST             = "file.close_list";            // DocumentCommandHandlers.js   handleFileCloseList()
+
+    /** Reopens last closed file */
     exports.FILE_REOPEN_CLOSED          = "file.reopen_closed";         // DocumentCommandHandlers.js   handleReopenClosed()
+
+    /** Opens files that were dropped */
     exports.FILE_OPEN_DROPPED_FILES     = "file.openDroppedFiles";      // DragAndDrop.js               openDroppedFiles()
+
+    /** Toggles live file preview */
     exports.FILE_LIVE_FILE_PREVIEW      = "file.liveFilePreview";       // LiveDevelopment/main.js      _handleGoLiveCommand()
+
+    /** Opens live preview settings */
     exports.FILE_LIVE_FILE_PREVIEW_SETTINGS = "file.liveFilePreviewSettings";       // LiveDevelopment/main.js      _handleGoLiveCommand()
+
+    /** Toggles live preview multi-browser mode */
     exports.TOGGLE_LIVE_PREVIEW_MB_MODE = "file.toggleLivePreviewMB";   // LiveDevelopment/main.js      _toggleLivePreviewMultiBrowser()
+
+    /** Reloads live preview */
     exports.CMD_RELOAD_LIVE_PREVIEW     = "file.reloadLivePreview";     // LiveDevelopment/main.js      _handleReloadLivePreviewCommand()
+
+    /** Toggles live highlight */
     exports.FILE_LIVE_HIGHLIGHT         = "file.previewHighlight";      // LiveDevelopment/main.js      _handlePreviewHighlightCommand()
+
+    /** Opens project settings */
     exports.FILE_PROJECT_SETTINGS       = "file.projectSettings";       // ProjectManager.js            _projectSettings()
+
+    /** Renames selected file or folder */
     exports.FILE_RENAME                 = "file.rename";                // DocumentCommandHandlers.js   handleFileRename()
+
+    /** Deletes selected file or folder */
     exports.FILE_DELETE                 = "file.delete";                // DocumentCommandHandlers.js   handleFileDelete()
+
+    /** Opens extension manager */
     exports.FILE_EXTENSION_MANAGER      = "file.extensionManager";      // ExtensionManagerDialog.js    _showDialog()
+
+    /** Refreshes the file tree */
     exports.FILE_REFRESH                = "file.refresh";               // ProjectManager.js            refreshFileTree()
+
+    /** Toggles show folders first in file tree */
     exports.FILE_SHOW_FOLDERS_FIRST     = "file.showFolderFirst";       // ProjectManager.js
+
+    /** Opens preferences */
     exports.FILE_OPEN_PREFERENCES       = "file.openPreferences";       // PreferencesManager.js        _handleOpenPreferences()
+
+    /** Opens keymap settings */
     exports.FILE_OPEN_KEYMAP            = "file.openKeyMap";            // KeyBindingManager.js         _openUserKeyMap()
 
-    // File shell callbacks - string must MATCH string in native code (appshell/command_callbacks.h)
+    /** Opens new window */
     exports.FILE_NEW_WINDOW             = "file.new_window";            // DocumentCommandHandlers.js   handleFileNewWindow()
+
+    /** Closes current window */
     exports.FILE_CLOSE_WINDOW           = "file.close_window";          // DocumentCommandHandlers.js   handleFileCloseWindow()
+
+    /** Quits the application */
     exports.FILE_QUIT                   = "file.quit";                  // DocumentCommandHandlers.js   handleFileQuit()
+
+
 
     // EDIT
     // File shell callbacks - string must MATCH string in native code (appshell/command_callbacks.h)
+    /** Undoes the last edit operation */
     exports.EDIT_UNDO                   = "edit.undo";                  // EditorCommandHandlers.js     handleUndo()
+
+    /** Redoes the last undone edit operation */
     exports.EDIT_REDO                   = "edit.redo";                  // EditorCommandHandlers.js     handleRedo()
+
+    /** Cuts the selected text to clipboard */
     exports.EDIT_CUT                    = "edit.cut";                   // EditorCommandHandlers.js     ignoreCommand()
+
+    /** Copies the selected text to clipboard */
     exports.EDIT_COPY                   = "edit.copy";                  // EditorCommandHandlers.js     ignoreCommand()
+
+    /** Pastes text from clipboard */
     exports.EDIT_PASTE                  = "edit.paste";                 // EditorCommandHandlers.js     ignoreCommand()
+
+    /** Selects all text in the current document */
     exports.EDIT_SELECT_ALL             = "edit.selectAll";             // EditorCommandHandlers.js     _handleSelectAll()
 
+    /** Selects the current line */
     exports.EDIT_SELECT_LINE            = "edit.selectLine";            // EditorCommandHandlers.js     selectLine()
+
+    /** Splits selection into individual lines */
     exports.EDIT_SPLIT_SEL_INTO_LINES   = "edit.splitSelIntoLines";     // EditorCommandHandlers.js     splitSelIntoLines()
+
+    /** Adds cursor to the next line */
     exports.EDIT_ADD_CUR_TO_NEXT_LINE   = "edit.addCursorToNextLine";   // EditorCommandHandlers.js     addCursorToNextLine()
+
+    /** Adds cursor to the previous line */
     exports.EDIT_ADD_CUR_TO_PREV_LINE   = "edit.addCursorToPrevLine";   // EditorCommandHandlers.js     addCursorToPrevLine()
+
+    /** Indents the selected text */
     exports.EDIT_INDENT                 = "edit.indent";                // EditorCommandHandlers.js     indentText()
+
+    /** Unindents the selected text */
     exports.EDIT_UNINDENT               = "edit.unindent";              // EditorCommandHandlers.js     unindentText()
+
+    /** Duplicates the selected text */
     exports.EDIT_DUPLICATE              = "edit.duplicate";             // EditorCommandHandlers.js     duplicateText()
+
+    /** Deletes the current line(s) */
     exports.EDIT_DELETE_LINES           = "edit.deletelines";           // EditorCommandHandlers.js     deleteCurrentLines()
+
+    /** Toggles line comment for current selection */
     exports.EDIT_LINE_COMMENT           = "edit.lineComment";           // EditorCommandHandlers.js     lineComment()
+
+    /** Toggles block comment for current selection */
     exports.EDIT_BLOCK_COMMENT          = "edit.blockComment";          // EditorCommandHandlers.js     blockComment()
+
+    /** Moves current line up */
     exports.EDIT_LINE_UP                = "edit.lineUp";                // EditorCommandHandlers.js     moveLineUp()
+
+    /** Moves current line down */
     exports.EDIT_LINE_DOWN              = "edit.lineDown";              // EditorCommandHandlers.js     moveLineDown()
+
+    /** Opens a new line above current line */
     exports.EDIT_OPEN_LINE_ABOVE        = "edit.openLineAbove";         // EditorCommandHandlers.js     openLineAbove()
+
+    /** Opens a new line below current line */
     exports.EDIT_OPEN_LINE_BELOW        = "edit.openLineBelow";         // EditorCommandHandlers.js     openLineBelow()
+
+    /** Toggles auto close brackets */
     exports.TOGGLE_CLOSE_BRACKETS       = "edit.autoCloseBrackets";     // EditorOptionHandlers.js      _getToggler()
+
+    /** Shows code hints */
     exports.SHOW_CODE_HINTS             = "edit.showCodeHints";         // CodeHintManager.js           _startNewSession()
+
+    /** Beautifies the current code */
     exports.EDIT_BEAUTIFY_CODE          = "edit.beautifyCode";         // CodeHintManager.js           _startNewSession()
+
+    /** Toggles code beautification on save */
     exports.EDIT_BEAUTIFY_CODE_ON_SAVE  = "edit.beautifyOnSave";         // CodeHintManager.js           _startNewSession()
 
-    // FIND
+    /** Opens find dialog */
     exports.CMD_FIND                    = "cmd.find";                   // FindReplace.js               _launchFind()
+
+    /** Opens find in files dialog */
     exports.CMD_FIND_IN_FILES           = "cmd.findInFiles";            // FindInFilesUI.js             _showFindBar()
+
+    /** Opens find in subtree dialog */
     exports.CMD_FIND_IN_SUBTREE         = "cmd.findInSubtree";          // FindInFilesUI.js             _showFindBarForSubtree()
+
+    /** Finds next match */
     exports.CMD_FIND_NEXT               = "cmd.findNext";               // FindReplace.js               _findNext()
+
+    /** Finds previous match */
     exports.CMD_FIND_PREVIOUS           = "cmd.findPrevious";           // FindReplace.js               _findPrevious()
+
+    /** Finds all matches and selects them */
     exports.CMD_FIND_ALL_AND_SELECT     = "cmd.findAllAndSelect";       // FindReplace.js               _findAllAndSelect()
+
+    /** Adds next match to selection */
     exports.CMD_ADD_NEXT_MATCH          = "cmd.addNextMatch";           // FindReplace.js               _expandAndAddNextToSelection()
+
+    /** Skips current match */
     exports.CMD_SKIP_CURRENT_MATCH      = "cmd.skipCurrentMatch";       // FindReplace.js               _skipCurrentMatch()
+
+    /** Replaces current match */
     exports.CMD_REPLACE                 = "cmd.replace";                // FindReplace.js               _replace()
+
+    /** Opens replace in files dialog */
     exports.CMD_REPLACE_IN_FILES        = "cmd.replaceInFiles";         // FindInFilesUI.js             _showReplaceBar()
+
+    /** Opens replace in subtree dialog */
     exports.CMD_REPLACE_IN_SUBTREE      = "cmd.replaceInSubtree";       // FindInFilesUI.js             _showReplaceBarForSubtree()
+
+    /** Opens find references panel */
     exports.CMD_FIND_ALL_REFERENCES     = "cmd.findAllReferences";      // findReferencesManager.js     _openReferencesPanel()
 
     // VIEW
+    /** Opens theme settings */
     exports.CMD_THEMES_OPEN_SETTINGS    = "view.themesOpenSetting";     // MenuCommands.js              Settings.open()
+
+    /** Toggles sidebar visibility */
     exports.VIEW_HIDE_SIDEBAR           = "view.toggleSidebar";         // SidebarView.js               toggle()
+
+    /** Zooms in the editor view */
     exports.VIEW_ZOOM_IN                = "view.zoomIn";                // ViewCommandHandlers.js       _handleZoomIn()
+
+    /** Zooms out the editor view */
     exports.VIEW_ZOOM_OUT               = "view.zoomOut";                // ViewCommandHandlers.js       _handleZoomOut()
+
+    /** Submenu for zoom options */
     exports.VIEW_ZOOM_SUBMENU           = "zoom-view-submenu";
+
+    /** Increases editor font size */
     exports.VIEW_INCREASE_FONT_SIZE     = "view.increaseFontSize";      // ViewCommandHandlers.js       _handleIncreaseFontSize()
+
+    /** Decreases editor font size */
     exports.VIEW_DECREASE_FONT_SIZE     = "view.decreaseFontSize";      // ViewCommandHandlers.js       _handleDecreaseFontSize()
+
+    /** Restores editor font size to default */
     exports.VIEW_RESTORE_FONT_SIZE      = "view.restoreFontSize";       // ViewCommandHandlers.js       _handleRestoreFontSize()
+
+    /** Scrolls editor view up by one line */
     exports.VIEW_SCROLL_LINE_UP         = "view.scrollLineUp";          // ViewCommandHandlers.js       _handleScrollLineUp()
+
+    /** Scrolls editor view down by one line */
     exports.VIEW_SCROLL_LINE_DOWN       = "view.scrollLineDown";        // ViewCommandHandlers.js       _handleScrollLineDown()
+
+    /** Toggles code inspection */
     exports.VIEW_TOGGLE_INSPECTION      = "view.toggleCodeInspection";  // CodeInspection.js            toggleEnabled()
+
+    /** Toggles problems panel visibility */
     exports.VIEW_TOGGLE_PROBLEMS        = "view.toggleProblems";        // CodeInspection.js            toggleProblems()
+
+    /** Toggles line numbers visibility */
     exports.TOGGLE_LINE_NUMBERS         = "view.toggleLineNumbers";     // EditorOptionHandlers.js      _getToggler()
+
+    /** Toggles active line highlight */
     exports.TOGGLE_ACTIVE_LINE          = "view.toggleActiveLine";      // EditorOptionHandlers.js      _getToggler()
+
+    /** Toggles word wrap */
     exports.TOGGLE_WORD_WRAP            = "view.toggleWordWrap";        // EditorOptionHandlers.js      _getToggler()
+
+    /** Toggles rulers visibility */
     exports.TOGGLE_RULERS               = "view.toggleRulers";          // EditorOptionHandlers.js
+
+    /** Toggles indent guides visibility */
     exports.TOGGLE_INDENT_GUIDES        = "view.toggleIndentGuides";    // integrated extension indentGuides
+
+    /** Toggles search auto-hide behavior */
     exports.TOGGLE_SEARCH_AUTOHIDE      = "view.toggleSearchAutoHide";  // EditorOptionHandlers.js      _getToggler()
 
+    /** Opens a file */
     exports.CMD_OPEN                        = "cmd.open";
+
+    /** Adds file to working set and opens it */
     exports.CMD_ADD_TO_WORKINGSET_AND_OPEN  = "cmd.addToWorkingSetAndOpen";          // DocumentCommandHandlers.js   handleOpenDocumentInNewPane()
+
     // ADD_TO_WORKING_SET is deprectated but we need a handler for it because the new command doesn't return the same result as the legacy command
     exports.FILE_ADD_TO_WORKING_SET     = "file.addToWorkingSet";       // Deprecated through DocumentCommandHandlers.js handleFileAddToWorkingSet
 
     // NAVIGATE
+    /** Goes to next document */
     exports.NAVIGATE_NEXT_DOC           = "navigate.nextDoc";           // DocumentCommandHandlers.js   handleGoNextDoc()
+
+    /** Goes to previous document */
     exports.NAVIGATE_PREV_DOC           = "navigate.prevDoc";           // DocumentCommandHandlers.js   handleGoPrevDoc()
+
+    /** Goes to next document in list order */
     exports.NAVIGATE_NEXT_DOC_LIST_ORDER    = "navigate.nextDocListOrder";           // DocumentCommandHandlers.js   handleGoNextDocListOrder()
+
+    /** Goes to previous document in list order */
     exports.NAVIGATE_PREV_DOC_LIST_ORDER    = "navigate.prevDocListOrder";           // DocumentCommandHandlers.js   handleGoPrevDocListOrder()
+
+    /** Shows current file in file tree */
     exports.NAVIGATE_SHOW_IN_FILE_TREE  = "navigate.showInFileTree";    // DocumentCommandHandlers.js   handleShowInTree()
+
+    /** Shows current file in OS file explorer */
     exports.NAVIGATE_SHOW_IN_OS         = "navigate.showInOS";          // DocumentCommandHandlers.js   handleShowInOS()
+
+    /** Opens quick open dialog */
     exports.NAVIGATE_QUICK_OPEN         = "navigate.quickOpen";         // QuickOpen.js                 doFileSearch()
+
+    /** Jumps to definition of symbol at cursor */
     exports.NAVIGATE_JUMPTO_DEFINITION  = "navigate.jumptoDefinition";  // JumpToDefManager.js             _doJumpToDef()
+
+    /** Opens go to definition search */
     exports.NAVIGATE_GOTO_DEFINITION    = "navigate.gotoDefinition";    // QuickOpen.js                 doDefinitionSearch()
+
+    /** Opens go to definition in project search */
     exports.NAVIGATE_GOTO_DEFINITION_PROJECT = "navigate.gotoDefinitionInProject";    // QuickOpen.js                 doDefinitionSearchInProject()
+
+    /** Opens go to line dialog */
     exports.NAVIGATE_GOTO_LINE          = "navigate.gotoLine";          // QuickOpen.js                 doGotoLine()
+
+    /** Goes to first problem in current file */
     exports.NAVIGATE_GOTO_FIRST_PROBLEM = "navigate.gotoFirstProblem";  // CodeInspection.js            handleGotoFirstProblem()
+
+    /** Goes to next problem in current file */
     exports.NAVIGATE_GOTO_NEXT_PROBLEM = "navigate.gotoNextProblem";  // CodeInspection.js            handleGotoNextProblem()
+
+    /** Goes to previous problem in current file */
     exports.NAVIGATE_GOTO_PREV_PROBLEM = "navigate.gotoPrevProblem";  // CodeInspection.js            handleGotoPrevProblem()
+
+    /** Toggles quick edit widget */
     exports.TOGGLE_QUICK_EDIT           = "navigate.toggleQuickEdit";   // EditorManager.js             _toggleInlineWidget()
+
+    /** Toggles quick docs widget */
     exports.TOGGLE_QUICK_DOCS           = "navigate.toggleQuickDocs";   // EditorManager.js             _toggleInlineWidget()
+
+    /** Goes to next match in quick edit */
     exports.QUICK_EDIT_NEXT_MATCH       = "navigate.nextMatch";         // MultiRangeInlineEditor.js    _nextRange()
+
+    /** Goes to previous match in quick edit */
     exports.QUICK_EDIT_PREV_MATCH       = "navigate.previousMatch";     // MultiRangeInlineEditor.js    _previousRange()
+
+    /** Creates new CSS rule in quick edit */
     exports.CSS_QUICK_EDIT_NEW_RULE     = "navigate.newRule";           // CSSInlineEditor.js           _handleNewRule()
 
+
     // HELP
+    /** Opens how to use Brackets guide */
     exports.HELP_HOW_TO_USE_BRACKETS    = "help.howToUseBrackets";      // HelpCommandHandlers.js       _handleLinkMenuItem()
+
+    /** Opens documentation */
     exports.HELP_DOCS                   = "help.docs";                  // HelpCommandHandlers.js       _handleLinkMenuItem()
+
+    /** Opens support resources */
     exports.HELP_SUPPORT                = "help.support";               // HelpCommandHandlers.js       _handleLinkMenuItem()
+
+    /** Opens feature suggestion page */
     exports.HELP_SUGGEST                = "help.suggest";               // HelpCommandHandlers.js       _handleLinkMenuItem()
+
+    /** Opens release notes */
     exports.HELP_RELEASE_NOTES          = "help.releaseNotes";          // HelpCommandHandlers.js       _handleLinkMenuItem()
+
+    /** Opens contributor guidelines */
     exports.HELP_GET_INVOLVED           = "help.getInvolved";           // HelpCommandHandlers.js       _handleLinkMenuItem()
+
+    /** Shows extensions folder in OS */
     exports.HELP_SHOW_EXT_FOLDER        = "help.showExtensionsFolder";  // HelpCommandHandlers.js       _handleShowExtensionsFolder()
+
+    /** Opens project homepage */
     exports.HELP_HOMEPAGE               = "help.homepage";              // HelpCommandHandlers.js       _handleLinkMenuItem()
+
+    /** Opens YouTube channel */
     exports.HELP_YOUTUBE                = "help.youtube";               // HelpCommandHandlers.js       _handleLinkMenuItem()
+
+    /** Opens Twitter page */
     exports.HELP_TWITTER                = "help.twitter";               // HelpCommandHandlers.js       _handleLinkMenuItem()
+
+    /** Toggles keyboard shortcuts panel */
     exports.HELP_TOGGLE_SHORTCUTS_PANEL = "help.toggleShortcuts";       // shortcuts integrated extension
+
+    /** Checks for updates */
     exports.HELP_CHECK_UPDATES          = "help.checkUpdates";          // shortcuts integrated extension
+
+    /** Toggles auto update */
     exports.HELP_AUTO_UPDATE            = "help.autoUpdate";             // shortcuts integrated extension
 
     // Working Set Configuration
+    /** Sorts working set by order files were added */
     exports.CMD_WORKINGSET_SORT_BY_ADDED  = "cmd.sortWorkingSetByAdded";     // WorkingSetSort.js       _handleSort()
+
+    /** Sorts working set by file name */
     exports.CMD_WORKINGSET_SORT_BY_NAME   = "cmd.sortWorkingSetByName";      // WorkingSetSort.js       _handleSort()
+
+    /** Sorts working set by file type */
     exports.CMD_WORKINGSET_SORT_BY_TYPE   = "cmd.sortWorkingSetByType";      // WorkingSetSort.js       _handleSort()
+
+    /** Toggles automatic working set sorting */
     exports.CMD_WORKING_SORT_TOGGLE_AUTO  = "cmd.sortWorkingSetToggleAuto";  // WorkingSetSort.js       _handleToggleAutoSort()
+
+    /** Opens keyboard navigation UI overlay */
     exports.CMD_KEYBOARD_NAV_UI_OVERLAY  = "cmd.keyboardNavUI";  // WorkingSetSort.js       _handleToggleAutoSort()
 
     // Split View
+    /** Removes split view */
     exports.CMD_SPLITVIEW_NONE          = "cmd.splitViewNone";          // SidebarView.js               _handleSplitNone()
+
+    /** Splits view vertically */
     exports.CMD_SPLITVIEW_VERTICAL      = "cmd.splitViewVertical";      // SidebarView.js               _handleSplitVertical()
+
+    /** Splits view horizontally */
     exports.CMD_SPLITVIEW_HORIZONTAL    = "cmd.splitViewHorizontal";    // SidebarView.js               _handleSplitHorizontal()
+
+    /** Switches focus between split panes */
     exports.CMD_SWITCH_PANE_FOCUS       = "cmd.switchPaneFocus";        // MainViewManager.js           _switchPaneFocus()
 
     // File shell callbacks - string must MATCH string in native code (appshell/command_callbacks.h)
+    /** Shows about dialog */
     exports.HELP_ABOUT                  = "help.about";                 // HelpCommandHandlers.js       _handleAboutDialog()
 
     // APP
+    /** Reloads the application */
     exports.APP_RELOAD                  = "app.reload";                 // DocumentCommandHandlers.js   handleReload()
+
+    /** Reloads the application without extensions */
     exports.APP_RELOAD_WITHOUT_EXTS     = "app.reload_without_exts";    // DocumentCommandHandlers.js   handleReloadWithoutExts()
 
     // File shell callbacks - string must MATCH string in native code (appshell/command_callbacks.h)
+    /** Aborts application quit */
     exports.APP_ABORT_QUIT              = "app.abort_quit";             // DocumentCommandHandlers.js   handleAbortQuit()
+
+    /** Handler before menu popup */
     exports.APP_BEFORE_MENUPOPUP        = "app.before_menupopup";       // DocumentCommandHandlers.js   handleBeforeMenuPopup()
 
     // Show or Hide sidebar
+    /** Hides the sidebar */
     exports.HIDE_SIDEBAR                = "view.hideSidebar";           // SidebarView.js               hide()
+
+    /** Shows the sidebar */
     exports.SHOW_SIDEBAR                = "view.showSidebar";           // SidebarView.js               show()
 
     // DEPRECATED: Working Set Commands
@@ -8395,8 +8692,6 @@ define("command/Commands", function (require, exports, module) {
  */
 
 /*global Phoenix*/
-
-// @INCLUDE_IN_API_DOCS
 
 /**
  * Initializes the default brackets menu items.
@@ -8849,6 +9144,8 @@ define("command/DefaultMenus", function (require, exports, module) {
  *
  */
 
+// @INCLUDE_IN_API_DOCS
+
 /*globals path, logger*/
 /*jslint regexp: true */
 /*unittests: KeyBindingManager */
@@ -8903,17 +9200,50 @@ define("command/KeyBindingManager", function (require, exports, module) {
     let KEYMAP_FILENAME     = "keymap.json",
         _userKeyMapFilePath = path.normalize(brackets.app.getApplicationSupportDirectory() + "/" + KEYMAP_FILENAME);
 
-    const EVENT_KEY_BINDING_ADDED = "keyBindingAdded",
-        EVENT_KEY_BINDING_REMOVED = "keyBindingRemoved",
-        EVENT_NEW_PRESET = "newPreset",
-        EVENT_PRESET_CHANGED = "presetChanged";
+    /**
+     * key binding add event
+     *
+     * @const
+     * @type {string}
+     */
+    const EVENT_KEY_BINDING_ADDED = "keyBindingAdded";
 
+    /**
+     * key binding remove event
+     *
+     * @const
+     * @type {string}
+     */
+    const EVENT_KEY_BINDING_REMOVED = "keyBindingRemoved";
+
+    /**
+     * new preset event
+     *
+     * @const
+     * @type {string}
+     */
+    const EVENT_NEW_PRESET = "newPreset";
+
+    /**
+     * preset change event
+     *
+     * @const
+     * @type {string}
+     */
+    const EVENT_PRESET_CHANGED = "presetChanged";
+
+    /**
+     * @const
+     * @type {Object}
+     */
     const KEY = Keys.KEY;
+
     const knownBindableCommands = new Set();
 
     /**
-     * @private
      * Forward declaration for JSLint.
+     *
+     * @private
      * @type {Function}
      */
     let _loadUserKeyMap = _.debounce(_loadUserKeyMapImmediate, 200);
@@ -8925,8 +9255,9 @@ define("command/KeyBindingManager", function (require, exports, module) {
     const PREF_TRIPLE_CTRL_KEY_PRESS_ENABLED = "tripleCtrlPalette";
 
     /**
-     * @private
      * Maps normalized shortcut descriptor to key binding info.
+     *
+     * @private
      * @type {!Object.<string, {commandID: string, key: string, displayKey: string}>}
      */
     let _keyMap            = {},    // For the actual key bindings including user specified ones
@@ -8939,8 +9270,9 @@ define("command/KeyBindingManager", function (require, exports, module) {
      */
 
     /**
-     * @private
      * Maps shortcut descriptor to a command id.
+     *
+     * @private
      * @type {UserKeyBinding}
      */
     let _originalUserKeyMap = {},
@@ -8948,23 +9280,26 @@ define("command/KeyBindingManager", function (require, exports, module) {
         _customKeyMapCache = {};
 
     /**
-     * @private
      * Maps commandID to the list of shortcuts that are bound to it.
+     *
+     * @private
      * @type {!Object.<string, Array.<{key: string, displayKey: string}>>}
      */
     let _commandMap  = {};
 
     /**
-     * @private
      * An array of command ID for all the available commands including the commands
      * of installed extensions.
+     *
+     * @private
      * @type {Array.<string>}
      */
     let _allCommands = [];
 
     /**
+     * Maps key names to the corresponding unicode symbols
+     *
      * @private
-     * Maps key names to the corresponding unicode symols
      * @type {{key: string, displayKey: string}}
      */
     let _displayKeyMap        = { "up": "\u2191",
@@ -8981,33 +9316,36 @@ define("command/KeyBindingManager", function (require, exports, module) {
             "PageUp", "PageDown", "Home", "End", "Insert", "Delete"];
 
     /**
-     * @private
      * Flag to show key binding errors in the key map file. Default is true and
      * it will be set to false when reloading without extensions. This flag is not
      * used to suppress errors in loading or parsing the key map file. So if the key
      * map file is corrupt, then the error dialog still shows up.
      *
+     * @private
      * @type {boolean}
      */
     let _showErrors = true;
 
     /**
-     * @private
      * Allow clients to toggle key binding
+     *
+     * @private
      * @type {boolean}
      */
     let _enabled = true;
 
     /**
-     * @private
      * Stack of registered global keydown hooks.
+     *
+     * @private
      * @type {Array.<function(Event): boolean>}
      */
     let _globalKeydownHooks = [];
 
     /**
-     * @private
      * States of Ctrl key down detection
+     *
+     * @private
      * @enum {number}
      */
     let CtrlDownStates = {
@@ -9017,52 +9355,56 @@ define("command/KeyBindingManager", function (require, exports, module) {
     };
 
     /**
-     * @private
      * Flags used to determine whether right Alt key is pressed. When it is pressed,
      * the following two keydown events are triggered in that specific order.
      *
      *    1. _ctrlDown - flag used to record { ctrlKey: true, keyIdentifier: "Control", ... } keydown event
      *    2. _altGrDown - flag used to record { ctrlKey: true, altKey: true, keyIdentifier: "Alt", ... } keydown event
      *
+     * @private
      * @type {CtrlDownStates|boolean}
      */
     let _ctrlDown = CtrlDownStates.NOT_YET_DETECTED,
         _altGrDown = false;
 
     /**
-     * @private
      * Used to record the timeStamp property of the last keydown event.
+     *
+     * @private
      * @type {number}
      */
     let _lastTimeStamp;
 
     /**
-     * @private
      * Used to record the keyIdentifier property of the last keydown event.
+     *
+     * @private
      * @type {string}
      */
     let _lastKeyIdentifier;
 
-    /*
-     * @private
+    /**
      * Constant used for checking the interval between Control keydown event and Alt keydown event.
      * If the right Alt key is down we get Control keydown followed by Alt keydown within 30 ms. if
      * the user is pressing Control key and then Alt key, the interval will be larger than 30 ms.
+     *
+     * @private
      * @type {number}
      */
     let MAX_INTERVAL_FOR_CTRL_ALT_KEYS = 30;
 
     /**
-     * @private
      * Forward declaration for JSLint.
+     *
+     * @private
      * @type {Function}
      */
     let _onCtrlUp;
 
     /**
-     * @private
      * Resets all the flags and removes _onCtrlUp event listener.
      *
+     * @private
      */
     function _quitAltGrMode() {
         _enabled = true;
@@ -9074,11 +9416,11 @@ define("command/KeyBindingManager", function (require, exports, module) {
     }
 
     /**
-     * @private
      * Detects the release of AltGr key by checking all keyup events
      * until we receive one with ctrl key code. Once detected, reset
      * all the flags and also remove this event listener.
      *
+     * @private
      * @param {!KeyboardEvent} e keyboard event object
      */
     _onCtrlUp = function (e) {
@@ -9089,7 +9431,6 @@ define("command/KeyBindingManager", function (require, exports, module) {
     };
 
     /**
-     * @private
      * Detects whether AltGr key is pressed. When it is pressed, the first keydown event has
      * ctrlKey === true with keyIdentifier === "Control". The next keydown event with
      * altKey === true, ctrlKey === true and keyIdentifier === "Alt" is sent within 30 ms. Then
@@ -9104,6 +9445,7 @@ define("command/KeyBindingManager", function (require, exports, module) {
      * When we detect the addition of Ctrl key besides AltGr key, we also quit AltGr mode and re-enable
      * KeyBindingManager.
      *
+     * @private
      * @param {!KeyboardEvent} e keyboard event object
      */
     function _detectAltGrKeyDown(e) {
@@ -9156,9 +9498,10 @@ define("command/KeyBindingManager", function (require, exports, module) {
     }
 
     /**
-     * @private
      * Initialize an empty keymap as the current keymap. It overwrites the current keymap if there is one.
      * builds the keyDescriptor string from the given parts
+     *
+     * @private
      * @param {boolean} hasCtrl Is Ctrl key enabled
      * @param {boolean} hasAlt Is Alt key enabled
      * @param {boolean} hasShift Is Shift key enabled
@@ -9200,7 +9543,9 @@ define("command/KeyBindingManager", function (require, exports, module) {
 
     /**
      * normalizes the incoming key descriptor so the modifier keys are always specified in the correct order
-     * @param {string} The string for a key descriptor, can be in any order, the result will be Ctrl-Alt-Shift-<Key>
+     *
+     * @private
+     * @param {string} origDescriptor The string for a key descriptor, can be in any order, the result will be Ctrl-Alt-Shift-<Key>
      * @return {string} The normalized key descriptor or null if the descriptor invalid
      */
     function normalizeKeyDescriptorString(origDescriptor) {
@@ -9345,8 +9690,9 @@ define("command/KeyBindingManager", function (require, exports, module) {
     }
 
     /**
-     * @private
      * Looks for keycodes that have os-inconsistent keys and fixes them.
+     *
+     * @private
      * @return {string} If the key is OS-inconsistent, the correct key; otherwise, the original key.
      **/
     function _mapKeycodeToKey(event) {
@@ -9376,6 +9722,8 @@ define("command/KeyBindingManager", function (require, exports, module) {
 
     /**
      * Takes a keyboard event and translates it into a key in a key map
+     *
+     * @private
      */
     function _translateKeyboardEvent(event) {
         let hasMacCtrl = (brackets.platform === "mac") ? (event.ctrlKey) : false,
@@ -9388,6 +9736,7 @@ define("command/KeyBindingManager", function (require, exports, module) {
 
     /**
      * Convert normalized key representation to display appropriate for platform.
+     *
      * @param {!string} descriptor Normalized key descriptor.
      * @return {!string} Display/Operating system appropriate string
      */
@@ -9470,13 +9819,12 @@ define("command/KeyBindingManager", function (require, exports, module) {
     }
 
     /**
-     * @private
-     *
      * Updates _allCommands array and _defaultKeyMap with the new key binding
      * if it is not yet in the _allCommands array. _allCommands array is initialized
      * only in extensionsLoaded event. So any new commands or key bindings added after
      * that will be updated here.
      *
+     * @private
      * @param {{commandID: string, key: string, displayKey:string, explicitPlatform: string}} newBinding
      */
     function _updateCommandAndKeyMaps(newBinding) {
@@ -9683,8 +10031,8 @@ define("command/KeyBindingManager", function (require, exports, module) {
     /**
      * Returns a copy of the current key map. If the optional 'defaults' parameter is true,
      * then a copy of the default key map is returned.
-     * @param {boolean=} defaults true if the caller wants a copy of the default key map.
-     *                            Otherwise, the current active key map is returned.
+     *
+     * @param {boolean=} defaults true if the caller wants a copy of the default key map. Otherwise, the current active key map is returned.
      * @return {!Object.<string, {commandID: string, key: string, displayKey: string}>}
      */
     function getKeymap(defaults) {
@@ -9701,7 +10049,9 @@ define("command/KeyBindingManager", function (require, exports, module) {
     /**
      * If there is a registered and enabled key event, we always mark the event as processed
      * except the ones in UN_SWALLOWED_EVENTS.
-     * @type {(string)[]}
+     *
+     * @private
+     * @type {Array.<string>}
      */
     const UN_SWALLOWED_EVENTS = _makeMapFromArray({}, [
         Commands.EDIT_SELECT_ALL,
@@ -9724,7 +10074,8 @@ define("command/KeyBindingManager", function (require, exports, module) {
     /**
      * Process the keybinding for the current key.
      *
-     * @param {string} A key-description string.
+     * @private
+     * @param {string} key A key-description string.
      * @return {boolean} true if the key was processed, false otherwise
      */
     function _handleKey(key) {
@@ -9757,10 +10108,10 @@ define("command/KeyBindingManager", function (require, exports, module) {
     }
 
     /**
-     * @private
-     *
      * Sort objects by platform property. Objects with a platform property come
      * before objects without a platform property.
+     *
+     * @private
      */
     function _sortByPlatform(a, b) {
         let a1 = (a.platform) ? 1 : 0,
@@ -9876,6 +10227,8 @@ define("command/KeyBindingManager", function (require, exports, module) {
     const _handledCommands = {};
     /**
      * Adds default key bindings when commands are registered to CommandManager
+     *
+     * @private
      * @param {$.Event} event jQuery event
      * @param {Command} command Newly registered command
      */
@@ -10032,6 +10385,8 @@ define("command/KeyBindingManager", function (require, exports, module) {
     /**
      * Handles a given keydown event, checking global hooks first before
      * deciding to handle it ourselves.
+     *
+     * @private
      * @param {Event} event The keydown event to handle.
      */
     function _handleKeyEvent(event) {
@@ -10080,10 +10435,10 @@ define("command/KeyBindingManager", function (require, exports, module) {
     });
 
     /**
-     * @private
      * Displays an error dialog and also opens the user key map file for editing only if
      * the error is not the loading file error.
      *
+     * @private
      * @param {?string} err Error type returned from JSON parser or open file operation
      * @param {string=} message Error message to be displayed in the dialog
      */
@@ -10112,10 +10467,10 @@ define("command/KeyBindingManager", function (require, exports, module) {
     }
 
     /**
-     * @private
-     *
      * Checks whether the given command ID is a special command that the user can't bind
      * to another shortcut.
+     *
+     * @private
      * @param {!string} commandID A string referring to a specific command
      * @return {boolean} true if normalizedKey is a special command, false otherwise.
      */
@@ -10128,10 +10483,10 @@ define("command/KeyBindingManager", function (require, exports, module) {
     }
 
     /**
-     * @private
-     *
      * Checks whether the given key combination is a shortcut of a special command
      * or a Mac system command that the user can't reassign to another command.
+     *
+     * @private
      * @param {!string} normalizedKey A key combination string used for a keyboard shortcut
      * @return {boolean} true if normalizedKey is a restricted shortcut, false otherwise.
      */
@@ -10153,9 +10508,9 @@ define("command/KeyBindingManager", function (require, exports, module) {
     }
 
     /**
-     * @private
-     *
      * Creates a bullet list item for any item in the given list.
+     *
+     * @private
      * @param {Array.<string>} list An array of strings to be converted into a
      * message string with a bullet list.
      * @return {string} the html text version of the list
@@ -10170,12 +10525,11 @@ define("command/KeyBindingManager", function (require, exports, module) {
     }
 
     /**
-     * @private
-     *
      * Gets the corresponding unicode symbol of an arrow key for display in the menu.
+     *
+     * @private
      * @param {string} key The non-modifier key used in the shortcut. It does not need to be normalized.
-     * @return {string} An empty string if key is not one of those we want to show with the unicode symbol.
-     *                  Otherwise, the corresponding unicode symbol is returned.
+     * @return {string} An empty string if key is not one of those we want to show with the unicode symbol. Otherwise, the corresponding unicode symbol is returned.
      */
     function _getDisplayKey(key) {
         let displayKey = "",
@@ -10187,8 +10541,6 @@ define("command/KeyBindingManager", function (require, exports, module) {
     }
 
     /**
-     * @private
-     *
      * Applies each user key binding to all the affected commands and updates _keyMap.
      * Shows errors in a dialog and then opens the user key map file if any of the following
      * is detected while applying the user key bindings.
@@ -10198,6 +10550,8 @@ define("command/KeyBindingManager", function (require, exports, module) {
      *     - The same key combination is listed for multiple key bindings.
      *     - A key binding has any invalid key syntax.
      *     - A key binding is referring to a non-existent command ID.
+     *
+     * @private
      */
     function _applyUserKeyBindings() {
         let remappedCommands   = [],
@@ -10316,10 +10670,10 @@ define("command/KeyBindingManager", function (require, exports, module) {
     }
 
     /**
-     * @private
-     *
      * Restores the default key bindings for all the commands that are modified by each key binding
      * specified in _customKeyMapCache (old version) but no longer specified in _customKeyMap (new version).
+     *
+     * @private
      */
     function _undoPriorUserKeyBindings() {
         _.forEach(_customKeyMapCache, function (commandID, key) {
@@ -10356,12 +10710,11 @@ define("command/KeyBindingManager", function (require, exports, module) {
     }
 
     /**
-     * @private
-     *
      * Gets the full file path to the user key map file. In testing environment
      * a different file path is returned so that running integration tests won't
      * pop up the error dialog showing the errors from the actual user key map file.
      *
+     * @private
      * @return {string} full file path to the user key map file.
      */
     function _getUserKeyMapFilePath() {
@@ -10418,13 +10771,12 @@ define("command/KeyBindingManager", function (require, exports, module) {
     }
 
     /**
-     * @private
-     *
      * Reads in the user key map file and parses its content into JSON.
      * Returns the user key bindings if JSON has "overrides".
      * Otherwise, returns an empty object or an error if the file
      * cannot be parsed or loaded.
      *
+     * @private
      * @return {$.Promise} a jQuery promise that will be resolved with the JSON
      * object if the user key map file has "overrides" property or an empty JSON.
      * If the key map file cannot be read or cannot be parsed by the JSON parser,
@@ -10468,6 +10820,7 @@ define("command/KeyBindingManager", function (require, exports, module) {
     /**
      * This can be used by extensions to register new kepmap packs that can be listed in the keyboard shortcuts panel
      * under use preset dropdown. For EG. distribute a `netbeans editor` shortcuts pack via extension.
+     *
      * @param {string} packID - A unique ID for the pack. Use `extensionID.name` format to avoid collisions.
      * @param {string} packName - A name for the pack.
      * @param {Object} keyMap - a keymap of the format {`Ctrl-Alt-L`: `file.liveFilePreview`} depending on the platform.
@@ -10489,6 +10842,12 @@ define("command/KeyBindingManager", function (require, exports, module) {
         exports.trigger(EVENT_NEW_PRESET, packID);
     }
 
+    /**
+     * Responsible to get all the custom keymap packs
+     *
+     * @returns {Array.<Object>} an array of all the custom keymap packs,
+     * each pack is an object with keys: `packID`, `packageName` & `keyMap`
+     */
     function getAllCustomKeymapPacks() {
         const packDetails = [];
         for(let packID of Object.keys(_registeredCustomKeyMaps)){
@@ -10501,6 +10860,11 @@ define("command/KeyBindingManager", function (require, exports, module) {
         return packDetails;
     }
 
+    /**
+     * To get the current custom keymap pack
+     *
+     * @returns {Object} the current custom keymap pack
+     */
     function getCurrentCustomKeymapPack() {
         return _registeredCustomKeyMaps[_customKeymapIDInUse];
     }
@@ -10509,6 +10873,7 @@ define("command/KeyBindingManager", function (require, exports, module) {
      * Determines the origin of a custom keyboard shortcut is from user keymap.json or a custom keymap preset.
      * If it is neither (Eg. phoenix default shortcuts, will return null.)
      *
+     * @private
      * @param {string} shortcut - The keyboard shortcut to check.
      * @returns {string|null} - The origin of the custom shortcut, or null if it is not a custom shortcut.
      */
@@ -10526,6 +10891,7 @@ define("command/KeyBindingManager", function (require, exports, module) {
 
     /**
      * internal use, this is for setting the current custom keyboard pack.
+     *
      * @param packID
      * @private
      */
@@ -10587,8 +10953,6 @@ define("command/KeyBindingManager", function (require, exports, module) {
     }
 
     /**
-     * @private
-     *
      * Reads in the user key bindings and updates the key map with each user key
      * binding by removing the existing one assigned to each key and adding
      * new one for the specified command id. Shows errors and opens the user
@@ -10596,7 +10960,9 @@ define("command/KeyBindingManager", function (require, exports, module) {
      *
      * This function is wrapped with debounce so that its execution is always delayed
      * by 200 ms. The delay is required because when this function is called some
-     * extensions may still be adding some commands and their key bindings asychronously.
+     * extensions may still be adding some commands and their key bindings asynchronously.
+     *
+     * @private
      */
     function _loadUserKeyMapImmediate() {
         return new Promise((resolve, reject)=>{
@@ -10626,6 +10992,7 @@ define("command/KeyBindingManager", function (require, exports, module) {
 
     /**
      * resets all user defined shortcuts
+     *
      * @return {Promise|Promise<void>|*}
      */
     function resetUserShortcutsAsync() {
@@ -10645,10 +11012,10 @@ define("command/KeyBindingManager", function (require, exports, module) {
     }
 
     /**
-     * @private
-     *
      * Opens the existing key map file or creates a new one with default content
      * if it does not exist.
+     *
+     * @private
      */
     function _openUserKeyMap() {
         let userKeyMapPath = _getUserKeyMapFilePath(),
@@ -10678,10 +11045,10 @@ define("command/KeyBindingManager", function (require, exports, module) {
     });
 
     /**
-     * @private
-     *
      * Initializes _allCommands array and _defaultKeyMap so that we can use them for
      * detecting non-existent commands and restoring the original key binding.
+     *
+     * @private
      */
     function _initCommandAndKeyMaps() {
         _allCommands = CommandManager.getAll();
@@ -10691,11 +11058,10 @@ define("command/KeyBindingManager", function (require, exports, module) {
     }
 
     /**
-     * @private
-     *
      * Sets the full file path to the user key map file. Only used by unit tests
      * to load a test file instead of the actual user key map file.
      *
+     * @private
      * @param {string} fullPath file path to the user key map file.
      */
     function _setUserKeyMapFilePath(fullPath) {
@@ -10724,6 +11090,11 @@ define("command/KeyBindingManager", function (require, exports, module) {
         _loadUserKeyMap();
     });
 
+    /**
+     * Whether the keyboard is in overlay mode or not
+     *
+     * @returns {boolean} True if in overlay mode else false
+     */
     function isInOverlayMode() {
         return KeyboardOverlayMode.isInOverlayMode();
     }
@@ -10789,6 +11160,12 @@ define("command/KeyBindingManager", function (require, exports, module) {
     let keyboardShortcutCaptureInProgress = null,
         keyboardShortcutDialog = null,
         capturedShortcut = null;
+
+    /**
+     * to display the shortcut selection dialog
+     *
+     * @param command
+     */
     function showShortcutSelectionDialog(command) {
         Metrics.countEvent(Metrics.EVENT_TYPE.KEYBOARD, 'shortcut', "DialogShown");
         if(_isSpecialCommand(command.getID())){
@@ -10835,6 +11212,7 @@ define("command/KeyBindingManager", function (require, exports, module) {
 
     /**
      * Returns true the given command id can be overriden by user.
+     *
      * @param commandId
      * @return {boolean}
      */
@@ -10846,6 +11224,7 @@ define("command/KeyBindingManager", function (require, exports, module) {
      * gets a list of commands that are known to have had a key binding in this session. Note that this will contain
      * commands that may not currently have a key binding. IT is mainly used in keyboard shortcuts panel to list items
      * that can be assigned a key binding.
+     *
      * @type {Set<string>}
      * @private
      */
@@ -10931,6 +11310,8 @@ define("command/KeyBindingManager", function (require, exports, module) {
  *
  */
 
+// @INCLUDE_IN_API_DOCS
+
 /*global Phoenix*/
 
 /**
@@ -10980,6 +11361,9 @@ define("command/KeyboardOverlayMode", function (require, exports, module) {
         }
     }
 
+    /**
+     * Responsible to start the overlay mode
+     */
     function startOverlayMode() {
         overlayOrderCentralElement = calculateUINavOrder();
         currentOverlayElement = overlayOrderCentralElement;
@@ -11022,6 +11406,10 @@ define("command/KeyboardOverlayMode", function (require, exports, module) {
         return secondPane;
     }
 
+    /**
+     * Responsible to exit the overlay mode.
+     * restores focus to previously active pane
+     */
     function exitOverlayMode() {
         const overlay = document.getElementById(CONTROL_NAV_OVERLAY_ID);
         overlay.classList.add('forced-hidden'); // Remove the class that hides the overlay
@@ -11032,6 +11420,12 @@ define("command/KeyboardOverlayMode", function (require, exports, module) {
         document.removeEventListener('click', exitOverlayMode, true);
     }
 
+    /**
+     * Handles the keyboard navigation in overlay mode
+     * Process the arrow keys to move between panes, Enter to select a pane, and Escape to exit overlay mode
+     *
+     * @param {KeyboardEvent} event
+     */
     function processOverlayKeyboardEvent(event) {
         const upElement = currentOverlayElement.up;
         const downElement = currentOverlayElement.down;
@@ -11083,6 +11477,11 @@ define("command/KeyboardOverlayMode", function (require, exports, module) {
         return true;
     }
 
+    /**
+     * to check whether in overlay mode or not
+     *
+     * @returns {boolean} returns true if in overlay mode otherwise false
+     */
     function isInOverlayMode() {
         return overlayMode;
     }
@@ -11128,12 +11527,20 @@ define("command/KeyboardOverlayMode", function (require, exports, module) {
  *
  */
 
+// @INCLUDE_IN_API_DOCS
+
 /*global Phoenix*/
 
 /**
  * Initializes the default brackets menu items.
  */
 define("command/Keys", function (require, exports, module) {
+
+    /**
+     * Defines common keyboard key identifiers for use in keyboard event handling.
+     *
+     * @enum {string} KEY
+     */
     const KEY = {
         ENTER: "Enter",
         RETURN: "Return",
@@ -11277,6 +11684,38 @@ define("command/Menus", function (require, exports, module) {
     const EVENT_BEFORE_SUB_MENU_CLOSE = "beforeSubMenuClose";
 
 
+
+    // Define each section as a separate constant
+    const FILE_OPEN_CLOSE_COMMANDS = { sectionMarker: Commands.FILE_NEW };
+    const FILE_SAVE_COMMANDS = { sectionMarker: Commands.FILE_SAVE };
+    const FILE_LIVE = { sectionMarker: Commands.FILE_LIVE_FILE_PREVIEW };
+    const FILE_SETTINGS = { sectionMarker: Commands.FILE_EXTENSION_MANAGER };
+    const FILE_EXTENSION_MANAGER = { sectionMarker: Commands.FILE_EXTENSION_MANAGER }; // Deprecated
+
+    const EDIT_UNDO_REDO_COMMANDS = { sectionMarker: Commands.EDIT_UNDO };
+    const EDIT_TEXT_COMMANDS = { sectionMarker: Commands.EDIT_CUT };
+    const EDIT_SELECTION_COMMANDS = { sectionMarker: Commands.EDIT_SELECT_ALL };
+    const EDIT_MODIFY_SELECTION = { sectionMarker: Commands.EDIT_INDENT };
+    const EDIT_COMMENT_SELECTION = { sectionMarker: Commands.EDIT_LINE_COMMENT };
+    const EDIT_CODE_HINTS_COMMANDS = { sectionMarker: Commands.SHOW_CODE_HINTS };
+    const EDIT_TOGGLE_OPTIONS = { sectionMarker: Commands.TOGGLE_CLOSE_BRACKETS };
+
+    const FIND_FIND_COMMANDS = { sectionMarker: Commands.CMD_FIND };
+    const FIND_FIND_IN_COMMANDS = { sectionMarker: Commands.CMD_FIND_IN_FILES };
+    const FIND_REPLACE_COMMANDS = { sectionMarker: Commands.CMD_REPLACE };
+
+    const VIEW_HIDESHOW_COMMANDS = { sectionMarker: Commands.VIEW_HIDE_SIDEBAR };
+    const VIEW_FONTSIZE_COMMANDS = { sectionMarker: Commands.VIEW_ZOOM_SUBMENU };
+    const VIEW_TOGGLE_OPTIONS = { sectionMarker: Commands.TOGGLE_ACTIVE_LINE };
+
+    const NAVIGATE_GOTO_COMMANDS = { sectionMarker: Commands.NAVIGATE_QUICK_OPEN };
+    const NAVIGATE_DOCUMENTS_COMMANDS = { sectionMarker: Commands.NAVIGATE_NEXT_DOC };
+    const NAVIGATE_OS_COMMANDS = { sectionMarker: Commands.NAVIGATE_SHOW_IN_FILE_TREE };
+    const NAVIGATE_QUICK_EDIT_COMMANDS = { sectionMarker: Commands.TOGGLE_QUICK_EDIT };
+    const NAVIGATE_QUICK_DOCS_COMMANDS = { sectionMarker: Commands.TOGGLE_QUICK_DOCS };
+
+
+
     /**
      * Brackets Application Menu Section Constants
      * It is preferred that plug-ins specify the location of new MenuItems
@@ -11290,35 +11729,34 @@ define("command/Menus", function (require, exports, module) {
      *
      * @enum {string}
      */
-    let MenuSection = {
-        // Menu Section                     Command ID to mark the section
-        FILE_OPEN_CLOSE_COMMANDS: { sectionMarker: Commands.FILE_NEW },
-        FILE_SAVE_COMMANDS: { sectionMarker: Commands.FILE_SAVE },
-        FILE_LIVE: { sectionMarker: Commands.FILE_LIVE_FILE_PREVIEW },
-        FILE_SETTINGS: { sectionMarker: Commands.FILE_EXTENSION_MANAGER },
-        FILE_EXTENSION_MANAGER: { sectionMarker: Commands.FILE_EXTENSION_MANAGER }, // deprecated. here for legacy support
+    const MenuSection = {
+        FILE_OPEN_CLOSE_COMMANDS,
+        FILE_SAVE_COMMANDS,
+        FILE_LIVE,
+        FILE_SETTINGS,
+        FILE_EXTENSION_MANAGER, // Deprecated
 
-        EDIT_UNDO_REDO_COMMANDS: { sectionMarker: Commands.EDIT_UNDO },
-        EDIT_TEXT_COMMANDS: { sectionMarker: Commands.EDIT_CUT },
-        EDIT_SELECTION_COMMANDS: { sectionMarker: Commands.EDIT_SELECT_ALL },
-        EDIT_MODIFY_SELECTION: { sectionMarker: Commands.EDIT_INDENT },
-        EDIT_COMMENT_SELECTION: { sectionMarker: Commands.EDIT_LINE_COMMENT },
-        EDIT_CODE_HINTS_COMMANDS: { sectionMarker: Commands.SHOW_CODE_HINTS },
-        EDIT_TOGGLE_OPTIONS: { sectionMarker: Commands.TOGGLE_CLOSE_BRACKETS },
+        EDIT_UNDO_REDO_COMMANDS,
+        EDIT_TEXT_COMMANDS,
+        EDIT_SELECTION_COMMANDS,
+        EDIT_MODIFY_SELECTION,
+        EDIT_COMMENT_SELECTION,
+        EDIT_CODE_HINTS_COMMANDS,
+        EDIT_TOGGLE_OPTIONS,
 
-        FIND_FIND_COMMANDS: { sectionMarker: Commands.CMD_FIND },
-        FIND_FIND_IN_COMMANDS: { sectionMarker: Commands.CMD_FIND_IN_FILES },
-        FIND_REPLACE_COMMANDS: { sectionMarker: Commands.CMD_REPLACE },
+        FIND_FIND_COMMANDS,
+        FIND_FIND_IN_COMMANDS,
+        FIND_REPLACE_COMMANDS,
 
-        VIEW_HIDESHOW_COMMANDS: { sectionMarker: Commands.VIEW_HIDE_SIDEBAR },
-        VIEW_FONTSIZE_COMMANDS: { sectionMarker: Commands.VIEW_ZOOM_SUBMENU },
-        VIEW_TOGGLE_OPTIONS: { sectionMarker: Commands.TOGGLE_ACTIVE_LINE },
+        VIEW_HIDESHOW_COMMANDS,
+        VIEW_FONTSIZE_COMMANDS,
+        VIEW_TOGGLE_OPTIONS,
 
-        NAVIGATE_GOTO_COMMANDS: { sectionMarker: Commands.NAVIGATE_QUICK_OPEN },
-        NAVIGATE_DOCUMENTS_COMMANDS: { sectionMarker: Commands.NAVIGATE_NEXT_DOC },
-        NAVIGATE_OS_COMMANDS: { sectionMarker: Commands.NAVIGATE_SHOW_IN_FILE_TREE },
-        NAVIGATE_QUICK_EDIT_COMMANDS: { sectionMarker: Commands.TOGGLE_QUICK_EDIT },
-        NAVIGATE_QUICK_DOCS_COMMANDS: { sectionMarker: Commands.TOGGLE_QUICK_DOCS }
+        NAVIGATE_GOTO_COMMANDS,
+        NAVIGATE_DOCUMENTS_COMMANDS,
+        NAVIGATE_OS_COMMANDS,
+        NAVIGATE_QUICK_EDIT_COMMANDS,
+        NAVIGATE_QUICK_DOCS_COMMANDS
     };
 
 
@@ -11410,6 +11848,7 @@ define("command/Menus", function (require, exports, module) {
     /**
     * Removes the attached event listeners from the corresponding object.
     * @param {MenuItem} menuItem
+    * @private
     */
     function removeMenuItemEventListeners(menuItem) {
         menuItem._command
@@ -11936,6 +12375,7 @@ define("command/Menus", function (require, exports, module) {
      *      AFTER or BEFORE, ignored when position is FIRST or LAST.
      *
      * @return {MenuItem} the newly created MenuItem
+     * @private
      */
     // Menu.prototype.createMenuItemsFromJSON = function (jsonStr, position, relativeID) {
     //     NOT IMPLEMENTED
@@ -11954,6 +12394,7 @@ define("command/Menus", function (require, exports, module) {
      *      AFTER or BEFORE, ignored when position is FIRST or LAST.
      *
      * @return {MenuItem} newly created menuItem for sub-menu
+     * @private
      */
     // MenuItem.prototype.createSubMenu = function (text, id, position, relativeID) {
     //     NOT IMPLEMENTED
@@ -12133,6 +12574,7 @@ define("command/Menus", function (require, exports, module) {
      * NOT IMPLEMENTED
      * Returns the parent MenuItem if the menu item is a sub-menu, returns null otherwise.
      * @return {MenuItem}
+     * @private
      */
     // MenuItem.prototype.getParentMenuItem = function () {
     //     NOT IMPLEMENTED;
