@@ -141801,36 +141801,41 @@ define("utils/AnimationUtils", function (require, exports, module) {
 define("utils/AppInit", function (require, exports, module) {
     const Metrics = require("utils/Metrics");
 
-    /*
+    /**
      * Fires when the base htmlContent/main-view.html is loaded
+     *
      * @type {string}
      * @const
      */
     var HTML_READY  = "htmlReady";
 
-    /*
+    /**
      * Fires when all extensions are loaded
+     *
      * @type {string}
      * @const
      */
     var APP_READY   = "appReady";
 
-    /*
+    /**
      * Fires after extensions have been loaded
+     *
      * @type {string}
      * @const
      */
     var EXTENSIONS_LOADED = "extensionsLoaded";
 
-    /*
+    /**
      * Map of each state's trigger
+     *
      * @type {Object.<string, boolean>}
      * @private
      */
     var _status      = { HTML_READY: false, APP_READY: false, EXTENSIONS_LOADED: false };
 
-    /*
+    /**
      * Map of callbacks to states
+     *
      * @type {Object.<string, Array.<function()>>}
      * @private
      */
@@ -141841,8 +141846,9 @@ define("utils/AppInit", function (require, exports, module) {
     _callbacks[EXTENSIONS_LOADED] = [];
 
 
-    /*
+    /**
      * calls the specified handler inside a try/catch handler
+     *
      * @param {function()} handler - the callback to call
      * @private
      */
@@ -141863,8 +141869,9 @@ define("utils/AppInit", function (require, exports, module) {
         }
     }
 
-    /*
+    /**
      * dispatches the event by calling all handlers registered for that type
+     *
      * @param {string} type - the event type to dispatch (APP_READY, EXTENSIONS_READY, HTML_READY)
      * @private
      */
@@ -141883,10 +141890,11 @@ define("utils/AppInit", function (require, exports, module) {
         _callbacks[type] = [];
     }
 
-    /*
+    /**
      * adds a callback to the list of functions to call for the specified event type
+     *
      * @param {string} type - the event type to dispatch (APP_READY, EXTENSIONS_READY, HTML_READY)
-     * @param {function} handler - callback funciton to call when the event is triggered
+     * @param {function} handler - callback function to call when the event is triggered
      * @private
      */
     function _addListener(type, handler) {
@@ -141901,6 +141909,7 @@ define("utils/AppInit", function (require, exports, module) {
      * Adds a callback for the ready hook. Handlers are called after
      * htmlReady is done, the initial project is loaded, and all extensions are
      * loaded.
+     *
      * @param {function} handler - callback function to call when the event is fired
      */
     function appReady(handler) {
@@ -141910,6 +141919,7 @@ define("utils/AppInit", function (require, exports, module) {
     /**
      * Adds a callback for the htmlReady hook. Handlers are called after the
      * main application html template is rendered.
+     *
      * @param {function} handler - callback function to call when the event is fired
      */
     function htmlReady(handler) {
@@ -141919,6 +141929,7 @@ define("utils/AppInit", function (require, exports, module) {
     /**
      * Adds a callback for the extensionsLoaded hook. Handlers are called after the
      * extensions have been loaded
+     *
      * @param {function} handler - callback function to call when the event is fired
      */
     function extensionsLoaded(handler) {
@@ -142248,7 +142259,10 @@ define("utils/Async", function (require, exports, module) {
         return masterDeferred.promise();
     }
 
-    /** Value passed to fail() handlers that have been triggered due to withTimeout()'s timeout */
+    /**
+     * Value passed to fail() handlers that have been triggered due to withTimeout()'s timeout
+     * @type {Object}
+     */
     var ERROR_TIMEOUT = {};
 
     /**
@@ -142375,7 +142389,7 @@ define("utils/Async", function (require, exports, module) {
                 try {
                     var responseOrPromise = nextFunction.apply(null, args);
                     if (responseOrPromise.hasOwnProperty("done") &&
-                            responseOrPromise.hasOwnProperty("fail")) {
+                        responseOrPromise.hasOwnProperty("fail")) {
                         responseOrPromise.done(function () {
                             chainHelper(index, arguments);
                         });
@@ -142449,6 +142463,7 @@ define("utils/Async", function (require, exports, module) {
      * queue at any time. If the queue is empty and nothing is currently executing when an operation is added,
      * it will execute immediately. Otherwise, it will execute when the last operation currently in the queue
      * has finished.
+     *
      * @constructor
      */
     function PromiseQueue() {
@@ -142487,6 +142502,7 @@ define("utils/Async", function (require, exports, module) {
      * finished. The operation must return a promise that will be resolved or rejected when it's finished;
      * the queue will continue with the next operation regardless of whether the current operation's promise
      * is resolved or rejected.
+     *
      * @param {function(): $.Promise} op The operation to add to the queue.
      */
     PromiseQueue.prototype.add = function (op) {
@@ -142508,8 +142524,9 @@ define("utils/Async", function (require, exports, module) {
     };
 
     /**
-     * @private
      * Pulls the next operation off the queue and executes it.
+     *
+     * @private
      */
     PromiseQueue.prototype._doNext = function () {
         var self = this;
@@ -142671,6 +142688,7 @@ define("utils/ColorUtils", function (require, exports, module) {
     /**
      * Sorted array of all the color names in the CSS Color Module Level 3 (http://www.w3.org/TR/css3-color/)
      * and "rebeccapurple" from CSS Color Module Level 4
+     *
      * @const @type {Array}
      */
     const COLOR_NAMES = ["aliceblue", "antiquewhite", "aqua", "aquamarine", "azure", "beige", "bisque", "black",
@@ -142700,13 +142718,15 @@ define("utils/ColorUtils", function (require, exports, module) {
      * rgb()/rgba() function format, hsl()/hsla() function format, 0x notation format
      * or color name format according to CSS Color Module Level 3 (http://www.w3.org/TR/css3-color/)
      * or "rebeccapurple" from CSS Color Module Level 4.
+     *
      * @const @type {RegExp}
      */
-    // use RegExp.source of the RegExp literal to avoid doubled backslashes
+        // use RegExp.source of the RegExp literal to avoid doubled backslashes
     var COLOR_REGEX = new RegExp(/0x([a-f0-9]{6})\b|0x([a-f0-9]{8})\b|#[a-f0-9]{6}\b|#[a-f0-9]{8}\b|#[a-f0-9]{3}\b|#[a-f0-9]{4}\b|\brgb\(\s*(?:[0-9]{1,2}|1[0-9]{2}|2[0-4][0-9]|25[0-5])\b\s*,\s*(?:[0-9]{1,2}|1[0-9]{2}|2[0-4][0-9]|25[0-5])\b\s*,\s*(?:[0-9]{1,2}|1[0-9]{2}|2[0-4][0-9]|25[0-5])\b\s*\)|\brgb\(\s*(?:[0-9]{1,2}%|100%)\s*,\s*(?:[0-9]{1,2}%|100%)\s*,\s*(?:[0-9]{1,2}%|100%)\s*\)|\brgba\(\s*(?:[0-9]{1,2}|1[0-9]{2}|2[0-4][0-9]|25[0-5])\b\s*,\s*(?:[0-9]{1,2}|1[0-9]{2}|2[0-4][0-9]|25[0-5])\b\s*,\s*(?:[0-9]{1,2}|1[0-9]{2}|2[0-4][0-9]|25[0-5])\b\s*,\s*(?:1|1\.0|0|0?\.[0-9]{1,3})\s*\)|\brgba\(\s*(?:[0-9]{1,2}%|100%)\s*,\s*(?:[0-9]{1,2}%|100%)\s*,\s*(?:[0-9]{1,2}%|100%)\s*,\s*(?:1|1\.0|0|0?\.[0-9]{1,3})\s*\)|\bhsl\(\s*(?:[0-9]{1,3})\b\s*,\s*(?:[0-9]{1,2}|100)\b%\s*,\s*(?:[0-9]{1,2}|100)\b%\s*\)|\bhsla\(\s*(?:[0-9]{1,3})\b\s*,\s*(?:[0-9]{1,2}|100)\b%\s*,\s*(?:[0-9]{1,2}|100)\b%\s*,\s*(?:1|1\.0|0|0?\.[0-9]{1,3})\s*\)|\b/.source + COLOR_NAMES.join("\\b|\\b") + "\\b", "gi");
 
-    /*
+    /**
      * Adds a color swatch to code hints where this is supported.
+     *
      * @param {!jQuery} $hintObj - list item where the swatch will be in
      * @param {?string} color - color the swatch should have, or null to add extra left margin to
      *      align with the other hints
@@ -142813,6 +142833,8 @@ define("utils/DeprecationWarning", function (require, exports, module) {
      * Trim the stack so that it does not have the call to this module,
      * and all the calls to require.js to load the extension that shows
      * this deprecation warning.
+     *
+     * @private
      */
     function _trimStack(stack) {
         var indexOfFirstRequireJSline;
@@ -142834,6 +142856,7 @@ define("utils/DeprecationWarning", function (require, exports, module) {
     /**
      * Show deprecation warning with the call stack if it
      * has never been displayed before.
+     *
      * @param {!string} message The deprecation message to be displayed.
      * @param {boolean=} oncePerCaller If true, displays the message once for each unique call location.
      *     If false (the default), only displays the message once no matter where it's called from.
@@ -142902,8 +142925,10 @@ define("utils/DeprecationWarning", function (require, exports, module) {
 
     /**
      * Create a deprecation warning and action for updated constants
-     * @param {!string} old Menu Id
-     * @param {!string} new Menu Id
+     *
+     * @param {Object} obj
+     * @param {!string} oldId Menu Id
+     * @param {!string} newId Menu Id
      */
     function deprecateConstant(obj, oldId, newId) {
         var warning     = "Use Menus." + newId + " instead of Menus." + oldId,
@@ -142923,26 +142948,26 @@ define("utils/DeprecationWarning", function (require, exports, module) {
     exports.deprecateConstant      = deprecateConstant;
 });
 
- /*
- * GNU AGPL-3.0 License
- *
- * Copyright (c) 2021 - present core.ai . All rights reserved.
- * Original work Copyright (c) 2013 - 2021 Adobe Systems Incorporated. All rights reserved.
- *
- * This program is free software: you can redistribute it and/or modify it
- * under the terms of the GNU Affero General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
- * for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
- *
- */
+/*
+* GNU AGPL-3.0 License
+*
+* Copyright (c) 2021 - present core.ai . All rights reserved.
+* Original work Copyright (c) 2013 - 2021 Adobe Systems Incorporated. All rights reserved.
+*
+* This program is free software: you can redistribute it and/or modify it
+* under the terms of the GNU Affero General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT
+* ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+* FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
+* for more details.
+*
+* You should have received a copy of the GNU Affero General Public License
+* along with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
+*
+*/
 
 // @INCLUDE_IN_API_DOCS
 
@@ -142971,6 +142996,7 @@ define("utils/DragAndDrop", function (require, exports, module) {
 
     /**
      * Returns true if the drag and drop items contains valid drop objects.
+     *
      * @param {Array.<DataTransferItem>} items Array of items being dragged
      * @return {boolean} True if one or more items can be dropped.
      */
@@ -142999,6 +143025,8 @@ define("utils/DragAndDrop", function (require, exports, module) {
      * Determines if the event contains a type list that has a URI-list.
      * If it does and contains an empty file list, then what is being dropped is a URL.
      * If that is true then we stop the event propagation and default behavior to save Brackets editor from the browser taking over.
+     *
+     * @private
      * @param {Array.<File>} files Array of File objects from the event datastructure. URLs are the only drop item that would contain a URI-list.
      * @param {event} event The event datastucture containing datatransfer information about the drag/drop event. Contains a type list which may or may not hold a URI-list depending on what was dragged/dropped. Interested if it does.
      */
@@ -143022,7 +143050,8 @@ define("utils/DragAndDrop", function (require, exports, module) {
 
     /**
      * Open dropped files
-     * @param {Array.<string>} files Array of files dropped on the application.
+     *
+     * @param {Array.<string>} paths Array of file paths dropped on the application.
      * @return {Promise} Promise that is resolved if all files are opened, or rejected
      *     if there was an error.
      */
@@ -143293,26 +143322,26 @@ define("utils/DragAndDrop", function (require, exports, module) {
     exports._PREF_DRAG_AND_DROP = _PREF_DRAG_AND_DROP;
 });
 
- /*
- * GNU AGPL-3.0 License
- *
- * Copyright (c) 2021 - present core.ai . All rights reserved.
- * Original work Copyright (c) 2013 - 2021 Adobe Systems Incorporated. All rights reserved.
- *
- * This program is free software: you can redistribute it and/or modify it
- * under the terms of the GNU Affero General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
- * for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
- *
- */
+/*
+* GNU AGPL-3.0 License
+*
+* Copyright (c) 2021 - present core.ai . All rights reserved.
+* Original work Copyright (c) 2013 - 2021 Adobe Systems Incorporated. All rights reserved.
+*
+* This program is free software: you can redistribute it and/or modify it
+* under the terms of the GNU Affero General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT
+* ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+* FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
+* for more details.
+*
+* You should have received a copy of the GNU Affero General Public License
+* along with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
+*
+*/
 
 // @INCLUDE_IN_API_DOCS
 
@@ -143358,8 +143387,9 @@ define("utils/DropdownEventHandler", function (require, exports, module) {
         this.scrolling = false;
 
         /**
-         * @private
          * The selected position in the list; otherwise -1.
+         *
+         * @private
          * @type {number}
          */
         this._selectedIndex = -1;
@@ -143374,6 +143404,7 @@ define("utils/DropdownEventHandler", function (require, exports, module) {
         /**
          * Convert keydown events into hint list navigation actions.
          *
+         * @private
          * @param {KeyboardEvent} event
          * @return {boolean} true if key was handled, otherwise false.
          */
@@ -143405,7 +143436,7 @@ define("utils/DropdownEventHandler", function (require, exports, module) {
                     self._tryToSelect(self.$items.length - 1, -1);
 
                 } else if (self._selectedIndex !== -1 &&
-                        (keyCode === KeyEvent.DOM_VK_RETURN)) {
+                    (keyCode === KeyEvent.DOM_VK_RETURN)) {
 
                     // Trigger a click handler to commmit the selected item
                     self._selectionHandler();
@@ -143428,6 +143459,8 @@ define("utils/DropdownEventHandler", function (require, exports, module) {
 
         /**
          * PopUpManager callback
+         *
+         * @private
          */
         function closeCallback() {
             KeyBindingManager.removeGlobalKeydownHook(_keydownHook);
@@ -143453,6 +143486,8 @@ define("utils/DropdownEventHandler", function (require, exports, module) {
 
     /**
      * Cleanup
+     *
+     * @private
      */
     DropdownEventHandler.prototype._cleanup = function () {
         if (this.$list) {
@@ -143466,6 +143501,8 @@ define("utils/DropdownEventHandler", function (require, exports, module) {
     /**
      * Try to select item at the given index. If it's disabled or a divider, keep trying by incrementing
      * index by 'direction' each time (wrapping around if needed).
+     *
+     * @private
      * @param {number} index  If out of bounds, index either wraps around to remain in range (e.g. -1 yields
      *                      last item, length+1 yields 2nd item) or if noWrap set, clips instead (e.g. -1 yields
      *                      first item, length+1 yields last item).
@@ -143502,6 +143539,7 @@ define("utils/DropdownEventHandler", function (require, exports, module) {
     };
 
     /**
+     * @private
      * @return {number} The number of items per scroll page.
      */
     DropdownEventHandler.prototype._itemsPerPage = function () {
@@ -143522,6 +143560,8 @@ define("utils/DropdownEventHandler", function (require, exports, module) {
 
     /**
      * Call selectionCallback with selected index
+     *
+     * @private
      */
     DropdownEventHandler.prototype._selectionHandler = function () {
 
@@ -143536,7 +143576,8 @@ define("utils/DropdownEventHandler", function (require, exports, module) {
     /**
      * Call selectionCallback with selected item
      *
-     * @param {jQueryObject} $item
+     * @private
+     * @param {jQueryObject} $link
      */
     DropdownEventHandler.prototype._clickHandler = function ($link) {
 
@@ -143584,6 +143625,8 @@ define("utils/DropdownEventHandler", function (require, exports, module) {
 
     /**
      * Register mouse event handlers
+     *
+     * @private
      */
     DropdownEventHandler.prototype._registerMouseEvents = function () {
         var self = this;
@@ -143616,6 +143659,7 @@ define("utils/DropdownEventHandler", function (require, exports, module) {
 
     /**
      * Re-register mouse event handlers
+     *
      * @param {!jQueryObject} $list  newly updated list object
      */
     DropdownEventHandler.prototype.reRegisterMouseHandlers = function ($list) {
@@ -143775,7 +143819,8 @@ define("utils/DropdownEventHandler", function (require, exports, module) {
 
     /**
      * Split "event.namespace" string into its two parts; both parts are optional.
-     * @param {string} eventName Event name and/or trailing ".namespace"
+     *
+     * @param {string} eventStr Event name and/or trailing ".namespace"
      * @return {!{event:string, ns:string}} Uses "" for missing parts.
      * @type {function}
      */
@@ -143792,6 +143837,7 @@ define("utils/DropdownEventHandler", function (require, exports, module) {
      * By default, we consider any events having more than 15 listeners to be leaky. But sometimes there may be
      * genuine use cases where an event can have a large number of listeners. For those events, it is recommended
      * to increase the leaky warning threshold individually with this API.
+     *
      * @param {string} eventName
      * @param {number} threshold - The new threshold to set. Will only be set if the new threshold is greater than
      * the current threshold.
@@ -143811,6 +143857,7 @@ define("utils/DropdownEventHandler", function (require, exports, module) {
      * Adds the given handler function to 'events': a space-separated list of one or more event names, each
      * with an optional ".namespace" (used by off() - see below). If the handler is already listening to this
      * event, a duplicate copy is added.
+     *
      * @param {string} events
      * @param {!function(!{type:string, target:!Object}, ...)} fn
      * @type {function}
@@ -143865,6 +143912,7 @@ define("utils/DropdownEventHandler", function (require, exports, module) {
      * 'events' can be: bare event name, bare .namespace, or event.namespace pair. This yields a set of
      * matching handlers. If 'fn' is omitted, all these handlers are removed. If 'fn' is provided,
      * only handlers exactly equal to 'fn' are removed (there may still be >1, if duplicates were added).
+     *
      * @param {string} events
      * @param {?function(!{type:string, target:!Object}, ...)} fn
      * @type {function}
@@ -143922,6 +143970,7 @@ define("utils/DropdownEventHandler", function (require, exports, module) {
 
     /**
      * Attaches a handler so it's only called once (per event in the 'events' list).
+     *
      * @param {string} events
      * @param {?function(!{type:string, target:!Object}, ...)} fn
      * @type {function}
@@ -143941,6 +143990,7 @@ define("utils/DropdownEventHandler", function (require, exports, module) {
 
     /**
      * Invokes all handlers for the given event (in the order they were added).
+     *
      * @param {string} eventName
      * @param {*} ... Any additional args are passed to the event handler after the event object
      * @type {function}
@@ -143975,6 +144025,7 @@ define("utils/DropdownEventHandler", function (require, exports, module) {
     /**
      * Adds the EventDispatcher APIs to the given object: on(), one(), off(), and trigger(). May also be
      * called on a prototype object - each instance will still behave independently.
+     *
      * @param {!Object} obj Object to add event-dispatch methods to
      * @type {function}
      */
@@ -143994,6 +144045,7 @@ define("utils/DropdownEventHandler", function (require, exports, module) {
     /**
      * Utility for calling on() with an array of arguments to pass to event handlers (rather than a varargs
      * list). makeEventDispatcher() must have previously been called on 'dispatcher'.
+     *
      * @param {!Object} dispatcher
      * @param {string} eventName
      * @param {!Array.<*>} argsArray
@@ -144028,6 +144080,7 @@ define("utils/DropdownEventHandler", function (require, exports, module) {
      * May be called before makeEventDispatcher(). May be called on a prototype where makeEventDispatcher()
      * is called separately per instance (i.e. in the constructor). Should be called before clients have
      * a chance to start calling on().
+     *
      * @param {!Object} obj Event dispatcher object
      * @param {string} eventName Name of deprecated event
      * @param {string=} insteadStr Suggested thing to use instead
@@ -144055,7 +144108,6 @@ define("utils/DropdownEventHandler", function (require, exports, module) {
         defineRequire();
     }
 }());
-
 
 /*
  * GNU AGPL-3.0 License
@@ -144143,6 +144195,7 @@ define("utils/EventManager", function (require, exports, module) {
 
     /**
      * Returns true is an EventHandler of the given name exists.
+     *
      * @param {string} handlerName
      * @return {boolean}
      * @type {function}
@@ -144185,6 +144238,7 @@ define("utils/EventManager", function (require, exports, module) {
      * bringing in a cross-origin ifrmame say [`http://mydomain.com`], you should add it to the whitelist by setting
      * `window.Phoenix.TRUSTED_ORIGINS ["http://mydomain.com"] = true;`
      *
+     * @private
      * @function
      * @global
      * @listens window#message
@@ -144236,6 +144290,12 @@ define("utils/EventManager", function (require, exports, module) {
         triggerEvent(handlerName, eventName, event);
     };
 
+    /**
+     * add or remove a domain, in the list of trusted origin
+     *
+     * @param {string} origin - the origin to be added or removed
+     * @param {boolean} isTrusted - if `true` adds the origin to the list, else removes it.
+     */
     function setTrustedOrigin(origin, isTrusted) {
         if(!isTrusted){
             delete eventTrustedOrigins[origin];
@@ -144315,9 +144375,20 @@ define("utils/EventManager", function (require, exports, module) {
  */
 
 define("utils/ExtensionInterface", function (require, exports, module) {
+
+    /**
+     * Extension interface registered event
+     *
+     * @const
+     * @type {string}
+     */
     const EVENT_EXTENSION_INTERFACE_REGISTERED = "extensionInterfaceRegistered";
 
-    /* standard named interfaces registered by default extensions*/
+    /**
+     * standard named interfaces registered by default extensions
+     *
+     * @private
+     */
     const _DEFAULT_EXTENSIONS_INTERFACE_NAMES = {
         PHOENIX_LIVE_PREVIEW: "Extn.Phoenix.livePreview"
     };
@@ -144343,6 +144414,7 @@ define("utils/ExtensionInterface", function (require, exports, module) {
 
     /**
      * Returns true is an interface of the given name exists.
+     *
      * @param {string} extensionInterfaceName
      * @return {boolean}
      * @type {function}
@@ -144463,10 +144535,31 @@ define("utils/ExtensionLoader", function (require, exports, module) {
 
     // default async initExtension timeout
     var EXTENSION_LOAD_TIMOUT_SECONDS = 60,
-        INIT_EXTENSION_TIMEOUT = EXTENSION_LOAD_TIMOUT_SECONDS * 1000,
-        EVENT_EXTENSION_LOADED = "load",
-        EVENT_EXTENSION_DISABLED = "disabled",
-        EVENT_EXTENSION_LOAD_FAILED = "loadFailed";
+        INIT_EXTENSION_TIMEOUT = EXTENSION_LOAD_TIMOUT_SECONDS * 1000;
+
+    /**
+     * Extension loaded event
+     *
+     * @const
+     * @type {string}
+     */
+    const EVENT_EXTENSION_LOADED = "load";
+
+    /**
+     * Extension disabled event
+     *
+     * @const
+     * @type {string}
+     */
+    const EVENT_EXTENSION_DISABLED = "disabled";
+
+    /**
+     * Extension load failed event
+     *
+     * @const
+     * @type {string}
+     */
+    const EVENT_EXTENSION_LOAD_FAILED = "loadFailed";
 
     var _init       = false,
         _extensions = {},
@@ -144475,6 +144568,8 @@ define("utils/ExtensionLoader", function (require, exports, module) {
 
     /**
      * Stores require.js contexts of extensions
+     *
+     * @private
      * @type {Object.<string, Object>}
      */
     var contexts    = {};
@@ -144496,14 +144591,24 @@ define("utils/ExtensionLoader", function (require, exports, module) {
 
     /**
      * Returns the path to the default extensions directory relative to Phoenix base URL
+     *
+     * @private
      */
     const DEFAULT_EXTENSIONS_PATH_BASE = "extensions/default";
+
+    /**
+     * Responsible to get the default extension path
+     *
+     * @returns {string}
+     */
     function getDefaultExtensionPath() {
         return window.PhoenixBaseURL + DEFAULT_EXTENSIONS_PATH_BASE;
     }
 
     /**
      * Returns the full path to the development extensions directory.
+     *
+     * @private
      */
     function _getExtensionPath() {
         return pathLib.normalize(Phoenix.VFS.getExtensionDir());
@@ -144511,6 +144616,8 @@ define("utils/ExtensionLoader", function (require, exports, module) {
 
     /**
      * Returns the full path to the development extensions directory.
+     *
+     * @private
      */
     function getDevExtensionPath() {
         return pathLib.normalize(Phoenix.VFS.getDevExtensionDir());
@@ -144529,7 +144636,7 @@ define("utils/ExtensionLoader", function (require, exports, module) {
     /**
      * Returns the require.js require context used to load an extension
      *
-     * @param {!string} name, used to identify the extension
+     * @param {!string} name used to identify the extension
      * @return {!Object} A require.js require object used to load the extension, or undefined if
      * there is no require object with that name
      */
@@ -144538,8 +144645,9 @@ define("utils/ExtensionLoader", function (require, exports, module) {
     }
 
     /**
-     * @private
      * Get timeout value for rejecting an extension's async initExtension promise.
+     *
+     * @private
      * @return {number} Timeout in milliseconds
      */
     function _getInitExtensionTimeout() {
@@ -144547,8 +144655,9 @@ define("utils/ExtensionLoader", function (require, exports, module) {
     }
 
     /**
-     * @private
      * Set timeout for rejecting an extension's async initExtension promise.
+     *
+     * @private
      * @param {number} value Timeout in milliseconds
      */
     function _setInitExtensionTimeout(value) {
@@ -144556,8 +144665,9 @@ define("utils/ExtensionLoader", function (require, exports, module) {
     }
 
     /**
-     * @private
      * Loads optional requirejs-config.json file for an extension
+     *
+     * @private
      * @param {Object} baseConfig
      * @return {$.Promise}
      */
@@ -144600,8 +144710,9 @@ define("utils/ExtensionLoader", function (require, exports, module) {
     }
 
     /**
-     * @private
      * Loads optional requirejs-config.json file for an extension
+     *
+     * @private
      * @param {Object} baseConfig
      * @return {$.Promise}
      */
@@ -144623,7 +144734,8 @@ define("utils/ExtensionLoader", function (require, exports, module) {
     /**
      * Loads the extension module that lives at baseUrl into its own Require.js context
      *
-     * @param {!string} name, used to identify the extension
+     * @private
+     * @param {!string} name used to identify the extension
      * @param {!{baseUrl: string}} config object with baseUrl property containing absolute path of extension
      * @param {string} entryPoint name of the main js file to load
      * @param {Object} metadata
@@ -144747,9 +144859,9 @@ define("utils/ExtensionLoader", function (require, exports, module) {
     /**
      * Loads the extension that lives at baseUrl into its own Require.js context
      *
-     * @param {!string} name, used to identify the extension
+     * @param {!string} name used to identify the extension
      * @param {!{baseUrl: string}} config object with baseUrl property containing absolute path of extension
-     * @param {!string} entryPoint, name of the main js file to load
+     * @param {!string} entryPoint name of the main js file to load
      * @return {!$.Promise} A promise object that is resolved when the extension is loaded, or rejected
      *              if the extension fails to load or throws an exception immediately when loaded.
      *              (Note: if extension contains a JS syntax error, promise is resolved not rejected).
@@ -144787,9 +144899,10 @@ define("utils/ExtensionLoader", function (require, exports, module) {
     /**
      * Runs unit tests for the extension that lives at baseUrl into its own Require.js context
      *
-     * @param {!string} name, used to identify the extension
+     * @private
+     * @param {!string} name used to identify the extension
      * @param {!{baseUrl: string}} config object with baseUrl property containing absolute path of extension
-     * @param {!string} entryPoint, name of the main js file to load
+     * @param {!string} entryPoint name of the main js file to load
      * @return {!$.Promise} A promise object that is resolved when all extensions complete loading.
      */
     function _testExtensionByURL(name, config, entryPoint) {
@@ -144822,9 +144935,9 @@ define("utils/ExtensionLoader", function (require, exports, module) {
     /**
      * Runs unit tests for the extension that lives at baseUrl into its own Require.js context
      *
-     * @param {!string} name, used to identify the extension
+     * @param {!string} name used to identify the extension
      * @param {!{baseUrl: string}} config object with baseUrl property containing absolute path of extension
-     * @param {!string} entryPoint, name of the main js file to load
+     * @param {!string} entryPoint name of the main js file to load
      * @return {!$.Promise} A promise object that is resolved when all extensions complete loading.
      */
     function testExtension(name, config, entryPoint) {
@@ -144901,9 +145014,9 @@ define("utils/ExtensionLoader", function (require, exports, module) {
 
 
     /**
-     * @private
      * Loads a file entryPoint from each extension folder within the baseUrl into its own Require.js context
      *
+     * @private
      * @param {!string} directory an absolute native path that contains a directory of extensions.
      *                  each subdirectory is interpreted as an independent extension
      * @param {!string} entryPoint Module name to load (without .js suffix)
@@ -144972,7 +145085,7 @@ define("utils/ExtensionLoader", function (require, exports, module) {
     /**
      * Loads the extension that lives at baseUrl into its own Require.js context
      *
-     * @param {!string} directory, an absolute native path that contains a directory of extensions.
+     * @param {!string} directory an absolute native path that contains a directory of extensions.
      *                  each subdirectory is interpreted as an independent extension
      * @return {!$.Promise} A promise object that is resolved when all extensions complete loading.
      */
@@ -144982,6 +145095,7 @@ define("utils/ExtensionLoader", function (require, exports, module) {
 
     /**
      * Loads a given extension at the path from virtual fs. Used by `debug menu> load project as extension`
+     *
      * @param directory
      * @return {!Promise}
      */
@@ -144998,7 +145112,7 @@ define("utils/ExtensionLoader", function (require, exports, module) {
     /**
      * Runs unit test for the extension that lives at baseUrl into its own Require.js context
      *
-     * @param {!string} directory, an absolute native path that contains a directory of extensions.
+     * @param {!string} directory an absolute native path that contains a directory of extensions.
      *                  each subdirectory is interpreted as an independent extension
      * @return {!$.Promise} A promise object that is resolved when all extensions complete loading.
      */
@@ -145102,6 +145216,12 @@ define("utils/ExtensionLoader", function (require, exports, module) {
     // eg: extensionPath = /tauri/home/home/.local/share/io.phcode.dev/assets/extensions/devTemp/theme/14/theme.css
     // eg: customExtensionLoadPath = /tauri/home/home/.local/share/io.phcode.dev/assets/extensions/devTemp/theme/14
     // eg: srcBasePath = /tauri/home/home/myExtension
+    /**
+     * To get the source path for extension
+     *
+     * @param extensionPath
+     * @returns {string}
+     */
     function getSourcePathForExtension(extensionPath) {
         const devTempExtDir = `${Phoenix.VFS.getDevTempExtensionDir()}/`;
         if(extensionPath.startsWith(devTempExtDir)) {
@@ -145156,9 +145276,9 @@ define("utils/ExtensionLoader", function (require, exports, module) {
                             }
                         });
                     }).catch((err)=>{
-                        console.error(`Error creating dir ${extDestPath}`, err);
-                        result.reject(err);
-                    });
+                    console.error(`Error creating dir ${extDestPath}`, err);
+                    result.reject(err);
+                });
             });
             // custom extensions are always loaded marked as resolved to prevent the main event loop from taking
             // too long to load
@@ -145341,6 +145461,8 @@ define("utils/ExtensionUtils", function (require, exports, module) {
     /**
      * getModuleUrl returns different urls for win platform
      * so that's why we need a different check here
+     *
+     * @private
      * @see #getModuleUrl
      * @param {!string} pathOrUrl that should be checked if it's absolute
      * @return {!boolean} returns true if pathOrUrl is absolute url on win platform
@@ -145401,7 +145523,7 @@ define("utils/ExtensionUtils", function (require, exports, module) {
      * @param {!module} module Module provided by RequireJS
      * @param {?string} path Relative path from the extension folder to a file
      * @return {!string} The path to the module's folder
-     **/
+     */
     function getModulePath(module, path) {
         var modulePath = module.uri.substr(0, module.uri.lastIndexOf("/") + 1);
         if (path) {
@@ -145417,7 +145539,7 @@ define("utils/ExtensionUtils", function (require, exports, module) {
      * @param {!module} module Module provided by RequireJS
      * @param {?string} path Relative path from the extension folder to a file
      * @return {!string} The URL to the module's folder
-     **/
+     */
     function getModuleUrl(module, path) {
         return encodeURI(getModulePath(module, path));
     }
@@ -145430,7 +145552,7 @@ define("utils/ExtensionUtils", function (require, exports, module) {
      * @param {!module} module Module provided by RequireJS
      * @param {!string} path Relative path from the extension folder to a file
      * @return {!$.Promise} A promise object that is resolved with the contents of the requested file
-     **/
+     */
     function loadFile(module, path) {
         var url     = PathUtils.isAbsoluteUrl(path) ? path : getModuleUrl(module, path);
         let result = new $.Deferred();
@@ -145495,6 +145617,7 @@ define("utils/ExtensionUtils", function (require, exports, module) {
      * Loads the package.json file in the given extension folder as well as any additional
      * metadata.
      *
+     * @private
      * @param {string} baseExtensionUrl The extension folder.
      * @param {?string} extensionName optional extension name
      * @return {$.Promise} A promise object that is resolved with the parsed contents of the package.json file,
@@ -145510,18 +145633,18 @@ define("utils/ExtensionUtils", function (require, exports, module) {
             .then(function (packageResult) {
                 json = packageResult;
             }).always(function () {
-                // if we don't have any metadata for the extension
-                // we should still create an empty one, so we can attach
-                // disabled property on it in case it's disabled
-                let disabled,
-                    defaultDisabled = JSON.parse(PhStore.getItem(Package.DEFAULT_DISABLED_EXTENSIONS_KEY) || "[]");
-                if (Array.isArray(defaultDisabled) && defaultDisabled.indexOf(baseExtensionUrl) !== -1) {
-                    console.warn("Extension has been disabled on startup: " + baseExtensionUrl);
-                    disabled = true;
-                }
-                json.disabled = disabled;
-                result.resolve(json);
-            });
+            // if we don't have any metadata for the extension
+            // we should still create an empty one, so we can attach
+            // disabled property on it in case it's disabled
+            let disabled,
+                defaultDisabled = JSON.parse(PhStore.getItem(Package.DEFAULT_DISABLED_EXTENSIONS_KEY) || "[]");
+            if (Array.isArray(defaultDisabled) && defaultDisabled.indexOf(baseExtensionUrl) !== -1) {
+                console.warn("Extension has been disabled on startup: " + baseExtensionUrl);
+                disabled = true;
+            }
+            json.disabled = disabled;
+            result.resolve(json);
+        });
 
         return result.promise();
     }
@@ -145535,6 +145658,7 @@ define("utils/ExtensionUtils", function (require, exports, module) {
      * disabled might be set.
      *
      * @param {string} metadataURL The extension folder/base url for default extensions.
+     * @param {string} extensionName name of the extension
      * @return {$.Promise} A promise object that is resolved with the parsed contents of the package.json file,
      *     or rejected if there is no package.json with the boolean indicating whether .disabled file exists.
      */
@@ -145620,9 +145744,16 @@ define("utils/ExtensionUtils", function (require, exports, module) {
  */
 
 define("utils/FeatureGate", function (require, exports, module) {
-    const FEATURE_REGISTERED = "featureGateRegistered",
-        ENABLED = 'enabled',
-        DISABLED = 'disabled';
+    /**
+     * Feature gate registered
+     *
+     * @const
+     * @type {string}
+     */
+    const FEATURE_REGISTERED = "featureGateRegistered";
+
+    const ENABLED = 'enabled';
+    const DISABLED = 'disabled';
 
     let EventDispatcher = require("utils/EventDispatcher");
 
@@ -145649,6 +145780,7 @@ define("utils/FeatureGate", function (require, exports, module) {
 
     /**
      * Returns an array of all named registered feature gates.
+     *
      * @return {string[]} list of registered features
      * @type {function}
      */
@@ -145663,6 +145795,7 @@ define("utils/FeatureGate", function (require, exports, module) {
      * if(FeatureGate.isFeatureEnabled(FEATURE_NEW_COLORS)){
      *    // do fancy colors here
      * }
+     *
      * @param {string} featureName
      * @return {boolean}
      * @type {function}
@@ -145717,8 +145850,6 @@ define("utils/FeatureGate", function (require, exports, module) {
  * along with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
  *
  */
-
-// @INCLUDE_IN_API_DOCS
 
 /**
  * Initializes the global "brackets" variable and it's properties.
@@ -145834,8 +145965,126 @@ define("utils/Global", function (require, exports, module) {
  *
  */
 
+// @INCLUDE_IN_API_DOCS
+
 /**
  * Utilities module to provide constants for keyCodes
+ * @property{number} DOM_VK_CANCEL: 3
+ * @property{number} DOM_VK_HELP: 6
+ * @property{number} DOM_VK_BACK_SPACE: 8
+ * @property{number} DOM_VK_TAB: 9
+ * @property{number} DOM_VK_CLEAR: 12
+ * @property{number} DOM_VK_RETURN: 13
+ * @property{number} DOM_VK_ENTER: 14
+ * @property{number} DOM_VK_SHIFT: 16
+ * @property{number} DOM_VK_CONTROL: 17
+ * @property{number} DOM_VK_ALT: 18
+ * @property{number} DOM_VK_PAUSE: 19
+ * @property{number} DOM_VK_CAPS_LOCK: 20
+ * @property{number} DOM_VK_ESCAPE: 27
+ * @property{number} DOM_VK_SPACE: 32
+ * @property{number} DOM_VK_PAGE_UP: 33
+ * @property{number} DOM_VK_PAGE_DOWN: 34
+ * @property{number} DOM_VK_END: 35
+ * @property{number} DOM_VK_HOME: 36
+ * @property{number} DOM_VK_LEFT: 37
+ * @property{number} DOM_VK_UP: 38
+ * @property{number} DOM_VK_RIGHT: 39
+ * @property{number} DOM_VK_DOWN: 40
+ * @property{number} DOM_VK_PRINTSCREEN: 44
+ * @property{number} DOM_VK_INSERT: 45
+ * @property{number} DOM_VK_DELETE: 46
+ * @property{number} DOM_VK_0: 48
+ * @property{number} DOM_VK_1: 49
+ * @property{number} DOM_VK_2: 50
+ * @property{number} DOM_VK_3: 51
+ * @property{number} DOM_VK_4: 52
+ * @property{number} DOM_VK_5: 53
+ * @property{number} DOM_VK_6: 54
+ * @property{number} DOM_VK_7: 55
+ * @property{number} DOM_VK_8: 56
+ * @property{number} DOM_VK_9: 57
+ * @property{number} DOM_VK_A: 65
+ * @property{number} DOM_VK_B: 66
+ * @property{number} DOM_VK_C: 67
+ * @property{number} DOM_VK_D: 68
+ * @property{number} DOM_VK_E: 69
+ * @property{number} DOM_VK_F: 70
+ * @property{number} DOM_VK_G: 71
+ * @property{number} DOM_VK_H: 72
+ * @property{number} DOM_VK_I: 73
+ * @property{number} DOM_VK_J: 74
+ * @property{number} DOM_VK_K: 75
+ * @property{number} DOM_VK_L: 76
+ * @property{number} DOM_VK_M: 77
+ * @property{number} DOM_VK_N: 78
+ * @property{number} DOM_VK_O: 79
+ * @property{number} DOM_VK_P: 80
+ * @property{number} DOM_VK_Q: 81
+ * @property{number} DOM_VK_R: 82
+ * @property{number} DOM_VK_S: 83
+ * @property{number} DOM_VK_T: 84
+ * @property{number} DOM_VK_U: 85
+ * @property{number} DOM_VK_V: 86
+ * @property{number} DOM_VK_W: 87
+ * @property{number} DOM_VK_X: 88
+ * @property{number} DOM_VK_Y: 89
+ * @property{number} DOM_VK_Z: 90
+ * @property{number} DOM_VK_CONTEXT_MENU: 93
+ * @property{number} DOM_VK_NUMPAD0: 96
+ * @property{number} DOM_VK_NUMPAD1: 97
+ * @property{number} DOM_VK_NUMPAD2: 98
+ * @property{number} DOM_VK_NUMPAD3: 99
+ * @property{number} DOM_VK_NUMPAD4: 100
+ * @property{number} DOM_VK_NUMPAD5: 101
+ * @property{number} DOM_VK_NUMPAD6: 102
+ * @property{number} DOM_VK_NUMPAD7: 103
+ * @property{number} DOM_VK_NUMPAD8: 104
+ * @property{number} DOM_VK_NUMPAD9: 105
+ * @property{number} DOM_VK_MULTIPLY: 106
+ * @property{number} DOM_VK_ADD: 107
+ * @property{number} DOM_VK_SEPARATOR: 108
+ * @property{number} DOM_VK_SUBTRACT: 109
+ * @property{number} DOM_VK_DECIMAL: 110
+ * @property{number} DOM_VK_DIVIDE: 111
+ * @property{number} DOM_VK_F1: 112
+ * @property{number} DOM_VK_F2: 113
+ * @property{number} DOM_VK_F3: 114
+ * @property{number} DOM_VK_F4: 115
+ * @property{number} DOM_VK_F5: 116
+ * @property{number} DOM_VK_F6: 117
+ * @property{number} DOM_VK_F7: 118
+ * @property{number} DOM_VK_F8: 119
+ * @property{number} DOM_VK_F9: 120
+ * @property{number} DOM_VK_F10: 121
+ * @property{number} DOM_VK_F11: 122
+ * @property{number} DOM_VK_F12: 123
+ * @property{number} DOM_VK_F13: 124
+ * @property{number} DOM_VK_F14: 125
+ * @property{number} DOM_VK_F15: 126
+ * @property{number} DOM_VK_F16: 127
+ * @property{number} DOM_VK_F17: 128
+ * @property{number} DOM_VK_F18: 129
+ * @property{number} DOM_VK_F19: 130
+ * @property{number} DOM_VK_F20: 131
+ * @property{number} DOM_VK_F21: 132
+ * @property{number} DOM_VK_F22: 133
+ * @property{number} DOM_VK_F23: 134
+ * @property{number} DOM_VK_F24: 135
+ * @property{number} DOM_VK_NUM_LOCK: 144
+ * @property{number} DOM_VK_SCROLL_LOCK: 145
+ * @property{number} DOM_VK_SEMICOLON: 186
+ * @property{number} DOM_VK_EQUALS: 187
+ * @property{number} DOM_VK_COMMA: 188
+ * @property{number} DOM_VK_DASH: 189
+ * @property{number} DOM_VK_PERIOD: 190
+ * @property{number} DOM_VK_SLASH: 191
+ * @property{number} DOM_VK_BACK_QUOTE: 192
+ * @property{number} DOM_VK_OPEN_BRACKET: 219
+ * @property{number} DOM_VK_BACK_SLASH: 220
+ * @property{number} DOM_VK_CLOSE_BRACKET: 221
+ * @property{number} DOM_VK_QUOTE: 222
+ * @property{number} DOM_VK_META: 22
  */
 define("utils/KeyEvent", {
     DOM_VK_CANCEL: 3,
@@ -146467,6 +146716,8 @@ define("utils/Metrics", function (require, exports, module) {
  *
  */
 
+// @INCLUDE_IN_API_DOCS
+
 /**
  * Virtualized NativeApp apis that works cross-platform, and in the browser.
  */
@@ -146478,8 +146729,9 @@ define("utils/NativeApp", function (require, exports, module) {
         FileSystemError = require("filesystem/FileSystemError");
 
     /**
-     * @private
      * Map an fs error code to a FileError.
+     *
+     * @private
      */
     function _browserErrToFileError(err) {
         if (err === brackets.fs.ERR_CODES.NOT_FOUND) {
@@ -146494,6 +146746,7 @@ define("utils/NativeApp", function (require, exports, module) {
 
     /** openLiveBrowser
      * Open the given URL in the user's system browser, optionally enabling debugging.
+     *
      * @param {string} url The URL to open.
      * @param {boolean=} enableRemoteDebugging Whether to turn on remote debugging. Default false.
      * @return {$.Promise}
@@ -146543,6 +146796,7 @@ define("utils/NativeApp", function (require, exports, module) {
 
     /** closeAllLiveBrowsers
      * Closes all the browsers that were tracked on open
+     *
      * TODO: does not seem to work on Windows
      * @return {$.Promise}
      */
@@ -146554,6 +146808,7 @@ define("utils/NativeApp", function (require, exports, module) {
 
     /**
      * Opens a URL in the system default browser.
+     *
      * @param {string} url
      * @param {string?} tabIdentifier - An optional tab identifier can be set to group the tabs. Maps to target option
      *              in browser. Doesn't do anything in tauri.
@@ -146562,6 +146817,9 @@ define("utils/NativeApp", function (require, exports, module) {
         return brackets.app.openURLInDefaultBrowser(url, tabIdentifier);
     }
 
+    /**
+     * Gets the path to the application's support directory
+     */
     function getApplicationSupportDirectory() {
         return brackets.app.getApplicationSupportDirectory();
     }
@@ -146595,8 +146853,6 @@ define("utils/NativeApp", function (require, exports, module) {
  * along with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
  *
  */
-
-// @INCLUDE_IN_API_DOCS
 
 
 define("utils/NodeConnection", function (require, exports, module) {
@@ -147401,6 +147657,8 @@ define("utils/NodeDomain", function (require, exports, module) {
  *
  */
 
+// @INCLUDE_IN_API_DOCS
+
 /**
  * Generic node util APIs connector. see `src-node/utils.js` for node peer
  */
@@ -147416,6 +147674,14 @@ define("utils/NodeUtils", function (require, exports, module) {
         utilsConnector = NodeConnector.createNodeConnector(UTILS_NODE_CONNECTOR, exports);
     }
 
+    /**
+     * Fetches text content from a URL
+     * This is only available in the native app
+     *
+     * @param {string} url
+     * @param {string} encoding
+     * @return {Promise<string>}
+     */
     async function fetchURLText(url, encoding) {
         if(!Phoenix.isNativeApp) {
             throw new Error("node not available in browser");
@@ -147426,6 +147692,8 @@ define("utils/NodeUtils", function (require, exports, module) {
 
     /**
      * updates the localized strings in brackets `Strings` to node.
+     *
+     * @private
      * @return {Promise<boolean>} Promise resolves to true if strings was updated in node, else false(in browser.)
      */
     async function _updateNodeLocaleStrings() {
@@ -147437,6 +147705,12 @@ define("utils/NodeUtils", function (require, exports, module) {
         return true;
     }
 
+    /**
+     * Gets the version of the Phoenix binary
+     * This is only available in the native app
+     *
+     * @return {Promise<string>}
+     */
     async function getPhoenixBinaryVersion() {
         if(!Phoenix.isNativeApp) {
             throw new Error("getPhoenixBinaryVersion not available in browser");
@@ -147446,6 +147720,12 @@ define("utils/NodeUtils", function (require, exports, module) {
         return utilsConnector.execPeer("getPhoenixBinaryVersion", phoenixBinPath);
     }
 
+    /**
+     * Retrieves the Linux OS flavor name
+     * This is only available in the native app on Linux
+     *
+     * @return {Promise<string|null>}
+     */
     async function getLinuxOSFlavorName() {
         if(Phoenix.platform !== "linux" || !Phoenix.isNativeApp) {
             return null;
@@ -147453,6 +147733,13 @@ define("utils/NodeUtils", function (require, exports, module) {
         return utilsConnector.execPeer("getLinuxOSFlavorName");
     }
 
+    /**
+     * Opens a URL in the default browser.
+     * This is only available in the native app.
+     *
+     * @param {string} url
+     * @param {string} browserName
+     */
     async function openUrlInBrowser(url, browserName) {
         if(!Phoenix.isNativeApp) {
             throw new Error("openUrlInBrowser not available in browser");
@@ -147477,6 +147764,13 @@ define("utils/NodeUtils", function (require, exports, module) {
         return utilsConnector.execPeer("_npmInstallInFolder", {moduleNativeDir});
     }
 
+    /**
+     * Gets an environment variable's value
+     * This is only available in the native app
+     *
+     * @param {string} varName
+     * @return {Promise<string>}
+     */
     async function getEnvironmentVariable(varName) {
         if(!Phoenix.isNativeApp) {
             throw new Error("getEnvironmentVariable not available in browser");
@@ -147484,6 +147778,14 @@ define("utils/NodeUtils", function (require, exports, module) {
         return utilsConnector.execPeer("getEnvironmentVariable", varName);
     }
 
+    /**
+     * Runs ESLint on a file
+     * This is only available in the native app
+     *
+     * @param {string} text
+     * @param {string} fullFilePath
+     * @param {string} projectFullPath
+     */
     async function ESLintFile(text, fullFilePath, projectFullPath) {
         if(!Phoenix.isNativeApp) {
             throw new Error("ESLintFile not available in browser");
@@ -147531,6 +147833,12 @@ define("utils/NodeUtils", function (require, exports, module) {
     exports.openUrlInBrowser = openUrlInBrowser;
     exports.ESLintFile = ESLintFile;
     exports.getEnvironmentVariable = getEnvironmentVariable;
+
+    /**
+     * checks if Node connector is ready
+     *
+     * @return {boolean} returns true if it's ready, otherwise false
+     */
     exports.isNodeReady = NodeConnector.isNodeReady;
 
     window.NodeUtils = exports;
@@ -147574,6 +147882,8 @@ define("utils/PerfUtils", function (require, exports, module) {
 
     /**
      * Flag to enable/disable performance data gathering. Default is true (enabled)
+     *
+     * @private
      * @type {boolean} enabled
      */
     var enabled = brackets && !!brackets.app.getTimeSinceStartup;
@@ -147583,12 +147893,16 @@ define("utils/PerfUtils", function (require, exports, module) {
      * test (passed to markStart/addMeasurement), and the value is the time, in
      * milliseconds, that it took to run the test. If multiple runs of the same test
      * are made, the value is an Array with each run stored as an entry in the Array.
+     *
+     * @private
      */
     var perfData = {};
 
     /**
      * Active tests. This is a hash of all tests that have had markStart() called,
      * but have not yet had addMeasurement() called.
+     *
+     * @private
      */
     var activeTests = {};
 
@@ -147596,20 +147910,23 @@ define("utils/PerfUtils", function (require, exports, module) {
      * Updatable tests. This is a hash of all tests that have had markStart() called,
      * and have had updateMeasurement() called. Caller must explicitly remove tests
      * from this list using finalizeMeasurement()
+     *
+     * @private
      */
     var updatableTests = {};
 
     /**
-     * @private
      * Keeps the track of measurements sequence number for re-entrant sequences with
      * the same name currently running. Entries are created and deleted as needed.
+     *
+     * @private
      */
     var _reentTests = {};
 
     /**
-     * @private
      * A unique key to log performance data
      *
+     * @private
      * @param {(string|undefined)} id Unique ID for this measurement name
      * @param {!string} name A short name for this measurement
      * @param {?number} reent Sequence identifier for parallel tests of the same name
@@ -147627,6 +147944,8 @@ define("utils/PerfUtils", function (require, exports, module) {
     /**
      * Override toString() to allow using PerfMeasurement as an array key without
      * explicit conversion.
+     *
+     * @private
      */
     PerfMeasurement.prototype.toString = function () {
         return this.name;
@@ -147647,8 +147966,9 @@ define("utils/PerfUtils", function (require, exports, module) {
     }
 
     /**
-     * @private
      * Generates PerfMeasurements based on the name or array of names.
+     *
+     * @private
      */
     function _generatePerfMeasurements(name) {
         // always convert it to array so that the rest of the routines could rely on it
@@ -147669,9 +147989,9 @@ define("utils/PerfUtils", function (require, exports, module) {
     }
 
     /**
-     * @private
      * Helper function for markStart()
      *
+     * @private
      * @param {Object} id  Timer id.
      * @param {number} time  Timer start time.
      */
@@ -147843,6 +148163,8 @@ define("utils/PerfUtils", function (require, exports, module) {
     /**
      * return single value, or comma separated values for an array or return aggregated values with
      * "min value, average, max value, standard deviation"
+     *
+     * @private
      * @param   {Array}    entry          An array or a single value
      * @param   {Boolean} aggregateStats If set, the returned value will be aggregated in the form -
      *                                   "min(avg)max[standard deviation]"
@@ -147878,6 +148200,7 @@ define("utils/PerfUtils", function (require, exports, module) {
 
     /**
      * Returns the performance data as a tab delimited string
+     *
      * @return {string}
      */
     function getDelimitedPerfData() {
@@ -147891,7 +148214,8 @@ define("utils/PerfUtils", function (require, exports, module) {
 
     /**
      * Returns the measured value for the given measurement name.
-     * @param {Object} id The measurement to retreive.
+     *
+     * @param {Object} id The measurement to retrieve.
      */
     function getData(id) {
         if (!id) {
@@ -147903,6 +148227,7 @@ define("utils/PerfUtils", function (require, exports, module) {
 
     /**
      * Returns the Performance metrics to be logged for health report
+     *
      * @return {Object} An object with the health data logs to be sent
      */
     function getHealthReport() {
@@ -147926,6 +148251,11 @@ define("utils/PerfUtils", function (require, exports, module) {
         return healthReport;
     }
 
+    /**
+     * To search data given the regular expression
+     * @param {RegExp} regExp the regular expression
+     * @returns {Array}
+     */
     function searchData(regExp) {
         var keys = Object.keys(perfData).filter(function (key) {
             return regExp.test(key);
@@ -148014,24 +148344,97 @@ define("utils/PerfUtils", function (require, exports, module) {
  */
 define("utils/Resizer", function (require, exports, module) {
 
-
-    var DIRECTION_VERTICAL = "vert";
-    var DIRECTION_HORIZONTAL = "horz";
-
-    var POSITION_TOP = "top";
-    var POSITION_BOTTOM = "bottom";
-    var POSITION_LEFT = "left";
-    var POSITION_RIGHT = "right";
-    var PREFS_PURE_CODE = "noDistractions";
-
     // Minimum size (height or width) for autodiscovered resizable panels
     var DEFAULT_MIN_SIZE = 100;
 
-    const EVENT_PANEL_COLLAPSED = 'panelCollapsed',
-        EVENT_PANEL_EXPANDED = 'panelExpanded',
-        EVENT_PANEL_RESIZE_START = 'panelResizeStart',
-        EVENT_PANEL_RESIZE_UPDATE = 'panelResizeUpdate',
-        EVENT_PANEL_RESIZE_END = 'panelResizeEnd';
+    /**
+     * Represents the vertical direction.
+     *
+     * @type {string}
+     */
+    var DIRECTION_VERTICAL = "vert";
+
+    /**
+     * Represents the horizontal direction.
+     *
+     * @type {string}
+     */
+    var DIRECTION_HORIZONTAL = "horz";
+
+    /**
+     * Indicates the top position.
+     *
+     * @type {string}
+     */
+    var POSITION_TOP = "top";
+
+    /**
+     * Indicates the bottom position.
+     *
+     * @type {string}
+     */
+    var POSITION_BOTTOM = "bottom";
+
+    /**
+     * Indicates the left position.
+     *
+     * @type {string}
+     */
+    var POSITION_LEFT = "left";
+
+    /**
+     * Indicates the right position.
+     *
+     * @type {string}
+     */
+    var POSITION_RIGHT = "right";
+
+    /**
+     * Preference for a distraction-free mode.
+     *
+     * @type {string}
+     */
+    var PREFS_PURE_CODE = "noDistractions";
+
+    /**
+     * Event triggered when a panel is collapsed.
+     *
+     * @type {string}
+     * @constant
+     */
+    const EVENT_PANEL_COLLAPSED = 'panelCollapsed';
+
+    /**
+     * Event triggered when a panel is expanded.
+     *
+     * @type {string}
+     * @constant
+     */
+    const EVENT_PANEL_EXPANDED = 'panelExpanded';
+
+    /**
+     * Event triggered at the start of panel resizing.
+     *
+     * @type {string}
+     * @constant
+     */
+    const EVENT_PANEL_RESIZE_START = 'panelResizeStart';
+
+    /**
+     * Event triggered during panel resizing updates.
+     *
+     * @type {string}
+     * @constant
+     */
+    const EVENT_PANEL_RESIZE_UPDATE = 'panelResizeUpdate';
+
+    /**
+     * Event triggered at the end of panel resizing.
+     *
+     * @type {string}
+     * @constant
+     */
+    const EVENT_PANEL_RESIZE_END = 'panelResizeEnd';
 
     // Load dependent modules
     var AppInit                 = require("utils/AppInit"),
@@ -148047,6 +148450,7 @@ define("utils/Resizer", function (require, exports, module) {
 
     /**
      * Shows a resizable element.
+     *
      * @param {DOMNode} element Html element to show if possible
      */
     function show(element) {
@@ -148058,6 +148462,7 @@ define("utils/Resizer", function (require, exports, module) {
 
     /**
      * Hides a resizable element.
+     *
      * @param {DOMNode} element Html element to hide if possible
      */
     function hide(element) {
@@ -148070,6 +148475,7 @@ define("utils/Resizer", function (require, exports, module) {
     /**
      * Changes the visibility state of a resizable element. The toggle
      * functionality is added when an element is made resizable.
+     *
      * @param {DOMNode} element Html element to toggle
      */
     function toggle(element) {
@@ -148082,6 +148488,7 @@ define("utils/Resizer", function (require, exports, module) {
 
     /**
      * Removes the resizability of an element if it's resizable
+     *
      * @param {DOMNode} element Html element in which to remove sizing
      */
     function removeSizable(element) {
@@ -148094,6 +148501,7 @@ define("utils/Resizer", function (require, exports, module) {
     /**
      * Updates the sizing div by resyncing to the sizing edge of the element
      * Call this method after manually changing the size of the element
+     *
      * @param {DOMNode} element Html element whose sizer should be resynchronized
      */
     function resyncSizer(element) {
@@ -148105,6 +148513,7 @@ define("utils/Resizer", function (require, exports, module) {
 
     /**
      * Returns the visibility state of a resizable element.
+     *
      * @param {DOMNode} element Html element to toggle
      * @return {boolean} true if element is visible, false if it is not visible
      */
@@ -148178,8 +148587,8 @@ define("utils/Resizer", function (require, exports, module) {
      *      or current size.
      */
     function makeResizable(element, direction, position, minSize, collapsible,
-                           forceLeft, createdByWorkspaceManager, usePercentages,
-                           forceRight, _attachToParent, initialSize) {
+        forceLeft, createdByWorkspaceManager, usePercentages,
+        forceRight, _attachToParent, initialSize) {
         var $resizer            = $('<div class="' + direction + '-resizer"></div>'),
             $element            = $(element),
             $parent             = $element.parent(),
@@ -148207,7 +148616,7 @@ define("utils/Resizer", function (require, exports, module) {
                     return this.height(newSize);
 
                 }
-                    // calling the function as a setter
+                // calling the function as a setter
                 var parentSize = parentSizeFunction.apply($parent),
                     percentage,
                     prop;
@@ -148228,7 +148637,7 @@ define("utils/Resizer", function (require, exports, module) {
             contentSizeFunction = direction === DIRECTION_HORIZONTAL ? $resizableElement.width : $resizableElement.height;
 
         if (PreferencesManager.get(PREFS_PURE_CODE) &&
-                ($element.hasClass("bottom-panel") || $element.hasClass("sidebar"))) {
+            ($element.hasClass("bottom-panel") || $element.hasClass("sidebar"))) {
             elementPrefs.visible = false;
         }
 
@@ -148662,14 +149071,16 @@ define("utils/StringMatch", function (require, exports, module) {
      * Performs matching that is useful for QuickOpen and similar searches.
      */
 
-    /** Object representing a search result with associated metadata (added as extra ad hoc fields) */
+    /**
+     * Object representing a search result with associated metadata (added as extra ad hoc fields)
+     */
     function SearchResult(label) {
         this.label = label;
     }
 
 
 
-    /*
+    /**
      * Identifies the "special" characters in the given string.
      * Special characters for matching purposes are:
      *
@@ -148685,7 +149096,8 @@ define("utils/StringMatch", function (require, exports, module) {
      * beginning of the last path segment. (This is used to allow scanning of
      * the last segment's specials separately.)
      *
-     * @param {string} input string to break apart (e.g. filename that is being searched)
+     * @private
+     * @param {string} str input string to break apart (e.g. filename that is being searched)
      * @return {{specials:Array.<number>, lastSegmentSpecialsIndex:number}}
      */
     function findSpecialCharacters(str) {
@@ -148775,7 +149187,7 @@ define("utils/StringMatch", function (require, exports, module) {
         }
     }
 
-    /*
+    /**
      * Finds the best matches between the query and the string. The query is
      * compared with str (usually a lower case string with a lower case
      * query).
@@ -148832,7 +149244,7 @@ define("utils/StringMatch", function (require, exports, module) {
      *
      * * When `deadBranches[queryCounter] = strCounter` it means if we're still trying to match
      *   `queryLower[queryCounter]` and we get to `str[strCounter]`, there's no way we can match the
-     *   remainer of `queryLower` with the remainder of `str` -- either using specials-only or
+     *   remainder of `queryLower` with the remainder of `str` -- either using specials-only or
      *   full any-char matching.
      *
      * * We know this because deadBranches[] is set in backtrack(), and we don't get to backtrack() unless
@@ -148843,6 +149255,7 @@ define("utils/StringMatch", function (require, exports, module) {
      *      (i.e. backtrack() due to `strCounter > deadBranches[queryCounter]`, yet
      *      `queryCounter < query.length`)
      *
+     * @private
      * @param {string} query the search string (generally lower cased)
      * @param {string} str the string to compare with (generally lower cased)
      * @param {string} originalQuery the "non-normalized" query string (used to detect case match priority)
@@ -149017,7 +149430,7 @@ define("utils/StringMatch", function (require, exports, module) {
     }
 
 
-    /*
+    /**
      * Seek out the best match in the last segment (generally the filename).
      * Matches in the filename are preferred, but the query entered could match
      * any part of the path. So, we find the best match we can get in the filename
@@ -149029,6 +149442,7 @@ define("utils/StringMatch", function (require, exports, module) {
      * result can optionally include a remainder, which is the characters
      * at the beginning of the query which did not match in the last segment.
      *
+     * @private
      * @param {string} query the search string (generally lower cased)
      * @param {string} str the string to compare with (generally lower cased)
      * @param {string} originalQuery the "non-normalized" query string (used to detect case match priority)
@@ -149076,12 +149490,13 @@ define("utils/StringMatch", function (require, exports, module) {
 
     }
 
-    /*
+    /**
      * Implements the top-level search algorithm. Search the last segment first,
      * then search the rest of the string with the remainder.
      *
      * The parameters and return value are the same as for getMatchRanges.
      *
+     * @private
      * @param {string} queryLower the search string (will be searched lower case)
      * @param {string} compareLower the lower-cased string to search
      * @param {string} originalQuery the "non-normalized" query string (used to detect case match priority)
@@ -149129,6 +149544,7 @@ define("utils/StringMatch", function (require, exports, module) {
     /**
      * Converts a list of matches into a form suitable for returning from stringMatch.
      *
+     * @private
      * @param {Array.<SpecialMatch|NormalMatch>} matchList to convert
      * @param {string} original string
      * @param {int} character index where last segment begins
@@ -149324,12 +149740,13 @@ define("utils/StringMatch", function (require, exports, module) {
         return result;
     }
 
-    /*
+    /**
      * If we short circuit normal matching to produce a prefix match,
      * this function will generate the appropriate SearchResult.
      * This function assumes that the prefix match check has already
      * been performed.
      *
+     * @private
      * @param {string} str  The string with the prefix match for the query
      * @param {string} query  The query that matched the beginning of str
      * @return {{ranges:{text:string, matched:boolean, includesLastSegment:boolean}, matchGoodness:int, scoreDebug: Object}} ranges has a matching range for beginning of str
@@ -149458,12 +149875,14 @@ define("utils/StringMatch", function (require, exports, module) {
 
     /**
      * Computes the most relevant ordering for code hints.
+     *
+     * @private
      * @param {Array} result - The array of results to be ordered.
      * @param {string} query - The query string used for matching.
      * @param {Array<string>} [prefixListLower] - Optional array of result values,
      *          that will rank matching items in the choices to the top
      *          if the query starts with the array. For example, on typing 'b', we have to show
-     *          'background-color' at the top. So we pass in ["background-color"] as a boost prefix list option 
+     *          'background-color' at the top. So we pass in ["background-color"] as a boost prefix list option
      *          along with other CSS properties that we want to boost in the results.
      * @param {number} [maxResults] - Optional maximum number of results to include in the output.
      * @param {boolean} onlyContiguous - If set, will only include contiguous results.
@@ -149552,7 +149971,7 @@ define("utils/StringMatch", function (require, exports, module) {
         return orderedResults;
     }
 
-    /*
+    /**
      * Match str against the query using the QuickOpen algorithm provided by
      * the functions above. The general idea is to prefer matches of "special" characters and,
      * optionally, matches that occur in the "last segment" (generally, the filename). stringMatch
@@ -149778,6 +150197,8 @@ define("utils/StringMatch", function (require, exports, module) {
     /**
      * Map from search-result string to the findSpecialCharacters() result for that string - easy to cache
      * since this info doesn't change as the query changes.
+     *
+     * @private
      * @type {{string: {specials:Array.<number>, lastSegmentSpecialsIndex:number}}}
      */
     StringMatcher.prototype._specialsCache = null;
@@ -149785,6 +150206,8 @@ define("utils/StringMatch", function (require, exports, module) {
     /**
      * Set of search-result strings that we know don't match the query _lastQuery - or any other query with
      * that prefix.
+     *
+     * @private
      * @type {{string: boolean}}
      */
     StringMatcher.prototype._noMatchCache = null;
@@ -149914,18 +150337,30 @@ define("utils/StringUtils", function (require, exports, module) {
         });
     }
 
+    /**
+     * Regex escape
+     *
+     * @param {string} str
+     * @returns {string}
+     */
     function regexEscape(str) {
         return str.replace(/([.?*+\^$\[\]\\(){}|\-])/g, "\\$1");
     }
 
-    // Periods (aka "dots") are allowed in HTML identifiers, but jQuery interprets
-    // them as the start of a class selector, so they need to be escaped
+    /**
+     * Periods (aka "dots") are allowed in HTML identifiers, but jQuery interprets
+     * them as the start of a class selector, so they need to be escaped
+     *
+     * @param {string} str
+     * @returns {string}
+     */
     function jQueryIdEscape(str) {
         return str.replace(/\./g, "\\.");
     }
 
     /**
      * Splits the text by new line characters and returns an array of lines
+     *
      * @param {string} text
      * @return {Array.<string>} lines
      */
@@ -149977,6 +150412,7 @@ define("utils/StringUtils", function (require, exports, module) {
 
     /**
      * Returns true if the given string starts with the given prefix.
+     *
      * @param   {String} str
      * @param   {String} prefix
      * @return {Boolean}
@@ -149995,6 +150431,14 @@ define("utils/StringUtils", function (require, exports, module) {
         return str.indexOf(suffix, str.length - suffix.length) !== -1;
     }
 
+    /**
+     * sort two urls alphabetically
+     * ensure folders appear before files on windows
+     *
+     * @param {string} a
+     * @param {string} b
+     * @returns {number}
+     */
     function urlSort(a, b) {
         var a2, b2;
         function isFile(s) {
@@ -150019,6 +150463,7 @@ define("utils/StringUtils", function (require, exports, module) {
 
     /**
      * Return an escaped path or URL string that can be broken near path separators.
+     *
      * @param {string} url the path or URL to format
      * @return {string} the formatted path or URL
      */
@@ -150065,6 +150510,7 @@ define("utils/StringUtils", function (require, exports, module) {
 
     /**
      * Truncate text to specified length.
+     *
      * @param {string} str Text to be truncated.
      * @param {number} len Length to which text should be truncated
      * @return {?string} Returns truncated text only if it was changed
@@ -150129,6 +150575,12 @@ define("utils/StringUtils", function (require, exports, module) {
         return randomId;
     }
 
+    /**
+     * Check if value is a valid number
+     *
+     * @param {string} value
+     * @returns {boolean} true if value is valid number, else false
+     */
     function isNumber(value) {
         return parseFloat(value).toString() === value;
     }
@@ -150171,6 +150623,8 @@ define("utils/StringUtils", function (require, exports, module) {
  *
  */
 
+// @INCLUDE_IN_API_DOCS
+
 /**
  * Functions for iterating through tokens in the current editor buffer. Useful for doing
  * light parsing that can rely purely on information gathered by the code coloring mechanism.
@@ -150192,8 +150646,10 @@ define("utils/TokenUtils", function (require, exports, module) {
         }
     }
 
-    /*
+    /**
      * Caches the tokens for the given editor/line if needed
+     *
+     * @private
      * @param {!CodeMirror} cm
      * @param {!number} line
      * @return {Array.<Object>} (Cached) array of tokens
@@ -150216,8 +150672,9 @@ define("utils/TokenUtils", function (require, exports, module) {
         return cache.tokens;
     }
 
-    /*
+    /**
      * Like cm.getTokenAt, but with caching. Way more performant for long lines.
+     *
      * @param {!CodeMirror} cm
      * @param {!{ch:number, line:number}} pos
      * @param {boolean} precise If given, results in more current results. Suppresses caching.
@@ -150234,7 +150691,7 @@ define("utils/TokenUtils", function (require, exports, module) {
         return token || cm.getTokenAt(pos, precise); // fall back to CMs getTokenAt, for example in an empty line
     }
 
-   /**
+    /**
      * Creates a context object for the given editor and position, suitable for passing to the
      * move functions.
      * @param {!CodeMirror} cm
@@ -150319,7 +150776,7 @@ define("utils/TokenUtils", function (require, exports, module) {
         return (ctx.pos.ch >= eol || ctx.token.end >= eol) && (ctx.pos.line >= ctx.editor.lineCount() - 1);
     }
 
-   /**
+    /**
      * Moves the given context in the given direction, skipping any whitespace it hits.
      * @param {function} moveFxn the function to move the context
      * @param {!{editor:!CodeMirror, pos:!{ch:number, line:number}, token:Object}} ctx
@@ -150355,7 +150812,7 @@ define("utils/TokenUtils", function (require, exports, module) {
      * @param {!CodeMirror} cm CodeMirror instance
      * @param {!{line:number, ch:number}} pos Position to query for mode
      * @param {boolean} precise If given, results in more current results. Suppresses caching.
-     * @return {mode:{Object}, name:string}
+     * @return {{mode:{Object}, name:string}}
      */
     function getModeAt(cm, pos, precise) {
         precise = precise || true;
@@ -150367,7 +150824,7 @@ define("utils/TokenUtils", function (require, exports, module) {
         }
 
         name = (modeData.name === "xml") ?
-                modeData.configuration : modeData.name;
+            modeData.configuration : modeData.name;
 
         return {mode: modeData, name: name};
     }
@@ -150402,6 +150859,12 @@ define("utils/TokenUtils", function (require, exports, module) {
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
  *
+ */
+
+/**
+ * This is deprecated; use browser APIs instead for working with URLs.
+ *
+ * @deprecated
  */
 
 define("utils/UrlParams", function (require, exports, module) {
@@ -150619,6 +151082,8 @@ define("utils/ViewUtils", function (require, exports, module) {
 
     /**
      * Positions shadow background elements to indicate vertical scrolling.
+     *
+     * @private
      * @param {!DOMElement} $displayElement the DOMElement that displays the shadow
      * @param {!Object} $scrollElement the object that is scrolled
      * @param {!DOMElement} $shadowTop div .scroller-shadow.top
@@ -150808,7 +151273,7 @@ define("utils/ViewUtils", function (require, exports, module) {
 
             if (selectionExtensionTop < scrollerTop || selectionExtensionBottom > scrollerBottom) {
                 $selectionExtension.css("clip", "rect(" + Math.max(scrollerTop - selectionExtensionTop - selectionExtensionClipOffsetYBy, 0) + "px, auto, " +
-                                           (selectionExtensionHeight - Math.max(selectionExtensionBottom - scrollerBottom, 0)) + "px, auto)");
+                    (selectionExtensionHeight - Math.max(selectionExtensionBottom - scrollerBottom, 0)) + "px, auto)");
             } else {
                 $selectionExtension.css("clip", "");
             }
@@ -151083,6 +151548,9 @@ define("utils/ViewUtils", function (require, exports, module) {
         return null;
     }
 
+    /**
+     * Hides the main toolbar
+     */
     function hideMainToolBar() {
         $("#main-toolbar").addClass("forced-hidden");
         $(".main-view .content").each(function (index, element) {
@@ -151090,6 +151558,9 @@ define("utils/ViewUtils", function (require, exports, module) {
         });
     }
 
+    /**
+     * Shows the main toolbar
+     */
     function showMainToolBar() {
         $("#main-toolbar").removeClass("forced-hidden");
         $(".main-view .content").each(function (index, element) {
