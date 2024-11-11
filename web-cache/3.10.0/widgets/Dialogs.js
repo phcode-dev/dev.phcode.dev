@@ -468,7 +468,7 @@ define(function (require, exports, module) {
      * @param {string} dlgClass A class name identifier for the dialog. Typically one of DefaultDialogs.*
      * @param {string=} title The title of the dialog. Can contain HTML markup. Defaults to "".
      * @param {string=} message The message to display in the dialog. Can contain HTML markup. Defaults to "".
-     * @param {Array.<{className: string, id: string, text: string, tooltip:string}>=} buttons An array of buttons where each button
+     * @param {Array.<Object>} buttons An array of buttons where each button
      *      has a class, id tooltip, and text property. The id is used in "data-button-id". Defaults to a single Ok button.
      *      Typically className is one of DIALOG_BTN_CLASS_*, id is one of DIALOG_BTN_*
      * @param {boolean=} autoDismiss Whether to automatically dismiss the dialog when one of the buttons
@@ -552,7 +552,7 @@ define(function (require, exports, module) {
     });
 
     /**
-     * Ensures that all <a> tags with a URL have a tooltip showing the same URL
+     * Ensures that all anchor tags with a URL have a tooltip showing the same URL
      * @param {!jQueryObject|Dialog} elementOrDialog  Dialog intance, or root of other DOM tree to add tooltips to
      */
     function addLinkTooltips(elementOrDialog) {

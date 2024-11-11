@@ -889,9 +889,10 @@ define(function (require, exports, module) {
     /**
      * Returns a copy of the current key map. If the optional 'defaults' parameter is true,
      * then a copy of the default key map is returned.
+     * In the default keymap each key is associated with an object containing `commandID`, `key`, and `displayKey`.
      *
      * @param {boolean=} defaults true if the caller wants a copy of the default key map. Otherwise, the current active key map is returned.
-     * @return {!Object.<string, {commandID: string, key: string, displayKey: string}>}
+     * @return {Object}
      */
     function getKeymap(defaults) {
         return $.extend({}, defaults ? _defaultKeyMap : _keyMap);
@@ -979,10 +980,12 @@ define(function (require, exports, module) {
 
     /**
      * Add one or more key bindings to a particular Command.
+     * Returns record(s) for valid key binding(s).
      *
      * @param {!string | Command} command - A command ID or command object
-     * @param {?({key: string, displayKey: string}|Array.<{key: string, displayKey: string, platform: string}>)} keyBindings
-     *     A single key binding or an array of keybindings. Example:
+     * @param {{key: string, displayKey:string, platform: string}} keyBindings
+     *     A single key binding or an array of keybindings.
+     *     In an array of keybinding `platform` property is also available. Example:
      *     "Shift-Cmd-F". Mac and Win key equivalents are automatically
      *     mapped to each other. Use displayKey property to display a different
      *     string (e.g. "CMD+" instead of "CMD=").
@@ -992,8 +995,7 @@ define(function (require, exports, module) {
      *     NOTE: If platform is not specified, Ctrl will be replaced by Cmd for "mac" platform
      * @param {object?} options
      * @param {boolean?} options.isMenuShortcut this allows alt-key shortcuts to be registered.
-     * @return {{key: string, displayKey:String}|Array.<{key: string, displayKey:String}>}
-     *     Returns record(s) for valid key binding(s)
+     * @return {{key: string, displayKey:string}}
      */
     function addBinding(command, keyBindings, platform, options={}) {
         let commandID = "",
@@ -1044,7 +1046,7 @@ define(function (require, exports, module) {
      * Retrieve key bindings currently associated with a command
      *
      * @param {!string | Command} command - A command ID or command object
-     * @return {!Array.<{{key: string, displayKey: string}}>} An array of associated key bindings.
+     * @return {Array.<Object>} The object has two properties `key` and `displayKey`
      */
     function getKeyBindings(command) {
         let bindings    = [],
@@ -1239,7 +1241,7 @@ define(function (require, exports, module) {
             document.body.classList.add('hide-cursor');
         }
     }
-    
+
     /**
      * Handles a given keydown event, checking global hooks first before
      * deciding to handle it ourselves.
@@ -1681,7 +1683,7 @@ define(function (require, exports, module) {
      *
      * @param {string} packID - A unique ID for the pack. Use `extensionID.name` format to avoid collisions.
      * @param {string} packName - A name for the pack.
-     * @param {Object} keyMap - a keymap of the format {`Ctrl-Alt-L`: `file.liveFilePreview`} depending on the platform.
+     * @param {Object} keyMap - a keymap of the format `{'Ctrl-Alt-L': 'file.liveFilePreview'}` depending on the platform.
      * The extension should decide the correct keymap based on the platform before calling this function.
      */
     function registerCustomKeymapPack(packID, packName, keyMap) {

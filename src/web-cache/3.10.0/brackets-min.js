@@ -2463,8 +2463,7 @@ define("JSUtils/ScopeManager", function (require, exports, module) {
     /**
      * Called each time the file associated with the active editor changes.
      * Marks the file as being dirty.
-     *
-     * @param {{line:number, ch: number}} changeList {from: {line:number, ch: number}, to: {line:number, ch:number}}
+    * @param {{line:number, ch: number}} changeList - An object representing the change range with `from` and `to` properties, each containing `line` and `ch` numbers.
      */
     function handleFileChange(changeList) {
         isDocumentDirty = true;
@@ -10031,9 +10030,10 @@ define("command/KeyBindingManager", function (require, exports, module) {
     /**
      * Returns a copy of the current key map. If the optional 'defaults' parameter is true,
      * then a copy of the default key map is returned.
+     * In the default keymap each key is associated with an object containing `commandID`, `key`, and `displayKey`.
      *
      * @param {boolean=} defaults true if the caller wants a copy of the default key map. Otherwise, the current active key map is returned.
-     * @return {!Object.<string, {commandID: string, key: string, displayKey: string}>}
+     * @return {Object}
      */
     function getKeymap(defaults) {
         return $.extend({}, defaults ? _defaultKeyMap : _keyMap);
@@ -10121,10 +10121,12 @@ define("command/KeyBindingManager", function (require, exports, module) {
 
     /**
      * Add one or more key bindings to a particular Command.
+     * Returns record(s) for valid key binding(s).
      *
      * @param {!string | Command} command - A command ID or command object
-     * @param {?({key: string, displayKey: string}|Array.<{key: string, displayKey: string, platform: string}>)} keyBindings
-     *     A single key binding or an array of keybindings. Example:
+     * @param {{key: string, displayKey:string, platform: string}} keyBindings
+     *     A single key binding or an array of keybindings.
+     *     In an array of keybinding `platform` property is also available. Example:
      *     "Shift-Cmd-F". Mac and Win key equivalents are automatically
      *     mapped to each other. Use displayKey property to display a different
      *     string (e.g. "CMD+" instead of "CMD=").
@@ -10134,8 +10136,7 @@ define("command/KeyBindingManager", function (require, exports, module) {
      *     NOTE: If platform is not specified, Ctrl will be replaced by Cmd for "mac" platform
      * @param {object?} options
      * @param {boolean?} options.isMenuShortcut this allows alt-key shortcuts to be registered.
-     * @return {{key: string, displayKey:String}|Array.<{key: string, displayKey:String}>}
-     *     Returns record(s) for valid key binding(s)
+     * @return {{key: string, displayKey:string}}
      */
     function addBinding(command, keyBindings, platform, options={}) {
         let commandID = "",
@@ -10186,7 +10187,7 @@ define("command/KeyBindingManager", function (require, exports, module) {
      * Retrieve key bindings currently associated with a command
      *
      * @param {!string | Command} command - A command ID or command object
-     * @return {!Array.<{{key: string, displayKey: string}}>} An array of associated key bindings.
+     * @return {Array.<Object>} The object has two properties `key` and `displayKey`
      */
     function getKeyBindings(command) {
         let bindings    = [],
@@ -10381,7 +10382,7 @@ define("command/KeyBindingManager", function (require, exports, module) {
             document.body.classList.add('hide-cursor');
         }
     }
-    
+
     /**
      * Handles a given keydown event, checking global hooks first before
      * deciding to handle it ourselves.
@@ -10823,7 +10824,7 @@ define("command/KeyBindingManager", function (require, exports, module) {
      *
      * @param {string} packID - A unique ID for the pack. Use `extensionID.name` format to avoid collisions.
      * @param {string} packName - A name for the pack.
-     * @param {Object} keyMap - a keymap of the format {`Ctrl-Alt-L`: `file.liveFilePreview`} depending on the platform.
+     * @param {Object} keyMap - a keymap of the format `{'Ctrl-Alt-L': 'file.liveFilePreview'}` depending on the platform.
      * The extension should decide the correct keymap based on the platform before calling this function.
      */
     function registerCustomKeymapPack(packID, packName, keyMap) {
@@ -45143,6 +45144,9 @@ define("features/ParameterHintsManager", function (require, exports, module) {
  */
 
 /* eslint-disable indent */
+
+// @INCLUDE_IN_API_DOCS
+
 define("features/PriorityBasedRegistration", function (require, exports, module) {
 
 
@@ -45150,6 +45154,7 @@ define("features/PriorityBasedRegistration", function (require, exports, module)
 
     /**
      * Comparator to sort providers from high to low priority
+     * @private
      */
     function _providerSort(a, b) {
         return b.priority - a.priority;
@@ -45229,6 +45234,13 @@ define("features/PriorityBasedRegistration", function (require, exports, module)
     };
 
 
+    /**
+     * Gets the list of providers for a specific language ID, including global providers.
+     * Filters out providers that are disabled in the preferences.
+     *
+     * @param {string} languageId language ID for which to get the providers
+     * @return {Array.<Object>} sorted list of active providers for given language
+     */
     RegistrationHandler.prototype.getProvidersForLanguageId = function (languageId) {
         var providers = (this._providers[languageId] || []).concat(this._providers.all || [])
             .sort(_providerSort);
@@ -50536,19 +50548,41 @@ define("filesystem/FileSystemEntry", function (require, exports, module) {
  *
  */
 
-/**
- * FileSystemError describes the errors that can occur when using the FileSystem, File,
- * and Directory modules.
- *
- * Error values are strings. Any "falsy" value: null, undefined or "" means "no error".
- */
+// @INCLUDE_IN_API_DOCS
+
 define("filesystem/FileSystemError", function (require, exports, module) {
 
-
     /**
+     *
+     *
+     * FileSystemError describes the errors that can occur when using the FileSystem, File,
+     * and Directory modules.
+     *
+     * Error values are strings. Any "falsy" value: null, undefined or "" means "no error".
+     *
      * Enumerated File System Errors
-     * @module
-     * @enum {string}
+     *
+     * ```js
+     *         UNKNOWN: "Unknown",
+     *         INVALID_PARAMS: "InvalidParams",
+     *         NOT_FOUND: "NotFound",
+     *         NOT_READABLE: "NotReadable",
+     *         UNSUPPORTED_ENCODING: "UnsupportedEncoding",
+     *         NOT_SUPPORTED: "NotSupported",
+     *         NOT_WRITABLE: "NotWritable",
+     *         OUT_OF_SPACE: "OutOfSpace",
+     *         TOO_MANY_ENTRIES: "TooManyEntries",
+     *         ALREADY_EXISTS: "AlreadyExists",
+     *         CONTENTS_MODIFIED: "ContentsModified",
+     *         ROOT_NOT_WATCHED: "RootNotBeingWatched",
+     *         EXCEEDS_MAX_FILE_SIZE: "ExceedsMaxFileSize",
+     *         NETWORK_DRIVE_NOT_SUPPORTED: "NetworkDriveNotSupported",
+     *         ENCODE_FILE_FAILED: "EncodeFileFailed",
+     *         DECODE_FILE_FAILED: "DecodeFileFailed",
+     *         UNSUPPORTED_UTF16_ENCODING: "UnsupportedUTF16Encoding"
+     *  ```
+     *
+     * @module FileSystemError
      */
     module.exports = {
         UNKNOWN: "Unknown",
@@ -50594,13 +50628,12 @@ define("filesystem/FileSystemError", function (require, exports, module) {
  *
  */
 
-/**
- * The FileSystemStats represents a particular FileSystemEntry's stats.
- */
+// @INCLUDE_IN_API_DOCS
+
 define("filesystem/FileSystemStats", function (require, exports, module) {
 
-
     /**
+     * The FileSystemStats represents a particular FileSystemEntry's stats.
      * @constructor
      * @param {{isFile: boolean, mtime: Date, size: Number, realPath: ?string, hash: object}} options
      */
@@ -50629,22 +50662,52 @@ define("filesystem/FileSystemStats", function (require, exports, module) {
 
     // Add "isFile", "isDirectory", "mtime" and "size" getters
     Object.defineProperties(FileSystemStats.prototype, {
+        /**
+         * Whether or not this is a stats object for a file
+         *
+         * @type {boolean}
+         */
         "isFile": {
             get: function () { return this._isFile; },
             set: function () { throw new Error("Cannot set isFile"); }
         },
+
+        /**
+         * Whether or not this is a stats object for a directory
+         *
+         * @type {boolean}
+         */
         "isDirectory": {
             get: function () { return this._isDirectory; },
             set: function () { throw new Error("Cannot set isDirectory"); }
         },
+
+        /**
+         * Modification time for a file
+         *
+         * @type {Date}
+         */
         "mtime": {
             get: function () { return this._mtime; },
             set: function () { throw new Error("Cannot set mtime"); }
         },
+
+        /**
+         * Size in bytes of a file
+         *
+         * @type {Number}
+         */
         "size": {
             get: function () { return this._size; },
             set: function () { throw new Error("Cannot set size"); }
         },
+
+        /**
+         * The canonical path of this file or directory ONLY if it is a symbolic link,
+         * and null otherwise.
+         *
+         * @type {?string}
+         */
         "realPath": {
             get: function () { return this._realPath; },
             set: function () { throw new Error("Cannot set realPath"); }
@@ -50653,30 +50716,40 @@ define("filesystem/FileSystemStats", function (require, exports, module) {
 
     /**
      * Whether or not this is a stats object for a file
+     *
+     * @private
      * @type {boolean}
      */
     FileSystemStats.prototype._isFile = false;
 
     /**
      * Whether or not this is a stats object for a directory
+     *
+     * @private
      * @type {boolean}
      */
     FileSystemStats.prototype._isDirectory = false;
 
     /**
      * Modification time for a file
+     *
+     * @private
      * @type {Date}
      */
     FileSystemStats.prototype._mtime = null;
 
     /**
      * Size in bytes of a file
+     *
+     * @private
      * @type {Number}
      */
     FileSystemStats.prototype._size = null;
 
     /**
      * Consistency hash for a file
+     *
+     * @private
      * @type {object}
      */
     FileSystemStats.prototype._hash = null;
@@ -50685,6 +50758,7 @@ define("filesystem/FileSystemStats", function (require, exports, module) {
      * The canonical path of this file or directory ONLY if it is a symbolic link,
      * and null otherwise.
      *
+     * @private
      * @type {?string}
      */
     FileSystemStats.prototype._realPath = null;
@@ -50713,6 +50787,8 @@ define("filesystem/FileSystemStats", function (require, exports, module) {
  *
  */
 
+// @INCLUDE_IN_API_DOCS
+
 define("filesystem/RemoteFile", function (require, exports, module) {
 
 
@@ -50725,7 +50801,8 @@ define("filesystem/RemoteFile", function (require, exports, module) {
     /**
      * Create a new file stat. See the FileSystemStats class for more details.
      *
-     * @param {!string} fullPath The full path for this File.
+     * @private
+     * @param {!string} uri The full path for this File.
      * @return {FileSystemStats} stats.
      */
     function _getStats(uri) {
@@ -50831,6 +50908,7 @@ define("filesystem/RemoteFile", function (require, exports, module) {
 
     /**
      * Cached contents of this file. This value is nullable but should NOT be undefined.
+     *
      * @private
      * @type {?string}
      */
@@ -50853,6 +50931,7 @@ define("filesystem/RemoteFile", function (require, exports, module) {
     /**
      * Clear any cached data for this file. Note that this explicitly does NOT
      * clear the file's hash.
+     *
      * @private
      */
     RemoteFile.prototype._clearCachedData = function () {
@@ -50948,18 +51027,39 @@ define("filesystem/RemoteFile", function (require, exports, module) {
         callback(FileSystemError.NOT_FOUND);
     };
 
+    /**
+     * Check if the remote file exists or not
+     *
+     * @param {function (err?, ?string, string=, FileSystemStats=)} callback
+     */
     RemoteFile.prototype.exists = function (callback) {
         callback(null, true);
     };
 
+    /**
+     * Unlink the remote file
+     *
+     * @param {function (err?, ?string, string=, FileSystemStats=)} callback
+     */
     RemoteFile.prototype.unlink = function (callback) {
         callback(FileSystemError.NOT_FOUND);
     };
 
+
+    /**
+     * Rename the remote file
+     *
+     * @param {function (err?, ?string, string=, FileSystemStats=)} callback
+     */
     RemoteFile.prototype.rename = function (newName, callback) {
         callback(FileSystemError.NOT_FOUND);
     };
 
+    /**
+     * Move the remote file to trash
+     *
+     * @param {function (err?, ?string, string=, FileSystemStats=)} callback
+     */
     RemoteFile.prototype.moveToTrash = function (callback) {
         callback(FileSystemError.NOT_FOUND);
     };
@@ -50989,10 +51089,12 @@ define("filesystem/RemoteFile", function (require, exports, module) {
  *
  */
 
+// @INCLUDE_IN_API_DOCS
+
 define("filesystem/WatchedRoot", function (require, exports, module) {
 
 
-    /*
+    /**
      * Represents file or directory structure watched by the FileSystem. If the
      * entry is a directory, all children (that pass the supplied filter function)
      * are also watched. A WatchedRoot object begins and ends its life in the
@@ -51014,8 +51116,28 @@ define("filesystem/WatchedRoot", function (require, exports, module) {
     }
 
     // Status constants
+    /**
+     * WatchedRoot inactive
+     *
+     * @const
+     * @type {number}
+     */
     WatchedRoot.INACTIVE = 0;
+
+    /**
+     * WatchedRoot starting
+     *
+     * @const
+     * @type {number}
+     */
     WatchedRoot.STARTING = 1;
+
+    /**
+     * WatchedRoot active
+     *
+     * @const
+     * @type {number}
+     */
     WatchedRoot.ACTIVE = 2;
 
     /**
@@ -158553,7 +158675,7 @@ define("widgets/Dialogs", function (require, exports, module) {
      * @param {string} dlgClass A class name identifier for the dialog. Typically one of DefaultDialogs.*
      * @param {string=} title The title of the dialog. Can contain HTML markup. Defaults to "".
      * @param {string=} message The message to display in the dialog. Can contain HTML markup. Defaults to "".
-     * @param {Array.<{className: string, id: string, text: string, tooltip:string}>=} buttons An array of buttons where each button
+     * @param {Array.<Object>} buttons An array of buttons where each button
      *      has a class, id tooltip, and text property. The id is used in "data-button-id". Defaults to a single Ok button.
      *      Typically className is one of DIALOG_BTN_CLASS_*, id is one of DIALOG_BTN_*
      * @param {boolean=} autoDismiss Whether to automatically dismiss the dialog when one of the buttons
@@ -158637,7 +158759,7 @@ define("widgets/Dialogs", function (require, exports, module) {
     });
 
     /**
-     * Ensures that all <a> tags with a URL have a tooltip showing the same URL
+     * Ensures that all anchor tags with a URL have a tooltip showing the same URL
      * @param {!jQueryObject|Dialog} elementOrDialog  Dialog intance, or root of other DOM tree to add tooltips to
      */
     function addLinkTooltips(elementOrDialog) {
