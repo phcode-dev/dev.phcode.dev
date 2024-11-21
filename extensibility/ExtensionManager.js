@@ -49,6 +49,7 @@ define(function (require, exports, module) {
         Strings             = require("strings"),
         StringUtils         = require("utils/StringUtils"),
         ThemeManager        = require("view/ThemeManager"),
+        TaskManager    = require("features/TaskManager"),
         Metrics = require("utils/Metrics");
 
     const EXTENSION_REGISTRY_LOCAL_STORAGE_KEY = Phoenix.isTestWindow ?
@@ -338,11 +339,22 @@ define(function (require, exports, module) {
         return filteredRegistry;
     }
 
+    function _getTaskManager() {
+        if(Phoenix.isTestWindow){
+            return {
+                close: ()=>{}
+            };
+        }
+        return TaskManager.addNewTask(Strings.EXTENSIONS_REGISTRY_TASK_TITLE,
+            Strings.EXTENSIONS_REGISTRY_TASK_MESSAGE,
+            `<i class="fa-solid fa-list"></i>`);
+    }
+
     /**
      * Downloads the registry of Brackets extensions and stores the information in our
      * extension info.
      *
-     * @param {boolean} force - true to fetch registry from server fresh every time
+     * @param {boolean} [force] - true to fetch registry from server fresh every time
      * @return {$.Promise} a promise that's resolved with the registry JSON data
      * or rejected if the server can't be reached.
      */
@@ -355,6 +367,7 @@ define(function (require, exports, module) {
 
         function _updateRegistry(newVersion) {
             console.log("downloading extension registry: ", newVersion, brackets.config.extension_registry);
+            const downloadTask = _getTaskManager();
             $.ajax({
                 url: brackets.config.extension_registry,
                 dataType: "json",
@@ -367,12 +380,15 @@ define(function (require, exports, module) {
                         if(!pendingDownloadRegistry.alreadyResolvedFromCache){
                             _populateExtensions(registry);
                             pendingDownloadRegistry.resolve();
+                            pendingDownloadRegistry.alreadyResolvedFromCache = true;
                         }
                     }).finally(()=>{
                         pendingDownloadRegistry = null;
+                        downloadTask.close();
                     });
                 })
                 .fail(function (err) {
+                    downloadTask.close();
                     console.error("error Fetching Extension Registry", err);
                     if(!pendingDownloadRegistry.alreadyResolvedFromCache){
                         pendingDownloadRegistry.reject();
@@ -386,11 +402,31 @@ define(function (require, exports, module) {
             return pendingDownloadRegistry.promise();
         }
 
+        async function _getLocalRegistry() {
+            // the extension registry is like 1.5MB. A local copy is packaged in the src/extensions/registry/ folder
+            // so that on first launch, the user can see the extension manager instantly(though outdated).
+            // The local registry is created at build time and will get outdated if the user uses an old installer.
+            // but it will get updated when the user clicks on extension manager.
+            try {
+                const response = await fetch("extensions/registry/registry.json");
+                if (response.ok) {
+                    return await response.json();
+                } else {
+                    console.error(`Failed to fetch local registry: ${response.status} ${response.statusText}`);
+                    return null;
+                }
+            } catch (error) {
+                console.error(`Error fetching local registry: ${error.message}`);
+                return null;
+            }
+        }
+
         _getCachedRegistry() // never rejects
             .then(registryJson => {
                 if(registryJson) {
                     // we always immediately but after the promise chain is setup after function return (some bug sigh)
                     // resolve for ui responsiveness and then check for updates.
+                    console.log("Using cached extension registry");
                     setTimeout(()=>{
                         Metrics.countEvent(Metrics.EVENT_TYPE.EXTENSIONS, "registry", "cachedUse");
                         let registry = JSON.parse(registryJson);
@@ -399,6 +435,19 @@ define(function (require, exports, module) {
                         pendingDownloadRegistry.resolve();
                     }, 0);
                     pendingDownloadRegistry.alreadyResolvedFromCache = true;
+                } else {
+                    _getLocalRegistry().then(localRegistry => {
+                        if(!localRegistry ||
+                            !pendingDownloadRegistry || pendingDownloadRegistry.alreadyResolvedFromCache) {
+                            return;
+                        }
+                        console.log("Using outdated local extension registry as no cached registry found.");
+                        Metrics.countEvent(Metrics.EVENT_TYPE.EXTENSIONS, "registry", "outdatedUse");
+                        localRegistry = _filterIncompatibleEntries(localRegistry);
+                        _populateExtensions(localRegistry);
+                        pendingDownloadRegistry.resolve();
+                        pendingDownloadRegistry.alreadyResolvedFromCache = true;
+                    });
                 }
                 // check for latest updates even if we have cache
                 _shouldUpdateExtensionRegistry()
