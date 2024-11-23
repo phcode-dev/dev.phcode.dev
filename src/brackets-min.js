@@ -19953,6 +19953,19 @@ define("editor/Editor", function (require, exports, module) {
                 return $(this.getRootElement());
             }
         });
+
+        const $cmElement = this.$el;
+        $cmElement[0].addEventListener("wheel", (event) => {
+            const $editor = $cmElement.find(".CodeMirror-scroll");
+            // we need to slow down the scroll by the factor of line height. else the scrolling is too fast.
+            // this became a problem after we added the custom line height feature causing jumping scrolls esp in safari
+            // and mac if we dont do this scroll scaling.
+            const lineHeight = parseFloat(getComputedStyle($editor[0]).lineHeight);
+            const scrollDelta = event.deltaY;
+            const defaultHeight = 14, scrollScaleFactor = lineHeight/defaultHeight;
+            $editor[0].scrollTop += (scrollDelta/scrollScaleFactor);
+            event.preventDefault();
+        });
     }
 
     EventDispatcher.makeEventDispatcher(Editor.prototype);
@@ -43759,7 +43772,8 @@ define("extensionsIntegrated/indentGuides/main", function (require, exports, mod
 
     const COMMAND_NAME    = Strings.CMD_TOGGLE_INDENT_GUIDES,
         COMMAND_ID      = Commands.TOGGLE_INDENT_GUIDES,
-        GUIDE_CLASS     = "phcode-indent-guides";
+        GUIDE_CLASS     = "phcode-indent-guides",
+        GUIDE_CLASS_NONE     = "phcode-indent-guides-none";
 
     const PREFERENCES_EDITOR_INDENT_GUIDES = "editor.indentGuides",
         PREFERENCES_EDITOR_INDENT_HIDE_FIRST = "editor.indentHideFirst";
@@ -43777,40 +43791,42 @@ define("extensionsIntegrated/indentGuides/main", function (require, exports, mod
     });
 
     // CodeMirror overlay code
-    const indentGuidesOverlay = {
-        token: function (stream, _state) {
-            let char        = "",
-                colNum      = 0,
-                spaceUnits  = 0,
-                isTabStart  = false;
+    function _createOverlayObject(spaceUnits) {
+        return {
+            _spaceUnits: spaceUnits,
+            _cmRefreshPending: false,
+            token: function (stream, _state) {
+                let char        = "",
+                    colNum      = 0,
+                    isTabStart  = false;
 
-            char    = stream.next();
-            colNum  = stream.column();
+                char    = stream.next();
+                colNum  = stream.column();
 
-            // Check for "hide first guide" preference
-            if ((hideFirst) && (colNum === 0)) {
+                // Check for "hide first guide" preference
+                if ((hideFirst) && (colNum === 0)) {
+                    return null;
+                }
+
+                if (char === "\t") {
+                    return enabled? GUIDE_CLASS : GUIDE_CLASS_NONE;
+                }
+
+                if (char !== " ") {
+                    stream.skipToEnd();
+                    return null;
+                }
+
+                isTabStart = (colNum % this._spaceUnits) === 0 ? true : false;
+
+                if ((char === " ") && (isTabStart)) {
+                    return enabled? GUIDE_CLASS : GUIDE_CLASS_NONE;
+                }
                 return null;
-            }
-
-            if (char === "\t") {
-                return GUIDE_CLASS;
-            }
-
-            if (char !== " ") {
-                stream.skipToEnd();
-                return null;
-            }
-
-            spaceUnits = Editor.getSpaceUnits();
-            isTabStart = (colNum % spaceUnits) ? false : true;
-
-            if ((char === " ") && (isTabStart)) {
-                return GUIDE_CLASS;
-            }
-            return null;
-        },
-        flattenSpans: false
-    };
+            },
+            flattenSpans: false
+        };
+    }
 
     function applyPreferences() {
         enabled     = PreferencesManager.get(PREFERENCES_EDITOR_INDENT_GUIDES);
@@ -43818,28 +43834,46 @@ define("extensionsIntegrated/indentGuides/main", function (require, exports, mod
     }
 
     function updateUI() {
-        const editor  = EditorManager.getActiveEditor(),
-            cm      = editor ? editor._codeMirror : null;
-
-        // Update CodeMirror overlay if editor is available
-        if (cm) {
-            if(editor._overlayPresent){
-                if(!enabled){
-                    cm.removeOverlay(indentGuidesOverlay);
-                    editor._overlayPresent = false;
-                    cm.refresh();
-                }
-            } else if(enabled){
-                cm.removeOverlay(indentGuidesOverlay);
-                cm.addOverlay(indentGuidesOverlay);
-                editor._overlayPresent = true;
-                cm.refresh();
-            }
+        const editor  = EditorManager.getActiveEditor();
+        if(!editor || !editor._codeMirror) {
+            return;
         }
+        const cm = editor._codeMirror;
+        if(!editor.__indentGuidesOverlay) {
+            editor.__indentGuidesOverlay = _createOverlayObject(Editor.getSpaceUnits(editor.document.file.fullPath));
+        }
+        function _reRenderOverlay() {
+            cm.removeOverlay(editor.__indentGuidesOverlay);
+            cm.addOverlay(editor.__indentGuidesOverlay);
+        }
+        editor.off(Editor.EVENT_OPTION_CHANGE+".indentGuide");
+        editor.on(Editor.EVENT_OPTION_CHANGE+".indentGuide", ()=>{
+            const newSpaceUnits = Editor.getSpaceUnits(editor.document.file.fullPath);
+            if(newSpaceUnits !== editor.__indentGuidesOverlay._spaceUnits){
+                editor.__indentGuidesOverlay._spaceUnits = newSpaceUnits;
+                if(EditorManager.getActiveEditor() === editor){
+                    console.log("space units changed, refreshing indent guides for",
+                        newSpaceUnits, editor.document.file.fullPath);
+                    _reRenderOverlay();
+                }
+            }
+        });
 
-        // Update menu
-        CommandManager.get(COMMAND_ID)
-            .setChecked(enabled);
+        let shouldRerender = false;
+        if(!cm.__indentGuidesOverlayAttached){
+            cm.addOverlay(editor.__indentGuidesOverlay);
+            cm.__indentGuidesOverlayAttached = editor.__indentGuidesOverlay;
+            cm.__overlayEnabled = enabled;
+        } else if(cm.__indentGuidesOverlayAttached &&
+            cm.__indentGuidesOverlayAttached !== editor.__indentGuidesOverlay) {
+            cm.removeOverlay(cm.__indentGuidesOverlayAttached);
+            cm.addOverlay(editor.__indentGuidesOverlay);
+            cm.__overlayEnabled = enabled;
+        } else if (shouldRerender || cm.__overlayEnabled !== enabled) {
+            cm.__overlayEnabled = enabled;
+            _reRenderOverlay();
+            console.log("Refreshing indent guides");
+        }
     }
 
     function handleToggleGuides() {
@@ -43850,6 +43884,8 @@ define("extensionsIntegrated/indentGuides/main", function (require, exports, mod
     function preferenceChanged() {
         applyPreferences();
         updateUI();
+        CommandManager.get(COMMAND_ID)
+            .setChecked(enabled);
     }
 
     // Initialize extension
@@ -91883,6 +91919,7 @@ define("nls/root/strings", {
     "USE_THEME_SCROLLBARS": "Use Theme Scrollbars",
     "FONT_SIZE": "Font Size",
     "FONT_FAMILY": "Font Family",
+    "FONT_LINE_HEIGHT": "Line Height",
     "THEMES_SETTINGS": "Themes Settings",
     "THEMES_ERROR": "Themes Error",
     "THEMES_ERROR_CANNOT_APPLY": "Could not apply theme due to an error.",
@@ -92249,6 +92286,7 @@ define("nls/root/strings", {
     "DESCRIPTION_NUMBER_QUICK_VIEW": "true to show Quick View on hover over numbers in editor",
     "DESCRIPTION_THEME": "Select a {APP_NAME} theme",
     "DESCRIPTION_USE_THEME_SCROLLBARS": "true to allow custom scroll bars",
+    "DESCRIPTION_EDITOR_LINE_HEIGHT": "Adjust the vertical spacing between lines of code in the editor. Choose a value between 1 and 3, default is 1.5",
     "DESCRIPTION_LINTING_COLLAPSED": "true to collapse linting panel",
     "DESCRIPTION_FONT_FAMILY": "Change font family",
     "DESCRIPTION_DESKTOP_ZOOM_SCALE": "Choose a zoom scale factor ranging from 0.1 (for a more compact view) to 2 (for a larger, more magnified view). Available in desktop apps only",
@@ -156792,6 +156830,21 @@ define("view/ThemeSettings", function (require, exports, module) {
                     <input type="text" data-target="fontFamily" value="{{settings.fontFamily}}">
                 </div>
             </div>
+
+            <div class="control-group">
+                <label class="control-label">{{Strings.FONT_LINE_HEIGHT}}:</label>
+                <div class="controls line-height-slider">
+                    <input
+                            type="range"
+                            min="1"
+                            max="3"
+                            step="0.1"
+                            value="{{settings.editorLineHeight}}"
+                            class="form-range fontLineHeightSlider"
+                            data-target="editorLineHeight">
+                    <span class="fontLineHeightValue">{{settings.editorLineHeight}}</span>
+                </div>
+            </div>
         </form>
     </div>
     <div class="modal-footer">
@@ -156820,7 +156873,8 @@ define("view/ThemeSettings", function (require, exports, module) {
         themeScrollbars: true,
         theme: SYSTEM_DEFAULT_THEME,
         lightTheme: "light-theme",
-        darkTheme: "dark-theme"
+        darkTheme: "dark-theme",
+        editorLineHeight: 1.5
     };
 
 
@@ -156903,6 +156957,12 @@ define("view/ThemeSettings", function (require, exports, module) {
                 var targetValue = $(this).val();
                 newSettings["fontFamily"] = targetValue;
             })
+            .on("input", ".fontLineHeightSlider", function () {
+                const targetValue = $(this).val();
+                $template.find(".fontLineHeightValue").text(targetValue);
+                newSettings["editorLineHeight"] = targetValue;
+                prefs.set("editorLineHeight", targetValue + "");
+            })
             .on("change", "select", function () {
                 var $target = $(":selected", this);
                 var attr = $target.attr("data-target");
@@ -156933,6 +156993,7 @@ define("view/ThemeSettings", function (require, exports, module) {
             } else if (id === "cancel") {
                 // Make sure we revert any changes to theme selection
                 prefs.set("theme", currentSettings.theme);
+                prefs.set("editorLineHeight", currentSettings.editorLineHeight);
             }
         });
         $template
@@ -156966,6 +157027,15 @@ define("view/ThemeSettings", function (require, exports, module) {
     });
     prefs.definePreference("themeScrollbars", "boolean", DEFAULTS.themeScrollbars, {
         description: Strings.DESCRIPTION_USE_THEME_SCROLLBARS
+    });
+    prefs.definePreference("editorLineHeight", "number", DEFAULTS.editorLineHeight, {
+        description: Strings.DESCRIPTION_EDITOR_LINE_HEIGHT
+    });
+
+    prefs.on("change", "editorLineHeight", function () {
+        const lineHeight = prefs.get("editorLineHeight") + "";
+        const $phoenixMain = $('#Phoenix-Main');
+        $phoenixMain[0].style.setProperty('--editor-line-height', lineHeight);
     });
 
     exports.DEFAULTS   = DEFAULTS;
