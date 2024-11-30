@@ -9716,7 +9716,7 @@ ins.jstree-icon {
 }
 /* Single color preview */
 .ico-cssColorPreview {
-  border: solid 1px rgba(0, 0, 0, 0.2);
+  border: solid 1px rgba(255, 255, 255, 0.2);
   display: inline-block;
   top: 0.1em;
   height: 0.7em;
@@ -9724,14 +9724,20 @@ ins.jstree-icon {
   margin-left: 0.15em;
   position: relative;
 }
+.dark .ico-cssColorPreview {
+  border: solid 1px rgba(0, 0, 0, 0.2);
+}
 /* Multiple colors preview container (this is a div) */
 .ico-multiple-cssColorPreview {
+  border: solid 1px rgba(255, 255, 255, 0.2);
   position: relative;
   display: inline-block;
   top: 0.1em;
   width: 0.7em;
   height: 0.7em;
   margin-left: 0.15em;
+}
+.dark .ico-multiple-cssColorPreview {
   border: solid 1px rgba(0, 0, 0, 0.2);
 }
 /* For individual color boxes, they will be added inside the main .ico-multiple-cssColorPreview div */
