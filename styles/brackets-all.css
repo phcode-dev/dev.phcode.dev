@@ -8599,6 +8599,7 @@ div.CodeMirror-cursors .CodeMirror-cursor {
 }
 .CodeMirror .CodeMirror-matchingtag {
   background: #cfead6;
+  display: inline-block;
 }
 /*
  * Temporarily override bold and italic syntax highlighting until
