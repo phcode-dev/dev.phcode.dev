@@ -64132,7 +64132,8 @@ define("nls/ar/strings", {
   "BEAUTIFY_OPTION_PROSE_WRAP": "لف النثر إذا تجاوز عرض الطباعة في ملفات مارك داون",
   "BEAUTIFY_OPTION_PRINT_TRAILING_COMMAS": "اطبع الفواصل اللاحقة كلما أمكن ذلك في هياكل نحوية متعددة الأسطر مفصولة بفواصل",
   "DESCRIPTION_INDENT_GUIDES_ENABLED": "صحيح لإظهار خطوط إرشاد المسافة البادئة، وإلا فهو خطأ.",
-  "DESCRIPTION_HIDE_FIRST": "صحيح لإظهار أول سطر من دليل المسافة البادئة، وإلا فهو خطأ."
+  "DESCRIPTION_HIDE_FIRST": "صحيح لإظهار أول سطر من دليل المسافة البادئة، وإلا فهو خطأ.",
+  "DESCRIPTION_CSS_COLOR_PREVIEW": "صحيح لعرض معاينات الألوان في الهامش، وإلا فهو خطأ."
 });
 /*
  * GNU AGPL-3.0 License
@@ -65202,7 +65203,8 @@ define("nls/bg/strings", {
   "BEAUTIFY_OPTION_PROSE_WRAP": "Обвийте прозата, ако надвишава ширината на печат във файловете за маркиране",
   "BEAUTIFY_OPTION_PRINT_TRAILING_COMMAS": "Отпечатване на запетая в края, където е възможно, в многоредови синтактични структури, разделени със запетая",
   "DESCRIPTION_INDENT_GUIDES_ENABLED": "true за показване на направляващи линии за отстъп, в противен случай е false.",
-  "DESCRIPTION_HIDE_FIRST": "true за показване на първия направляващ ред за отстъпи else false."
+  "DESCRIPTION_HIDE_FIRST": "true за показване на първия направляващ ред за отстъпи else false.",
+  "DESCRIPTION_CSS_COLOR_PREVIEW": "true за показване на цветни визуализации в канавката, иначе false."
 });
 /*
  * Copyright (c) 2013 Adobe Systems Incorporated. All rights reserved.
@@ -66301,7 +66303,8 @@ define("nls/cs/strings", {
   "BEAUTIFY_OPTION_PROSE_WRAP": "Zabalte prózu, pokud přesahuje šířku tisku do souborů značek",
   "BEAUTIFY_OPTION_PRINT_TRAILING_COMMAS": "Pokud je to možné, vytiskněte koncové čárky ve víceřádkových syntaktických strukturách oddělených čárkami",
   "DESCRIPTION_INDENT_GUIDES_ENABLED": "true pro zobrazení vodicích čar odsazení, jinak false.",
-  "DESCRIPTION_HIDE_FIRST": "true pro zobrazení prvního vodícího řádku odsazení, jinak false."
+  "DESCRIPTION_HIDE_FIRST": "true pro zobrazení prvního vodícího řádku odsazení, jinak false.",
+  "DESCRIPTION_CSS_COLOR_PREVIEW": "true pro zobrazení náhledů barev v okapu, jinak false."
 });
 /*
  * GNU AGPL-3.0 License
@@ -67398,7 +67401,8 @@ define("nls/da/strings", {
   "BEAUTIFY_OPTION_PROSE_WRAP": "Indpak prosa, hvis den overskrider printbredden i markdown-filer",
   "BEAUTIFY_OPTION_PRINT_TRAILING_COMMAS": "Udskriv efterstillede kommaer, hvor det er muligt, i kommaseparerede syntaktiske strukturer med flere linjer",
   "DESCRIPTION_INDENT_GUIDES_ENABLED": "sandt for at vise indrykke hjælpelinjer, ellers falsk.",
-  "DESCRIPTION_HIDE_FIRST": "sand for at vise den første indrykningslinje ellers falsk."
+  "DESCRIPTION_HIDE_FIRST": "sand for at vise den første indrykningslinje ellers falsk.",
+  "DESCRIPTION_CSS_COLOR_PREVIEW": "sand for at vise farveforhåndsvisninger i rendestenen, ellers falsk."
 });
 /*
  * GNU AGPL-3.0 License
@@ -68493,7 +68497,8 @@ define("nls/de/strings", {
   "BEAUTIFY_OPTION_PROSE_WRAP": "Prosa umbrechen, wenn sie die Druckbreite in Markdown-Dateien überschreitet",
   "BEAUTIFY_OPTION_PRINT_TRAILING_COMMAS": "Geben Sie, wo immer möglich, nachgestellte Kommas in mehrzeiligen, durch Kommas getrennten syntaktischen Strukturen aus",
   "DESCRIPTION_INDENT_GUIDES_ENABLED": "„True“, um Einzugshilfslinien anzuzeigen, sonst „False“.",
-  "DESCRIPTION_HIDE_FIRST": "„True“, um die erste Einzugshilfszeile anzuzeigen, andernfalls „False“."
+  "DESCRIPTION_HIDE_FIRST": "„True“, um die erste Einzugshilfszeile anzuzeigen, andernfalls „False“.",
+  "DESCRIPTION_CSS_COLOR_PREVIEW": "„true“, um Farbvorschauen im Rand anzuzeigen, sonst „false“."
 });
 /*
  * GNU AGPL-3.0 License
@@ -69590,7 +69595,8 @@ define("nls/el/strings", {
   "BEAUTIFY_OPTION_PROSE_WRAP": "Τυλίξτε πρόζα εάν υπερβαίνει το πλάτος εκτύπωσης στα αρχεία σήμανσης",
   "BEAUTIFY_OPTION_PRINT_TRAILING_COMMAS": "Εκτυπώστε τελικά κόμματα όπου είναι δυνατόν σε συντακτικές δομές πολλαπλών γραμμών διαχωρισμένων με κόμματα",
   "DESCRIPTION_INDENT_GUIDES_ENABLED": "true για να εμφανίζει τις κατευθυντήριες γραμμές εσοχή, αλλιώς false.",
-  "DESCRIPTION_HIDE_FIRST": "true για να εμφανίζεται η πρώτη γραμμή Οδηγού εσοχής αλλιώς false."
+  "DESCRIPTION_HIDE_FIRST": "true για να εμφανίζεται η πρώτη γραμμή Οδηγού εσοχής αλλιώς false.",
+  "DESCRIPTION_CSS_COLOR_PREVIEW": "true για την εμφάνιση προεπισκοπήσεων χρωμάτων στην υδρορροή, αλλιώς false."
 });
 /*
  * GNU AGPL-3.0 License
@@ -70687,7 +70693,8 @@ define("nls/en-gb/strings", {
   "BEAUTIFY_OPTION_PROSE_WRAP": "Wrap prose if it exceeds the print width in markdown files",
   "BEAUTIFY_OPTION_PRINT_TRAILING_COMMAS": "Print trailing commas wherever possible in multi-line comma-separated syntactic structures",
   "DESCRIPTION_INDENT_GUIDES_ENABLED": "true to show indent guide lines, else false.",
-  "DESCRIPTION_HIDE_FIRST": "true to show the first Indent Guide line else false."
+  "DESCRIPTION_HIDE_FIRST": "true to show the first Indent Guide line else false.",
+  "DESCRIPTION_CSS_COLOR_PREVIEW": "true to display color previews in the gutter, else false."
 });
 /*
  * GNU AGPL-3.0 License
@@ -71757,7 +71764,8 @@ define("nls/es/strings", {
   "BEAUTIFY_OPTION_PROSE_WRAP": "Envuelva la prosa si excede el ancho de impresión en los archivos de rebajas",
   "BEAUTIFY_OPTION_PRINT_TRAILING_COMMAS": "Imprima comas finales siempre que sea posible en estructuras sintácticas separadas por comas de varias líneas",
   "DESCRIPTION_INDENT_GUIDES_ENABLED": "verdadero para mostrar líneas guía de sangría, de lo contrario falso.",
-  "DESCRIPTION_HIDE_FIRST": "verdadero para mostrar la primera línea de la Guía de sangría, de lo contrario falso."
+  "DESCRIPTION_HIDE_FIRST": "verdadero para mostrar la primera línea de la Guía de sangría, de lo contrario falso.",
+  "DESCRIPTION_CSS_COLOR_PREVIEW": "verdadero para mostrar vistas previas de color en el margen, de lo contrario falso."
 });
 /*
  * GNU AGPL-3.0 License
@@ -72855,7 +72863,8 @@ define("nls/fa-ir/strings", {
   "BEAUTIFY_OPTION_PROSE_WRAP": "اگر از عرض چاپ در فایل‌های علامت‌گذاری بیشتر شود، نثر را بپیچید",
   "BEAUTIFY_OPTION_PRINT_TRAILING_COMMAS": "در ساختارهای نحوی چند خطی جدا شده با کاما، هر جا که ممکن است، کاماهای انتهایی را چاپ کنید",
   "DESCRIPTION_INDENT_GUIDES_ENABLED": "درست برای نشان دادن خطوط راهنمای تورفتگی، در غیر این صورت نادرست.",
-  "DESCRIPTION_HIDE_FIRST": "درست است تا اولین خط راهنمای تورفتگی نشان داده شود و در غیر این صورت نادرست است."
+  "DESCRIPTION_HIDE_FIRST": "درست است تا اولین خط راهنمای تورفتگی نشان داده شود و در غیر این صورت نادرست است.",
+  "DESCRIPTION_CSS_COLOR_PREVIEW": "درست برای نمایش پیش نمایش های رنگی در ناودان، در غیر این صورت نادرست است."
 });
 /*
  * GNU AGPL-3.0 License
@@ -73952,7 +73961,8 @@ define("nls/fi/strings", {
   "BEAUTIFY_OPTION_PROSE_WRAP": "Kääri proosa, jos se ylittää painoleveyden merkintätiedostoissa",
   "BEAUTIFY_OPTION_PRINT_TRAILING_COMMAS": "Tulosta loppupilkut aina kun mahdollista monirivisissä pilkuilla erotetuissa syntaktisissa rakenteissa",
   "DESCRIPTION_INDENT_GUIDES_ENABLED": "tosi näyttääksesi sisennyksen ohjeviivat, muuten epätosi.",
-  "DESCRIPTION_HIDE_FIRST": "tosi näyttääksesi ensimmäisen sisennyksen ohjeviivan, muuten epätosi."
+  "DESCRIPTION_HIDE_FIRST": "tosi näyttääksesi ensimmäisen sisennyksen ohjeviivan, muuten epätosi.",
+  "DESCRIPTION_CSS_COLOR_PREVIEW": "tosi näyttääksesi värien esikatselun kourussa, muuten false."
 });
 /*
  * GNU AGPL-3.0 License
@@ -75049,7 +75059,8 @@ define("nls/fr/strings", {
   "BEAUTIFY_OPTION_PROSE_WRAP": "Enveloppez la prose si elle dépasse la largeur d'impression dans les fichiers Markdown",
   "BEAUTIFY_OPTION_PRINT_TRAILING_COMMAS": "Imprimer des virgules de fin dans la mesure du possible dans des structures syntaxiques multilignes séparées par des virgules",
   "DESCRIPTION_INDENT_GUIDES_ENABLED": "vrai pour afficher les lignes de guide d'indentation, sinon faux.",
-  "DESCRIPTION_HIDE_FIRST": "vrai pour afficher la première ligne du guide d'indentation, sinon faux."
+  "DESCRIPTION_HIDE_FIRST": "vrai pour afficher la première ligne du guide d'indentation, sinon faux.",
+  "DESCRIPTION_CSS_COLOR_PREVIEW": "vrai pour afficher les aperçus des couleurs dans la gouttière, sinon faux."
 });
 /*
  * GNU AGPL-3.0 License
@@ -76757,7 +76768,8 @@ define("nls/hi/strings", {
   "BEAUTIFY_OPTION_PROSE_WRAP": "गद्य लपेटें यदि यह मार्कडाउन फ़ाइलों में प्रिंट की चौड़ाई से अधिक है",
   "BEAUTIFY_OPTION_PRINT_TRAILING_COMMAS": "बहु-पंक्ति अल्पविराम से अलग किए गए वाक्य-विन्यास संरचनाओं में जहां भी संभव हो, अनुगामी अल्पविराम प्रिंट करें",
   "DESCRIPTION_INDENT_GUIDES_ENABLED": "इंडेंट गाइड लाइन दिखाने के लिए सत्य, अन्यथा असत्य।",
-  "DESCRIPTION_HIDE_FIRST": "प्रथम इंडेंट गाइड लाइन दिखाने के लिए true दबाएं, अन्यथा false दबाएं।"
+  "DESCRIPTION_HIDE_FIRST": "प्रथम इंडेंट गाइड लाइन दिखाने के लिए true दबाएं, अन्यथा false दबाएं।",
+  "DESCRIPTION_CSS_COLOR_PREVIEW": "गटर में रंग पूर्वावलोकन प्रदर्शित करने के लिए सत्य, अन्यथा असत्य।"
 });
 /*
  * GNU AGPL-3.0 License
@@ -77827,7 +77839,8 @@ define("nls/hr/strings", {
   "BEAUTIFY_OPTION_PROSE_WRAP": "Zamotajte prozu ako premašuje širinu ispisa u datotekama za označavanje",
   "BEAUTIFY_OPTION_PRINT_TRAILING_COMMAS": "Ispis zareza na kraju gdje god je to moguće u sintaktičkim strukturama s više redaka odvojenih zarezima",
   "DESCRIPTION_INDENT_GUIDES_ENABLED": "true za prikaz uvlačnih linija smjernica, inače false.",
-  "DESCRIPTION_HIDE_FIRST": "true za prikaz prve linije smjernice za uvlačenje else false."
+  "DESCRIPTION_HIDE_FIRST": "true za prikaz prve linije smjernice za uvlačenje else false.",
+  "DESCRIPTION_CSS_COLOR_PREVIEW": "true za prikaz pregleda boja u oluku, inače false."
 });
 /*
  * GNU AGPL-3.0 License
@@ -78924,7 +78937,8 @@ define("nls/hu/strings", {
   "BEAUTIFY_OPTION_PROSE_WRAP": "Csomagolja be a prózát, ha meghaladja a nyomtatási szélességet a leíró fájlokban",
   "BEAUTIFY_OPTION_PRINT_TRAILING_COMMAS": "A többsoros, vesszővel elválasztott szintaktikai struktúrákban lehetőség szerint nyomtasson záró vesszőt",
   "DESCRIPTION_INDENT_GUIDES_ENABLED": "igaz a behúzás irányvonalainak megjelenítéséhez, különben hamis.",
-  "DESCRIPTION_HIDE_FIRST": "igaz, hogy az első behúzás segédvonalat mutassa, különben hamis."
+  "DESCRIPTION_HIDE_FIRST": "igaz, hogy az első behúzás segédvonalat mutassa, különben hamis.",
+  "DESCRIPTION_CSS_COLOR_PREVIEW": "igaz a színes előnézetek megjelenítéséhez az ereszcsatornában, egyébként hamis."
 });
 /*
  * GNU AGPL-3.0 License
@@ -79994,7 +80008,8 @@ define("nls/id/strings", {
   "BEAUTIFY_OPTION_PROSE_WRAP": "Bungkus prosa jika melebihi lebar cetak dalam file penurunan harga",
   "BEAUTIFY_OPTION_PRINT_TRAILING_COMMAS": "Cetak tanda koma sedapat mungkin dalam struktur sintaksis multi-baris yang dipisahkan koma",
   "DESCRIPTION_INDENT_GUIDES_ENABLED": "benar untuk memperlihatkan garis panduan indentasi, jika tidak, salah.",
-  "DESCRIPTION_HIDE_FIRST": "benar untuk menampilkan baris Panduan Indentasi pertama, jika tidak salah."
+  "DESCRIPTION_HIDE_FIRST": "benar untuk menampilkan baris Panduan Indentasi pertama, jika tidak salah.",
+  "DESCRIPTION_CSS_COLOR_PREVIEW": "benar untuk menampilkan pratinjau warna di selokan, jika tidak, salah."
 });
 /*
  * GNU AGPL-3.0 License
@@ -81090,7 +81105,8 @@ define("nls/it/strings", {
   "BEAUTIFY_OPTION_PROSE_WRAP": "Avvolgi la prosa se supera la larghezza di stampa nei file markdown",
   "BEAUTIFY_OPTION_PRINT_TRAILING_COMMAS": "Stampa le virgole finali, ove possibile, in strutture sintattiche separate da virgole su più righe",
   "DESCRIPTION_INDENT_GUIDES_ENABLED": "true per mostrare le linee guida di rientro, altrimenti false.",
-  "DESCRIPTION_HIDE_FIRST": "true per mostrare la prima riga della guida di rientro, altrimenti false."
+  "DESCRIPTION_HIDE_FIRST": "true per mostrare la prima riga della guida di rientro, altrimenti false.",
+  "DESCRIPTION_CSS_COLOR_PREVIEW": "true per visualizzare le anteprime dei colori nella spaziatura, altrimenti false."
 });
 /*
  * GNU AGPL-3.0 License
@@ -82187,7 +82203,8 @@ define("nls/ja/strings", {
   "BEAUTIFY_OPTION_PROSE_WRAP": "マークダウンファイルの印刷幅を超える場合は文章を折り返す",
   "BEAUTIFY_OPTION_PRINT_TRAILING_COMMAS": "複数行のコンマ区切りの構文構造では、可能な限り末尾のコンマを出力します",
   "DESCRIPTION_INDENT_GUIDES_ENABLED": "インデントガイドラインを表示する場合は true、それ以外の場合は false です。",
-  "DESCRIPTION_HIDE_FIRST": "最初のインデント ガイドラインを表示する場合は true、そうでない場合は false です。"
+  "DESCRIPTION_HIDE_FIRST": "最初のインデント ガイドラインを表示する場合は true、そうでない場合は false です。",
+  "DESCRIPTION_CSS_COLOR_PREVIEW": "ガターにカラープレビューを表示する場合は true、それ以外の場合は false です。"
 });
 /*
  * GNU AGPL-3.0 License
@@ -83284,7 +83301,8 @@ define("nls/ko/strings", {
   "BEAUTIFY_OPTION_PROSE_WRAP": "마크다운 파일의 인쇄 너비를 초과하는 경우 산문을 줄입니다.",
   "BEAUTIFY_OPTION_PRINT_TRAILING_COMMAS": "여러 줄 쉼표로 구분된 구문 구조에서 가능한 한 후행 쉼표를 인쇄합니다.",
   "DESCRIPTION_INDENT_GUIDES_ENABLED": "들여쓰기 가이드라인을 표시하려면 true를 지정하고, 그렇지 않으면 false를 지정합니다.",
-  "DESCRIPTION_HIDE_FIRST": "첫 번째 들여쓰기 안내선을 표시하려면 true이고, 그렇지 않으면 false입니다."
+  "DESCRIPTION_HIDE_FIRST": "첫 번째 들여쓰기 안내선을 표시하려면 true이고, 그렇지 않으면 false입니다.",
+  "DESCRIPTION_CSS_COLOR_PREVIEW": "색상 미리보기를 거터에 표시하려면 true이고, 그렇지 않으면 false입니다."
 });
 /*
  * GNU AGPL-3.0 License
@@ -84381,7 +84399,8 @@ define("nls/lv/strings", {
   "BEAUTIFY_OPTION_PROSE_WRAP": "Aptiniet prozu, ja tas pārsniedz drukas platumu atzīmes failos",
   "BEAUTIFY_OPTION_PRINT_TRAILING_COMMAS": "Drukājiet beigu komatus, kur vien iespējams, vairāku rindiņu komatu atdalītās sintaktiskās struktūrās",
   "DESCRIPTION_INDENT_GUIDES_ENABLED": "patiess, lai parādītu vadlīniju atkāpi, pretējā gadījumā nepatiesi.",
-  "DESCRIPTION_HIDE_FIRST": "patiess, lai parādītu pirmo atkāpes vadlīniju līniju, pretējā gadījumā nepatiesi."
+  "DESCRIPTION_HIDE_FIRST": "patiess, lai parādītu pirmo atkāpes vadlīniju līniju, pretējā gadījumā nepatiesi.",
+  "DESCRIPTION_CSS_COLOR_PREVIEW": "patiess, lai notekcaurulē parādītu krāsu priekšskatījumus, pretējā gadījumā nepatiesi."
 });
 /*
  * GNU AGPL-3.0 License
@@ -85451,7 +85470,8 @@ define("nls/ml/strings", {
   "BEAUTIFY_OPTION_PROSE_WRAP": "മാർക്ക്ഡൗൺ ഫയലുകളിലെ പ്രിന്റ് വീതി കവിഞ്ഞാൽ ഗദ്യം പൊതിയുക",
   "BEAUTIFY_OPTION_PRINT_TRAILING_COMMAS": "മൾട്ടി-ലൈൻ കോമ കൊണ്ട് വേർതിരിച്ച വാക്യഘടനയിൽ സാധ്യമാകുന്നിടത്തെല്ലാം ട്രെയിലിംഗ് കോമകൾ പ്രിന്റ് ചെയ്യുക",
   "DESCRIPTION_INDENT_GUIDES_ENABLED": "ഇൻഡൻ്റ് ഗൈഡ് ലൈനുകൾ കാണിക്കാൻ ശരി, അല്ലെങ്കിൽ തെറ്റ്.",
-  "DESCRIPTION_HIDE_FIRST": "ആദ്യ ഇൻഡൻ്റ് ഗൈഡ് ലൈൻ കാണിക്കുന്നത് ശരിയാണ്, അല്ലാത്തത് തെറ്റാണ്."
+  "DESCRIPTION_HIDE_FIRST": "ആദ്യ ഇൻഡൻ്റ് ഗൈഡ് ലൈൻ കാണിക്കുന്നത് ശരിയാണ്, അല്ലാത്തത് തെറ്റാണ്.",
+  "DESCRIPTION_CSS_COLOR_PREVIEW": "ഗട്ടറിൽ വർണ്ണ പ്രിവ്യൂ കാണിക്കുന്നത് ശരിയാണ്, അല്ലെങ്കിൽ തെറ്റ്."
 });
 /*
  * GNU AGPL-3.0 License
@@ -87086,7 +87106,8 @@ define("nls/nl/strings", {
   "BEAUTIFY_OPTION_PROSE_WRAP": "Wikkel proza als het de afdrukbreedte overschrijdt in markdown-bestanden",
   "BEAUTIFY_OPTION_PRINT_TRAILING_COMMAS": "Print volgkomma's waar mogelijk in syntactische structuren met meerdere regels, gescheiden door komma's",
   "DESCRIPTION_INDENT_GUIDES_ENABLED": "true om inspringingsrichtlijnen weer te geven, anders false.",
-  "DESCRIPTION_HIDE_FIRST": "true om de eerste Indent Guide-regel weer te geven, anders false."
+  "DESCRIPTION_HIDE_FIRST": "true om de eerste Indent Guide-regel weer te geven, anders false.",
+  "DESCRIPTION_CSS_COLOR_PREVIEW": "true om kleurvoorbeelden in de goot weer te geven, anders false."
 });
 /*
  * GNU AGPL-3.0 License
@@ -88183,7 +88204,8 @@ define("nls/pl/strings", {
   "BEAUTIFY_OPTION_PROSE_WRAP": "Zawijaj prozę, jeśli przekracza szerokość wydruku w plikach przecen",
   "BEAUTIFY_OPTION_PRINT_TRAILING_COMMAS": "Drukuj końcowe przecinki tam, gdzie to możliwe, w wielowierszowych strukturach składniowych oddzielonych przecinkami",
   "DESCRIPTION_INDENT_GUIDES_ENABLED": "true, aby wyświetlić linie pomocnicze wcięcia, w przeciwnym wypadku false.",
-  "DESCRIPTION_HIDE_FIRST": "true, aby wyświetlić pierwszą linię prowadnicy wcięcia, w przeciwnym wypadku false."
+  "DESCRIPTION_HIDE_FIRST": "true, aby wyświetlić pierwszą linię prowadnicy wcięcia, w przeciwnym wypadku false.",
+  "DESCRIPTION_CSS_COLOR_PREVIEW": "true, aby wyświetlić podgląd kolorów w rynnie, w przeciwnym wypadku false."
 });
 /*
  * GNU AGPL-3.0 License
@@ -89280,7 +89302,8 @@ define("nls/pt-br/strings", {
   "BEAUTIFY_OPTION_PROSE_WRAP": "Enrole prosa se exceder a largura de impressão em arquivos de remarcação",
   "BEAUTIFY_OPTION_PRINT_TRAILING_COMMAS": "Imprima vírgulas à direita sempre que possível em estruturas sintáticas de várias linhas separadas por vírgulas",
   "DESCRIPTION_INDENT_GUIDES_ENABLED": "true para mostrar linhas de guia de recuo, caso contrário false.",
-  "DESCRIPTION_HIDE_FIRST": "true para mostrar a primeira linha do Guia de Recuo, caso contrário false."
+  "DESCRIPTION_HIDE_FIRST": "true para mostrar a primeira linha do Guia de Recuo, caso contrário false.",
+  "DESCRIPTION_CSS_COLOR_PREVIEW": "true para exibir visualizações de cores na medianiz, caso contrário false."
 });
 /*
  * GNU AGPL-3.0 License
@@ -90375,7 +90398,8 @@ define("nls/pt-pt/strings", {
   "BEAUTIFY_OPTION_PROSE_WRAP": "Enrole prosa se exceder a largura de impressão em arquivos de remarcação",
   "BEAUTIFY_OPTION_PRINT_TRAILING_COMMAS": "Imprima vírgulas à direita sempre que possível em estruturas sintáticas de várias linhas separadas por vírgulas",
   "DESCRIPTION_INDENT_GUIDES_ENABLED": "true para mostrar linhas de guia de recuo, caso contrário false.",
-  "DESCRIPTION_HIDE_FIRST": "true para mostrar a primeira linha do Guia de Recuo, caso contrário false."
+  "DESCRIPTION_HIDE_FIRST": "true para mostrar a primeira linha do Guia de Recuo, caso contrário false.",
+  "DESCRIPTION_CSS_COLOR_PREVIEW": "true para exibir visualizações de cores na medianiz, caso contrário false."
 });
 /*
  * GNU AGPL-3.0 License
@@ -91470,7 +91494,8 @@ define("nls/ro/strings", {
   "BEAUTIFY_OPTION_PROSE_WRAP": "Înfășurați proza dacă depășește lățimea de tipărire în fișierele de reducere",
   "BEAUTIFY_OPTION_PRINT_TRAILING_COMMAS": "Tipăriți virgulele finale ori de câte ori este posibil în structuri sintactice separate prin virgulă cu mai multe linii",
   "DESCRIPTION_INDENT_GUIDES_ENABLED": "adevărat pentru a afișa liniile de ghidare de indentare, altfel fals.",
-  "DESCRIPTION_HIDE_FIRST": "true pentru a afișa prima linie de ghidare de indentare, altfel false."
+  "DESCRIPTION_HIDE_FIRST": "true pentru a afișa prima linie de ghidare de indentare, altfel false.",
+  "DESCRIPTION_CSS_COLOR_PREVIEW": "true pentru a afișa previzualizările de culoare în jgheab, altfel false."
 });
 /*
  * GNU AGPL-3.0 License
@@ -93888,7 +93913,8 @@ define("nls/ru/strings", {
   "BEAUTIFY_OPTION_PROSE_WRAP": "Оберните прозу, если она превышает ширину печати в файлах уценки",
   "BEAUTIFY_OPTION_PRINT_TRAILING_COMMAS": "Печатайте конечные запятые везде, где это возможно, в многострочных синтаксических структурах, разделенных запятыми.",
   "DESCRIPTION_INDENT_GUIDES_ENABLED": "true, чтобы показать направляющие линии отступа, в противном случае false.",
-  "DESCRIPTION_HIDE_FIRST": "true, чтобы отобразить первую линию направляющей отступа, в противном случае false."
+  "DESCRIPTION_HIDE_FIRST": "true, чтобы отобразить первую линию направляющей отступа, в противном случае false.",
+  "DESCRIPTION_CSS_COLOR_PREVIEW": "true для отображения предварительных вариантов цветов в области между строк, в противном случае false."
 });
 /*
  * GNU AGPL-3.0 License
@@ -94985,7 +95011,8 @@ define("nls/sk/strings", {
   "BEAUTIFY_OPTION_PROSE_WRAP": "Zabaľte prózu, ak presahuje šírku tlače do súborov značiek",
   "BEAUTIFY_OPTION_PRINT_TRAILING_COMMAS": "Vždy, keď je to možné, tlačte koncové čiarky vo viacriadkových syntaktických štruktúrach oddelených čiarkami",
   "DESCRIPTION_INDENT_GUIDES_ENABLED": "true, ak chcete zobraziť vodiace čiary odsadenia, inak nepravda.",
-  "DESCRIPTION_HIDE_FIRST": "true, aby sa zobrazil prvý vodiaci riadok odsadenia, inak je nepravda."
+  "DESCRIPTION_HIDE_FIRST": "true, aby sa zobrazil prvý vodiaci riadok odsadenia, inak je nepravda.",
+  "DESCRIPTION_CSS_COLOR_PREVIEW": "true na zobrazenie náhľadov farieb v odkvape, inak false."
 });
 /*
  * GNU AGPL-3.0 License
@@ -96081,7 +96108,8 @@ define("nls/sr/strings", {
   "BEAUTIFY_OPTION_PROSE_WRAP": "Замотајте прозу ако премашује ширину штампе у датотекама за означавање",
   "BEAUTIFY_OPTION_PRINT_TRAILING_COMMAS": "Штампајте задње зарезе где год је то могуће у синтаксичким структурама раздвојеним зарезима у више редова",
   "DESCRIPTION_INDENT_GUIDES_ENABLED": "тачно да би се приказале увлаке водича, иначе нетачно.",
-  "DESCRIPTION_HIDE_FIRST": "труе да би се прва линија за увлачење приказала у супротном фалсе."
+  "DESCRIPTION_HIDE_FIRST": "труе да би се прва линија за увлачење приказала у супротном фалсе.",
+  "DESCRIPTION_CSS_COLOR_PREVIEW": "труе за приказ прегледа боја у олуку, иначе нетачно."
 });
 /*
  * GNU AGPL-3.0 License
@@ -97261,7 +97289,8 @@ define("nls/sv/strings", {
   "BEAUTIFY_OPTION_PROSE_WRAP": "Slå in prosa om den överskrider utskriftsbredden i markdown-filer",
   "BEAUTIFY_OPTION_PRINT_TRAILING_COMMAS": "Skriv ut avslutande kommatecken där det är möjligt i flerrads kommaseparerade syntaktiska strukturer",
   "DESCRIPTION_INDENT_GUIDES_ENABLED": "sant för att visa indragsriktlinjer, annars falskt.",
-  "DESCRIPTION_HIDE_FIRST": "sant för att visa den första indragslinjen annars falsk."
+  "DESCRIPTION_HIDE_FIRST": "sant för att visa den första indragslinjen annars falsk.",
+  "DESCRIPTION_CSS_COLOR_PREVIEW": "sant för att visa färgförhandsvisningar i rännstenen, annars falskt."
 });
 /*
  * GNU AGPL-3.0 License
@@ -98358,7 +98387,8 @@ define("nls/tr/strings", {
   "BEAUTIFY_OPTION_PROSE_WRAP": "İşaretleme dosyalarında baskı genişliğini aşarsa düzyazıyı sarın",
   "BEAUTIFY_OPTION_PRINT_TRAILING_COMMAS": "Çok satırlı virgülle ayrılmış sözdizimsel yapılarda mümkün olan her yerde sondaki virgülleri yazdırın",
   "DESCRIPTION_INDENT_GUIDES_ENABLED": "girinti kılavuz çizgilerini göstermek için true, aksi takdirde false.",
-  "DESCRIPTION_HIDE_FIRST": "İlk Girinti Kılavuzu satırını göstermek için doğru, aksi takdirde yanlış."
+  "DESCRIPTION_HIDE_FIRST": "İlk Girinti Kılavuzu satırını göstermek için doğru, aksi takdirde yanlış.",
+  "DESCRIPTION_CSS_COLOR_PREVIEW": "oluklarda renkli önizlemeleri görüntülemek için true, aksi takdirde false değerini kullanın."
 });
 /*
  * GNU AGPL-3.0 License
@@ -99455,7 +99485,8 @@ define("nls/uk/strings", {
   "BEAUTIFY_OPTION_PROSE_WRAP": "Оберніть прозу, якщо вона перевищує ширину друку у файлах розмітки",
   "BEAUTIFY_OPTION_PRINT_TRAILING_COMMAS": "Друк завершальних ком, де це можливо, у багаторядкових синтаксичних структурах, розділених комами",
   "DESCRIPTION_INDENT_GUIDES_ENABLED": "true, щоб показувати напрямні лінії відступу, інакше, false.",
-  "DESCRIPTION_HIDE_FIRST": "true, щоб показати перший напрямний рядок відступу, else false."
+  "DESCRIPTION_HIDE_FIRST": "true, щоб показати перший напрямний рядок відступу, else false.",
+  "DESCRIPTION_CSS_COLOR_PREVIEW": "true для відображення попереднього перегляду кольорів у каналі, інакше false."
 });
 /*
  * GNU AGPL-3.0 License
@@ -100552,7 +100583,8 @@ define("nls/ur/strings", {
   "BEAUTIFY_OPTION_PROSE_WRAP": "نثر کو لپیٹیں اگر یہ مارک ڈاؤن فائلوں میں پرنٹ کی چوڑائی سے زیادہ ہے۔",
   "BEAUTIFY_OPTION_PRINT_TRAILING_COMMAS": "ملٹی لائن کوما سے الگ کردہ نحوی ڈھانچے میں جہاں بھی ممکن ہو ٹریلنگ کوما پرنٹ کریں",
   "DESCRIPTION_INDENT_GUIDES_ENABLED": "انڈینٹ گائیڈ لائنز دکھانے کے لیے true، ورنہ غلط۔",
-  "DESCRIPTION_HIDE_FIRST": "پہلی انڈینٹ گائیڈ لائن کو دکھانے کے لیے صحیح ورنہ غلط۔"
+  "DESCRIPTION_HIDE_FIRST": "پہلی انڈینٹ گائیڈ لائن کو دکھانے کے لیے صحیح ورنہ غلط۔",
+  "DESCRIPTION_CSS_COLOR_PREVIEW": "گٹر میں رنگین مناظر ظاہر کرنے کے لیے درست، ورنہ غلط۔"
 });
 /*
  * GNU AGPL-3.0 License
@@ -101679,7 +101711,8 @@ define("nls/zh-cn/strings", {
   "BEAUTIFY_OPTION_PROSE_WRAP": "如果散文超过 Markdown 文件中的打印宽度，则包装散文",
   "BEAUTIFY_OPTION_PRINT_TRAILING_COMMAS": "在多行逗号分隔的句法结构中尽可能打印尾随逗号",
   "DESCRIPTION_INDENT_GUIDES_ENABLED": "如果为 true，则显示缩进指导线，否则为 false。",
-  "DESCRIPTION_HIDE_FIRST": "true 则显示第一个缩进指引线，否则为 false。"
+  "DESCRIPTION_HIDE_FIRST": "true 则显示第一个缩进指引线，否则为 false。",
+  "DESCRIPTION_CSS_COLOR_PREVIEW": "如果为 true，则在边缘显示颜色预览，否则为 false。"
 });
 /*
  * GNU AGPL-3.0 License
@@ -102776,7 +102809,8 @@ define("nls/zh-tw/strings", {
   "BEAUTIFY_OPTION_PROSE_WRAP": "如果散文超過 Markdown 文件中的打印寬度，則包裝散文",
   "BEAUTIFY_OPTION_PRINT_TRAILING_COMMAS": "在多行逗號分隔的句法結構中盡可能打印尾隨逗號",
   "DESCRIPTION_INDENT_GUIDES_ENABLED": "true 則顯示縮排引導線，否則 false。",
-  "DESCRIPTION_HIDE_FIRST": "true 則顯示第一個縮排引導線，否則 false。"
+  "DESCRIPTION_HIDE_FIRST": "true 則顯示第一個縮排引導線，否則 false。",
+  "DESCRIPTION_CSS_COLOR_PREVIEW": "true 則在裝訂線中顯示顏色預覽，否則 false。"
 });
 /*
  * GNU AGPL-3.0 License
