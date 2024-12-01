@@ -9715,13 +9715,17 @@ ins.jstree-icon {
   padding-bottom: 2px;
 }
 /* Single color preview */
+.CodeMirror .CodeMirror-colorGutter {
+  width: 1em;
+  background-color: transparent;
+  text-align: center;
+}
 .ico-cssColorPreview {
   border: solid 1px rgba(255, 255, 255, 0.2);
   display: inline-block;
   top: 0.1em;
   height: 0.7em;
   width: 0.7em;
-  margin-left: 0.15em;
   position: relative;
 }
 .dark .ico-cssColorPreview {
@@ -9729,22 +9733,21 @@ ins.jstree-icon {
 }
 /* Multiple colors preview container (this is a div) */
 .ico-multiple-cssColorPreview {
-  border: solid 1px rgba(255, 255, 255, 0.2);
+  border: solid 0.05em rgba(255, 255, 255, 0.2);
   position: relative;
   display: inline-block;
-  top: 0.1em;
-  width: 0.7em;
-  height: 0.7em;
-  margin-left: 0.15em;
+  top: 0.2em;
+  width: 0.9em;
+  height: 0.9em;
 }
 .dark .ico-multiple-cssColorPreview {
-  border: solid 1px rgba(0, 0, 0, 0.2);
+  border: solid 0.05em rgba(0, 0, 0, 0.2);
 }
 /* For individual color boxes, they will be added inside the main .ico-multiple-cssColorPreview div */
 .ico-multiple-cssColorPreview .color-box {
   position: absolute;
-  width: 0.3em;
-  height: 0.3em;
+  width: 0.4em;
+  height: 0.4em;
   box-sizing: border-box;
 }
 /* Overall layout */
@@ -12454,6 +12457,7 @@ textarea.exclusions-editor {
 .CodeMirror .code-inspection-gutter {
   width: 1em;
   background-color: transparent;
+  text-align: center;
 }
 .brackets-inspection-gutter-marker {
   cursor: default;
@@ -12461,7 +12465,7 @@ textarea.exclusions-editor {
   line-height: 1em;
   height: 1em;
   width: 1em;
-  font-size: 0.8em;
+  font-size: 0.7em;
   pointer-events: auto;
 }
 #problems-panel {
