@@ -33148,6 +33148,8 @@ define("extensionsIntegrated/CSSColorPreview/main", function (require, exports, 
         Editor              = require("editor/Editor").Editor,
         PreferencesManager  = require("preferences/PreferencesManager"),
         MainViewManager     = require("view/MainViewManager"),
+        Commands            = require("command/Commands"),
+        CommandManager      = require("command/CommandManager"),
         Strings             = require("strings");
 
     // Extension variables.
@@ -33257,6 +33259,45 @@ define("extensionsIntegrated/CSSColorPreview/main", function (require, exports, 
         });
     }
 
+
+    /**
+     * To move the cursor to the color text and display the color quick edit
+     * @param {Editor} codem the codemirror instance
+     * @param {Number} lineNumber the line number that is clicked
+     * @param {String} gutter the gutter name
+     */
+    function colorIconClicked(codem, lineNumber, gutter) {
+        const editor = EditorManager.getActiveEditor();
+        const cm = editor._codeMirror;
+
+        if(gutter === 'CodeMirror-linenumbers') {
+
+            let colorValue;
+
+            for(let i of codem.colorGutters) {
+                if(i.lineNumber === lineNumber) {
+                    colorValue = i.colorValues[0];
+                }
+            }
+
+            const lineText = cm.getLine(lineNumber);
+            const colorIndex = lineText.indexOf(colorValue);
+
+            if (colorIndex !== -1) {
+                // Place cursor at the start of the color text
+                if (editor) {
+                    editor.setCursorPos(lineNumber, colorIndex);
+
+                    // Added a 50ms delay with setTimeout to make sure the quick edit menu toggles correctly.
+                    // Without it, closing the menu trigger text selection, reopening the menu.
+                    setTimeout(() => {
+                        CommandManager.execute(Commands.TOGGLE_QUICK_EDIT);
+                    }, 50);
+                }
+            }
+        }
+    }
+
     /**
      * To display the color marks on the gutter
      * @param {activeEditor} editor
@@ -33269,6 +33310,10 @@ define("extensionsIntegrated/CSSColorPreview/main", function (require, exports, 
             const cm = editor._codeMirror;
             editor.clearGutter(GUTTER_NAME); // clear color markers
             _addDummyGutterMarkerIfNotExist(editor, editor.getCursorPos().line);
+
+            cm.on("gutterClick", (codem, lineNumber, gutter) => {
+                colorIconClicked(codem, lineNumber, gutter);
+            });
 
             // Only add markers if enabled
             if (enabled) {
