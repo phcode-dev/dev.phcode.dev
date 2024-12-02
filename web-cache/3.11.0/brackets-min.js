@@ -20653,6 +20653,17 @@ define("editor/Editor", function (require, exports, module) {
     };
 
     /**
+     * Retrieves a single line text
+     * @param {number} lineNumber - The lineNumber to extract text from
+     * @returns {string|null} The text at the given position if within bounds,
+     *                        otherwise `null` if the position is out of range.
+     */
+    Editor.prototype.getLine = function (lineNumber) {
+        const retrievedText = this._codeMirror.getLine(lineNumber);
+        return retrievedText === undefined ? null : retrievedText;
+    };
+
+    /**
      * Retrieves a single character previous to the specified position in the editor in the same line if possible.
      * x|y where `|` is the cursor, will return x
      *
@@ -33177,13 +33188,12 @@ define("extensionsIntegrated/CSSColorPreview/main", function (require, exports, 
      */
     function _getAllColorsAndLineNums(editor) {
 
-        const cm = editor._codeMirror;
-        const nLen = cm.lineCount();
+        const nLen = editor.lineCount();
         const aColors = [];
 
         // match colors and push into an array
         for (let i = 0; i < nLen; i++) {
-            let lineText = cm.getLine(i);
+            let lineText = editor.getLine(i);
 
             if ((lineText.indexOf('/*') !== -1) || (lineText.indexOf('*/') !== -1)) {
                 continue;
@@ -33262,25 +33272,24 @@ define("extensionsIntegrated/CSSColorPreview/main", function (require, exports, 
 
     /**
      * To move the cursor to the color text and display the color quick edit
-     * @param {Editor} codem the codemirror instance
+     * @param {CodeMirror} codeMirror the codemirror instance
      * @param {Number} lineNumber the line number that is clicked
      * @param {String} gutter the gutter name
      */
-    function colorIconClicked(codem, lineNumber, gutter) {
+    function colorIconClicked(codeMirror, lineNumber, gutter) {
         const editor = EditorManager.getActiveEditor();
-        const cm = editor._codeMirror;
 
-        if(gutter === 'CodeMirror-linenumbers') {
+        if(gutter === GUTTER_NAME) {
 
             let colorValue;
 
-            for(let i of codem.colorGutters) {
+            for(let i of codeMirror.colorGutters) {
                 if(i.lineNumber === lineNumber) {
                     colorValue = i.colorValues[0];
                 }
             }
 
-            const lineText = cm.getLine(lineNumber);
+            const lineText = editor.getLine(lineNumber);
             const colorIndex = lineText.indexOf(colorValue);
 
             if (colorIndex !== -1) {
@@ -33311,8 +33320,8 @@ define("extensionsIntegrated/CSSColorPreview/main", function (require, exports, 
             editor.clearGutter(GUTTER_NAME); // clear color markers
             _addDummyGutterMarkerIfNotExist(editor, editor.getCursorPos().line);
 
-            cm.on("gutterClick", (codem, lineNumber, gutter) => {
-                colorIconClicked(codem, lineNumber, gutter);
+            cm.on("gutterClick", (codeMirror, lineNumber, gutter) => {
+                colorIconClicked(codeMirror, lineNumber, gutter);
             });
 
             // Only add markers if enabled
