@@ -63,13 +63,17 @@
  *
  * A code hint provider should implement the following three functions:
  *
+ * ```js
  * - `CodeHintProvider.hasHints(editor, implicitChar)`
  * - `CodeHintProvider.getHints(implicitChar)`
  * - `CodeHintProvider.insertHint(hint)`
+ * ```
  *
  * The behavior of these three functions is described in detail below.
  *
+ * ```js
  * __CodeHintProvider.hasHints(editor, implicitChar)__
+ * ```
  *
  * The method by which a provider indicates intent to provide hints for a
  * given editor. The manager calls this method both when hints are
@@ -99,21 +103,25 @@
  * particular, it should keep a reference to the editor object so that it
  * can access the editor in future calls to getHints and insertHints.
  *
+ * ```js
  * param {Editor} editor
+ * ```
  * A non-null editor object for the active window.
  *
- * param {string} implicitChar
+ * param {String} implicitChar
  * Either null, if the hinting request was explicit, or a single character
  * that represents the last insertion and that indicates an implicit
  * hinting request.
  *
- * return {boolean}
+ * return {Boolean}
  * Determines whether the current provider is able to provide hints for
  * the given editor context and, in case implicitChar is non- null,
  * whether it is appropriate to do so.
  *
  *
+ * ```js
  * __CodeHintProvider.getHints(implicitChar)__
+ * ```
  *
  * The method by which a provider provides hints for the editor context
  * associated with the current session. The getHints method is called only
@@ -168,15 +176,17 @@
  * assume that the document will not be changed outside of the editor
  * during a session.
  *
- * param {string} implicitChar
+ * param {String} implicitChar
  * Either null, if the request to update the hint list was a result of
  * navigation, or a single character that represents the last insertion.
  *
+ * ```js
  *     return {jQuery.Deferred|{
  *          hints: Array.<string|jQueryObject>,
  *          match: string,
  *          selectInitial: boolean,
  *          handleWideResults: boolean}}
+ * ```
  *
  * Null if the provider wishes to end the hinting session. Otherwise, a
  * response object, possibly deferred, that provides 1. a sorted array
@@ -196,8 +206,9 @@
  * of prefix matching, or can provide its own emphasis if it wishes to use
  * a more sophisticated matching algorithm.
  *
- *
+ * ```js
  * __CodeHintProvider.insertHint(hint)__
+ * ```
  *
  * The method by which a provider inserts a hint into the editor context
  * associated with the current session. The provider may assume that the
@@ -209,17 +220,17 @@
  * explicit hinting request, which may result in a new hinting session
  * being opened with some provider, but not necessarily the current one.
  *
- * param {string} hint
+ * param {String} hint
  * The hint to be inserted into the editor context for the current session.
  *
- * return {boolean}
+ * return {Boolean}
  * Indicates whether the manager should follow hint insertion with an
  * explicit hint request.
  *
  *
  * __CodeHintProvider.insertHintOnTab__
  *
- * type {?boolean} insertHintOnTab
+ * type {Boolean} insertHintOnTab
  * Indicates whether the CodeHintManager should request that the provider of
  * the current session insert the currently selected hint on tab key events,
  * or if instead a tab character should be inserted into the editor. If omitted,
