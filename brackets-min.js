@@ -22053,12 +22053,8 @@ define("editor/Editor", function (require, exports, module) {
         }
     };
 
-    /**
-     * Renders all registered gutters
-     * @private
-     */
-    Editor.prototype._renderGutters = function () {
-        var languageId = this.document.getLanguage().getId();
+    Editor.prototype._getRegisteredGutters = function () {
+        const languageId = this.document.getLanguage().getId();
 
         function _filterByLanguages(gutter) {
             return !gutter.languages || gutter.languages.indexOf(languageId) > -1;
@@ -22072,19 +22068,26 @@ define("editor/Editor", function (require, exports, module) {
             return gutter.name;
         }
 
-        var gutters = registeredGutters.map(_getName),
-            rootElement = this.getRootElement();
-
         // If the line numbers gutter has not been explicitly registered and the CodeMirror lineNumbes option is
         // set to true, we explicitly add the line numbers gutter. This case occurs the first time the editor loads
         // and showLineNumbers is set to true in preferences
+        const gutters = registeredGutters.map(_getName);
         if (gutters.indexOf(LINE_NUMBER_GUTTER) < 0 && this._codeMirror.getOption(cmOptions[SHOW_LINE_NUMBERS])) {
             registeredGutters.push({ name: LINE_NUMBER_GUTTER, priority: LINE_NUMBER_GUTTER_PRIORITY });
         }
 
-        gutters = registeredGutters.sort(_sortByPriority)
+        return  registeredGutters.sort(_sortByPriority)
             .filter(_filterByLanguages)
             .map(_getName);
+    };
+
+    /**
+     * Renders all registered gutters
+     * @private
+     */
+    Editor.prototype._renderGutters = function () {
+        const rootElement = this.getRootElement();
+        const gutters = this._getRegisteredGutters();
 
         this._codeMirror.setOption("gutters", gutters);
         this._codeMirror.refresh();
@@ -22134,6 +22137,16 @@ define("editor/Editor", function (require, exports, module) {
      */
     Editor.prototype.clearGutterMarker = function (lineNumber, gutterName) {
         this.setGutterMarker(lineNumber, gutterName, null);
+    };
+
+    /**
+     * Returns true if this editor has the named gutter activated. gutters are considered active if the gutter is
+     * registered for the language of the file currently shown in the editor.
+     * @param {string} gutterName The name of the gutter to check
+     */
+    Editor.prototype.isGutterActive = function (gutterName) {
+        const gutters = this._getRegisteredGutters();
+        return gutters.includes(gutterName);
     };
 
     /**
@@ -33237,7 +33250,6 @@ define("extensionsIntegrated/CSSColorPreview/main", function (require, exports, 
      */
     function showColorMarks() {
         if (!enabled) {
-            removeColorMarks();
             return;
         }
 
@@ -33264,22 +33276,6 @@ define("extensionsIntegrated/CSSColorPreview/main", function (require, exports, 
             }
         });
     }
-
-    /**
-     * To remove the color marks from the gutter of all the active editors
-     */
-    function removeColorMarks() {
-
-        const allActiveEditors = MainViewManager.getAllViewedEditors();
-
-        allActiveEditors.forEach((activeEditor) => {
-            const currEditor = activeEditor.editor;
-            if(currEditor) {
-                currEditor.clearGutter(GUTTER_NAME);
-            }
-        });
-    }
-
 
     /**
      * To move the cursor to the color text and display the color quick edit
@@ -33310,8 +33306,8 @@ define("extensionsIntegrated/CSSColorPreview/main", function (require, exports, 
      *   all the line numbers and the colors to be displayed on that line.
      */
     function showGutters(editor, _results) {
+        // TODO we should show the gutter in those languages only if a color is present in that file.
         if (editor && enabled) {
-            initGutter(editor);
             const cm = editor._codeMirror;
             editor.clearGutter(GUTTER_NAME); // clear color markers
             _addDummyGutterMarkerIfNotExist(editor, editor.getCursorPos().line);
@@ -33371,19 +33367,6 @@ define("extensionsIntegrated/CSSColorPreview/main", function (require, exports, 
         }
     }
 
-
-    /**
-     * Initialize the gutter
-     * @param {activeEditor} editor
-     */
-    function initGutter(editor) {
-        if (!Editor.isGutterRegistered(GUTTER_NAME)) {
-            // we should restrict the languages here to Editor.registerGutter(..., ["css", "less", "scss", etc..]);
-            // TODO we should show the gutter in those languages only if a color is present in that file.
-            Editor.registerGutter(GUTTER_NAME, COLOR_PREVIEW_GUTTER_PRIORITY, COLOR_LANGUAGES);
-        }
-    }
-
     function _addDummyGutterMarkerIfNotExist(editor, line) {
         let marker = editor.getGutterMarker(line, GUTTER_NAME);
         if(!marker){
@@ -33407,8 +33390,7 @@ define("extensionsIntegrated/CSSColorPreview/main", function (require, exports, 
 
         // Add listener for all editor changes
         EditorManager.on("activeEditorChange", function (event, newEditor, oldEditor) {
-            if (newEditor) {
-                // todo: only attach if the color gutter is present as we disable it in certain languages
+            if (newEditor && newEditor.isGutterActive(GUTTER_NAME)) {
                 newEditor.off("cursorActivity.colorPreview");
                 newEditor.on("cursorActivity.colorPreview", _cursorActivity);
                 // Unbind the previous editor's change event if it exists
@@ -33426,6 +33408,7 @@ define("extensionsIntegrated/CSSColorPreview/main", function (require, exports, 
                 }
 
                 showColorMarks();
+                _cursorActivity(null, newEditor);
             }
         });
 
@@ -33448,9 +33431,9 @@ define("extensionsIntegrated/CSSColorPreview/main", function (require, exports, 
         const value = PreferencesManager.get(PREFERENCES_CSS_COLOR_PREVIEW);
         enabled = value;
         if (!value) {
-            // to dynamically remove color to all active editors
-            removeColorMarks();
+            Editor.unregisterGutter(GUTTER_NAME);
         } else {
+            Editor.registerGutter(GUTTER_NAME, COLOR_PREVIEW_GUTTER_PRIORITY, COLOR_LANGUAGES);
             // to dynamically add color to all active editors
             addColorMarksToAllEditors();
         }
@@ -33463,19 +33446,11 @@ define("extensionsIntegrated/CSSColorPreview/main", function (require, exports, 
         showColorMarks();
     }
 
-    /**
-     * Driver function, runs at the start of the program
-     */
-    function init() {
-        // preferenceChanged calls 'showColorMarks' or 'removeColorMarks'
-        preferenceChanged();
-        registerHandlers();
-    }
-
     // init after appReady
     AppInit.appReady(function () {
         PreferencesManager.on("change", PREFERENCES_CSS_COLOR_PREVIEW, preferenceChanged);
-        init();
+        preferenceChanged();
+        registerHandlers();
     });
 });
 
