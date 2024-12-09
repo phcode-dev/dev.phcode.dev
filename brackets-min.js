@@ -33272,7 +33272,6 @@ define("extensionsIntegrated/CSSColorPreview/main", function (require, exports, 
      */
     function showGutters(editor, _results, update = false) {
         if (editor && enabled) {
-            const cm = editor._codeMirror;
             // if the file is updated we don't need to clear the gutter
             // as it will clear all the existing markers.
             if(!update) {
@@ -33282,9 +33281,9 @@ define("extensionsIntegrated/CSSColorPreview/main", function (require, exports, 
 
             // Only add markers if enabled
             if (enabled) {
-                cm.colorGutters = _.sortBy(_results, "lineNumber");
+                const colorGutters = _.sortBy(_results, "lineNumber");
 
-                cm.colorGutters.forEach(function (obj) {
+                colorGutters.forEach(function (obj) {
                     let $marker;
                     if (obj.colorValues.length === 1) {
                         // Single color preview
@@ -33363,18 +33362,10 @@ define("extensionsIntegrated/CSSColorPreview/main", function (require, exports, 
                 newEditor.on("cursorActivity.colorPreview", _cursorActivity);
                 // Unbind the previous editor's change event if it exists
                 if (oldEditor) {
-                    const oldCM = oldEditor._codeMirror;
-                    if (oldCM) {
-                        oldCM.off("change", onChanged);
-                    }
+                    oldEditor.off("change", onChanged);
                 }
-
-                // Bind change event to the new editor
-                const cm = newEditor._codeMirror;
-                if (cm) {
-                    cm.on("change", onChanged);
-                }
-
+                newEditor.off("change", onChanged);
+                newEditor.on("change", onChanged);
                 showColorMarks();
                 _cursorActivity(null, newEditor);
             }
@@ -33383,13 +33374,11 @@ define("extensionsIntegrated/CSSColorPreview/main", function (require, exports, 
         // Handle the currently active editor at initialization
         const activeEditor = EditorManager.getActiveEditor();
         if (activeEditor) {
-            const cm = activeEditor._codeMirror;
-            if (cm) {
-                cm.on("change", onChanged);
-            }
+            activeEditor.off("change", onChanged);
+            activeEditor.on("change", onChanged);
             showColorMarks();
+            _cursorActivity(null, activeEditor);
         }
-
     }
 
     /**
