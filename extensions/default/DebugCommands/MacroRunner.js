@@ -49,6 +49,9 @@ define(function (require, exports, module) {
         EditorManager = brackets.getModule("editor/EditorManager"),
         KeyEvent = brackets.getModule("utils/KeyEvent"),
         Commands = brackets.getModule("command/Commands"),
+        FileSystem = brackets.getModule("filesystem/FileSystem"),
+        MainViewManager = brackets.getModule("view/MainViewManager"),
+        FileUtils   = brackets.getModule("file/FileUtils"),
         PreferencesManager  = brackets.getModule("preferences/PreferencesManager"),
         Editor = brackets.getModule("editor/Editor"),
         Dialogs = brackets.getModule("widgets/Dialogs"),
@@ -66,6 +69,58 @@ define(function (require, exports, module) {
         }
         const projectFilePath = path.join(ProjectManager.getProjectRoot().fullPath, filePath);
         return jsPromise(FileViewController.openFileAndAddToWorkingSet(projectFilePath));
+    }
+
+    /**
+     * Reads a text file and returns a promise that resolves to the text
+     * @param filePath - project relative or full path
+     * @param {boolean?} bypassCache - an optional argument, if specified will read from disc instead of using cache.
+     * @returns {Promise<String>}
+     */
+    function readTextFile(filePath, bypassCache) {
+        if(!filePath.startsWith('/')) {
+            filePath = path.join(ProjectManager.getProjectRoot().fullPath, filePath);
+        }
+        const file = FileSystem.getFileForPath(filePath);
+        return jsPromise(FileUtils.readAsText(file, bypassCache));
+    }
+
+    /**
+     * Asynchronously writes a file as UTF-8 encoded text.
+     * @param filePath - project relative or full path
+     * @param {String} text
+     * @param {boolean} allowBlindWrite Indicates whether or not CONTENTS_MODIFIED
+     *      errors---which can be triggered if the actual file contents differ from
+     *      the FileSystem's last-known contents---should be ignored.
+     * @return {Promise<null>} promise that will be resolved when
+     * file writing completes, or rejected with a FileSystemError string constant.
+     */
+    function writeTextFile(filePath, text, allowBlindWrite) {
+        if(!filePath.startsWith('/')) {
+            filePath = path.join(ProjectManager.getProjectRoot().fullPath, filePath);
+        }
+        const file = FileSystem.getFileForPath(filePath);
+        return jsPromise(FileUtils.writeText(file, text, allowBlindWrite));
+    }
+
+    /**
+     * deletes a file or dir at given path
+     * @param filePath - project relative or full path
+     * @return {Promise<null>} promise that will be resolved when path removed
+     */
+    function deletePath(filePath) {
+        if(!filePath.startsWith('/')) {
+            filePath = path.join(ProjectManager.getProjectRoot().fullPath, filePath);
+        }
+        return new Promise((resolve, reject) => {
+            window.fs.unlink(filePath, (err)=>{
+                if (err) {
+                    reject(err);
+                    return;
+                }
+                resolve();
+            });
+        });
     }
 
 
@@ -307,9 +362,10 @@ define(function (require, exports, module) {
         }
     }
 
-    function validateEqual(obj1, obj2) {
+    function validateEqual(obj1, obj2, message = "") {
         if(!_.isEqual(obj1, obj2)){
-            throw new Error(`validateEqual: expected ${JSON.stringify(obj1)} to equal ${JSON.stringify(obj2)}`);
+            throw new Error(`validateEqual: ${ message ? message + "\n" : ""
+            } expected ${JSON.stringify(obj1)} to equal ${JSON.stringify(obj2)}`);
         }
     }
 
@@ -370,6 +426,14 @@ define(function (require, exports, module) {
         return PreferencesManager.get(key);
     }
 
+    // Helper function to get full path (reusing existing openFile logic)
+    function _getFullPath(filePath) {
+        if(filePath.startsWith('/')) {
+            return filePath;
+        }
+        return path.join(ProjectManager.getProjectRoot().fullPath, filePath);
+    }
+
     const EDITING = {
         setEditorSpacing: function (useTabs, spaceOrTabCount, isAutoMode) {
             const activeEditor = EditorManager.getActiveEditor();
@@ -387,6 +451,85 @@ define(function (require, exports, module) {
             } else {
                 Editor.Editor.setSpaceUnits(spaceOrTabCount, fullPath);
             }
+        },
+        /**
+         * Split the editor pane vertically
+         */
+        splitVertical: function() {
+            CommandManager.execute(Commands.CMD_SPLITVIEW_VERTICAL);
+        },
+
+        /**
+         * Split the editor pane horizontally
+         */
+        splitHorizontal: function() {
+            CommandManager.execute(Commands.CMD_SPLITVIEW_HORIZONTAL);
+        },
+
+        /**
+         * Remove split pane and return to single pane view
+         */
+        splitNone: function() {
+            CommandManager.execute(Commands.CMD_SPLITVIEW_NONE);
+        },
+        /**
+         * Gets the editor in the first pane (left/top)
+         * @return {?Editor} The editor in first pane or null if not available
+         */
+        getFirstPaneEditor: function() {
+            return MainViewManager.getCurrentlyViewedEditor("first-pane");
+        },
+
+        /**
+         * Gets the editor in the second pane (right/bottom)
+         * @return {?Editor} The editor in second pane or null if not available
+         */
+        getSecondPaneEditor: function() {
+            return MainViewManager.getCurrentlyViewedEditor("second-pane");
+        },
+
+        /**
+         * Checks if the view is currently split
+         * @return {boolean} True if view is split, false otherwise
+         */
+        isSplit: function() {
+            return MainViewManager.getPaneCount() > 1;
+        },
+        /**
+         * Opens a file in the first pane (left/top)
+         * @param {string} filePath - Project relative or absolute file path
+         * @returns {Promise} A promise that resolves when the file is opened
+         */
+        openFileInFirstPane: function(filePath) {
+            return jsPromise(CommandManager.execute(Commands.FILE_OPEN, {
+                fullPath: _getFullPath(filePath),
+                paneId: "first-pane"
+            }));
+        },
+
+        /**
+         * Opens a file in the second pane (right/bottom)
+         * @param {string} filePath - Project relative or absolute file path
+         * @returns {Promise} A promise that resolves when the file is opened
+         */
+        openFileInSecondPane: function(filePath) {
+            return jsPromise(CommandManager.execute(Commands.FILE_OPEN, {
+                fullPath: _getFullPath(filePath),
+                paneId: "second-pane"
+            }));
+        },
+        /**
+         * Focus the first pane (left/top)
+         */
+        focusFirstPane: function() {
+            MainViewManager.setActivePaneId("first-pane");
+        },
+
+        /**
+         * Focus the second pane (right/bottom)
+         */
+        focusSecondPane: function() {
+            MainViewManager.setActivePaneId("second-pane");
         }
     };
 
@@ -616,6 +759,7 @@ define(function (require, exports, module) {
     }
 
     const __PR= {
+        readTextFile, writeTextFile, deletePath,
         openFile, setCursors, expectCursorsToBe, keydown, typeAtCursor, validateText, validateAllMarks, validateMarks,
         closeFile, closeAll, undo, redo, setPreference, getPreference, validateEqual, validateNotEqual, execCommand,
         awaitsFor, waitForModalDialog, waitForModalDialogClosed, clickDialogButtonID, clickDialogButton,
