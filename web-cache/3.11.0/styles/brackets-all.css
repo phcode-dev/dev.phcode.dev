@@ -9529,17 +9529,26 @@ ins.jstree-icon {
   color: #fff;
 }
 #project-dropdown-toggle {
-  display: inline-block;
+  display: flex;
   /* adjust margins to keep position #project-title position stable after extension is loaded */
-  margin: -3px 5px -2px -6px;
   overflow: hidden;
-  padding: 0 5px;
   white-space: nowrap;
+  padding: 2px 5px;
+  margin-left: -5px;
+}
+#project-dropdown-toggle .dropdown-arrow {
+  display: inline-block;
+  width: 7px;
+  height: 5px;
+  margin-left: 4px;
+  position: relative;
+  top: 7px;
 }
 #project-title {
-  /* vertical align center text */
-  height: 21px;
-  line-height: 21px;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1 1 0;
 }
 #project-dropdown-toggle:hover .dropdown-arrow {
   background-image: url("images/down-arrow.svg");
@@ -10941,10 +10950,11 @@ img {
   display: flex;
   align-items: center;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
-  padding: 8px 0 9px 12px;
+  padding: 6px 0 6px 12px;
   font-size: 15px;
   color: #adb9bd;
   overflow: hidden;
+  gap: 0.5em;
 }
 #project-files-header .btn-alt-quiet {
   background-color: #47484b;
@@ -10952,7 +10962,8 @@ img {
   z-index: 9;
 }
 #project-operations-spinner {
-  margin-right: 7px;
+  margin-right: 5px;
+  margin-top: 0;
 }
 .open-files-container {
   -webkit-box-flex: 0;
