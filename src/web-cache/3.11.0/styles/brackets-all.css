@@ -8597,7 +8597,7 @@ div.CodeMirror-cursors .CodeMirror-cursor {
   background: #d7dede;
   color: #000;
 }
-.CodeMirror .CodeMirror-matchingtag {
+.CodeMirror .CodeMirror-matchingtag:not(.CodeMirror-searching) {
   background: #cfead6;
 }
 /*

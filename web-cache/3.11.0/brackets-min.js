@@ -136062,8 +136062,9 @@ define("search/FindBar", function (require, exports, module) {
     let intervalId = 0,
         lastQueriedText = "",
         lastTypedText = "",
-        lastTypedTextWasRegexp = false;
-    const MAX_HISTORY_RESULTS = 50;
+        lastTypedTextWasRegexp = false,
+        lastClosedQuery = null;
+    const MAX_HISTORY_RESULTS = 25;
     const PREF_MAX_HISTORY = "maxSearchHistory";
 
     const INSTANT_SEARCH_INTERVAL_MS = 50;
@@ -136640,6 +136641,12 @@ define("search/FindBar", function (require, exports, module) {
     FindBar.prototype.close = function (suppressAnimation) {
         lastQueriedText = "";
         if (this._modalBar) {
+            lastClosedQuery = {
+                query: this.$("#find-what").val() || "",
+                replaceText: this.getReplaceText(),
+                isCaseSensitive: this.$("#find-case-sensitive").is(".active"),
+                isRegexp: this.$("#find-regexp").is(".active")
+            };
             this._addElementToSearchHistory($("#find-what").val(), $("#fif-filter-input").val());
             // 1st arg = restore scroll pos; 2nd arg = no animation, since getting replaced immediately
             this._modalBar.close(true, !suppressAnimation);
@@ -136665,7 +136672,9 @@ define("search/FindBar", function (require, exports, module) {
      * @return {{query: string, caseSensitive: boolean, isRegexp: boolean}}
      */
     FindBar.prototype.getQueryInfo = function (usePlatformLineEndings = true) {
-        let query = this.$("#find-what").val() || "";
+        const $findWhat = this.$("#find-what");
+        const findTextArea = $findWhat[0];
+        let query = $findWhat.val() || "";
         const lineEndings = FileUtils.sniffLineEndings(query);
         if (usePlatformLineEndings && lineEndings === FileUtils.LINE_ENDINGS_LF && brackets.platform === "win") {
             query = query.replace(/\n/g, "\r\n");
@@ -136673,7 +136682,8 @@ define("search/FindBar", function (require, exports, module) {
         return {
             query: query,
             isCaseSensitive: this.$("#find-case-sensitive").is(".active"),
-            isRegexp: this.$("#find-regexp").is(".active")
+            isRegexp: this.$("#find-regexp").is(".active"),
+            isQueryTextSelected: findTextArea.selectionStart !== findTextArea.selectionEnd
         };
     };
 
@@ -136860,7 +136870,7 @@ define("search/FindBar", function (require, exports, module) {
      * @private
      * @static
      * @param {?FindBar} currentFindBar - The currently open Find Bar, if any.
-     * @param {?Editor} activeEditor - The active editor, if any.
+     * @param {?Editor} editor - The active editor, if any.
      * @return {{query: string, replaceText: string}} An object containing the query and replacement text
      *     to prepopulate the Find Bar.
      */
@@ -136881,11 +136891,31 @@ define("search/FindBar", function (require, exports, module) {
                     return !bar.isClosed();
                 }
             );
+            // this happens when the find in files bar is opened and we are trying to open single file search or
+            // vice versa. we need to detect the other findbar and determine what is the search term to use
 
-            if (openedFindBar) {
+            //debugger
+            const currentQueryInfo = openedFindBar && openedFindBar.getQueryInfo();
+            if(!openedFindBar && selection){
+                // when no findbar is open, the selected text always takes precedence in both single and multi file
+                query = selection;
+            } else if(openedFindBar && selection && currentQueryInfo && !currentQueryInfo.isRegexp && currentQueryInfo.isQueryTextSelected) {
+                // we are switching between single<>multi file search without the user editing the search text in between
+                // while there is an active selection, the selection takes precedence.
+                query = selection;
+                replaceText = openedFindBar.getReplaceText();
+            } else if (openedFindBar) {
+                // there is no selection and we are switching between single<>multi file search, copy the
+                // current query from the open findbar as is
                 query = openedFindBar.getQueryInfo().query;
                 replaceText = openedFindBar.getReplaceText();
+            }  else if (lastClosedQuery) {
+                // these is no open find bar currently and there is no selection, but there is a last saved query, so
+                // load the last query. this happenes on all freash search cases apart from the very first time
+                query = lastClosedQuery.query;
+                replaceText = lastClosedQuery.replaceText;
             } else if (editor) {
+                // the very first query after app start, nothing to restore.
                 query = (!lastTypedTextWasRegexp && selection) || lastQueriedText || lastTypedText;
             }
         }
@@ -138978,6 +139008,45 @@ define("search/FindReplace", function (require, exports, module) {
         }
     }
 
+    function _markCurrentPos(editor) {
+        var cm = editor._codeMirror;
+        const pos = editor.getCursorPos(false, "start");
+        cm.operation(function () {
+            var state = getSearchState(cm);
+            clearCurrentMatchHighlight(cm, state);
+
+            let curIndex = editor.indexFromPos(pos);
+            curIndex = curIndex >= 1 ? curIndex-- : 0;
+            let thisMatch = _getNextMatch(editor, false, editor.posFromIndex(curIndex));
+            if (thisMatch) {
+                let previousMatch = _getNextMatch(editor, true, thisMatch.start);
+                if(previousMatch){
+                    const start = editor.indexFromPos(previousMatch.start), end = editor.indexFromPos(previousMatch.end);
+                    if(curIndex >= start && curIndex <= end) {
+                        thisMatch = previousMatch;
+                    }
+                }
+                // Update match index indicators - only possible if we have resultSet saved (missing if FIND_MAX_FILE_SIZE threshold hit)
+                if (state.resultSet.length) {
+                    _updateFindBarWithMatchInfo(state,
+                        {from: thisMatch.start, to: thisMatch.end}, false);
+                    // Update current-tickmark indicator - only if highlighting enabled (disabled if FIND_HIGHLIGHT_MAX threshold hit)
+                    if (state.marked.length) {
+                        ScrollTrackMarkers.markCurrent(state.matchIndex);  // _updateFindBarWithMatchInfo() has updated this index
+                    }
+                }
+
+                // Only mark text with "current match" highlight if search bar still open
+                if (findBar && !findBar.isClosed()) {
+                    // If highlighting disabled, apply both match AND current-match styles for correct appearance
+                    var curentMatchClassName = state.marked.length ? "searching-current-match" : "CodeMirror-searching searching-current-match";
+                    state.markedCurrent = cm.markText(thisMatch.start, thisMatch.end,
+                        { className: curentMatchClassName, startStyle: "searching-first", endStyle: "searching-last" });
+                }
+            }
+        });
+    }
+
     /**
      * Selects the next match (or prev match, if searchBackwards==true) starting from either the current position
      * (if pos unspecified) or the given position (if pos specified explicitly). The starting position
@@ -139152,11 +139221,13 @@ define("search/FindReplace", function (require, exports, module) {
         setQueryInfo(state, findBar.getQueryInfo(false));
         updateResultSet(editor);
 
-        if (state.parsedQuery) {
+        if(initial){
+            _markCurrentPos(editor);
+        } else if (state.parsedQuery && !initial) {
             // 3rd arg: prefer to avoid scrolling if result is anywhere within view, since in this case user
             // is in the middle of typing, not navigating explicitly; viewport jumping would be distracting.
             findNext(editor, false, true, state.searchStartPos);
-        } else if (!initial) {
+        } else {
             // Blank or invalid query: just jump back to initial pos
             editor._codeMirror.setCursor(state.searchStartPos);
         }
