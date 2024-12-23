@@ -45630,11 +45630,11 @@ define("features/ParameterHintsManager", function (require, exports, module) {
      *
      */
     function dismissHint(editor) {
+        popupShown = false;
         if (hintState.visible) {
             $hintContainer.hide();
             $hintContent.empty();
             hintState = {};
-            popupShown = false;
 
             if (editor) {
                 editor.off("cursorActivity.ParameterHinting", handleCursorActivity);
@@ -159162,7 +159162,8 @@ define("view/WorkspaceManager", function (require, exports, module) {
             // handled by the inline widget itself first.
             return;
         }
-        if(focussedEditor.canConsumeEscapeKeyEvent()){
+        const dropdownOpen = $(".dropdown.open").is(":visible");
+        if(dropdownOpen || focussedEditor.canConsumeEscapeKeyEvent()){
             return;
         }
 
