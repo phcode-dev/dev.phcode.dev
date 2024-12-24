@@ -43218,7 +43218,7 @@ define("extensionsIntegrated/RecentProjects/main", function (require, exports, m
             })
             .appendTo($("body"));
 
-        PopUpManager.addPopUp($dropdown, cleanupDropdown, true);
+        PopUpManager.addPopUp($dropdown, cleanupDropdown, true, {closeCurrentPopups: true});
 
         // TODO: should use capture, otherwise clicking on the menus doesn't close it. More fallout
         // from the fact that we can't use the Boostrap (1.4) dropdowns.
@@ -144642,7 +144642,7 @@ define("utils/DropdownEventHandler", function (require, exports, module) {
 
         if (this.$list) {
             this._registerMouseEvents();
-            PopUpManager.addPopUp(this.$list, closeCallback, true);
+            PopUpManager.addPopUp(this.$list, closeCallback, true, {closeCurrentPopups: true});
         }
     };
 
@@ -161570,12 +161570,17 @@ define("widgets/PopUpManager", function (require, exports, module) {
      *      remove the popup from the _popUps array when the popup is closed. Specify false
      *      when the popup is always persistant in the _popUps array.
      * @param {object} options
-     * @param {boolean} options.popupManagesFocus - set to true if the popup manages focus restore on close
+     * @param {boolean} [options.popupManagesFocus] - set to true if the popup manages focus restore on close
+     * @param {boolean} [options.closeCurrentPopups] - set to true if you want to dismiss all exiting popups before
+     *              adding this. Useful when this should be the only popup visible.
      *
      */
     function addPopUp($popUp, removeHandler, autoRemove, options) {
         autoRemove = autoRemove || false;
         options = options || {};
+        if(options.closeCurrentPopups) {
+            closeAllPopups();
+        }
         const popupManagesFocus = options.popupManagesFocus || false;
 
         _popUps.push($popUp[0]);
@@ -161655,7 +161660,7 @@ define("widgets/PopUpManager", function (require, exports, module) {
     function _keydownCaptureListener(keyEvent) {
         // Escape key or Alt key (Windows-only)
         if (keyEvent.keyCode !== KeyEvent.DOM_VK_ESCAPE &&
-                !(keyEvent.keyCode === KeyEvent.DOM_VK_ALT && brackets.platform === "win")) {
+            !(keyEvent.keyCode === KeyEvent.DOM_VK_ALT && brackets.platform === "win")) {
             return;
         }
 
@@ -161709,11 +161714,15 @@ define("widgets/PopUpManager", function (require, exports, module) {
         WorkspaceManager.addEscapeKeyEventHandler("PopUpManager", _dontToggleWorkspacePanel);
     });
 
+    function closeAllPopups() {
+        removeCurrentPopUp();
+    }
 
     EventDispatcher.makeEventDispatcher(exports);
 
     exports.addPopUp            = addPopUp;
     exports.removePopUp         = removePopUp;
+    exports.closeAllPopups      = closeAllPopups;
     exports.listenToContextMenu = listenToContextMenu;
 });
 
