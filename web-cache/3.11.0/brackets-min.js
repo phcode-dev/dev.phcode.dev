@@ -8465,6 +8465,12 @@ define("command/Commands", function (require, exports, module) {
     /** Submenu for zoom options */
     exports.VIEW_ZOOM_SUBMENU           = "zoom-view-submenu";
 
+    /** Submenu for Open in project context menu */
+    exports.OPEN_IN_SUBMENU             = "file-open-in-submenu";
+
+    /** Submenu for Open in working set context menu */
+    exports.OPEN_IN_SUBMENU_WS          = "file-open-in-submenu-ws";
+
     /** Increases editor font size */
     exports.VIEW_INCREASE_FONT_SIZE     = "view.increaseFontSize";      // ViewCommandHandlers.js       _handleIncreaseFontSize()
 
@@ -8531,6 +8537,12 @@ define("command/Commands", function (require, exports, module) {
 
     /** Shows current file in OS file explorer */
     exports.NAVIGATE_SHOW_IN_OS         = "navigate.showInOS";          // DocumentCommandHandlers.js   handleShowInOS()
+
+    /** Shows current file in OS Terminal */
+    exports.NAVIGATE_OPEN_IN_TERMINAL         = "navigate.openInTerminal";
+
+    /** Shows current file in open powershell in Windows os */
+    exports.NAVIGATE_OPEN_IN_POWERSHELL         = "navigate.openInPowerShell";
 
     /** Opens quick open dialog */
     exports.NAVIGATE_QUICK_OPEN         = "navigate.quickOpen";         // QuickOpen.js                 doFileSearch()
@@ -8734,7 +8746,7 @@ define("command/DefaultMenus", function (require, exports, module) {
                     return err;
                 }
                 _setContextMenuItemsVisible(isPresent, [Commands.FILE_RENAME,
-                    Commands.NAVIGATE_SHOW_IN_FILE_TREE, Commands.NAVIGATE_SHOW_IN_OS]);
+                    Commands.NAVIGATE_SHOW_IN_FILE_TREE, Commands.NAVIGATE_SHOW_IN_OS, Commands.NAVIGATE_OPEN_IN_TERMINAL]);
             });
         }
     }
@@ -8973,7 +8985,12 @@ define("command/DefaultMenus", function (require, exports, module) {
         workingset_cmenu.addMenuItem(Commands.FILE_SAVE);
         workingset_cmenu.addMenuItem(Commands.NAVIGATE_SHOW_IN_FILE_TREE);
         if(Phoenix.isNativeApp){
-            workingset_cmenu.addMenuItem(Commands.NAVIGATE_SHOW_IN_OS);
+            let subMenu = workingset_cmenu.addSubMenu(Strings.CMD_OPEN_IN, Commands.OPEN_IN_SUBMENU_WS);
+            subMenu.addMenuItem(Commands.NAVIGATE_SHOW_IN_OS);
+            subMenu.addMenuItem(Commands.NAVIGATE_OPEN_IN_TERMINAL);
+            if (brackets.platform === "win") {
+                subMenu.addMenuItem(Commands.NAVIGATE_OPEN_IN_POWERSHELL);
+            }
         }
         workingset_cmenu.addMenuDivider();
         workingset_cmenu.addMenuItem(Commands.FILE_COPY);
@@ -9007,7 +9024,12 @@ define("command/DefaultMenus", function (require, exports, module) {
         project_cmenu.addMenuItem(Commands.FILE_NEW);
         project_cmenu.addMenuItem(Commands.FILE_NEW_FOLDER);
         if(Phoenix.isNativeApp){
-            project_cmenu.addMenuItem(Commands.NAVIGATE_SHOW_IN_OS);
+            let subMenu = project_cmenu.addSubMenu(Strings.CMD_OPEN_IN, Commands.OPEN_IN_SUBMENU);
+            subMenu.addMenuItem(Commands.NAVIGATE_SHOW_IN_OS);
+            subMenu.addMenuItem(Commands.NAVIGATE_OPEN_IN_TERMINAL);
+            if (brackets.platform === "win") {
+                subMenu.addMenuItem(Commands.NAVIGATE_OPEN_IN_POWERSHELL);
+            }
         }
         project_cmenu.addMenuDivider();
         project_cmenu.addMenuItem(Commands.FILE_CUT);
@@ -14362,6 +14384,7 @@ define("document/DocumentCommandHandlers", function (require, exports, module) {
         LanguageManager     = require("language/LanguageManager"),
         NewFileContentManager     = require("features/NewFileContentManager"),
         NodeConnector = require("NodeConnector"),
+        NodeUtils           = require("utils/NodeUtils"),
         _                   = require("thirdparty/lodash");
 
     /**
@@ -16263,6 +16286,20 @@ define("document/DocumentCommandHandlers", function (require, exports, module) {
         }
     }
 
+    function openDefaultTerminal() {
+        const entry = ProjectManager.getSelectedItem();
+        if (entry && entry.fullPath) {
+            NodeUtils.openNativeTerminal(entry.fullPath);
+        }
+    }
+
+    function openPowerShell() {
+        const entry = ProjectManager.getSelectedItem();
+        if (entry && entry.fullPath) {
+            NodeUtils.openNativeTerminal(entry.fullPath, true);
+        }
+    }
+
     function raceAgainstTime(promise, timeout = 2000) {
         const timeoutPromise = new Promise((_resolve, reject) => {
             setTimeout(() => {
@@ -16555,11 +16592,13 @@ define("document/DocumentCommandHandlers", function (require, exports, module) {
     exports._parseDecoratedPath = _parseDecoratedPath;
 
     // Set some command strings
-    var quitString  = Strings.CMD_QUIT,
-        showInOS    = Strings.CMD_SHOW_IN_OS;
+    let quitString  = Strings.CMD_QUIT,
+        showInOS    = Strings.CMD_SHOW_IN_FILE_MANAGER,
+        defaultTerminal    = Strings.CMD_OPEN_IN_TERMINAL;
     if (brackets.platform === "win") {
         quitString  = Strings.CMD_EXIT;
         showInOS    = Strings.CMD_SHOW_IN_EXPLORER;
+        defaultTerminal    = Strings.CMD_OPEN_IN_CMD;
     } else if (brackets.platform === "mac") {
         showInOS    = Strings.CMD_SHOW_IN_FINDER;
     }
@@ -16608,6 +16647,10 @@ define("document/DocumentCommandHandlers", function (require, exports, module) {
 
     // Special Commands
     CommandManager.register(showInOS,                                Commands.NAVIGATE_SHOW_IN_OS,            handleShowInOS);
+    CommandManager.register(defaultTerminal,                         Commands.NAVIGATE_OPEN_IN_TERMINAL,      openDefaultTerminal);
+    if (brackets.platform === "win") {
+        CommandManager.register(Strings.CMD_OPEN_IN_POWER_SHELL,     Commands.NAVIGATE_OPEN_IN_POWERSHELL,    openPowerShell);
+    }
     CommandManager.register(Strings.CMD_NEW_BRACKETS_WINDOW,         Commands.FILE_NEW_WINDOW,                handleFileNewWindow);
     CommandManager.register(quitString,                              Commands.FILE_QUIT,                      handleFileCloseWindow);
     CommandManager.register(Strings.CMD_SHOW_IN_TREE,                Commands.NAVIGATE_SHOW_IN_FILE_TREE,     handleShowInTree);
@@ -92343,6 +92386,7 @@ define("nls/root/strings", {
     "CMD_FILE_REFRESH": "Refresh File Tree",
     "CMD_FILE_SHOW_FOLDERS_FIRST": "Sort Folders First",
     "CMD_QUIT": "Quit",
+    "CMD_OPEN_IN": "Open In",
     // Used in native File menu on Windows
     "CMD_EXIT": "Exit",
 
@@ -92442,9 +92486,12 @@ define("nls/root/strings", {
     "CMD_NEXT_DOC_LIST_ORDER": "Next Document in List",
     "CMD_PREV_DOC_LIST_ORDER": "Previous Document in List",
     "CMD_SHOW_IN_TREE": "Show in File Tree",
-    "CMD_SHOW_IN_EXPLORER": "Show in Explorer",
-    "CMD_SHOW_IN_FINDER": "Show in Finder",
-    "CMD_SHOW_IN_OS": "Show in OS Files",
+    "CMD_SHOW_IN_EXPLORER": "Windows File Explorer",
+    "CMD_SHOW_IN_FINDER": "macOS Finder",
+    "CMD_SHOW_IN_FILE_MANAGER": "File Manager",
+    "CMD_OPEN_IN_TERMINAL": "Terminal",
+    "CMD_OPEN_IN_CMD": "Command Prompt",
+    "CMD_OPEN_IN_POWER_SHELL": "Power Shell",
     "CMD_SWITCH_PANE_FOCUS": "Switch Pane Focus",
 
     // Debug menu commands
@@ -148968,6 +149015,23 @@ define("utils/NodeUtils", function (require, exports, module) {
         });
     }
 
+    /**
+     * Runs ESLint on a file
+     * This is only available in the native app
+     *
+     * @param {string} cwd the working directory of terminal
+     * @param {boolean} [usePowerShell]
+     */
+    async function openNativeTerminal(cwd, usePowerShell = false) {
+        if(!Phoenix.isNativeApp) {
+            throw new Error("openNativeTerminal not available in browser");
+        }
+        return utilsConnector.execPeer("openNativeTerminal", {
+            cwd: window.fs.getTauriPlatformPath(cwd),
+            usePowerShell
+        });
+    }
+
     if(NodeConnector.isNodeAvailable()) {
         // todo we need to update the strings if a user extension adds its translations. Since we dont support
         // node extensions for now, should consider when we support node extensions.
@@ -149004,6 +149068,7 @@ define("utils/NodeUtils", function (require, exports, module) {
     exports.openUrlInBrowser = openUrlInBrowser;
     exports.ESLintFile = ESLintFile;
     exports.getEnvironmentVariable = getEnvironmentVariable;
+    exports.openNativeTerminal = openNativeTerminal;
 
     /**
      * checks if Node connector is ready

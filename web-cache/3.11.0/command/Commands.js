@@ -267,6 +267,12 @@ define(function (require, exports, module) {
     /** Submenu for zoom options */
     exports.VIEW_ZOOM_SUBMENU           = "zoom-view-submenu";
 
+    /** Submenu for Open in project context menu */
+    exports.OPEN_IN_SUBMENU             = "file-open-in-submenu";
+
+    /** Submenu for Open in working set context menu */
+    exports.OPEN_IN_SUBMENU_WS          = "file-open-in-submenu-ws";
+
     /** Increases editor font size */
     exports.VIEW_INCREASE_FONT_SIZE     = "view.increaseFontSize";      // ViewCommandHandlers.js       _handleIncreaseFontSize()
 
@@ -333,6 +339,12 @@ define(function (require, exports, module) {
 
     /** Shows current file in OS file explorer */
     exports.NAVIGATE_SHOW_IN_OS         = "navigate.showInOS";          // DocumentCommandHandlers.js   handleShowInOS()
+
+    /** Shows current file in OS Terminal */
+    exports.NAVIGATE_OPEN_IN_TERMINAL         = "navigate.openInTerminal";
+
+    /** Shows current file in open powershell in Windows os */
+    exports.NAVIGATE_OPEN_IN_POWERSHELL         = "navigate.openInPowerShell";
 
     /** Opens quick open dialog */
     exports.NAVIGATE_QUICK_OPEN         = "navigate.quickOpen";         // QuickOpen.js                 doFileSearch()
