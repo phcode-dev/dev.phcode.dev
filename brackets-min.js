@@ -8544,6 +8544,9 @@ define("command/Commands", function (require, exports, module) {
     /** Shows current file in open powershell in Windows os */
     exports.NAVIGATE_OPEN_IN_POWERSHELL         = "navigate.openInPowerShell";
 
+    /** Open current file in the default associated app in the os */
+    exports.NAVIGATE_OPEN_IN_DEFAULT_APP        = "navigate.openInDefaultApp";
+
     /** Opens quick open dialog */
     exports.NAVIGATE_QUICK_OPEN         = "navigate.quickOpen";         // QuickOpen.js                 doFileSearch()
 
@@ -8730,7 +8733,12 @@ define("command/DefaultMenus", function (require, exports, module) {
      */
     function _setContextMenuItemsVisible(enabled, items) {
         items.forEach(function (item) {
-            CommandManager.get(item).setEnabled(enabled);
+            const command = CommandManager.get(item);
+            if(command) {
+                // some commands may be only selectively present in browser or in some oses.
+                // Eg. NAVIGATE_OPEN_IN_POWERSHELL is only present in Windows desktop apps
+                command.setEnabled(enabled);
+            }
         });
     }
 
@@ -8746,7 +8754,9 @@ define("command/DefaultMenus", function (require, exports, module) {
                     return err;
                 }
                 _setContextMenuItemsVisible(isPresent, [Commands.FILE_RENAME,
-                    Commands.NAVIGATE_SHOW_IN_FILE_TREE, Commands.NAVIGATE_SHOW_IN_OS, Commands.NAVIGATE_OPEN_IN_TERMINAL]);
+                    Commands.NAVIGATE_SHOW_IN_FILE_TREE, Commands.NAVIGATE_SHOW_IN_OS,
+                    Commands.NAVIGATE_OPEN_IN_TERMINAL, Commands.NAVIGATE_OPEN_IN_POWERSHELL,
+                    Commands.NAVIGATE_OPEN_IN_DEFAULT_APP]);
             });
         }
     }
@@ -8991,6 +9001,7 @@ define("command/DefaultMenus", function (require, exports, module) {
             if (brackets.platform === "win") {
                 subMenu.addMenuItem(Commands.NAVIGATE_OPEN_IN_POWERSHELL);
             }
+            subMenu.addMenuItem(Commands.NAVIGATE_OPEN_IN_DEFAULT_APP);
         }
         workingset_cmenu.addMenuDivider();
         workingset_cmenu.addMenuItem(Commands.FILE_COPY);
@@ -9030,6 +9041,7 @@ define("command/DefaultMenus", function (require, exports, module) {
             if (brackets.platform === "win") {
                 subMenu.addMenuItem(Commands.NAVIGATE_OPEN_IN_POWERSHELL);
             }
+            subMenu.addMenuItem(Commands.NAVIGATE_OPEN_IN_DEFAULT_APP);
         }
         project_cmenu.addMenuDivider();
         project_cmenu.addMenuItem(Commands.FILE_CUT);
@@ -16300,6 +16312,13 @@ define("document/DocumentCommandHandlers", function (require, exports, module) {
         }
     }
 
+    function openDefaultApp() {
+        const entry = ProjectManager.getSelectedItem();
+        if (entry && entry.fullPath) {
+            NodeUtils.openInDefaultApp(entry.fullPath, true);
+        }
+    }
+
     function raceAgainstTime(promise, timeout = 2000) {
         const timeoutPromise = new Promise((_resolve, reject) => {
             setTimeout(() => {
@@ -16594,7 +16613,7 @@ define("document/DocumentCommandHandlers", function (require, exports, module) {
     // Set some command strings
     let quitString  = Strings.CMD_QUIT,
         showInOS    = Strings.CMD_SHOW_IN_FILE_MANAGER,
-        defaultTerminal    = Strings.CMD_OPEN_IN_TERMINAL;
+        defaultTerminal    = Strings.CMD_OPEN_IN_TERMINAL_DO_NOT_TRANSLATE;
     if (brackets.platform === "win") {
         quitString  = Strings.CMD_EXIT;
         showInOS    = Strings.CMD_SHOW_IN_EXPLORER;
@@ -16651,6 +16670,7 @@ define("document/DocumentCommandHandlers", function (require, exports, module) {
     if (brackets.platform === "win") {
         CommandManager.register(Strings.CMD_OPEN_IN_POWER_SHELL,     Commands.NAVIGATE_OPEN_IN_POWERSHELL,    openPowerShell);
     }
+    CommandManager.register(Strings.CMD_OPEN_IN_DEFAULT_APP,         Commands.NAVIGATE_OPEN_IN_DEFAULT_APP,   openDefaultApp);
     CommandManager.register(Strings.CMD_NEW_BRACKETS_WINDOW,         Commands.FILE_NEW_WINDOW,                handleFileNewWindow);
     CommandManager.register(quitString,                              Commands.FILE_QUIT,                      handleFileCloseWindow);
     CommandManager.register(Strings.CMD_SHOW_IN_TREE,                Commands.NAVIGATE_SHOW_IN_FILE_TREE,     handleShowInTree);
@@ -92589,9 +92609,10 @@ define("nls/root/strings", {
     "CMD_SHOW_IN_EXPLORER": "Windows File Explorer",
     "CMD_SHOW_IN_FINDER": "macOS Finder",
     "CMD_SHOW_IN_FILE_MANAGER": "File Manager",
-    "CMD_OPEN_IN_TERMINAL": "Terminal",
+    "CMD_OPEN_IN_TERMINAL_DO_NOT_TRANSLATE": "Terminal",
     "CMD_OPEN_IN_CMD": "Command Prompt",
-    "CMD_OPEN_IN_POWER_SHELL": "Power Shell",
+    "CMD_OPEN_IN_POWER_SHELL": "PowerShell",
+    "CMD_OPEN_IN_DEFAULT_APP": "System Default App",
     "CMD_SWITCH_PANE_FOCUS": "Switch Pane Focus",
 
     // Debug menu commands
@@ -149168,6 +149189,19 @@ define("utils/NodeUtils", function (require, exports, module) {
         });
     }
 
+    /**
+     * Opens a file in the default application for its type on Windows, macOS, and Linux.
+     *
+     * @param {string} fullPath - The path to the file/folder to open.
+     * @returns {Promise<void>} - Resolves if the file/folder is opened successfully, rejects otherwise.
+     */
+    async function openInDefaultApp(fullPath) {
+        if(!Phoenix.isNativeApp) {
+            throw new Error("openInDefaultApp not available in browser");
+        }
+        return utilsConnector.execPeer("openInDefaultApp", window.fs.getTauriPlatformPath(fullPath));
+    }
+
     if(NodeConnector.isNodeAvailable()) {
         // todo we need to update the strings if a user extension adds its translations. Since we dont support
         // node extensions for now, should consider when we support node extensions.
@@ -149205,6 +149239,7 @@ define("utils/NodeUtils", function (require, exports, module) {
     exports.ESLintFile = ESLintFile;
     exports.getEnvironmentVariable = getEnvironmentVariable;
     exports.openNativeTerminal = openNativeTerminal;
+    exports.openInDefaultApp = openInDefaultApp;
 
     /**
      * checks if Node connector is ready
