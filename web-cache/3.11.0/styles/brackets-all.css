@@ -10677,11 +10677,11 @@ img {
   background: #000;
 }
 .bottom-panel .table-container tr.selected td {
-  background-color: #d0d5d5;
+  background-color: #b8c9d1;
   color: #000;
 }
 .dark .bottom-panel .table-container tr.selected td {
-  background-color: #3d3e40;
+  background-color: #2e3e44;
   color: #fff;
 }
 .bottom-panel-table td {
