@@ -43140,8 +43140,8 @@ define("extensionsIntegrated/RecentProjects/main", function (require, exports, m
         case KeyEvent.DOM_VK_DELETE:
             if ($dropdownItem) {
                 removeSelectedItem(event);
-                keyHandled = true;
             }
+            keyHandled = true;
             break;
         }
 
@@ -161990,7 +161990,8 @@ define("widgets/PopUpManager", function (require, exports, module) {
         MainViewManager     = require("view/MainViewManager"),
         KeyEvent        = require("utils/KeyEvent");
 
-    let _popUps = [], addPopupInProgress = false;
+    let _popUps = [], addPopupInProgress = false,
+        currentEventPopups = [];
 
     /**
      * Add Esc key handling for a popup DOM element.
@@ -162022,6 +162023,29 @@ define("widgets/PopUpManager", function (require, exports, module) {
         addPopupInProgress = false;
     }
 
+    function handleSelectionEvents($popUp, options = {}) {
+        const {keyboardEventHandler, enableSearchFilter} = options;
+        currentEventPopups.push({
+            $popUp,
+            keyboardEventHandler,
+            enableSearchFilter
+        });
+        if(currentEventPopups.length > 1){
+            console.error(`${currentEventPopups.length} popups are visible while handling keyboard events!`,
+                "Possible popup event handler leak. Only 1 popup event handler is expected at this time.");
+        }
+        if(enableSearchFilter && !$popUp.find(".sticky-li-top").length) {
+            $popUp.prepend(
+                `<li class="sticky-li-top forced-hidden">
+                    <a class='stylesheet-link'><i class="fa fa-search" aria-hidden="true"></i>&nbsp;&nbsp;
+                    <span class="searchTextSpan"></span></a>
+                </li>`);
+        }
+        $popUp.off("keydown", _processSelectionEvent);
+        $popUp.on("keydown", _processSelectionEvent);
+        $popUp.focus();
+    }
+
     /**
      * Remove Esc key handling for a pop-up. Removes the pop-up from the DOM
      * if the pop-up is currently visible and was not originally attached.
@@ -162045,6 +162069,12 @@ define("widgets/PopUpManager", function (require, exports, module) {
             MainViewManager.focusActivePane();
         }
 
+        let handlerIndex = currentEventPopups.findIndex(item => item.$popUp.is($popUp));
+        if(handlerIndex >= 0){
+            currentEventPopups.splice(handlerIndex, 1);
+            searchStr = "";
+            $popUp.off("keydown", _processSelectionEvent);
+        }
         // check index after removeHandler is done processing to protect
         // against recursive calls
         let index = _popUps.indexOf($popUp[0]);
@@ -162082,11 +162112,150 @@ define("widgets/PopUpManager", function (require, exports, module) {
                     }
 
                     removePopUp($popUp);
+                    return true;
                 }
 
                 break;
             }
         }
+    }
+
+    let searchStr ="";
+    /**
+     * hides all elements in popup that doesn't match the given search string, also shows the search bar in popup
+     * @param $popup
+     * @param searchString
+     */
+    function _filterDropdown($popup, searchString) {
+        searchStr = searchString;
+        const $stickyLi = $popup.find('li.sticky-li-top');
+        if(!$stickyLi.length){
+            console.error("Search filter element not found! Please call" +
+                " PopUpManager.handleSelectionEvents with enableSearchFilter option.");
+            return;
+        }
+        if(searchString){
+            $stickyLi.removeClass("forced-hidden");
+        } else {
+            $stickyLi.addClass("forced-hidden");
+        }
+
+        $popup.find('li').each(function(index, li) {
+            if(index === 0){
+                // this is the top search box itself
+                return;
+            }
+            const $li = $(li);
+            if(!$li.text().toLowerCase().includes(searchString.toLowerCase())){
+                $li.addClass("forced-hidden");
+            } else {
+                $li.removeClass("forced-hidden");
+            }
+        });
+
+        if(searchString) {
+            $stickyLi.removeClass('forced-hidden');
+            $stickyLi.find('.searchTextSpan').text(searchString);
+        } else {
+            $stickyLi.addClass('forced-hidden');
+        }
+    }
+
+
+    /**
+     * Selects the next or previous item in the list
+     * @param {number} direction  +1 for next, -1 for prev
+     * @param $popUp
+     */
+    function selectNextItem(direction, $popUp) {
+        const $selectedItem = $popUp.find(".selected");
+        let $links   = $popUp.find("a:visible").not(function() {
+                return $(this).closest('.sticky-li-top').length > 0;
+            }),
+            nextIndex    = 0;
+        const selectedIndex = $links.index($selectedItem);
+        if(selectedIndex >= 0){
+            // the selected item is visible, move from this index
+            nextIndex = (selectedIndex + direction) % $links.length;
+        } else if(direction === -1) {
+            // nothing is selected and reverse direction, select the last element
+            nextIndex = $links.length - 1;
+        } else {
+            // nothing is selected, select the first element
+            nextIndex = 0;
+        }
+        if(searchStr && $links.length === 0){
+            // no search result, only the top search field visible
+            return;
+        }
+
+        const $newItem = $links.eq(nextIndex);
+        if ($selectedItem) {
+            $selectedItem.removeClass("selected");
+        }
+        $newItem.addClass("selected");
+    }
+
+    function _processSelectionEvent(event) {
+        const {$popUp, keyboardEventHandler} = currentEventPopups[currentEventPopups.length - 1];
+        if(!$popUp || !$popUp.is(":visible")){
+            return false;
+        }
+        if(keyboardEventHandler) {
+            const processed = keyboardEventHandler(event);
+            if(processed){
+                return true;
+            }
+        }
+        var keyHandled = false;
+
+        switch (event.keyCode) {
+        case KeyEvent.DOM_VK_UP:
+            selectNextItem(-1, $popUp);
+            keyHandled = true;
+            break;
+        case KeyEvent.DOM_VK_DOWN:
+            selectNextItem(+1, $popUp);
+            keyHandled = true;
+            break;
+        case KeyEvent.DOM_VK_ENTER:
+        case KeyEvent.DOM_VK_RETURN:
+            const $dropdownItem = $popUp.find(".selected");
+            if ($dropdownItem) {
+                $dropdownItem.trigger("click");
+            }
+            keyHandled = true;
+            break;
+        }
+
+        if(keyHandled){
+            event.stopImmediatePropagation();
+            event.preventDefault();
+            return keyHandled;
+        } else if((event.ctrlKey || event.metaKey) && event.key === 'v') {
+            Phoenix.app.clipboardReadText().then(text=>{
+                searchStr += text;
+                _filterDropdown($popUp, searchStr);
+            });
+            keyHandled = true;
+        } else if (event.key.length === 1) {
+            searchStr += event.key;
+            keyHandled = true;
+        } else if (event.key === 'Backspace') {
+            // Remove the last character when Backspace is pressed
+            searchStr  = searchStr.slice(0, -1);
+            keyHandled = true;
+        } else {
+            // bubble up, not for us to handle
+            return false;
+        }
+        _filterDropdown($popUp, searchStr);
+
+        if (keyHandled) {
+            event.stopImmediatePropagation();
+            event.preventDefault();
+        }
+        return keyHandled;
     }
 
     function _keydownCaptureListener(keyEvent) {
@@ -162101,7 +162270,7 @@ define("widgets/PopUpManager", function (require, exports, module) {
             return;
         }
 
-        removeCurrentPopUp(keyEvent);
+        return removeCurrentPopUp(keyEvent);
     }
 
     /**
@@ -162153,6 +162322,7 @@ define("widgets/PopUpManager", function (require, exports, module) {
     EventDispatcher.makeEventDispatcher(exports);
 
     exports.addPopUp            = addPopUp;
+    exports.handleSelectionEvents = handleSelectionEvents;
     exports.removePopUp         = removePopUp;
     exports.closeAllPopups      = closeAllPopups;
     exports.listenToContextMenu = listenToContextMenu;
