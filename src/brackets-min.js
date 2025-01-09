@@ -36665,10 +36665,14 @@ define("extensionsIntegrated/NavigationAndHistory/main", function (require, expo
             }
 
             $newItem.data("path", value.file);
+
+            // convert the virtual path to display path
+            var displayPath = Phoenix.app.getDisplayPath(value.file);
+
             $newItem.data("paneId", value.paneId);
             $newItem.data("cursor", value.cursor);
             $newItem.data("file", fileEntry);
-            $newItem.attr("title", value.file);
+            $newItem.attr("title", displayPath); // this is for the tooltip
 
             if (isPaneLabelReqd && value.paneId) {
                 $newItem.addClass(value.paneId);
@@ -36796,8 +36800,12 @@ define("extensionsIntegrated/NavigationAndHistory/main", function (require, expo
             var $scope = $(event.target).parent();
             $("#mrof-container #mrof-list > li.highlight").removeClass("highlight");
             $(event.target).parent().addClass("highlight");
-            $mrofContainer.find("#recent-file-path").text($scope.data("path"));
-            $mrofContainer.find("#recent-file-path").attr('title', ($scope.data("path")));
+
+            // convert the virtual path to display path
+            var displayPath = Phoenix.app.getDisplayPath($scope.data("path"));
+            $mrofContainer.find("#recent-file-path").text(displayPath);
+            $mrofContainer.find("#recent-file-path").attr('title', displayPath);
+
             $currentContext = $scope;
         }
 
