@@ -36575,7 +36575,7 @@ define("extensionsIntegrated/NavigationAndHistory/main", function (require, expo
     }
 
     function _createFileEntries($mrofList) {
-        var data, fileEntry, $link, $newItem;
+        var data, fileEntry, $link, $newItem, $removeBtn;
         // Iterate over the MROF list and create the pop over UI items
 
         // If we are in split view we might want to show the panes corresponding to the entries
@@ -36593,33 +36593,72 @@ define("extensionsIntegrated/NavigationAndHistory/main", function (require, expo
                 // Try to see if we have same doc split
                 // Check existing list for this doc path and active pane entry
                 var entryIndex = _.findIndex(_mrofList, function (record) {
-                    return (record && record.file === value.file && record.paneId === MainViewManager.getActivePaneId());
+                    return (
+                        record &&
+                        record.file === value.file &&
+                        record.paneId === MainViewManager.getActivePaneId()
+                    );
                 });
 
                 // If found don't process this entry, as the document is already present in active pane
                 if (entryIndex >= 0) {
                     return true;
                 }
-                    // Process this for active pane id
+                // Process this for active pane id
                 value.paneId = MainViewManager.getActivePaneId();
 
             }
 
             var indxInWS = MainViewManager.findInWorkingSet(value.paneId, value.file);
 
-            data = {fullPath: value.file,
+            data = {
+                fullPath: value.file,
                 name: FileUtils.getBaseName(value.file),
-                isFile: true};
+                isFile: true
+            };
 
             fileEntry = FileSystem.getFileForPath(value.file);
 
             // Create new list item with a link
-            $link = $("<a href='#' class='mroitem'></a>").html(ViewUtils.getFileEntryDisplay({name: FileUtils.getBaseName(value.file)}));
+            $link = $("<a href='#' class='mroitem'></a>").html(
+                ViewUtils.getFileEntryDisplay({name: FileUtils.getBaseName(value.file)})
+            );
+
+            // Create remove button only for files not in working set
+            $removeBtn = null;
+            if (indxInWS === -1) {
+                $removeBtn = $("<span class='remove-file'>&times;</span>").on("click", function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    // Find and remove the entry from _mrofList
+                    var filePath = $(this).parent().data("path");
+                    var paneId = $(this).parent().data("paneId");
+
+                    _mrofList = _mrofList.filter(function(entry) {
+                        return !(entry && entry.file === filePath && entry.paneId === paneId);
+                    });
+
+                    // Remove the list item from UI
+                    $(this).parent().remove();
+
+                    // Update preferences
+                    PreferencesManager.setViewState(
+                        OPEN_FILES_VIEW_STATE,
+                        _mrofList,
+                        PreferencesManager.STATE_PROJECT_CONTEXT
+                    );
+                });
+            }
 
             // Use the file icon providers
             WorkingSetView.useIconProviders(data, $link);
 
+            // Create list item with link and conditionally add remove button
             $newItem = $("<li></li>").append($link);
+            if ($removeBtn) {
+                $newItem.append($removeBtn);
+            }
 
             if (indxInWS !== -1) { // in working set show differently
                 $newItem.addClass("working-set");
@@ -36639,7 +36678,7 @@ define("extensionsIntegrated/NavigationAndHistory/main", function (require, expo
             // Use the class providers(git e.t.c)
             WorkingSetView.useClassProviders(data, $newItem);
 
-            // If a file is dirty , mark it in the list
+            // If a file is dirty, mark it in the list
             if (_isOpenAndDirty(fileEntry)) {
                 $(dirtyDotTemplate).prependTo($newItem);
             }
