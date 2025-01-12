@@ -5980,8 +5980,8 @@ body.tauri #titlebar .dirty-dot {
 }
 #main-toolbar .selected-button {
   background-color: #3C3F41 !important;
-  margin-left: 2px !important;
-  margin-right: 0px !important;
+  margin-left: 3px !important;
+  margin-right: 0 !important;
 }
 #main-toolbar .buttons,
 #main-toolbar .bottom-buttons {
@@ -6044,11 +6044,14 @@ body.tauri #titlebar .dirty-dot {
 .toolbar .title .dirty-dot {
   font-weight: normal;
 }
-.toolbar .buttons {
+.toolbar .buttons,
+.toolbar .bottom-buttons {
   margin: 5px 0 0 4px;
 }
 .toolbar .buttons span,
-.toolbar .buttons a {
+.toolbar .bottom-buttons span,
+.toolbar .buttons a,
+.toolbar .bottom-buttons a {
   cursor: default;
 }
 /* Menu-related styles */
@@ -10136,7 +10139,7 @@ img {
 #status-indicators .btn-status-bar,
 #status-phoenix .btn-status-bar {
   border: 0;
-  background-color: inherit;
+  background-color: unset;
   color: inherit;
   font: inherit;
   height: inherit;
@@ -10173,22 +10176,27 @@ img {
   border-left: unset;
   border-right: 1px solid rgba(0, 0, 0, 0.09);
   float: left;
-  padding: unset;
-  width: 35px;
   text-align: center;
 }
 .dark #status-phoenix > div {
-  border-left: unset;
   border-right: 1px solid #343434;
 }
-#status-menu:hover,
-.status-tab:hover {
+#status-phoenix > div:hover {
   background-color: #f0f0f0;
   cursor: pointer;
 }
-.dark #status-menu:hover,
-.dark .status-tab:hover {
-  background-color: rgba(255, 255, 255, 0.05);
+.dark #status-phoenix > div:hover {
+  background-color: rgba(255, 255, 255, 0.04);
+}
+#status-phoenix > div:only-child {
+  border-right: unset;
+}
+#status-indicators > div:hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+.dark #status-indicators > div:hover {
+  background-color: rgba(255, 255, 255, 0.04);
 }
 #status-indent > * {
   display: inline-block;
@@ -10231,7 +10239,6 @@ img {
   margin: 0;
 }
 #status-overwrite {
-  transition: background-color 3s;
   background-color: rgba(255, 255, 255, 0);
   color: #333;
   cursor: pointer;
@@ -10355,8 +10362,23 @@ img {
   color: #ccc;
 }
 #status-overwrite.flash {
-  transition: background-color 1s;
-  background-color: #78b2f2;
+  animation: brightenFade 2s ease-in-out;
+}
+@keyframes brightenFade {
+  0% {
+    background-color: transparent;
+  }
+  15% {
+    background-color: #78b2f2;
+    color: black;
+  }
+  30% {
+    background-color: #78b2f2;
+    color: black;
+  }
+  100% {
+    background-color: transparent;
+  }
 }
 #sync-button {
   width: 24px;
