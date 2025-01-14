@@ -7956,7 +7956,19 @@ dt,
   border: none;
 }
 .dark .alert {
-  color: #c95800;
+  background: #c95800;
+  border-radius: 2px;
+  color: #fff;
+}
+.alert.alert-warning {
+  text-shadow: none;
+  background-color: #fdf5cc;
+  border: none;
+}
+.dark .alert.alert-warning {
+  background: #ffd966;
+  border-radius: 2px;
+  color: #333333;
 }
 .alert h4 {
   color: #fdf5cc;
