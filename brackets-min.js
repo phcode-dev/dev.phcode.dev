@@ -38015,7 +38015,7 @@ define("extensionsIntegrated/Phoenix/main", function (require, exports, module) 
  *
  */
 
-/*global Phoenix*/
+/*global path, jsPromise*/
 
 define("extensionsIntegrated/Phoenix/new-project", function (require, exports, module) {
     const Dialogs = require("widgets/Dialogs"),
@@ -38422,9 +38422,9 @@ define("extensionsIntegrated/Phoenix/new-project", function (require, exports, m
         });
     }
 
-    function showFolderSelect() {
+    function showFolderSelect(initialPath = "") {
         return new Promise((resolve, reject)=>{
-            FileSystem.showOpenDialog(false, true, Strings.CHOOSE_FOLDER, '', null, function (err, files) {
+            FileSystem.showOpenDialog(false, true, Strings.CHOOSE_FOLDER, initialPath, null, function (err, files) {
                 if(err || files.length !== 1){
                     reject();
                     return;
@@ -38432,6 +38432,86 @@ define("extensionsIntegrated/Phoenix/new-project", function (require, exports, m
                 resolve(files[0]);
             });
         });
+    }
+
+    async function gitClone(url, cloneDIR) {
+        try{
+            const cloneFolderExists = await _dirExists(cloneDIR);
+            if(!cloneFolderExists) {
+                await Phoenix.VFS.ensureExistsDirAsync(cloneDIR);
+            }
+            await jsPromise(ProjectManager.openProject(cloneDIR));
+            CommandManager.execute("git-clone-url", url, cloneDIR );
+        } catch (e) {
+            setTimeout(async ()=>{
+                // we need this timeout as when user clicks clone in new project dialog, it will immediately
+                // close the error dialog too as it dismisses itself.
+                showErrorDialogue(Strings.ERROR_CLONING_TITLE, e.message || e);
+            }, 100);
+            console.error("git clone failed: ", url, cloneDIR, e);
+            Metrics.countEvent(Metrics.EVENT_TYPE.NEW_PROJECT, "gitClone", "fail");
+        }
+    }
+
+    function _getGitFolderName(gitURL) {
+        if (typeof gitURL !== 'string' || !gitURL.trim()) {
+            return "";
+        }
+        // Remove trailing `.git` if it exists and split the URL
+        const parts = gitURL.replace(/\.git$/, '').split('/');
+        // Return the last segment as the project folder name
+        return parts[parts.length - 1];
+    }
+
+    async function _dirExists(fullPath) {
+        try {
+            const {entry} = await FileSystem.resolveAsync(fullPath);
+            return entry.isDirectory;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    /**
+     * Determines which directory to use for a Git clone operation:
+     *  1. If the selected directory is empty, returns that directory.
+     *  2. Otherwise, checks/creates a child directory named after the Git project.
+     *     - If that child directory is (or becomes) empty, returns its entry.
+     *     - If it is not empty, returns null.
+     *
+     * @param {string} selectedDir - The full path to the user-selected directory.
+     * @param {string} gitURL - The Git clone URL (used to derive the child folder name).
+     * @returns {Promise<{error, }>} error string to show to user and the path to clone.
+     */
+    async function getGitCloneDir(selectedDir, gitURL) {
+        const selectedDirExists = await _dirExists(selectedDir);
+        if (!selectedDirExists) {
+            return {error: Strings.ERROR_GIT_FOLDER_NOT_EXIST, clonePath: selectedDir};
+        }
+
+        const {entry: selectedEntry} = await FileSystem.resolveAsync(selectedDir);
+        if (await selectedEntry.isEmptyAsync()) {
+            return {clonePath: selectedDir};
+        }
+
+        // If not empty, compute the child directory path
+        const folderName = _getGitFolderName(gitURL);
+        if(!folderName){
+            return {error: Strings.ERROR_GIT_FOLDER_NOT_EMPTY, clonePath: selectedDir};
+        }
+
+        const childDirPath = path.join(selectedDir, folderName);
+        const childDirExists = await _dirExists(childDirPath);
+        if (!childDirExists) {
+            return {clonePath: childDirPath};
+        }
+        // The child directory exists; check if it is empty
+        const {entry: childEntry} = await FileSystem.resolveAsync(childDirPath);
+        const isChildEmpty = await childEntry.isEmptyAsync();
+        if(isChildEmpty){
+            return {clonePath: childDirPath};
+        }
+        return {error: Strings.ERROR_GIT_FOLDER_NOT_EMPTY, clonePath: childDirPath};
     }
 
     function showAboutBox() {
@@ -38444,6 +38524,8 @@ define("extensionsIntegrated/Phoenix/new-project", function (require, exports, m
     exports.downloadAndOpenProject = downloadAndOpenProject;
     exports.showFolderSelect = showFolderSelect;
     exports.showErrorDialogue = showErrorDialogue;
+    exports.getGitCloneDir = getGitCloneDir;
+    exports.gitClone = gitClone;
     exports.setupExploreProject = defaultProjects.setupExploreProject;
     exports.setupStartupProject = defaultProjects.setupStartupProject;
     exports.alreadyExists = window.Phoenix.VFS.existsAsync;
@@ -93041,20 +93123,26 @@ define("nls/root/strings", {
     "CODE_EDITOR": "Code Editor",
     "BUILD_THE_WEB": "Build the web",
     "IMPORT_PROJECT": "Import Project",
-    "GITHUB_PROJECT": "GitHub Project",
-    "NEW_PROJECT_FROM_GITHUB": "New Project from GitHub",
-    "GITHUB_REPO_URL": "GitHub Repo URL :",
+    "GIT_PROJECT": "Get from Git",
+    "NEW_PROJECT_FROM_GIT": "New Project from Git",
+    "GIT_REPO_URL": "Git Repo URL :",
+    "GIT_CLONE_URL": "Git Clone URL :",
     "START_PROJECT": "Start Project\u2026",
     "DOWNLOAD_DESKTOP_APP": "Download Desktop App",
     "GET_DESKTOP_APP": "Get Desktop App",
     "CREATE_PROJECT": "Create Project",
     "SETTING_UP_PROJECT": "Setting Up Project",
     "LOCATION": "Location :",
+    "ERROR_ONLY_GITHUB": "The browser version of {APP_NAME} supports only GitHub URLs. To work with other Git URLs, please use the desktop app.",
+    "ERROR_GIT_URL_INVALID": "Please enter a valid Git clone URL.",
+    "ERROR_GIT_FOLDER_NOT_EMPTY": "The Selected folder cannot be used for Git clone as it is not empty or is unreadable.",
+    "ERROR_GIT_FOLDER_NOT_EXIST": "The Selected folder cannot be used for Git clone as it does not exist.",
+    "ERROR_CLONING_TITLE": "Git clone Failed",
     "DOWNLOADING": "Downloading...",
     "DOWNLOADING_FILE": "Downloading {0}...",
     "EXTRACTING_FILES_PROGRESS": "Extracting {0} of {1} files.",
     "COMPRESS_FILES_PROGRESS": "Compressing {0} of {1} files.",
-    "DOWNLOAD_FAILED_MESSAGE": "Make sure the download URL is a valid. </br>NB: As Phoenix is in alpha, Private Repos and GitHub URLs larger than 25 MB is not allowed.",
+    "DOWNLOAD_FAILED_MESSAGE": "Make sure the download URL is a valid. </br>NB: As Phoenix is free, Private Repos and GitHub URLs larger than 25 MB is not allowed.",
     "PLEASE_SELECT_A_FOLDER": "Please select a folder...",
     "UNZIP_IN_PROGRESS": "Unzipping files...",
     "UNZIP_FAILED": "Error: Unzipping failed.",
