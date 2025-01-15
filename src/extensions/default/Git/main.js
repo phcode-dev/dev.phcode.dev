@@ -31,8 +31,7 @@ define(function (require, exports, module) {
     require(modules);
 
     // Load CSS
-    ExtensionUtils.loadStyleSheet(module, "styles/brackets-git.less");
-    ExtensionUtils.loadStyleSheet(module, "styles/fonts/octicon.less");
+    ExtensionUtils.loadStyleSheet(module, "styles/git-styles.less");
 
     AppInit.appReady(function () {
         Main.init().then((enabled)=>{
@@ -697,7 +696,7 @@ define("src/Branch", function (require, exports) {
                     var MAX_LEN = 18;
 
                     const tooltip = StringUtils.format(Strings.ON_BRANCH, branchName);
-                    const html = `<i class='octicon octicon-git-branch'></i> ${
+                    const html = `<i class="fas fa-code-branch"></i> ${
                         branchName.length > MAX_LEN ? branchName.substring(0, MAX_LEN) + "\u2026" : branchName
                     }`;
                     $gitBranchName
@@ -730,7 +729,7 @@ define("src/Branch", function (require, exports) {
         // Add branch name to project tree
         const $html = $(`<div id='git-branch-dropdown-toggle' class='btn-alt-quiet'>
             <span id='git-branch'>
-                <i class='octicon octicon-git-branch'></i>
+                <i class="fas fa-code-branch"></i>
             </span>
             <span class="dropdown-arrow"></span>
             </div>`);
@@ -3880,54 +3879,60 @@ define("src/Panel", function (require, exports) {
         let totalFiles = gitStatusResults.length,
             filesDone = 0;
 
+        function showProgress() {
+            const $progressBar = $dialog.find('.accordion-progress-bar-inner');
+            if ($progressBar.length) {
+                $progressBar[0].style.width = `${filesDone/totalFiles*100}%`;
+            }
+            if(filesDone === totalFiles){
+                $dialog.find('.accordion-progress-bar').addClass("forced-inVisible");
+            }
+            const progressString = StringUtils.format(Strings.CODE_INSPECTION_DONE_FILES, filesDone, totalFiles);
+            $dialog.find(".lint-errors").html(progressString);
+        }
+
         const codeInspectionPromises = gitStatusResults.map(function (fileObj) {
             const isDeleted = fileObj.status.indexOf(Git.FILE_STATUS.DELETED) !== -1;
+            if(isDeleted){
+                filesDone++;
+                showProgress();
+                return;
+            }
 
             // Do a code inspection for the file, if it was not deleted
-            if (!isDeleted) {
-                return new Promise((resolve) => {
-                    // Delay lintFile execution to give the event loop some breathing room
-                    setTimeout(() => {
-                        lintFile(fileObj.file)
-                            .catch(function () {
-                                return [
-                                    {
-                                        provider: { name: "See console [F12] for details" },
-                                        result: {
-                                            errors: [
-                                                {
-                                                    pos: { line: 0, ch: 0 },
-                                                    message: "CodeInspection failed to execute for this file."
-                                                }
-                                            ]
-                                        }
+            return new Promise((resolve) => {
+                // Delay lintFile execution to give the event loop some breathing room
+                setTimeout(() => {
+                    lintFile(fileObj.file)
+                        .catch(function () {
+                            return [
+                                {
+                                    provider: { name: "See console [F12] for details" },
+                                    result: {
+                                        errors: [
+                                            {
+                                                pos: { line: 0, ch: 0 },
+                                                message: "CodeInspection failed to execute for this file."
+                                            }
+                                        ]
                                     }
-                                ];
-                            })
-                            .then(function (result) {
-                                if (result) {
-                                    lintResults.push({
-                                        filename: fileObj.file,
-                                        result: result
-                                    });
                                 }
-                                resolve();
-                            }).finally(()=>{
-                                filesDone++;
-                                const $progressBar = $dialog.find('.accordion-progress-bar-inner');
-                                if ($progressBar.length) {
-                                    $progressBar[0].style.width = `${filesDone/totalFiles*100}%`;
-                                }
-                                if(filesDone === totalFiles){
-                                    $dialog.find('.accordion-progress-bar').addClass("forced-inVisible");
-                                }
-                                const progressString = StringUtils.format(Strings.CODE_INSPECTION_DONE_FILES, filesDone, totalFiles);
-                                $dialog.find(".lint-errors").html(progressString);
-
-                            });
-                    }, 0); // Delay of 0ms to defer to the next tick of the event loop
-                });
-            }
+                            ];
+                        })
+                        .then(function (result) {
+                            if (result) {
+                                lintResults.push({
+                                    filename: fileObj.file,
+                                    result: result
+                                });
+                            }
+                            resolve();
+                        }).finally(()=>{
+                            filesDone++;
+                            showProgress();
+                        });
+                }, 0); // Delay of 0ms to defer to the next tick of the event loop
+            });
         });
 
         return Promise.all(_.compact(codeInspectionPromises)).then(function () {
@@ -6815,7 +6820,7 @@ define("src/dialogs/Push", function (require, exports) {
         Strings           = brackets.getModule("strings");
 
     // Templates
-    const template            = `<div id="git-pull-dialog" class="git modal">
+    const template            = `<div id="git-push-dialog" class="git modal">
     <div class="modal-header">
         <h1 class="dialog-title">{{Strings.DIALOG_PUSH_TITLE}} &mdash; {{config.remote}}</h1>
     </div>
