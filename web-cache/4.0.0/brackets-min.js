@@ -8682,6 +8682,88 @@ define("command/Commands", function (require, exports, module) {
     /** Shows the sidebar */
     exports.SHOW_SIDEBAR                = "view.showSidebar";           // SidebarView.js               show()
 
+    // commands
+    /** Initializes a new git repository */
+    exports.CMD_GIT_INIT = "git-init";
+
+    /** Clones a git repository */
+    exports.CMD_GIT_CLONE = "git-clone";
+
+    /** Clones a git repository with a specific URL */
+    exports.CMD_GIT_CLONE_WITH_URL = "git-clone-url";
+
+    /** Opens git settings */
+    exports.CMD_GIT_SETTINGS_COMMAND_ID = "git-settings";
+
+    /** Closes unmodified files */
+    exports.CMD_GIT_CLOSE_UNMODIFIED = "git-close-unmodified-files";
+
+    /** Checks out a branch or commit */
+    exports.CMD_GIT_CHECKOUT = "git-checkout";
+
+    /** Performs a hard reset */
+    exports.CMD_GIT_RESET_HARD = "git-reset-hard";
+
+    /** Performs a soft reset */
+    exports.CMD_GIT_RESET_SOFT = "git-reset-soft";
+
+    /** Performs a mixed reset */
+    exports.CMD_GIT_RESET_MIXED = "git-reset-mixed";
+
+    /** Toggles the git panel */
+    exports.CMD_GIT_TOGGLE_PANEL = "git-toggle-panel";
+
+    /** Goes to next git change */
+    exports.CMD_GIT_GOTO_NEXT_CHANGE = "git-gotoNextChange";
+
+    /** Goes to previous git change */
+    exports.CMD_GIT_GOTO_PREVIOUS_CHANGE = "git-gotoPrevChange";
+
+    /** Commits current file changes */
+    exports.CMD_GIT_COMMIT_CURRENT = "git-commitCurrent";
+
+    /** Commits all changes */
+    exports.CMD_GIT_COMMIT_ALL = "git-commitAll";
+
+    /** Fetches from remote */
+    exports.CMD_GIT_FETCH = "git-fetch";
+
+    /** Pulls from remote */
+    exports.CMD_GIT_PULL = "git-pull";
+
+    /** Pushes to remote */
+    exports.CMD_GIT_PUSH = "git-push";
+
+    /** Refreshes git status */
+    exports.CMD_GIT_REFRESH = "git-refresh";
+
+    /** Creates a git tag */
+    exports.CMD_GIT_TAG = "git-tag";
+
+    /** Discards all changes */
+    exports.CMD_GIT_DISCARD_ALL_CHANGES = "git-discard-all-changes";
+
+    /** Undoes the last commit */
+    exports.CMD_GIT_UNDO_LAST_COMMIT = "git-undo-last-commit";
+
+    /** Changes git username */
+    exports.CMD_GIT_CHANGE_USERNAME = "git-change-username";
+
+    /** Changes git email */
+    exports.CMD_GIT_CHANGE_EMAIL = "git-change-email";
+
+    /** Pushes to Gerrit code review */
+    exports.CMD_GIT_GERRIT_PUSH_REF = "git-gerrit-push_ref";
+
+    /** Shows authors of selected code */
+    exports.CMD_GIT_AUTHORS_OF_SELECTION = "git-authors-of-selection";
+
+    /** Shows authors of current file */
+    exports.CMD_GIT_AUTHORS_OF_FILE = "git-authors-of-file";
+
+    /** Toggles display of untracked files */
+    exports.CMD_GIT_TOGGLE_UNTRACKED = "git-toggle-untracked";
+
     // DEPRECATED: Working Set Commands
     DeprecationWarning.deprecateConstant(exports, "SORT_WORKINGSET_BY_ADDED",   "CMD_WORKINGSET_SORT_BY_ADDED");
     DeprecationWarning.deprecateConstant(exports, "SORT_WORKINGSET_BY_NAME",    "CMD_WORKINGSET_SORT_BY_NAME");
@@ -11717,6 +11799,14 @@ define("command/Menus", function (require, exports, module) {
     };
 
     /**
+     * Brackets well known submenus
+     * @enum {string}
+     */
+    let SubMenuIds = {
+        GIT_SUB_MENU: "git-submenu"
+    };
+
+    /**
      * Event triggered before the context menu opens.
      * @event EVENT_BEFORE_CONTEXT_MENU_OPEN
      */
@@ -11893,6 +11983,15 @@ define("command/Menus", function (require, exports, module) {
      */
     function getMenu(id) {
         return menuMap[id];
+    }
+
+    /**
+     * Retrieves the subMenu object for the corresponding id if present.
+     * @param {string} id
+     * @return {Menu}
+     */
+    function getSubMenu(id) {
+        return getContextMenu(id);
     }
 
     /**
@@ -13396,6 +13495,7 @@ define("command/Menus", function (require, exports, module) {
     exports.LAST_IN_SECTION = LAST_IN_SECTION;
     exports.DIVIDER = DIVIDER;
     exports.getMenu = getMenu;
+    exports.getSubMenu = getSubMenu;
     exports.getAllMenus = getAllMenus;
     exports.getMenuItem = getMenuItem;
     exports.getContextMenu = getContextMenu;
@@ -13409,6 +13509,7 @@ define("command/Menus", function (require, exports, module) {
     exports.Menu = Menu;
     exports.MenuItem = MenuItem;
     exports.ContextMenu = ContextMenu;
+    exports.SubMenuIds = SubMenuIds;
     // public events
     exports.EVENT_BEFORE_CONTEXT_MENU_OPEN = EVENT_BEFORE_CONTEXT_MENU_OPEN;
     exports.EVENT_BEFORE_CONTEXT_MENU_CLOSE = EVENT_BEFORE_CONTEXT_MENU_CLOSE;
@@ -155877,6 +155978,23 @@ define("utils/ExtensionLoader", function (require, exports, module) {
     }
 
     /**
+     * Loads the default extension located at given extensions/default/extensionFolderName . used for tests
+     *
+     * @private
+     * @param {string} extensionFolderName
+     * @return {!$.Promise} A promise object that is resolved when all extensions complete loading.
+     */
+    function _loadDefaultExtension(extensionFolderName) {
+        const extensionPath = getDefaultExtensionPath();
+
+        logger.leaveTrail("loading default extension: " + extensionFolderName);
+        var extConfig = {
+            baseUrl: extensionPath + "/" + extensionFolderName
+        };
+        return loadExtension(extensionFolderName, extConfig, 'main');
+    }
+
+    /**
      * Loads the extension that lives at baseUrl into its own Require.js context
      *
      * @param {!string} directory an absolute native path that contains a directory of extensions.
@@ -156158,8 +156276,11 @@ define("utils/ExtensionLoader", function (require, exports, module) {
     EventDispatcher.makeEventDispatcher(exports);
 
     // unit tests
-    exports._setInitExtensionTimeout = _setInitExtensionTimeout;
-    exports._getInitExtensionTimeout = _getInitExtensionTimeout;
+    if(Phoenix.isTestWindow) {
+        exports._loadDefaultExtension = _loadDefaultExtension;
+        exports._setInitExtensionTimeout = _setInitExtensionTimeout;
+        exports._getInitExtensionTimeout = _getInitExtensionTimeout;
+    }
 
     // private internal usage
     exports._DELETED_EXTENSION_FILE_MARKER = _DELETED_EXTENSION_FILE_MARKER;
