@@ -150,6 +150,7 @@ define("src/Branch", function (require, exports) {
         StringUtils             = brackets.getModule("utils/StringUtils"),
         DocumentManager         = brackets.getModule("document/DocumentManager"),
         Strings                 = brackets.getModule("strings"),
+        Metrics                 = brackets.getModule("utils/Metrics"),
         MainViewManager         = brackets.getModule("view/MainViewManager");
 
     var Git                     = require("src/git/Git"),
@@ -157,7 +158,7 @@ define("src/Branch", function (require, exports) {
         EventEmitter            = require("src/EventEmitter"),
         ErrorHandler            = require("src/ErrorHandler"),
         Panel                   = require("src/Panel"),
-        Setup                         = require("src/utils/Setup"),
+        Setup                   = require("src/utils/Setup"),
         Preferences             = require("src/Preferences"),
         ProgressDialog          = require("src/dialogs/Progress"),
         Utils                   = require("src/Utils"),
@@ -347,22 +348,25 @@ define("src/Branch", function (require, exports) {
                     if (useRebase) {
 
                         Git.rebaseInit(fromBranch).catch(function (err) {
+                            Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'rebase', "fail");
                             throw ErrorHandler.showError(err, Strings.ERROR_REBASE_FAILED);
                         }).then(function (stdout) {
+                            Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'rebase', "success");
                             Utils.showOutput(stdout || Strings.GIT_REBASE_SUCCESS, Strings.REBASE_RESULT).finally(function () {
                                 EventEmitter.emit(Events.REFRESH_ALL);
                             });
-
-                        });
+                        }).catch(console.error);
                     } else {
 
                         Git.mergeBranch(fromBranch, mergeMsg, useNoff).catch(function (err) {
+                            Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'merge', "fail");
                             throw ErrorHandler.showError(err, Strings.ERROR_MERGE_FAILED);
                         }).then(function (stdout) {
+                            Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'merge', "success");
                             Utils.showOutput(stdout || Strings.GIT_MERGE_SUCCESS, Strings.MERGE_RESULT).finally(function () {
                                 EventEmitter.emit(Events.REFRESH_ALL);
                             });
-                        });
+                        }).catch(console.error);
                     }
                 }
             });
@@ -460,8 +464,10 @@ define("src/Branch", function (require, exports) {
                             track       = !!isRemote;
 
                         Git.createBranch(branchName, originName, track).catch(function (err) {
+                            Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'branch', "createFail");
                             throw ErrorHandler.showError(err, Strings.ERROR_CREATE_BRANCH);
                         }).then(function () {
+                            Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'branch', "create");
                             EventEmitter.emit(Events.REFRESH_ALL);
                         });
                     }
@@ -488,8 +494,10 @@ define("src/Branch", function (require, exports) {
                             }).then(function (response) {
                                 if (response === true) {
                                     return Git.forceBranchDelete(branchName).then(function (output) {
+                                        Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'branch', "delete");
                                         return Utils.showOutput(output || Strings.GIT_BRANCH_DELETE_SUCCESS);
                                     }).catch(function (err) {
+                                        Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'branch', "deleteFail");
                                         ErrorHandler.showError(err, Strings.ERROR_BRANCH_DELETE_FORCED);
                                     });
                                 }
@@ -515,12 +523,15 @@ define("src/Branch", function (require, exports) {
 
             Git.getCurrentBranchName().then(function (oldBranchName) {
                 Git.checkout(newBranchName).then(function () {
+                    Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'branch', "switch");
                     return closeNotExistingFiles(oldBranchName, newBranchName);
                 }).catch(function (err) {
-                    throw ErrorHandler.showError(err, Strings.ERROR_SWITCHING_BRANCHES);
+                    Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'branch', "switchFail");
+                    ErrorHandler.showError(err, Strings.ERROR_SWITCHING_BRANCHES);
                 });
             }).catch(function (err) {
-                throw ErrorHandler.showError(err, Strings.ERROR_GETTING_CURRENT_BRANCH);
+                Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'branch', "switchFail");
+                ErrorHandler.showError(err, Strings.ERROR_GETTING_CURRENT_BRANCH);
             });
 
         });
@@ -725,7 +736,7 @@ define("src/Branch", function (require, exports) {
                 }
             });
         }).catch(function (err) {
-            throw ErrorHandler.showError(err);
+            ErrorHandler.showError(err);
         });
     }
 
@@ -1150,10 +1161,9 @@ define("src/Constants", function (require, exports) {
 
 define("src/ErrorHandler", function (require, exports) {
 
-    var _                          = brackets.getModule("thirdparty/lodash"),
-        Dialogs                    = brackets.getModule("widgets/Dialogs"),
+    const Dialogs                    = brackets.getModule("widgets/Dialogs"),
         Mustache                   = brackets.getModule("thirdparty/mustache/mustache"),
-        NativeApp                  = brackets.getModule("utils/NativeApp"),
+        Metrics                    = brackets.getModule("utils/Metrics"),
         Strings                    = brackets.getModule("strings"),
         Utils                      = require("src/Utils"),
         errorDialogTemplate        = `<div id="git-error-dialog" class="modal">
@@ -1169,8 +1179,6 @@ define("src/ErrorHandler", function (require, exports) {
     </div>
 </div>
 `;
-
-    var errorQueue = [];
 
     function errorToString(err) {
         return Utils.encodeSensitiveInformation(err.toString());
@@ -1196,13 +1204,21 @@ define("src/ErrorHandler", function (require, exports) {
     };
 
     exports.logError = function (err) {
-        var msg = err && err.stack ? err.stack : err;
+        const msg = err && err.stack ? err.stack : err;
         Utils.consoleError("[brackets-git] " + msg);
-        errorQueue.push(err);
         return err;
     };
 
-    exports.showError = function (err, title, dontStripError) {
+    /**
+     *
+     * @param err
+     * @param title
+     * @param {dontStripError: boolean, errorMetric: string} options
+     */
+    exports.showError = function (err, title, options = {}) {
+        const dontStripError = options.dontStripError;
+        const errorMetric = options.errorMetric;
+        Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'dialogErr', errorMetric || "Show");
         if (err.__shown) { return err; }
 
         exports.logError(err);
@@ -1251,17 +1267,21 @@ define("src/ErrorHandler", function (require, exports) {
 });
 
 define("src/EventEmitter", function (require, exports, module) {
-    const EventDispatcher = brackets.getModule("utils/EventDispatcher");
+    const EventDispatcher = brackets.getModule("utils/EventDispatcher"),
+        Metrics = brackets.getModule("utils/Metrics");
 
     const emInstance = {};
     EventDispatcher.makeEventDispatcher(emInstance);
 
-    function getEmitter(eventName) {
+    function getEmitter(eventName, optionalMetricToLog) {
         if (!eventName) {
             throw new Error("no event has been passed to get the emittor!");
         }
         return function () {
             emit(eventName, ...arguments);
+            if(optionalMetricToLog) {
+                Metrics.countEvent(Metrics.EVENT_TYPE.GIT, optionalMetricToLog[0], optionalMetricToLog[1]);
+            }
         };
     }
 
@@ -1757,6 +1777,7 @@ define("src/History", function (require) {
         FileUtils = brackets.getModule("file/FileUtils"),
         LocalizationUtils = brackets.getModule("utils/LocalizationUtils"),
         Strings = brackets.getModule("strings"),
+        Metrics = brackets.getModule("utils/Metrics"),
         Mustache = brackets.getModule("thirdparty/mustache/mustache");
 
     // Local modules
@@ -2083,9 +2104,11 @@ define("src/History", function (require) {
     });
     EventEmitter.on(Events.HISTORY_SHOW_FILE, function () {
         handleToggleHistory("FILE");
+        Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'panel', "fileHistory");
     });
     EventEmitter.on(Events.HISTORY_SHOW_GLOBAL, function () {
         handleToggleHistory("GLOBAL");
+        Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'panel', "history");
     });
     EventEmitter.on(Events.REFRESH_HISTORY, function () {
         handleToggleHistory("REFRESH");
@@ -2103,6 +2126,7 @@ define("src/HistoryViewer", function (require, exports) {
         Mustache        = brackets.getModule("thirdparty/mustache/mustache"),
         WorkspaceManager  = brackets.getModule("view/WorkspaceManager"),
         Strings           = brackets.getModule("strings"),
+        Metrics         = brackets.getModule("utils/Metrics"),
         marked          = brackets.getModule('thirdparty/marked.min').marked;
 
     const ErrorHandler  = require("src/ErrorHandler"),
@@ -2388,6 +2412,7 @@ define("src/HistoryViewer", function (require, exports) {
     }
 
     function show(commitInfo, doc, options) {
+        Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'history', "detailView");
         initialize();
 
         commit    = commitInfo;
@@ -2456,6 +2481,7 @@ define("src/Main", function (require, exports) {
         Menus             = brackets.getModule("command/Menus"),
         FileSystem        = brackets.getModule("filesystem/FileSystem"),
         Mustache          = brackets.getModule("thirdparty/mustache/mustache"),
+        Metrics           = brackets.getModule("utils/Metrics"),
         ProjectManager    = brackets.getModule("project/ProjectManager");
 
     const Constants       = require("src/Constants"),
@@ -2883,9 +2909,17 @@ define("src/Main", function (require, exports) {
     $(window).focus(refreshOnFocusChange);
 
     // Event handlers
+    let projectSwitched = true;
+    EventEmitter.on(Events.BRACKETS_PROJECT_CHANGE, function () {
+        // pressing refresh button will raise GIT_ENABLED event and we only want one enabled metric
+        // per project open.
+        projectSwitched = true;
+    });
     EventEmitter.on(Events.GIT_ENABLED, function () {
         _enableAllCommands(true);
         gitEnabled = true;
+        projectSwitched && Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'enabled', "project");
+        projectSwitched = false;
     });
     EventEmitter.on(Events.GIT_DISABLED, function () {
         _enableAllCommands(false);
@@ -2902,17 +2936,18 @@ define("src/Main", function (require, exports) {
 define("src/NoRepo", function (require) {
 
     // Brackets modules
-    const FileSystem      = brackets.getModule("filesystem/FileSystem"),
+    const FileSystem    = brackets.getModule("filesystem/FileSystem"),
         FileUtils       = brackets.getModule("file/FileUtils"),
         ProjectManager  = brackets.getModule("project/ProjectManager"),
         CommandManager  = brackets.getModule("command/CommandManager"),
-        StringUtils           = brackets.getModule("utils/StringUtils");
+        Metrics         = brackets.getModule("utils/Metrics"),
+        Strings         = brackets.getModule("strings"),
+        StringUtils     = brackets.getModule("utils/StringUtils");
 
     // Local modules
-    const ErrorHandler    = require("src/ErrorHandler"),
+    const ErrorHandler  = require("src/ErrorHandler"),
         Events          = require("src/Events"),
         EventEmitter    = require("src/EventEmitter"),
-        Strings             = brackets.getModule("strings"),
         ExpectedError   = require("src/ExpectedError"),
         ProgressDialog  = require("src/dialogs/Progress"),
         CloneDialog     = require("src/dialogs/Clone"),
@@ -2962,8 +2997,8 @@ define("src/NoRepo", function (require) {
                             EventEmitter.emit(Events.GIT_CHANGE_EMAIL, function () {
                                 Git.init().then(function (result) {
                                     resolve(result);
-                                }).catch(function (err) {
-                                    reject(err);
+                                }).catch(function (error) {
+                                    reject(error);
                                 });
                             });
                         });
@@ -2974,9 +3009,11 @@ define("src/NoRepo", function (require) {
                 });
             });
         }).then(function () {
+            Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'init', "success");
             return stageGitIgnore("Initial staging");
         }).catch(function (err) {
-            ErrorHandler.showError(err, Strings.INIT_NEW_REPO_FAILED, true);
+            ErrorHandler.showError(err, Strings.INIT_NEW_REPO_FAILED, {dontStripError: true});
+            Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'init', "fail");
         }).then(function () {
             EventEmitter.emit(Events.REFRESH_ALL);
         });
@@ -3003,7 +3040,7 @@ define("src/NoRepo", function (require) {
                 const clonePath = Phoenix.app.getDisplayPath(Utils.getProjectRoot());
                 const err = new ExpectedError(
                     StringUtils.format(Strings.GIT_CLONE_ERROR_EXPLAIN, clonePath));
-                ErrorHandler.showError(err, Strings.GIT_CLONE_REMOTE_FAILED, true);
+                ErrorHandler.showError(err, Strings.GIT_CLONE_REMOTE_FAILED, {dontStripError: true});
                 return;
             }
             function _clone(cloneConfig) {
@@ -3019,8 +3056,11 @@ define("src/NoRepo", function (require) {
                     const tracker = ProgressDialog.newProgressTracker();
                     destPath = destPath ? fs.getTauriPlatformPath(destPath) : ".";
                     return ProgressDialog.show(Git.clone(remoteUrl, destPath, tracker), tracker);
+                }).then(()=>{
+                    Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'clone', "success");
                 }).catch(function (err) {
-                    ErrorHandler.showError(err, Strings.GIT_CLONE_REMOTE_FAILED);
+                    Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'clone', "fail");
+                    ErrorHandler.showError(err, Strings.GIT_CLONE_REMOTE_FAILED, {errorMetric: "clone"});
                 });
 
                 // restore original url if desired
@@ -3086,6 +3126,7 @@ define("src/Panel", function (require, exports) {
         ProjectManager     = brackets.getModule("project/ProjectManager"),
         StringUtils        = brackets.getModule("utils/StringUtils"),
         Strings            = brackets.getModule("strings"),
+        Metrics            = brackets.getModule("utils/Metrics"),
         Constants          = require("src/Constants"),
         Git                = require("src/git/Git"),
         Events             = require("./Events"),
@@ -3369,6 +3410,8 @@ define("src/Panel", function (require, exports) {
         const compiledTemplate = Mustache.render(gitCommitDialogTemplate, {Strings: Strings}),
             dialog           = Dialogs.showModalDialogUsingTemplate(compiledTemplate),
             $dialog          = dialog.getElement();
+        Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'commit', "showDialog");
+        let totalLintErrors = 0;
         inspectFiles(files, $dialog).then(function (lintResults) {
             // Flatten the error structure from various providers
             lintResults = lintResults || [];
@@ -3393,7 +3436,10 @@ define("src/Panel", function (require, exports) {
                     ErrorHandler.logError("[brackets-git] lintResults contain object in unexpected format: " + JSON.stringify(lintResult));
                 }
                 lintResult.hasErrors = lintResult.errors.length > 0;
+                totalLintErrors += lintResult.errors.length;
             });
+
+            Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'commit', "lintErr" + Metrics.getRangeName(totalLintErrors));
 
             // Filter out only results with errors to show
             lintResults = _.filter(lintResults, function (lintResult) {
@@ -3434,7 +3480,11 @@ define("src/Panel", function (require, exports) {
         _makeDialogBig($dialog);
 
         // Show nicely colored commit diff
-        $dialog.find(".commit-diff").append(Utils.formatDiff(stagedDiff));
+        const diff = Utils.formatDiff(stagedDiff);
+        if(diff === Utils.FORMAT_DIFF_TOO_LARGE) {
+            Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'commit', "diffTooLarge");
+        }
+        $dialog.find(".commit-diff").append(diff);
 
         // Enable / Disable amend checkbox
         var toggleAmendCheckbox = function (bool) {
@@ -3613,6 +3663,8 @@ define("src/Panel", function (require, exports) {
             } else {
                 throw new ExpectedError(Strings.ERROR_MODIFIED_DIALOG_FILES);
             }
+        }).then(()=>{
+            Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'commit', "success");
         }).catch(function (err) {
             if (ErrorHandler.contains(err, "Please tell me who you are")) {
                 return new Promise((resolve)=>{
@@ -3624,7 +3676,8 @@ define("src/Panel", function (require, exports) {
                 });
             }
 
-            ErrorHandler.showError(err, Strings.ERROR_GIT_COMMIT_FAILED);
+            ErrorHandler.showError(err, Strings.ERROR_GIT_COMMIT_FAILED, {errorMetric: "commit"});
+            Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'commit', "fail");
 
         }).finally(function () {
             EventEmitter.emit(Events.GIT_COMMITED);
@@ -3723,8 +3776,15 @@ define("src/Panel", function (require, exports) {
                     dialog           = Dialogs.showModalDialogUsingTemplate(compiledTemplate),
                     $dialog          = dialog.getElement();
                 _makeDialogBig($dialog);
-                $dialog.find(".commit-diff").append(Utils.formatDiff(diff));
+                const diffVal = Utils.formatDiff(diff);
+                if(diffVal === Utils.FORMAT_DIFF_TOO_LARGE) {
+                    Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'diffBtn', "diffTooLarge");
+                } else {
+                    Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'diffBtn', "success");
+                }
+                $dialog.find(".commit-diff").append(Utils.formatDiff(diffVal));
             }).catch(function (err) {
+                Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'diffBtn', "error");
                 ErrorHandler.showError(err, Strings.ERROR_GIT_DIFF_FAILED);
             });
         }
@@ -3881,8 +3941,8 @@ define("src/Panel", function (require, exports) {
     function inspectFiles(gitStatusResults, $dialog) {
         const lintResults = [];
         let totalFiles = gitStatusResults.length,
+            totalFilesLinted = 0,
             filesDone = 0;
-
         function showProgress() {
             const $progressBar = $dialog.find('.accordion-progress-bar-inner');
             if ($progressBar.length) {
@@ -3933,6 +3993,7 @@ define("src/Panel", function (require, exports) {
                             resolve();
                         }).finally(()=>{
                             filesDone++;
+                            totalFilesLinted++;
                             showProgress();
                         });
                 }, 0); // Delay of 0ms to defer to the next tick of the event loop
@@ -3940,6 +4001,8 @@ define("src/Panel", function (require, exports) {
         });
 
         return Promise.all(_.compact(codeInspectionPromises)).then(function () {
+            Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'commit', "files" + Metrics.getRangeName(totalFiles));
+            Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'commit', "lint" + Metrics.getRangeName(totalFilesLinted));
             return lintResults;
         });
     }
@@ -4496,7 +4559,7 @@ define("src/Panel", function (require, exports) {
                     });
                 }
             })
-            .on("click", ".git-refresh", EventEmitter.getEmitter(Events.REFRESH_ALL))
+            .on("click", ".git-refresh", EventEmitter.getEmitter(Events.REFRESH_ALL, ["panel", "refreshBtn"]))
             .on("click", ".git-commit", EventEmitter.getEmitter(Events.HANDLE_GIT_COMMIT))
             .on("click", ".git-rebase-continue", function (e) { handleRebase("continue", e); })
             .on("click", ".git-rebase-skip", function (e) { handleRebase("skip", e); })
@@ -4504,26 +4567,34 @@ define("src/Panel", function (require, exports) {
             .on("click", ".git-commit-merge", commitMerge)
             .on("click", ".git-merge-abort", abortMerge)
             .on("click", ".git-find-conflicts", findConflicts)
-            .on("click", ".git-prev-gutter", GutterManager.goToPrev)
-            .on("click", ".git-next-gutter", GutterManager.goToNext)
+            .on("click", ".git-prev-gutter", ()=>{
+                Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'panel', "prevBtn");
+                GutterManager.goToPrev();
+            })
+            .on("click", ".git-next-gutter", ()=>{
+                Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'panel', "nextBtn");
+                GutterManager.goToNext();
+            })
             .on("click", ".git-file-history", EventEmitter.getEmitter(Events.HISTORY_SHOW_FILE))
             .on("click", ".git-history-toggle", EventEmitter.getEmitter(Events.HISTORY_SHOW_GLOBAL))
-            .on("click", ".git-fetch", EventEmitter.getEmitter(Events.HANDLE_FETCH))
+            .on("click", ".git-fetch", EventEmitter.getEmitter(Events.HANDLE_FETCH, ["panel", "fetchBtn"]))
             .on("click", ".git-push", function () {
+                Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'panel', "pushBtn");
                 var typeOfRemote = $(this).attr("x-selected-remote-type");
                 if (typeOfRemote === "git") {
                     EventEmitter.emit(Events.HANDLE_PUSH);
                 }
             })
-            .on("click", ".git-pull", EventEmitter.getEmitter(Events.HANDLE_PULL))
+            .on("click", ".git-pull", EventEmitter.getEmitter(Events.HANDLE_PULL, ["panel", "pullBtn"]))
             .on("click", ".git-init", EventEmitter.getEmitter(Events.HANDLE_GIT_INIT))
             .on("click", ".git-clone", EventEmitter.getEmitter(Events.HANDLE_GIT_CLONE))
-            .on("click", ".change-remote", EventEmitter.getEmitter(Events.HANDLE_REMOTE_PICK))
-            .on("click", ".remove-remote", EventEmitter.getEmitter(Events.HANDLE_REMOTE_DELETE))
-            .on("click", ".git-remote-new", EventEmitter.getEmitter(Events.HANDLE_REMOTE_CREATE))
+            .on("click", ".change-remote", EventEmitter.getEmitter(Events.HANDLE_REMOTE_PICK, ["panel", "changeRemote"]))
+            .on("click", ".remove-remote", EventEmitter.getEmitter(Events.HANDLE_REMOTE_DELETE, ["panel", "removeRemote"]))
+            .on("click", ".git-remote-new", EventEmitter.getEmitter(Events.HANDLE_REMOTE_CREATE, ["panel", "newRemote"]))
             .on("contextmenu", "tr", function (e) {
                 const $this = $(this);
                 if ($this.hasClass("history-commit")) {
+                    Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'cmenu', "history");
                     if(!$this.hasClass("selected")){
                         $this.click();
                     }
@@ -4533,6 +4604,7 @@ define("src/Panel", function (require, exports) {
 
                 $this.click();
                 setTimeout(function () {
+                    Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'cmenu', "filechanges");
                     Menus.getContextMenu(Constants.GIT_PANEL_CHANGES_CMENU).open(e);
                 }, 1);
             });
@@ -5011,6 +5083,8 @@ define("src/Remotes", function (require) {
         DefaultDialogs  = brackets.getModule("widgets/DefaultDialogs"),
         Dialogs         = brackets.getModule("widgets/Dialogs"),
         Mustache        = brackets.getModule("thirdparty/mustache/mustache"),
+        Metrics         = brackets.getModule("utils/Metrics"),
+        Strings         = brackets.getModule("strings"),
         StringUtils     = brackets.getModule("utils/StringUtils");
 
     // Local modules
@@ -5022,7 +5096,6 @@ define("src/Remotes", function (require) {
         ProgressDialog  = require("src/dialogs/Progress"),
         PullDialog      = require("src/dialogs/Pull"),
         PushDialog      = require("src/dialogs/Push"),
-        Strings             = brackets.getModule("strings"),
         Utils           = require("src/Utils");
 
     // Templates
@@ -5253,11 +5326,13 @@ define("src/Remotes", function (require) {
                     return ProgressDialog.show(op, progressTracker)
                         .then(function (result) {
                             return ProgressDialog.waitForClose().then(function () {
+                                Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'push', "success");
                                 showPushResult(result);
                             });
                         })
                         .catch(function (err) {
-                            ErrorHandler.showError(err, Strings.ERROR_PUSHING_REMOTE);
+                            Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'push', "fail");
+                            ErrorHandler.showError(err, Strings.ERROR_PUSHING_REMOTE, {errorMetric: "push"});
                         });
                 });
                 // restore original url if desired
@@ -5331,12 +5406,14 @@ define("src/Remotes", function (require) {
                                 // leaving the result as empty in stdout.
                                 // If we reach this point, the command has succeeded,
                                 // so we display a success message if `result` is "".
+                                Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'pull', "success");
                                 return Utils.showOutput(result || Strings.GIT_PULL_SUCCESS,
                                     Strings.GIT_PULL_RESPONSE);
                             });
                         })
                         .catch(function (err) {
-                            ErrorHandler.showError(err, Strings.ERROR_PULLING_REMOTE);
+                            Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'pull', "fail");
+                            ErrorHandler.showError(err, Strings.ERROR_PULLING_REMOTE, {errorMetric: "pull"});
                         });
                 });
                 // restore original url if desired
@@ -5363,8 +5440,12 @@ define("src/Remotes", function (require) {
 
         const tracker = ProgressDialog.newProgressTracker();
         return ProgressDialog.show(Git.fetchAllRemotes(tracker), tracker)
+            .then(()=>{
+                Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'fetch', "success");
+            })
             .catch(function (err) {
-                ErrorHandler.showError(err);
+                Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'fetch', "fail");
+                ErrorHandler.showError(err, undefined, {errorMetric: "fetch"});
             })
             .then(ProgressDialog.waitForClose)
             .finally(function () {
@@ -5664,6 +5745,8 @@ define("src/Utils", function (require, exports, module) {
         Constants       = require("src/Constants"),
         Strings         = brackets.getModule("strings");
 
+    const FORMAT_DIFF_TOO_LARGE = "<div>" + Strings.DIFF_TOO_LONG + "</div>";
+
     // Module variables
     const formatDiffTemplate      = `<table>
     <tbody>
@@ -5766,7 +5849,7 @@ define("src/Utils", function (require, exports, module) {
         var diffSplit = diff.split("\n");
 
         if (diffSplit.length > DIFF_MAX_LENGTH) {
-            return "<div>" + Strings.DIFF_TOO_LONG + "</div>";
+            return "" + FORMAT_DIFF_TOO_LARGE; // create new str to return
         }
 
         diffSplit.forEach(function (line) {
@@ -6282,6 +6365,7 @@ define("src/Utils", function (require, exports, module) {
     }
 
     // Public API
+    exports.FORMAT_DIFF_TOO_LARGE       = FORMAT_DIFF_TOO_LARGE;
     exports.formatDiff                  = formatDiff;
     exports.getProjectRoot              = getProjectRoot;
     exports.getExtensionDirectory       = getExtensionDirectory;
@@ -7101,7 +7185,7 @@ define("src/dialogs/RemoteCommon", function (require, exports) {
                 .then(function () {
                     fillBranches(config, $dialog);
                 }).catch(function (err) {
-                    throw ErrorHandler.showError(err, Strings.ERROR_FETCH_REMOTE);
+                    ErrorHandler.showError(err, Strings.ERROR_FETCH_REMOTE);
                 });
         });
         fillBranches(config, $dialog);
@@ -8523,7 +8607,8 @@ define("src/git/GitCli", function (require, exports) {
 define("src/utils/Setup", function (require, exports) {
 
     // Brackets modules
-    const _ = brackets.getModule("thirdparty/lodash");
+    const _ = brackets.getModule("thirdparty/lodash"),
+        Metrics = brackets.getModule("utils/Metrics");
 
     // Local modules
     const Cli         = require("src/Cli"),
@@ -8632,10 +8717,12 @@ define("src/utils/Setup", function (require, exports) {
             getGitVersion().then(function (_version) {
                 extensionActivated = true;
                 resolve(extensionActivated);
+                Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'installed', "yes");
             }).catch(function (err) {
                 extensionActivated = false;
                 console.warn("Failed to launch Git executable. Deactivating Git extension. Is git installed?", err);
                 resolve(extensionActivated);
+                Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'installed', "no");
             });
         });
     }
