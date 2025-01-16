@@ -149672,7 +149672,7 @@ define("search/QuickOpen", function (require, exports, module) {
      * @private
      * @const {RegExp}
      */
-    var CURSOR_POS_EXP = new RegExp(":([^,]+)?(,(.+)?)?");
+    var CURSOR_POS_EXP = new RegExp(":([^,:]+)?([,:](.+)?)?");
 
     /**
      * Current plugin
