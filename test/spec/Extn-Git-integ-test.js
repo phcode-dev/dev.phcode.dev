@@ -27,7 +27,7 @@ define(function (require, exports, module) {
         return;
     }
 
-    let $, __PR, testWindow, ExtensionLoader, Menus, Commands, CommandManager,
+    let $, __PR, testWindow, ExtensionLoader, Menus, Commands, CommandManager, EditorManager,
         SpecRunnerUtils     = require("spec/SpecRunnerUtils"),
         anotherTestFolder = SpecRunnerUtils.getTestPath("/spec/LowLevelFileIO-test-files");
 
@@ -60,6 +60,7 @@ define(function (require, exports, module) {
             ExtensionLoader = testWindow.brackets.test.ExtensionLoader;
             Commands = testWindow.brackets.test.Commands;
             CommandManager = testWindow.brackets.test.CommandManager;
+            EditorManager = testWindow.brackets.test.EditorManager;
             testPathGit = await SpecRunnerUtils.getTempTestDirectory("/spec/EditorCommandHandlers-test-files");
 
             await SpecRunnerUtils.loadProjectInTestWindow(testPathGit);
@@ -69,7 +70,8 @@ define(function (require, exports, module) {
             }, "Git menus to be present", 10000);
         }, 30000);
 
-        describe("Init repo and do all tests", function () {
+        describe("Init repo and do all tests in order", function () {
+            // ordering of tests in this matters and it may not run as individual tests.
             let $gitPanel, $gitIcon;
             beforeAll(async function () {
                 $gitPanel = $("#git-panel");
@@ -116,16 +118,235 @@ define(function (require, exports, module) {
                 expect($(".check-all").prop("checked")).toBeFalse();
             });
 
-            it("Should be able to stage and commit initialized git repo", async function () {
+            function clickOpenFile(elementNumber) {
+                const $elements = $gitPanel.find(".modified-file"); // Get all .modified-file elements
+                if (elementNumber >= 0 && elementNumber < $elements.length) {
+                    $($elements[elementNumber]).trigger("mousedown"); // Trigger mousedown on the specified element
+                } else {
+                    console.error("Invalid element number:", elementNumber); // Handle invalid index
+                }
+            }
+
+            it("Should clicking on file in git panel should open it", async function () {
                 await showGitPanel();
-                expect($(".check-all").prop("checked")).toBeFalse();
-                $(".check-all").click();
+                clickOpenFile(0);
                 await awaitsFor(()=>{
-                    const checkboxes = document.querySelectorAll(".check-one");
-                    return Array.from(checkboxes).every(checkbox => checkbox.checked);
-                }, "All files to be staged for commit", 10000);
-                $(".git-commit").click();
+                    const editor = EditorManager.getActiveEditor();
+                    if(!editor){
+                        return false;
+                    }
+                    return editor.document.file.fullPath.endsWith(".gitignore");
+                }, "first file to open");
             });
+
+            it("should git username and email be valid", async function () {
+                const tempUser = "phcodeTestGitUser";
+                const tempEmail = "phcodeTestGitUser@gmail.com";
+                // username validate
+                let currentVal = await testWindow.phoenixGitEvents.Git.getConfig("user.name");
+                if(!currentVal) {
+                    await testWindow.phoenixGitEvents.Git.setConfig("user.name", tempUser, true);
+                    currentVal = await testWindow.phoenixGitEvents.Git.getConfig("user.name");
+                    expect(currentVal).toBe(tempUser);
+                } else {
+                    expect(currentVal).toBeDefined();
+                }
+                // email validate
+                currentVal = await testWindow.phoenixGitEvents.Git.getConfig("user.email");
+                if(!currentVal) {
+                    await testWindow.phoenixGitEvents.Git.setConfig("user.email", tempEmail, true);
+                    currentVal = await testWindow.phoenixGitEvents.Git.getConfig("user.email");
+                    expect(currentVal).toBe(tempEmail);
+                } else {
+                    expect(currentVal).toBeDefined();
+                }
+            });
+
+            async function commitAllBtnClick() {
+                await showGitPanel();
+                if(!$(".check-all").prop("checked")) {
+                    $(".check-all").click();
+                    await awaitsFor(()=>{
+                        const checkboxes = document.querySelectorAll(".check-one");
+                        const commitIsDisabled = $(".git-commit").prop("disabled");
+                        return Array.from(checkboxes).every(checkbox => checkbox.checked) && !commitIsDisabled;
+                    }, "All files to be staged for commit", 10000);
+                }
+                $(".git-commit").click();
+                await __PR.waitForModalDialog("#git-commit-dialog");
+            }
+
+            async function commmitDlgWithMessage(message) {
+                $("input[name='commit-message']").val(message);
+                __PR.clickDialogButtonID(__PR.Dialogs.DIALOG_BTN_OK);
+                await __PR.waitForModalDialogClosed("#git-commit-dialog");
+            }
+
+            function expectTextToContain(srcText, list) {
+                const nonEmptyLines = srcText
+                    .split("\n")             // Split the text into lines
+                    .map(line => line.trim()) // Trim each line
+                    .filter(line => line !== "").join("\n"); // Remove empty lines
+                for(const text of list) {
+                    expect(nonEmptyLines).toContain(text);
+                }
+            }
+
+            it("Should be able to stage, show commit dialog and cancel dialog on initialized git repo", async function () {
+                await commitAllBtnClick();
+                __PR.clickDialogButtonID(__PR.Dialogs.DIALOG_BTN_CANCEL);
+                await __PR.waitForModalDialogClosed("#git-commit-dialog");
+            });
+
+            it("Should git dialog show commit diff and lint errors", async function () {
+                await commitAllBtnClick();
+
+                // check lint errors
+                await awaitsFor(()=>{
+                    return $(".lint-errors").text().includes("test.html");
+                }, "lint errors to be shown", 10000);
+                expect($(".lint-errors").text()).toContain("<html> is missing required \"lang\" attribute");
+                expect($(".lint-errors").is(":visible")).toBeTrue();
+
+                // check commit diff
+                await awaitsFor(()=>{
+                    return $(".commit-diff").text().includes("test.html");
+                }, "commit-diff to be shown", 10000);
+                expectTextToContain($(".commit-diff").text(), [
+                    ".gitignore", "test.css", "test.html", "test.js",
+                    "/node_modules/", "color:", `<head>`,
+                    `console.log`
+                ]);
+
+                // dismiss dialog
+                __PR.clickDialogButtonID(__PR.Dialogs.DIALOG_BTN_CANCEL);
+                await __PR.waitForModalDialogClosed("#git-commit-dialog");
+            });
+
+            it("Should be able to commit the files", async function () {
+                await commitAllBtnClick();
+                await commmitDlgWithMessage("first commit");
+                await awaitsFor(()=>{
+                    return $(".git-edited-list tr").length === 0;
+                }, "no files to be commited", 10000);
+            });
+
+            it("Should editing new file and saving add it to changed files list", async function () {
+                __PR.setCursors(["5:15"]);
+                __PR.typeAtCursor("\nhelloIG");
+                await __PR.saveActiveFile();
+                await awaitsFor(()=>{
+                    return $(".git-edited-list tr").length === 1;
+                }, "new edited file to come up in status", 10000);
+
+                // now commit
+                await commitAllBtnClick();
+                await commmitDlgWithMessage("second commit");
+                await awaitsFor(()=>{
+                    return $(".git-edited-list tr").length === 0;
+                }, "no files to be commited", 10000);
+            });
+
+            async function gotoChange(line, direction) {
+                await awaitsFor(()=>{
+                    $(`.git-${direction}-gutter`).click();
+                    const editor = EditorManager.getActiveEditor();
+                    return editor.getCursorPos().line === line;
+                }, `should go to previous change ${line}`, 10000, 100);
+            }
+
+            it("Should be able to navigate to next and previous changes and then discard changes", async function () {
+                __PR.setCursors(["1:1"]);
+                __PR.typeAtCursor("changeLine1\n");
+                __PR.setCursors(["4:1"]);
+                __PR.typeAtCursor("changeLine2\n");
+                await __PR.saveActiveFile();
+                await awaitsFor(()=>{
+                    return $(".git-edited-list tr").length === 1;
+                }, "new edited file to come up in status", 10000);
+
+                // next previous buttons tests
+                await gotoChange(3, "prev");
+                await gotoChange(0, "prev");
+                await gotoChange(3, "next");
+
+                // discard all changes with panel button
+                $(".btn-git-undo").click();
+                __PR.clickDialogButtonID(__PR.Dialogs.DIALOG_BTN_OK);
+                await awaitsFor(()=>{
+                    return $(".git-edited-list tr").length === 0;
+                }, "no files to be commited", 10000);
+            });
+
+            async function waitForHistoryVisible(visible) {
+                await awaitsFor(() => {
+                    return $gitPanel.find("#git-history-list").is(":visible") === visible;
+                }, `History list to be visible: ${visible}`);
+            }
+
+            async function testHistoryToggle(whichHistory) {
+                const $historyToggleButton = $gitPanel.find(whichHistory);
+
+                $historyToggleButton.trigger("click");
+                await waitForHistoryVisible(true);
+
+                const $historyList = $gitPanel.find("#git-history-list");
+
+                // Check if the first and second commits are displayed
+                const $historyCommits = $historyList.find(".commit-subject");
+                expect($historyCommits.length).toBeGreaterThanOrEqual(2);
+
+                // Verify the content of the first and second commits
+                expect($historyCommits.eq(0).text().trim()).toBe("second commit");
+                expect($historyCommits.eq(1).text().trim()).toBe("first commit");
+
+                $historyToggleButton.trigger("click");
+                await waitForHistoryVisible(false);
+            }
+
+            it("should show history with first and second commit on clicking global history", async () => {
+                await testHistoryToggle(".git-history-toggle");
+            });
+
+            it("should show history with first and second commit on clicking global history", async () => {
+                await testHistoryToggle(".git-file-history");
+            });
+
+            async function waitForHistoryViewerVisible(visible) {
+                await awaitsFor(() => {
+                    return $("#history-viewer").is(":visible") === visible;
+                }, `History viewer to be visible: ${visible}`);
+            }
+
+            async function testHistoryViewerToggle(commitIndex) {
+                const $historyList = $gitPanel.find("#git-history-list");
+                const $commitRow = $historyList.find(".history-commit").eq(commitIndex);
+
+                // Ensure the commit row exists
+                expect($commitRow.length).toBe(1);
+
+                // Click the row to show the history viewer
+                $commitRow.trigger("click");
+                await waitForHistoryViewerVisible(true);
+
+                // Verify that the history viewer shows the correct commit
+                const $historyViewer = $("#editor-holder .git");
+                await awaitsFor(() => {
+                    return $historyViewer.find(".commit-title").text().trim().includes("first commit");
+                }, `History viewer to have commit detail`);
+
+                // Click the row again to dismiss the history viewer
+                $commitRow.trigger("click");
+                await waitForHistoryViewerVisible(false);
+            }
+
+            it("should show the history viewer when clicking the first commit row and dismiss it on clicking again", async () => {
+                const $historyToggleButton = $gitPanel.find(".git-history-toggle");
+                $historyToggleButton.trigger("click");
+                await waitForHistoryVisible(true); // Ensure the history list is visible
+                await testHistoryViewerToggle(1); // Test for the first commit row
+            });
+
         });
 
     });
