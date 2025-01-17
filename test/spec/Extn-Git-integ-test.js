@@ -230,6 +230,25 @@ define(function (require, exports, module) {
                 await __PR.waitForModalDialogClosed("#git-commit-dialog");
             });
 
+            it("Should be able to show individual file diff from panel", async function () {
+                $($(".btn-git-diff")[0]).click();
+
+                // check commit diff
+                await awaitsFor(()=>{
+                    return $(".commit-diff").text().includes("gitignore");
+                }, "commit-diff to be shown", 10000);
+                expectTextToContain($(".commit-diff").text(), [
+                    "node_modules"
+                ]);
+                expectTextToContain($(".dialog-title").text(), [
+                    ".gitignore"
+                ]);
+
+                // dismiss dialog
+                __PR.clickDialogButtonID("close");
+                await __PR.waitForModalDialogClosed("#git-diff-dialog");
+            });
+
             it("Should be able to commit the files", async function () {
                 await commitAllBtnClick();
                 await commmitDlgWithMessage("first commit");
@@ -416,7 +435,57 @@ define(function (require, exports, module) {
 
             });
 
-        });
+            it("should discard all changes since last commit", async () => {
+                await SpecRunnerUtils.loadProjectInTestWindow(testPathGit);
+                __PR.typeAtCursor("discardTest");
+                await __PR.saveActiveFile();
+                await __PR.openFile("test.js");
+                __PR.typeAtCursor("discardJSTest");
+                await __PR.saveActiveFile();
+                await awaitsFor(()=>{
+                    return $gitPanel.find(".modified-file").length === 2;
+                }, "2 files to be added in modified files list", 10000);
 
+                // now discard all changes
+                __PR.execCommand(Commands.CMD_GIT_DISCARD_ALL_CHANGES); // dont await here as
+                // it tracks full complete after dialog closed
+                await __PR.waitForModalDialog("#git-question-dialog");
+                __PR.clickDialogButtonID(__PR.Dialogs.DIALOG_BTN_OK);
+                await awaitsFor(()=>{
+                    return $gitPanel.find(".modified-file").length === 0;
+                }, "no files in modified files list", 10000);
+            });
+
+            const createdBranch = "createdBranch";
+            async function waitForBranchNameDropdown(expectedName) {
+                await awaitsFor(()=>{
+                    return $("#git-branch").text().trim().includes(expectedName);
+                }, `branch ${expectedName} to show in project`);
+            }
+
+            it("should be able to create a new branch", async () => {
+                $("#git-branch-dropdown-toggle").click();
+                await awaitsFor(()=>{
+                    return $(".git-branch-new").is(":visible");
+                }, "branch dropdown to show");
+                $(".git-branch-new").click();
+                await __PR.waitForModalDialog(".git");
+                $('input[name="branch-name"]').val(createdBranch);
+                __PR.clickDialogButtonID(__PR.Dialogs.DIALOG_BTN_OK);
+                await waitForBranchNameDropdown(createdBranch);
+            });
+
+            it("should be able to switch branch", async () => {
+                await waitForBranchNameDropdown(createdBranch);
+                $("#git-branch-dropdown-toggle").click();
+                await awaitsFor(()=>{
+                    return $(".git-branch-new").is(":visible");
+                }, "branch dropdown to show");
+
+                expect($(".switch-branch").text()).toContain("master");
+                $(".switch-branch").click();
+                await waitForBranchNameDropdown("master");
+            });
+        });
     });
 });
