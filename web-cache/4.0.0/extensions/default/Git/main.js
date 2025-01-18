@@ -1417,6 +1417,45 @@ define("src/GutterManager", function (require, exports) {
         editorsWithGutters = [],
         openWidgets = [];
 
+    /**
+     * Checks if there's already a gutter marker on the given line;
+     * if not, inserts a blank <div> to prevent an empty gutter spot.
+     */
+    function _addDummyGutterMarkerIfNotExist(cm, line) {
+        var lineInfo = cm.lineInfo(line);
+        if (!lineInfo) {
+            return; // If line is out of range or doc is empty
+        }
+        var gutters = cm.getOption("gutters").slice(0),
+            gutterEnabled = gutters.indexOf(gutterName);
+        if(gutterEnabled === -1){
+            return;
+        }
+        var gutterMarkers = lineInfo.gutterMarkers;
+        var existingMarker = gutterMarkers && gutterMarkers[gutterName];
+        if (!existingMarker) {
+            var dummy = document.createElement("div");
+            dummy.className = "CodeMirror-gitGutter-none";
+            cm.setGutterMarker(line, gutterName, dummy);
+        }
+    }
+
+    function _cursorActivity(_evt, editor){
+        // this is to prevent a gutter gap in the active line if there is no color on this line.
+        _addDummyGutterMarkerIfNotExist(editor._codeMirror, editor.getCursorPos().line);
+    }
+
+    EditorManager.on("activeEditorChange", function (event, newEditor, oldEditor) {
+        if(newEditor){
+            newEditor.off("cursorActivity.gitGutter");
+            newEditor.on("cursorActivity.gitGutter", _cursorActivity);
+            _cursorActivity(null, newEditor);
+        }
+        if(oldEditor){
+            oldEditor.off("cursorActivity.gitGutter");
+        }
+    });
+
     function clearWidgets() {
         var lines = openWidgets.map(function (mark) {
             var w = mark.lineWidget;
@@ -1498,7 +1537,7 @@ define("src/GutterManager", function (require, exports) {
                             .html("&nbsp;");
             cm.setGutterMarker(obj.line, gutterName, $marker[0]);
         });
-
+        _cursorActivity(null, editor);
         // reopen widgets that were opened before refresh
         openBefore.forEach(function (obj) {
             gutterClick(obj.cm, obj.line, gutterName);
@@ -1769,7 +1808,18 @@ define("src/GutterManager", function (require, exports) {
         }
     });
 
+    function init() {
+        const editor = EditorManager.getActiveEditor();
+        if(!editor){
+            return;
+        }
+        editor.off("cursorActivity.gitGutter");
+        editor.on("cursorActivity.gitGutter", _cursorActivity);
+        _cursorActivity(null, editor);
+    }
+
     // API
+    exports.init = init;
     exports.goToPrev = goToPrev;
     exports.goToNext = goToNext;
 });
@@ -2174,7 +2224,7 @@ define("src/HistoryViewer", function (require, exports) {
         </div>
     </div>
     <div class="body">
-        <div class="commitBody">{{{bodyMarkdown}}}</div>
+        <div class="commitBody selectable-text">{{{bodyMarkdown}}}</div>
         <div class="table-striped tab-content">
             <div class="commit-files">
                 <ul class="nav nav-tabs nav-stacked filesContainer"></ul>
@@ -4410,7 +4460,7 @@ define("src/Panel", function (require, exports) {
                 if ($this.attr("x-status") === Git.FILE_STATUS.DELETED) {
                     return;
                 }
-                FileViewController.addToWorkingSetAndSelect(Preferences.get("currentGitRoot") + $this.attr("x-file"));
+                FileViewController.openFileAndAddToWorkingSet(Preferences.get("currentGitRoot") + $this.attr("x-file"));
             });
 
     }
@@ -4643,6 +4693,7 @@ define("src/Panel", function (require, exports) {
             toggle(true);
         }
         _panelResized();
+        GutterManager.init();
     } // function init() {
 
     function enable() {
@@ -6056,7 +6107,7 @@ define("src/Utils", function (require, exports, module) {
             }
 
             // create entry for temporary file
-            var fileEntry = FileSystem.getFileForPath(folder + ".bracketsGitTemp");
+            var fileEntry = FileSystem.getFileForPath(folder + ".phoenixGitTemp");
 
             function finish(bool) {
                 // delete the temp file and resolve
@@ -8054,10 +8105,10 @@ define("src/git/GitCli", function (require, exports) {
         } else {
             return new Promise(function (resolve, reject) {
                 // FUTURE: maybe use git commit --file=-
-                var fileEntry = FileSystem.getFileForPath(Preferences.get("currentGitRoot") + ".bracketsGitTemp");
+                var fileEntry = FileSystem.getFileForPath(Preferences.get("currentGitRoot") + ".phoenixGitTemp");
                 jsPromise(FileUtils.writeText(fileEntry, message))
                     .then(function () {
-                        args.push("-F", ".bracketsGitTemp");
+                        args.push("-F", ".phoenixGitTemp");
                         return git(args, {progressTracker});
                     })
                     .then(function (res) {

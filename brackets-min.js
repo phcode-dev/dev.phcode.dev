@@ -3947,7 +3947,7 @@ define("LiveDevelopment/LiveDevMultiBrowser", function (require, exports, module
 
         // reload the page if the given document is a JS file related
         // to the current live document.
-        if (_liveDocument.isRelated(absolutePath)) {
+        if (_liveDocument.isRelated && _liveDocument.isRelated(absolutePath)) {
             if (doc.getLanguage().getId() === "javascript") {
                 _setStatus(STATUS_RELOADING);
                 _protocol.reload();
@@ -3969,7 +3969,7 @@ define("LiveDevelopment/LiveDevMultiBrowser", function (require, exports, module
 
         var absolutePath = doc.file.fullPath;
 
-        if (_liveDocument.isRelated(absolutePath)) {
+        if (_liveDocument.isRelated && _liveDocument.isRelated(absolutePath)) {
             // Set status to out of sync if dirty. Otherwise, set it to active status.
             _setStatus(_docIsOutOfSync(doc) ? STATUS_OUT_OF_SYNC : STATUS_ACTIVE);
         }
