@@ -3165,7 +3165,8 @@ define("src/NoRepo", function (require) {
 
 define("src/Panel", function (require, exports) {
 
-    const _                  = brackets.getModule("thirdparty/lodash"),
+    const _                = brackets.getModule("thirdparty/lodash"),
+        StateManager       = brackets.getModule("preferences/StateManager"),
         CodeInspection     = brackets.getModule("language/CodeInspection"),
         CommandManager     = brackets.getModule("command/CommandManager"),
         Commands           = brackets.getModule("command/Commands"),
@@ -3417,7 +3418,8 @@ define("src/Panel", function (require, exports) {
 </div>
 `;
 
-    var showFileWhiteList = /^\.gitignore$/;
+    const showFileWhiteList = /^\.gitignore$/,
+        GIT_PANEL_SHOWN_ON_FIRST_BOOT = "GIT_PANEL_SHOWN_ON_FIRST_BOOT";
 
     const COMMIT_MODE = {
         CURRENT: "CURRENT",
@@ -4758,6 +4760,10 @@ define("src/Panel", function (require, exports) {
     });
 
     EventEmitter.on(Events.GIT_ENABLED, function () {
+        if(!StateManager.get(GIT_PANEL_SHOWN_ON_FIRST_BOOT)){
+            StateManager.set(GIT_PANEL_SHOWN_ON_FIRST_BOOT, true);
+            toggle(true);
+        }
         // Add info from Git to panel
         Git.getConfig("user.name").then(function (currentUserName) {
             EventEmitter.emit(Events.GIT_USERNAME_CHANGED, currentUserName);
