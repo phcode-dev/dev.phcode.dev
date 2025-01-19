@@ -16110,6 +16110,7 @@ define("document/DocumentCommandHandlers", function (require, exports, module) {
      * @private - tracks our closing state if we get called again
      */
     var _windowGoingAway = false;
+    let exitWaitPromises = [];
 
     /**
      * @private
@@ -16128,12 +16129,15 @@ define("document/DocumentCommandHandlers", function (require, exports, module) {
 
         return CommandManager.execute(Commands.FILE_CLOSE_ALL, { promptOnly: true })
             .done(function () {
+                exitWaitPromises = [];
                 _windowGoingAway = true;
 
                 // Give everyone a chance to save their state - but don't let any problems block
                 // us from quitting
                 try {
-                    ProjectManager.trigger("beforeAppClose");
+                    // if someone wats to do any deferred tasks, they should add
+                    // their promise to the wait promises list.
+                    ProjectManager.trigger("beforeAppClose", exitWaitPromises);
                 } catch (ex) {
                     console.error(ex);
                 }
@@ -16510,10 +16514,13 @@ define("document/DocumentCommandHandlers", function (require, exports, module) {
         _isReloading = true;
 
         return CommandManager.execute(Commands.FILE_CLOSE_ALL, { promptOnly: true }).done(function () {
+            exitWaitPromises = [];
             // Give everyone a chance to save their state - but don't let any problems block
             // us from quitting
             try {
-                ProjectManager.trigger("beforeAppClose");
+                // if someone wats to do any deferred tasks, they should add
+                // their promise to the wait promises list.
+                ProjectManager.trigger("beforeAppClose", exitWaitPromises);
             } catch (ex) {
                 console.error(ex);
             }
@@ -16531,7 +16538,8 @@ define("document/DocumentCommandHandlers", function (require, exports, module) {
 
             // Defer for a more successful reload - issue #11539
             window.setTimeout(function () {
-                raceAgainstTime(window.PhStore.flushDB()) // wither wait for flush or time this out
+                exitWaitPromises.push(window.PhStore.flushDB());
+                raceAgainstTime(Promise.all(exitWaitPromises)) // wither wait for flush or time this out
                     .finally(()=>{
                         raceAgainstTime(_safeNodeTerminate(), 4000)
                             .finally(()=>{
@@ -16704,7 +16712,8 @@ define("document/DocumentCommandHandlers", function (require, exports, module) {
             event.preventDefault();
             _handleWindowGoingAway(null, closeSuccess=>{
                 console.log('close success: ', closeSuccess);
-                raceAgainstTime(_safeFlushDB())
+                exitWaitPromises.push(_safeFlushDB());
+                raceAgainstTime(Promise.all(exitWaitPromises))
                     .finally(()=>{
                         raceAgainstTime(_safeNodeTerminate())
                             .finally(()=>{
@@ -35342,20 +35351,25 @@ define("extensionsIntegrated/NavigationAndHistory/FileRecovery", function (requi
         if(!input){
             return null;
         }
-        const parts = input.split(',', 2);
+        // Find the first comma
+        const firstCommaIndex = input.indexOf(',');
 
-        if (parts.length !== 2) {
+        // If there's no comma or it's at the very beginning, the input is invalid
+        if (firstCommaIndex === -1 || firstCommaIndex === 0) {
             return null;
         }
 
+        // Extract the parts
+        const expectedLengthPart = input.slice(0, firstCommaIndex);
+        const actualString = input.slice(firstCommaIndex + 1);
+
         // Parse the length part (should be the first part before the comma)
-        const expectedLength = parseInt(parts[0], 10);
+        const expectedLength = parseInt(expectedLengthPart, 10);
         if (isNaN(expectedLength)) {
             return null;
         }
 
-        // The second part is the actual string after the comma
-        const actualString = parts[1];
+        // The second part is the actual string after the commas
         if (actualString.length === expectedLength) {
             return actualString;
         }
@@ -35651,6 +35665,14 @@ define("extensionsIntegrated/NavigationAndHistory/FileRecovery", function (requi
             // for the startup project. So we call manually.
             projectOpened(null, currentProjectRoot);
         }
+        ProjectManager.on("beforeAppClose", (_evt, waitPromises)=>{
+            // this is a safe exit, we should delete all restore data.
+            let exitProjectRoot = ProjectManager.getProjectRoot();
+            if(exitProjectRoot) {
+                const restoreRoot = getProjectRestoreRoot(exitProjectRoot.fullPath);
+                waitPromises.push(silentlyRemoveDirectory(restoreRoot));
+            }
+        });
     }
 
     function init() {
@@ -38132,7 +38154,7 @@ define("extensionsIntegrated/Phoenix/main", function (require, exports, module) 
 define("extensionsIntegrated/Phoenix/new-project", function (require, exports, module) {
     const Dialogs = require("widgets/Dialogs"),
         Mustache = require("thirdparty/mustache/mustache"),
-        newProjectTemplate = `<div class="modal" style="background-color:#3C3F41; width:min(50%, 850px); height: 570px; display: flex; flex-direction: column; justify-content: space-between">
+        newProjectTemplate = `<div class="modal new-project-modal-dialog">
     <iframe title="New Project" id="newProjectFrame" width="100%" height="100%"
             src={{newProjectURL}} style="border: 0px;visibility:hidden;" onload="this.style.visibility = 'visible';">
     </iframe>
