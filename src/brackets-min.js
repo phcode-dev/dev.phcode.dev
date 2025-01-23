@@ -37727,7 +37727,7 @@ define("extensionsIntegrated/Phoenix/guided-tour", function (require, exports, m
                 userAlreadyDidAction.beautifyCodeShown =  true;
                 PhStore.setItem(GUIDED_TOUR_LOCAL_STORAGE_KEY, JSON.stringify(userAlreadyDidAction));
                 Metrics.countEvent(Metrics.EVENT_TYPE.UI, "guide", "beautify");
-                currentlyShowingNotification = NotificationUI.createFromTemplate(
+                currentlyShowingNotification = NotificationUI.createFromTemplate( Strings.CMD_BEAUTIFY_CODE,
                     StringUtils.format(Strings.BEAUTIFY_CODE_NOTIFICATION, keyboardShortcut),
                     "editor-context-menu-edit.beautifyCode", {
                         allowedPlacements: ['left', 'right'],
@@ -37756,7 +37756,8 @@ define("extensionsIntegrated/Phoenix/guided-tour", function (require, exports, m
         userAlreadyDidAction.newProjectShown =  true;
         PhStore.setItem(GUIDED_TOUR_LOCAL_STORAGE_KEY, JSON.stringify(userAlreadyDidAction));
         Metrics.countEvent(Metrics.EVENT_TYPE.UI, "guide", "newProj");
-        currentlyShowingNotification = NotificationUI.createFromTemplate(Strings.NEW_PROJECT_NOTIFICATION,
+        currentlyShowingNotification = NotificationUI.createFromTemplate(
+            Strings.START_PROJECT, Strings.NEW_PROJECT_NOTIFICATION,
             "newProject", {
                 allowedPlacements: ['top', 'bottom'],
                 autoCloseTimeS: 15,
@@ -101304,7 +101305,7 @@ define("nls/root/strings", {
     "HEALTH_DATA_NOTIFICATION": "Health Report Preferences",
     "HEALTH_FIRST_POPUP_TITLE": "Privacy Notice",
     "HEALTH_DATA_DO_TRACK": "Share anonymous information on how I use {APP_NAME}",
-    "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>does not collect or process any personally identifiable information</strong>, but <strong>collects anonymous usage statistics</strong> to guard your privacy. Anonymous data is exempt from GDPR/CCPA notification requirements, but we believe you need to have a choice to opt out of anonymous data collection as well.<br><br> You can see your data or <strong>choose not to share any anonymous data</strong> by selecting <strong>Help > Health Report</strong>. These <strong>anonymous</strong> app usage statistics and error reports helps prioritize features, find bugs, and spot usability issues for improving your experience with {APP_NAME}. Without this data, we would not know what features it is worth building for you! <br><br>",
+    "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>does not collect or process any personally identifiable information</strong>, but <strong>collects anonymous usage statistics</strong> to guard your privacy. Anonymous data is exempt from GDPR/CCPA notification requirements, but we believe you need to have a choice to opt out of anonymous data collection as well.<br><br> You can see your data or <strong>choose not to share any anonymous data</strong> by selecting <strong>Help > Health Report</strong>. These <strong>anonymous</strong> app usage statistics and error reports helps prioritize features, find bugs, and spot usability issues for improving your experience with {APP_NAME}. Without this data, we would not know what features it is worth building for you! <br>",
     "HEALTH_DATA_PREVIEW": "{APP_NAME} Health Report",
     "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>does not collect or process any personally identifiable information</strong>, but <strong>collects anonymous usage statistics</strong> to guard your privacy. These <strong>anonymous</strong> app usage statistics and error reports helps prioritize features, find bugs, and spot usability issues for improving your experience with {APP_NAME}.</p> <p>Below is a preview of the data that will be sent in your next Health Report <em>if</em> it is enabled. (Also see developer console for error logs marked 'Caught Critical error'.)</p>",
 
@@ -101644,9 +101645,9 @@ define("nls/root/strings", {
     "PREVIEW": "Preview",
     "BUILD_WEBSITE": "Build Website",
     "VIEW_MORE": "View More...",
-    "NEW_PROJECT_NOTIFICATION": "Click this icon to open the `New Project` window again.</br> See Recent Projects, Open Folder or start projects from templates.</br> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>ok</a>",
-    "BEAUTIFY_CODE_NOTIFICATION": "Click here or press <b>`{0}`</b> to Beautify code. </br> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>ok</a>",
-    "DEFAULT_PROJECT_NOTIFICATION": "Click here to open the <br/><b>default project</b> in phoenix. </br> <a href='#' style='float:right;'>ok</a>",
+    "NEW_PROJECT_NOTIFICATION": "Click this icon to open the `Start Project` window again.</br> See Recent Projects, Open Folder or start projects from templates.</br> <img src=\"styles/images/new_project.png\">",
+    "BEAUTIFY_CODE_NOTIFICATION": "Click here or press <b>`{0}`</b> to beautify code. </br> <img src=\"styles/images/beautify.gif\">",
+    "DEFAULT_PROJECT_NOTIFICATION": "Click here to open the <br/><b>default project</b> in {APP_NAME}. </br> <a href='#' style='float:right;'>ok</a>",
     "DIRECTORY_REPLACE_MESSAGE": "The selected folder <span class='dialog-filename'>{0}</span> is not empty. Are you sure you want to replace the folder contents with the project?",
     "DEFAULT_PROJECT_HTML_CLICK_HERE": "Click here to locate this &lt;span&gt; in the HTML file",
     "BUILD_WEBSITE_SECTION": "Build Website",
@@ -101955,6 +101956,8 @@ define("nls/root/strings", {
     "ERROR_NO_REMOTE_SELECTED": "No remote has been selected for {0}!",
     "ERROR_BRANCH_LIST": "Getting branch list failed",
     "ERROR_FETCH_REMOTE": "Fetching remote information failed",
+    "GIT_TOAST_TITLE": "Explore Git Features in Phoenix Code",
+    "GIT_TOAST_MESSAGE": "Click the Git panel icon to manage your repository. Easily commit, push, pull, and view your project history—all in one place.<br><a href='https://docs.phcode.dev/docs/Features/git'>Learn more about the Git panel →</a>",
 
     // surveys
     "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote for the features you want to see next!"
@@ -172899,6 +172902,7 @@ define("widgets/NotificationUI", function (require, exports, module) {
      *   });
      * ```
      *
+     * @param {string} title The title for the notification.
      * @param {string|Element} template A string template or HTML Element to use as the dialog HTML.
      * @param {String} [elementID] optional id string if provided will show the notification pointing to the element.
      *   If no element is specified, it will be managed as a generic notification.
@@ -172908,19 +172912,21 @@ define("widgets/NotificationUI", function (require, exports, module) {
      *       Values can be a mix of `['top', 'bottom', 'left', 'right']`
      *   * `autoCloseTimeS` - Time in seconds after which the notification should be auto closed. Default is never.
      *   * `dismissOnClick` - when clicked, the notification is closed. Default is true(dismiss).
+     *   * `toastStyle` - To style the toast notification for error, warning, info etc. Can be
+     *     one of `NotificationUI.NOTIFICATION_STYLES_CSS_CLASS.*` or your own css class name.
      * @return {Notification} Object with a done handler that resolves when the notification closes.
      * @type {function}
      */
-    function createFromTemplate(template, elementID, options= {}) {
+    function createFromTemplate(title, template, elementID, options= {}) {
         // https://floating-ui.com/docs/tutorial
         options.allowedPlacements = options.allowedPlacements || ['top', 'bottom', 'left', 'right'];
         options.dismissOnClick = options.dismissOnClick === undefined ? true : options.dismissOnClick;
         if(!elementID){
             elementID = 'notificationUIDefaultAnchor';
         }
-        const tooltip = _createDomElementWithArrowElement(template, elementID, options);
-        tooltip.addClass('notification-ui-visible');
-        let notification = (new Notification(tooltip, NOTIFICATION_TYPE_ARROW));
+        const $tooltip = _createDomElementWithArrowElement(title, template, elementID, options);
+        $tooltip.addClass('notification-ui-visible');
+        let notification = (new Notification($tooltip, NOTIFICATION_TYPE_ARROW));
 
         if(options.autoCloseTimeS){
             setTimeout(()=>{
@@ -172929,10 +172935,13 @@ define("widgets/NotificationUI", function (require, exports, module) {
         }
 
         if(options.dismissOnClick){
-            tooltip.click(()=>{
+            $tooltip.click(()=>{
                 notification.close(CLOSE_REASON.CLICK_DISMISS);
             });
         }
+        $tooltip.find(".notification-popup-close-button").click(()=>{
+            notification.close(CLOSE_REASON.CLICK_DISMISS);
+        });
         return notification;
     }
 
@@ -172988,7 +172997,7 @@ define("widgets/NotificationUI", function (require, exports, module) {
         WorkspaceManager.on(WorkspaceManager.EVENT_WORKSPACE_UPDATE_LAYOUT, tooltip.update);
     }
 
-    function _createDomElementWithArrowElement(domTemplate, elementID, options) {
+    function _createDomElementWithArrowElement(title, domTemplate, elementID, options) {
         notificationWidgetCount++;
         const onElement = document.getElementById(elementID);
         let arrowElement;
@@ -172998,18 +173007,29 @@ define("widgets/NotificationUI", function (require, exports, module) {
         if (typeof domTemplate === 'string' || domTemplate instanceof String){
             textTemplate = domTemplate;
         }
-        let floatingDom = $(`<div id="${widgetID}" class="notification-ui-tooltip" role="tooltip">
-                                ${textTemplate||''}</div>`);
+        const styleClass = NOTIFICATION_STYLES_CSS_CLASS[options.toastStyle]
+            || options.toastStyle;
+        let $floatingDom = $(`<div id="${widgetID}" class="notification-ui-tooltip ${styleClass}" role="tooltip">
+        <div>
+            <p class='notification-popup-close-button arrow'>×</p>
+        </div>
+        <div >
+            <p class="notification-dialog-title">${title}</p>
+        </div>
+        <div>
+            <p class="notification-dialog-content">${textTemplate||''}</p>
+        </div></div>`);
         if(!textTemplate && domTemplate){
-            floatingDom.append($(domTemplate));
+            $floatingDom.find(".notification-dialog-content").append($(domTemplate));
         }
         if(onElement){
-            arrowElement = $(`<div id="${arrowID}" class="notification-ui-arrow"></div>`);
-            floatingDom.append(arrowElement);
+            arrowElement = $(`<div id="${arrowID}" class="notification-ui-arrow ${
+                NOTIFICATION_STYLES_CSS_CLASS[options.toastStyle] || ''}"></div>`);
+            $floatingDom.append(arrowElement);
         }
-        $("body").append(floatingDom);
-        _updatePositions(floatingDom[0], onElement, arrowElement[0], options);
-        return floatingDom;
+        $("body").append($floatingDom);
+        _updatePositions($floatingDom[0], onElement, arrowElement[0], options);
+        return $floatingDom;
     }
 
     /**
@@ -173041,10 +173061,11 @@ define("widgets/NotificationUI", function (require, exports, module) {
     function createToastFromTemplate(title, template, options = {}) {
         options.dismissOnClick = options.dismissOnClick === undefined ? true : options.dismissOnClick;
         notificationWidgetCount++;
+        const styleClass = NOTIFICATION_STYLES_CSS_CLASS[options.toastStyle]
+            || options.toastStyle || NOTIFICATION_STYLES_CSS_CLASS.INFO;
         const widgetID = `notification-toast-${notificationWidgetCount}`,
             $NotificationPopup = $(Mustache.render(ToastPopupHtml, {id: widgetID, title: title,
-                containerStyle: NOTIFICATION_STYLES_CSS_CLASS[options.toastStyle]
-                        || options.toastStyle || NOTIFICATION_STYLES_CSS_CLASS.INFO}));
+                containerStyle: styleClass}));
         $NotificationPopup.find(".notification-dialog-content")
             .append($(template));
 

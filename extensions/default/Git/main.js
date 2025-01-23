@@ -3183,6 +3183,7 @@ define("src/Panel", function (require, exports) {
         StringUtils        = brackets.getModule("utils/StringUtils"),
         Strings            = brackets.getModule("strings"),
         Metrics            = brackets.getModule("utils/Metrics"),
+        NotificationUI = brackets.getModule("widgets/NotificationUI"),
         Constants          = require("src/Constants"),
         Git                = require("src/git/Git"),
         Events             = require("./Events"),
@@ -4763,6 +4764,15 @@ define("src/Panel", function (require, exports) {
         if(!StateManager.get(GIT_PANEL_SHOWN_ON_FIRST_BOOT)){
             StateManager.set(GIT_PANEL_SHOWN_ON_FIRST_BOOT, true);
             toggle(true);
+            NotificationUI.createFromTemplate(
+                Strings.GIT_TOAST_TITLE,
+                Strings.GIT_TOAST_MESSAGE,
+                "git-toolbar-icon", {
+                    allowedPlacements: ['left'],
+                    dismissOnClick: true,
+                    toastStyle: "width-250"
+                }
+            );
         }
         // Add info from Git to panel
         Git.getConfig("user.name").then(function (currentUserName) {
