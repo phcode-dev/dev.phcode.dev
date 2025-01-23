@@ -64254,7 +64254,6 @@ define("nls/ar/strings", {
   "HEALTH_DATA_NOTIFICATION": "تفضيلات تقرير الحالة",
   "HEALTH_FIRST_POPUP_TITLE": "إشعار الخصوصية",
   "HEALTH_DATA_DO_TRACK": "مشاركة معلومات مجهولة المصدر حول كيفية استخدامي لـ {APP_NAME}",
-  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>لا تجمع أو تعالج أي معلومات تعريف شخصية</strong>، ولكنها <strong>تجمع إحصائيات استخدام مجهولة المصدر</strong> لحماية خصوصيتك. البيانات المجهولة المصدر مُستثناة من متطلبات إشعارات اللائحة العامة لحماية البيانات/قانون خصوصية المستهلك في كاليفورنيا، لكننا نعتقد أنك بحاجة إلى خيار إلغاء الاشتراك في جمع البيانات المجهولة المصدر أيضًا.<br><br> يمكنك الاطلاع على بياناتك أو <strong>اختيار عدم مشاركة أي بيانات مجهولة المصدر</strong> عن طريق تحديد <strong>مساعدة > تقرير الحالة</strong>. تساعد إحصائيات استخدام التطبيق وتقارير الأخطاء <strong>المجهولة المصدر</strong> هذه على تحديد أولويات الميزات، والعثور على الأخطاء، واكتشاف مشكلات سهولة الاستخدام لتحسين تجربتك مع {APP_NAME}. بدون هذه البيانات، لن نعرف الميزات التي تستحق تطويرها من أجلِك! <br><br>",
   "HEALTH_DATA_PREVIEW": "تقرير حالة {APP_NAME}",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>لا تجمع أو تعالج أي معلومات تعريف شخصية</strong>، ولكنها <strong>تجمع إحصائيات استخدام مجهولة المصدر</strong> لحماية خصوصيتك. تساعد إحصائيات استخدام التطبيق وتقارير الأخطاء <strong>المجهولة المصدر</strong> هذه على تحديد أولويات الميزات، والعثور على الأخطاء، واكتشاف مشكلات سهولة الاستخدام لتحسين تجربتك مع {APP_NAME}.</p> <p>فيما يلي معاينة للبيانات التي سيتم إرسالها في تقرير الحالة التالي <em>إذا</em> كان مُمكّنًا. (راجع أيضًا وحدة تحكم المطور لسجلات الأخطاء التي تحمل علامة \"تم اكتشاف خطأ فادح\".)</p>",
   "INLINE_TIMING_EDITOR_TIME": "الوقت",
@@ -64547,9 +64546,6 @@ define("nls/ar/strings", {
   "PREVIEW": "معاينة",
   "BUILD_WEBSITE": "إنشاء موقع ويب",
   "VIEW_MORE": "عرض المزيد...",
-  "NEW_PROJECT_NOTIFICATION": "انقر على هذا الرمز لفتح نافذة `مشروع جديد` مرة أخرى.</br> راجع المشاريع الأخيرة، أو افتح مجلداً، أو ابدأ مشاريع من قوالب.</br> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>موافق</a>",
-  "BEAUTIFY_CODE_NOTIFICATION": "انقر هنا أو اضغط <b>`{0}`</b> لتحسين تنسيق الكود. </br> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>موافق</a>",
-  "DEFAULT_PROJECT_NOTIFICATION": "انقر هنا لفتح <br/><b>المشروع الافتراضي</b> في فونيكس. </br> <a href='#' style='float:right;'>موافق</a>",
   "DIRECTORY_REPLACE_MESSAGE": "المجلد المحدد <span class='dialog-filename'>{0}</span> ليس فارغًا. هل أنت متأكد أنك تريد استبدال محتويات المجلد بالمشروع؟",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "انقر هنا لتحديد موقع هذا &lt;span&gt; في ملف HTML",
   "BUILD_WEBSITE_SECTION": "إنشاء موقع ويب",
@@ -64853,7 +64849,13 @@ define("nls/ar/strings", {
   "ERROR_NO_REMOTE_SELECTED": "لم يتم تحديد جهاز تحكم عن بعد لـ {0}!",
   "ERROR_BRANCH_LIST": "فشل عملية الحصول على قائمة الفروع",
   "ERROR_FETCH_REMOTE": "فشل جلب معلومات جهاز التحكم عن بعد",
-  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "صوت للميزات التي ترغب برؤيتها تالياً!"
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "صوت للميزات التي ترغب برؤيتها تالياً!",
+  "HEALTH_DATA_NOTIFICATION_MESSAGE": "لا يقوم تطبيق {APP_NAME} <strong>بجمع أو معالجة أي معلومات تعريف شخصية</strong>، ولكنه <strong>يجمع إحصاءات استخدام مجهولة المصدر</strong> لحماية خصوصيتك.  البيانات المجهولة معفاة من متطلبات إخطار النظام الأوروبي العام لحماية البيانات/قانون خصوصية المستهلك في كاليفورنيا، لكننا نعتقد أن لديك الحق في اختيار عدم المشاركة في جمع البيانات المجهولة المصدر أيضًا.<br><br> يمكنك الاطلاع على بياناتك أو <strong>اختيار عدم مشاركة أي بيانات مجهولة المصدر</strong> عن طريق تحديد <strong>مساعدة > تقرير الحالة</strong>. تساعد إحصاءات استخدام التطبيق <strong>المجهولة المصدر</strong> وتقارير الأخطاء على تحديد أولويات الميزات، والعثور على الأخطاء، وتحديد مشكلات سهولة الاستخدام لتحسين تجربتك مع {APP_NAME}. بدون هذه البيانات، لن نعرف الميزات التي تستحق تطويرها من أجلك! <br>",
+  "NEW_PROJECT_NOTIFICATION": "انقر على هذا الرمز لفتح نافذة `بدء مشروع` مرة أخرى.</br> شاهد المشاريع الأخيرة، أو افتح مجلدًا أو ابدأ مشاريع من قوالب.</br> <img src=\"styles/images/new_project.png\">",
+  "BEAUTIFY_CODE_NOTIFICATION": "انقر هنا أو اضغط على <b>`{0}`</b> لتحسين تنسيق الشفرة. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "انقر هنا لفتح <br/><b>المشروع الافتراضي</b> في {APP_NAME}. </br> <a href='#' style='float:right;'>موافق</a>",
+  "GIT_TOAST_TITLE": "استكشف ميزات Git في Phoenix Code",
+  "GIT_TOAST_MESSAGE": "انقر على رمز لوحة Git لإدارة مستودعك. يمكنك بسهولة تنفيذ الالتزام والدفع والسحب وعرض سجل مشروعك - كل ذلك في مكان واحد.<br><a href='https://docs.phcode.dev/docs/Features/git'>تعرّف على المزيد حول لوحة Git →</a>"
 });
 /*
  * GNU AGPL-3.0 License
@@ -65600,7 +65602,6 @@ define("nls/bg/strings", {
   "HEALTH_DATA_NOTIFICATION": "Предпочитания за здравния доклад",
   "HEALTH_FIRST_POPUP_TITLE": "Уведомление за поверителност",
   "HEALTH_DATA_DO_TRACK": "Споделяне на анонимна информация за това как използвам {APP_NAME}",
-  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>не събира и не обработва никаква лична информация</strong>, но <strong>събира анонимна статистика за използването</strong>, за да защити вашата поверителност. Анонимните данни са освободени от изискванията за уведомяване по GDPR/CCPA, но ние вярваме, че трябва да имате избор да се откажете и от събирането на анонимни данни.<br><br> Можете да видите данните си или <strong>да изберете да не споделяте никакви анонимни данни</strong>, като изберете <strong>Помощ > Отчет за състоянието</strong>. Тази <strong>анонимна</strong> статистика за използването на приложението и отчетите за грешки ни помагат да приоритизираме функциите, да откриваме грешки и да забелязваме проблеми с използваемостта, за да подобрим вашето изживяване с {APP_NAME}. Без тези данни, няма да знаем какви функции си струва да разработваме за вас! <br><br>",
   "HEALTH_DATA_PREVIEW": "Здравен доклад на {APP_NAME}",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>не събира и не обработва никаква лична информация</strong>, но <strong>събира анонимна статистика за използването</strong>, за да защити вашата поверителност. Тази <strong>анонимна</strong> статистика за използването на приложението и отчетите за грешки ни помагат да приоритизираме функциите, да откриваме грешки и да забелязваме проблеми с използваемостта, за да подобрим вашето изживяване с {APP_NAME}.</p> <p>По-долу е преглед на данните, които ще бъдат изпратени в следващия ви отчет за състоянието, <em>ако</em> е активиран. (Вижте също конзолата за разработчици за регистрационни файлове за грешки, маркирани като „Уловена критична грешка“.)</p>",
   "INLINE_TIMING_EDITOR_TIME": "Време",
@@ -65893,9 +65894,6 @@ define("nls/bg/strings", {
   "PREVIEW": "Преглед",
   "BUILD_WEBSITE": "Създаване на уебсайт",
   "VIEW_MORE": "Виж още...",
-  "NEW_PROJECT_NOTIFICATION": "Кликнете върху тази икона, за да отворите отново прозореца „Нов проект“.<br/> Вижте Последни проекти, Отвори папка или стартирайте проекти от шаблони.<br/> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>ок</a>",
-  "BEAUTIFY_CODE_NOTIFICATION": "Кликнете тук или натиснете <b>`{0}`</b>, за да форматирате кода. </br> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>ок</a>",
-  "DEFAULT_PROJECT_NOTIFICATION": "Кликнете тук, за да отворите <br/><b>проекта по подразбиране</b> във phoenix. </br> <a href='#' style='float:right;'>ок</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Избраната папка <span class='dialog-filename'>{0}</span> не е празна. Сигурни ли сте, че искате да замените съдържанието на папката с проекта?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Кликнете тук, за да намерите това &lt;span&gt; в HTML файла",
   "BUILD_WEBSITE_SECTION": "Създаване на уебсайт",
@@ -66199,7 +66197,13 @@ define("nls/bg/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Няма избрано отдалечено хранилище за {0}!",
   "ERROR_BRANCH_LIST": "Получаването на списъка с клонове е неуспешно",
   "ERROR_FETCH_REMOTE": "Извличането на информация за отдалеченото хранилище е неуспешно",
-  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Гласувайте за функциите, които искате да видите следващи!"
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Гласувайте за функциите, които искате да видите следващи!",
+  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>не събира и не обработва никаква лична информация</strong>, но <strong>събира анонимна статистика за използването</strong>, за да защити вашата поверителност. Анонимните данни са освободени от изискванията за уведомяване по GDPR/CCPA, но ние вярваме, че трябва да имате избор да се откажете и от събирането на анонимни данни.<br><br> Можете да видите данните си или да <strong>изберете да не споделяте никакви анонимни данни</strong>, като изберете <strong>Помощ > Отчет за състоянието</strong>. Тази <strong>анонимна</strong> статистика за използването на приложението и отчетите за грешки ни помагат да приоритизираме функциите, да откриваме грешки и да забелязваме проблеми с използваемостта, за да подобрим вашето преживяване с {APP_NAME}. Без тези данни, ние не бихме знаели какви функции си струва да разработваме за вас! <br>",
+  "NEW_PROJECT_NOTIFICATION": "Щракнете върху тази икона, за да отворите отново прозореца „Стартиране на проект“.</br> Вижте Последни проекти, Отваряне на папка или стартирайте проекти от шаблони.</br> <img src=\"styles/images/new_project.png\">",
+  "BEAUTIFY_CODE_NOTIFICATION": "Щракнете тук или натиснете <b>`{0}`</b>, за да форматирате кода. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Щракнете тук, за да отворите <br/><b>проекта по подразбиране</b> в {APP_NAME}. </br> <a href='#' style='float:right;'>ок</a>",
+  "GIT_TOAST_TITLE": "Разгледайте Git функциите в Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Щракнете върху иконата на Git панела, за да управлявате хранилището си. Лесно създавайте commit, push, pull и преглеждайте историята на проекта си – всичко на едно място.<br><a href='https://docs.phcode.dev/docs/Features/git'>Научете повече за Git панела →</a>"
 });
 /*
  * Copyright (c) 2013 Adobe Systems Incorporated. All rights reserved.
@@ -66975,7 +66979,6 @@ define("nls/cs/strings", {
   "HEALTH_DATA_NOTIFICATION": "Nastavení hlášení o zdraví",
   "HEALTH_FIRST_POPUP_TITLE": "Oznámení o ochraně osobních údajů",
   "HEALTH_DATA_DO_TRACK": "Sdílet anonymní informace o tom, jak používám {APP_NAME}",
-  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>neshromažďuje ani nezpracovává žádné osobní údaje</strong>, ale <strong>shromažďuje anonymní statistiky používání</strong> pro ochranu vašeho soukromí. Anonymní data jsou vyňata z požadavků na oznámení GDPR/CCPA, ale věříme, že byste měli mít možnost odhlásit se i ze shromažďování anonymních dat.<br><br> Svá data si můžete prohlédnout nebo se <strong>rozhodnout nesdílet žádná anonymní data</strong> výběrem možnosti <strong>Nápověda > Hlášení o stavu</strong>. Tyto <strong>anonymní</strong> statistiky používání aplikace a hlášení o chybách nám pomáhají upřednostňovat funkce, nacházet chyby a odhalovat problémy s použitelností pro zlepšení vaší zkušenosti s aplikací {APP_NAME}. Bez těchto dat bychom nevěděli, jaké funkce pro vás stojí za to vyvíjet! <br><br>",
   "HEALTH_DATA_PREVIEW": "Hlášení o zdraví {APP_NAME}",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>neshromažďuje ani nezpracovává žádné osobní údaje</strong>, ale <strong>shromažďuje anonymní statistiky používání</strong> pro ochranu vašeho soukromí. Tyto <strong>anonymní</strong> statistiky používání aplikace a hlášení o chybách nám pomáhají upřednostňovat funkce, nacházet chyby a odhalovat problémy s použitelností pro zlepšení vaší zkušenosti s aplikací {APP_NAME}.</p> <p>Níže je uveden náhled dat, která budou odeslána ve vašem dalším hlášení o stavu, <em>pokud</em> je povoleno. (Viz také konzole pro vývojáře pro protokoly chyb označené 'Caught Critical error'.)</p>",
   "INLINE_TIMING_EDITOR_TIME": "Doba",
@@ -67268,9 +67271,6 @@ define("nls/cs/strings", {
   "PREVIEW": "Náhled",
   "BUILD_WEBSITE": "Vytvořit web",
   "VIEW_MORE": "Zobrazit více...",
-  "NEW_PROJECT_NOTIFICATION": "Klikněte na tuto ikonu pro opětovné otevření okna `Nový projekt`.</br> Zobrazte si Nedávné projekty, Otevřete složku nebo začněte projekty z šablon.</br> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>ok</a>",
-  "BEAUTIFY_CODE_NOTIFICATION": "Klikněte sem nebo stiskněte <b>`{0}`</b> pro formátování kódu. </br> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>ok</a>",
-  "DEFAULT_PROJECT_NOTIFICATION": "Klikněte sem pro otevření <br/><b>výchozího projektu</b> ve phoenixu. </br> <a href='#' style='float:right;'>ok</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Vybraná složka <span class='dialog-filename'>{0}</span> není prázdná. Jste si jisti, že chcete nahradit obsah složky projektem?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Klikněte sem pro nalezení tohoto &lt;span&gt; v HTML souboru",
   "BUILD_WEBSITE_SECTION": "Vytvořit web",
@@ -67574,7 +67574,13 @@ define("nls/cs/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Nebyl vybrán žádný vzdálený repozitář pro {0}!",
   "ERROR_BRANCH_LIST": "Získání seznamu větví selhalo",
   "ERROR_FETCH_REMOTE": "Získání informací o vzdáleném repozitáři selhalo",
-  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Hlasujte pro funkce, které chcete vidět v další verzi!"
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Hlasujte pro funkce, které chcete vidět v další verzi!",
+  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>nesbírá ani nezpracovává žádné osobně identifikovatelné informace</strong>, ale <strong>sbírá anonymní statistiky používání</strong>, aby chránil vaše soukromí. Anonymní data jsou vyňata z požadavků na oznámení GDPR/CCPA, ale věříme, že byste měli mít možnost odhlásit se i ze sběru anonymních dat.<br><br> Svá data si můžete prohlédnout nebo se <strong>rozhodnout nesdílet žádná anonymní data</strong> výběrem možnosti <strong>Nápověda > Zpráva o stavu</strong>. Tyto <strong>anonymní</strong> statistiky používání aplikace a zprávy o chybách nám pomáhají upřednostňovat funkce, nacházet chyby a odhalovat problémy s použitelností, abychom zlepšili vaši zkušenost s aplikací {APP_NAME}. Bez těchto dat bychom nevěděli, jaké funkce pro vás stojí za to vyvíjet! <br>",
+  "NEW_PROJECT_NOTIFICATION": "Klikněte na tuto ikonu pro opětovné otevření okna `Spustit projekt`.</br> Zobrazte si Nedávné projekty, Otevřít složku nebo spusťte projekty ze šablon.</br> <img src=\"styles/images/new_project.png\">",
+  "BEAUTIFY_CODE_NOTIFICATION": "Klikněte sem nebo stiskněte <b>`{0}`</b> pro formátování kódu. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Klikněte sem pro otevření <br/><b>výchozího projektu</b> v {APP_NAME}. </br> <a href='#' style='float:right;'>ok</a>",
+  "GIT_TOAST_TITLE": "Prozkoumejte funkce Gitu v Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Klikněte na ikonu panelu Git pro správu vašeho repozitáře. Snadno commitujte, pushujte, pullujte a prohlížejte si historii projektu – vše na jednom místě.<br><a href='https://docs.phcode.dev/docs/Features/git'>Zjistěte více o panelu Git →</a>"
 });
 /*
  * GNU AGPL-3.0 License
@@ -68348,7 +68354,6 @@ define("nls/da/strings", {
   "HEALTH_DATA_NOTIFICATION": "Indstillinger for sundhedsrapport",
   "HEALTH_FIRST_POPUP_TITLE": "Privatlivsmeddelelse",
   "HEALTH_DATA_DO_TRACK": "Del anonym information om hvordan jeg bruger {APP_NAME}",
-  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>indsamler eller behandler ingen personligt identificerbare oplysninger</strong>, men <strong>indsamler anonyme brugsstatistikker</strong> for at beskytte dit privatliv. Anonyme data er undtaget fra GDPR/CCPA-bestemmelser om underretning, men vi mener, at du skal have mulighed for at fravælge indsamling af anonyme data. <br><br> Du kan se dine data eller <strong>vælge ikke at dele anonyme data</strong> ved at vælge <strong>Hjælp > Sundhedsrapport</strong>. Disse <strong>anonyme</strong> statistikker over appbrug og fejlrapporter hjælper med at prioritere funktioner, finde fejl og identificere brugervenlighedsproblemer for at forbedre din oplevelse med {APP_NAME}. Uden disse data ville vi ikke vide, hvilke funktioner det er værd at udvikle til dig! <br><br>",
   "HEALTH_DATA_PREVIEW": "{APP_NAME} sundhedsrapport",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>indsamler eller behandler ingen personligt identificerbare oplysninger</strong>, men <strong>indsamler anonyme brugsstatistikker</strong> for at beskytte dit privatliv. Disse <strong>anonyme</strong> statistikker over appbrug og fejlrapporter hjælper med at prioritere funktioner, finde fejl og identificere brugervenlighedsproblemer for at forbedre din oplevelse med {APP_NAME}.</p> <p>Nedenfor er et eksempel på de data, der vil blive sendt i din næste sundhedsrapport, <em>hvis</em> den er aktiveret. (Se også udviklerkonsollen for fejllogger markeret 'Caught Critical error'.)</p>",
   "INLINE_TIMING_EDITOR_TIME": "Tid",
@@ -68641,9 +68646,6 @@ define("nls/da/strings", {
   "PREVIEW": "Forhåndsvisning",
   "BUILD_WEBSITE": "Opbyg website",
   "VIEW_MORE": "Se mere...",
-  "NEW_PROJECT_NOTIFICATION": "Klik på dette ikon for at åbne vinduet `Nyt projekt` igen.</br> Se Seneste Projekter, Åbn Mappe eller start projekter fra skabeloner.</br> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>ok</a>",
-  "BEAUTIFY_CODE_NOTIFICATION": "Klik her eller tryk på <b>`{0}`</b> for at formattere kode. </br> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>ok</a>",
-  "DEFAULT_PROJECT_NOTIFICATION": "Klik her for at åbne <br/><b>standardprojektet</b> i phoenix. </br> <a href='#' style='float:right;'>ok</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Den valgte mappe <span class='dialog-filename'>{0}</span> er ikke tom. Er du sikker på, at du vil erstatte mappeindholdet med projektet?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Klik her for at finde denne &lt;span&gt; i HTML-filen",
   "BUILD_WEBSITE_SECTION": "Opbyg website",
@@ -68947,7 +68949,13 @@ define("nls/da/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Ingen remote er valgt for {0}!",
   "ERROR_BRANCH_LIST": "Det lykkedes ikke at hente grenliste",
   "ERROR_FETCH_REMOTE": "Hentning af remote-information mislykkedes",
-  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stem på de funktioner, du gerne vil se!"
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stem på de funktioner, du gerne vil se!",
+  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>indsamler eller behandler ingen personligt identificerbare oplysninger</strong>, men <strong>indsamler anonyme brugsstatistikker</strong> for at beskytte dit privatliv. Anonyme data er undtaget fra GDPR/CCPA-anmeldelseskrav, men vi mener, at du skal have mulighed for at fravælge indsamling af anonyme data.<br><br> Du kan se dine data eller <strong>vælge ikke at dele anonyme data</strong> ved at vælge <strong>Hjælp > Sundhedsrapport</strong>. Disse <strong>anonyme</strong> statistikker over appbrug og fejlrapporter hjælper med at prioritere funktioner, finde fejl og identificere brugervenlighedsproblemer for at forbedre din oplevelse med {APP_NAME}. Uden disse data ville vi ikke vide, hvilke funktioner det er værd at bygge for dig! <br>",
+  "NEW_PROJECT_NOTIFICATION": "Klik på dette ikon for at åbne vinduet `Start projekt` igen.</br> Se Seneste Projekter, Åbn Mappe eller start projekter fra skabeloner.</br> <img src=\"styles/images/new_project.png\">",
+  "BEAUTIFY_CODE_NOTIFICATION": "Klik her eller tryk på <b>`{0}`</b> for at formattere kode. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Klik her for at åbne <br/><b>standardprojektet</b> i {APP_NAME}. </br> <a href='#' style='float:right;'>ok</a>",
+  "GIT_TOAST_TITLE": "Udforsk Git-funktioner i Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Klik på Git-panelikonet for at administrere dit repository. Commit, push, pull og se din projekthistorik nemt – alt sammen på ét sted.<br><a href='https://docs.phcode.dev/docs/Features/git'>Læs mere om Git-panelet →</a>"
 });
 /*
  * GNU AGPL-3.0 License
@@ -69719,7 +69727,6 @@ define("nls/de/strings", {
   "HEALTH_DATA_NOTIFICATION": "Statusbericht-Einstellungen",
   "HEALTH_FIRST_POPUP_TITLE": "Datenschutzhinweis",
   "HEALTH_DATA_DO_TRACK": "Anonyme Informationen über meine Nutzung von {APP_NAME} teilen",
-  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>erfasst oder verarbeitet keine personenbezogenen Daten</strong>, sondern <strong>erfasst anonyme Nutzungsstatistiken</strong>, um Ihre Privatsphäre zu schützen. Anonyme Daten sind von den Benachrichtigungsanforderungen der DSGVO/CCPA ausgenommen, aber wir glauben, dass Sie die Möglichkeit haben sollten, auch die Erfassung anonymer Daten abzulehnen.<br><br> Sie können Ihre Daten einsehen oder <strong>die Weitergabe anonymer Daten ablehnen</strong>, indem Sie <strong>Hilfe > Zustandsbericht</strong> auswählen. Diese <strong>anonymen</strong> Nutzungsstatistiken und Fehlerberichte der App helfen uns, Funktionen zu priorisieren, Fehler zu finden und Usability-Probleme zu erkennen, um Ihre Erfahrung mit {APP_NAME} zu verbessern. Ohne diese Daten wüssten wir nicht, welche Funktionen es sich lohnt, für Sie zu entwickeln! <br><br>",
   "HEALTH_DATA_PREVIEW": "{APP_NAME}-Statusbericht",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>erfasst oder verarbeitet keine personenbezogenen Daten</strong>, sondern <strong>erfasst anonyme Nutzungsstatistiken</strong>, um Ihre Privatsphäre zu schützen. Diese <strong>anonymen</strong> Nutzungsstatistiken und Fehlerberichte der App helfen uns, Funktionen zu priorisieren, Fehler zu finden und Usability-Probleme zu erkennen, um Ihre Erfahrung mit {APP_NAME} zu verbessern.</p> <p>Im Folgenden finden Sie eine Vorschau der Daten, die in Ihrem nächsten Zustandsbericht gesendet werden, <em>falls</em> dieser aktiviert ist. (Siehe auch die Entwicklerkonsole für Fehlerprotokolle mit der Kennzeichnung 'Schwerwiegender Fehler abgefangen'.)</p>",
   "INLINE_TIMING_EDITOR_TIME": "Zeit",
@@ -70012,9 +70019,6 @@ define("nls/de/strings", {
   "PREVIEW": "Vorschau",
   "BUILD_WEBSITE": "Webseite erstellen",
   "VIEW_MORE": "Mehr anzeigen...",
-  "NEW_PROJECT_NOTIFICATION": "Klicken Sie auf dieses Symbol, um das Fenster `Neues Projekt` erneut zu öffnen.</br> Sehen Sie sich die letzten Projekte an, öffnen Sie einen Ordner oder starten Sie Projekte aus Vorlagen.</br> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>OK</a>",
-  "BEAUTIFY_CODE_NOTIFICATION": "Klicken Sie hier oder drücken Sie <b>`{0}`</b>, um den Code zu verschönern. </br> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>OK</a>",
-  "DEFAULT_PROJECT_NOTIFICATION": "Klicken Sie hier, um das <br/><b>Standardprojekt</b> in Phoenix zu öffnen. </br> <a href='#' style='float:right;'>OK</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Der ausgewählte Ordner <span class='dialog-filename'>{0}</span> ist nicht leer. Möchten Sie den Ordnerinhalt wirklich mit dem Projekt ersetzen?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Klicken Sie hier, um dies &lt;span&gt; in der HTML-Datei zu finden",
   "BUILD_WEBSITE_SECTION": "Webseite erstellen",
@@ -70318,7 +70322,13 @@ define("nls/de/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Für {0} wurde kein Remote ausgewählt!",
   "ERROR_BRANCH_LIST": "Abrufen der Branch-Liste fehlgeschlagen",
   "ERROR_FETCH_REMOTE": "Abrufen der Remote-Informationen fehlgeschlagen",
-  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stimmen Sie für die Funktionen ab, die Sie als Nächstes sehen möchten!"
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stimmen Sie für die Funktionen ab, die Sie als Nächstes sehen möchten!",
+  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>sammelt oder verarbeitet keine personenbezogenen Daten</strong>, aber <strong>erhebt anonyme Nutzungsstatistiken</strong>, um Ihre Privatsphäre zu schützen. Anonyme Daten sind von den Benachrichtigungsanforderungen der DSGVO/CCPA ausgenommen, aber wir glauben, dass Sie die Möglichkeit haben sollten, der Erfassung anonymer Daten zu widersprechen.<br><br> Sie können Ihre Daten einsehen oder <strong>die Weitergabe anonymer Daten deaktivieren</strong>, indem Sie <strong>Hilfe > Zustandsbericht</strong> auswählen. Diese <strong>anonymen</strong> App-Nutzungsstatistiken und Fehlerberichte helfen uns, Funktionen zu priorisieren, Fehler zu finden und Usability-Probleme zu erkennen, um Ihre Erfahrung mit {APP_NAME} zu verbessern. Ohne diese Daten wüssten wir nicht, welche Funktionen es sich lohnt, für Sie zu entwickeln! <br>",
+  "NEW_PROJECT_NOTIFICATION": "Klicken Sie auf dieses Symbol, um das Fenster „Projekt starten“ erneut zu öffnen.</br> Sehen Sie sich kürzlich bearbeitete Projekte an, öffnen Sie einen Ordner oder starten Sie Projekte aus Vorlagen.</br> <img src=\"styles/images/new_project.png\">",
+  "BEAUTIFY_CODE_NOTIFICATION": "Klicken Sie hier oder drücken Sie <b>`{0}`</b>, um Code zu verschönern. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Klicken Sie hier, um das <br/><b>Standardprojekt</b> in {APP_NAME} zu öffnen. </br> <a href='#' style='float:right;'>OK</a>",
+  "GIT_TOAST_TITLE": "Git-Funktionen in Phoenix Code entdecken",
+  "GIT_TOAST_MESSAGE": "Klicken Sie auf das Git-Panel-Symbol, um Ihr Repository zu verwalten. Committen, Pushen, Pullen und die Anzeige Ihres Projektverlaufs – alles an einem Ort.<br><a href='https://docs.phcode.dev/docs/Features/git'>Mehr über das Git-Panel erfahren →</a>"
 });
 /*
  * GNU AGPL-3.0 License
@@ -71092,7 +71102,6 @@ define("nls/el/strings", {
   "HEALTH_DATA_NOTIFICATION": "Προτιμήσεις Health Report",
   "HEALTH_FIRST_POPUP_TITLE": "Ειδοποίηση Απορρήτου",
   "HEALTH_DATA_DO_TRACK": "Κοινοποίηση ανώνυμων πληροφοριών σχετικά με τον τρόπο που χρησιμοποιώ το {APP_NAME}",
-  "HEALTH_DATA_NOTIFICATION_MESSAGE": "Το {APP_NAME} <strong>δεν συλλέγει ή επεξεργάζεται προσωπικά δεδομένα</strong>, αλλά <strong>συλλέγει ανώνυμα στατιστικά χρήσης</strong> για την προστασία του απορρήτου σας. Τα ανώνυμα δεδομένα εξαιρούνται από τις απαιτήσεις ειδοποίησης GDPR/CCPA, αλλά πιστεύουμε ότι πρέπει να έχετε την επιλογή να εξαιρεθείτε από τη συλλογή ανώνυμων δεδομένων.<br><br> Μπορείτε να δείτε τα δεδομένα σας ή να <strong>επιλέξετε να μην κοινοποιήσετε ανώνυμα δεδομένα</strong> επιλέγοντας <strong>Βοήθεια > Αναφορά Υγείας</strong>. Αυτά τα <strong>ανώνυμα</strong> στατιστικά χρήσης εφαρμογών και οι αναφορές σφαλμάτων βοηθούν στην ιεράρχηση των λειτουργιών, στην εύρεση σφαλμάτων και στον εντοπισμό προβλημάτων χρηστικότητας για τη βελτίωση της εμπειρίας σας με το {APP_NAME}. Χωρίς αυτά τα δεδομένα, δεν θα γνωρίζαμε ποιες λειτουργίες αξίζει να δημιουργήσουμε για εσάς! <br><br>",
   "HEALTH_DATA_PREVIEW": "{APP_NAME} Health Report",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>Το {APP_NAME} <strong>δεν συλλέγει ή επεξεργάζεται προσωπικά δεδομένα</strong>, αλλά <strong>συλλέγει ανώνυμα στατιστικά χρήσης</strong> για την προστασία του απορρήτου σας. Αυτά τα <strong>ανώνυμα</strong> στατιστικά χρήσης εφαρμογών και οι αναφορές σφαλμάτων βοηθούν στην ιεράρχηση των λειτουργιών, στην εύρεση σφαλμάτων και στον εντοπισμό προβλημάτων χρηστικότητας για τη βελτίωση της εμπειρίας σας με το {APP_NAME}.</p> <p>Παρακάτω είναι μια προεπισκόπηση των δεδομένων που θα σταλούν στην επόμενη Αναφορά Υγείας σας <em>εάν</em> είναι ενεργοποιημένη. (Δείτε επίσης την κονσόλα προγραμματιστή για αρχεία καταγραφής σφαλμάτων με την ένδειξη 'Caught Critical error'.)</p>",
   "INLINE_TIMING_EDITOR_TIME": "Χρόνος",
@@ -71385,9 +71394,6 @@ define("nls/el/strings", {
   "PREVIEW": "Προεπισκόπηση",
   "BUILD_WEBSITE": "Δημιουργία Ιστοσελίδας",
   "VIEW_MORE": "Δείτε Περισσότερα...",
-  "NEW_PROJECT_NOTIFICATION": "Κάντε κλικ σε αυτό το εικονίδιο για να ανοίξετε ξανά το παράθυρο `Νέο Έργο`.</br> Δείτε τα Πρόσφατα Έργα, Ανοίξτε Φάκελο ή ξεκινήστε έργα από πρότυπα.</br> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>εντάξει</a>",
-  "BEAUTIFY_CODE_NOTIFICATION": "Κάντε κλικ εδώ ή πατήστε <b>`{0}`</b> για να ομορφύνετε τον κώδικα. </br> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>εντάξει</a>",
-  "DEFAULT_PROJECT_NOTIFICATION": "Κάντε κλικ εδώ για να ανοίξετε το <br/><b>προεπιλεγμένο έργο</b> στο phoenix. </br> <a href='#' style='float:right;'>εντάξει</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Ο επιλεγμένος φάκελος <span class='dialog-filename'>{0}</span> δεν είναι κενός. Είστε σίγουροι ότι θέλετε να αντικαταστήσετε τα περιεχόμενα του φακέλου με το έργο;",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Κάντε κλικ εδώ για να εντοπίσετε αυτό το &lt;span&gt; στο αρχείο HTML",
   "BUILD_WEBSITE_SECTION": "Δημιουργία Ιστοσελίδας",
@@ -71691,7 +71697,13 @@ define("nls/el/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Δεν έχει επιλεγεί απομακρυσμένο για το {0}!",
   "ERROR_BRANCH_LIST": "Αποτυχία λήψης λίστας κλάδων",
   "ERROR_FETCH_REMOTE": "Αποτυχία λήψης πληροφοριών απομακρυσμένου",
-  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Ψηφίστε για τις λειτουργίες που θέλετε να δείτε στη συνέχεια!"
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Ψηφίστε για τις λειτουργίες που θέλετε να δείτε στη συνέχεια!",
+  "HEALTH_DATA_NOTIFICATION_MESSAGE": "Το {APP_NAME} <strong>δεν συλλέγει ή επεξεργάζεται προσωπικά δεδομένα</strong>, αλλά <strong>συλλέγει ανώνυμα στατιστικά χρήσης</strong> για την προστασία του απορρήτου σας. Τα ανώνυμα δεδομένα εξαιρούνται από τις απαιτήσεις ειδοποίησης GDPR/CCPA, αλλά πιστεύουμε ότι πρέπει να έχετε την επιλογή να εξαιρεθείτε από τη συλλογή ανώνυμων δεδομένων.<br><br> Μπορείτε να δείτε τα δεδομένα σας ή να <strong>επιλέξετε να μην κοινοποιήσετε ανώνυμα δεδομένα</strong> επιλέγοντας <strong>Βοήθεια > Αναφορά Υγείας</strong>. Αυτά τα <strong>ανώνυμα</strong> στατιστικά χρήσης εφαρμογών και οι αναφορές σφαλμάτων βοηθούν στην ιεράρχηση των λειτουργιών, στην εύρεση σφαλμάτων και στον εντοπισμό προβλημάτων χρηστικότητας για τη βελτίωση της εμπειρίας σας με το {APP_NAME}. Χωρίς αυτά τα δεδομένα, δεν θα γνωρίζαμε ποιες λειτουργίες αξίζει να δημιουργήσουμε για εσάς! <br>",
+  "NEW_PROJECT_NOTIFICATION": "Κάντε κλικ σε αυτό το εικονίδιο για να ανοίξετε ξανά το παράθυρο `Έναρξη Έργου`.</br> Δείτε τα Πρόσφατα Έργα, ανοίξτε Φάκελο ή ξεκινήστε έργα από πρότυπα.</br> <img src=\"styles/images/new_project.png\">",
+  "BEAUTIFY_CODE_NOTIFICATION": "Κάντε κλικ εδώ ή πατήστε <b>`{0}`</b> για να ομορφύνετε τον κώδικα. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Κάντε κλικ εδώ για να ανοίξετε το <br/><b>προεπιλεγμένο έργο</b> στο {APP_NAME}. </br> <a href='#' style='float:right;'>ok</a>",
+  "GIT_TOAST_TITLE": "Εξερευνήστε τις Λειτουργίες Git στο Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Κάντε κλικ στο εικονίδιο του πίνακα Git για να διαχειριστείτε το αποθετήριό σας. Κάντε εύκολα commit, push, pull και δείτε το ιστορικό του έργου σας—όλα σε ένα μέρος.<br><a href='https://docs.phcode.dev/docs/Features/git'>Μάθετε περισσότερα για τον πίνακα Git →</a>"
 });
 /*
  * GNU AGPL-3.0 License
@@ -72465,7 +72477,6 @@ define("nls/en-gb/strings", {
   "HEALTH_DATA_NOTIFICATION": "Health Report Preferences",
   "HEALTH_FIRST_POPUP_TITLE": "Privacy Notice",
   "HEALTH_DATA_DO_TRACK": "Share anonymous information on how I use {APP_NAME}",
-  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>does not collect or process any personally identifiable information</strong>, but <strong>collects anonymous usage statistics</strong> to guard your privacy. Anonymous data is exempt from GDPR/CCPA notification requirements, but we believe you should have a choice to opt out of anonymous data collection as well.<br><br> You can see your data or <strong>choose not to share any anonymous data</strong> by selecting <strong>Help > Health Report</strong>. These <strong>anonymous</strong> app usage statistics and error reports help prioritise features, find bugs, and spot usability issues for improving your experience with {APP_NAME}. Without this data, we wouldn't know what features are worth building for you! <br><br>",
   "HEALTH_DATA_PREVIEW": "{APP_NAME} Health Report",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>does not collect or process any personally identifiable information</strong>, but <strong>collects anonymous usage statistics</strong> to guard your privacy. These <strong>anonymous</strong> app usage statistics and error reports help prioritise features, find bugs, and spot usability issues for improving your experience with {APP_NAME}.</p> <p>Below is a preview of the data that will be sent in your next Health Report <em>if</em> it is enabled. (Also see developer console for error logs marked 'Caught Critical error'.)</p>",
   "INLINE_TIMING_EDITOR_TIME": "Time",
@@ -72758,9 +72769,6 @@ define("nls/en-gb/strings", {
   "PREVIEW": "Preview",
   "BUILD_WEBSITE": "Build website",
   "VIEW_MORE": "See more…",
-  "NEW_PROJECT_NOTIFICATION": "Click this icon to open the `New Project` window again.</br> See Recent Projects, Open Folder or start projects from templates.</br> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>OK</a>",
-  "BEAUTIFY_CODE_NOTIFICATION": "Click here or press <b>`{0}`</b> to beautify code. </br> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>OK</a>",
-  "DEFAULT_PROJECT_NOTIFICATION": "Click here to open the <br/><b>default project</b> in Phoenix. </br> <a href='#' style='float:right;'>OK</a>",
   "DIRECTORY_REPLACE_MESSAGE": "The selected folder <span class='dialog-filename'>{0}</span> is not empty. Are you sure you want to replace the folder contents with the project?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Click here to locate this &lt;span&gt; in the HTML file",
   "BUILD_WEBSITE_SECTION": "Build website",
@@ -73064,7 +73072,13 @@ define("nls/en-gb/strings", {
   "ERROR_NO_REMOTE_SELECTED": "No remote has been selected for {0}!",
   "ERROR_BRANCH_LIST": "Getting the branch list failed",
   "ERROR_FETCH_REMOTE": "Fetching remote information failed",
-  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote for the features you'd like to see next!"
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote for the features you'd like to see next!",
+  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>does not collect or process any personally identifiable information</strong>, but <strong>collects anonymous usage statistics</strong> to protect your privacy. Anonymous data is exempt from GDPR/CCPA notification requirements, but we believe you should have a choice to opt out of anonymous data collection as well.<br><br> You can see your data or <strong>choose not to share any anonymous data</strong> by selecting <strong>Help > Health Report</strong>. These <strong>anonymous</strong> app usage statistics and error reports help us prioritise features, find bugs, and spot usability issues to improve your experience with {APP_NAME}. Without this data, we wouldn't know what features are worth building for you! <br>",
+  "NEW_PROJECT_NOTIFICATION": "Click this icon to open the `Start Project` window again.</br> See Recent Projects, Open Folder or start projects from templates.</br> <img src=\"styles/images/new_project.png\">",
+  "BEAUTIFY_CODE_NOTIFICATION": "Click here or press <b>`{0}`</b> to format code. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Click here to open the <br/><b>default project</b> in {APP_NAME}. </br> <a href='#' style='float:right;'>OK</a>",
+  "GIT_TOAST_TITLE": "Explore Git Features in Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Click the Git panel icon to manage your repository. Easily commit, push, pull, and view your project history—all in one place.<br><a href='https://docs.phcode.dev/docs/Features/git'>Learn more about the Git panel →</a>"
 });
 /*
  * GNU AGPL-3.0 License
@@ -73811,7 +73825,6 @@ define("nls/es/strings", {
   "HEALTH_DATA_NOTIFICATION": "Preferencias del reporte de estadísticas",
   "HEALTH_FIRST_POPUP_TITLE": "Aviso de privacidad",
   "HEALTH_DATA_DO_TRACK": "Compartir información anónima sobre cómo uso {APP_NAME}",
-  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>no recopila ni procesa ninguna información de identificación personal</strong>, pero <strong>recopila estadísticas de uso anónimas</strong> para proteger su privacidad. Los datos anónimos están exentos de los requisitos de notificación de GDPR/CCPA, pero creemos que también debe tener la opción de no participar en la recopilación de datos anónimos.<br><br> Puede ver sus datos o <strong>elegir no compartir ningún dato anónimo</strong> seleccionando <strong>Ayuda > Informe de estado</strong>. Estas estadísticas de uso de la aplicación <strong>anónimas</strong> y los informes de errores ayudan a priorizar las funciones, encontrar errores y detectar problemas de usabilidad para mejorar su experiencia con {APP_NAME}. ¡Sin estos datos, no sabríamos qué funciones vale la pena desarrollar para usted! <br><br>",
   "HEALTH_DATA_PREVIEW": "Reporte de estadísticas de {APP_NAME}",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>no recopila ni procesa ninguna información de identificación personal</strong>, pero <strong>recopila estadísticas de uso anónimas</strong> para proteger su privacidad. Estas estadísticas de uso de la aplicación <strong>anónimas</strong> y los informes de errores ayudan a priorizar las funciones, encontrar errores y detectar problemas de usabilidad para mejorar su experiencia con {APP_NAME}.</p> <p>A continuación se muestra una vista previa de los datos que se enviarán en su próximo Informe de estado <em>si</em> está habilitado. (Consulte también la consola del desarrollador para ver los registros de errores marcados como 'Error crítico detectado'.)</p>",
   "INLINE_TIMING_EDITOR_TIME": "Tiempo",
@@ -74104,9 +74117,6 @@ define("nls/es/strings", {
   "PREVIEW": "Vista previa",
   "BUILD_WEBSITE": "Crear sitio web",
   "VIEW_MORE": "Ver más...",
-  "NEW_PROJECT_NOTIFICATION": "Haga clic en este ícono para abrir la ventana `Nuevo Proyecto` nuevamente.</br> Vea Proyectos Recientes, Abrir Carpeta o inicie proyectos desde plantillas.</br> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>aceptar</a>",
-  "BEAUTIFY_CODE_NOTIFICATION": "Haga clic aquí o presione <b>`{0}`</b> para embellecer el código. </br> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>aceptar</a>",
-  "DEFAULT_PROJECT_NOTIFICATION": "Haga clic aquí para abrir el <br/><b>proyecto predeterminado</b> en phoenix. </br> <a href='#' style='float:right;'>aceptar</a>",
   "DIRECTORY_REPLACE_MESSAGE": "La carpeta seleccionada <span class='dialog-filename'>{0}</span> no está vacía. ¿Está seguro de que desea reemplazar el contenido de la carpeta con el proyecto?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Haga clic aquí para ubicar esto &lt;span&gt; en el archivo HTML",
   "BUILD_WEBSITE_SECTION": "Crear sitio web",
@@ -74410,7 +74420,13 @@ define("nls/es/strings", {
   "ERROR_NO_REMOTE_SELECTED": "No se ha seleccionado ningún remoto para {0}.",
   "ERROR_BRANCH_LIST": "Error al obtener la lista de ramas.",
   "ERROR_FETCH_REMOTE": "Error al obtener la información del remoto.",
-  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "¡Vota por las funciones que quieres ver próximamente!"
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "¡Vota por las funciones que quieres ver próximamente!",
+  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>no recopila ni procesa ninguna información de identificación personal</strong>, pero <strong>recopila estadísticas de uso anónimas</strong> para proteger su privacidad. Los datos anónimos están exentos de los requisitos de notificación de GDPR/CCPA, pero creemos que debe tener la opción de no participar en la recopilación de datos anónimos también.<br><br> Puede ver sus datos o <strong>optar por no compartir ningún dato anónimo</strong> seleccionando <strong>Ayuda > Informe de estado</strong>. Estas estadísticas de uso de la aplicación <strong>anónimas</strong> y los informes de errores ayudan a priorizar las funciones, encontrar errores y detectar problemas de usabilidad para mejorar su experiencia con {APP_NAME}. ¡Sin estos datos, no sabríamos qué funciones vale la pena desarrollar para usted! <br>",
+  "NEW_PROJECT_NOTIFICATION": "Haga clic en este icono para abrir la ventana `Iniciar proyecto` nuevamente.</br> Vea Proyectos recientes, Abrir carpeta o inicie proyectos desde plantillas.</br> <img src=\"styles/images/new_project.png\">",
+  "BEAUTIFY_CODE_NOTIFICATION": "Haga clic aquí o presione <b>`{0}`</b> para embellecer el código. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Haga clic aquí para abrir el <br/><b>proyecto predeterminado</b> en {APP_NAME}. </br> <a href='#' style='float:right;'>Aceptar</a>",
+  "GIT_TOAST_TITLE": "Explora las funciones de Git en Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Haga clic en el icono del panel de Git para administrar su repositorio. Confirme, envíe (push), extraiga (pull) y vea el historial de su proyecto fácilmente, todo en un solo lugar.<br><a href='https://docs.phcode.dev/docs/Features/git'>Obtenga más información sobre el panel de Git →</a>"
 });
 /*
  * GNU AGPL-3.0 License
@@ -75185,7 +75201,6 @@ define("nls/fa-ir/strings", {
   "HEALTH_DATA_NOTIFICATION": "تنظیمات گزارش سلامت",
   "HEALTH_FIRST_POPUP_TITLE": "اطلاعیه حریم خصوصی",
   "HEALTH_DATA_DO_TRACK": "به اشتراک گذاشتن اطلاعات ناشناس در مورد نحوه استفاده من از {APP_NAME}",
-  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>هیچگونه اطلاعات شخصی قابل شناسایی را جمع‌آوری یا پردازش نمی‌کند</strong>، اما <strong>آمار استفاده ناشناس را جمع‌آوری می‌کند</strong> تا از حریم خصوصی شما محافظت کند. داده‌های ناشناس از الزامات اطلاع‌رسانی GDPR/CCPA معاف هستند، اما ما معتقدیم که شما باید حق انتخاب عدم اشتراک‌گذاری داده‌های ناشناس را نیز داشته باشید.<br><br> شما می‌توانید داده‌های خود را مشاهده کنید یا <strong>انتخاب کنید که هیچ داده ناشناسی را به اشتراک نگذارید</strong> با انتخاب <strong>راهنما > گزارش سلامت</strong>. این آمار استفاده از برنامه و گزارش‌های خطای <strong>ناشناس</strong> به اولویت‌بندی ویژگی‌ها، یافتن اشکالات و شناسایی مشکلات کاربردپذیری برای بهبود تجربه شما با {APP_NAME} کمک می‌کند. بدون این داده‌ها، ما نمی‌دانیم که ساخت چه ویژگی‌هایی برای شما ارزشمند است! <br><br>",
   "HEALTH_DATA_PREVIEW": "گزارش سلامت {APP_NAME}",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>هیچگونه اطلاعات شخصی قابل شناسایی را جمع‌آوری یا پردازش نمی‌کند</strong>، اما <strong>آمار استفاده ناشناس را جمع‌آوری می‌کند</strong> تا از حریم خصوصی شما محافظت کند. این آمار استفاده از برنامه و گزارش‌های خطای <strong>ناشناس</strong> به اولویت‌بندی ویژگی‌ها، یافتن اشکالات و شناسایی مشکلات کاربردپذیری برای بهبود تجربه شما با {APP_NAME} کمک می‌کند.</p> <p>در زیر پیش‌نمایشی از داده‌هایی که در گزارش سلامت بعدی شما ارسال می‌شود <em>در صورت</em> فعال بودن آن، آمده است. (همچنین به کنسول توسعه‌دهنده برای گزارش‌های خطا با علامت 'Caught Critical error' مراجعه کنید.)</p>",
   "INLINE_TIMING_EDITOR_TIME": "زمان",
@@ -75478,9 +75493,6 @@ define("nls/fa-ir/strings", {
   "PREVIEW": "پیش‌نمایش",
   "BUILD_WEBSITE": "ساخت وب‌سایت",
   "VIEW_MORE": "مشاهده بیشتر...",
-  "NEW_PROJECT_NOTIFICATION": "برای باز کردن مجدد پنجره «پروژه جدید» روی این آیکون کلیک کنید.</br> پروژه‌های اخیر را ببینید، پوشه را باز کنید یا پروژه‌ها را از قالب‌ها شروع کنید.</br> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>تأیید</a>",
-  "BEAUTIFY_CODE_NOTIFICATION": "برای قالب‌بندی کد، اینجا کلیک کنید یا <b>`{0}`</b> را فشار دهید. </br> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>تأیید</a>",
-  "DEFAULT_PROJECT_NOTIFICATION": "برای باز کردن <br/><b>پروژه پیش‌فرض</b> در فونیکس اینجا کلیک کنید. </br> <a href='#' style='float:right;'>تأیید</a>",
   "DIRECTORY_REPLACE_MESSAGE": "پوشه انتخاب شده <span class='dialog-filename'>{0}</span> خالی نیست. آیا مطمئن هستید که می‌خواهید محتوای پوشه را با پروژه جایگزین کنید؟",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "برای یافتن این &lt;span&gt; در فایل HTML اینجا کلیک کنید",
   "BUILD_WEBSITE_SECTION": "ساخت وب‌سایت",
@@ -75784,7 +75796,13 @@ define("nls/fa-ir/strings", {
   "ERROR_NO_REMOTE_SELECTED": "هیچ ریموتی برای {0} انتخاب نشده است!",
   "ERROR_BRANCH_LIST": "دریافت لیست شاخه‌ها با شکست مواجه شد",
   "ERROR_FETCH_REMOTE": "دریافت اطلاعات ریموت با شکست مواجه شد",
-  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "برای قابلیت‌هایی که می‌خواهید در آینده ببینید، رأی دهید!"
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "برای قابلیت‌هایی که می‌خواهید در آینده ببینید، رأی دهید!",
+  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>هیچگونه اطلاعات شخصی شما را جمع‌آوری یا پردازش نمی‌کند</strong>، اما <strong>آمار استفاده ناشناس را جمع‌آوری می‌کند</strong> تا از حریم خصوصی شما محافظت کند. داده‌های ناشناس از الزامات اطلاع‌رسانی GDPR/CCPA معاف هستند، اما ما معتقدیم که شما باید حق انتخاب عدم اشتراک‌گذاری داده‌های ناشناس را نیز داشته باشید.<br><br> می‌توانید داده‌های خود را مشاهده کنید یا <strong>انتخاب کنید که هیچ داده ناشناسی را به اشتراک نگذارید</strong> با انتخاب <strong>راهنما > گزارش سلامت</strong>. این آمار استفاده از برنامه و گزارش‌های خطای <strong>ناشناس</strong> به اولویت‌بندی ویژگی‌ها، یافتن اشکالات و شناسایی مشکلات کاربردپذیری برای بهبود تجربه شما با {APP_NAME} کمک می‌کند. بدون این داده‌ها، ما نمی‌دانیم که ساخت چه ویژگی‌هایی برای شما ارزشمند است! <br>",
+  "NEW_PROJECT_NOTIFICATION": "برای باز کردن مجدد پنجره «شروع پروژه» روی این آیکون کلیک کنید.</br> پروژه‌های اخیر را ببینید، پوشه را باز کنید یا پروژه‌ها را از روی قالب‌ها شروع کنید.</br> <img src=\"styles/images/new_project.png\">",
+  "BEAUTIFY_CODE_NOTIFICATION": "برای قالب‌بندی کد، اینجا کلیک کنید یا <b>`{0}`</b> را فشار دهید. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "برای باز کردن <br/><b>پروژه پیش‌فرض</b> در {APP_NAME} اینجا کلیک کنید. </br> <a href='#' style='float:right;'>تأیید</a>",
+  "GIT_TOAST_TITLE": "کاوش ویژگی‌های گیت در Phoenix Code",
+  "GIT_TOAST_MESSAGE": "برای مدیریت مخزن خود روی آیکون پنل گیت کلیک کنید. به راحتی کامیت، پوش، پول و مشاهده تاریخچه پروژه خود را - همه در یک مکان - انجام دهید.<br><a href='https://docs.phcode.dev/docs/Features/git'>درباره پنل گیت بیشتر بدانید →</a>"
 });
 /*
  * GNU AGPL-3.0 License
@@ -76558,7 +76576,6 @@ define("nls/fi/strings", {
   "HEALTH_DATA_NOTIFICATION": "Terveydentilaraportin asetukset",
   "HEALTH_FIRST_POPUP_TITLE": "Tietosuojailuilmoitus",
   "HEALTH_DATA_DO_TRACK": "Jaa anonyymiä tietoa {APP_NAME}-sovelluksen käytöstäni",
-  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>ei kerää tai käsittele mitään henkilötietoja</strong>, mutta <strong>kerää anonyymejä käyttötilastoja</strong> yksityisyytesi suojaamiseksi. Anonyymi data ei kuulu GDPR:n/CCPA:n ilmoitusvaatimusten piiriin, mutta uskomme, että sinulla on oltava mahdollisuus kieltäytyä myös anonyymin datan keräämisestä.<br><br> Voit tarkastella tietojasi tai <strong>valita, ettet jaa anonyymiä dataa</strong> valitsemalla <strong>Ohje > Käyttöraportti</strong>. Nämä <strong>anonyymit</strong> sovelluksen käyttötilastot ja virheilmoitukset auttavat meitä priorisoimaan ominaisuuksia, löytämään virheitä ja havaitsemaan käytettävyysongelmia {APP_NAME}-kokemuksesi parantamiseksi. Ilman tätä dataa emme tietäisi, mitä ominaisuuksia kannattaa rakentaa sinulle! <br><br>",
   "HEALTH_DATA_PREVIEW": "{APP_NAME}in terveydentilaraportti",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>ei kerää tai käsittele mitään henkilötietoja</strong>, mutta <strong>kerää anonyymejä käyttötilastoja</strong> yksityisyytesi suojaamiseksi. Nämä <strong>anonyymit</strong> sovelluksen käyttötilastot ja virheilmoitukset auttavat meitä priorisoimaan ominaisuuksia, löytämään virheitä ja havaitsemaan käytettävyysongelmia {APP_NAME}-kokemuksesi parantamiseksi.</p> <p>Alla on esikatselu tiedoista, jotka lähetetään seuraavassa käyttöraportissasi, <em>jos</em> se on käytössä. (Katso myös kehittäjäkonsolin virhelokit, jotka on merkitty 'Caught Critical error'.)</p>",
   "INLINE_TIMING_EDITOR_TIME": "Aika",
@@ -76851,9 +76868,6 @@ define("nls/fi/strings", {
   "PREVIEW": "Esikatselu",
   "BUILD_WEBSITE": "Rakenna verkkosivusto",
   "VIEW_MORE": "Näytä lisää...",
-  "NEW_PROJECT_NOTIFICATION": "Klikkaa tätä kuvaketta avataksesi `Uusi projekti` -ikkunan uudelleen.</br> Katso Viimeaikaiset projektit, Avaa kansio tai aloita projektit mallipohjista.</br> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>ok</a>",
-  "BEAUTIFY_CODE_NOTIFICATION": "Klikkaa tästä tai paina <b>`{0}`</b> muotoillaksesi koodin. </br> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>ok</a>",
-  "DEFAULT_PROJECT_NOTIFICATION": "Klikkaa tästä avataksesi <br/><b>oletusprojektin</b> phoenixissa. </br> <a href='#' style='float:right;'>ok</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Valittu kansio <span class='dialog-filename'>{0}</span> ei ole tyhjä. Oletko varma, että haluat korvata kansion sisällön projektilla?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Klikkaa tästä paikantaaksesi tämän &lt;span&gt; HTML-tiedostossa",
   "BUILD_WEBSITE_SECTION": "Rakenna verkkosivusto",
@@ -77157,7 +77171,13 @@ define("nls/fi/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Kohteelle {0} ei ole valittu etäyhteyttä!",
   "ERROR_BRANCH_LIST": "Haarojen listan haku epäonnistui",
   "ERROR_FETCH_REMOTE": "Etäyhteyden tietojen haku epäonnistui",
-  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Äänestä ominaisuuksia, jotka haluat nähdä seuraavaksi!"
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Äänestä ominaisuuksia, jotka haluat nähdä seuraavaksi!",
+  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>ei kerää tai käsittele mitään henkilötietoja</strong>, mutta <strong>kerää anonyymejä käyttötilastoja</strong> yksityisyytesi suojaamiseksi. Anonyymi data ei kuulu GDPR/CCPA-ilmoitusvaatimusten piiriin, mutta uskomme, että sinulla tulee olla mahdollisuus kieltäytyä myös anonyymin datan keräämisestä.<br><br> Voit tarkastella dataasi tai <strong>valita, ettet jaa anonyymiä dataa</strong> valitsemalla <strong>Ohje > Terveysraportti</strong>. Nämä <strong>anonyymit</strong> sovelluksen käyttötilastot ja virheraporttien avulla voimme priorisoida ominaisuuksia, löytää bugeja ja havaita käytettävyysongelmia parantaaksemme {APP_NAME}-kokemustasi. Ilman tätä dataa emme tietäisi, mitä ominaisuuksia kannattaa rakentaa sinulle! <br>",
+  "NEW_PROJECT_NOTIFICATION": "Napsauta tätä kuvaketta avataksesi `Aloita projekti` -ikkunan uudelleen.</br> Katso Viimeaikaiset projektit, Avaa kansio tai aloita projekteja mallipohjista.</br> <img src=\"styles/images/new_project.png\">",
+  "BEAUTIFY_CODE_NOTIFICATION": "Napsauta tästä tai paina <b>`{0}`</b> muotoillaksesi koodin. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Napsauta tästä avataksesi <br/><b>oletusprojektin</b> {APP_NAME}:ssä. </br> <a href='#' style='float:right;'>ok</a>",
+  "GIT_TOAST_TITLE": "Tutustu Git-ominaisuuksiin Phoenix Codessa",
+  "GIT_TOAST_MESSAGE": "Napsauta Git-paneelin kuvaketta hallitaksesi arkistoasi (repository). Tee commit, push ja pull helposti ja tarkastele projektihistoriaasi – kaikki yhdessä paikassa.<br><a href='https://docs.phcode.dev/docs/Features/git'>Lue lisää Git-paneelista →</a>"
 });
 /*
  * GNU AGPL-3.0 License
@@ -77931,7 +77951,6 @@ define("nls/fr/strings", {
   "HEALTH_DATA_NOTIFICATION": "Health Report Preferences",
   "HEALTH_FIRST_POPUP_TITLE": "Avis de confidentialité",
   "HEALTH_DATA_DO_TRACK": "Partager des informations anonymes sur mon utilisation de {APP_NAME}",
-  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>ne collecte ni ne traite aucune information personnellement identifiable</strong>, mais <strong>collecte des statistiques d'utilisation anonymes</strong> pour protéger votre vie privée. Les données anonymes sont exemptées des exigences de notification RGPD/CCPA, mais nous pensons que vous devez avoir le choix de refuser la collecte de données anonymes également.<br><br>Vous pouvez consulter vos données ou <strong>choisir de ne pas partager de données anonymes</strong> en sélectionnant <strong>Aide > Rapport d'état</strong>. Ces statistiques d'utilisation de l'application et rapports d'erreurs <strong>anonymes</strong> nous aident à prioriser les fonctionnalités, à trouver les bogues et à repérer les problèmes d'utilisation afin d'améliorer votre expérience avec {APP_NAME}. Sans ces données, nous ne saurions pas quelles fonctionnalités valent la peine d'être développées pour vous !<br><br>",
   "HEALTH_DATA_PREVIEW": "Rapport d’intégrité de {APP_NAME}",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>ne collecte ni ne traite aucune information personnellement identifiable</strong>, mais <strong>collecte des statistiques d'utilisation anonymes</strong> pour protéger votre vie privée. Ces statistiques d'utilisation de l'application et rapports d'erreurs <strong>anonymes</strong> nous aident à prioriser les fonctionnalités, à trouver les bogues et à repérer les problèmes d'utilisation afin d'améliorer votre expérience avec {APP_NAME}.</p> <p>Vous trouverez ci-dessous un aperçu des données qui seront envoyées dans votre prochain rapport d'état <em>si</em> celui-ci est activé. (Voir également la console développeur pour les journaux d'erreurs marqués « Erreur critique détectée ».)</p>",
   "INLINE_TIMING_EDITOR_TIME": "Temps",
@@ -78224,9 +78243,6 @@ define("nls/fr/strings", {
   "PREVIEW": "Aperçu",
   "BUILD_WEBSITE": "Générer le site web",
   "VIEW_MORE": "Voir plus…",
-  "NEW_PROJECT_NOTIFICATION": "Cliquez sur cette icône pour rouvrir la fenêtre « Nouveau projet ».<br/> Voir les projets récents, ouvrir un dossier ou démarrer des projets à partir de modèles.<br/> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>ok</a>",
-  "BEAUTIFY_CODE_NOTIFICATION": "Cliquez ici ou appuyez sur <b>`{0}`</b> pour embellir le code. <br/> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>ok</a>",
-  "DEFAULT_PROJECT_NOTIFICATION": "Cliquez ici pour ouvrir le <br/><b>projet par défaut</b> dans phoenix. <br/> <a href='#' style='float:right;'>ok</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Le dossier sélectionné <span class='dialog-filename'>{0}</span> n'est pas vide. Êtes-vous sûr de vouloir remplacer le contenu du dossier par le projet ?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Cliquez ici pour localiser ceci &lt;span&gt; dans le fichier HTML",
   "BUILD_WEBSITE_SECTION": "Générer le site web",
@@ -78530,7 +78546,13 @@ define("nls/fr/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Aucun dépôt distant n'a été sélectionné pour {0} !",
   "ERROR_BRANCH_LIST": "Échec de la récupération de la liste des branches",
   "ERROR_FETCH_REMOTE": "Échec de la récupération des informations du dépôt distant",
-  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Votez pour les fonctionnalités que vous souhaitez voir apparaître !"
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Votez pour les fonctionnalités que vous souhaitez voir apparaître !",
+  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>ne collecte ni ne traite aucune donnée personnelle</strong>, mais <strong>collecte des statistiques d'utilisation anonymes</strong> pour protéger votre vie privée. Les données anonymes sont exemptées des exigences de notification RGPD/CCPA, mais nous pensons que vous devez avoir le choix de refuser la collecte de données anonymes.<br><br> Vous pouvez consulter vos données ou <strong>choisir de ne pas partager de données anonymes</strong> en sélectionnant <strong>Aide > Rapport d'intégrité</strong>. Ces statistiques d'utilisation de l'application et rapports d'erreurs <strong>anonymes</strong> nous aident à prioriser les fonctionnalités, à trouver les bogues et à repérer les problèmes d'utilisation afin d'améliorer votre expérience avec {APP_NAME}. Sans ces données, nous ne saurions pas quelles fonctionnalités valent la peine d'être développées pour vous ! <br>",
+  "NEW_PROJECT_NOTIFICATION": "Cliquez sur cette icône pour ouvrir à nouveau la fenêtre « Démarrer un projet ».<br> Consultez les projets récents, ouvrez un dossier ou démarrez des projets à partir de modèles.<br> <img src=\"styles/images/new_project.png\">",
+  "BEAUTIFY_CODE_NOTIFICATION": "Cliquez ici ou appuyez sur <b>`{0}`</b> pour embellir le code. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Cliquez ici pour ouvrir le <br/><b>projet par défaut</b> dans {APP_NAME}. </br> <a href='#' style='float:right;'>OK</a>",
+  "GIT_TOAST_TITLE": "Explorer les fonctionnalités Git dans Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Cliquez sur l'icône du panneau Git pour gérer votre dépôt. Validez, envoyez (push), récupérez (pull) et consultez l'historique de votre projet facilement, le tout au même endroit.<br><a href='https://docs.phcode.dev/docs/Features/git'>En savoir plus sur le panneau Git →</a>"
 });
 /*
  * GNU AGPL-3.0 License
@@ -79304,7 +79326,6 @@ define("nls/gl/strings", {
   "HEALTH_DATA_NOTIFICATION": "Preferencias do informe de saúde",
   "HEALTH_FIRST_POPUP_TITLE": "Aviso de privacidade",
   "HEALTH_DATA_DO_TRACK": "Compartir información anónima sobre como uso {APP_NAME}",
-  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>non recompila nin procesa ningunha información persoal identificable</strong>, pero <strong>recopila estatísticas de uso anónimas</strong> para protexer a súa privacidade. Os datos anónimos están exentos dos requisitos de notificación do GDPR/CCPA, pero cremos que debe ter a opción de excluírse tamén da recompilación de datos anónimos.<br><br> Pode ver os seus datos ou <strong>escoller non compartir ningún dato anónimo</strong> seleccionando <strong>Axuda > Informe de saúde</strong>. Estas estatísticas de uso da aplicación e informes de erros <strong>anónimos</strong> axudan a priorizar as funcionalidades, atopar erros e detectar problemas de usabilidade para mellorar a súa experiencia con {APP_NAME}. Sen estes datos, non saberiamos que funcionalidades paga a pena construír para vostede! <br><br>",
   "HEALTH_DATA_PREVIEW": "Informe de saúde de {APP_NAME}",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>non recompila nin procesa ningunha información persoal identificable</strong>, pero <strong>recopila estatísticas de uso anónimas</strong> para protexer a súa privacidade. Estas estatísticas de uso da aplicación e informes de erros <strong>anónimos</strong> axudan a priorizar as funcionalidades, atopar erros e detectar problemas de usabilidade para mellorar a súa experiencia con {APP_NAME}.</p> <p>A continuación móstrase unha vista previa dos datos que se enviarán no seu próximo Informe de saúde <em>se</em> está activado. (Vexa tamén a consola do programador para os rexistros de erros marcados como \"Erro crítico detectado\".)</p>",
   "INLINE_TIMING_EDITOR_TIME": "Tempo",
@@ -79597,9 +79618,6 @@ define("nls/gl/strings", {
   "PREVIEW": "Vista previa",
   "BUILD_WEBSITE": "Crear sitio web",
   "VIEW_MORE": "Ver máis...",
-  "NEW_PROJECT_NOTIFICATION": "Fai clic nesta icona para abrir de novo a xanela `Novo proxecto`.</br> Consulta os proxectos recentes, abre un cartafol ou inicia proxectos desde modelos.</br> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>ok</a>",
-  "BEAUTIFY_CODE_NOTIFICATION": "Fai clic aquí ou preme <b>`{0}`</b> para embelecer o código. </br> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>ok</a>",
-  "DEFAULT_PROJECT_NOTIFICATION": "Fai clic aquí para abrir o <br/><b>proxecto predeterminado</b> en phoenix. </br> <a href='#' style='float:right;'>ok</a>",
   "DIRECTORY_REPLACE_MESSAGE": "O cartafol seleccionado <span class='dialog-filename'>{0}</span> non está baleiro. Seguro que queres substituír o contido do cartafol co proxecto?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Fai clic aquí para localizar isto &lt;span&gt; no ficheiro HTML",
   "BUILD_WEBSITE_SECTION": "Crear sitio web",
@@ -79903,7 +79921,13 @@ define("nls/gl/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Non se seleccionou ningún remoto para {0}!",
   "ERROR_BRANCH_LIST": "Fallou a obtención da lista de ramas",
   "ERROR_FETCH_REMOTE": "Fallou a obtención da información do remoto",
-  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vota polas funcionalidades que queres ver a continuación!"
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vota polas funcionalidades que queres ver a continuación!",
+  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>non recompila nin procesa ningunha información persoal identificable</strong>, pero <strong>recopila estatísticas de uso anónimas</strong> para protexer a súa privacidade. Os datos anónimos están exentos dos requisitos de notificación do GDPR/CCPA, pero cremos que debe ter a opción de excluírse tamén da recompilación de datos anónimos.<br><br> Pode ver os seus datos ou <strong>escoller non compartir ningún dato anónimo</strong> seleccionando <strong>Axuda > Informe de saúde</strong>. Estas estatísticas de uso da aplicación e informes de erros <strong>anónimos</strong> axudan a priorizar as funcionalidades, atopar erros e detectar problemas de usabilidade para mellorar a súa experiencia con {APP_NAME}. Sen estes datos, non saberiamos que funcionalidades paga a pena construír para vostede! <br>",
+  "NEW_PROJECT_NOTIFICATION": "Fai clic nesta icona para abrir de novo a xanela `Iniciar proxecto`.</br> Ver proxectos recentes, abrir cartafol ou iniciar proxectos desde modelos.</br> <img src=\"styles/images/new_project.png\">",
+  "BEAUTIFY_CODE_NOTIFICATION": "Fai clic aquí ou preme <b>`{0}`</b> para embelecer o código. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Fai clic aquí para abrir o <br/><b>proxecto predeterminado</b> en {APP_NAME}. </br> <a href='#' style='float:right;'>Aceptar</a>",
+  "GIT_TOAST_TITLE": "Explora as funcionalidades de Git en Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Fai clic na icona do panel de Git para xestionar o teu repositorio. Fai commits, envía (push), obtén (pull) e visualiza o historial do teu proxecto facilmente, todo nun mesmo lugar.<br><a href='https://docs.phcode.dev/docs/Features/git'>Aprende máis sobre o panel de Git →</a>"
 });
 /*
  * GNU AGPL-3.0 License
@@ -80650,7 +80674,6 @@ define("nls/hi/strings", {
   "HEALTH_DATA_NOTIFICATION": "स्वास्थ्य रिपोर्ट प्राथमिकताएँ",
   "HEALTH_FIRST_POPUP_TITLE": "गोपनीयता सूचना",
   "HEALTH_DATA_DO_TRACK": "मेरे द्वारा {APP_NAME} के उपयोग की अनाम जानकारी साझा करें",
-  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>कोई भी व्यक्तिगत रूप से पहचान योग्य जानकारी एकत्र या संसाधित नहीं करता है</strong>, लेकिन आपकी गोपनीयता की रक्षा के लिए <strong>अनाम उपयोग के आंकड़े एकत्र करता है</strong>। अनाम डेटा GDPR/CCPA अधिसूचना आवश्यकताओं से मुक्त है, लेकिन हमारा मानना है कि आपको अनाम डेटा संग्रह से बाहर निकलने का विकल्प भी होना चाहिए।<br><br> आप अपना डेटा देख सकते हैं या <strong>कोई भी अनाम डेटा साझा न करने का विकल्प चुन सकते हैं</strong>, इसके लिए <strong>सहायता > स्वास्थ्य रिपोर्ट</strong> चुनें। ये <strong>अनाम</strong> ऐप उपयोग के आंकड़े और त्रुटि रिपोर्ट {APP_NAME} के साथ आपके अनुभव को बेहतर बनाने के लिए सुविधाओं को प्राथमिकता देने, बग ढूंढने और उपयोगिता संबंधी समस्याओं का पता लगाने में मदद करते हैं। इस डेटा के बिना, हमें पता नहीं चलेगा कि आपके लिए कौन सी सुविधाएँ बनाना उचित है! <br><br>",
   "HEALTH_DATA_PREVIEW": "{APP_NAME} स्वास्थ्य रिपोर्ट",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>कोई भी व्यक्तिगत रूप से पहचान योग्य जानकारी एकत्र या संसाधित नहीं करता है</strong>, लेकिन आपकी गोपनीयता की रक्षा के लिए <strong>अनाम उपयोग के आंकड़े एकत्र करता है</strong>। ये <strong>अनाम</strong> ऐप उपयोग के आंकड़े और त्रुटि रिपोर्ट {APP_NAME} के साथ आपके अनुभव को बेहतर बनाने के लिए सुविधाओं को प्राथमिकता देने, बग ढूंढने और उपयोगिता संबंधी समस्याओं का पता लगाने में मदद करते हैं।</p> <p>नीचे उस डेटा का पूर्वावलोकन दिया गया है जो आपकी अगली स्वास्थ्य रिपोर्ट में भेजा जाएगा <em>यदि</em> यह सक्षम है। ('Caught Critical error' के रूप में चिह्नित त्रुटि लॉग के लिए डेवलपर कंसोल भी देखें।)</p>",
   "INLINE_TIMING_EDITOR_TIME": "समय",
@@ -80943,9 +80966,6 @@ define("nls/hi/strings", {
   "PREVIEW": "पूर्वावलोकन",
   "BUILD_WEBSITE": "वेबसाइट बनाएँ",
   "VIEW_MORE": "और देखें...",
-  "NEW_PROJECT_NOTIFICATION": "`नया प्रोजेक्ट` विंडो फिर से खोलने के लिए इस आइकन पर क्लिक करें।</br> हाल के प्रोजेक्ट देखें, फ़ोल्डर खोलें या टेम्प्लेट से प्रोजेक्ट शुरू करें।</br> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>ठीक है</a>",
-  "BEAUTIFY_CODE_NOTIFICATION": "कोड को सुंदर बनाने के लिए यहां क्लिक करें या <b>`{0}`</b> दबाएं। </br> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>ठीक है</a>",
-  "DEFAULT_PROJECT_NOTIFICATION": "फीनिक्स में <br/><b>डिफ़ॉल्ट प्रोजेक्ट</b> खोलने के लिए यहां क्लिक करें। </br> <a href='#' style='float:right;'>ठीक है</a>",
   "DIRECTORY_REPLACE_MESSAGE": "चयनित फ़ोल्डर <span class='dialog-filename'>{0}</span> खाली नहीं है। क्या आप वाकई फ़ोल्डर की सामग्री को प्रोजेक्ट से बदलना चाहते हैं?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "HTML फ़ाइल में इसे ढूंढने के लिए यहां क्लिक करें &lt;span&gt;",
   "BUILD_WEBSITE_SECTION": "वेबसाइट बनाएँ",
@@ -81249,7 +81269,13 @@ define("nls/hi/strings", {
   "ERROR_NO_REMOTE_SELECTED": "{0} के लिए कोई रिमोट चयनित नहीं है!",
   "ERROR_BRANCH_LIST": "शाखा सूची प्राप्त करने में विफलता",
   "ERROR_FETCH_REMOTE": "रिमोट जानकारी प्राप्त करने में विफलता",
-  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "उन विशेषताओं के लिए वोट करें जिन्हें आप आगे देखना चाहते हैं!"
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "उन विशेषताओं के लिए वोट करें जिन्हें आप आगे देखना चाहते हैं!",
+  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>कोई भी व्यक्तिगत रूप से पहचान योग्य जानकारी एकत्र या संसाधित नहीं करता है</strong>, लेकिन आपकी गोपनीयता की रक्षा के लिए <strong>अनाम उपयोग आँकड़े एकत्र करता है</strong>। अनाम डेटा GDPR/CCPA अधिसूचना आवश्यकताओं से मुक्त है, लेकिन हमारा मानना है कि आपके पास अनाम डेटा संग्रह से बाहर निकलने का विकल्प भी होना चाहिए।<br><br> आप अपना डेटा देख सकते हैं या <strong>कोई भी अनाम डेटा साझा न करने का विकल्प चुन सकते हैं</strong>, इसके लिए <strong>सहायता > स्वास्थ्य रिपोर्ट</strong> चुनें। ये <strong>अनाम</strong> ऐप उपयोग आँकड़े और त्रुटि रिपोर्ट {APP_NAME} के साथ आपके अनुभव को बेहतर बनाने के लिए सुविधाओं को प्राथमिकता देने, बग खोजने और उपयोगिता संबंधी समस्याओं का पता लगाने में मदद करते हैं। इस डेटा के बिना, हमें पता नहीं चलेगा कि आपके लिए कौन सी सुविधाएँ बनाना उचित है! <br>",
+  "NEW_PROJECT_NOTIFICATION": "इस आइकन पर क्लिक करके `प्रोजेक्ट शुरू करें` विंडो फिर से खोलें।</br> हाल के प्रोजेक्ट देखें, फ़ोल्डर खोलें या टेम्प्लेट से प्रोजेक्ट शुरू करें।</br> <img src=\"styles/images/new_project.png\">",
+  "BEAUTIFY_CODE_NOTIFICATION": "कोड को सुंदर बनाने के लिए यहां क्लिक करें या <b>`{0}`</b> दबाएं। </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "{APP_NAME} में <br/><b>डिफ़ॉल्ट प्रोजेक्ट</b> खोलने के लिए यहां क्लिक करें। </br> <a href='#' style='float:right;'>ठीक है</a>",
+  "GIT_TOAST_TITLE": "फ़ीनिक्स कोड में Git सुविधाओं का अन्वेषण करें",
+  "GIT_TOAST_MESSAGE": "अपने रिपॉजिटरी को प्रबंधित करने के लिए Git पैनल आइकन पर क्लिक करें। आसानी से कमिट करें, पुश करें, पुल करें और अपने प्रोजेक्ट का इतिहास देखें—सब एक ही स्थान पर।<br><a href='https://docs.phcode.dev/docs/Features/git'>Git पैनल के बारे में अधिक जानें →</a>"
 });
 /*
  * GNU AGPL-3.0 License
@@ -81996,7 +82022,6 @@ define("nls/hr/strings", {
   "HEALTH_DATA_NOTIFICATION": "Postavke izvješća o stanju",
   "HEALTH_FIRST_POPUP_TITLE": "Obavijest o privatnosti",
   "HEALTH_DATA_DO_TRACK": "Dijeli anonimne informacije o tome kako koristim {APP_NAME}",
-  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>ne prikuplja niti obrađuje nikakve osobne podatke</strong>, već <strong>prikuplja anonimne statistike korištenja</strong> kako bi zaštitio vašu privatnost. Anonimni podaci su izuzeti od zahtjeva za obavijesti GDPR/CCPA, ali vjerujemo da trebate imati mogućnost isključivanja prikupljanja anonimnih podataka.<br><br> Možete vidjeti svoje podatke ili <strong>odabrati da ne dijelite nikakve anonimne podatke</strong> odabirom <strong>Pomoć > Izvješće o stanju</strong>. Ove <strong>anonimne</strong> statistike korištenja aplikacije i izvješća o pogreškama pomažu u određivanju prioriteta značajki, pronalaženju grešaka i uočavanju problema s uporabom radi poboljšanja vašeg iskustva s {APP_NAME}. Bez ovih podataka ne bismo znali koje značajke vrijedi izraditi za vas! <br><br>",
   "HEALTH_DATA_PREVIEW": "Izvješće o stanju {APP_NAME}",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>ne prikuplja niti obrađuje nikakve osobne podatke</strong>, već <strong>prikuplja anonimne statistike korištenja</strong> kako bi zaštitio vašu privatnost. Ove <strong>anonimne</strong> statistike korištenja aplikacije i izvješća o pogreškama pomažu u određivanju prioriteta značajki, pronalaženju grešaka i uočavanju problema s uporabom radi poboljšanja vašeg iskustva s {APP_NAME}.</p> <p>Ispod je pregled podataka koji će biti poslani u vašem sljedećem Izvješću o stanju <em>ako</em> je omogućeno. (Također pogledajte konzolu za razvojne programere za zapisnike pogrešaka označene s 'Uhvaćena kritična pogreška'.)</p>",
   "INLINE_TIMING_EDITOR_TIME": "Vrijeme",
@@ -82289,9 +82314,6 @@ define("nls/hr/strings", {
   "PREVIEW": "Pregled",
   "BUILD_WEBSITE": "Izradi web-stranicu",
   "VIEW_MORE": "Prikaži više...",
-  "NEW_PROJECT_NOTIFICATION": "Kliknite ovu ikonu da biste ponovno otvorili prozor `Novi projekt`.</br> Pogledajte Nedavne projekte, Otvorite mapu ili započnite projekte iz predložaka.</br> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>u redu</a>",
-  "BEAUTIFY_CODE_NOTIFICATION": "Kliknite ovdje ili pritisnite <b>`{0}`</b> za Uređivanje koda. </br> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>u redu</a>",
-  "DEFAULT_PROJECT_NOTIFICATION": "Kliknite ovdje da biste otvorili <br/><b>zadani projekt</b> u phoenixu. </br> <a href='#' style='float:right;'>u redu</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Odabrana mapa <span class='dialog-filename'>{0}</span> nije prazna. Jeste li sigurni da želite zamijeniti sadržaj mape s projektom?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Kliknite ovdje da biste pronašli ovaj &lt;span&gt; u HTML datoteci",
   "BUILD_WEBSITE_SECTION": "Izrada web-stranice",
@@ -82595,7 +82617,13 @@ define("nls/hr/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Nije odabran udaljeni repozitorij za {0}!",
   "ERROR_BRANCH_LIST": "Dohvaćanje popisa grana nije uspjelo",
   "ERROR_FETCH_REMOTE": "Dohvaćanje informacija o udaljenom repozitoriju nije uspjelo",
-  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Glasajte za značajke koje želite vidjeti sljedeće!"
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Glasajte za značajke koje želite vidjeti sljedeće!",
+  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>ne prikuplja niti obrađuje nikakve osobne podatke</strong>, ali <strong>prikuplja anonimnu statistiku korištenja</strong> kako bi zaštitio vašu privatnost. Anonimni podaci su izuzeti od zahtjeva za obavijestima GDPR/CCPA, ali vjerujemo da trebate imati mogućnost isključivanja prikupljanja anonimnih podataka.<br><br> Možete vidjeti svoje podatke ili <strong>odabrati da ne dijelite nikakve anonimne podatke</strong> odabirom <strong>Pomoć > Izvješće o zdravlju</strong>. Ova <strong>anonimna</strong> statistika korištenja aplikacije i izvješća o pogreškama pomažu u određivanju prioriteta značajki, pronalaženju grešaka i uočavanju problema s upotrebljivošću radi poboljšanja vašeg iskustva s {APP_NAME}. Bez ovih podataka ne bismo znali koje značajke vrijedi izraditi za vas! <br>",
+  "NEW_PROJECT_NOTIFICATION": "Kliknite ovu ikonu da biste ponovno otvorili prozor `Pokreni projekt`.</br> Pogledajte Nedavne projekte, Otvorite mapu ili pokrenite projekte iz predložaka.</br> <img src=\"styles/images/new_project.png\">",
+  "BEAUTIFY_CODE_NOTIFICATION": "Kliknite ovdje ili pritisnite <b>`{0}`</b> za uljepšavanje koda. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Kliknite ovdje da biste otvorili <br/><b>zadani projekt</b> u {APP_NAME}. </br> <a href='#' style='float:right;'>u redu</a>",
+  "GIT_TOAST_TITLE": "Istražite Git značajke u Phoenix Codeu",
+  "GIT_TOAST_MESSAGE": "Kliknite ikonu Git panela za upravljanje svojim repozitorijem. Jednostavno potvrdite (commit), pošaljite (push), preuzmite (pull) i pregledajte povijest svog projekta - sve na jednom mjestu.<br><a href='https://docs.phcode.dev/docs/Features/git'>Saznajte više o Git panelu →</a>"
 });
 /*
  * GNU AGPL-3.0 License
@@ -83369,7 +83397,6 @@ define("nls/hu/strings", {
   "HEALTH_DATA_NOTIFICATION": "Állapotjelentés beállításai",
   "HEALTH_FIRST_POPUP_TITLE": "Adatvédelmi nyilatkozat",
   "HEALTH_DATA_DO_TRACK": "Névtelen információk megosztása a(z) {APP_NAME} használatáról",
-  "HEALTH_DATA_NOTIFICATION_MESSAGE": "A(z) {APP_NAME} <strong>nem gyűjt és nem dolgoz fel semmilyen személyazonosító információt</strong>, de <strong>gyűjt névtelen használati statisztikákat</strong> az Ön adatainak védelme érdekében. A névtelen adatok mentesülnek a GDPR/CCPA értesítési követelményei alól, de úgy gondoljuk, hogy Önnek lehetősége kell legyen a névtelen adatgyűjtés letiltására is.<br><br> Megtekintheti adatait, vagy <strong>választhatja, hogy nem oszt meg semmilyen névtelen adatot</strong> a <strong>Súgó > Állapotjelentés</strong> menüpont kiválasztásával. Ezek a <strong>névtelen</strong> alkalmazáshasználati statisztikák és hibajelentések segítenek a funkciók rangsorolásában, a hibák megtalálásában és a használhatósági problémák felismerésében, hogy javítsuk a(z) {APP_NAME} használatával kapcsolatos élményét. Ezen adatok nélkül nem tudnánk, hogy milyen funkciókat érdemes fejlesztenünk az Ön számára! <br><br>",
   "HEALTH_DATA_PREVIEW": "{APP_NAME} állapotjelentés",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>A(z) {APP_NAME} <strong>nem gyűjt és nem dolgoz fel semmilyen személyazonosító információt</strong>, de <strong>gyűjt névtelen használati statisztikákat</strong> az Ön adatainak védelme érdekében. Ezek a <strong>névtelen</strong> alkalmazáshasználati statisztikák és hibajelentések segítenek a funkciók rangsorolásában, a hibák megtalálásában és a használhatósági problémák felismerésében, hogy javítsuk a(z) {APP_NAME} használatával kapcsolatos élményét.</p> <p>Az alábbiakban megtekintheti a következő állapotjelentésben elküldendő adatok előnézetét, <em>amennyiben</em> az engedélyezve van. (A 'Kritikus hiba észlelése' jelzésű hibák naplóit a fejlesztői konzolban is megtekintheti.)</p>",
   "INLINE_TIMING_EDITOR_TIME": "Idő",
@@ -83662,9 +83689,6 @@ define("nls/hu/strings", {
   "PREVIEW": "Előnézet",
   "BUILD_WEBSITE": "Weboldal létrehozása",
   "VIEW_MORE": "Továbbiak...",
-  "NEW_PROJECT_NOTIFICATION": "Kattintson erre az ikonra az `Új projekt` ablak újbóli megnyitásához.</br> Tekintse meg a Legutóbbi projekteket, nyisson meg egy mappát, vagy indítson projekteket sablonokból.</br> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>ok</a>",
-  "BEAUTIFY_CODE_NOTIFICATION": "Kattintson ide vagy nyomja meg a <b>`{0}`</b> billentyűt a kód formázásához. </br> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>ok</a>",
-  "DEFAULT_PROJECT_NOTIFICATION": "Kattintson ide az <br/><b>alapértelmezett projekt</b> megnyitásához a phoenixben. </br> <a href='#' style='float:right;'>ok</a>",
   "DIRECTORY_REPLACE_MESSAGE": "A kiválasztott mappa <span class='dialog-filename'>{0}</span> nem üres. Biztosan felül akarja írni a mappa tartalmát a projekttel?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Kattintson ide a &lt;span&gt; megkereséséhez a HTML fájlban",
   "BUILD_WEBSITE_SECTION": "Weboldal létrehozása",
@@ -83968,7 +83992,13 @@ define("nls/hu/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Nincs kiválasztva távoli adattár a(z) {0} számára!",
   "ERROR_BRANCH_LIST": "Ágak listájának lekérése sikertelen",
   "ERROR_FETCH_REMOTE": "Távoli adattár információinak lekérése sikertelen",
-  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Szavazzon azokra a funkciókra, amelyeket a jövőben látni szeretne!"
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Szavazzon azokra a funkciókra, amelyeket a jövőben látni szeretne!",
+  "HEALTH_DATA_NOTIFICATION_MESSAGE": "A(z) {APP_NAME} <strong>nem gyűjt és nem dolgoz fel semmilyen személyazonosításra alkalmas információt</strong>, de <strong>gyűjt anonim használati statisztikákat</strong> az Ön adatainak védelme érdekében. Az anonim adatok mentesülnek a GDPR/CCPA értesítési követelményei alól, de úgy gondoljuk, hogy Önnek lehetősége kell legyen lemondani az anonim adatgyűjtésről is.<br><br> Megtekintheti adatait, vagy <strong>választhatja, hogy nem oszt meg semmilyen anonim adatot</strong> a <strong>Súgó > Állapotjelentés</strong> kiválasztásával. Ezek az <strong>anonim</strong> alkalmazáshasználati statisztikák és hibajelentések segítenek a funkciók priorizálásában, a hibák megtalálásában és a használhatósági problémák felderítésében, hogy javítsuk az Ön {APP_NAME} élményét. Ezen adatok nélkül nem tudnánk, hogy milyen funkciókat érdemes fejlesztenünk az Ön számára! <br>",
+  "NEW_PROJECT_NOTIFICATION": "Kattintson erre az ikonra a `Projekt indítása` ablak újbóli megnyitásához.</br> Tekintse meg a Legutóbbi projekteket, nyisson meg egy mappát, vagy indítson projekteket sablonokból.</br> <img src=\"styles/images/new_project.png\">",
+  "BEAUTIFY_CODE_NOTIFICATION": "Kattintson ide vagy nyomja meg a <b>`{0}`</b> billentyűt a kód formázásához. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Kattintson ide az <br/><b>alapértelmezett projekt</b> megnyitásához a(z) {APP_NAME} alkalmazásban. </br> <a href='#' style='float:right;'>ok</a>",
+  "GIT_TOAST_TITLE": "Fedezd fel a Git funkciókat a Phoenix Code-ban",
+  "GIT_TOAST_MESSAGE": "Kattintson a Git panel ikonra a verziókövető rendszer kezeléséhez. Könnyedén végezhet commit, push és pull műveleteket, valamint megtekintheti a projekt előzményeit – mindezt egy helyen.<br><a href='https://docs.phcode.dev/docs/Features/git'>Tudj meg többet a Git panelről →</a>"
 });
 /*
  * GNU AGPL-3.0 License
@@ -84715,7 +84745,6 @@ define("nls/id/strings", {
   "HEALTH_DATA_NOTIFICATION": "Preferensi Laporan Kesehatan",
   "HEALTH_FIRST_POPUP_TITLE": "Pemberitahuan Privasi",
   "HEALTH_DATA_DO_TRACK": "Bagikan informasi anonim tentang bagaimana saya menggunakan {APP_NAME}",
-  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>tidak mengumpulkan atau memproses informasi identitas pribadi apa pun</strong>, tetapi <strong>mengumpulkan statistik penggunaan anonim</strong> untuk menjaga privasi Anda. Data anonim dikecualikan dari persyaratan pemberitahuan GDPR/CCPA, tetapi kami percaya Anda perlu memiliki pilihan untuk tidak ikut serta dalam pengumpulan data anonim juga.<br><br> Anda dapat melihat data Anda atau <strong>memilih untuk tidak membagikan data anonim apa pun</strong> dengan memilih <strong>Bantuan > Laporan Kesehatan</strong>. Statistik penggunaan aplikasi dan laporan kesalahan yang <strong>anonim</strong> ini membantu memprioritaskan fitur, menemukan bug, dan menemukan masalah kegunaan untuk meningkatkan pengalaman Anda dengan {APP_NAME}. Tanpa data ini, kami tidak akan tahu fitur apa yang layak dibuat untuk Anda! <br><br>",
   "HEALTH_DATA_PREVIEW": "Laporan Kesehatan {APP_NAME}",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>tidak mengumpulkan atau memproses informasi identitas pribadi apa pun</strong>, tetapi <strong>mengumpulkan statistik penggunaan anonim</strong> untuk menjaga privasi Anda. Statistik penggunaan aplikasi dan laporan kesalahan yang <strong>anonim</strong> ini membantu memprioritaskan fitur, menemukan bug, dan menemukan masalah kegunaan untuk meningkatkan pengalaman Anda dengan {APP_NAME}.</p> <p>Berikut adalah pratinjau data yang akan dikirim dalam Laporan Kesehatan Anda berikutnya <em>jika</em> diaktifkan. (Lihat juga konsol pengembang untuk log kesalahan yang ditandai 'Caught Critical error'.)</p>",
   "INLINE_TIMING_EDITOR_TIME": "Waktu",
@@ -85008,9 +85037,6 @@ define("nls/id/strings", {
   "PREVIEW": "Pratinjau",
   "BUILD_WEBSITE": "Bangun Situs Web",
   "VIEW_MORE": "Lihat Selengkapnya...",
-  "NEW_PROJECT_NOTIFICATION": "Klik ikon ini untuk membuka jendela `Proyek Baru` lagi.</br> Lihat Proyek Terbaru, Buka Folder atau mulai proyek dari template.</br> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>ok</a>",
-  "BEAUTIFY_CODE_NOTIFICATION": "Klik di sini atau tekan <b>`{0}`</b> untuk Memperindah kode. </br> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>ok</a>",
-  "DEFAULT_PROJECT_NOTIFICATION": "Klik di sini untuk membuka <br/><b>proyek default</b> di phoenix. </br> <a href='#' style='float:right;'>ok</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Folder yang dipilih <span class='dialog-filename'>{0}</span> tidak kosong. Apakah Anda yakin ingin mengganti isi folder dengan proyek ini?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Klik di sini untuk menemukan &lt;span&gt; ini di berkas HTML",
   "BUILD_WEBSITE_SECTION": "Bangun Situs Web",
@@ -85314,7 +85340,13 @@ define("nls/id/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Tidak ada remote yang dipilih untuk {0}!",
   "ERROR_BRANCH_LIST": "Gagal mendapatkan daftar branch",
   "ERROR_FETCH_REMOTE": "Gagal mengambil informasi remote",
-  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Pilih fitur yang ingin Anda lihat selanjutnya!"
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Pilih fitur yang ingin Anda lihat selanjutnya!",
+  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>tidak mengumpulkan atau memproses informasi identitas pribadi apa pun</strong>, tetapi <strong>mengumpulkan statistik penggunaan anonim</strong> untuk menjaga privasi Anda. Data anonim dikecualikan dari persyaratan pemberitahuan GDPR/CCPA, tetapi kami percaya Anda perlu memiliki pilihan untuk tidak ikut serta dalam pengumpulan data anonim juga.<br><br> Anda dapat melihat data Anda atau <strong>memilih untuk tidak membagikan data anonim apa pun</strong> dengan memilih <strong>Bantuan > Laporan Kesehatan</strong>. Statistik penggunaan aplikasi dan laporan kesalahan <strong>anonim</strong> ini membantu memprioritaskan fitur, menemukan bug, dan menemukan masalah kegunaan untuk meningkatkan pengalaman Anda dengan {APP_NAME}. Tanpa data ini, kami tidak akan tahu fitur apa yang layak dibuat untuk Anda! <br>",
+  "NEW_PROJECT_NOTIFICATION": "Klik ikon ini untuk membuka jendela `Mulai Proyek` lagi.</br> Lihat Proyek Terbaru, Buka Folder atau mulai proyek dari template.</br> <img src=\"styles/images/new_project.png\">",
+  "BEAUTIFY_CODE_NOTIFICATION": "Klik di sini atau tekan <b>`{0}`</b> untuk mempercantik kode. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Klik di sini untuk membuka <br/><b>proyek default</b> di {APP_NAME}. </br> <a href='#' style='float:right;'>ok</a>",
+  "GIT_TOAST_TITLE": "Jelajahi Fitur Git di Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Klik ikon panel Git untuk mengelola repositori Anda. Lakukan commit, push, pull, dan lihat riwayat proyek Anda dengan mudah—semua di satu tempat.<br><a href='https://docs.phcode.dev/docs/Features/git'>Pelajari lebih lanjut tentang panel Git →</a>"
 });
 /*
  * GNU AGPL-3.0 License
@@ -86087,7 +86119,6 @@ define("nls/it/strings", {
   "HEALTH_DATA_NOTIFICATION": "Preferenze Health Data",
   "HEALTH_FIRST_POPUP_TITLE": "Informativa sulla privacy",
   "HEALTH_DATA_DO_TRACK": "Condividi informazioni anonime su come utilizzo {APP_NAME}",
-  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>non raccoglie né elabora alcuna informazione personale identificabile</strong>, ma <strong>raccoglie statistiche di utilizzo anonime</strong> per tutelare la tua privacy. I dati anonimi sono esenti dai requisiti di notifica GDPR/CCPA, ma crediamo che tu debba avere la possibilità di scegliere di non partecipare alla raccolta di dati anonimi.<br><br> Puoi visualizzare i tuoi dati o <strong>scegliere di non condividere alcun dato anonimo</strong> selezionando <strong>Aiuto > Rapporto sull'integrità</strong>. Queste statistiche di utilizzo dell'app e i rapporti sugli errori <strong>anonimi</strong> ci aiutano a dare priorità alle funzionalità, a trovare bug e a individuare problemi di usabilità per migliorare la tua esperienza con {APP_NAME}. Senza questi dati, non sapremmo quali funzionalità vale la pena sviluppare per te! <br><br>",
   "HEALTH_DATA_PREVIEW": "Anteprima Health Data",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>non raccoglie né elabora alcuna informazione personale identificabile</strong>, ma <strong>raccoglie statistiche di utilizzo anonime</strong> per tutelare la tua privacy. Queste statistiche di utilizzo dell'app e i rapporti sugli errori <strong>anonimi</strong> ci aiutano a dare priorità alle funzionalità, a trovare bug e a individuare problemi di usabilità per migliorare la tua esperienza con {APP_NAME}.</p> <p>Di seguito è riportata un'anteprima dei dati che verranno inviati nel tuo prossimo Rapporto sull'integrità <em>se</em> abilitato. (Vedi anche la console per sviluppatori per i registri degli errori contrassegnati come \"Errore critico rilevato\".)</p>",
   "INLINE_TIMING_EDITOR_TIME": "Tempo",
@@ -86380,9 +86411,6 @@ define("nls/it/strings", {
   "PREVIEW": "Anteprima",
   "BUILD_WEBSITE": "Crea sito web",
   "VIEW_MORE": "Vedi altro...",
-  "NEW_PROJECT_NOTIFICATION": "Fai clic su questa icona per aprire nuovamente la finestra `Nuovo progetto`.</br> Vedi Progetti recenti, Apri cartella o avvia progetti da modelli.</br> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>ok</a>",
-  "BEAUTIFY_CODE_NOTIFICATION": "Fai clic qui o premi <b>`{0}`</b> per formattare il codice. </br> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>ok</a>",
-  "DEFAULT_PROJECT_NOTIFICATION": "Fai clic qui per aprire il <br/><b>progetto predefinito</b> in Phoenix. </br> <a href='#' style='float:right;'>ok</a>",
   "DIRECTORY_REPLACE_MESSAGE": "La cartella selezionata <span class='dialog-filename'>{0}</span> non è vuota. Sei sicuro di voler sostituire il contenuto della cartella con il progetto?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Fai clic qui per individuare questo &lt;span&gt; nel file HTML",
   "BUILD_WEBSITE_SECTION": "Crea sito web",
@@ -86686,7 +86714,13 @@ define("nls/it/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Nessun remote selezionato per {0}!",
   "ERROR_BRANCH_LIST": "Impossibile ottenere l'elenco dei branch",
   "ERROR_FETCH_REMOTE": "Recupero delle informazioni del remote non riuscito",
-  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vota per le funzionalità che desideri vedere in futuro!"
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vota per le funzionalità che desideri vedere in futuro!",
+  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>non raccoglie né elabora alcuna informazione personale identificativa</strong>, ma <strong>raccoglie statistiche di utilizzo anonime</strong> per tutelare la tua privacy. I dati anonimi sono esenti dai requisiti di notifica GDPR/CCPA, ma crediamo che tu debba avere la possibilità di scegliere di non condividere i dati anonimi.<br><br> Puoi visualizzare i tuoi dati o <strong>scegliere di non condividere alcun dato anonimo</strong> selezionando <strong>Aiuto > Report di integrità</strong>. Queste statistiche di utilizzo dell'app e i report sugli errori <strong>anonimi</strong> ci aiutano a dare priorità alle funzionalità, a trovare bug e a individuare problemi di usabilità per migliorare la tua esperienza con {APP_NAME}. Senza questi dati, non sapremmo quali funzionalità vale la pena sviluppare per te! <br>",
+  "NEW_PROJECT_NOTIFICATION": "Fai clic su questa icona per aprire nuovamente la finestra `Avvia progetto`.</br> Visualizza i progetti recenti, apri una cartella o avvia progetti da modelli.</br> <img src=\"styles/images/new_project.png\">",
+  "BEAUTIFY_CODE_NOTIFICATION": "Fai clic qui o premi <b>`{0}`</b> per formattare il codice. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Fai clic qui per aprire il <br/><b>progetto predefinito</b> in {APP_NAME}. </br> <a href='#' style='float:right;'>ok</a>",
+  "GIT_TOAST_TITLE": "Esplora le funzionalità Git in Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Fai clic sull'icona del pannello Git per gestire il tuo repository. Esegui commit, push, pull e visualizza la cronologia del tuo progetto, tutto in un unico posto.<br><a href='https://docs.phcode.dev/docs/Features/git'>Scopri di più sul pannello Git →</a>"
 });
 /*
  * GNU AGPL-3.0 License
@@ -87460,7 +87494,6 @@ define("nls/ja/strings", {
   "HEALTH_DATA_NOTIFICATION": "Health Report Preferences",
   "HEALTH_FIRST_POPUP_TITLE": "プライバシーに関するお知らせ",
   "HEALTH_DATA_DO_TRACK": "{APP_NAME} の利用状況に関する匿名情報を共有する",
-  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} は<strong>個人を特定できる情報を一切収集または処理しませんが</strong>、お客様のプライバシー保護のため、<strong>匿名の利用統計情報を収集しています</strong>。匿名データは GDPR/CCPA の通知要件から除外されていますが、匿名データの収集についてもオプトアウトを選択できる必要があると考えています。<br><br> <strong>ヘルプ > 健全性レポート</strong>を選択することで、データの確認や<strong>匿名データの共有を停止する</strong>ことができます。これらの<strong>匿名の</strong>アプリ利用統計情報とエラーレポートは、{APP_NAME} の操作性を向上させるための機能の優先順位付け、バグの発見、ユーザビリティの問題の特定に役立ちます。このデータがなければ、お客様にとってどのような機能を構築する価値があるのかがわかりません！<br><br>",
   "HEALTH_DATA_PREVIEW": "{APP_NAME} の正常性レポート",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} は<strong>個人を特定できる情報を一切収集または処理しませんが</strong>、<strong>匿名の利用統計情報を収集しています</strong>。お客様のプライバシー保護のためです。これらの<strong>匿名の</strong>アプリ利用統計情報とエラーレポートは、{APP_NAME} の操作性を向上させるための機能の優先順位付け、バグの発見、ユーザビリティの問題の特定に役立ちます。</p> <p>以下は、有効になっている<em>場合</em>に、次回の健全性レポートで送信されるデータのプレビューです。（「重大なエラーをキャッチしました」とマークされたエラーログについては、開発者コンソールも参照してください。）</p>",
   "INLINE_TIMING_EDITOR_TIME": "時間",
@@ -87753,9 +87786,6 @@ define("nls/ja/strings", {
   "PREVIEW": "プレビュー",
   "BUILD_WEBSITE": "ウェブサイトをビルド",
   "VIEW_MORE": "もっと見る…",
-  "NEW_PROJECT_NOTIFICATION": "このアイコンをクリックすると`新規プロジェクト`ウィンドウが再び開きます。</br> 最近のプロジェクト、フォルダを開く、またはテンプレートからプロジェクトを開始できます。</br> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>OK</a>",
-  "BEAUTIFY_CODE_NOTIFICATION": "ここをクリックするか、<b>`{0}`</b>を押してコードを整形します。</br> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>OK</a>",
-  "DEFAULT_PROJECT_NOTIFICATION": "ここをクリックしてphoenixの<br/><b>デフォルトプロジェクト</b>を開きます。</br> <a href='#' style='float:right;'>OK</a>",
   "DIRECTORY_REPLACE_MESSAGE": "選択したフォルダ <span class='dialog-filename'>{0}</span> は空ではありません。本当にフォルダの内容をプロジェクトで置き換えますか？",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "ここをクリックして、HTMLファイル内のこの&lt;span&gt;を探します",
   "BUILD_WEBSITE_SECTION": "ウェブサイトをビルド",
@@ -88059,7 +88089,13 @@ define("nls/ja/strings", {
   "ERROR_NO_REMOTE_SELECTED": "{0} に対してリモートが選択されていません！",
   "ERROR_BRANCH_LIST": "ブランチ一覧の取得に失敗しました。",
   "ERROR_FETCH_REMOTE": "リモート情報の取得に失敗しました。",
-  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "次に実装してほしい機能に投票してください！"
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "次に実装してほしい機能に投票してください！",
+  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME}は<strong>個人を特定できる情報は一切収集または処理しませんが</strong>、お客様のプライバシー保護のため、<strong>匿名の利用状況統計を収集しています</strong>。匿名データはGDPR/CCPAの通知要件から除外されていますが、匿名データの収集をオプトアウトする選択肢も必要だと考えています。<br><br> <strong>ヘルプ > ヘルスレポート</strong>を選択することで、データの確認や<strong>匿名データの共有を停止する</strong>ことができます。これらの<strong>匿名の</strong>アプリ利用状況統計とエラーレポートは、{APP_NAME}におけるお客様のエクスペリエンス向上のため、機能の優先順位付け、バグの発見、ユーザビリティの問題の特定に役立ちます。このデータがなければ、お客様にとってどのような機能を構築する価値があるのかがわかりません。<br>",
+  "NEW_PROJECT_NOTIFICATION": "このアイコンをクリックすると、「プロジェクトを開始」ウィンドウが再び開きます。</br> 最近のプロジェクトの表示、フォルダを開く、またはテンプレートからプロジェクトを開始できます。</br> <img src=\"styles/images/new_project.png\">",
+  "BEAUTIFY_CODE_NOTIFICATION": "ここをクリックするか、<b>`{0}`</b>を押してコードを整形します。</br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "ここをクリックして、{APP_NAME}の<br/><b>デフォルトプロジェクト</b>を開きます。</br> <a href='#' style='float:right;'>OK</a>",
+  "GIT_TOAST_TITLE": "Phoenix CodeのGit機能を試す",
+  "GIT_TOAST_MESSAGE": "Gitパネルアイコンをクリックしてリポジトリを管理します。コミット、プッシュ、プル、プロジェクト履歴の表示をすべて1か所で行えます。<br><a href='https://docs.phcode.dev/docs/Features/git'>Gitパネルの詳細はこちら →</a>"
 });
 /*
  * GNU AGPL-3.0 License
@@ -88833,7 +88869,6 @@ define("nls/ko/strings", {
   "HEALTH_DATA_NOTIFICATION": "상태 보고서 환경설정",
   "HEALTH_FIRST_POPUP_TITLE": "개인정보처리방침",
   "HEALTH_DATA_DO_TRACK": "{APP_NAME} 사용 방식에 대한 익명 정보 공유",
-  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME}은 <strong>개인 식별 정보를 수집하거나 처리하지 않지만</strong>, 사용자의 개인정보를 보호하기 위해 <strong>익명 사용 통계를 수집합니다</strong>. 익명 데이터는 GDPR/CCPA 알림 요구사항에서 제외되지만, 익명 데이터 수집을 거부할 수 있는 선택권도 제공해야 한다고 생각합니다.<br><br> <strong>도움말 > 상태 보고서</strong>를 선택하여 데이터를 확인하거나 <strong>익명 데이터를 공유하지 않도록 선택</strong>할 수 있습니다. 이러한 <strong>익명</strong> 앱 사용 통계 및 오류 보고서는 {APP_NAME} 사용 환경 개선을 위해 기능 우선순위 지정, 버그 찾기 및 사용성 문제 파악에 도움이 됩니다. 이 데이터가 없으면 어떤 기능을 개발해야 할지 알 수 없습니다! <br><br>",
   "HEALTH_DATA_PREVIEW": "{APP_NAME} 상태 보고서",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME}은 <strong>개인 식별 정보를 수집하거나 처리하지 않지만</strong>, 사용자의 개인정보를 보호하기 위해 <strong>익명 사용 통계를 수집합니다</strong>. 이러한 <strong>익명</strong> 앱 사용 통계 및 오류 보고서는 {APP_NAME} 사용 환경 개선을 위해 기능 우선순위 지정, 버그 찾기 및 사용성 문제 파악에 도움이 됩니다.</p> <p>다음은 활성화된 경우 다음 상태 보고서에 전송될 데이터의 미려보기입니다. ('심각한 오류 포착'으로 표시된 오류 로그는 개발자 콘솔에서도 확인할 수 있습니다.)</p>",
   "INLINE_TIMING_EDITOR_TIME": "시간",
@@ -89126,9 +89161,6 @@ define("nls/ko/strings", {
   "PREVIEW": "미리보기",
   "BUILD_WEBSITE": "웹사이트 빌드",
   "VIEW_MORE": "더 보기...",
-  "NEW_PROJECT_NOTIFICATION": "`새 프로젝트` 창을 다시 열려면 이 아이콘을 클릭하세요.</br> 최근 프로젝트 보기, 폴더 열기 또는 템플릿에서 프로젝트 시작하기.</br> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>확인</a>",
-  "BEAUTIFY_CODE_NOTIFICATION": "코드를 정리하려면 여기를 클릭하거나 <b>`{0}`</b>를 누르세요. </br> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>확인</a>",
-  "DEFAULT_PROJECT_NOTIFICATION": "피닉스에서 <br/><b>기본 프로젝트</b>를 열려면 여기를 클릭하세요. </br> <a href='#' style='float:right;'>확인</a>",
   "DIRECTORY_REPLACE_MESSAGE": "선택한 폴더 <span class='dialog-filename'>{0}</span>이 비어 있지 않습니다. 폴더 내용을 프로젝트로 바꾸시겠습니까?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "HTML 파일에서 이 &lt;span&gt;의 위치를 찾으려면 여기를 클릭하세요.",
   "BUILD_WEBSITE_SECTION": "웹사이트 빌드",
@@ -89432,7 +89464,13 @@ define("nls/ko/strings", {
   "ERROR_NO_REMOTE_SELECTED": "{0}에 대해 선택된 리모트가 없습니다!",
   "ERROR_BRANCH_LIST": "브랜치 목록 가져오기 실패",
   "ERROR_FETCH_REMOTE": "리모트 정보 가져오기 실패",
-  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "다음에 보고 싶은 기능에 투표하세요!"
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "다음에 보고 싶은 기능에 투표하세요!",
+  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME}은 <strong>어떠한 개인 식별 정보도 수집하거나 처리하지 않습니다</strong>. 하지만 사용자의 개인 정보를 보호하기 위해 <strong>익명의 사용 통계를 수집합니다</strong>. 익명 데이터는 GDPR/CCPA 알림 요구 사항에서 제외되지만, 익명 데이터 수집을 거부할 수 있는 선택권을 제공해야 한다고 생각합니다.<br><br> <strong>도움말 > 상태 보고서</strong>를 선택하여 데이터를 확인하거나 <strong>익명 데이터를 공유하지 않도록 선택</strong>할 수 있습니다. 이러한 <strong>익명</strong> 앱 사용 통계 및 오류 보고서는 기능 우선 순위 지정, 버그 발견 및 사용성 문제 파악에 도움이 되어 {APP_NAME} 사용 환경을 개선하는 데 도움이 됩니다. 이 데이터가 없으면 어떤 기능을 개발해야 할지 알 수 없습니다! <br>",
+  "NEW_PROJECT_NOTIFICATION": "이 아이콘을 클릭하면 `프로젝트 시작` 창이 다시 열립니다.</br> 최근 프로젝트 보기, 폴더 열기 또는 템플릿에서 프로젝트 시작하기.</br> <img src=\"styles/images/new_project.png\">",
+  "BEAUTIFY_CODE_NOTIFICATION": "여기를 클릭하거나 <b>`{0}`</b>을 눌러 코드를 정리하세요. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "여기를 클릭하여 {APP_NAME}에서 <br/><b>기본 프로젝트</b>를 여세요. </br> <a href='#' style='float:right;'>확인</a>",
+  "GIT_TOAST_TITLE": "Phoenix Code의 Git 기능 살펴보기",
+  "GIT_TOAST_MESSAGE": "Git 패널 아이콘을 클릭하여 저장소를 관리하세요. 커밋, 푸시, 풀, 프로젝트 기록 보기를 한 곳에서 간편하게 수행할 수 있습니다.<br><a href='https://docs.phcode.dev/docs/Features/git'>Git 패널에 대해 자세히 알아보기 →</a>"
 });
 /*
  * GNU AGPL-3.0 License
@@ -90206,7 +90244,6 @@ define("nls/lv/strings", {
   "HEALTH_DATA_NOTIFICATION": "Veselības atskaites iestatījumi",
   "HEALTH_FIRST_POPUP_TITLE": "Paziņojums par privātumu",
   "HEALTH_DATA_DO_TRACK": "Kopīgot anonīmu informāciju par to, kā es izmantoju {APP_NAME}",
-  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>nevāc un neapstrādā nekādu personiski identificējamu informāciju</strong>, bet <strong>vāc anonīmu lietošanas statistiku</strong>, lai aizsargātu jūsu privātumu. Anonīmi dati ir atbrīvoti no GDPR/CCPA paziņošanas prasībām, taču mēs uzskatām, ka jums ir jābūt iespējai atteikties arī no anonīmu datu vākšanas.<br><br> Jūs varat apskatīt savus datus vai <strong>izvēlēties nekopīgot nekādus anonīmus datus</strong>, atlasot <strong>Palīdzība > Veselības ziņojums</strong>. Šī <strong>anonīmā</strong> lietotnes lietošanas statistika un kļūdu ziņojumi palīdz noteikt prioritātes funkcijām, atrast kļūdas un noteikt lietojamības problēmas, lai uzlabotu jūsu pieredzi ar {APP_NAME}. Bez šiem datiem mēs nezinātu, kādas funkcijas ir vērts jums izstrādāt! <br><br>",
   "HEALTH_DATA_PREVIEW": "{APP_NAME} veselības atskaite",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>nevāc un neapstrādā nekādu personiski identificējamu informāciju</strong>, bet <strong>vāc anonīmu lietošanas statistiku</strong>, lai aizsargātu jūsu privātumu. Šī <strong>anonīmā</strong> lietotnes lietošanas statistika un kļūdu ziņojumi palīdz noteikt prioritātes funkcijām, atrast kļūdas un noteikt lietojamības problēmas, lai uzlabotu jūsu pieredzi ar {APP_NAME}.</p> <p>Zemāk ir redzams priekšskatījums datiem, kas tiks nosūtīti jūsu nākamajā veselības ziņojumā, <em>ja</em> tas ir iespējots. (Skatīt arī izstrātāja konsoli kļūdu žurnāliem, kas atzīmēti ar 'Caught Critical error'.)</p>",
   "INLINE_TIMING_EDITOR_TIME": "Laiks",
@@ -90499,9 +90536,6 @@ define("nls/lv/strings", {
   "PREVIEW": "Priekšskatījums",
   "BUILD_WEBSITE": "Izveidot vietni",
   "VIEW_MORE": "Skatīt vairāk...",
-  "NEW_PROJECT_NOTIFICATION": "Noklikšķiniet uz šīs ikonas, lai vēlreiz atvērtu logu `Jauns projekts`.</br> Skatiet nesenus projektus, atveriet mapi vai sāciet projektus no veidnēm.</br> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>labi</a>",
-  "BEAUTIFY_CODE_NOTIFICATION": "Noklikšķiniet šeit vai nospiediet <b>`{0}`</b>, lai formatētu kodu. </br> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>labi</a>",
-  "DEFAULT_PROJECT_NOTIFICATION": "Noklikšķiniet šeit, lai atvērtu <br/><b>noklusējuma projektu</b> programmā phoenix. </br> <a href='#' style='float:right;'>labi</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Izvēlētā mape <span class='dialog-filename'>{0}</span> nav tukša. Vai tiešām vēlaties aizstāt mapes saturu ar projektu?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Noklikšķiniet šeit, lai atrastu šo &lt;span&gt; HTML failā",
   "BUILD_WEBSITE_SECTION": "Izveidot vietni",
@@ -90805,7 +90839,13 @@ define("nls/lv/strings", {
   "ERROR_NO_REMOTE_SELECTED": "{0} nav izvēlēta attālā krātuve!",
   "ERROR_BRANCH_LIST": "Neizdevās iegūt zaru sarakstu",
   "ERROR_FETCH_REMOTE": "Neizdevās iegūt informāciju par attālo krātuvi",
-  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Nobalsot par funkcijām, kuras vēlaties redzēt nākamreiz!"
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Nobalsot par funkcijām, kuras vēlaties redzēt nākamreiz!",
+  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>nevāc un neapstrādā nekādu personu identificējošu informāciju</strong>, bet <strong>vāc anonīmu lietošanas statistiku</strong>, lai aizsargātu jūsu privātumu. Anonīmi dati ir atbrīvoti no GDPR/CCPA paziņošanas prasībām, taču mēs uzskatām, ka jums ir jābūt iespējai atteikties arī no anonīmu datu vākšanas.<br><br> Jūs varat apskatīt savus datus vai <strong>izvēlēties nekopīgot anonīmus datus</strong>, atlasot <strong>Palīdzība > Statusa pārskats</strong>. Šī <strong>anonīmā</strong> lietotnes lietošanas statistika un kļūdu ziņojumi palīdz noteikt funkciju prioritātes, atrast kļūdas un pamanīt lietojamības problēmas, lai uzlabotu jūsu pieredzi ar {APP_NAME}. Bez šiem datiem mēs nezinātu, kādas funkcijas ir vērts jums izstrādāt! <br>",
+  "NEW_PROJECT_NOTIFICATION": "Noklikšķiniet uz šīs ikonas, lai vēlreiz atvērtu logu `Sākt projektu`.</br> Skatiet nesenus projektus, atveriet mapi vai sāciet projektus no veidnēm.</br> <img src=\"styles/images/new_project.png\">",
+  "BEAUTIFY_CODE_NOTIFICATION": "Noklikšķiniet šeit vai nospiediet <b>`{0}`</b>, lai formatētu kodu. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Noklikšķiniet šeit, lai atvērtu <br/><b>noklusējuma projektu</b> {APP_NAME}. </br> <a href='#' style='float:right;'>labi</a>",
+  "GIT_TOAST_TITLE": "Izpētiet Git funkcijas Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Noklikšķiniet uz Git paneļa ikonas, lai pārvaldītu savu repozitoriju. Ērti veiciet commit, push, pull un skatiet sava projekta vēsturi — viss vienā vietā.<br><a href='https://docs.phcode.dev/docs/Features/git'>Uzziniet vairāk par Git paneli →</a>"
 });
 /*
  * GNU AGPL-3.0 License
@@ -91552,7 +91592,6 @@ define("nls/ml/strings", {
   "HEALTH_DATA_NOTIFICATION": "ആരോഗ്യ റിപ്പോർട്ട് ക്രമീകരണങ്ങൾ",
   "HEALTH_FIRST_POPUP_TITLE": "സ്വകാര്യതാ നോട്ടീസ്",
   "HEALTH_DATA_DO_TRACK": "ഞാൻ {APP_NAME} എങ്ങനെ ഉപയോഗിക്കുന്നു എന്നതിനെക്കുറിച്ചുള്ള അജ്ഞാത വിവരങ്ങൾ പങ്കിടുക",
-  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>വ്യക്തിപരമായി തിരിച്ചറിയാൻ കഴിയുന്ന യാതൊരു വിവരവും ശേഖരിക്കുകയോ പ്രോസസ്സ് ചെയ്യുകയോ ചെയ്യുന്നില്ല</strong>, എന്നാൽ നിങ്ങളുടെ സ്വകാര്യത സംരക്ഷിക്കുന്നതിന് <strong>അജ്ഞാത ഉപയോഗ സ്ഥിതിവിവരക്കണക്കുകൾ ശേഖരിക്കുന്നു</strong>. അജ്ഞാത ഡാറ്റ GDPR/CCPA നോട്ടിഫിക്കേഷൻ ആവശ്യകതകളിൽ നിന്ന് ഒഴിവാക്കിയിട്ടുണ്ട്, എന്നാൽ അജ്ഞാത ഡാറ്റ ശേഖരണം ഒഴിവാക്കാനും നിങ്ങൾക്ക് ഒരു ചോയ്‌സ് ഉണ്ടായിരിക്കണമെന്ന് ഞങ്ങൾ വിശ്വസിക്കുന്നു.<br><br> നിങ്ങളുടെ ഡാറ്റ കാണാനോ <strong>യാതൊരു അജ്ഞാത ഡാറ്റയും പങ്കിടാതിരിക്കാനോ</strong> <strong>സഹായം > ആരോഗ്യ റിപ്പോർട്ട്</strong> തിരഞ്ഞെടുക്കാം. ഈ <strong>അജ്ഞാത</strong> ആപ്പ് ഉപയോഗ സ്ഥിതിവിവരക്കണക്കുകളും പിശക് റിപ്പോർട്ടുകളും {APP_NAME} ഉപയോഗിച്ചുള്ള നിങ്ങളുടെ അനുഭവം മെച്ചപ്പെടുത്തുന്നതിന് സവിശേഷതകൾക്ക് മുൻഗണന നൽകാനും ബഗുകൾ കണ്ടെത്താനും ഉപയോഗക്ഷമത പ്രശ്നങ്ങൾ കണ്ടെത്താനും സഹായിക്കുന്നു. ഈ ഡാറ്റ ഇല്ലാതെ, നിങ്ങൾക്കായി ഏതൊക്കെ സവിശേഷതകൾ നിർമ്മിക്കണമെന്ന് ഞങ്ങൾക്ക് അറിയില്ല. <br><br>",
   "HEALTH_DATA_PREVIEW": "{APP_NAME} ആരോഗ്യ റിപ്പോർട്ട്",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>വ്യക്തിപരമായി തിരിച്ചറിയാൻ കഴിയുന്ന യാതൊരു വിവരവും ശേഖരിക്കുകയോ പ്രോസസ്സ് ചെയ്യുകയോ ചെയ്യുന്നില്ല</strong>, എന്നാൽ നിങ്ങളുടെ സ്വകാര്യത സംരക്ഷിക്കുന്നതിന് <strong>അജ്ഞാത ഉപയോഗ സ്ഥിതിവിവരക്കണക്കുകൾ ശേഖരിക്കുന്നു</strong>. ഈ <strong>അജ്ഞാത</strong> ആപ്പ് ഉപയോഗ സ്ഥിതിവിവരക്കണക്കുകളും പിശക് റിപ്പോർട്ടുകളും {APP_NAME} ഉപയോഗിച്ചുള്ള നിങ്ങളുടെ അനുഭവം മെച്ചപ്പെടുത്തുന്നതിന് സവിശേഷതകൾക്ക് മുൻഗണന നൽകാനും ബഗുകൾ കണ്ടെത്താനും ഉപയോഗക്ഷമത പ്രശ്നങ്ങൾ കണ്ടെത്താനും സഹായിക്കുന്നു.</p> <p>നിങ്ങളുടെ അടുത്ത ആരോഗ്യ റിപ്പോർട്ടിൽ അത് പ്രവർത്തനക്ഷമമാക്കിയിട്ടുണ്ടെങ്കിൽ <em>അയയ്‌ക്കുന്ന</em> ഡാറ്റയുടെ ഒരു പ്രിവ്യൂ ചുവടെയുണ്ട്. ('Caught Critical error' എന്ന് അടയാളപ്പെടുത്തിയ പിശക് ലോഗുകൾക്കായി ഡെവലപ്പർ കൺസോളും കാണുക.)</p>",
   "INLINE_TIMING_EDITOR_TIME": "സമയം",
@@ -91845,9 +91884,6 @@ define("nls/ml/strings", {
   "PREVIEW": "പ്രിവ്യൂ",
   "BUILD_WEBSITE": "വെബ്‌സൈറ്റ് നിർമ്മിക്കുക",
   "VIEW_MORE": "കൂടുതൽ കാണുക...",
-  "NEW_PROJECT_NOTIFICATION": "`പുതിയ പ്രോജക്റ്റ്` വിൻഡോ വീണ്ടും തുറക്കാൻ ഈ ഐക്കണിൽ ക്ലിക്ക് ചെയ്യുക.</br>  സമീപകാല പ്രോജക്റ്റുകൾ കാണുക, ഫോൾഡർ തുറക്കുക അല്ലെങ്കിൽ ടെംപ്ലേറ്റുകളിൽ നിന്ന് പ്രോജക്റ്റുകൾ ആരംഭിക്കുക.</br> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>ശരി</a>",
-  "BEAUTIFY_CODE_NOTIFICATION": "കോഡ് ഭംഗിയാക്കാൻ ഇവിടെ ക്ലിക്ക് ചെയ്യുക അല്ലെങ്കിൽ <b>`{0}`</b> അമർത്തുക. </br> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>ശരി</a>",
-  "DEFAULT_PROJECT_NOTIFICATION": "ഫീനിക്സിൽ <br/><b>ഡിഫോൾട്ട് പ്രോജക്റ്റ്</b> തുറക്കാൻ ഇവിടെ ക്ലിക്ക് ചെയ്യുക. </br> <a href='#' style='float:right;'>ശരി</a>",
   "DIRECTORY_REPLACE_MESSAGE": "തെരഞ്ഞെടുത്ത ഫോൾഡർ <span class='dialog-filename'>{0}</span> ശൂന്യമല്ല. ഫോൾഡറിന്റെ ഉള്ളടക്കങ്ങൾ പ്രോജക്റ്റ് ഉപയോഗിച്ച് മാറ്റിസ്ഥാപിക്കണമെന്ന് നിങ്ങൾക്ക് ഉറപ്പാണോ?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "HTML ഫയലിൽ ഇത് കണ്ടെത്താൻ ഇവിടെ ക്ലിക്ക് ചെയ്യുക &lt;span&gt;",
   "BUILD_WEBSITE_SECTION": "വെബ്‌സൈറ്റ് നിർമ്മിക്കുക",
@@ -92151,7 +92187,13 @@ define("nls/ml/strings", {
   "ERROR_NO_REMOTE_SELECTED": "{0} എന്നതിന് റിമോട്ട് തിരഞ്ഞെടുത്തിട്ടില്ല!",
   "ERROR_BRANCH_LIST": "ബ്രാഞ്ച് ലിസ്റ്റ് എടുക്കുന്നതിൽ പിഴവ്",
   "ERROR_FETCH_REMOTE": "റിമോട്ട് വിവരങ്ങൾ എടുക്കുന്നതിൽ പിഴവ്",
-  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "നിങ്ങൾക്ക് അടുത്തതായി കാണാൻ ആഗ്രഹിക്കുന്ന സവിശേഷതകൾക്ക് വോട്ട് ചെയ്യുക!"
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "നിങ്ങൾക്ക് അടുത്തതായി കാണാൻ ആഗ്രഹിക്കുന്ന സവിശേഷതകൾക്ക് വോട്ട് ചെയ്യുക!",
+  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>നിങ്ങളുടെ സ്വകാര്യ വിവരങ്ങളൊന്നും ശേഖരിക്കുകയോ പ്രോസസ്സ് ചെയ്യുകയോ ചെയ്യുന്നില്ല</strong>, എന്നാൽ നിങ്ങളുടെ സ്വകാര്യത സംരക്ഷിക്കുന്നതിനായി <strong>അജ്ഞാത ഉപയോഗ സ്ഥിതിവിവരക്കണക്കുകൾ ശേഖരിക്കുന്നു</strong>. അജ്ഞാത ഡാറ്റ GDPR/CCPA വിജ്ഞാപന ആവശ്യകതകളിൽ നിന്ന് ഒഴിവാക്കിയിരിക്കുന്നു, എന്നാൽ അജ്ഞാത ഡാറ്റ ശേഖരണം ഒഴിവാക്കാനുള്ള ഒരു തിരഞ്ഞെടുപ്പ് നിങ്ങൾക്ക് ഉണ്ടായിരിക്കണമെന്ന് ഞങ്ങൾ വിശ്വസിക്കുന്നു.<br><br> നിങ്ങളുടെ ഡാറ്റ കാണാനോ <strong>എന്തെങ്കിലും അജ്ഞാത ഡാറ്റ പങ്കിടാതിരിക്കാനോ</strong> <strong>സഹായം > ആരോഗ്യ റിപ്പോർട്ട്</strong> തിരഞ്ഞെടുക്കാം. ഈ <strong>അജ്ഞാത</strong> ആപ്പ് ഉപയോഗ സ്ഥിതിവിവരക്കണക്കുകളും പിശക് റിപ്പോർട്ടുകളും {APP_NAME} ഉപയോഗിച്ചുള്ള നിങ്ങളുടെ അനുഭവം മെച്ചപ്പെടുത്തുന്നതിന് സവിശേഷതകൾക്ക് മുൻഗണന നൽകാനും ബഗുകൾ കണ്ടെത്താനും ഉപയോഗക്ഷമതാ പ്രശ്‌നങ്ങൾ കണ്ടെത്താനും സഹായിക്കുന്നു. ഈ ഡാറ്റ ഇല്ലെങ്കിൽ, നിങ്ങൾക്കായി ഏതൊക്കെ സവിശേഷതകൾ നിർമ്മിക്കണമെന്ന് ഞങ്ങൾക്ക് അറിയില്ല! <br>",
+  "NEW_PROJECT_NOTIFICATION": "ഈ ഐക്കണിൽ ക്ലിക്ക് ചെയ്‌ത് `പ്രോജക്റ്റ് ആരംഭിക്കുക` വിൻഡോ വീണ്ടും തുറക്കുക.</br> സമീപകാല പ്രോജക്റ്റുകൾ കാണുക, ഫോൾഡർ തുറക്കുക അല്ലെങ്കിൽ ടെംപ്ലേറ്റുകളിൽ നിന്ന് പ്രോജക്റ്റുകൾ ആരംഭിക്കുക.</br> <img src=\"styles/images/new_project.png\">",
+  "BEAUTIFY_CODE_NOTIFICATION": "കോഡ് മനോഹരമാക്കാൻ ഇവിടെ ക്ലിക്ക് ചെയ്യുക അല്ലെങ്കിൽ <b>`{0}`</b> അമർത്തുക. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "{APP_NAME}-ൽ <br/><b>സ്ഥിരസ്ഥിതി പ്രോജക്റ്റ്</b> തുറക്കാൻ ഇവിടെ ക്ലിക്ക് ചെയ്യുക. </br> <a href='#' style='float:right;'>ശരി</a>",
+  "GIT_TOAST_TITLE": "ഫീനിക്സ് കോഡിലെ ഗിറ്റ് സവിശേഷതകൾ പര്യവേക്ഷണം ചെയ്യുക",
+  "GIT_TOAST_MESSAGE": "നിങ്ങളുടെ റെപ്പോസിറ്ററി കൈകാര്യം ചെയ്യാൻ ഗിറ്റ് പാനൽ ഐക്കണിൽ ക്ലിക്ക് ചെയ്യുക. എളുപ്പത്തിൽ കമ്മിറ്റ് ചെയ്യുക, പുഷ് ചെയ്യുക, പുൾ ചെയ്യുക, നിങ്ങളുടെ പ്രോജക്റ്റ് ചരിത്രം കാണുക—എല്ലാം ഒരിടത്ത്.<br><a href='https://docs.phcode.dev/docs/Features/git'>ഗിറ്റ് പാനലിനെക്കുറിച്ച് കൂടുതലറിയുക →</a>"
 });
 /*
  * GNU AGPL-3.0 License
@@ -92898,7 +92940,6 @@ define("nls/nb/strings", {
   "HEALTH_DATA_NOTIFICATION": "Innstillinger for helserapport",
   "HEALTH_FIRST_POPUP_TITLE": "Personvernerklæring",
   "HEALTH_DATA_DO_TRACK": "Del anonym informasjon om hvordan jeg bruker {APP_NAME}",
-  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>samler ikke inn eller behandler noen personlig identifiserbar informasjon</strong>, men <strong>samler inn anonym bruksstatistikk</strong> for å beskytte personvernet ditt. Anonyme data er unntatt fra GDPR/CCPA-varslingkrav, men vi mener at du bør ha et valg om å reservere deg mot innsamling av anonyme data også.<br><br> Du kan se dataene dine eller <strong>velge å ikke dele noen anonyme data</strong> ved å velge <strong>Hjelp > Helserapport</strong>. Denne <strong>anonyme</strong> statistikken over appbruk og feilrapporter hjelper oss med å prioritere funksjoner, finne feil og oppdage bruksproblemer for å forbedre opplevelsen din med {APP_NAME}. Uten disse dataene ville vi ikke vite hvilke funksjoner det er verdt å bygge for deg! <br><br>",
   "HEALTH_DATA_PREVIEW": "{APP_NAME} helserapport",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>samler ikke inn eller behandler noen personlig identifiserbar informasjon</strong>, men <strong>samler inn anonym bruksstatistikk</strong> for å beskytte personvernet ditt. Denne <strong>anonyme</strong> statistikken over appbruk og feilrapporter hjelper oss med å prioritere funksjoner, finne feil og oppdage bruksproblemer for å forbedre opplevelsen din med {APP_NAME}.</p> <p>Nedenfor er en forhåndsvisning av dataene som vil bli sendt i din neste helserapport <em>hvis</em> den er aktivert. (Se også utviklerkonsollen for feillogger merket 'Caught Critical error'.)</p>",
   "INLINE_TIMING_EDITOR_TIME": "Tid",
@@ -93191,9 +93232,6 @@ define("nls/nb/strings", {
   "PREVIEW": "Forhåndsvisning",
   "BUILD_WEBSITE": "Bygg nettsted",
   "VIEW_MORE": "Vis mer...",
-  "NEW_PROJECT_NOTIFICATION": "Klikk dette ikonet for å åpne `Nytt prosjekt`-vinduet igjen.</br> Se Nylige prosjekter, Åpne mappe eller start prosjekter fra maler.</br> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>ok</a>",
-  "BEAUTIFY_CODE_NOTIFICATION": "Klikk her eller trykk <b>`{0}`</b> for å forskjønne koden. </br> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>ok</a>",
-  "DEFAULT_PROJECT_NOTIFICATION": "Klikk her for å åpne <br/><b>standardprosjektet</b> i phoenix. </br> <a href='#' style='float:right;'>ok</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Den valgte mappen <span class='dialog-filename'>{0}</span> er ikke tom. Er du sikker på at du vil erstatte mappeinnholdet med prosjektet?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Klikk her for å finne denne &lt;span&gt; i HTML-filen",
   "BUILD_WEBSITE_SECTION": "Bygg nettsted",
@@ -93497,7 +93535,13 @@ define("nls/nb/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Ingen eksternt repositorium er valgt for {0}!",
   "ERROR_BRANCH_LIST": "Kunne ikke hente grenliste",
   "ERROR_FETCH_REMOTE": "Kunne ikke hente informasjon om eksternt repositorium",
-  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stem på funksjonene du ønsker å se neste!"
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stem på funksjonene du ønsker å se neste!",
+  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>samler ikke inn eller behandler noen personlig identifiserbar informasjon</strong>, men <strong>samler inn anonym bruksstatistikk</strong> for å beskytte personvernet ditt. Anonyme data er unntatt fra GDPR/CCPA-varslingsplikten, men vi mener du bør ha muligheten til å velge bort innsamling av anonyme data også.<br><br> Du kan se dataene dine eller <strong>velge å ikke dele noen anonyme data</strong> ved å velge <strong>Hjelp > Helse-rapport</strong>. Denne <strong>anonyme</strong> statistikken over appbruk og feilrapporter hjelper oss med å prioritere funksjoner, finne feil og oppdage brukervennlighetsproblemer for å forbedre din opplevelse med {APP_NAME}. Uten disse dataene ville vi ikke visst hvilke funksjoner det er verdt å bygge for deg! <br>",
+  "NEW_PROJECT_NOTIFICATION": "Klikk på dette ikonet for å åpne `Start prosjekt`-vinduet igjen.</br> Se Nylige prosjekter, Åpne mappe eller start prosjekter fra maler.</br> <img src=\"styles/images/new_project.png\">",
+  "BEAUTIFY_CODE_NOTIFICATION": "Klikk her eller trykk <b>`{0}`</b> for å pynte kode. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Klikk her for å åpne <br/><b>standardprosjektet</b> i {APP_NAME}. </br> <a href='#' style='float:right;'>ok</a>",
+  "GIT_TOAST_TITLE": "Utforsk Git-funksjoner i Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Klikk på Git-panelikonet for å administrere repositoriet ditt. Utfør commit, push, pull og se prosjektloggen din – alt på ett sted.<br><a href='https://docs.phcode.dev/docs/Features/git'>Lær mer om Git-panelet →</a>"
 });
 /*
  * GNU AGPL-3.0 License
@@ -94271,7 +94315,6 @@ define("nls/nl/strings", {
   "HEALTH_DATA_NOTIFICATION": "Statusrapport instellingen",
   "HEALTH_FIRST_POPUP_TITLE": "Privacyverklaring",
   "HEALTH_DATA_DO_TRACK": "Deel anonieme informatie over hoe ik {APP_NAME} gebruik",
-  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>verzamelt of verwerkt geen persoonlijk identificeerbare informatie</strong>, maar <strong>verzamelt anonieme gebruiksstatistieken</strong> om uw privacy te beschermen. Anonieme gegevens zijn vrijgesteld van GDPR/CCPA-meldingsvereisten, maar wij zijn van mening dat u ook de mogelijkheid moet hebben om u af te melden voor het verzamelen van anonieme gegevens.<br><br>U kunt uw gegevens bekijken of <strong>kiezen om geen anonieme gegevens te delen</strong> door <strong>Help > Gezondheidsrapport</strong> te selecteren. Deze <strong>anonieme</strong> gebruiksstatistieken en foutrapporten van de app helpen bij het prioriteren van functies, het vinden van bugs en het opsporen van problemen met de bruikbaarheid om uw ervaring met {APP_NAME} te verbeteren. Zonder deze gegevens zouden we niet weten welke functies het waard zijn om voor u te ontwikkelen! <br><br>",
   "HEALTH_DATA_PREVIEW": "{APP_NAME} statusrapport",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>verzamelt of verwerkt geen persoonlijk identificeerbare informatie</strong>, maar <strong>verzamelt anonieme gebruiksstatistieken</strong> om uw privacy te beschermen. Deze <strong>anonieme</strong> gebruiksstatistieken en foutrapporten van de app helpen bij het prioriteren van functies, het vinden van bugs en het opsporen van problemen met de bruikbaarheid om uw ervaring met {APP_NAME} te verbeteren.</p> <p>Hieronder ziet u een voorbeeld van de gegevens die in uw volgende gezondheidsrapport worden verzonden <em>als</em> deze is ingeschakeld. (Zie ook de ontwikkelaarsconsole voor foutlogboeken gemarkeerd met 'Caught Critical error'.)</p>",
   "INLINE_TIMING_EDITOR_TIME": "Tijd",
@@ -94564,9 +94607,6 @@ define("nls/nl/strings", {
   "PREVIEW": "Voorbeeldweergave",
   "BUILD_WEBSITE": "Website bouwen",
   "VIEW_MORE": "Meer bekijken...",
-  "NEW_PROJECT_NOTIFICATION": "Klik op dit pictogram om het venster `Nieuw project` opnieuw te openen.</br> Bekijk Recente Projecten, Open Map of start projecten vanuit sjablonen.</br> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>ok</a>",
-  "BEAUTIFY_CODE_NOTIFICATION": "Klik hier of druk op <b>`{0}`</b> om code te verfraaien. </br> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>ok</a>",
-  "DEFAULT_PROJECT_NOTIFICATION": "Klik hier om het <br/><b>standaardproject</b> in phoenix te openen. </br> <a href='#' style='float:right;'>ok</a>",
   "DIRECTORY_REPLACE_MESSAGE": "De geselecteerde map <span class='dialog-filename'>{0}</span> is niet leeg. Weet u zeker dat u de inhoud van de map wilt vervangen door het project?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Klik hier om deze &lt;span&gt; in het HTML-bestand te vinden",
   "BUILD_WEBSITE_SECTION": "Website bouwen",
@@ -94870,7 +94910,13 @@ define("nls/nl/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Er is geen remote geselecteerd voor {0}!",
   "ERROR_BRANCH_LIST": "Ophalen van branch-lijst mislukt",
   "ERROR_FETCH_REMOTE": "Ophalen van remote-informatie mislukt",
-  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stem op de functies die u graag wilt zien!"
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stem op de functies die u graag wilt zien!",
+  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>verzamelt of verwerkt geen persoonlijk identificeerbare informatie</strong>, maar <strong>verzamelt wel anonieme gebruiksstatistieken</strong> om uw privacy te beschermen. Anonieme gegevens zijn vrijgesteld van GDPR/CCPA-meldingsvereisten, maar wij vinden dat u de mogelijkheid moet hebben om u af te melden voor het verzamelen van anonieme gegevens.<br><br>U kunt uw gegevens bekijken of ervoor <strong>kiezen om geen anonieme gegevens te delen</strong> door <strong>Help > Statusrapport</strong> te selecteren. Deze <strong>anonieme</strong> gebruiksstatistieken en foutrapporten helpen bij het prioriteren van functies, het vinden van bugs en het opsporen van problemen met de bruikbaarheid om uw ervaring met {APP_NAME} te verbeteren. Zonder deze gegevens zouden we niet weten welke functies het waard zijn om voor u te ontwikkelen! <br>",
+  "NEW_PROJECT_NOTIFICATION": "Klik op dit pictogram om het venster `Project starten` opnieuw te openen.</br> Bekijk Recente Projecten, Open Map of start projecten vanuit sjablonen.</br> <img src=\"styles/images/new_project.png\">",
+  "BEAUTIFY_CODE_NOTIFICATION": "Klik hier of druk op <b>`{0}`</b> om code op te maken. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Klik hier om het <br/><b>standaardproject</b> in {APP_NAME} te openen. </br> <a href='#' style='float:right;'>ok</a>",
+  "GIT_TOAST_TITLE": "Ontdek Git-functies in Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Klik op het Git-paneelpictogram om uw repository te beheren. Commit, push, pull en bekijk uw projectgeschiedenis eenvoudig - alles op één plek.<br><a href='https://docs.phcode.dev/docs/Features/git'>Meer informatie over het Git-paneel →</a>"
 });
 /*
  * GNU AGPL-3.0 License
@@ -95644,7 +95690,6 @@ define("nls/pl/strings", {
   "HEALTH_DATA_NOTIFICATION": "Ustawienia raportowania",
   "HEALTH_FIRST_POPUP_TITLE": "Informacja o prywatności",
   "HEALTH_DATA_DO_TRACK": "Udostępniaj anonimowe informacje o tym, jak korzystam z {APP_NAME}",
-  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>nie gromadzi ani nie przetwarza żadnych danych osobowych</strong>, ale <strong>gromadzi anonimowe statystyki użytkowania</strong>, aby chronić Twoją prywatność. Dane anonimowe są zwolnione z wymogów powiadamiania RODO/CCPA, ale uważamy, że powinieneś mieć możliwość rezygnacji również z gromadzenia danych anonimowych.<br><br> Możesz zobaczyć swoje dane lub <strong>zrezygnować z udostępniania jakichkolwiek danych anonimowych</strong>, wybierając <strong>Pomoc > Raport o stanie</strong>. Te <strong>anonimowe</strong> statystyki użytkowania aplikacji i raporty o błędach pomagają priorytetyzować funkcje, znajdować błędy i wykrywać problemy z użytecznością, aby poprawić komfort korzystania z {APP_NAME}. Bez tych danych nie wiedzielibyśmy, jakie funkcje warto dla Ciebie tworzyć! <br><br>",
   "HEALTH_DATA_PREVIEW": "Raporty {APP_NAME}",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>nie gromadzi ani nie przetwarza żadnych danych osobowych</strong>, ale <strong>gromadzi anonimowe statystyki użytkowania</strong>, aby chronić Twoją prywatność. Te <strong>anonimowe</strong> statystyki użytkowania aplikacji i raporty o błędach pomagają priorytetyzować funkcje, znajdować błędy i wykrywać problemy z użytecznością, aby poprawić komfort korzystania z {APP_NAME}.</p> <p>Poniżej znajduje się podgląd danych, które zostaną wysłane w następnym Raporcie o stanie, <em>jeśli</em> będzie on włączony. (Zobacz także konsolę deweloperską, aby sprawdzić logi błędów oznaczone jako 'Caught Critical error'.)</p>",
   "INLINE_TIMING_EDITOR_TIME": "Czas",
@@ -95937,9 +95982,6 @@ define("nls/pl/strings", {
   "PREVIEW": "Podgląd",
   "BUILD_WEBSITE": "Stwórz stronę internetową",
   "VIEW_MORE": "Zobacz więcej...",
-  "NEW_PROJECT_NOTIFICATION": "Kliknij tę ikonę, aby ponownie otworzyć okno `Nowy projekt`.</br> Zobacz ostatnie projekty, otwórz folder lub rozpocznij projekty z szablonów.</br> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>ok</a>",
-  "BEAUTIFY_CODE_NOTIFICATION": "Kliknij tutaj lub naciśnij <b>`{0}`</b>, aby upiększyć kod. </br> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>ok</a>",
-  "DEFAULT_PROJECT_NOTIFICATION": "Kliknij tutaj, aby otworzyć <br/><b>projekt domyślny</b> w phoenix. </br> <a href='#' style='float:right;'>ok</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Wybrany folder <span class='dialog-filename'>{0}</span> nie jest pusty. Czy na pewno chcesz zastąpić zawartość folderu projektem?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Kliknij tutaj, aby zlokalizować to &lt;span&gt; w pliku HTML",
   "BUILD_WEBSITE_SECTION": "Stwórz stronę internetową",
@@ -96243,7 +96285,13 @@ define("nls/pl/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Nie wybrano zdalnego repozytorium dla {0}!",
   "ERROR_BRANCH_LIST": "Pobieranie listy gałęzi nie powiodło się",
   "ERROR_FETCH_REMOTE": "Pobieranie informacji o zdalnym repozytorium nie powiodło się",
-  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Zagłosuj na funkcje, które chcesz zobaczyć w przyszłości!"
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Zagłosuj na funkcje, które chcesz zobaczyć w przyszłości!",
+  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>nie gromadzi ani nie przetwarza żadnych danych osobowych</strong>, ale <strong>zbiera anonimowe statystyki użytkowania</strong>, aby chronić Twoją prywatność. Anonimowe dane są zwolnione z wymogów powiadamiania RODO/CCPA, ale uważamy, że powinieneś mieć możliwość rezygnacji również z gromadzenia danych anonimowych.<br><br> Możesz zobaczyć swoje dane lub <strong>zrezygnować z udostępniania jakichkolwiek danych anonimowych</strong>, wybierając <strong>Pomoc > Raport o stanie</strong>. Te <strong>anonimowe</strong> statystyki użytkowania aplikacji i raporty o błędach pomagają nam ustalać priorytety funkcji, znajdować błędy i wykrywać problemy z użytecznością, aby poprawić Twoje wrażenia z korzystania z {APP_NAME}. Bez tych danych nie wiedzielibyśmy, jakie funkcje warto dla Ciebie tworzyć! <br>",
+  "NEW_PROJECT_NOTIFICATION": "Kliknij tę ikonę, aby ponownie otworzyć okno `Rozpocznij projekt`.</br> Zobacz Ostatnie projekty, Otwórz folder lub rozpocznij projekty z szablonów.</br> <img src=\"styles/images/new_project.png\">",
+  "BEAUTIFY_CODE_NOTIFICATION": "Kliknij tutaj lub naciśnij <b>`{0}`</b>, aby upiększyć kod. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Kliknij tutaj, aby otworzyć <br/><b>domyślny projekt</b> w {APP_NAME}. </br> <a href='#' style='float:right;'>ok</a>",
+  "GIT_TOAST_TITLE": "Poznaj funkcje Gita w Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Kliknij ikonę panelu Git, aby zarządzać swoim repozytorium. Łatwo zatwierdzaj, przesyłaj, pobieraj i przeglądaj historię swojego projektu — wszystko w jednym miejscu.<br><a href='https://docs.phcode.dev/docs/Features/git'>Dowiedz się więcej o panelu Git →</a>"
 });
 /*
  * GNU AGPL-3.0 License
@@ -97017,7 +97065,6 @@ define("nls/pt-br/strings", {
   "HEALTH_DATA_NOTIFICATION": "Preferências do relatório de saúde",
   "HEALTH_FIRST_POPUP_TITLE": "Aviso de Privacidade",
   "HEALTH_DATA_DO_TRACK": "Compartilhar informações anônimas sobre como eu uso o {APP_NAME}",
-  "HEALTH_DATA_NOTIFICATION_MESSAGE": "O {APP_NAME} <strong>não coleta nem processa qualquer informação pessoal identificável</strong>, mas <strong>coleta estatísticas de uso anônimas</strong> para proteger sua privacidade.  Dados anônimos estão isentos dos requisitos de notificação da GDPR/CCPA, mas acreditamos que você precisa ter a opção de desativar a coleta de dados anônimos também.<br><br> Você pode ver seus dados ou <strong>optar por não compartilhar nenhum dado anônimo</strong> selecionando <strong>Ajuda > Relatório de Saúde</strong>. Essas estatísticas de uso do aplicativo e relatórios de erros <strong>anônimos</strong> ajudam a priorizar recursos, encontrar bugs e identificar problemas de usabilidade para melhorar sua experiência com o {APP_NAME}. Sem esses dados, não saberíamos quais recursos valem a pena desenvolver para você! <br><br>",
   "HEALTH_DATA_PREVIEW": "Relatório de saúde do {APP_NAME}",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>O {APP_NAME} <strong>não coleta nem processa qualquer informação pessoal identificável</strong>, mas <strong>coleta estatísticas de uso anônimas</strong> para proteger sua privacidade. Essas estatísticas de uso do aplicativo e relatórios de erros <strong>anônimos</strong> ajudam a priorizar recursos, encontrar bugs e identificar problemas de usabilidade para melhorar sua experiência com o {APP_NAME}.</p> <p>Abaixo está uma prévia dos dados que serão enviados em seu próximo Relatório de Saúde <em>se</em> ele estiver ativado. (Veja também o console do desenvolvedor para logs de erro marcados como 'Erro crítico detectado'.)</p>",
   "INLINE_TIMING_EDITOR_TIME": "Tempo",
@@ -97310,9 +97357,6 @@ define("nls/pt-br/strings", {
   "PREVIEW": "Visualizar",
   "BUILD_WEBSITE": "Gerar Site",
   "VIEW_MORE": "Ver Mais...",
-  "NEW_PROJECT_NOTIFICATION": "Clique neste ícone para abrir a janela `Novo Projeto` novamente.</br> Veja Projetos Recentes, Abrir Pasta ou inicie projetos a partir de modelos.</br> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>ok</a>",
-  "BEAUTIFY_CODE_NOTIFICATION": "Clique aqui ou pressione <b>`{0}`</b> para Embelezar o código. </br> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>ok</a>",
-  "DEFAULT_PROJECT_NOTIFICATION": "Clique aqui para abrir o <br/><b>projeto padrão</b> no phoenix. </br> <a href='#' style='float:right;'>ok</a>",
   "DIRECTORY_REPLACE_MESSAGE": "A pasta selecionada <span class='dialog-filename'>{0}</span> não está vazia. Tem certeza de que deseja substituir o conteúdo da pasta pelo projeto?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Clique aqui para localizar este &lt;span&gt; no arquivo HTML",
   "BUILD_WEBSITE_SECTION": "Gerar Site",
@@ -97616,7 +97660,13 @@ define("nls/pt-br/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Nenhum remoto foi selecionado para {0}!",
   "ERROR_BRANCH_LIST": "Falha ao obter a lista de branches",
   "ERROR_FETCH_REMOTE": "Falha ao buscar informações do remoto",
-  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote nos recursos que você quer ver em seguida!"
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote nos recursos que você quer ver em seguida!",
+  "HEALTH_DATA_NOTIFICATION_MESSAGE": "O {APP_NAME} <strong>não coleta ou processa nenhuma informação pessoalmente identificável</strong>, mas <strong>coleta estatísticas anônimas de uso</strong> para proteger sua privacidade. Dados anônimos estão isentos dos requisitos de notificação da GDPR/CCPA, mas acreditamos que você precisa ter a opção de desativar a coleta de dados anônimos também.<br><br> Você pode ver seus dados ou <strong>optar por não compartilhar nenhum dado anônimo</strong> selecionando <strong>Ajuda > Relatório de Saúde</strong>. Essas estatísticas <strong>anônimas</strong> de uso do aplicativo e relatórios de erros ajudam a priorizar recursos, encontrar bugs e identificar problemas de usabilidade para melhorar sua experiência com o {APP_NAME}. Sem esses dados, não saberíamos quais recursos valem a pena desenvolver para você! <br>",
+  "NEW_PROJECT_NOTIFICATION": "Clique neste ícone para abrir a janela `Iniciar Projeto` novamente.</br> Veja Projetos Recentes, Abrir Pasta ou inicie projetos a partir de modelos.</br> <img src=\"styles/images/new_project.png\">",
+  "BEAUTIFY_CODE_NOTIFICATION": "Clique aqui ou pressione <b>`{0}`</b> para formatar o código. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Clique aqui para abrir o <br/><b>projeto padrão</b> no {APP_NAME}. </br> <a href='#' style='float:right;'>ok</a>",
+  "GIT_TOAST_TITLE": "Explore os Recursos do Git no Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Clique no ícone do painel Git para gerenciar seu repositório. Faça commits, pushes, pulls e visualize o histórico do seu projeto com facilidade — tudo em um só lugar.<br><a href='https://docs.phcode.dev/docs/Features/git'>Saiba mais sobre o painel Git →</a>"
 });
 /*
  * GNU AGPL-3.0 License
@@ -98388,7 +98438,6 @@ define("nls/pt-pt/strings", {
   "HEALTH_DATA_NOTIFICATION": "Preferências do Relatório de Estado",
   "HEALTH_FIRST_POPUP_TITLE": "Aviso de Privacidade",
   "HEALTH_DATA_DO_TRACK": "Partilhar informações anónimas sobre como uso o {APP_NAME}",
-  "HEALTH_DATA_NOTIFICATION_MESSAGE": "O {APP_NAME} <strong>não recolhe nem processa qualquer informação pessoalmente identificável</strong>, mas <strong>recolhe estatísticas de utilização anónimas</strong> para proteger a sua privacidade. Os dados anónimos estão isentos dos requisitos de notificação do RGPD/CCPA, mas acreditamos que deve ter a opção de recusar a recolha de dados anónimos também.<br><br> Pode ver os seus dados ou <strong>optar por não partilhar quaisquer dados anónimos</strong> selecionando <strong>Ajuda > Relatório de Estado</strong>. Estas estatísticas de utilização da aplicação e relatórios de erros <strong>anónimos</strong> ajudam a priorizar funcionalidades, encontrar erros e detetar problemas de usabilidade para melhorar a sua experiência com o {APP_NAME}. Sem estes dados, não saberíamos que funcionalidades valem a pena desenvolver para si! <br><br>",
   "HEALTH_DATA_PREVIEW": "Relatório de Estado do {APP_NAME}",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>O {APP_NAME} <strong>não recolhe nem processa qualquer informação pessoalmente identificável</strong>, mas <strong>recolhe estatísticas de utilização anónimas</strong> para proteger a sua privacidade. Estas estatísticas de utilização da aplicação e relatórios de erros <strong>anónimos</strong> ajudam a priorizar funcionalidades, encontrar erros e detetar problemas de usabilidade para melhorar a sua experiência com o {APP_NAME}.</p> <p>Abaixo encontra-se uma pré-visualização dos dados que serão enviados no seu próximo Relatório de Estado <em>se</em> este estiver ativado. (Consulte também a consola do programador para registos de erros marcados como 'Erro crítico detetado'.)</p>",
   "INLINE_TIMING_EDITOR_TIME": "Tempo",
@@ -98681,9 +98730,6 @@ define("nls/pt-pt/strings", {
   "PREVIEW": "Pré-visualização",
   "BUILD_WEBSITE": "Criar Website",
   "VIEW_MORE": "Ver Mais...",
-  "NEW_PROJECT_NOTIFICATION": "Clique neste ícone para abrir novamente a janela `Novo Projeto`.</br> Veja Projetos Recentes, Abrir Pasta ou inicie projetos a partir de modelos.</br> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>ok</a>",
-  "BEAUTIFY_CODE_NOTIFICATION": "Clique aqui ou pressione <b>`{0}`</b> para Embelezar o código. </br> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>ok</a>",
-  "DEFAULT_PROJECT_NOTIFICATION": "Clique aqui para abrir o <br/><b>projeto predefinido</b> no phoenix. </br> <a href='#' style='float:right;'>ok</a>",
   "DIRECTORY_REPLACE_MESSAGE": "A pasta selecionada <span class='dialog-filename'>{0}</span> não está vazia. Tem a certeza de que pretende substituir o conteúdo da pasta com o projeto?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Clique aqui para localizar isto &lt;span&gt; no ficheiro HTML",
   "BUILD_WEBSITE_SECTION": "Criar Website",
@@ -98987,7 +99033,13 @@ define("nls/pt-pt/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Nenhum remoto foi selecionado para {0}!",
   "ERROR_BRANCH_LIST": "Falha ao obter a lista de ramos",
   "ERROR_FETCH_REMOTE": "Falha ao obter informações do remoto",
-  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote nas funcionalidades que quer ver a seguir!"
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote nas funcionalidades que quer ver a seguir!",
+  "HEALTH_DATA_NOTIFICATION_MESSAGE": "O {APP_NAME} <strong>não recolhe nem processa qualquer informação pessoalmente identificável</strong>, mas <strong>recolhe estatísticas de utilização anónimas</strong> para proteger a sua privacidade. Os dados anónimos estão isentos dos requisitos de notificação do RGPD/CCPA, mas acreditamos que deve ter a opção de recusar a recolha de dados anónimos também.<br><br> Pode ver os seus dados ou <strong>optar por não partilhar quaisquer dados anónimos</strong> selecionando <strong>Ajuda > Relatório de Funcionamento</strong>. Estas estatísticas de utilização da aplicação e relatórios de erros <strong>anónimos</strong> ajudam a priorizar funcionalidades, encontrar erros e detetar problemas de usabilidade para melhorar a sua experiência com o {APP_NAME}. Sem estes dados, não saberíamos que funcionalidades valem a pena desenvolver para si! <br>",
+  "NEW_PROJECT_NOTIFICATION": "Clique neste ícone para abrir novamente a janela `Iniciar Projeto`.</br> Veja Projetos Recentes, Abrir Pasta ou inicie projetos a partir de modelos.</br> <img src=\"styles/images/new_project.png\">",
+  "BEAUTIFY_CODE_NOTIFICATION": "Clique aqui ou pressione <b>`{0}`</b> para embelezar o código. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Clique aqui para abrir o <br/><b>projeto predefinido</b> no {APP_NAME}. </br> <a href='#' style='float:right;'>ok</a>",
+  "GIT_TOAST_TITLE": "Explore as funcionalidades do Git no Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Clique no ícone do painel Git para gerir o seu repositório. Efetue commits, pushes, pulls e veja o histórico do seu projeto com facilidade — tudo num só lugar.<br><a href='https://docs.phcode.dev/docs/Features/git'>Saiba mais sobre o painel Git →</a>"
 });
 /*
  * GNU AGPL-3.0 License
@@ -99759,7 +99811,6 @@ define("nls/ro/strings", {
   "HEALTH_DATA_NOTIFICATION": "Preferințe raport de sănătate",
   "HEALTH_FIRST_POPUP_TITLE": "Notificare privind confidențialitatea",
   "HEALTH_DATA_DO_TRACK": "Partajați informații anonime despre cum utilizez {APP_NAME}",
-  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>nu colectează și nu procesează nicio informație de identificare personală</strong>, dar <strong>colectează statistici anonime de utilizare</strong> pentru a vă proteja confidențialitatea. Datele anonime sunt exceptate de la cerințele de notificare GDPR/CCPA, dar credem că trebuie să aveți opțiunea de a renunța și la colectarea de date anonime.<br><br> Puteți vedea datele dvs. sau <strong>alege să nu partajați nicio dată anonimă</strong> selectând <strong>Ajutor > Raport de sănătate</strong>. Aceste statistici <strong>anonime</strong> de utilizare a aplicației și rapoartele de erori ajută la prioritizarea funcțiilor, la găsirea erorilor și la identificarea problemelor de utilizare pentru a vă îmbunătăți experiența cu {APP_NAME}. Fără aceste date, nu am ști ce funcții merită să construim pentru dvs.! <br><br>",
   "HEALTH_DATA_PREVIEW": "Raport de sănătate {APP_NAME}",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>nu colectează și nu procesează nicio informație de identificare personală</strong>, dar <strong>colectează statistici anonime de utilizare</strong> pentru a vă proteja confidențialitatea. Aceste statistici <strong>anonime</strong> de utilizare a aplicației și rapoartele de erori ajută la prioritizarea funcțiilor, la găsirea erorilor și la identificarea problemelor de utilizare pentru a vă îmbunătăți experiența cu {APP_NAME}.</p> <p>Mai jos este o previzualizare a datelor care vor fi trimise în următorul dvs. Raport de sănătate <em>dacă</em> acesta este activat. (Consultați și consola dezvoltatorului pentru jurnalele de erori marcate cu „Eroare critică detectată”.)</p>",
   "INLINE_TIMING_EDITOR_TIME": "Timp",
@@ -100052,9 +100103,6 @@ define("nls/ro/strings", {
   "PREVIEW": "Previzualizare",
   "BUILD_WEBSITE": "Creează site web",
   "VIEW_MORE": "Vezi mai mult...",
-  "NEW_PROJECT_NOTIFICATION": "Apasă această pictogramă pentru a deschide din nou fereastra `Proiect nou`.</br> Vezi Proiecte recente, Deschide director sau începe proiecte din șabloane.</br> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>ok</a>",
-  "BEAUTIFY_CODE_NOTIFICATION": "Apasă aici sau tastează <b>`{0}`</b> pentru a formata codul. </br> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>ok</a>",
-  "DEFAULT_PROJECT_NOTIFICATION": "Apasă aici pentru a deschide <br/><b>proiectul implicit</b> în phoenix. </br> <a href='#' style='float:right;'>ok</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Directorul selectat <span class='dialog-filename'>{0}</span> nu este gol. Sigur doriți să înlocuiți conținutul directorului cu proiectul?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Apasă aici pentru a localiza acest &lt;span&gt; în fișierul HTML",
   "BUILD_WEBSITE_SECTION": "Creează site web",
@@ -100358,7 +100406,13 @@ define("nls/ro/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Niciun depozit remote nu a fost selectat pentru {0}!",
   "ERROR_BRANCH_LIST": "Obținerea listei de branch-uri a eșuat",
   "ERROR_FETCH_REMOTE": "Obținerea informațiilor despre depozitul remote a eșuat",
-  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Votează pentru funcționalitățile pe care dorești să le vezi în continuare!"
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Votează pentru funcționalitățile pe care dorești să le vezi în continuare!",
+  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>nu colectează și nu procesează nicio informație de identificare personală</strong>, dar <strong>colectează statistici anonime de utilizare</strong> pentru a vă proteja confidențialitatea. Datele anonime sunt exceptate de la cerințele de notificare GDPR/CCPA, dar credem că trebuie să aveți opțiunea de a renunța și la colectarea datelor anonime.<br><br> Puteți vedea datele dvs. sau <strong>alege să nu partajați nicio dată anonimă</strong> selectând <strong>Ajutor > Raport de stare</strong>. Aceste statistici <strong>anonime</strong> de utilizare a aplicației și rapoartele de erori ajută la prioritizarea funcțiilor, la găsirea erorilor și la identificarea problemelor de utilizare pentru a vă îmbunătăți experiența cu {APP_NAME}. Fără aceste date, nu am ști ce funcții merită să construim pentru dvs.! <br>",
+  "NEW_PROJECT_NOTIFICATION": "Faceți clic pe această pictogramă pentru a deschide din nou fereastra `Începeți proiect`. </br> Vedeți Proiecte recente, Deschideți folder sau începeți proiecte din șabloane. </br> <img src=\"styles/images/new_project.png\">",
+  "BEAUTIFY_CODE_NOTIFICATION": "Faceți clic aici sau apăsați <b>`{0}`</b> pentru a formata codul. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Faceți clic aici pentru a deschide <br/><b>proiectul implicit</b> în {APP_NAME}. </br> <a href='#' style='float:right;'>ok</a>",
+  "GIT_TOAST_TITLE": "Explorați funcțiile Git în Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Faceți clic pe pictograma panoului Git pentru a vă gestiona depozitul. Efectuați ușor commit, push, pull și vizualizați istoricul proiectului dvs. - totul într-un singur loc.<br><a href='https://docs.phcode.dev/docs/Features/git'>Aflați mai multe despre panoul Git →</a>"
 });
 /*
  * GNU AGPL-3.0 License
@@ -102735,7 +102789,6 @@ define("nls/ru/strings", {
   "HEALTH_DATA_NOTIFICATION": "Настройки отчета о работоспособности",
   "HEALTH_FIRST_POPUP_TITLE": "Уведомление о конфиденциальности",
   "HEALTH_DATA_DO_TRACK": "Делиться анонимной информацией о том, как я использую {APP_NAME}",
-  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>не собирает и не обрабатывает никакую персональную информацию</strong>, но <strong>собирает анонимную статистику использования</strong> для защиты вашей конфиденциальности. Анонимные данные не подпадают под требования GDPR/CCPA об уведомлении, но мы считаем, что у вас должен быть выбор отказаться от сбора анонимных данных.<br><br> Вы можете просмотреть свои данные или <strong>отказаться от предоставления анонимных данных</strong>, выбрав <strong>Справка > Отчет о работоспособности</strong>. Эта <strong>анонимная</strong> статистика использования приложения и отчеты об ошибках помогают расставлять приоритеты в функциях, находить ошибки и выявлять проблемы с удобством использования для улучшения вашей работы с {APP_NAME}. Без этих данных мы не будем знать, какие функции стоит разрабатывать для вас! <br><br>",
   "HEALTH_DATA_PREVIEW": "Отчет о работоспособности {APP_NAME}",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>не собирает и не обрабатывает никакую персональную информацию</strong>, но <strong>собирает анонимную статистику использования</strong> для защиты вашей конфиденциальности. Эта <strong>анонимная</strong> статистика использования приложения и отчеты об ошибках помогают расставлять приоритеты в функциях, находить ошибки и выявлять проблемы с удобством использования для улучшения вашей работы с {APP_NAME}.</p> <p>Ниже представлен предварительный просмотр данных, которые будут отправлены в вашем следующем отчете о работоспособности, <em>если</em> он включен. (Также см. консоль разработчика для журналов ошибок с пометкой «Перехвачена критическая ошибка».)</p>",
   "INLINE_TIMING_EDITOR_TIME": "Время",
@@ -103028,9 +103081,6 @@ define("nls/ru/strings", {
   "PREVIEW": "Предпросмотр",
   "BUILD_WEBSITE": "Создать сайт",
   "VIEW_MORE": "Подробнее...",
-  "NEW_PROJECT_NOTIFICATION": "Нажмите на этот значок, чтобы снова открыть окно «Новый проект».</br> См. Недавние проекты, Открыть папку или начать проекты из шаблонов.</br> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>ок</a>",
-  "BEAUTIFY_CODE_NOTIFICATION": "Нажмите сюда или <b>`{0}`</b> для форматирования кода. </br> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>ок</a>",
-  "DEFAULT_PROJECT_NOTIFICATION": "Нажмите сюда, чтобы открыть <br/><b>проект по умолчанию</b> в phoenix. </br> <a href='#' style='float:right;'>ок</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Выбранная папка <span class='dialog-filename'>{0}</span> не пуста. Вы уверены, что хотите заменить содержимое папки проектом?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Нажмите сюда, чтобы найти этот &lt;span&gt; в HTML-файле",
   "BUILD_WEBSITE_SECTION": "Создать сайт",
@@ -103334,7 +103384,13 @@ define("nls/ru/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Для {0} не выбран удалённый репозиторий!",
   "ERROR_BRANCH_LIST": "Не удалось получить список веток",
   "ERROR_FETCH_REMOTE": "Не удалось получить информацию об удалённом репозитории",
-  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Проголосуйте за функции, которые вы хотите увидеть в будущем!"
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Проголосуйте за функции, которые вы хотите увидеть в будущем!",
+  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>не собирает и не обрабатывает никакую персональную информацию</strong>, но <strong>собирает анонимную статистику использования</strong> для защиты вашей конфиденциальности. Анонимные данные не подпадают под требования GDPR/CCPA об уведомлении, но мы считаем, что у вас должна быть возможность отказаться от сбора анонимных данных.<br><br> Вы можете просмотреть свои данные или <strong>отказаться от предоставления анонимных данных</strong>, выбрав <strong>Справка > Отчет о работоспособности</strong>. Эта <strong>анонимная</strong> статистика использования приложения и отчеты об ошибках помогают нам расставлять приоритеты в функциях, находить ошибки и выявлять проблемы с удобством использования для улучшения вашей работы с {APP_NAME}. Без этих данных мы не будем знать, какие функции стоит разрабатывать для вас! <br>",
+  "NEW_PROJECT_NOTIFICATION": "Нажмите на этот значок, чтобы снова открыть окно «Начать проект».</br> Смотрите Недавние проекты, Открыть папку или начните проекты из шаблонов.</br> <img src=\"styles/images/new_project.png\">",
+  "BEAUTIFY_CODE_NOTIFICATION": "Нажмите здесь или <b>`{0}`</b> для форматирования кода. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Нажмите здесь, чтобы открыть <br/><b>проект по умолчанию</b> в {APP_NAME}. </br> <a href='#' style='float:right;'>ok</a>",
+  "GIT_TOAST_TITLE": "Возможности Git в Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Нажмите на значок панели Git для управления вашим репозиторием. Легко выполняйте коммиты, отправляйте (push), получайте (pull) изменения и просматривайте историю вашего проекта — все в одном месте.<br><a href='https://docs.phcode.dev/docs/Features/git'>Узнать больше о панели Git →</a>"
 });
 /*
  * GNU AGPL-3.0 License
@@ -104108,7 +104164,6 @@ define("nls/sk/strings", {
   "HEALTH_DATA_NOTIFICATION": "Nastavenia hlásenia o stave",
   "HEALTH_FIRST_POPUP_TITLE": "Oznámenie o ochrane osobných údajov",
   "HEALTH_DATA_DO_TRACK": "Zdieľať anonymné informácie o tom, ako používam {APP_NAME}",
-  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>nezbiera ani nespracováva žiadne osobné údaje</strong>, ale <strong>zbiera anonymné štatistiky používania</strong> na ochranu vášho súkromia. Anonymné údaje sú vyňaté z požiadaviek na oznámenie GDPR/CCPA, ale veríme, že by ste mali mať možnosť odmietnuť aj zhromažďovanie anonymných údajov.<br><br> Svoje údaje si môžete pozrieť alebo <strong>sa rozhodnúť nezdieľať žiadne anonymné údaje</strong> výberom možnosti <strong>Pomocník > Hlásenie o stave</strong>. Tieto <strong>anonymné</strong> štatistiky používania aplikácie a hlásenia o chybách pomáhajú uprednostňovať funkcie, nachádzať chyby a odhaľovať problémy s použiteľnosťou na zlepšenie vašej skúsenosti s aplikáciou {APP_NAME}. Bez týchto údajov by sme nevedeli, aké funkcie sa oplatí pre vás vyvíjať! <br><br>",
   "HEALTH_DATA_PREVIEW": "Hlásenie o stave {APP_NAME}",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>nezbiera ani nespracováva žiadne osobné údaje</strong>, ale <strong>zbiera anonymné štatistiky používania</strong> na ochranu vášho súkromia. Tieto <strong>anonymné</strong> štatistiky používania aplikácie a hlásenia o chybách pomáhajú uprednostňovať funkcie, nachádzať chyby a odhaľovať problémy s použiteľnosťou na zlepšenie vašej skúsenosti s aplikáciou {APP_NAME}.</p> <p>Nižšie je uvedený náhľad údajov, ktoré budú odoslané vo vašom ďalšom hlásení o stave, <em>ak</em> je povolené. (Pozrite si aj konzolu pre vývojárov, kde nájdete záznamy chýb označené ako „Zachytená kritická chyba“.)</p>",
   "INLINE_TIMING_EDITOR_TIME": "Čas",
@@ -104401,9 +104456,6 @@ define("nls/sk/strings", {
   "PREVIEW": "Náhľad",
   "BUILD_WEBSITE": "Vytvoriť webovú stránku",
   "VIEW_MORE": "Zobraziť viac...",
-  "NEW_PROJECT_NOTIFICATION": "Kliknite na túto ikonu, ak chcete znova otvoriť okno `Nový projekt`.</br> Pozrite si Nedávne projekty, Otvorte priečinok alebo začnite projekty zo šablón.</br> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>ok</a>",
-  "BEAUTIFY_CODE_NOTIFICATION": "Kliknite sem alebo stlačte <b>`{0}`</b> pre skrášlenie kódu. </br> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>ok</a>",
-  "DEFAULT_PROJECT_NOTIFICATION": "Kliknite sem pre otvorenie <br/><b>predvoleného projektu</b> vo phoenixe. </br> <a href='#' style='float:right;'>ok</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Vybraný priečinok <span class='dialog-filename'>{0}</span> nie je prázdny. Ste si istý, že chcete nahradiť obsah priečinka projektom?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Kliknite sem pre nájdenie tohto &lt;span&gt; v HTML súbore",
   "BUILD_WEBSITE_SECTION": "Vytvorenie webovej stránky",
@@ -104707,7 +104759,13 @@ define("nls/sk/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Pre {0} nebol vybraný žiadny vzdialený repozitár!",
   "ERROR_BRANCH_LIST": "Získanie zoznamu vetiev zlyhalo",
   "ERROR_FETCH_REMOTE": "Získanie informácií o vzdialenom repozitári zlyhalo",
-  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Hlasujte za funkcie, ktoré chcete vidieť v ďalšej verzii!"
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Hlasujte za funkcie, ktoré chcete vidieť v ďalšej verzii!",
+  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>nezbiera ani nespracováva žiadne osobné údaje</strong>, ale <strong>zbiera anonymné štatistiky používania</strong> na ochranu vášho súkromia. Anonymné údaje sú vyňaté z požiadaviek na oznámenie GDPR/CCPA, ale veríme, že by ste mali mať možnosť odmietnuť aj zber anonymných údajov.<br><br> Svoje údaje si môžete pozrieť alebo <strong>sa rozhodnúť nezdieľať žiadne anonymné údaje</strong> výberom možnosti <strong>Pomocník > Správa o stave</strong>. Tieto <strong>anonymné</strong> štatistiky používania aplikácie a hlásenia chýb nám pomáhajú uprednostňovať funkcie, nachádzať chyby a odhaľovať problémy s použiteľnosťou, aby sme zlepšili vašu skúsenosť s aplikáciou {APP_NAME}. Bez týchto údajov by sme nevedeli, aké funkcie sa pre vás oplatí vyvíjať! <br>",
+  "NEW_PROJECT_NOTIFICATION": "Kliknite na túto ikonu a znova otvorte okno `Spustiť projekt`.</br> Pozrite si Nedávne projekty, Otvorte priečinok alebo spustite projekty zo šablón.</br> <img src=\"styles/images/new_project.png\">",
+  "BEAUTIFY_CODE_NOTIFICATION": "Kliknite sem alebo stlačte <b>`{0}`</b> pre skrášlenie kódu. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Kliknite sem pre otvorenie <br/><b>predvoleného projektu</b> v {APP_NAME}. </br> <a href='#' style='float:right;'>ok</a>",
+  "GIT_TOAST_TITLE": "Preskúmajte funkcie Gitu v Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Kliknite na ikonu panela Git pre správu vášho repozitára. Jednoducho commitujte, pushujte, pullujte a prezerajte si históriu vášho projektu – všetko na jednom mieste.<br><a href='https://docs.phcode.dev/docs/Features/git'>Zistite viac o paneli Git →</a>"
 });
 /*
  * GNU AGPL-3.0 License
@@ -105480,7 +105538,6 @@ define("nls/sr/strings", {
   "HEALTH_DATA_NOTIFICATION": "Подешавања извештаја о исправности",
   "HEALTH_FIRST_POPUP_TITLE": "Обавештење о приватности",
   "HEALTH_DATA_DO_TRACK": "Делите анонимне информације о томе како користим {APP_NAME}",
-  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>не прикупља нити обрађује било какве личне податке</strong>, али <strong>прикупља анонимну статистику коришћења</strong> ради заштите ваше приватности. Анонимни подаци су изузети од захтева за обавештавање GDPR/CCPA, али верујемо да треба да имате могућност да се искључите из прикупљања анонимних података.<br><br> Можете видети своје податке или <strong>изабрати да не делите никакве анонимне податке</strong> тако што ћете изабрати <strong>Помоћ > Извештај о исправности</strong>. Ова <strong>анонимна</strong> статистика коришћења апликације и извештаји о грешкама помажу у одређивању приоритета функција, проналажењу грешака и уочавању проблема са употребљивошћу ради побољшања вашег искуства са {APP_NAME}. Без ових података, не бисмо знали које функције вреди направити за вас! <br><br>",
   "HEALTH_DATA_PREVIEW": "Извештај о исправности {APP_NAME}",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>не прикупља нити обрађује било какве личне податке</strong>, али <strong>прикупља анонимну статистику коришћења</strong> ради заштите ваше приватности. Ова <strong>анонимна</strong> статистика коришћења апликације и извештаји о грешкама помажу у одређивању приоритета функција, проналажењу грешака и уочавању проблема са употребљивошћу ради побољшања вашег искуства са {APP_NAME}.</p> <p>Испод је преглед података који ће бити послати у вашем следећем извештају о исправности <em>ако</em> је омогућен. (Такође погледајте конзолу за програмере за евиденцију грешака означену са 'Ухваћена критична грешка'.)</p>",
   "INLINE_TIMING_EDITOR_TIME": "Време",
@@ -105773,9 +105830,6 @@ define("nls/sr/strings", {
   "PREVIEW": "Преглед",
   "BUILD_WEBSITE": "Направи веб-сајт",
   "VIEW_MORE": "Види више...",
-  "NEW_PROJECT_NOTIFICATION": "Кликните на ову икону да бисте поново отворили прозор `Нови пројекат`.</br> Погледајте Недавне пројекте, Отворите фасциклу или започните пројекте из шаблона.</br> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>ok</a>",
-  "BEAUTIFY_CODE_NOTIFICATION": "Кликните овде или притисните <b>`{0}`</b> да улепшате код. </br> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>ok</a>",
-  "DEFAULT_PROJECT_NOTIFICATION": "Кликните овде да бисте отворили <br/><b>подразумевани пројекат</b> у phoenix-у. </br> <a href='#' style='float:right;'>ok</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Изабрана фасцикла <span class='dialog-filename'>{0}</span> није празна. Да ли сте сигурни да желите да замените садржај фасцикле са пројектом?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Кликните овде да бисте лоцирали овај &lt;span&gt; у HTML датотеци",
   "BUILD_WEBSITE_SECTION": "Направи веб-сајт",
@@ -106079,7 +106133,13 @@ define("nls/sr/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Није изабран удаљени репозиторијум за {0}!",
   "ERROR_BRANCH_LIST": "Преузимање листе грана није успело",
   "ERROR_FETCH_REMOTE": "Преузимање информација о удаљеном репозиторијуму није успело",
-  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Гласајте за функције које желите да видите у будућности!"
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Гласајте за функције које желите да видите у будућности!",
+  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>не прикупља нити обрађује било какве личне податке</strong>, али <strong>прикупља анонимну статистику коришћења</strong> ради заштите ваше приватности. Анонимни подаци су изузети од захтева за обавештавање GDPR/CCPA, али верујемо да треба да имате могућност да се искључите из прикупљања анонимних података.<br><br> Можете видети своје податке или <strong>изабрати да не делите никакве анонимне податке</strong> тако што ћете изабрати <strong>Помоћ > Извештај о здрављу</strong>. Ова <strong>анонимна</strong> статистика коришћења апликације и извештаји о грешкама помажу у одређивању приоритета функција, проналажењу грешака и уочавању проблема са употребљивошћу ради побољшања вашег искуства са {APP_NAME}. Без ових података, не бисмо знали које функције вреди направити за вас! <br>",
+  "NEW_PROJECT_NOTIFICATION": "Кликните на ову икону да бисте поново отворили прозор „Покрени пројекат”.</br> Погледајте Скорије пројекте, Отворите фасциклу или покрените пројекте из шаблона.</br> <img src=\"styles/images/new_project.png\">",
+  "BEAUTIFY_CODE_NOTIFICATION": "Кликните овде или притисните <b>`{0}`</b> да бисте улепшали код. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Кликните овде да бисте отворили <br/><b>подразумевани пројекат</b> у {APP_NAME}. </br> <a href='#' style='float:right;'>ок</a>",
+  "GIT_TOAST_TITLE": "Истражите Гит функције у Phoenix Code-у",
+  "GIT_TOAST_MESSAGE": "Кликните на икону Гит панела да бисте управљали својим спремиштем. Лако направите commit, push, pull и погледајте историју свог пројекта — све на једном месту.<br><a href='https://docs.phcode.dev/docs/Features/git'>Сазнајте више о Гит панелу →</a>"
 });
 /*
  * GNU AGPL-3.0 License
@@ -106936,7 +106996,6 @@ define("nls/sv/strings", {
   "HEALTH_DATA_NOTIFICATION": "Hälsorapport inställningar",
   "HEALTH_FIRST_POPUP_TITLE": "Sekretessmeddelande",
   "HEALTH_DATA_DO_TRACK": "Dela anonym information om hur jag använder {APP_NAME}",
-  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>samlar inte in eller behandlar någon personligt identifierbar information</strong>, men <strong>samlar in anonym användningsstatistik</strong> för att skydda din integritet. Anonym data är undantagen från GDPR/CCPA-anmälningskrav, men vi anser att du bör ha möjlighet att välja bort insamling av anonym data också.<br><br> Du kan se dina data eller <strong>välja att inte dela någon anonym data</strong> genom att välja <strong>Hjälp > Hälsorapport</strong>. Denna <strong>anonyma</strong> statistik över appanvändning och felrapporter hjälper oss att prioritera funktioner, hitta buggar och upptäcka användbarhetsproblem för att förbättra din upplevelse med {APP_NAME}. Utan dessa data skulle vi inte veta vilka funktioner det är värt att bygga för dig! <br><br>",
   "HEALTH_DATA_PREVIEW": "{APP_NAME} Hälsorapport",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>samlar inte in eller behandlar någon personligt identifierbar information</strong>, men <strong>samlar in anonym användningsstatistik</strong> för att skydda din integritet. Denna <strong>anonyma</strong> statistik över appanvändning och felrapporter hjälper oss att prioritera funktioner, hitta buggar och upptäcka användbarhetsproblem för att förbättra din upplevelse med {APP_NAME}.</p> <p>Nedan visas en förhandsgranskning av de data som kommer att skickas i din nästa hälsorapport <em>om</em> den är aktiverad. (Se även utvecklarkonsolen för felloggar markerade 'Caught Critical error'.)</p>",
   "INLINE_TIMING_EDITOR_TIME": "Tid",
@@ -107229,9 +107288,6 @@ define("nls/sv/strings", {
   "PREVIEW": "Förhandsgranska",
   "BUILD_WEBSITE": "Skapa webbplats",
   "VIEW_MORE": "Visa mer...",
-  "NEW_PROJECT_NOTIFICATION": "Klicka på den här ikonen för att öppna fönstret `Nytt projekt` igen.</br> Se Senaste projekt, Öppna mapp eller starta projekt från mallar.</br> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>ok</a>",
-  "BEAUTIFY_CODE_NOTIFICATION": "Klicka här eller tryck på <b>`{0}`</b> för att formattera kod. </br> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>ok</a>",
-  "DEFAULT_PROJECT_NOTIFICATION": "Klicka här för att öppna <br/><b>standardprojektet</b> i phoenix. </br> <a href='#' style='float:right;'>ok</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Den valda mappen <span class='dialog-filename'>{0}</span> är inte tom. Är du säker på att du vill ersätta mappens innehåll med projektet?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Klicka här för att hitta detta &lt;span&gt; i HTML-filen",
   "BUILD_WEBSITE_SECTION": "Skapa webbplats",
@@ -107535,7 +107591,13 @@ define("nls/sv/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Ingen fjärranslutning har valts för {0}!",
   "ERROR_BRANCH_LIST": "Det gick inte att hämta grenlistan",
   "ERROR_FETCH_REMOTE": "Det gick inte att hämta information om fjärranslutning",
-  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Rösta på funktionerna du vill se härnäst!"
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Rösta på funktionerna du vill se härnäst!",
+  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>samlar inte in eller behandlar någon personligt identifierbar information</strong>, men <strong>samlar in anonym användningsstatistik</strong> för att skydda din integritet. Anonyma data är undantagna från GDPR/CCPA-anmälningskrav, men vi anser att du bör ha möjlighet att välja bort insamling av anonyma data också.<br><br> Du kan se dina data eller <strong>välja att inte dela några anonyma data</strong> genom att välja <strong>Hjälp > Hälsorapport</strong>. Denna <strong>anonyma</strong> statistik över appanvändning och felrapporter hjälper oss att prioritera funktioner, hitta buggar och upptäcka användbarhetsproblem för att förbättra din upplevelse med {APP_NAME}. Utan dessa data skulle vi inte veta vilka funktioner det är värt att bygga för dig! <br>",
+  "NEW_PROJECT_NOTIFICATION": "Klicka på den här ikonen för att öppna fönstret `Starta projekt` igen.</br> Se Senaste projekt, Öppna mapp eller starta projekt från mallar.</br> <img src=\"styles/images/new_project.png\">",
+  "BEAUTIFY_CODE_NOTIFICATION": "Klicka här eller tryck på <b>`{0}`</b> för att snygga till koden. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Klicka här för att öppna <br/><b>standardprojektet</b> i {APP_NAME}. </br> <a href='#' style='float:right;'>ok</a>",
+  "GIT_TOAST_TITLE": "Utforska Git-funktioner i Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Klicka på Git-panelens ikon för att hantera din repository. Committa, pusha, pulla och se din projekthistorik enkelt – allt på ett ställe.<br><a href='https://docs.phcode.dev/docs/Features/git'>Läs mer om Git-panelen →</a>"
 });
 /*
  * GNU AGPL-3.0 License
@@ -108309,7 +108371,6 @@ define("nls/tr/strings", {
   "HEALTH_DATA_NOTIFICATION": "Sistem Durumu Raporu Tercihleri",
   "HEALTH_FIRST_POPUP_TITLE": "Gizlilik Bildirimi",
   "HEALTH_DATA_DO_TRACK": "{APP_NAME} kullanımımla ilgili anonim bilgileri paylaş",
-  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>kişisel olarak tanımlanabilir hiçbir bilgi toplamaz veya işlemez</strong>, ancak gizliliğinizi korumak için <strong>anonim kullanım istatistikleri toplar</strong>. Anonim veriler GDPR/CCPA bildirim gerekliliklerinden muaftır, ancak anonim veri toplamayı da reddetme seçeneğinizin olması gerektiğine inanıyoruz.<br><br> Verilerinizi görebilir veya <strong>anonim veri paylaşmamayı seçebilirsiniz</strong>, bunun için <strong>Yardım > Sistem Durumu Raporu</strong>'nu seçin. Bu <strong>anonim</strong> uygulama kullanım istatistikleri ve hata raporları, {APP_NAME} ile deneyiminizi iyileştirmek için özellikleri önceliklendirmeye, hataları bulmaya ve kullanılabilirlik sorunlarını tespit etmeye yardımcı olur. Bu veriler olmadan, sizin için hangi özellikleri geliştirmeye değer olduğunu bilemeyiz! <br><br>",
   "HEALTH_DATA_PREVIEW": "{APP_NAME} Sistem Durumu Raporu",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>kişisel olarak tanımlanabilir hiçbir bilgi toplamaz veya işlemez</strong>, ancak gizliliğinizi korumak için <strong>anonim kullanım istatistikleri toplar</strong>. Bu <strong>anonim</strong> uygulama kullanım istatistikleri ve hata raporları, {APP_NAME} ile deneyiminizi iyileştirmek için özellikleri önceliklendirmeye, hataları bulmaya ve kullanılabilirlik sorunlarını tespit etmeye yardımcı olur.</p> <p>Aşağıda, etkinleştirilmiş <em>ise</em> bir sonraki Sistem Durumu Raporunuzda gönderilecek verilerin bir önizlemesi yer almaktadır. ('Caught Critical error' olarak işaretlenmiş hata günlükleri için geliştirici konsoluna da bakın.)</p>",
   "INLINE_TIMING_EDITOR_TIME": "Zaman",
@@ -108602,9 +108663,6 @@ define("nls/tr/strings", {
   "PREVIEW": "Önizleme",
   "BUILD_WEBSITE": "Web Sitesi Oluştur",
   "VIEW_MORE": "Daha Fazla...",
-  "NEW_PROJECT_NOTIFICATION": "`Yeni Proje` penceresini tekrar açmak için bu simgeye tıklayın.</br> Son Projelere bakın, Klasör Açın veya şablonlardan projeler başlatın.</br> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>tamam</a>",
-  "BEAUTIFY_CODE_NOTIFICATION": "Kodu güzelleştirmek için buraya tıklayın veya <b>`{0}`</b> tuşuna basın. </br> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>tamam</a>",
-  "DEFAULT_PROJECT_NOTIFICATION": "phoenix'te <br/><b>varsayılan projeyi</b> açmak için buraya tıklayın. </br> <a href='#' style='float:right;'>tamam</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Seçilen klasör <span class='dialog-filename'>{0}</span> boş değil. Klasör içeriğini proje ile değiştirmek istediğinizden emin misiniz?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "&lt;span&gt; öğesinin HTML dosyasındaki konumunu bulmak için buraya tıklayın",
   "BUILD_WEBSITE_SECTION": "Web Sitesi Oluştur",
@@ -108908,7 +108966,13 @@ define("nls/tr/strings", {
   "ERROR_NO_REMOTE_SELECTED": "{0} için uzak depo seçilmedi!",
   "ERROR_BRANCH_LIST": "Dal listesi alınamadı",
   "ERROR_FETCH_REMOTE": "Uzak depo bilgileri alınamadı",
-  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Gelecekte görmek istediğiniz özellikler için oy verin!"
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Gelecekte görmek istediğiniz özellikler için oy verin!",
+  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>kişisel olarak tanımlanabilir hiçbir bilgiyi toplamaz veya işlemez</strong>, ancak gizliliğinizi korumak için <strong>anonim kullanım istatistikleri toplar</strong>. Anonim veriler GDPR/CCPA bildirim gerekliliklerinden muaftır, ancak anonim veri toplamayı da devre dışı bırakma seçeneğinizin olması gerektiğine inanıyoruz.<br><br> Verilerinizi görebilir veya <strong>Yardım > Sağlık Raporu</strong>'nu seçerek <strong>hiçbir anonim veriyi paylaşmamayı seçebilirsiniz</strong>. Bu <strong>anonim</strong> uygulama kullanım istatistikleri ve hata raporları, {APP_NAME} ile deneyiminizi iyileştirmek için özellikleri önceliklendirmeye, hataları bulmaya ve kullanılabilirlik sorunlarını tespit etmeye yardımcı olur. Bu veriler olmadan, sizin için hangi özellikleri geliştirmeye değer olduğunu bilemeyiz! <br>",
+  "NEW_PROJECT_NOTIFICATION": "Bu simgeye tıklayarak `Proje Başlat` penceresini tekrar açın.</br> Son Projelere bakın, Klasör Açın veya şablonlardan projeler başlatın.</br> <img src=\"styles/images/new_project.png\">",
+  "BEAUTIFY_CODE_NOTIFICATION": "Kodu güzelleştirmek için buraya tıklayın veya <b>`{0}`</b> tuşuna basın. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "{APP_NAME}'de <br/><b>varsayılan projeyi</b> açmak için buraya tıklayın. </br> <a href='#' style='float:right;'>tamam</a>",
+  "GIT_TOAST_TITLE": "Phoenix Code'da Git Özelliklerini Keşfedin",
+  "GIT_TOAST_MESSAGE": "Deponuzu yönetmek için Git paneli simgesine tıklayın. Proje geçmişinizi kolayca işleyin, gönderin, çekin ve görüntüleyin—hepsi tek bir yerde.<br><a href='https://docs.phcode.dev/docs/Features/git'>Git paneli hakkında daha fazla bilgi edinin →</a>"
 });
 /*
  * GNU AGPL-3.0 License
@@ -109682,7 +109746,6 @@ define("nls/uk/strings", {
   "HEALTH_DATA_NOTIFICATION": "Параметри звіту про стан",
   "HEALTH_FIRST_POPUP_TITLE": "Повідомлення про конфіденційність",
   "HEALTH_DATA_DO_TRACK": "Надати анонімну інформацію про використання {APP_NAME}",
-  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>не збирає та не обробляє жодної інформації, що дозволяє встановити особу</strong>, але <strong>збирає анонімну статистику використання</strong> для захисту вашої конфіденційності. Анонімні дані не підпадають під вимоги GDPR/CCPA щодо повідомлення, але ми вважаємо, що ви повинні мати можливість відмовитися від збору анонімних даних.<br><br> Ви можете переглянути свої дані або <strong>відмовитися від надання будь-яких анонімних даних</strong>, вибравши <strong>Довідка > Звіт про стан</strong>. Ця <strong>анонімна</strong> статистика використання програми та звіти про помилки допомагають визначити пріоритетність функцій, знаходити помилки та виявляти проблеми з зручністю використання для покращення вашого досвіду роботи з {APP_NAME}. Без цих даних ми не знатимемо, які функції варто розробляти для вас! <br><br>",
   "HEALTH_DATA_PREVIEW": "Звіт про стан {APP_NAME}",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>не збирає та не обробляє жодної інформації, що дозволяє встановити особу</strong>, але <strong>збирає анонімну статистику використання</strong> для захисту вашої конфіденційності. Ця <strong>анонімна</strong> статистика використання програми та звіти про помилки допомагають визначити пріоритетність функцій, знаходити помилки та виявляти проблеми з зручністю використання для покращення вашого досвіду роботи з {APP_NAME}.</p> <p>Нижче наведено попередній перегляд даних, які будуть надіслані у вашому наступному Звіті про стан, <em>якщо</em> він увімкнено. (Також див. консоль розробника для журналів помилок з позначкою 'Caught Critical error'.)</p>",
   "INLINE_TIMING_EDITOR_TIME": "Час",
@@ -109975,9 +110038,6 @@ define("nls/uk/strings", {
   "PREVIEW": "Попередній перегляд",
   "BUILD_WEBSITE": "Створити вебсайт",
   "VIEW_MORE": "Дивитися більше...",
-  "NEW_PROJECT_NOTIFICATION": "Клацніть цю піктограму, щоб знову відкрити вікно `Новий проєкт`.</br> Перегляньте Останні проєкти, Відкрийте папку або почніть проєкти з шаблонів.</br> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>ok</a>",
-  "BEAUTIFY_CODE_NOTIFICATION": "Клацніть тут або натисніть <b>`{0}`</b>, щоб форматувати код. </br> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>ok</a>",
-  "DEFAULT_PROJECT_NOTIFICATION": "Клацніть тут, щоб відкрити <br/><b>проєкт за замовчуванням</b> у phoenix. </br> <a href='#' style='float:right;'>ok</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Вибрана папка <span class='dialog-filename'>{0}</span> не пуста. Ви впевнені, що хочете замінити вміст папки проєктом?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Клацніть тут, щоб знайти цей &lt;span&gt; у HTML-файлі",
   "BUILD_WEBSITE_SECTION": "Створення вебсайту",
@@ -110281,7 +110341,13 @@ define("nls/uk/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Для {0} не вибрано віддалений репозиторій!",
   "ERROR_BRANCH_LIST": "Не вдалося отримати список гілок",
   "ERROR_FETCH_REMOTE": "Не вдалося отримати інформацію про віддалений репозиторій",
-  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Проголосуйте за функції, які ви хочете бачити наступними!"
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Проголосуйте за функції, які ви хочете бачити наступними!",
+  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>не збирає та не обробляє жодної персональної інформації</strong>, але <strong>збирає анонімну статистику використання</strong> для захисту вашої конфіденційності. Анонімні дані не підпадають під вимоги GDPR/CCPA щодо повідомлення, але ми вважаємо, що ви повинні мати можливість відмовитися від збору анонімних даних.<br><br> Ви можете переглянути свої дані або <strong>відмовитися від надання будь-яких анонімних даних</strong>, обравши <strong>Довідка > Звіт про стан</strong>. Ця <strong>анонімна</strong> статистика використання програми та звіти про помилки допомагають нам визначити пріоритетність функцій, знаходити помилки та виявляти проблеми з зручністю використання для покращення вашого досвіду роботи з {APP_NAME}. Без цих даних ми не знатимемо, які функції варто розробляти для вас! <br>",
+  "NEW_PROJECT_NOTIFICATION": "Натисніть цю піктограму, щоб знову відкрити вікно `Почати проєкт`.</br> Перегляньте Останні проєкти, Відкрийте папку або почніть проєкти з шаблонів.</br> <img src=\"styles/images/new_project.png\">",
+  "BEAUTIFY_CODE_NOTIFICATION": "Натисніть тут або натисніть <b>`{0}`</b>, щоб покращити форматування коду. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Натисніть тут, щоб відкрити <br/><b>проєкт за замовчуванням</b> у {APP_NAME}. </br> <a href='#' style='float:right;'>ok</a>",
+  "GIT_TOAST_TITLE": "Ознайомтеся з функціями Git у Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Натисніть піктограму панелі Git, щоб керувати вашим репозиторієм. Легко виконуйте коміти, пуші, пули та переглядайте історію вашого проєкту — все в одному місці.<br><a href='https://docs.phcode.dev/docs/Features/git'>Дізнайтеся більше про панель Git →</a>"
 });
 /*
  * GNU AGPL-3.0 License
@@ -111055,7 +111121,6 @@ define("nls/ur/strings", {
   "HEALTH_DATA_NOTIFICATION": "ہیلتھ رپورٹ کی ترجیحات",
   "HEALTH_FIRST_POPUP_TITLE": "رازداری کا نوٹس",
   "HEALTH_DATA_DO_TRACK": "میری {APP_NAME} کے استعمال کے بارے میں گمنام معلومات شیئر کریں۔",
-  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>کسی بھی قسم کی ذاتی معلومات اکٹھا یا عملدرآمد نہیں کرتا</strong>، لیکن آپ کی رازداری کے تحفظ کے لیے <strong>گمنام استعمال کے اعدادوشمار اکٹھا کرتا ہے</strong>۔ گمنام ڈیٹا GDPR/CCPA نوٹیفکیشن کی ضروریات سے مستثنیٰ ہے، لیکن ہمارا ماننا ہے کہ آپ کو گمنام ڈیٹا اکٹھا کرنے سے بھی دستبرداری کا اختیار ہونا چاہیے۔<br><br> آپ اپنا ڈیٹا دیکھ سکتے ہیں یا <strong>کوئی بھی گمنام ڈیٹا شیئر نہ کرنے کا انتخاب کر سکتے ہیں</strong>، <strong>مدد > ہیلتھ رپورٹ</strong> کو منتخب کر کے۔ یہ <strong>گمنام</strong> ایپ کے استعمال کے اعدادوشمار اور ایرر رپورٹس {APP_NAME} کے ساتھ آپ کے تجربے کو بہتر بنانے کے لیے خصوصیات کو ترجیح دینے، کیڑے تلاش کرنے اور استعمال کے مسائل کو تلاش کرنے میں مدد کرتی ہیں۔ اس ڈیٹا کے بغیر، ہمیں معلوم نہیں ہوگا کہ آپ کے لیے کون سی خصوصیات بنانے کے قابل ہیں۔ <br><br>",
   "HEALTH_DATA_PREVIEW": "{APP_NAME} ہیلتھ رپورٹ",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>کسی بھی قسم کی ذاتی معلومات اکٹھا یا عملدرآمد نہیں کرتا</strong>، لیکن آپ کی رازداری کے تحفظ کے لیے <strong>گمنام استعمال کے اعدادوشمار اکٹھا کرتا ہے</strong>۔ یہ <strong>گمنام</strong> ایپ کے استعمال کے اعدادوشمار اور ایرر رپورٹس {APP_NAME} کے ساتھ آپ کے تجربے کو بہتر بنانے کے لیے خصوصیات کو ترجیح دینے، کیڑے تلاش کرنے اور استعمال کے مسائل کو تلاش کرنے میں مدد کرتی ہیں۔</p> <p>ذیل میں اس ڈیٹا کا پیش نظارہ ہے جو آپ کی اگلی ہیلتھ رپورٹ میں بھیجا جائے گا <em>اگر</em> یہ فعال ہے۔ ('Caught Critical error' کے نشان والے ایرر لاگز کے لیے ڈویلپر کنسول بھی دیکھیں۔)</p>",
   "INLINE_TIMING_EDITOR_TIME": "وقت",
@@ -111348,9 +111413,6 @@ define("nls/ur/strings", {
   "PREVIEW": "پیش نظارہ",
   "BUILD_WEBSITE": "ویب سائٹ بنائیں",
   "VIEW_MORE": "مزید دیکھیں۔۔۔",
-  "NEW_PROJECT_NOTIFICATION": "`نیا منصوبہ` ونڈو دوبارہ کھولنے کے لیے اس آئیکن پر کلک کریں۔</br> حالیہ منصوبے دیکھیں، فولڈر کھولیں یا ٹیمپلیٹس سے منصوبے شروع کریں۔</br> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>ٹھیک ہے</a>",
-  "BEAUTIFY_CODE_NOTIFICATION": "کوڈ کو خوبصورت بنانے کے لیے یہاں کلک کریں یا <b>`{0}`</b> دبائیں۔ </br> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>ٹھیک ہے</a>",
-  "DEFAULT_PROJECT_NOTIFICATION": "فینکس میں <br/><b>ڈیفالٹ منصوبہ</b> کھولنے کے لیے یہاں کلک کریں۔ </br> <a href='#' style='float:right;'>ٹھیک ہے</a>",
   "DIRECTORY_REPLACE_MESSAGE": "منتخب کردہ فولڈر <span class='dialog-filename'>{0}</span> خالی نہیں ہے۔ کیا آپ واقعی فولڈر کے مندرجات کو اس منصوبے سے تبدیل کرنا چاہتے ہیں؟",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "ایچ ٹی ایم ایل فائل میں اس &lt;span&gt; کو تلاش کرنے کے لیے یہاں کلک کریں۔",
   "BUILD_WEBSITE_SECTION": "ویب سائٹ بنائیں",
@@ -111654,7 +111716,13 @@ define("nls/ur/strings", {
   "ERROR_NO_REMOTE_SELECTED": "{0} کے لیے کوئی ریموٹ منتخب نہیں کیا گیا ہے۔",
   "ERROR_BRANCH_LIST": "برانچ لسٹ حاصل کرنے میں ناکامی۔",
   "ERROR_FETCH_REMOTE": "ریموٹ معلومات حاصل کرنے میں ناکامی۔",
-  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "اپنی پسندیدہ خصوصیات کے لیے ووٹ دیں!"
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "اپنی پسندیدہ خصوصیات کے لیے ووٹ دیں!",
+  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>کسی بھی قسم کی ذاتی معلومات جمع یا عمل نہیں کرتا</strong>، لیکن آپ کی رازداری کے تحفظ کے لیے <strong>گمنام استعمال کے اعدادوشمار جمع کرتا ہے</strong>۔ گمنام ڈیٹا GDPR/CCPA نوٹیفکیشن کی ضروریات سے مستثنیٰ ہے، لیکن ہمارا ماننا ہے کہ آپ کے پاس گمنام ڈیٹا کلیکشن سے دستبرداری کا اختیار بھی ہونا چاہیے۔<br><br> آپ اپنا ڈیٹا دیکھ سکتے ہیں یا <strong>کوئی بھی گمنام ڈیٹا شیئر نہ کرنے کا انتخاب کر سکتے ہیں</strong>، <strong>مدد > ہیلتھ رپورٹ</strong> کو منتخب کر کے۔ یہ <strong>گمنام</strong> ایپ کے استعمال کے اعدادوشمار اور ایرر رپورٹس خصوصیات کو ترجیح دینے، بگس کو تلاش کرنے، اور استعمال کے مسائل کو تلاش کرنے میں مدد کرتی ہیں تاکہ {APP_NAME} کے ساتھ آپ کے تجربے کو بہتر بنایا جا سکے۔ اس ڈیٹا کے بغیر، ہمیں معلوم نہیں ہوگا کہ آپ کے لیے کون سی خصوصیات بنانا قابل قدر ہیں۔ <br>",
+  "NEW_PROJECT_NOTIFICATION": "اس آئیکن پر کلک کریں تاکہ `اسٹارٹ پروجیکٹ` ونڈو دوبارہ کھل جائے۔</br> حالیہ پروجیکٹس دیکھیں، فولڈر کھولیں یا ٹیمپلیٹس سے پروجیکٹس شروع کریں۔</br> <img src=\"styles/images/new_project.png\">",
+  "BEAUTIFY_CODE_NOTIFICATION": "کوڈ کو خوبصورت بنانے کے لیے یہاں کلک کریں یا <b>`{0}`</b> دبائیں۔ </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "{APP_NAME} میں <br/><b>ڈیفالٹ پروجیکٹ</b> کھولنے کے لیے یہاں کلک کریں۔ </br> <a href='#' style='float:right;'>ٹھیک ہے</a>",
+  "GIT_TOAST_TITLE": "فینکس کوڈ میں گٹ فیچرز دریافت کریں",
+  "GIT_TOAST_MESSAGE": "اپنی ذخیرہ گاہ (repository) کو منظم کرنے کے لیے گٹ پینل آئیکن پر کلک کریں۔ آسانی سے کامٹ، پش، پل کریں، اور اپنے پروجیکٹ کی تاریخ دیکھیں—سب ایک ہی جگہ پر۔<br><a href='https://docs.phcode.dev/docs/Features/git'>گٹ پینل کے بارے میں مزید جانیں →</a>"
 });
 /*
  * GNU AGPL-3.0 License
@@ -112458,7 +112526,6 @@ define("nls/zh-cn/strings", {
   "HEALTH_DATA_NOTIFICATION": "健康报告首选项",
   "HEALTH_FIRST_POPUP_TITLE": "隐私声明",
   "HEALTH_DATA_DO_TRACK": "分享我使用 {APP_NAME} 的匿名信息",
-  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>不会收集或处理任何个人身份信息</strong>，但会<strong>收集匿名使用统计数据</strong>来保护您的隐私。匿名数据不受 GDPR/CCPA 通知要求的约束，但我们认为您也需要选择退出匿名数据收集。<br><br>您可以通过选择<strong>帮助 > 健康报告</strong>来查看您的数据或<strong>选择不共享任何匿名数据</strong>。这些<strong>匿名</strong>应用使用统计数据和错误报告有助于确定功能优先级、查找错误和发现可用性问题，从而改善您使用 {APP_NAME} 的体验。如果没有这些数据，我们将不知道哪些功能值得为您构建！<br><br>",
   "HEALTH_DATA_PREVIEW": "{APP_NAME} 健康报告",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>不会收集或处理任何个人身份信息</strong>，但会<strong>收集匿名使用统计数据</strong>来保护您的隐私。这些<strong>匿名</strong>应用使用统计数据和错误报告有助于确定功能优先级、查找错误和发现可用性问题，从而改善您使用 {APP_NAME} 的体验。</p> <p>以下是您的下一个健康报告<em>如果</em>启用将发送的数据预览。（另请参阅开发者控制台中标记为“Caught Critical error”的错误日志。）</p>",
   "INLINE_TIMING_EDITOR_TIME": "时间",
@@ -112751,9 +112818,6 @@ define("nls/zh-cn/strings", {
   "PREVIEW": "预览",
   "BUILD_WEBSITE": "构建网站",
   "VIEW_MORE": "查看更多...",
-  "NEW_PROJECT_NOTIFICATION": "点击此图标可再次打开“新建项目”窗口。</br>查看最近项目、打开文件夹或从模板启动项目。</br> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>确定</a>",
-  "BEAUTIFY_CODE_NOTIFICATION": "点击此处或按<b>`{0}`</b>美化代码。</br> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>确定</a>",
-  "DEFAULT_PROJECT_NOTIFICATION": "点击此处在 Phoenix 中打开<br/><b>默认项目</b>。</br> <a href='#' style='float:right;'>确定</a>",
   "DIRECTORY_REPLACE_MESSAGE": "所选文件夹 <span class='dialog-filename'>{0}</span> 不为空。您确定要用项目替换文件夹内容吗？",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "点击此处可在 HTML 文件中找到此 &lt;span&gt;",
   "BUILD_WEBSITE_SECTION": "构建网站",
@@ -113057,7 +113121,13 @@ define("nls/zh-cn/strings", {
   "ERROR_NO_REMOTE_SELECTED": "未为 {0} 选择远程仓库！",
   "ERROR_BRANCH_LIST": "获取分支列表失败",
   "ERROR_FETCH_REMOTE": "获取远程仓库信息失败",
-  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "为您希望看到的下一个功能投票！"
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "为您希望看到的下一个功能投票！",
+  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>不会收集或处理任何个人身份信息</strong>，但<strong>会收集匿名的使用统计数据</strong>以保护您的隐私。匿名数据不受 GDPR/CCPA 通知要求的约束，但我们认为您也需要有选择退出匿名数据收集的权利。<br><br>您可以通过选择<strong>帮助 > 健康报告</strong>来查看您的数据或<strong>选择不共享任何匿名数据</strong>。这些<strong>匿名的</strong>应用使用统计数据和错误报告有助于确定功能优先级、查找错误和发现可用性问题，从而改善您使用 {APP_NAME} 的体验。如果没有这些数据，我们将无法了解哪些功能值得为您构建！<br>",
+  "NEW_PROJECT_NOTIFICATION": "点击此图标可再次打开“新建项目”窗口。</br>查看最近项目、打开文件夹或从模板启动项目。</br> <img src=\"styles/images/new_project.png\">",
+  "BEAUTIFY_CODE_NOTIFICATION": "点击此处或按 <b>`{0}`</b> 美化代码。</br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "点击此处在 {APP_NAME} 中打开<br/><b>默认项目</b>。</br> <a href='#' style='float:right;'>确定</a>",
+  "GIT_TOAST_TITLE": "探索 Phoenix Code 中的 Git 功能",
+  "GIT_TOAST_MESSAGE": "点击 Git 面板图标即可管理您的代码仓库。轻松提交、推送、拉取和查看项目历史记录，一切尽在一处。<br><a href='https://docs.phcode.dev/docs/Features/git'>了解更多关于 Git 面板的信息 →</a>"
 });
 /*
  * GNU AGPL-3.0 License
@@ -113831,7 +113901,6 @@ define("nls/zh-tw/strings", {
   "HEALTH_DATA_NOTIFICATION": "狀況報告喜好設定",
   "HEALTH_FIRST_POPUP_TITLE": "隱私權聲明",
   "HEALTH_DATA_DO_TRACK": "分享我使用 {APP_NAME} 的匿名資訊",
-  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>不會收集或處理任何個人識別資訊</strong>，但<strong>會收集匿名使用統計資料</strong>以保障您的隱私。匿名資料不在 GDPR/CCPA 通知要求的範圍內，但我們認為您也需要有選擇退出匿名資料收集的權利。<br><br>您可以透過選擇<strong>說明 > 健康報告</strong>來查看您的資料或<strong>選擇不分享任何匿名資料</strong>。這些<strong>匿名</strong>應用程式使用統計資料和錯誤報告有助於我們排定功能優先順序、找出錯誤並發現可用性問題，以改善您使用 {APP_NAME} 的體驗。如果沒有這些資料，我們將不知道哪些功能值得為您打造！<br><br>",
   "HEALTH_DATA_PREVIEW": "{APP_NAME} 狀況報告",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>不會收集或處理任何個人識別資訊</strong>，但<strong>會收集匿名使用統計資料</strong>以保障您的隱私。這些<strong>匿名</strong>應用程式使用統計資料和錯誤報告有助於我們排定功能優先順序、找出錯誤並發現可用性問題，以改善您使用 {APP_NAME} 的體驗。</p> <p>以下是<em>如果</em>已啟用健康報告，將在您的下次健康報告中傳送的資料預覽。（另請參閱開發人員主控台，查看標記為「攔截到嚴重錯誤」的錯誤日誌。）</p>",
   "INLINE_TIMING_EDITOR_TIME": "時間",
@@ -114124,9 +114193,6 @@ define("nls/zh-tw/strings", {
   "PREVIEW": "預覽",
   "BUILD_WEBSITE": "建置網站",
   "VIEW_MORE": "查看更多…",
-  "NEW_PROJECT_NOTIFICATION": "點擊此圖示即可再次開啟「新增專案」視窗。</br> 查看近期專案、開啟資料夾或從範本開始專案。</br> <img src=\"styles/images/new_project.png\">  <br/> <a href='#' style='float:right;'>確定</a>",
-  "BEAUTIFY_CODE_NOTIFICATION": "點擊此處或按下 <b>`{0}`</b> 以美化程式碼。</br> <img src=\"styles/images/beautify.gif\">  <br/> <a href='#' style='float:right;'>確定</a>",
-  "DEFAULT_PROJECT_NOTIFICATION": "點擊此處即可在 Phoenix 中開啟<br/><b>預設專案</b>。</br> <a href='#' style='float:right;'>確定</a>",
   "DIRECTORY_REPLACE_MESSAGE": "所選資料夾 <span class='dialog-filename'>{0}</span> 並非空的。您確定要用專案取代資料夾內容嗎？",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "點擊此處即可在 HTML 檔案中找到此 &lt;span&gt;",
   "BUILD_WEBSITE_SECTION": "建置網站",
@@ -114430,7 +114496,13 @@ define("nls/zh-tw/strings", {
   "ERROR_NO_REMOTE_SELECTED": "{0} 尚未選取任何遠端！",
   "ERROR_BRANCH_LIST": "取得分支列表失敗",
   "ERROR_FETCH_REMOTE": "擷取遠端資訊失敗",
-  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "投票選出您希望看到的下個功能！"
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "投票選出您希望看到的下個功能！",
+  "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>不會收集或處理任何個人識別資訊</strong>，但<strong>會收集匿名使用統計數據</strong>以保護您的隱私。匿名數據不受 GDPR/CCPA 通知要求的約束，但我們認為您也需要有選擇退出匿名數據收集的權利。<br><br>您可以透過選擇<strong>說明 > 健康報告</strong>來查看您的數據或<strong>選擇不分享任何匿名數據</strong>。這些<strong>匿名</strong>應用程式使用統計數據和錯誤報告有助於我們排定功能優先順序、找出錯誤並發現可用性問題，以改善您使用 {APP_NAME} 的體驗。沒有這些數據，我們就不知道哪些功能值得為您打造！<br>",
+  "NEW_PROJECT_NOTIFICATION": "按一下此圖示即可再次開啟「開始專案」視窗。</br> 查看最近的專案、開啟資料夾或從範本開始專案。</br> <img src=\"styles/images/new_project.png\">",
+  "BEAUTIFY_CODE_NOTIFICATION": "按一下此處或按下 <b>`{0}`</b> 以美化程式碼。</br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "按一下此處即可在 {APP_NAME} 中開啟<br/><b>預設專案</b>。</br> <a href='#' style='float:right;'>確定</a>",
+  "GIT_TOAST_TITLE": "在 Phoenix Code 中探索 Git 功能",
+  "GIT_TOAST_MESSAGE": "按一下 Git 面板圖示即可管理您的儲存庫。輕鬆提交、推送、提取和檢視您的專案歷史記錄，一切盡在掌握之中。<br><a href='https://docs.phcode.dev/docs/Features/git'>深入瞭解 Git 面板 →</a>"
 });
 /*
  * GNU AGPL-3.0 License
