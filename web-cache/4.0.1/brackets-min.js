@@ -64851,7 +64851,8 @@ define("nls/ar/strings", {
   "ERROR_PUSHING_OPERATION": "فشل عملية الدفع",
   "ERROR_NO_REMOTE_SELECTED": "لم يتم تحديد جهاز تحكم عن بعد لـ {0}!",
   "ERROR_BRANCH_LIST": "فشل عملية الحصول على قائمة الفروع",
-  "ERROR_FETCH_REMOTE": "فشل جلب معلومات جهاز التحكم عن بعد"
+  "ERROR_FETCH_REMOTE": "فشل جلب معلومات جهاز التحكم عن بعد",
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "صوت للميزات التي ترغب برؤيتها تالياً!"
 });
 /*
  * GNU AGPL-3.0 License
@@ -66196,7 +66197,8 @@ define("nls/bg/strings", {
   "ERROR_PUSHING_OPERATION": "Операцията по изпращане е неуспешна",
   "ERROR_NO_REMOTE_SELECTED": "Няма избрано отдалечено хранилище за {0}!",
   "ERROR_BRANCH_LIST": "Получаването на списъка с клонове е неуспешно",
-  "ERROR_FETCH_REMOTE": "Извличането на информация за отдалеченото хранилище е неуспешно"
+  "ERROR_FETCH_REMOTE": "Извличането на информация за отдалеченото хранилище е неуспешно",
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Гласувайте за функциите, които искате да видите следващи!"
 });
 /*
  * Copyright (c) 2013 Adobe Systems Incorporated. All rights reserved.
@@ -67570,7 +67572,8 @@ define("nls/cs/strings", {
   "ERROR_PUSHING_OPERATION": "Operace odeslání selhala",
   "ERROR_NO_REMOTE_SELECTED": "Nebyl vybrán žádný vzdálený repozitář pro {0}!",
   "ERROR_BRANCH_LIST": "Získání seznamu větví selhalo",
-  "ERROR_FETCH_REMOTE": "Získání informací o vzdáleném repozitáři selhalo"
+  "ERROR_FETCH_REMOTE": "Získání informací o vzdáleném repozitáři selhalo",
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Hlasujte pro funkce, které chcete vidět v další verzi!"
 });
 /*
  * GNU AGPL-3.0 License
@@ -68942,7 +68945,8 @@ define("nls/da/strings", {
   "ERROR_PUSHING_OPERATION": "Push-handling mislykkedes",
   "ERROR_NO_REMOTE_SELECTED": "Ingen remote er valgt for {0}!",
   "ERROR_BRANCH_LIST": "Det lykkedes ikke at hente grenliste",
-  "ERROR_FETCH_REMOTE": "Hentning af remote-information mislykkedes"
+  "ERROR_FETCH_REMOTE": "Hentning af remote-information mislykkedes",
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stem på de funktioner, du gerne vil se!"
 });
 /*
  * GNU AGPL-3.0 License
@@ -70312,7 +70316,8 @@ define("nls/de/strings", {
   "ERROR_PUSHING_OPERATION": "Push-Vorgang fehlgeschlagen",
   "ERROR_NO_REMOTE_SELECTED": "Für {0} wurde kein Remote ausgewählt!",
   "ERROR_BRANCH_LIST": "Abrufen der Branch-Liste fehlgeschlagen",
-  "ERROR_FETCH_REMOTE": "Abrufen der Remote-Informationen fehlgeschlagen"
+  "ERROR_FETCH_REMOTE": "Abrufen der Remote-Informationen fehlgeschlagen",
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stimmen Sie für die Funktionen ab, die Sie als Nächstes sehen möchten!"
 });
 /*
  * GNU AGPL-3.0 License
@@ -71684,7 +71689,8 @@ define("nls/el/strings", {
   "ERROR_PUSHING_OPERATION": "Αποτυχία λειτουργίας ώθησης (push)",
   "ERROR_NO_REMOTE_SELECTED": "Δεν έχει επιλεγεί απομακρυσμένο για το {0}!",
   "ERROR_BRANCH_LIST": "Αποτυχία λήψης λίστας κλάδων",
-  "ERROR_FETCH_REMOTE": "Αποτυχία λήψης πληροφοριών απομακρυσμένου"
+  "ERROR_FETCH_REMOTE": "Αποτυχία λήψης πληροφοριών απομακρυσμένου",
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Ψηφίστε για τις λειτουργίες που θέλετε να δείτε στη συνέχεια!"
 });
 /*
  * GNU AGPL-3.0 License
@@ -73056,7 +73062,8 @@ define("nls/en-gb/strings", {
   "ERROR_PUSHING_OPERATION": "Pushing operation failed",
   "ERROR_NO_REMOTE_SELECTED": "No remote has been selected for {0}!",
   "ERROR_BRANCH_LIST": "Getting the branch list failed",
-  "ERROR_FETCH_REMOTE": "Fetching remote information failed"
+  "ERROR_FETCH_REMOTE": "Fetching remote information failed",
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote for the features you'd like to see next!"
 });
 /*
  * GNU AGPL-3.0 License
@@ -74401,7 +74408,8 @@ define("nls/es/strings", {
   "ERROR_PUSHING_OPERATION": "Error en la operación de subida.",
   "ERROR_NO_REMOTE_SELECTED": "No se ha seleccionado ningún remoto para {0}.",
   "ERROR_BRANCH_LIST": "Error al obtener la lista de ramas.",
-  "ERROR_FETCH_REMOTE": "Error al obtener la información del remoto."
+  "ERROR_FETCH_REMOTE": "Error al obtener la información del remoto.",
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "¡Vota por las funciones que quieres ver próximamente!"
 });
 /*
  * GNU AGPL-3.0 License
@@ -75774,7 +75782,8 @@ define("nls/fa-ir/strings", {
   "ERROR_PUSHING_OPERATION": "عملیات پوش (Push) با شکست مواجه شد",
   "ERROR_NO_REMOTE_SELECTED": "هیچ ریموتی برای {0} انتخاب نشده است!",
   "ERROR_BRANCH_LIST": "دریافت لیست شاخه‌ها با شکست مواجه شد",
-  "ERROR_FETCH_REMOTE": "دریافت اطلاعات ریموت با شکست مواجه شد"
+  "ERROR_FETCH_REMOTE": "دریافت اطلاعات ریموت با شکست مواجه شد",
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "برای قابلیت‌هایی که می‌خواهید در آینده ببینید، رأی دهید!"
 });
 /*
  * GNU AGPL-3.0 License
@@ -77146,7 +77155,8 @@ define("nls/fi/strings", {
   "ERROR_PUSHING_OPERATION": "Pushausoperaatio epäonnistui",
   "ERROR_NO_REMOTE_SELECTED": "Kohteelle {0} ei ole valittu etäyhteyttä!",
   "ERROR_BRANCH_LIST": "Haarojen listan haku epäonnistui",
-  "ERROR_FETCH_REMOTE": "Etäyhteyden tietojen haku epäonnistui"
+  "ERROR_FETCH_REMOTE": "Etäyhteyden tietojen haku epäonnistui",
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Äänestä ominaisuuksia, jotka haluat nähdä seuraavaksi!"
 });
 /*
  * GNU AGPL-3.0 License
@@ -78518,7 +78528,8 @@ define("nls/fr/strings", {
   "ERROR_PUSHING_OPERATION": "Échec de l'opération d'envoi (push)",
   "ERROR_NO_REMOTE_SELECTED": "Aucun dépôt distant n'a été sélectionné pour {0} !",
   "ERROR_BRANCH_LIST": "Échec de la récupération de la liste des branches",
-  "ERROR_FETCH_REMOTE": "Échec de la récupération des informations du dépôt distant"
+  "ERROR_FETCH_REMOTE": "Échec de la récupération des informations du dépôt distant",
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Votez pour les fonctionnalités que vous souhaitez voir apparaître !"
 });
 /*
  * GNU AGPL-3.0 License
@@ -79890,7 +79901,8 @@ define("nls/gl/strings", {
   "ERROR_PUSHING_OPERATION": "Fallou a operación de envío",
   "ERROR_NO_REMOTE_SELECTED": "Non se seleccionou ningún remoto para {0}!",
   "ERROR_BRANCH_LIST": "Fallou a obtención da lista de ramas",
-  "ERROR_FETCH_REMOTE": "Fallou a obtención da información do remoto"
+  "ERROR_FETCH_REMOTE": "Fallou a obtención da información do remoto",
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vota polas funcionalidades que queres ver a continuación!"
 });
 /*
  * GNU AGPL-3.0 License
@@ -81235,7 +81247,8 @@ define("nls/hi/strings", {
   "ERROR_PUSHING_OPERATION": "पुश करने में विफलता",
   "ERROR_NO_REMOTE_SELECTED": "{0} के लिए कोई रिमोट चयनित नहीं है!",
   "ERROR_BRANCH_LIST": "शाखा सूची प्राप्त करने में विफलता",
-  "ERROR_FETCH_REMOTE": "रिमोट जानकारी प्राप्त करने में विफलता"
+  "ERROR_FETCH_REMOTE": "रिमोट जानकारी प्राप्त करने में विफलता",
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "उन विशेषताओं के लिए वोट करें जिन्हें आप आगे देखना चाहते हैं!"
 });
 /*
  * GNU AGPL-3.0 License
@@ -82580,7 +82593,8 @@ define("nls/hr/strings", {
   "ERROR_PUSHING_OPERATION": "Operacija slanja (push) nije uspjela",
   "ERROR_NO_REMOTE_SELECTED": "Nije odabran udaljeni repozitorij za {0}!",
   "ERROR_BRANCH_LIST": "Dohvaćanje popisa grana nije uspjelo",
-  "ERROR_FETCH_REMOTE": "Dohvaćanje informacija o udaljenom repozitoriju nije uspjelo"
+  "ERROR_FETCH_REMOTE": "Dohvaćanje informacija o udaljenom repozitoriju nije uspjelo",
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Glasajte za značajke koje želite vidjeti sljedeće!"
 });
 /*
  * GNU AGPL-3.0 License
@@ -83952,7 +83966,8 @@ define("nls/hu/strings", {
   "ERROR_PUSHING_OPERATION": "Küldési művelet sikertelen",
   "ERROR_NO_REMOTE_SELECTED": "Nincs kiválasztva távoli adattár a(z) {0} számára!",
   "ERROR_BRANCH_LIST": "Ágak listájának lekérése sikertelen",
-  "ERROR_FETCH_REMOTE": "Távoli adattár információinak lekérése sikertelen"
+  "ERROR_FETCH_REMOTE": "Távoli adattár információinak lekérése sikertelen",
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Szavazzon azokra a funkciókra, amelyeket a jövőben látni szeretne!"
 });
 /*
  * GNU AGPL-3.0 License
@@ -85297,7 +85312,8 @@ define("nls/id/strings", {
   "ERROR_PUSHING_OPERATION": "Operasi push gagal",
   "ERROR_NO_REMOTE_SELECTED": "Tidak ada remote yang dipilih untuk {0}!",
   "ERROR_BRANCH_LIST": "Gagal mendapatkan daftar branch",
-  "ERROR_FETCH_REMOTE": "Gagal mengambil informasi remote"
+  "ERROR_FETCH_REMOTE": "Gagal mengambil informasi remote",
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Pilih fitur yang ingin Anda lihat selanjutnya!"
 });
 /*
  * GNU AGPL-3.0 License
@@ -86668,7 +86684,8 @@ define("nls/it/strings", {
   "ERROR_PUSHING_OPERATION": "Operazione di push non riuscita",
   "ERROR_NO_REMOTE_SELECTED": "Nessun remote selezionato per {0}!",
   "ERROR_BRANCH_LIST": "Impossibile ottenere l'elenco dei branch",
-  "ERROR_FETCH_REMOTE": "Recupero delle informazioni del remote non riuscito"
+  "ERROR_FETCH_REMOTE": "Recupero delle informazioni del remote non riuscito",
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vota per le funzionalità che desideri vedere in futuro!"
 });
 /*
  * GNU AGPL-3.0 License
@@ -88040,7 +88057,8 @@ define("nls/ja/strings", {
   "ERROR_PUSHING_OPERATION": "プッシュ操作に失敗しました。",
   "ERROR_NO_REMOTE_SELECTED": "{0} に対してリモートが選択されていません！",
   "ERROR_BRANCH_LIST": "ブランチ一覧の取得に失敗しました。",
-  "ERROR_FETCH_REMOTE": "リモート情報の取得に失敗しました。"
+  "ERROR_FETCH_REMOTE": "リモート情報の取得に失敗しました。",
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "次に実装してほしい機能に投票してください！"
 });
 /*
  * GNU AGPL-3.0 License
@@ -89412,7 +89430,8 @@ define("nls/ko/strings", {
   "ERROR_PUSHING_OPERATION": "푸시 작업 실패",
   "ERROR_NO_REMOTE_SELECTED": "{0}에 대해 선택된 리모트가 없습니다!",
   "ERROR_BRANCH_LIST": "브랜치 목록 가져오기 실패",
-  "ERROR_FETCH_REMOTE": "리모트 정보 가져오기 실패"
+  "ERROR_FETCH_REMOTE": "리모트 정보 가져오기 실패",
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "다음에 보고 싶은 기능에 투표하세요!"
 });
 /*
  * GNU AGPL-3.0 License
@@ -90784,7 +90803,8 @@ define("nls/lv/strings", {
   "ERROR_PUSHING_OPERATION": "Nosūtīšanas operācija neizdevās",
   "ERROR_NO_REMOTE_SELECTED": "{0} nav izvēlēta attālā krātuve!",
   "ERROR_BRANCH_LIST": "Neizdevās iegūt zaru sarakstu",
-  "ERROR_FETCH_REMOTE": "Neizdevās iegūt informāciju par attālo krātuvi"
+  "ERROR_FETCH_REMOTE": "Neizdevās iegūt informāciju par attālo krātuvi",
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Nobalsot par funkcijām, kuras vēlaties redzēt nākamreiz!"
 });
 /*
  * GNU AGPL-3.0 License
@@ -92129,7 +92149,8 @@ define("nls/ml/strings", {
   "ERROR_PUSHING_OPERATION": "പുഷ് ചെയ്യുന്നതിൽ പിഴവ്",
   "ERROR_NO_REMOTE_SELECTED": "{0} എന്നതിന് റിമോട്ട് തിരഞ്ഞെടുത്തിട്ടില്ല!",
   "ERROR_BRANCH_LIST": "ബ്രാഞ്ച് ലിസ്റ്റ് എടുക്കുന്നതിൽ പിഴവ്",
-  "ERROR_FETCH_REMOTE": "റിമോട്ട് വിവരങ്ങൾ എടുക്കുന്നതിൽ പിഴവ്"
+  "ERROR_FETCH_REMOTE": "റിമോട്ട് വിവരങ്ങൾ എടുക്കുന്നതിൽ പിഴവ്",
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "നിങ്ങൾക്ക് അടുത്തതായി കാണാൻ ആഗ്രഹിക്കുന്ന സവിശേഷതകൾക്ക് വോട്ട് ചെയ്യുക!"
 });
 /*
  * GNU AGPL-3.0 License
@@ -93474,7 +93495,8 @@ define("nls/nb/strings", {
   "ERROR_PUSHING_OPERATION": "Pushing-operasjon mislyktes",
   "ERROR_NO_REMOTE_SELECTED": "Ingen eksternt repositorium er valgt for {0}!",
   "ERROR_BRANCH_LIST": "Kunne ikke hente grenliste",
-  "ERROR_FETCH_REMOTE": "Kunne ikke hente informasjon om eksternt repositorium"
+  "ERROR_FETCH_REMOTE": "Kunne ikke hente informasjon om eksternt repositorium",
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stem på funksjonene du ønsker å se neste!"
 });
 /*
  * GNU AGPL-3.0 License
@@ -94846,7 +94868,8 @@ define("nls/nl/strings", {
   "ERROR_PUSHING_OPERATION": "Push-bewerking mislukt",
   "ERROR_NO_REMOTE_SELECTED": "Er is geen remote geselecteerd voor {0}!",
   "ERROR_BRANCH_LIST": "Ophalen van branch-lijst mislukt",
-  "ERROR_FETCH_REMOTE": "Ophalen van remote-informatie mislukt"
+  "ERROR_FETCH_REMOTE": "Ophalen van remote-informatie mislukt",
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stem op de functies die u graag wilt zien!"
 });
 /*
  * GNU AGPL-3.0 License
@@ -96218,7 +96241,8 @@ define("nls/pl/strings", {
   "ERROR_PUSHING_OPERATION": "Operacja wysyłania nie powiodła się",
   "ERROR_NO_REMOTE_SELECTED": "Nie wybrano zdalnego repozytorium dla {0}!",
   "ERROR_BRANCH_LIST": "Pobieranie listy gałęzi nie powiodło się",
-  "ERROR_FETCH_REMOTE": "Pobieranie informacji o zdalnym repozytorium nie powiodło się"
+  "ERROR_FETCH_REMOTE": "Pobieranie informacji o zdalnym repozytorium nie powiodło się",
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Zagłosuj na funkcje, które chcesz zobaczyć w przyszłości!"
 });
 /*
  * GNU AGPL-3.0 License
@@ -97590,7 +97614,8 @@ define("nls/pt-br/strings", {
   "ERROR_PUSHING_OPERATION": "Falha na operação de push",
   "ERROR_NO_REMOTE_SELECTED": "Nenhum remoto foi selecionado para {0}!",
   "ERROR_BRANCH_LIST": "Falha ao obter a lista de branches",
-  "ERROR_FETCH_REMOTE": "Falha ao buscar informações do remoto"
+  "ERROR_FETCH_REMOTE": "Falha ao buscar informações do remoto",
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote nos recursos que você quer ver em seguida!"
 });
 /*
  * GNU AGPL-3.0 License
@@ -98960,7 +98985,8 @@ define("nls/pt-pt/strings", {
   "ERROR_PUSHING_OPERATION": "Operação de enviar falhou",
   "ERROR_NO_REMOTE_SELECTED": "Nenhum remoto foi selecionado para {0}!",
   "ERROR_BRANCH_LIST": "Falha ao obter a lista de ramos",
-  "ERROR_FETCH_REMOTE": "Falha ao obter informações do remoto"
+  "ERROR_FETCH_REMOTE": "Falha ao obter informações do remoto",
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote nas funcionalidades que quer ver a seguir!"
 });
 /*
  * GNU AGPL-3.0 License
@@ -100330,7 +100356,8 @@ define("nls/ro/strings", {
   "ERROR_PUSHING_OPERATION": "Operațiunea de împingere (push) a eșuat",
   "ERROR_NO_REMOTE_SELECTED": "Niciun depozit remote nu a fost selectat pentru {0}!",
   "ERROR_BRANCH_LIST": "Obținerea listei de branch-uri a eșuat",
-  "ERROR_FETCH_REMOTE": "Obținerea informațiilor despre depozitul remote a eșuat"
+  "ERROR_FETCH_REMOTE": "Obținerea informațiilor despre depozitul remote a eșuat",
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Votează pentru funcționalitățile pe care dorești să le vezi în continuare!"
 });
 /*
  * GNU AGPL-3.0 License
@@ -103303,7 +103330,8 @@ define("nls/ru/strings", {
   "ERROR_PUSHING_OPERATION": "Операция отправки изменений не удалась",
   "ERROR_NO_REMOTE_SELECTED": "Для {0} не выбран удалённый репозиторий!",
   "ERROR_BRANCH_LIST": "Не удалось получить список веток",
-  "ERROR_FETCH_REMOTE": "Не удалось получить информацию об удалённом репозитории"
+  "ERROR_FETCH_REMOTE": "Не удалось получить информацию об удалённом репозитории",
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Проголосуйте за функции, которые вы хотите увидеть в будущем!"
 });
 /*
  * GNU AGPL-3.0 License
@@ -104675,7 +104703,8 @@ define("nls/sk/strings", {
   "ERROR_PUSHING_OPERATION": "Operácia odoslania zlyhala",
   "ERROR_NO_REMOTE_SELECTED": "Pre {0} nebol vybraný žiadny vzdialený repozitár!",
   "ERROR_BRANCH_LIST": "Získanie zoznamu vetiev zlyhalo",
-  "ERROR_FETCH_REMOTE": "Získanie informácií o vzdialenom repozitári zlyhalo"
+  "ERROR_FETCH_REMOTE": "Získanie informácií o vzdialenom repozitári zlyhalo",
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Hlasujte za funkcie, ktoré chcete vidieť v ďalšej verzii!"
 });
 /*
  * GNU AGPL-3.0 License
@@ -106046,7 +106075,8 @@ define("nls/sr/strings", {
   "ERROR_PUSHING_OPERATION": "Операција слања није успела",
   "ERROR_NO_REMOTE_SELECTED": "Није изабран удаљени репозиторијум за {0}!",
   "ERROR_BRANCH_LIST": "Преузимање листе грана није успело",
-  "ERROR_FETCH_REMOTE": "Преузимање информација о удаљеном репозиторијуму није успело"
+  "ERROR_FETCH_REMOTE": "Преузимање информација о удаљеном репозиторијуму није успело",
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Гласајте за функције које желите да видите у будућности!"
 });
 /*
  * GNU AGPL-3.0 License
@@ -107501,7 +107531,8 @@ define("nls/sv/strings", {
   "ERROR_PUSHING_OPERATION": "Push-åtgärden misslyckades",
   "ERROR_NO_REMOTE_SELECTED": "Ingen fjärranslutning har valts för {0}!",
   "ERROR_BRANCH_LIST": "Det gick inte att hämta grenlistan",
-  "ERROR_FETCH_REMOTE": "Det gick inte att hämta information om fjärranslutning"
+  "ERROR_FETCH_REMOTE": "Det gick inte att hämta information om fjärranslutning",
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Rösta på funktionerna du vill se härnäst!"
 });
 /*
  * GNU AGPL-3.0 License
@@ -108873,7 +108904,8 @@ define("nls/tr/strings", {
   "ERROR_PUSHING_OPERATION": "Gönderme işlemi başarısız oldu",
   "ERROR_NO_REMOTE_SELECTED": "{0} için uzak depo seçilmedi!",
   "ERROR_BRANCH_LIST": "Dal listesi alınamadı",
-  "ERROR_FETCH_REMOTE": "Uzak depo bilgileri alınamadı"
+  "ERROR_FETCH_REMOTE": "Uzak depo bilgileri alınamadı",
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Gelecekte görmek istediğiniz özellikler için oy verin!"
 });
 /*
  * GNU AGPL-3.0 License
@@ -110245,7 +110277,8 @@ define("nls/uk/strings", {
   "ERROR_PUSHING_OPERATION": "Операція відправки змін не вдалася",
   "ERROR_NO_REMOTE_SELECTED": "Для {0} не вибрано віддалений репозиторій!",
   "ERROR_BRANCH_LIST": "Не вдалося отримати список гілок",
-  "ERROR_FETCH_REMOTE": "Не вдалося отримати інформацію про віддалений репозиторій"
+  "ERROR_FETCH_REMOTE": "Не вдалося отримати інформацію про віддалений репозиторій",
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Проголосуйте за функції, які ви хочете бачити наступними!"
 });
 /*
  * GNU AGPL-3.0 License
@@ -111617,7 +111650,8 @@ define("nls/ur/strings", {
   "ERROR_PUSHING_OPERATION": "پُش آپریشن ناکام ہو گیا۔",
   "ERROR_NO_REMOTE_SELECTED": "{0} کے لیے کوئی ریموٹ منتخب نہیں کیا گیا ہے۔",
   "ERROR_BRANCH_LIST": "برانچ لسٹ حاصل کرنے میں ناکامی۔",
-  "ERROR_FETCH_REMOTE": "ریموٹ معلومات حاصل کرنے میں ناکامی۔"
+  "ERROR_FETCH_REMOTE": "ریموٹ معلومات حاصل کرنے میں ناکامی۔",
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "اپنی پسندیدہ خصوصیات کے لیے ووٹ دیں!"
 });
 /*
  * GNU AGPL-3.0 License
@@ -113019,7 +113053,8 @@ define("nls/zh-cn/strings", {
   "ERROR_PUSHING_OPERATION": "推送操作失败",
   "ERROR_NO_REMOTE_SELECTED": "未为 {0} 选择远程仓库！",
   "ERROR_BRANCH_LIST": "获取分支列表失败",
-  "ERROR_FETCH_REMOTE": "获取远程仓库信息失败"
+  "ERROR_FETCH_REMOTE": "获取远程仓库信息失败",
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "为您希望看到的下一个功能投票！"
 });
 /*
  * GNU AGPL-3.0 License
@@ -114391,7 +114426,8 @@ define("nls/zh-tw/strings", {
   "ERROR_PUSHING_OPERATION": "推送操作失敗",
   "ERROR_NO_REMOTE_SELECTED": "{0} 尚未選取任何遠端！",
   "ERROR_BRANCH_LIST": "取得分支列表失敗",
-  "ERROR_FETCH_REMOTE": "擷取遠端資訊失敗"
+  "ERROR_FETCH_REMOTE": "擷取遠端資訊失敗",
+  "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "投票選出您希望看到的下個功能！"
 });
 /*
  * GNU AGPL-3.0 License
