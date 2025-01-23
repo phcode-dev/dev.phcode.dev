@@ -37665,7 +37665,6 @@ define("extensionsIntegrated/Phoenix/guided-tour", function (require, exports, m
         Metrics = require("utils/Metrics"),
         Dialogs = require("widgets/Dialogs"),
         Mustache = require("thirdparty/mustache/mustache"),
-        PreferencesManager = require("preferences/PreferencesManager"),
         SurveyTemplate = `<div class="modal" style="height: 60vh; display: flex; flex-direction: column; justify-content: space-between">
     <div id="surveyFrameContainer" style="border: 0; width: 100%; height: 100%"></div>
     <div class="modal-footer">
@@ -37681,11 +37680,10 @@ define("extensionsIntegrated/Phoenix/guided-tour", function (require, exports, m
     // All popup notifications will show immediately on boot, we don't want to interrupt user amidst his work
     // by showing it at a later point in time.
     const GENERAL_SURVEY_TIME = 1200000, // 20 min
-        POWER_USER_SURVEY_TIME = 10000, // 10 seconds to allow the survey to preload, but not
+        SURVEY_PRELOAD_DELAY = 10000, // 10 seconds to allow the survey to preload, but not
         // enough time to break user workflow
         ONE_MONTH_IN_DAYS = 30,
-        POWER_USER_SURVEY_INTERVAL_DAYS = 35,
-        USAGE_COUNTS_KEY    = "healthDataUsage"; // private to phoenix, set from health data extension
+        POWER_USER_SURVEY_INTERVAL_DAYS = 35;
 
     const userAlreadyDidAction = PhStore.getItem(GUIDED_TOUR_LOCAL_STORAGE_KEY)
         ? JSON.parse(PhStore.getItem(GUIDED_TOUR_LOCAL_STORAGE_KEY)) : {
@@ -37857,48 +37855,26 @@ define("extensionsIntegrated/Phoenix/guided-tour", function (require, exports, m
         }
     }
 
-    function _showGeneralSurvey(surveyURL, delayOverride) {
+    function _showFirstUseSurvey(surveyURL, delayOverride, title,  useDialog) {
         let surveyVersion = 6; // increment this if you want to show this again
         if(userAlreadyDidAction.generalSurveyShownVersion === surveyVersion) {
             return;
         }
-        const $surveyFrame = addSurveyIframe(surveyURL);
+        let $surveyFrame;
+        if(useDialog){
+            $surveyFrame = addSurveyIframe(surveyURL);
+        }
         setTimeout(()=>{
-            const templateVars = {
-                Strings: Strings
-            };
-            let positionObserver;
-            Metrics.countEvent(Metrics.EVENT_TYPE.USER, "survey", "generalShown", 1);
-            Dialogs.showModalDialogUsingTemplate(Mustache.render(SurveyTemplate, templateVars)).done(()=>{
-                positionObserver && positionObserver.disconnect();
-                $surveyFrame.remove();
-            });
-            setTimeout(()=>{
-                const $surveyFrameContainer = $('#surveyFrameContainer');
-                repositionIframe($surveyFrame, $surveyFrameContainer);
-                positionObserver = observerPositionChanges($surveyFrame, $surveyFrameContainer);
-            }, 200);
+            if(useDialog){
+                Metrics.countEvent(Metrics.EVENT_TYPE.USER, "survey", "firstDialog", 1);
+                _showDialogSurvey($surveyFrame);
+            } else {
+                Metrics.countEvent(Metrics.EVENT_TYPE.USER, "survey", "firstNotification", 1);
+                _showSurveyNotification(surveyURL, title);
+            }
             userAlreadyDidAction.generalSurveyShownVersion = surveyVersion;
             PhStore.setItem(GUIDED_TOUR_LOCAL_STORAGE_KEY, JSON.stringify(userAlreadyDidAction));
         }, delayOverride || GENERAL_SURVEY_TIME);
-    }
-
-    // a power user is someone who has used Phoenix at least 3 days or 8 hours in the last two weeks
-    function _isPowerUser() {
-        let usageData = PreferencesManager.getViewState(USAGE_COUNTS_KEY) || {},
-            dateKeys = Object.keys(usageData),
-            dateBefore14Days = new Date(),
-            totalUsageMinutes = 0,
-            totalUsageDays = 0;
-        dateBefore14Days.setUTCDate(dateBefore14Days.getUTCDate()-14);
-        for(let dateKey of dateKeys){
-            let date = new Date(dateKey);
-            if(date >= dateBefore14Days) {
-                totalUsageDays ++;
-                totalUsageMinutes = totalUsageMinutes + usageData[dateKey];
-            }
-        }
-        return totalUsageDays >= 3 || (totalUsageMinutes/60) >= 8;
     }
 
     function addSurveyIframe(surveyURL) {
@@ -37938,38 +37914,66 @@ define("extensionsIntegrated/Phoenix/guided-tour", function (require, exports, m
         return resizeObserver;
     }
 
-    function _showPowerUserSurvey(surveyURL, intervalOverride) {
-        if(_isPowerUser()) {
-            const intervalDays = intervalOverride || POWER_USER_SURVEY_INTERVAL_DAYS;
-            Metrics.countEvent(Metrics.EVENT_TYPE.USER, "power", "user", 1);
-            let lastShownDate = userAlreadyDidAction.lastShownPowerSurveyDate;
-            let nextShowDate = new Date(lastShownDate);
-            nextShowDate.setUTCDate(nextShowDate.getUTCDate() + intervalDays);
-            let currentDate = new Date();
-            if(currentDate < nextShowDate){
-                return;
-            }
+    function _showDialogSurvey($surveyFrame) {
+        const templateVars = {
+            Strings: Strings
+        };
+        let positionObserver;
+        Dialogs.showModalDialogUsingTemplate(Mustache.render(SurveyTemplate, templateVars))
+            .done(()=>{
+                positionObserver && positionObserver.disconnect();
+                $surveyFrame.remove();
+            });
+        const $surveyFrameContainer = $('#surveyFrameContainer');
+        setTimeout(()=>{
+            repositionIframe($surveyFrame, $surveyFrameContainer);
+            positionObserver = observerPositionChanges($surveyFrame, $surveyFrameContainer);
+        }, 200);
+    }
+
+    function _showSurveyNotification(surveyUrl, title) {
+        NotificationUI.createToastFromTemplate(
+            title || Strings.SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT,
+            `<div class="survey-notification-popup">
+                    <iframe src="${surveyUrl}" style="width: 500px; height: 645px;" frameborder="0"></iframe></div>`, {
+                toastStyle: `${NotificationUI.NOTIFICATION_STYLES_CSS_CLASS.INFO} survey-notification-big forced-hidden`,
+                dismissOnClick: false
+            });
+        setTimeout(()=>{
+            $('.survey-notification-big').removeClass('forced-hidden');
+        }, SURVEY_PRELOAD_DELAY);
+    }
+
+    function _showRepeatUserSurvey(surveyURL, intervalOverride, title, useDialog) {
+        let nextPowerSurveyShowDate = userAlreadyDidAction.nextPowerSurveyShowDate;
+        if(!nextPowerSurveyShowDate){
+            // first boot, we schedule the power user survey to happen in two weeks
+            let nextShowDate = new Date();
+            nextShowDate.setUTCDate(nextShowDate.getUTCDate() + 14); // the first time repeat survey always shows up
+            // always after 2 weeks.
+            userAlreadyDidAction.nextPowerSurveyShowDate = nextShowDate.getTime();
+            PhStore.setItem(GUIDED_TOUR_LOCAL_STORAGE_KEY, JSON.stringify(userAlreadyDidAction));
+            return;
+        }
+        const intervalDays = intervalOverride || POWER_USER_SURVEY_INTERVAL_DAYS;
+        let nextShowDate = new Date(nextPowerSurveyShowDate);
+        let currentDate = new Date();
+        if(currentDate < nextShowDate){
+            return;
+        }
+        if(useDialog){
             const $surveyFrame = addSurveyIframe(surveyURL);
             setTimeout(()=>{
-                Metrics.countEvent(Metrics.EVENT_TYPE.USER, "survey", "powerShown", 1);
-                const templateVars = {
-                    Strings: Strings
-                };
-                let positionObserver;
-                Dialogs.showModalDialogUsingTemplate(Mustache.render(SurveyTemplate, templateVars))
-                    .done(()=>{
-                        positionObserver && positionObserver.disconnect();
-                        $surveyFrame.remove();
-                    });
-                const $surveyFrameContainer = $('#surveyFrameContainer');
-                setTimeout(()=>{
-                    repositionIframe($surveyFrame, $surveyFrameContainer);
-                    positionObserver = observerPositionChanges($surveyFrame, $surveyFrameContainer);
-                }, 200);
-                userAlreadyDidAction.lastShownPowerSurveyDate = Date.now();
-                PhStore.setItem(GUIDED_TOUR_LOCAL_STORAGE_KEY, JSON.stringify(userAlreadyDidAction));
-            }, POWER_USER_SURVEY_TIME);
+                Metrics.countEvent(Metrics.EVENT_TYPE.USER, "survey", "powerDialog", 1);
+                _showDialogSurvey($surveyFrame);
+            }, SURVEY_PRELOAD_DELAY);
+        } else {
+            Metrics.countEvent(Metrics.EVENT_TYPE.USER, "survey", "powerNotification", 1);
+            _showSurveyNotification(surveyURL, title);
         }
+        nextShowDate.setUTCDate(nextShowDate.getUTCDate() + intervalDays);
+        userAlreadyDidAction.nextPowerSurveyShowDate = nextShowDate.getTime();
+        PhStore.setItem(GUIDED_TOUR_LOCAL_STORAGE_KEY, JSON.stringify(userAlreadyDidAction));
     }
 
     async function _showSurveys() {
@@ -37982,14 +37986,20 @@ define("extensionsIntegrated/Phoenix/guided-tour", function (require, exports, m
             if(!Phoenix.isNativeApp && surveyJSON.browser) {
                 surveyJSON = {
                     newUser: surveyJSON.browser.newUser || surveyJSON.newUser,
+                    newUserTitle: surveyJSON.browser.newUserTitle || surveyJSON.newUserTitle,
                     newUserShowDelayMS: surveyJSON.browser.newUserShowDelayMS || surveyJSON.newUserShowDelayMS,
+                    newUserUseDialog: surveyJSON.browser.newUserUseDialog || surveyJSON.newUserUseDialog,
                     powerUser: surveyJSON.browser.powerUser || surveyJSON.powerUser,
+                    powerUserTitle: surveyJSON.browser.powerUserTitle || surveyJSON.powerUserTitle,
                     powerUserShowIntervalDays: surveyJSON.browser.powerUserShowIntervalDays
-                        || surveyJSON.powerUserShowIntervalDays
+                        || surveyJSON.powerUserShowIntervalDays,
+                    powerUserUseDialog: surveyJSON.browser.powerUserUseDialog || surveyJSON.powerUserUseDialog
                 };
             }
-            surveyJSON.newUser && _showGeneralSurvey(surveyJSON.newUser, surveyJSON.newUserShowDelayMS);
-            surveyJSON.powerUser && _showPowerUserSurvey(surveyJSON.powerUser, surveyJSON.powerUserShowIntervalDays);
+            surveyJSON.newUser && _showFirstUseSurvey(surveyJSON.newUser, surveyJSON.newUserShowDelayMS,
+                surveyJSON.newUserTitle, surveyJSON.newUserUseDialog);
+            surveyJSON.powerUser && _showRepeatUserSurvey(surveyJSON.powerUser, surveyJSON.powerUserShowIntervalDays,
+                surveyJSON.powerUserTitle, surveyJSON.powerUserUseDialog);
         } catch (e) {
             console.error("Error fetching survey link", surveyLinksURL, e);
             Metrics.countEvent(Metrics.EVENT_TYPE.USER, "survey", "fetchError", 1);
@@ -101917,7 +101927,10 @@ define("nls/root/strings", {
     "ERROR_PUSHING_OPERATION": "Pushing operation failed",
     "ERROR_NO_REMOTE_SELECTED": "No remote has been selected for {0}!",
     "ERROR_BRANCH_LIST": "Getting branch list failed",
-    "ERROR_FETCH_REMOTE": "Fetching remote information failed"
+    "ERROR_FETCH_REMOTE": "Fetching remote information failed",
+
+    // surveys
+    "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote for the features you want to see next!"
 });
 
 /*
@@ -158895,7 +158908,8 @@ define("utils/Metrics", function (require, exports, module) {
         loggedDataForAudit = new Map();
 
     let isFirstUseDay;
-    let userID;
+    let userID, isPowerUserFn;
+    let cachedIsPowerUser = false;
 
     function _setUserID() {
         const userIDKey = "phoenixUserPseudoID";
@@ -158919,9 +158933,11 @@ define("utils/Metrics", function (require, exports, module) {
         dayAfterFirstUse.setUTCDate(firstUseDay.getUTCDate() + 1);
         let today = new Date();
         isFirstUseDay = today < dayAfterFirstUse;
+        if(!isFirstUseDay){
+            setTimeout(_setFirstDayFlag, ONE_DAY);
+        }
     }
     _setFirstDayFlag();
-    setInterval(_setFirstDayFlag, ONE_DAY);
 
     /**
      * This section outlines the properties and methods available in this module
@@ -159109,13 +159125,20 @@ define("utils/Metrics", function (require, exports, module) {
      * and paid plans for GA starts at 100,000 USD.
      * @private
      */
-    function init(){
+    function init(initOptions = {}){
         if(initDone || window.testEnvironment){
             return;
         }
         _initGoogleAnalytics();
         _initCoreAnalytics();
         initDone = true;
+        if (initOptions.isPowerUserFn) {
+            isPowerUserFn = initOptions.isPowerUserFn;
+            cachedIsPowerUser = isPowerUserFn();  // only call once to avoid heavy computations repeatedly
+            setInterval(()=>{
+                cachedIsPowerUser = isPowerUserFn();
+            }, ONE_DAY);
+        }
     }
 
     // some events generate too many ga events that ga can't handle. ignore them.
@@ -159200,7 +159223,10 @@ define("utils/Metrics", function (require, exports, module) {
      * @type {function}
      */
     function countEvent(eventType, eventCategory, eventSubCategory, count= 1) {
-        if(!isFirstUseDay){
+        if(cachedIsPowerUser){
+            // emit power user metrics too
+            _countEvent(`P-${eventType}`, eventCategory, eventSubCategory, count);
+        } else if(!isFirstUseDay){
             // emit repeat user metrics too
             _countEvent(`R-${eventType}`, eventCategory, eventSubCategory, count);
         }
@@ -159228,7 +159254,10 @@ define("utils/Metrics", function (require, exports, module) {
      * @type {function}
      */
     function valueEvent(eventType, eventCategory, eventSubCategory, value) {
-        if(!isFirstUseDay){
+        if(cachedIsPowerUser){
+            // emit power user metrics too
+            _valueEvent(`P-${eventType}`, eventCategory, eventSubCategory, value);
+        } else if(!isFirstUseDay){
             // emit repeat user metrics too
             _valueEvent(`R-${eventType}`, eventCategory, eventSubCategory, value);
         }
@@ -159301,6 +159330,16 @@ define("utils/Metrics", function (require, exports, module) {
         return "10000+";
     }
 
+    /**
+     * A power user is someone who has used Phoenix at least 3 days or 8 hours in the last two weeks
+     * @returns {boolean}
+     */
+    function isPowerUser() {
+        if(!isPowerUserFn) {
+            throw new Error("PowerUser fn is not initialized in Metrics.");
+        }
+        return isPowerUserFn();
+    }
 
     // Define public API
     exports.init               = init;
@@ -159313,6 +159352,7 @@ define("utils/Metrics", function (require, exports, module) {
     exports.logPerformanceTime = logPerformanceTime;
     exports.flushMetrics       = flushMetrics;
     exports.getRangeName       = getRangeName;
+    exports.isPowerUser        = isPowerUser;
     exports.EVENT_TYPE = EVENT_TYPE;
     exports.AUDIT_TYPE_COUNT = AUDIT_TYPE_COUNT;
     exports.AUDIT_TYPE_VALUE = AUDIT_TYPE_VALUE;
@@ -172941,10 +172981,11 @@ define("widgets/NotificationUI", function (require, exports, module) {
      * The message can either be a string or a jQuery object representing a DOM node that is *not* in the current DOM.
      *
      * Creating a toast notification popup
+     *
+     * ```js
      * // note that you can even provide an HTML Element node with
      * // custom event handlers directly here instead of HTML text.
      * let notification1 = NotificationUI.createToastFromTemplate( "Title here",
-     * ```js
      *   "<div>Click me to locate the file in file tree</div>", {
      *       dismissOnClick: false,
      *       autoCloseTimeS: 300 // auto close the popup after 5 minutes
