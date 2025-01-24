@@ -38246,6 +38246,24 @@ define("extensionsIntegrated/Phoenix/new-project", function (require, exports, m
         createProjectDialogueObj,
         downloadCancelled = false;
 
+    function _focusContentWindow() {
+        let attempts = 0;
+        const maxAttempts = 10; // 10 * 100ms = 1 second total scan time
+        const intervalId = setInterval(() => {
+            const frame = document.getElementById("newProjectFrame");
+            if (frame && frame.contentWindow) {
+                frame.contentWindow.focus();
+                clearInterval(intervalId);
+            }
+
+            attempts++;
+            if (attempts >= maxAttempts) {
+                clearInterval(intervalId);
+                console.warn("Could not find or focus on newProjectFrame");
+            }
+        }, 100);
+    }
+
     function _showNewProjectDialogue() {
         if(window.testEnvironment){
             return;
@@ -38259,9 +38277,7 @@ define("extensionsIntegrated/Phoenix/new-project", function (require, exports, m
         };
         let dialogueContents = Mustache.render(newProjectTemplate, templateVars);
         newProjectDialogueObj = Dialogs.showModalDialogUsingTemplate(dialogueContents, true);
-        setTimeout(()=>{
-            document.getElementById("newProjectFrame").contentWindow.focus();
-        }, 100);
+        _focusContentWindow();
         Metrics.countEvent(Metrics.EVENT_TYPE.NEW_PROJECT, "dialogue", "open");
     }
 
@@ -48504,6 +48520,10 @@ define("file/FileUtils", function (require, exports, module) {
      * @return {string} Path of containing folder (including trailing "/"); or "" if path was the root
      */
     function getParentPath(fullPath) {
+        // Guard clause: ensure fullPath is a non-empty string
+        if (typeof fullPath !== "string" || !fullPath) {
+            return "";
+        }
         if (fullPath === "/") {
             return "";
         }
