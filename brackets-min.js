@@ -64569,6 +64569,7 @@ define("nls/ar/strings", {
   "VIEW_MORE": "عرض المزيد...",
   "NEW_PROJECT_NOTIFICATION": "انقر على هذا الرمز لفتح نافذة `بدء مشروع` مرة أخرى.</br> شاهد المشاريع الأخيرة، أو افتح مجلدًا أو ابدأ مشاريع من قوالب.</br> <img src=\"styles/images/new_project.png\">",
   "BEAUTIFY_CODE_NOTIFICATION": "انقر هنا أو اضغط على <b>`{0}`</b> لتحسين تنسيق الشفرة. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "افتح <b>المشروع الافتراضي</b> في {APP_NAME} للبدء بسرعة (مثالي كمسودة).<br><br>أو افتح مجلدًا من جهاز الكمبيوتر الخاص بك باستخدام رمز <strong>فتح مجلد</strong> أدناه.<br><a href='#' style='float:right;'>موافق</a>",
   "DIRECTORY_REPLACE_MESSAGE": "المجلد المحدد <span class='dialog-filename'>{0}</span> ليس فارغًا. هل أنت متأكد أنك تريد استبدال محتويات المجلد بالمشروع؟",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "انقر هنا لتحديد موقع هذا &lt;span&gt; في ملف HTML",
   "BUILD_WEBSITE_SECTION": "إنشاء موقع ويب",
@@ -64875,7 +64876,7 @@ define("nls/ar/strings", {
   "GIT_TOAST_TITLE": "استكشف ميزات Git في Phoenix Code",
   "GIT_TOAST_MESSAGE": "انقر على رمز لوحة Git لإدارة مستودعك. يمكنك بسهولة تنفيذ الالتزام والدفع والسحب وعرض سجل مشروعك - كل ذلك في مكان واحد.<br><a href='https://docs.phcode.dev/docs/Features/git'>تعرّف على المزيد حول لوحة Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "صوت للميزات التي ترغب برؤيتها تالياً!",
-  "DEFAULT_PROJECT_NOTIFICATION": "افتح <b>المشروع الافتراضي</b> في {APP_NAME} للبدء بسرعة (مثالي كمسودة).<br><br>أو افتح مجلدًا من جهاز الكمبيوتر الخاص بك باستخدام رمز <strong>فتح مجلد</strong> أدناه.<br><a href='#' style='float:right;'>موافق</a>"
+  "ERROR_PREPARING_COMMIT_DIALOG": "فشل تحضير مربع حوار الالتزام"
 });
 /*
  * GNU AGPL-3.0 License
@@ -65917,6 +65918,7 @@ define("nls/bg/strings", {
   "VIEW_MORE": "Виж още...",
   "NEW_PROJECT_NOTIFICATION": "Щракнете върху тази икона, за да отворите отново прозореца „Стартиране на проект“.</br> Вижте Последни проекти, Отваряне на папка или стартирайте проекти от шаблони.</br> <img src=\"styles/images/new_project.png\">",
   "BEAUTIFY_CODE_NOTIFICATION": "Щракнете тук или натиснете <b>`{0}`</b>, за да форматирате кода. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Отворете <b>Примерния проект</b> в {APP_NAME} за бърз старт (идеален е като чернова).</br></br>Или отворете папка от вашия компютър с иконата <strong>Отваряне на папка</strong> по-долу.<br><a href='#' style='float:right;'>ок</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Избраната папка <span class='dialog-filename'>{0}</span> не е празна. Сигурни ли сте, че искате да замените съдържанието на папката с проекта?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Кликнете тук, за да намерите това &lt;span&gt; в HTML файла",
   "BUILD_WEBSITE_SECTION": "Създаване на уебсайт",
@@ -66223,7 +66225,7 @@ define("nls/bg/strings", {
   "GIT_TOAST_TITLE": "Разгледайте Git функциите в Phoenix Code",
   "GIT_TOAST_MESSAGE": "Щракнете върху иконата на Git панела, за да управлявате хранилището си. Лесно създавайте commit, push, pull и преглеждайте историята на проекта си – всичко на едно място.<br><a href='https://docs.phcode.dev/docs/Features/git'>Научете повече за Git панела →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Гласувайте за функциите, които искате да видите следващи!",
-  "DEFAULT_PROJECT_NOTIFICATION": "Отворете <b>Примерния проект</b> в {APP_NAME} за бърз старт (идеален е като чернова).</br></br>Или отворете папка от вашия компютър с иконата <strong>Отваряне на папка</strong> по-долу.<br><a href='#' style='float:right;'>ок</a>"
+  "ERROR_PREPARING_COMMIT_DIALOG": "Неуспешно подготвяне на диалогов прозорец за commit"
 });
 /*
  * Copyright (c) 2013 Adobe Systems Incorporated. All rights reserved.
@@ -67294,6 +67296,7 @@ define("nls/cs/strings", {
   "VIEW_MORE": "Zobrazit více...",
   "NEW_PROJECT_NOTIFICATION": "Klikněte na tuto ikonu pro opětovné otevření okna `Spustit projekt`.</br> Zobrazte si Nedávné projekty, Otevřít složku nebo spusťte projekty ze šablon.</br> <img src=\"styles/images/new_project.png\">",
   "BEAUTIFY_CODE_NOTIFICATION": "Klikněte sem nebo stiskněte <b>`{0}`</b> pro formátování kódu. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Otevřete <b>Výchozí projekt</b> v aplikaci {APP_NAME} pro rychlý start (ideální jako poznámkový blok).</br></br>Nebo otevřete složku z počítače pomocí ikony <strong>Otevřít složku</strong> níže.<br><a href='#' style='float:right;'>ok</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Vybraná složka <span class='dialog-filename'>{0}</span> není prázdná. Jste si jisti, že chcete nahradit obsah složky projektem?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Klikněte sem pro nalezení tohoto &lt;span&gt; v HTML souboru",
   "BUILD_WEBSITE_SECTION": "Vytvořit web",
@@ -67600,7 +67603,7 @@ define("nls/cs/strings", {
   "GIT_TOAST_TITLE": "Prozkoumejte funkce Gitu v Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klikněte na ikonu panelu Git pro správu vašeho repozitáře. Snadno commitujte, pushujte, pullujte a prohlížejte si historii projektu – vše na jednom místě.<br><a href='https://docs.phcode.dev/docs/Features/git'>Zjistěte více o panelu Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Hlasujte pro funkce, které chcete vidět v další verzi!",
-  "DEFAULT_PROJECT_NOTIFICATION": "Otevřete <b>Výchozí projekt</b> v aplikaci {APP_NAME} pro rychlý start (ideální jako poznámkový blok).</br></br>Nebo otevřete složku z počítače pomocí ikony <strong>Otevřít složku</strong> níže.<br><a href='#' style='float:right;'>ok</a>"
+  "ERROR_PREPARING_COMMIT_DIALOG": "Chyba při přípravě dialogu pro commit"
 });
 /*
  * GNU AGPL-3.0 License
@@ -68669,6 +68672,7 @@ define("nls/da/strings", {
   "VIEW_MORE": "Se mere...",
   "NEW_PROJECT_NOTIFICATION": "Klik på dette ikon for at åbne vinduet `Start projekt` igen.</br> Se Seneste Projekter, Åbn Mappe eller start projekter fra skabeloner.</br> <img src=\"styles/images/new_project.png\">",
   "BEAUTIFY_CODE_NOTIFICATION": "Klik her eller tryk på <b>`{0}`</b> for at formattere kode. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Åbn <b>Standardprojektet</b> i {APP_NAME} for at komme hurtigt i gang (ideelt som et kladde).</br></br>Eller åbn en mappe fra din computer med ikonet <strong>Åbn mappe</strong> nedenfor.<br><a href='#' style='float:right;'>ok</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Den valgte mappe <span class='dialog-filename'>{0}</span> er ikke tom. Er du sikker på, at du vil erstatte mappeindholdet med projektet?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Klik her for at finde denne &lt;span&gt; i HTML-filen",
   "BUILD_WEBSITE_SECTION": "Opbyg website",
@@ -68975,7 +68979,7 @@ define("nls/da/strings", {
   "GIT_TOAST_TITLE": "Udforsk Git-funktioner i Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klik på Git-panelikonet for at administrere dit repository. Commit, push, pull og se din projekthistorik nemt – alt sammen på ét sted.<br><a href='https://docs.phcode.dev/docs/Features/git'>Læs mere om Git-panelet →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stem på de funktioner, du gerne vil se!",
-  "DEFAULT_PROJECT_NOTIFICATION": "Åbn <b>Standardprojektet</b> i {APP_NAME} for at komme hurtigt i gang (ideelt som et kladde).</br></br>Eller åbn en mappe fra din computer med ikonet <strong>Åbn mappe</strong> nedenfor.<br><a href='#' style='float:right;'>ok</a>"
+  "ERROR_PREPARING_COMMIT_DIALOG": "Forberedelse af commit-dialog mislykkedes"
 });
 /*
  * GNU AGPL-3.0 License
@@ -70042,6 +70046,7 @@ define("nls/de/strings", {
   "VIEW_MORE": "Mehr anzeigen...",
   "NEW_PROJECT_NOTIFICATION": "Klicken Sie auf dieses Symbol, um das Fenster „Projekt starten“ erneut zu öffnen.</br> Sehen Sie sich kürzlich bearbeitete Projekte an, öffnen Sie einen Ordner oder starten Sie Projekte aus Vorlagen.</br> <img src=\"styles/images/new_project.png\">",
   "BEAUTIFY_CODE_NOTIFICATION": "Klicken Sie hier oder drücken Sie <b>`{0}`</b>, um Code zu verschönern. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Öffnen Sie das <b>Standardprojekt</b> in {APP_NAME}, um schnell zu starten (ideal als Notizblock).</br></br>Oder öffnen Sie einen Ordner von Ihrem Computer mit dem Symbol <strong>Ordner öffnen</strong> unten.<br><a href='#' style='float:right;'>OK</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Der ausgewählte Ordner <span class='dialog-filename'>{0}</span> ist nicht leer. Möchten Sie den Ordnerinhalt wirklich mit dem Projekt ersetzen?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Klicken Sie hier, um dies &lt;span&gt; in der HTML-Datei zu finden",
   "BUILD_WEBSITE_SECTION": "Webseite erstellen",
@@ -70348,7 +70353,7 @@ define("nls/de/strings", {
   "GIT_TOAST_TITLE": "Git-Funktionen in Phoenix Code entdecken",
   "GIT_TOAST_MESSAGE": "Klicken Sie auf das Git-Panel-Symbol, um Ihr Repository zu verwalten. Committen, Pushen, Pullen und die Anzeige Ihres Projektverlaufs – alles an einem Ort.<br><a href='https://docs.phcode.dev/docs/Features/git'>Mehr über das Git-Panel erfahren →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stimmen Sie für die Funktionen ab, die Sie als Nächstes sehen möchten!",
-  "DEFAULT_PROJECT_NOTIFICATION": "Öffnen Sie das <b>Standardprojekt</b> in {APP_NAME}, um schnell zu starten (ideal als Notizblock).</br></br>Oder öffnen Sie einen Ordner von Ihrem Computer mit dem Symbol <strong>Ordner öffnen</strong> unten.<br><a href='#' style='float:right;'>OK</a>"
+  "ERROR_PREPARING_COMMIT_DIALOG": "Fehler beim Vorbereiten des Commit-Dialogs"
 });
 /*
  * GNU AGPL-3.0 License
@@ -71417,6 +71422,7 @@ define("nls/el/strings", {
   "VIEW_MORE": "Δείτε Περισσότερα...",
   "NEW_PROJECT_NOTIFICATION": "Κάντε κλικ σε αυτό το εικονίδιο για να ανοίξετε ξανά το παράθυρο `Έναρξη Έργου`.</br> Δείτε τα Πρόσφατα Έργα, ανοίξτε Φάκελο ή ξεκινήστε έργα από πρότυπα.</br> <img src=\"styles/images/new_project.png\">",
   "BEAUTIFY_CODE_NOTIFICATION": "Κάντε κλικ εδώ ή πατήστε <b>`{0}`</b> για να ομορφύνετε τον κώδικα. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Ανοίξτε το <b>Προεπιλεγμένο Έργο</b> στο {APP_NAME} για να ξεκινήσετε γρήγορα (ιδανικό ως πρόχειρο).</br></br>Ή, ανοίξτε έναν φάκελο από τον υπολογιστή σας με το εικονίδιο <strong>Άνοιγμα Φακέλου</strong> παρακάτω.<br><a href='#' style='float:right;'>εντάξει</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Ο επιλεγμένος φάκελος <span class='dialog-filename'>{0}</span> δεν είναι κενός. Είστε σίγουροι ότι θέλετε να αντικαταστήσετε τα περιεχόμενα του φακέλου με το έργο;",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Κάντε κλικ εδώ για να εντοπίσετε αυτό το &lt;span&gt; στο αρχείο HTML",
   "BUILD_WEBSITE_SECTION": "Δημιουργία Ιστοσελίδας",
@@ -71723,7 +71729,7 @@ define("nls/el/strings", {
   "GIT_TOAST_TITLE": "Εξερευνήστε τις Λειτουργίες Git στο Phoenix Code",
   "GIT_TOAST_MESSAGE": "Κάντε κλικ στο εικονίδιο του πίνακα Git για να διαχειριστείτε το αποθετήριό σας. Κάντε εύκολα commit, push, pull και δείτε το ιστορικό του έργου σας—όλα σε ένα μέρος.<br><a href='https://docs.phcode.dev/docs/Features/git'>Μάθετε περισσότερα για τον πίνακα Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Ψηφίστε για τις λειτουργίες που θέλετε να δείτε στη συνέχεια!",
-  "DEFAULT_PROJECT_NOTIFICATION": "Ανοίξτε το <b>Προεπιλεγμένο Έργο</b> στο {APP_NAME} για να ξεκινήσετε γρήγορα (ιδανικό ως πρόχειρο).</br></br>Ή, ανοίξτε έναν φάκελο από τον υπολογιστή σας με το εικονίδιο <strong>Άνοιγμα Φακέλου</strong> παρακάτω.<br><a href='#' style='float:right;'>εντάξει</a>"
+  "ERROR_PREPARING_COMMIT_DIALOG": "Αποτυχία προετοιμασίας παραθύρου δημιουργίας commit"
 });
 /*
  * GNU AGPL-3.0 License
@@ -72792,6 +72798,7 @@ define("nls/en-gb/strings", {
   "VIEW_MORE": "See more…",
   "NEW_PROJECT_NOTIFICATION": "Click this icon to open the `Start Project` window again.</br> See Recent Projects, Open Folder or start projects from templates.</br> <img src=\"styles/images/new_project.png\">",
   "BEAUTIFY_CODE_NOTIFICATION": "Click here or press <b>`{0}`</b> to format code. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Open the <b>Default Project</b> in {APP_NAME} to get started quickly (ideal as a scratchpad).</br></br>Or, open a folder from your computer with the <strong>Open Folder</strong> icon below.<br><a href='#' style='float:right;'>OK</a>",
   "DIRECTORY_REPLACE_MESSAGE": "The selected folder <span class='dialog-filename'>{0}</span> is not empty. Are you sure you want to replace the folder contents with the project?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Click here to locate this &lt;span&gt; in the HTML file",
   "BUILD_WEBSITE_SECTION": "Build website",
@@ -73098,7 +73105,7 @@ define("nls/en-gb/strings", {
   "GIT_TOAST_TITLE": "Explore Git Features in Phoenix Code",
   "GIT_TOAST_MESSAGE": "Click the Git panel icon to manage your repository. Easily commit, push, pull, and view your project history—all in one place.<br><a href='https://docs.phcode.dev/docs/Features/git'>Learn more about the Git panel →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote for the features you'd like to see next!",
-  "DEFAULT_PROJECT_NOTIFICATION": "Open the <b>Default Project</b> in {APP_NAME} to get started quickly (ideal as a scratchpad).</br></br>Or, open a folder from your computer with the <strong>Open Folder</strong> icon below.<br><a href='#' style='float:right;'>OK</a>"
+  "ERROR_PREPARING_COMMIT_DIALOG": "Failed to prepare the commit dialogue"
 });
 /*
  * GNU AGPL-3.0 License
@@ -74140,6 +74147,7 @@ define("nls/es/strings", {
   "VIEW_MORE": "Ver más...",
   "NEW_PROJECT_NOTIFICATION": "Haga clic en este icono para abrir la ventana `Iniciar proyecto` nuevamente.</br> Vea Proyectos recientes, Abrir carpeta o inicie proyectos desde plantillas.</br> <img src=\"styles/images/new_project.png\">",
   "BEAUTIFY_CODE_NOTIFICATION": "Haga clic aquí o presione <b>`{0}`</b> para embellecer el código. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Abre el <b>Proyecto predeterminado</b> en {APP_NAME} para empezar rápidamente (ideal como bloc de notas).</br></br>O bien, abre una carpeta de tu ordenador con el icono <strong>Abrir carpeta</strong> que se muestra a continuación.<br><a href='#' style='float:right;'>Aceptar</a>",
   "DIRECTORY_REPLACE_MESSAGE": "La carpeta seleccionada <span class='dialog-filename'>{0}</span> no está vacía. ¿Está seguro de que desea reemplazar el contenido de la carpeta con el proyecto?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Haga clic aquí para ubicar esto &lt;span&gt; en el archivo HTML",
   "BUILD_WEBSITE_SECTION": "Crear sitio web",
@@ -74446,7 +74454,7 @@ define("nls/es/strings", {
   "GIT_TOAST_TITLE": "Explora las funciones de Git en Phoenix Code",
   "GIT_TOAST_MESSAGE": "Haga clic en el icono del panel de Git para administrar su repositorio. Confirme, envíe (push), extraiga (pull) y vea el historial de su proyecto fácilmente, todo en un solo lugar.<br><a href='https://docs.phcode.dev/docs/Features/git'>Obtenga más información sobre el panel de Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "¡Vota por las funciones que quieres ver próximamente!",
-  "DEFAULT_PROJECT_NOTIFICATION": "Abre el <b>Proyecto predeterminado</b> en {APP_NAME} para empezar rápidamente (ideal como bloc de notas).</br></br>O bien, abre una carpeta de tu ordenador con el icono <strong>Abrir carpeta</strong> que se muestra a continuación.<br><a href='#' style='float:right;'>Aceptar</a>"
+  "ERROR_PREPARING_COMMIT_DIALOG": "Error al preparar el diálogo de confirmación"
 });
 /*
  * GNU AGPL-3.0 License
@@ -75516,6 +75524,7 @@ define("nls/fa-ir/strings", {
   "VIEW_MORE": "مشاهده بیشتر...",
   "NEW_PROJECT_NOTIFICATION": "برای باز کردن مجدد پنجره «شروع پروژه» روی این آیکون کلیک کنید.</br> پروژه‌های اخیر را ببینید، پوشه را باز کنید یا پروژه‌ها را از روی قالب‌ها شروع کنید.</br> <img src=\"styles/images/new_project.png\">",
   "BEAUTIFY_CODE_NOTIFICATION": "برای قالب‌بندی کد، اینجا کلیک کنید یا <b>`{0}`</b> را فشار دهید. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "برای شروع سریع، <b>پروژه پیش‌فرض</b> را در {APP_NAME} باز کنید (به عنوان یک برگه یادداشت ایده‌آل است).</br></br>یا، با استفاده از آیکون <strong>باز کردن پوشه</strong> در پایین، یک پوشه از رایانه خود باز کنید.<br><a href='#' style='float:right;'>تأیید</a>",
   "DIRECTORY_REPLACE_MESSAGE": "پوشه انتخاب شده <span class='dialog-filename'>{0}</span> خالی نیست. آیا مطمئن هستید که می‌خواهید محتوای پوشه را با پروژه جایگزین کنید؟",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "برای یافتن این &lt;span&gt; در فایل HTML اینجا کلیک کنید",
   "BUILD_WEBSITE_SECTION": "ساخت وب‌سایت",
@@ -75822,7 +75831,7 @@ define("nls/fa-ir/strings", {
   "GIT_TOAST_TITLE": "کاوش ویژگی‌های گیت در Phoenix Code",
   "GIT_TOAST_MESSAGE": "برای مدیریت مخزن خود روی آیکون پنل گیت کلیک کنید. به راحتی کامیت، پوش، پول و مشاهده تاریخچه پروژه خود را - همه در یک مکان - انجام دهید.<br><a href='https://docs.phcode.dev/docs/Features/git'>درباره پنل گیت بیشتر بدانید →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "برای قابلیت‌هایی که می‌خواهید در آینده ببینید، رأی دهید!",
-  "DEFAULT_PROJECT_NOTIFICATION": "برای شروع سریع، <b>پروژه پیش‌فرض</b> را در {APP_NAME} باز کنید (به عنوان یک برگه یادداشت ایده‌آل است).</br></br>یا، با استفاده از آیکون <strong>باز کردن پوشه</strong> در پایین، یک پوشه از رایانه خود باز کنید.<br><a href='#' style='float:right;'>تأیید</a>"
+  "ERROR_PREPARING_COMMIT_DIALOG": "خطا در آماده‌سازی پنجره ثبت کامیت"
 });
 /*
  * GNU AGPL-3.0 License
@@ -76891,6 +76900,7 @@ define("nls/fi/strings", {
   "VIEW_MORE": "Näytä lisää...",
   "NEW_PROJECT_NOTIFICATION": "Napsauta tätä kuvaketta avataksesi `Aloita projekti` -ikkunan uudelleen.</br> Katso Viimeaikaiset projektit, Avaa kansio tai aloita projekteja mallipohjista.</br> <img src=\"styles/images/new_project.png\">",
   "BEAUTIFY_CODE_NOTIFICATION": "Napsauta tästä tai paina <b>`{0}`</b> muotoillaksesi koodin. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Avaa <b>oletusprojekti</b> {APP_NAME}:ssa päästäksesi nopeasti alkuun (sopii hyvin muistioksi).</br></br>Voit myös avata kansion tietokoneeltasi alla olevalla <strong>Avaa kansio</strong> -kuvakkeella.<br><a href='#' style='float:right;'>ok</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Valittu kansio <span class='dialog-filename'>{0}</span> ei ole tyhjä. Oletko varma, että haluat korvata kansion sisällön projektilla?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Klikkaa tästä paikantaaksesi tämän &lt;span&gt; HTML-tiedostossa",
   "BUILD_WEBSITE_SECTION": "Rakenna verkkosivusto",
@@ -77197,7 +77207,7 @@ define("nls/fi/strings", {
   "GIT_TOAST_TITLE": "Tutustu Git-ominaisuuksiin Phoenix Codessa",
   "GIT_TOAST_MESSAGE": "Napsauta Git-paneelin kuvaketta hallitaksesi arkistoasi (repository). Tee commit, push ja pull helposti ja tarkastele projektihistoriaasi – kaikki yhdessä paikassa.<br><a href='https://docs.phcode.dev/docs/Features/git'>Lue lisää Git-paneelista →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Äänestä ominaisuuksia, jotka haluat nähdä seuraavaksi!",
-  "DEFAULT_PROJECT_NOTIFICATION": "Avaa <b>oletusprojekti</b> {APP_NAME}:ssa päästäksesi nopeasti alkuun (sopii hyvin muistioksi).</br></br>Voit myös avata kansion tietokoneeltasi alla olevalla <strong>Avaa kansio</strong> -kuvakkeella.<br><a href='#' style='float:right;'>ok</a>"
+  "ERROR_PREPARING_COMMIT_DIALOG": "Commit-valintaikkunan valmistelu epäonnistui"
 });
 /*
  * GNU AGPL-3.0 License
@@ -78266,6 +78276,7 @@ define("nls/fr/strings", {
   "VIEW_MORE": "Voir plus…",
   "NEW_PROJECT_NOTIFICATION": "Cliquez sur cette icône pour ouvrir à nouveau la fenêtre « Démarrer un projet ».<br> Consultez les projets récents, ouvrez un dossier ou démarrez des projets à partir de modèles.<br> <img src=\"styles/images/new_project.png\">",
   "BEAUTIFY_CODE_NOTIFICATION": "Cliquez ici ou appuyez sur <b>`{0}`</b> pour embellir le code. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Ouvrez le <b>Projet par défaut</b> dans {APP_NAME} pour commencer rapidement (idéal comme bloc-notes).</br></br>Ou, ouvrez un dossier de votre ordinateur avec l'icône <strong>Ouvrir un dossier</strong> ci-dessous.<br><a href='#' style='float:right;'>ok</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Le dossier sélectionné <span class='dialog-filename'>{0}</span> n'est pas vide. Êtes-vous sûr de vouloir remplacer le contenu du dossier par le projet ?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Cliquez ici pour localiser ceci &lt;span&gt; dans le fichier HTML",
   "BUILD_WEBSITE_SECTION": "Générer le site web",
@@ -78572,7 +78583,7 @@ define("nls/fr/strings", {
   "GIT_TOAST_TITLE": "Explorer les fonctionnalités Git dans Phoenix Code",
   "GIT_TOAST_MESSAGE": "Cliquez sur l'icône du panneau Git pour gérer votre dépôt. Validez, envoyez (push), récupérez (pull) et consultez l'historique de votre projet facilement, le tout au même endroit.<br><a href='https://docs.phcode.dev/docs/Features/git'>En savoir plus sur le panneau Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Votez pour les fonctionnalités que vous souhaitez voir apparaître !",
-  "DEFAULT_PROJECT_NOTIFICATION": "Ouvrez le <b>Projet par défaut</b> dans {APP_NAME} pour commencer rapidement (idéal comme bloc-notes).</br></br>Ou, ouvrez un dossier de votre ordinateur avec l'icône <strong>Ouvrir un dossier</strong> ci-dessous.<br><a href='#' style='float:right;'>ok</a>"
+  "ERROR_PREPARING_COMMIT_DIALOG": "Échec de la préparation de la boîte de dialogue de commit"
 });
 /*
  * GNU AGPL-3.0 License
@@ -79641,6 +79652,7 @@ define("nls/gl/strings", {
   "VIEW_MORE": "Ver máis...",
   "NEW_PROJECT_NOTIFICATION": "Fai clic nesta icona para abrir de novo a xanela `Iniciar proxecto`.</br> Ver proxectos recentes, abrir cartafol ou iniciar proxectos desde modelos.</br> <img src=\"styles/images/new_project.png\">",
   "BEAUTIFY_CODE_NOTIFICATION": "Fai clic aquí ou preme <b>`{0}`</b> para embelecer o código. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Abre o <b>Proxecto predefinido</b> en {APP_NAME} para comezar rapidamente (ideal como borrador).</br></br>Ou abre un cartafol do teu computador co ícone <strong>Abrir cartafol</strong> a continuación.<br><a href='#' style='float:right;'>Aceptar</a>",
   "DIRECTORY_REPLACE_MESSAGE": "O cartafol seleccionado <span class='dialog-filename'>{0}</span> non está baleiro. Seguro que queres substituír o contido do cartafol co proxecto?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Fai clic aquí para localizar isto &lt;span&gt; no ficheiro HTML",
   "BUILD_WEBSITE_SECTION": "Crear sitio web",
@@ -79947,7 +79959,7 @@ define("nls/gl/strings", {
   "GIT_TOAST_TITLE": "Explora as funcionalidades de Git en Phoenix Code",
   "GIT_TOAST_MESSAGE": "Fai clic na icona do panel de Git para xestionar o teu repositorio. Fai commits, envía (push), obtén (pull) e visualiza o historial do teu proxecto facilmente, todo nun mesmo lugar.<br><a href='https://docs.phcode.dev/docs/Features/git'>Aprende máis sobre o panel de Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vota polas funcionalidades que queres ver a continuación!",
-  "DEFAULT_PROJECT_NOTIFICATION": "Abre o <b>Proxecto predefinido</b> en {APP_NAME} para comezar rapidamente (ideal como borrador).</br></br>Ou abre un cartafol do teu computador co ícone <strong>Abrir cartafol</strong> a continuación.<br><a href='#' style='float:right;'>Aceptar</a>"
+  "ERROR_PREPARING_COMMIT_DIALOG": "Produciuse un erro ao preparar o diálogo de confirmación"
 });
 /*
  * GNU AGPL-3.0 License
@@ -80989,6 +81001,7 @@ define("nls/hi/strings", {
   "VIEW_MORE": "और देखें...",
   "NEW_PROJECT_NOTIFICATION": "इस आइकन पर क्लिक करके `प्रोजेक्ट शुरू करें` विंडो फिर से खोलें।</br> हाल के प्रोजेक्ट देखें, फ़ोल्डर खोलें या टेम्प्लेट से प्रोजेक्ट शुरू करें।</br> <img src=\"styles/images/new_project.png\">",
   "BEAUTIFY_CODE_NOTIFICATION": "कोड को सुंदर बनाने के लिए यहां क्लिक करें या <b>`{0}`</b> दबाएं। </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "आरंभ करने के लिए {APP_NAME} में <b>डिफ़ॉल्ट प्रोजेक्ट</b> खोलें (स्क्रैच पैड के रूप में आदर्श)।</br></br>या, नीचे दिए गए <strong>फ़ोल्डर खोलें</strong> आइकन से अपने कंप्यूटर से एक फ़ोल्डर खोलें।<br><a href='#' style='float:right;'>ठीक है</a>",
   "DIRECTORY_REPLACE_MESSAGE": "चयनित फ़ोल्डर <span class='dialog-filename'>{0}</span> खाली नहीं है। क्या आप वाकई फ़ोल्डर की सामग्री को प्रोजेक्ट से बदलना चाहते हैं?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "HTML फ़ाइल में इसे ढूंढने के लिए यहां क्लिक करें &lt;span&gt;",
   "BUILD_WEBSITE_SECTION": "वेबसाइट बनाएँ",
@@ -81295,7 +81308,7 @@ define("nls/hi/strings", {
   "GIT_TOAST_TITLE": "फ़ीनिक्स कोड में Git सुविधाओं का अन्वेषण करें",
   "GIT_TOAST_MESSAGE": "अपने रिपॉजिटरी को प्रबंधित करने के लिए Git पैनल आइकन पर क्लिक करें। आसानी से कमिट करें, पुश करें, पुल करें और अपने प्रोजेक्ट का इतिहास देखें—सब एक ही स्थान पर।<br><a href='https://docs.phcode.dev/docs/Features/git'>Git पैनल के बारे में अधिक जानें →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "उन विशेषताओं के लिए वोट करें जिन्हें आप आगे देखना चाहते हैं!",
-  "DEFAULT_PROJECT_NOTIFICATION": "आरंभ करने के लिए {APP_NAME} में <b>डिफ़ॉल्ट प्रोजेक्ट</b> खोलें (स्क्रैच पैड के रूप में आदर्श)।</br></br>या, नीचे दिए गए <strong>फ़ोल्डर खोलें</strong> आइकन से अपने कंप्यूटर से एक फ़ोल्डर खोलें।<br><a href='#' style='float:right;'>ठीक है</a>"
+  "ERROR_PREPARING_COMMIT_DIALOG": "कमिट डायलॉग तैयार करने में विफल रहा"
 });
 /*
  * GNU AGPL-3.0 License
@@ -82337,6 +82350,7 @@ define("nls/hr/strings", {
   "VIEW_MORE": "Prikaži više...",
   "NEW_PROJECT_NOTIFICATION": "Kliknite ovu ikonu da biste ponovno otvorili prozor `Pokreni projekt`.</br> Pogledajte Nedavne projekte, Otvorite mapu ili pokrenite projekte iz predložaka.</br> <img src=\"styles/images/new_project.png\">",
   "BEAUTIFY_CODE_NOTIFICATION": "Kliknite ovdje ili pritisnite <b>`{0}`</b> za uljepšavanje koda. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Otvorite <b>Zadani projekt</b> u {APP_NAME} za brzi početak (idealno kao radna bilježnica).</br></br>Ili otvorite mapu s računala pomoću ikone <strong>Otvori mapu</strong> ispod.<br><a href='#' style='float:right;'>u redu</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Odabrana mapa <span class='dialog-filename'>{0}</span> nije prazna. Jeste li sigurni da želite zamijeniti sadržaj mape s projektom?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Kliknite ovdje da biste pronašli ovaj &lt;span&gt; u HTML datoteci",
   "BUILD_WEBSITE_SECTION": "Izrada web-stranice",
@@ -82643,7 +82657,7 @@ define("nls/hr/strings", {
   "GIT_TOAST_TITLE": "Istražite Git značajke u Phoenix Codeu",
   "GIT_TOAST_MESSAGE": "Kliknite ikonu Git panela za upravljanje svojim repozitorijem. Jednostavno potvrdite (commit), pošaljite (push), preuzmite (pull) i pregledajte povijest svog projekta - sve na jednom mjestu.<br><a href='https://docs.phcode.dev/docs/Features/git'>Saznajte više o Git panelu →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Glasajte za značajke koje želite vidjeti sljedeće!",
-  "DEFAULT_PROJECT_NOTIFICATION": "Otvorite <b>Zadani projekt</b> u {APP_NAME} za brzi početak (idealno kao radna bilježnica).</br></br>Ili otvorite mapu s računala pomoću ikone <strong>Otvori mapu</strong> ispod.<br><a href='#' style='float:right;'>u redu</a>"
+  "ERROR_PREPARING_COMMIT_DIALOG": "Priprema dijaloga za commit nije uspjela"
 });
 /*
  * GNU AGPL-3.0 License
@@ -83712,6 +83726,7 @@ define("nls/hu/strings", {
   "VIEW_MORE": "Továbbiak...",
   "NEW_PROJECT_NOTIFICATION": "Kattintson erre az ikonra a `Projekt indítása` ablak újbóli megnyitásához.</br> Tekintse meg a Legutóbbi projekteket, nyisson meg egy mappát, vagy indítson projekteket sablonokból.</br> <img src=\"styles/images/new_project.png\">",
   "BEAUTIFY_CODE_NOTIFICATION": "Kattintson ide vagy nyomja meg a <b>`{0}`</b> billentyűt a kód formázásához. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Nyissa meg az <b>Alapértelmezett projektet</b> az {APP_NAME} alkalmazásban a gyors kezdéshez (ideális vázlatfüzetként).</br></br>Vagy nyisson meg egy mappát a számítógépéről az alábbi <strong>Mappa megnyitása</strong> ikonnal.<br><a href='#' style='float:right;'>ok</a>",
   "DIRECTORY_REPLACE_MESSAGE": "A kiválasztott mappa <span class='dialog-filename'>{0}</span> nem üres. Biztosan felül akarja írni a mappa tartalmát a projekttel?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Kattintson ide a &lt;span&gt; megkereséséhez a HTML fájlban",
   "BUILD_WEBSITE_SECTION": "Weboldal létrehozása",
@@ -84018,7 +84033,7 @@ define("nls/hu/strings", {
   "GIT_TOAST_TITLE": "Fedezd fel a Git funkciókat a Phoenix Code-ban",
   "GIT_TOAST_MESSAGE": "Kattintson a Git panel ikonra a verziókövető rendszer kezeléséhez. Könnyedén végezhet commit, push és pull műveleteket, valamint megtekintheti a projekt előzményeit – mindezt egy helyen.<br><a href='https://docs.phcode.dev/docs/Features/git'>Tudj meg többet a Git panelről →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Szavazzon azokra a funkciókra, amelyeket a jövőben látni szeretne!",
-  "DEFAULT_PROJECT_NOTIFICATION": "Nyissa meg az <b>Alapértelmezett projektet</b> az {APP_NAME} alkalmazásban a gyors kezdéshez (ideális vázlatfüzetként).</br></br>Vagy nyisson meg egy mappát a számítógépéről az alábbi <strong>Mappa megnyitása</strong> ikonnal.<br><a href='#' style='float:right;'>ok</a>"
+  "ERROR_PREPARING_COMMIT_DIALOG": "A kommitdialógus előkészítése sikertelen volt"
 });
 /*
  * GNU AGPL-3.0 License
@@ -85060,6 +85075,7 @@ define("nls/id/strings", {
   "VIEW_MORE": "Lihat Selengkapnya...",
   "NEW_PROJECT_NOTIFICATION": "Klik ikon ini untuk membuka jendela `Mulai Proyek` lagi.</br> Lihat Proyek Terbaru, Buka Folder atau mulai proyek dari template.</br> <img src=\"styles/images/new_project.png\">",
   "BEAUTIFY_CODE_NOTIFICATION": "Klik di sini atau tekan <b>`{0}`</b> untuk mempercantik kode. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Buka <b>Proyek Default</b> di {APP_NAME} untuk memulai dengan cepat (ideal sebagai catatan sementara).</br></br>Atau, buka folder dari komputer Anda dengan ikon <strong>Buka Folder</strong> di bawah ini.<br><a href='#' style='float:right;'>ok</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Folder yang dipilih <span class='dialog-filename'>{0}</span> tidak kosong. Apakah Anda yakin ingin mengganti isi folder dengan proyek ini?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Klik di sini untuk menemukan &lt;span&gt; ini di berkas HTML",
   "BUILD_WEBSITE_SECTION": "Bangun Situs Web",
@@ -85366,7 +85382,7 @@ define("nls/id/strings", {
   "GIT_TOAST_TITLE": "Jelajahi Fitur Git di Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klik ikon panel Git untuk mengelola repositori Anda. Lakukan commit, push, pull, dan lihat riwayat proyek Anda dengan mudah—semua di satu tempat.<br><a href='https://docs.phcode.dev/docs/Features/git'>Pelajari lebih lanjut tentang panel Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Pilih fitur yang ingin Anda lihat selanjutnya!",
-  "DEFAULT_PROJECT_NOTIFICATION": "Buka <b>Proyek Default</b> di {APP_NAME} untuk memulai dengan cepat (ideal sebagai catatan sementara).</br></br>Atau, buka folder dari komputer Anda dengan ikon <strong>Buka Folder</strong> di bawah ini.<br><a href='#' style='float:right;'>ok</a>"
+  "ERROR_PREPARING_COMMIT_DIALOG": "Gagal mempersiapkan dialog commit"
 });
 /*
  * GNU AGPL-3.0 License
@@ -86434,6 +86450,7 @@ define("nls/it/strings", {
   "VIEW_MORE": "Vedi altro...",
   "NEW_PROJECT_NOTIFICATION": "Fai clic su questa icona per aprire nuovamente la finestra `Avvia progetto`.</br> Visualizza i progetti recenti, apri una cartella o avvia progetti da modelli.</br> <img src=\"styles/images/new_project.png\">",
   "BEAUTIFY_CODE_NOTIFICATION": "Fai clic qui o premi <b>`{0}`</b> per formattare il codice. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Apri il <b>Progetto predefinito</b> in {APP_NAME} per iniziare rapidamente (ideale come blocco note).</br></br>Oppure, apri una cartella dal tuo computer con l'icona <strong>Apri cartella</strong> qui sotto.<br><a href='#' style='float:right;'>ok</a>",
   "DIRECTORY_REPLACE_MESSAGE": "La cartella selezionata <span class='dialog-filename'>{0}</span> non è vuota. Sei sicuro di voler sostituire il contenuto della cartella con il progetto?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Fai clic qui per individuare questo &lt;span&gt; nel file HTML",
   "BUILD_WEBSITE_SECTION": "Crea sito web",
@@ -86740,7 +86757,7 @@ define("nls/it/strings", {
   "GIT_TOAST_TITLE": "Esplora le funzionalità Git in Phoenix Code",
   "GIT_TOAST_MESSAGE": "Fai clic sull'icona del pannello Git per gestire il tuo repository. Esegui commit, push, pull e visualizza la cronologia del tuo progetto, tutto in un unico posto.<br><a href='https://docs.phcode.dev/docs/Features/git'>Scopri di più sul pannello Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vota per le funzionalità che desideri vedere in futuro!",
-  "DEFAULT_PROJECT_NOTIFICATION": "Apri il <b>Progetto predefinito</b> in {APP_NAME} per iniziare rapidamente (ideale come blocco note).</br></br>Oppure, apri una cartella dal tuo computer con l'icona <strong>Apri cartella</strong> qui sotto.<br><a href='#' style='float:right;'>ok</a>"
+  "ERROR_PREPARING_COMMIT_DIALOG": "Preparazione della finestra di commit non riuscita"
 });
 /*
  * GNU AGPL-3.0 License
@@ -87809,6 +87826,7 @@ define("nls/ja/strings", {
   "VIEW_MORE": "もっと見る…",
   "NEW_PROJECT_NOTIFICATION": "このアイコンをクリックすると、「プロジェクトを開始」ウィンドウが再び開きます。</br> 最近のプロジェクトの表示、フォルダを開く、またはテンプレートからプロジェクトを開始できます。</br> <img src=\"styles/images/new_project.png\">",
   "BEAUTIFY_CODE_NOTIFICATION": "ここをクリックするか、<b>`{0}`</b>を押してコードを整形します。</br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "{APP_NAME}で<b>デフォルトプロジェクト</b>を開くとすぐに作業を開始できます（メモ帳として最適です）。</br></br>または、下の<strong>フォルダを開く</strong>アイコンをクリックしてコンピュータからフォルダを開きます。<br><a href='#' style='float:right;'>OK</a>",
   "DIRECTORY_REPLACE_MESSAGE": "選択したフォルダ <span class='dialog-filename'>{0}</span> は空ではありません。本当にフォルダの内容をプロジェクトで置き換えますか？",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "ここをクリックして、HTMLファイル内のこの&lt;span&gt;を探します",
   "BUILD_WEBSITE_SECTION": "ウェブサイトをビルド",
@@ -88115,7 +88133,7 @@ define("nls/ja/strings", {
   "GIT_TOAST_TITLE": "Phoenix CodeのGit機能を試す",
   "GIT_TOAST_MESSAGE": "Gitパネルアイコンをクリックしてリポジトリを管理します。コミット、プッシュ、プル、プロジェクト履歴の表示をすべて1か所で行えます。<br><a href='https://docs.phcode.dev/docs/Features/git'>Gitパネルの詳細はこちら →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "次に実装してほしい機能に投票してください！",
-  "DEFAULT_PROJECT_NOTIFICATION": "{APP_NAME}で<b>デフォルトプロジェクト</b>を開くとすぐに作業を開始できます（メモ帳として最適です）。</br></br>または、下の<strong>フォルダを開く</strong>アイコンをクリックしてコンピュータからフォルダを開きます。<br><a href='#' style='float:right;'>OK</a>"
+  "ERROR_PREPARING_COMMIT_DIALOG": "コミットダイアログの準備に失敗しました"
 });
 /*
  * GNU AGPL-3.0 License
@@ -89184,6 +89202,7 @@ define("nls/ko/strings", {
   "VIEW_MORE": "더 보기...",
   "NEW_PROJECT_NOTIFICATION": "이 아이콘을 클릭하면 `프로젝트 시작` 창이 다시 열립니다.</br> 최근 프로젝트 보기, 폴더 열기 또는 템플릿에서 프로젝트 시작하기.</br> <img src=\"styles/images/new_project.png\">",
   "BEAUTIFY_CODE_NOTIFICATION": "여기를 클릭하거나 <b>`{0}`</b>을 눌러 코드를 정리하세요. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "시작하기 안내를 위해 {APP_NAME}에서 <b>기본 프로젝트</b>를 열어보세요(메모장으로 적합).</br></br>또는 아래의 <strong>폴더 열기</strong> 아이콘을 사용하여 컴퓨터에서 폴더를 열 수 있습니다.<br><a href='#' style='float:right;'>확인</a>",
   "DIRECTORY_REPLACE_MESSAGE": "선택한 폴더 <span class='dialog-filename'>{0}</span>이 비어 있지 않습니다. 폴더 내용을 프로젝트로 바꾸시겠습니까?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "HTML 파일에서 이 &lt;span&gt;의 위치를 찾으려면 여기를 클릭하세요.",
   "BUILD_WEBSITE_SECTION": "웹사이트 빌드",
@@ -89490,7 +89509,7 @@ define("nls/ko/strings", {
   "GIT_TOAST_TITLE": "Phoenix Code의 Git 기능 살펴보기",
   "GIT_TOAST_MESSAGE": "Git 패널 아이콘을 클릭하여 저장소를 관리하세요. 커밋, 푸시, 풀, 프로젝트 기록 보기를 한 곳에서 간편하게 수행할 수 있습니다.<br><a href='https://docs.phcode.dev/docs/Features/git'>Git 패널에 대해 자세히 알아보기 →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "다음에 보고 싶은 기능에 투표하세요!",
-  "DEFAULT_PROJECT_NOTIFICATION": "시작하기 안내를 위해 {APP_NAME}에서 <b>기본 프로젝트</b>를 열어보세요(메모장으로 적합).</br></br>또는 아래의 <strong>폴더 열기</strong> 아이콘을 사용하여 컴퓨터에서 폴더를 열 수 있습니다.<br><a href='#' style='float:right;'>확인</a>"
+  "ERROR_PREPARING_COMMIT_DIALOG": "커밋 대화 상자 준비 실패"
 });
 /*
  * GNU AGPL-3.0 License
@@ -90559,6 +90578,7 @@ define("nls/lv/strings", {
   "VIEW_MORE": "Skatīt vairāk...",
   "NEW_PROJECT_NOTIFICATION": "Noklikšķiniet uz šīs ikonas, lai vēlreiz atvērtu logu `Sākt projektu`.</br> Skatiet nesenus projektus, atveriet mapi vai sāciet projektus no veidnēm.</br> <img src=\"styles/images/new_project.png\">",
   "BEAUTIFY_CODE_NOTIFICATION": "Noklikšķiniet šeit vai nospiediet <b>`{0}`</b>, lai formatētu kodu. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Atveriet <b>Noklusējuma projektu</b> programmā {APP_NAME}, lai ātri sāktu darbu (ideāli piemērots kā piekrastes blociņš).</br></br>Vai arī atveriet mapi no sava datora, izmantojot zemāk redzamo ikonu <strong>Atvērt mapi</strong>.<br><a href='#' style='float:right;'>labi</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Izvēlētā mape <span class='dialog-filename'>{0}</span> nav tukša. Vai tiešām vēlaties aizstāt mapes saturu ar projektu?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Noklikšķiniet šeit, lai atrastu šo &lt;span&gt; HTML failā",
   "BUILD_WEBSITE_SECTION": "Izveidot vietni",
@@ -90865,7 +90885,7 @@ define("nls/lv/strings", {
   "GIT_TOAST_TITLE": "Izpētiet Git funkcijas Phoenix Code",
   "GIT_TOAST_MESSAGE": "Noklikšķiniet uz Git paneļa ikonas, lai pārvaldītu savu repozitoriju. Ērti veiciet commit, push, pull un skatiet sava projekta vēsturi — viss vienā vietā.<br><a href='https://docs.phcode.dev/docs/Features/git'>Uzziniet vairāk par Git paneli →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Nobalsot par funkcijām, kuras vēlaties redzēt nākamreiz!",
-  "DEFAULT_PROJECT_NOTIFICATION": "Atveriet <b>Noklusējuma projektu</b> programmā {APP_NAME}, lai ātri sāktu darbu (ideāli piemērots kā piekrastes blociņš).</br></br>Vai arī atveriet mapi no sava datora, izmantojot zemāk redzamo ikonu <strong>Atvērt mapi</strong>.<br><a href='#' style='float:right;'>labi</a>"
+  "ERROR_PREPARING_COMMIT_DIALOG": "Neizdevās sagatavot izmaiņu apstiprināšanas dialogu"
 });
 /*
  * GNU AGPL-3.0 License
@@ -91907,6 +91927,7 @@ define("nls/ml/strings", {
   "VIEW_MORE": "കൂടുതൽ കാണുക...",
   "NEW_PROJECT_NOTIFICATION": "ഈ ഐക്കണിൽ ക്ലിക്ക് ചെയ്‌ത് `പ്രോജക്റ്റ് ആരംഭിക്കുക` വിൻഡോ വീണ്ടും തുറക്കുക.</br> സമീപകാല പ്രോജക്റ്റുകൾ കാണുക, ഫോൾഡർ തുറക്കുക അല്ലെങ്കിൽ ടെംപ്ലേറ്റുകളിൽ നിന്ന് പ്രോജക്റ്റുകൾ ആരംഭിക്കുക.</br> <img src=\"styles/images/new_project.png\">",
   "BEAUTIFY_CODE_NOTIFICATION": "കോഡ് മനോഹരമാക്കാൻ ഇവിടെ ക്ലിക്ക് ചെയ്യുക അല്ലെങ്കിൽ <b>`{0}`</b> അമർത്തുക. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "വേഗത്തിൽ ആരംഭിക്കുന്നതിന് {APP_NAME} ലെ <b>സ്വതവെയുള്ള പ്രോജക്റ്റ്</b> തുറക്കുക (ഒരു സ്ക്രാച്ച് പാഡ് ആയി ഉത്തമം).</br></br>അല്ലെങ്കിൽ, താഴെയുള്ള <strong>ഫോൾഡർ തുറക്കുക</strong> ഐക്കൺ ഉപയോഗിച്ച് നിങ്ങളുടെ കമ്പ്യൂട്ടറിൽ നിന്ന് ഒരു ഫോൾഡർ തുറക്കുക.<br><a href='#' style='float:right;'>ശരി</a>",
   "DIRECTORY_REPLACE_MESSAGE": "തെരഞ്ഞെടുത്ത ഫോൾഡർ <span class='dialog-filename'>{0}</span> ശൂന്യമല്ല. ഫോൾഡറിന്റെ ഉള്ളടക്കങ്ങൾ പ്രോജക്റ്റ് ഉപയോഗിച്ച് മാറ്റിസ്ഥാപിക്കണമെന്ന് നിങ്ങൾക്ക് ഉറപ്പാണോ?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "HTML ഫയലിൽ ഇത് കണ്ടെത്താൻ ഇവിടെ ക്ലിക്ക് ചെയ്യുക &lt;span&gt;",
   "BUILD_WEBSITE_SECTION": "വെബ്‌സൈറ്റ് നിർമ്മിക്കുക",
@@ -92213,7 +92234,7 @@ define("nls/ml/strings", {
   "GIT_TOAST_TITLE": "ഫീനിക്സ് കോഡിലെ ഗിറ്റ് സവിശേഷതകൾ പര്യവേക്ഷണം ചെയ്യുക",
   "GIT_TOAST_MESSAGE": "നിങ്ങളുടെ റെപ്പോസിറ്ററി കൈകാര്യം ചെയ്യാൻ ഗിറ്റ് പാനൽ ഐക്കണിൽ ക്ലിക്ക് ചെയ്യുക. എളുപ്പത്തിൽ കമ്മിറ്റ് ചെയ്യുക, പുഷ് ചെയ്യുക, പുൾ ചെയ്യുക, നിങ്ങളുടെ പ്രോജക്റ്റ് ചരിത്രം കാണുക—എല്ലാം ഒരിടത്ത്.<br><a href='https://docs.phcode.dev/docs/Features/git'>ഗിറ്റ് പാനലിനെക്കുറിച്ച് കൂടുതലറിയുക →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "നിങ്ങൾക്ക് അടുത്തതായി കാണാൻ ആഗ്രഹിക്കുന്ന സവിശേഷതകൾക്ക് വോട്ട് ചെയ്യുക!",
-  "DEFAULT_PROJECT_NOTIFICATION": "വേഗത്തിൽ ആരംഭിക്കുന്നതിന് {APP_NAME} ലെ <b>സ്വതവെയുള്ള പ്രോജക്റ്റ്</b> തുറക്കുക (ഒരു സ്ക്രാച്ച് പാഡ് ആയി ഉത്തമം).</br></br>അല്ലെങ്കിൽ, താഴെയുള്ള <strong>ഫോൾഡർ തുറക്കുക</strong> ഐക്കൺ ഉപയോഗിച്ച് നിങ്ങളുടെ കമ്പ്യൂട്ടറിൽ നിന്ന് ഒരു ഫോൾഡർ തുറക്കുക.<br><a href='#' style='float:right;'>ശരി</a>"
+  "ERROR_PREPARING_COMMIT_DIALOG": "കമ്മിറ്റ് ഡയലോഗ് തയ്യാറാക്കുന്നതിൽ പിഴവ്"
 });
 /*
  * GNU AGPL-3.0 License
@@ -93255,6 +93276,7 @@ define("nls/nb/strings", {
   "VIEW_MORE": "Vis mer...",
   "NEW_PROJECT_NOTIFICATION": "Klikk på dette ikonet for å åpne `Start prosjekt`-vinduet igjen.</br> Se Nylige prosjekter, Åpne mappe eller start prosjekter fra maler.</br> <img src=\"styles/images/new_project.png\">",
   "BEAUTIFY_CODE_NOTIFICATION": "Klikk her eller trykk <b>`{0}`</b> for å pynte kode. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Åpne <b>Standardprosjektet</b> i {APP_NAME} for å komme raskt i gang (ideelt som et kladdeark).</br></br>Eller åpne en mappe fra datamaskinen din med <strong>Åpne mappe</strong>-ikonet nedenfor.<br><a href='#' style='float:right;'>ok</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Den valgte mappen <span class='dialog-filename'>{0}</span> er ikke tom. Er du sikker på at du vil erstatte mappeinnholdet med prosjektet?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Klikk her for å finne denne &lt;span&gt; i HTML-filen",
   "BUILD_WEBSITE_SECTION": "Bygg nettsted",
@@ -93561,7 +93583,7 @@ define("nls/nb/strings", {
   "GIT_TOAST_TITLE": "Utforsk Git-funksjoner i Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klikk på Git-panelikonet for å administrere repositoriet ditt. Utfør commit, push, pull og se prosjektloggen din – alt på ett sted.<br><a href='https://docs.phcode.dev/docs/Features/git'>Lær mer om Git-panelet →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stem på funksjonene du ønsker å se neste!",
-  "DEFAULT_PROJECT_NOTIFICATION": "Åpne <b>Standardprosjektet</b> i {APP_NAME} for å komme raskt i gang (ideelt som et kladdeark).</br></br>Eller åpne en mappe fra datamaskinen din med <strong>Åpne mappe</strong>-ikonet nedenfor.<br><a href='#' style='float:right;'>ok</a>"
+  "ERROR_PREPARING_COMMIT_DIALOG": "Klargjøring av commit-dialogen feilet"
 });
 /*
  * GNU AGPL-3.0 License
@@ -94630,6 +94652,7 @@ define("nls/nl/strings", {
   "VIEW_MORE": "Meer bekijken...",
   "NEW_PROJECT_NOTIFICATION": "Klik op dit pictogram om het venster `Project starten` opnieuw te openen.</br> Bekijk Recente Projecten, Open Map of start projecten vanuit sjablonen.</br> <img src=\"styles/images/new_project.png\">",
   "BEAUTIFY_CODE_NOTIFICATION": "Klik hier of druk op <b>`{0}`</b> om code op te maken. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Open het <b>Standaardproject</b> in {APP_NAME} om snel aan de slag te gaan (ideaal als kladblok).</br></br>Of open een map van uw computer met het pictogram <strong>Map openen</strong> hieronder.<br><a href='#' style='float:right;'>ok</a>",
   "DIRECTORY_REPLACE_MESSAGE": "De geselecteerde map <span class='dialog-filename'>{0}</span> is niet leeg. Weet u zeker dat u de inhoud van de map wilt vervangen door het project?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Klik hier om deze &lt;span&gt; in het HTML-bestand te vinden",
   "BUILD_WEBSITE_SECTION": "Website bouwen",
@@ -94936,7 +94959,7 @@ define("nls/nl/strings", {
   "GIT_TOAST_TITLE": "Ontdek Git-functies in Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klik op het Git-paneelpictogram om uw repository te beheren. Commit, push, pull en bekijk uw projectgeschiedenis eenvoudig - alles op één plek.<br><a href='https://docs.phcode.dev/docs/Features/git'>Meer informatie over het Git-paneel →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stem op de functies die u graag wilt zien!",
-  "DEFAULT_PROJECT_NOTIFICATION": "Open het <b>Standaardproject</b> in {APP_NAME} om snel aan de slag te gaan (ideaal als kladblok).</br></br>Of open een map van uw computer met het pictogram <strong>Map openen</strong> hieronder.<br><a href='#' style='float:right;'>ok</a>"
+  "ERROR_PREPARING_COMMIT_DIALOG": "Voorbereiden commit-dialoogvenster mislukt"
 });
 /*
  * GNU AGPL-3.0 License
@@ -96005,6 +96028,7 @@ define("nls/pl/strings", {
   "VIEW_MORE": "Zobacz więcej...",
   "NEW_PROJECT_NOTIFICATION": "Kliknij tę ikonę, aby ponownie otworzyć okno `Rozpocznij projekt`.</br> Zobacz Ostatnie projekty, Otwórz folder lub rozpocznij projekty z szablonów.</br> <img src=\"styles/images/new_project.png\">",
   "BEAUTIFY_CODE_NOTIFICATION": "Kliknij tutaj lub naciśnij <b>`{0}`</b>, aby upiększyć kod. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Otwórz <b>Domyślny projekt</b> w {APP_NAME}, aby szybko rozpocząć (idealny jako brudnopis).</br></br>Możesz też otworzyć folder z komputera za pomocą ikony <strong>Otwórz folder</strong> poniżej.<br><a href='#' style='float:right;'>ok</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Wybrany folder <span class='dialog-filename'>{0}</span> nie jest pusty. Czy na pewno chcesz zastąpić zawartość folderu projektem?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Kliknij tutaj, aby zlokalizować to &lt;span&gt; w pliku HTML",
   "BUILD_WEBSITE_SECTION": "Stwórz stronę internetową",
@@ -96311,7 +96335,7 @@ define("nls/pl/strings", {
   "GIT_TOAST_TITLE": "Poznaj funkcje Gita w Phoenix Code",
   "GIT_TOAST_MESSAGE": "Kliknij ikonę panelu Git, aby zarządzać swoim repozytorium. Łatwo zatwierdzaj, przesyłaj, pobieraj i przeglądaj historię swojego projektu — wszystko w jednym miejscu.<br><a href='https://docs.phcode.dev/docs/Features/git'>Dowiedz się więcej o panelu Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Zagłosuj na funkcje, które chcesz zobaczyć w przyszłości!",
-  "DEFAULT_PROJECT_NOTIFICATION": "Otwórz <b>Domyślny projekt</b> w {APP_NAME}, aby szybko rozpocząć (idealny jako brudnopis).</br></br>Możesz też otworzyć folder z komputera za pomocą ikony <strong>Otwórz folder</strong> poniżej.<br><a href='#' style='float:right;'>ok</a>"
+  "ERROR_PREPARING_COMMIT_DIALOG": "Przygotowanie okna dialogowego zatwierdzenia nie powiodło się"
 });
 /*
  * GNU AGPL-3.0 License
@@ -97380,6 +97404,7 @@ define("nls/pt-br/strings", {
   "VIEW_MORE": "Ver Mais...",
   "NEW_PROJECT_NOTIFICATION": "Clique neste ícone para abrir a janela `Iniciar Projeto` novamente.</br> Veja Projetos Recentes, Abrir Pasta ou inicie projetos a partir de modelos.</br> <img src=\"styles/images/new_project.png\">",
   "BEAUTIFY_CODE_NOTIFICATION": "Clique aqui ou pressione <b>`{0}`</b> para formatar o código. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Abra o <b>Projeto Padrão</b> no {APP_NAME} para começar rapidamente (ideal como um rascunho).</br></br>Ou abra uma pasta do seu computador com o ícone <strong>Abrir Pasta</strong> abaixo.<br><a href='#' style='float:right;'>ok</a>",
   "DIRECTORY_REPLACE_MESSAGE": "A pasta selecionada <span class='dialog-filename'>{0}</span> não está vazia. Tem certeza de que deseja substituir o conteúdo da pasta pelo projeto?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Clique aqui para localizar este &lt;span&gt; no arquivo HTML",
   "BUILD_WEBSITE_SECTION": "Gerar Site",
@@ -97686,7 +97711,7 @@ define("nls/pt-br/strings", {
   "GIT_TOAST_TITLE": "Explore os Recursos do Git no Phoenix Code",
   "GIT_TOAST_MESSAGE": "Clique no ícone do painel Git para gerenciar seu repositório. Faça commits, pushes, pulls e visualize o histórico do seu projeto com facilidade — tudo em um só lugar.<br><a href='https://docs.phcode.dev/docs/Features/git'>Saiba mais sobre o painel Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote nos recursos que você quer ver em seguida!",
-  "DEFAULT_PROJECT_NOTIFICATION": "Abra o <b>Projeto Padrão</b> no {APP_NAME} para começar rapidamente (ideal como um rascunho).</br></br>Ou abra uma pasta do seu computador com o ícone <strong>Abrir Pasta</strong> abaixo.<br><a href='#' style='float:right;'>ok</a>"
+  "ERROR_PREPARING_COMMIT_DIALOG": "Falha ao preparar a caixa de diálogo de commit"
 });
 /*
  * GNU AGPL-3.0 License
@@ -98753,6 +98778,7 @@ define("nls/pt-pt/strings", {
   "VIEW_MORE": "Ver Mais...",
   "NEW_PROJECT_NOTIFICATION": "Clique neste ícone para abrir novamente a janela `Iniciar Projeto`.</br> Veja Projetos Recentes, Abrir Pasta ou inicie projetos a partir de modelos.</br> <img src=\"styles/images/new_project.png\">",
   "BEAUTIFY_CODE_NOTIFICATION": "Clique aqui ou pressione <b>`{0}`</b> para embelezar o código. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Abra o <b>Projeto Padrão</b> no {APP_NAME} para começar rapidamente (ideal como um bloco de notas).</br></br>Ou abra uma pasta do seu computador com o ícone <strong>Abrir Pasta</strong> abaixo.<br><a href='#' style='float:right;'>OK</a>",
   "DIRECTORY_REPLACE_MESSAGE": "A pasta selecionada <span class='dialog-filename'>{0}</span> não está vazia. Tem a certeza de que pretende substituir o conteúdo da pasta com o projeto?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Clique aqui para localizar isto &lt;span&gt; no ficheiro HTML",
   "BUILD_WEBSITE_SECTION": "Criar Website",
@@ -99059,7 +99085,7 @@ define("nls/pt-pt/strings", {
   "GIT_TOAST_TITLE": "Explore as funcionalidades do Git no Phoenix Code",
   "GIT_TOAST_MESSAGE": "Clique no ícone do painel Git para gerir o seu repositório. Efetue commits, pushes, pulls e veja o histórico do seu projeto com facilidade — tudo num só lugar.<br><a href='https://docs.phcode.dev/docs/Features/git'>Saiba mais sobre o painel Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote nas funcionalidades que quer ver a seguir!",
-  "DEFAULT_PROJECT_NOTIFICATION": "Abra o <b>Projeto Padrão</b> no {APP_NAME} para começar rapidamente (ideal como um bloco de notas).</br></br>Ou abra uma pasta do seu computador com o ícone <strong>Abrir Pasta</strong> abaixo.<br><a href='#' style='float:right;'>OK</a>"
+  "ERROR_PREPARING_COMMIT_DIALOG": "Falha ao preparar a janela de _commit_"
 });
 /*
  * GNU AGPL-3.0 License
@@ -100126,6 +100152,7 @@ define("nls/ro/strings", {
   "VIEW_MORE": "Vezi mai mult...",
   "NEW_PROJECT_NOTIFICATION": "Faceți clic pe această pictogramă pentru a deschide din nou fereastra `Începeți proiect`. </br> Vedeți Proiecte recente, Deschideți folder sau începeți proiecte din șabloane. </br> <img src=\"styles/images/new_project.png\">",
   "BEAUTIFY_CODE_NOTIFICATION": "Faceți clic aici sau apăsați <b>`{0}`</b> pentru a formata codul. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Deschideți <b>Proiectul Implicit</b> în {APP_NAME} pentru a începe rapid (ideal ca blocnotes).</br></br>Sau, deschideți un dosar de pe computer utilizând pictograma <strong>Deschidere Dosar</strong> de mai jos.<br><a href='#' style='float:right;'>ok</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Directorul selectat <span class='dialog-filename'>{0}</span> nu este gol. Sigur doriți să înlocuiți conținutul directorului cu proiectul?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Apasă aici pentru a localiza acest &lt;span&gt; în fișierul HTML",
   "BUILD_WEBSITE_SECTION": "Creează site web",
@@ -100432,7 +100459,7 @@ define("nls/ro/strings", {
   "GIT_TOAST_TITLE": "Explorați funcțiile Git în Phoenix Code",
   "GIT_TOAST_MESSAGE": "Faceți clic pe pictograma panoului Git pentru a vă gestiona depozitul. Efectuați ușor commit, push, pull și vizualizați istoricul proiectului dvs. - totul într-un singur loc.<br><a href='https://docs.phcode.dev/docs/Features/git'>Aflați mai multe despre panoul Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Votează pentru funcționalitățile pe care dorești să le vezi în continuare!",
-  "DEFAULT_PROJECT_NOTIFICATION": "Deschideți <b>Proiectul Implicit</b> în {APP_NAME} pentru a începe rapid (ideal ca blocnotes).</br></br>Sau, deschideți un dosar de pe computer utilizând pictograma <strong>Deschidere Dosar</strong> de mai jos.<br><a href='#' style='float:right;'>ok</a>"
+  "ERROR_PREPARING_COMMIT_DIALOG": "Pregătirea dialogului de commit a eșuat"
 });
 /*
  * GNU AGPL-3.0 License
@@ -103105,6 +103132,7 @@ define("nls/ru/strings", {
   "VIEW_MORE": "Подробнее...",
   "NEW_PROJECT_NOTIFICATION": "Нажмите на этот значок, чтобы снова открыть окно «Начать проект».</br> Смотрите Недавние проекты, Открыть папку или начните проекты из шаблонов.</br> <img src=\"styles/images/new_project.png\">",
   "BEAUTIFY_CODE_NOTIFICATION": "Нажмите здесь или <b>`{0}`</b> для форматирования кода. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Откройте <b>Стандартный проект</b> в {APP_NAME} для быстрого начала работы (идеально подходит в качестве черновика).</br></br>Или откройте папку с вашего компьютера с помощью значка <strong>Открыть папку</strong> ниже.<br><a href='#' style='float:right;'>ок</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Выбранная папка <span class='dialog-filename'>{0}</span> не пуста. Вы уверены, что хотите заменить содержимое папки проектом?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Нажмите сюда, чтобы найти этот &lt;span&gt; в HTML-файле",
   "BUILD_WEBSITE_SECTION": "Создать сайт",
@@ -103411,7 +103439,7 @@ define("nls/ru/strings", {
   "GIT_TOAST_TITLE": "Возможности Git в Phoenix Code",
   "GIT_TOAST_MESSAGE": "Нажмите на значок панели Git для управления вашим репозиторием. Легко выполняйте коммиты, отправляйте (push), получайте (pull) изменения и просматривайте историю вашего проекта — все в одном месте.<br><a href='https://docs.phcode.dev/docs/Features/git'>Узнать больше о панели Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Проголосуйте за функции, которые вы хотите увидеть в будущем!",
-  "DEFAULT_PROJECT_NOTIFICATION": "Откройте <b>Стандартный проект</b> в {APP_NAME} для быстрого начала работы (идеально подходит в качестве черновика).</br></br>Или откройте папку с вашего компьютера с помощью значка <strong>Открыть папку</strong> ниже.<br><a href='#' style='float:right;'>ок</a>"
+  "ERROR_PREPARING_COMMIT_DIALOG": "Не удалось подготовить диалог фиксации"
 });
 /*
  * GNU AGPL-3.0 License
@@ -104480,6 +104508,7 @@ define("nls/sk/strings", {
   "VIEW_MORE": "Zobraziť viac...",
   "NEW_PROJECT_NOTIFICATION": "Kliknite na túto ikonu a znova otvorte okno `Spustiť projekt`.</br> Pozrite si Nedávne projekty, Otvorte priečinok alebo spustite projekty zo šablón.</br> <img src=\"styles/images/new_project.png\">",
   "BEAUTIFY_CODE_NOTIFICATION": "Kliknite sem alebo stlačte <b>`{0}`</b> pre skrášlenie kódu. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Otvorte si <b>Predvolený projekt</b> v {APP_NAME} pre rýchly štart (ideálne ako poznámkový blok).</br></br>Prípadne otvorte priečinok z vášho počítača pomocou ikony <strong>Otvoriť priečinok</strong> nižšie.<br><a href='#' style='float:right;'>ok</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Vybraný priečinok <span class='dialog-filename'>{0}</span> nie je prázdny. Ste si istý, že chcete nahradiť obsah priečinka projektom?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Kliknite sem pre nájdenie tohto &lt;span&gt; v HTML súbore",
   "BUILD_WEBSITE_SECTION": "Vytvorenie webovej stránky",
@@ -104786,7 +104815,7 @@ define("nls/sk/strings", {
   "GIT_TOAST_TITLE": "Preskúmajte funkcie Gitu v Phoenix Code",
   "GIT_TOAST_MESSAGE": "Kliknite na ikonu panela Git pre správu vášho repozitára. Jednoducho commitujte, pushujte, pullujte a prezerajte si históriu vášho projektu – všetko na jednom mieste.<br><a href='https://docs.phcode.dev/docs/Features/git'>Zistite viac o paneli Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Hlasujte za funkcie, ktoré chcete vidieť v ďalšej verzii!",
-  "DEFAULT_PROJECT_NOTIFICATION": "Otvorte si <b>Predvolený projekt</b> v {APP_NAME} pre rýchly štart (ideálne ako poznámkový blok).</br></br>Prípadne otvorte priečinok z vášho počítača pomocou ikony <strong>Otvoriť priečinok</strong> nižšie.<br><a href='#' style='float:right;'>ok</a>"
+  "ERROR_PREPARING_COMMIT_DIALOG": "Chyba pri príprave dialógového okna pre commit"
 });
 /*
  * GNU AGPL-3.0 License
@@ -105854,6 +105883,7 @@ define("nls/sr/strings", {
   "VIEW_MORE": "Види више...",
   "NEW_PROJECT_NOTIFICATION": "Кликните на ову икону да бисте поново отворили прозор „Покрени пројекат”.</br> Погледајте Скорије пројекте, Отворите фасциклу или покрените пројекте из шаблона.</br> <img src=\"styles/images/new_project.png\">",
   "BEAUTIFY_CODE_NOTIFICATION": "Кликните овде или притисните <b>`{0}`</b> да бисте улепшали код. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Отворите <b>Подразумевани пројекат</b> у {APP_NAME} да бисте брзо почели (идеално као бележница).</br></br>Или отворите фасциклу са вашег рачунара помоћу иконе <strong>Отвори фасциклу</strong> испод.<br><a href='#' style='float:right;'>ок</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Изабрана фасцикла <span class='dialog-filename'>{0}</span> није празна. Да ли сте сигурни да желите да замените садржај фасцикле са пројектом?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Кликните овде да бисте лоцирали овај &lt;span&gt; у HTML датотеци",
   "BUILD_WEBSITE_SECTION": "Направи веб-сајт",
@@ -106160,7 +106190,7 @@ define("nls/sr/strings", {
   "GIT_TOAST_TITLE": "Истражите Гит функције у Phoenix Code-у",
   "GIT_TOAST_MESSAGE": "Кликните на икону Гит панела да бисте управљали својим спремиштем. Лако направите commit, push, pull и погледајте историју свог пројекта — све на једном месту.<br><a href='https://docs.phcode.dev/docs/Features/git'>Сазнајте више о Гит панелу →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Гласајте за функције које желите да видите у будућности!",
-  "DEFAULT_PROJECT_NOTIFICATION": "Отворите <b>Подразумевани пројекат</b> у {APP_NAME} да бисте брзо почели (идеално као бележница).</br></br>Или отворите фасциклу са вашег рачунара помоћу иконе <strong>Отвори фасциклу</strong> испод.<br><a href='#' style='float:right;'>ок</a>"
+  "ERROR_PREPARING_COMMIT_DIALOG": "Дошло је до грешке приликом припреме дијалога за креирање комита."
 });
 /*
  * GNU AGPL-3.0 License
@@ -107312,6 +107342,7 @@ define("nls/sv/strings", {
   "VIEW_MORE": "Visa mer...",
   "NEW_PROJECT_NOTIFICATION": "Klicka på den här ikonen för att öppna fönstret `Starta projekt` igen.</br> Se Senaste projekt, Öppna mapp eller starta projekt från mallar.</br> <img src=\"styles/images/new_project.png\">",
   "BEAUTIFY_CODE_NOTIFICATION": "Klicka här eller tryck på <b>`{0}`</b> för att snygga till koden. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Öppna <b>Standardprojektet</b> i {APP_NAME} för att komma igång snabbt (perfekt som ett kladdblock).</br></br>Eller öppna en mapp från din dator med ikonen <strong>Öppna mapp</strong> nedan.<br><a href='#' style='float:right;'>ok</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Den valda mappen <span class='dialog-filename'>{0}</span> är inte tom. Är du säker på att du vill ersätta mappens innehåll med projektet?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Klicka här för att hitta detta &lt;span&gt; i HTML-filen",
   "BUILD_WEBSITE_SECTION": "Skapa webbplats",
@@ -107618,7 +107649,7 @@ define("nls/sv/strings", {
   "GIT_TOAST_TITLE": "Utforska Git-funktioner i Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klicka på Git-panelens ikon för att hantera din repository. Committa, pusha, pulla och se din projekthistorik enkelt – allt på ett ställe.<br><a href='https://docs.phcode.dev/docs/Features/git'>Läs mer om Git-panelen →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Rösta på funktionerna du vill se härnäst!",
-  "DEFAULT_PROJECT_NOTIFICATION": "Öppna <b>Standardprojektet</b> i {APP_NAME} för att komma igång snabbt (perfekt som ett kladdblock).</br></br>Eller öppna en mapp från din dator med ikonen <strong>Öppna mapp</strong> nedan.<br><a href='#' style='float:right;'>ok</a>"
+  "ERROR_PREPARING_COMMIT_DIALOG": "Det gick inte att förbereda commit-dialogrutan"
 });
 /*
  * GNU AGPL-3.0 License
@@ -108687,6 +108718,7 @@ define("nls/tr/strings", {
   "VIEW_MORE": "Daha Fazla...",
   "NEW_PROJECT_NOTIFICATION": "Bu simgeye tıklayarak `Proje Başlat` penceresini tekrar açın.</br> Son Projelere bakın, Klasör Açın veya şablonlardan projeler başlatın.</br> <img src=\"styles/images/new_project.png\">",
   "BEAUTIFY_CODE_NOTIFICATION": "Kodu güzelleştirmek için buraya tıklayın veya <b>`{0}`</b> tuşuna basın. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Hızlı başlangıç için {APP_NAME} uygulamasında <b>Varsayılan Proje</b>'yi açın (not defteri olarak idealdir).</br></br>Veya, aşağıdaki <strong>Klasör Aç</strong> simgesiyle bilgisayarınızdan bir klasör açın.<br><a href='#' style='float:right;'>tamam</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Seçilen klasör <span class='dialog-filename'>{0}</span> boş değil. Klasör içeriğini proje ile değiştirmek istediğinizden emin misiniz?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "&lt;span&gt; öğesinin HTML dosyasındaki konumunu bulmak için buraya tıklayın",
   "BUILD_WEBSITE_SECTION": "Web Sitesi Oluştur",
@@ -108993,7 +109025,7 @@ define("nls/tr/strings", {
   "GIT_TOAST_TITLE": "Phoenix Code'da Git Özelliklerini Keşfedin",
   "GIT_TOAST_MESSAGE": "Deponuzu yönetmek için Git paneli simgesine tıklayın. Proje geçmişinizi kolayca işleyin, gönderin, çekin ve görüntüleyin—hepsi tek bir yerde.<br><a href='https://docs.phcode.dev/docs/Features/git'>Git paneli hakkında daha fazla bilgi edinin →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Gelecekte görmek istediğiniz özellikler için oy verin!",
-  "DEFAULT_PROJECT_NOTIFICATION": "Hızlı başlangıç için {APP_NAME} uygulamasında <b>Varsayılan Proje</b>'yi açın (not defteri olarak idealdir).</br></br>Veya, aşağıdaki <strong>Klasör Aç</strong> simgesiyle bilgisayarınızdan bir klasör açın.<br><a href='#' style='float:right;'>tamam</a>"
+  "ERROR_PREPARING_COMMIT_DIALOG": "Kaydetme iletişim kutusu hazırlanamadı"
 });
 /*
  * GNU AGPL-3.0 License
@@ -110062,6 +110094,7 @@ define("nls/uk/strings", {
   "VIEW_MORE": "Дивитися більше...",
   "NEW_PROJECT_NOTIFICATION": "Натисніть цю піктограму, щоб знову відкрити вікно `Почати проєкт`.</br> Перегляньте Останні проєкти, Відкрийте папку або почніть проєкти з шаблонів.</br> <img src=\"styles/images/new_project.png\">",
   "BEAUTIFY_CODE_NOTIFICATION": "Натисніть тут або натисніть <b>`{0}`</b>, щоб покращити форматування коду. </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "Відкрийте <b>Типовий проєкт</b> в {APP_NAME} для швидкого старту (ідеально як чернетка).</br></br>Або відкрийте папку з вашого комп'ютера за допомогою значка <strong>Відкрити папку</strong> нижче.<br><a href='#' style='float:right;'>гаразд</a>",
   "DIRECTORY_REPLACE_MESSAGE": "Вибрана папка <span class='dialog-filename'>{0}</span> не пуста. Ви впевнені, що хочете замінити вміст папки проєктом?",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "Клацніть тут, щоб знайти цей &lt;span&gt; у HTML-файлі",
   "BUILD_WEBSITE_SECTION": "Створення вебсайту",
@@ -110368,7 +110401,7 @@ define("nls/uk/strings", {
   "GIT_TOAST_TITLE": "Ознайомтеся з функціями Git у Phoenix Code",
   "GIT_TOAST_MESSAGE": "Натисніть піктограму панелі Git, щоб керувати вашим репозиторієм. Легко виконуйте коміти, пуші, пули та переглядайте історію вашого проєкту — все в одному місці.<br><a href='https://docs.phcode.dev/docs/Features/git'>Дізнайтеся більше про панель Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Проголосуйте за функції, які ви хочете бачити наступними!",
-  "DEFAULT_PROJECT_NOTIFICATION": "Відкрийте <b>Типовий проєкт</b> в {APP_NAME} для швидкого старту (ідеально як чернетка).</br></br>Або відкрийте папку з вашого комп'ютера за допомогою значка <strong>Відкрити папку</strong> нижче.<br><a href='#' style='float:right;'>гаразд</a>"
+  "ERROR_PREPARING_COMMIT_DIALOG": "Не вдалося підготувати діалог коміту"
 });
 /*
  * GNU AGPL-3.0 License
@@ -111437,6 +111470,7 @@ define("nls/ur/strings", {
   "VIEW_MORE": "مزید دیکھیں۔۔۔",
   "NEW_PROJECT_NOTIFICATION": "اس آئیکن پر کلک کریں تاکہ `اسٹارٹ پروجیکٹ` ونڈو دوبارہ کھل جائے۔</br> حالیہ پروجیکٹس دیکھیں، فولڈر کھولیں یا ٹیمپلیٹس سے پروجیکٹس شروع کریں۔</br> <img src=\"styles/images/new_project.png\">",
   "BEAUTIFY_CODE_NOTIFICATION": "کوڈ کو خوبصورت بنانے کے لیے یہاں کلک کریں یا <b>`{0}`</b> دبائیں۔ </br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "جلدی شروع کرنے کے لیے {APP_NAME} میں <b>ڈیفالٹ پراجیکٹ</b> کھولیں (اسکریچ پیڈ کے طور پر بہترین)۔</br></br> یا، نیچے دیے گئے <strong>فولڈر کھولیں</strong> آئیکن سے اپنے کمپیوٹر سے ایک فولڈر کھولیں۔<br><a href='#' style='float:right;'>ٹھیک ہے</a>",
   "DIRECTORY_REPLACE_MESSAGE": "منتخب کردہ فولڈر <span class='dialog-filename'>{0}</span> خالی نہیں ہے۔ کیا آپ واقعی فولڈر کے مندرجات کو اس منصوبے سے تبدیل کرنا چاہتے ہیں؟",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "ایچ ٹی ایم ایل فائل میں اس &lt;span&gt; کو تلاش کرنے کے لیے یہاں کلک کریں۔",
   "BUILD_WEBSITE_SECTION": "ویب سائٹ بنائیں",
@@ -111743,7 +111777,7 @@ define("nls/ur/strings", {
   "GIT_TOAST_TITLE": "فینکس کوڈ میں گٹ فیچرز دریافت کریں",
   "GIT_TOAST_MESSAGE": "اپنی ذخیرہ گاہ (repository) کو منظم کرنے کے لیے گٹ پینل آئیکن پر کلک کریں۔ آسانی سے کامٹ، پش، پل کریں، اور اپنے پروجیکٹ کی تاریخ دیکھیں—سب ایک ہی جگہ پر۔<br><a href='https://docs.phcode.dev/docs/Features/git'>گٹ پینل کے بارے میں مزید جانیں →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "اپنی پسندیدہ خصوصیات کے لیے ووٹ دیں!",
-  "DEFAULT_PROJECT_NOTIFICATION": "جلدی شروع کرنے کے لیے {APP_NAME} میں <b>ڈیفالٹ پراجیکٹ</b> کھولیں (اسکریچ پیڈ کے طور پر بہترین)۔</br></br> یا، نیچے دیے گئے <strong>فولڈر کھولیں</strong> آئیکن سے اپنے کمپیوٹر سے ایک فولڈر کھولیں۔<br><a href='#' style='float:right;'>ٹھیک ہے</a>"
+  "ERROR_PREPARING_COMMIT_DIALOG": "کمیٹ ڈائیلاگ تیار کرنے میں ناکام"
 });
 /*
  * GNU AGPL-3.0 License
@@ -112842,6 +112876,7 @@ define("nls/zh-cn/strings", {
   "VIEW_MORE": "查看更多...",
   "NEW_PROJECT_NOTIFICATION": "点击此图标可再次打开“新建项目”窗口。</br>查看最近项目、打开文件夹或从模板启动项目。</br> <img src=\"styles/images/new_project.png\">",
   "BEAUTIFY_CODE_NOTIFICATION": "点击此处或按 <b>`{0}`</b> 美化代码。</br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "在 {APP_NAME} 中打开<b>默认项目</b>即可快速开始（非常适合用作暂存板）。</br></br>或者，使用下面的<strong>打开文件夹</strong>图标从您的计算机打开一个文件夹。<br><a href='#' style='float:right;'>确定</a>",
   "DIRECTORY_REPLACE_MESSAGE": "所选文件夹 <span class='dialog-filename'>{0}</span> 不为空。您确定要用项目替换文件夹内容吗？",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "点击此处可在 HTML 文件中找到此 &lt;span&gt;",
   "BUILD_WEBSITE_SECTION": "构建网站",
@@ -113148,7 +113183,7 @@ define("nls/zh-cn/strings", {
   "GIT_TOAST_TITLE": "探索 Phoenix Code 中的 Git 功能",
   "GIT_TOAST_MESSAGE": "点击 Git 面板图标即可管理您的代码仓库。轻松提交、推送、拉取和查看项目历史记录，一切尽在一处。<br><a href='https://docs.phcode.dev/docs/Features/git'>了解更多关于 Git 面板的信息 →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "为您希望看到的下一个功能投票！",
-  "DEFAULT_PROJECT_NOTIFICATION": "在 {APP_NAME} 中打开<b>默认项目</b>即可快速开始（非常适合用作暂存板）。</br></br>或者，使用下面的<strong>打开文件夹</strong>图标从您的计算机打开一个文件夹。<br><a href='#' style='float:right;'>确定</a>"
+  "ERROR_PREPARING_COMMIT_DIALOG": "准备提交对话框失败"
 });
 /*
  * GNU AGPL-3.0 License
@@ -114217,6 +114252,7 @@ define("nls/zh-tw/strings", {
   "VIEW_MORE": "查看更多…",
   "NEW_PROJECT_NOTIFICATION": "按一下此圖示即可再次開啟「開始專案」視窗。</br> 查看最近的專案、開啟資料夾或從範本開始專案。</br> <img src=\"styles/images/new_project.png\">",
   "BEAUTIFY_CODE_NOTIFICATION": "按一下此處或按下 <b>`{0}`</b> 以美化程式碼。</br> <img src=\"styles/images/beautify.gif\">",
+  "DEFAULT_PROJECT_NOTIFICATION": "在 {APP_NAME} 中開啟<b>預設專案</b>即可快速上手（適合做為草稿區）。</br></br>或者，使用下方的<strong>開啟資料夾</strong>圖示從您的電腦開啟資料夾。<br><a href='#' style='float:right;'>確定</a>",
   "DIRECTORY_REPLACE_MESSAGE": "所選資料夾 <span class='dialog-filename'>{0}</span> 並非空的。您確定要用專案取代資料夾內容嗎？",
   "DEFAULT_PROJECT_HTML_CLICK_HERE": "點擊此處即可在 HTML 檔案中找到此 &lt;span&gt;",
   "BUILD_WEBSITE_SECTION": "建置網站",
@@ -114523,7 +114559,7 @@ define("nls/zh-tw/strings", {
   "GIT_TOAST_TITLE": "在 Phoenix Code 中探索 Git 功能",
   "GIT_TOAST_MESSAGE": "按一下 Git 面板圖示即可管理您的儲存庫。輕鬆提交、推送、提取和檢視您的專案歷史記錄，一切盡在掌握之中。<br><a href='https://docs.phcode.dev/docs/Features/git'>深入瞭解 Git 面板 →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "投票選出您希望看到的下個功能！",
-  "DEFAULT_PROJECT_NOTIFICATION": "在 {APP_NAME} 中開啟<b>預設專案</b>即可快速上手（適合做為草稿區）。</br></br>或者，使用下方的<strong>開啟資料夾</strong>圖示從您的電腦開啟資料夾。<br><a href='#' style='float:right;'>確定</a>"
+  "ERROR_PREPARING_COMMIT_DIALOG": "準備提交對話框失敗"
 });
 /*
  * GNU AGPL-3.0 License
