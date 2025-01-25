@@ -372,6 +372,11 @@ define("src/Branch", function (require, exports) {
                     }
                 }
             });
+        }).catch(err => {
+            console.error("Error Getting branches", err);
+            // we need to strip all user entered info from git thrown exception for get branches which shouldn't fail,
+            // so we throw a blank error for bugsnag
+            throw new Error("Failed to get getBranches while doMerge");
         });
     }
 
@@ -412,7 +417,7 @@ define("src/Branch", function (require, exports) {
 
             Git.getAllBranches().catch(function (err) {
                 ErrorHandler.showError(err);
-            }).then(function (branches) {
+            }).then(function (branches = []) {
 
                 var compiledTemplate = Mustache.render(newBranchTemplate, {
                     branches: branches,
@@ -579,7 +584,7 @@ define("src/Branch", function (require, exports) {
 
         Git.getBranches().catch(function (err) {
             ErrorHandler.showError(err, Strings.ERROR_GETTING_BRANCH_LIST);
-        }).then(function (branches) {
+        }).then(function (branches = []) {
             branches = branches.reduce(function (arr, branch) {
                 if (!branch.currentBranch && !branch.remote) {
                     arr.push(branch.name);
@@ -4119,7 +4124,7 @@ define("src/Panel", function (require, exports) {
         }
 
         p.catch(function (err) {
-            ErrorHandler.showError(err, "Preparing commit dialog failed");
+            ErrorHandler.showError(err, Strings.ERROR_PREPARING_COMMIT_DIALOG);
         }).finally(function () {
             Utils.unsetLoading($gitPanel.find(".git-commit"));
         });
@@ -4333,7 +4338,12 @@ define("src/Panel", function (require, exports) {
                 return Git.resetIndex();
             })
             .then(function () {
-                return handleGitCommit(lastCommitMessage[ProjectManager.getProjectRoot().fullPath], false, COMMIT_MODE.CURRENT);
+                return handleGitCommit(lastCommitMessage[ProjectManager.getProjectRoot().fullPath],
+                    false, COMMIT_MODE.CURRENT);
+            }).catch((err)=>{
+                console.error(err);
+                // rethrowing with stripped git error details as it may have sensitive info
+                throw new Error("Error commitCurrentFile in git panel.js. this should not have happened here.");
             });
     }
 
@@ -4344,7 +4354,12 @@ define("src/Panel", function (require, exports) {
                 return Git.resetIndex();
             })
             .then(function () {
-                return handleGitCommit(lastCommitMessage[ProjectManager.getProjectRoot().fullPath], false, COMMIT_MODE.ALL);
+                return handleGitCommit(lastCommitMessage[ProjectManager.getProjectRoot().fullPath],
+                    false, COMMIT_MODE.ALL);
+            }).catch((err)=>{
+                console.error(err);
+                // rethrowing with stripped git error details as it may have sensitive info
+                throw new Error("Error commitAllFiles in git panel.js. this should not have happened here.");
             });
     }
 
@@ -4609,13 +4624,20 @@ define("src/Panel", function (require, exports) {
             .on("click", ".check-all", function () {
                 if ($(this).is(":checked")) {
                     return Git.stageAll().then(function () {
-                        Git.status();
-                    });
-                } else {
-                    return Git.resetIndex().then(function () {
-                        Git.status();
+                        return Git.status();
+                    }).catch((err)=>{
+                        console.error(err);
+                        // rethrowing with stripped git error details as it may have sensitive info
+                        throw new Error("Error stage all by checkbox in git panel.js. this should not have happened");
                     });
                 }
+                return Git.resetIndex().then(function () {
+                    return Git.status();
+                }).catch((err)=>{
+                    console.error(err);
+                    // rethrowing with stripped git error details as it may have sensitive info
+                    throw new Error("Error unstage all by checkbox in git panel.js. this should not have happened");
+                });
             })
             .on("click", ".git-refresh", EventEmitter.getEmitter(Events.REFRESH_ALL, ["panel", "refreshBtn"]))
             .on("click", ".git-commit", EventEmitter.getEmitter(Events.HANDLE_GIT_COMMIT))
@@ -6701,16 +6723,17 @@ define("src/dialogs/Progress", function (require, exports) {
                 onProgress();
             }
 
+            let finalValue, finalError;
             function finish() {
                 finished = true;
                 if (dialog) {
                     dialog.close();
                 }
-                promise.then(function (val) {
-                    resolve(val);
-                }).catch(function (err) {
-                    reject(err);
-                });
+                if(finalError){
+                    reject(finalError);
+                } else {
+                    resolve(finalValue);
+                }
             }
 
             if (!options.preDelay) {
@@ -6725,17 +6748,24 @@ define("src/dialogs/Progress", function (require, exports) {
             progressTracker.on(`${Events.GIT_PROGRESS_EVENT}.progressDlg`, (_evt, data)=>{
                 onProgress(data);
             });
-            promise.finally(function () {
-                progressTracker.off(`${Events.GIT_PROGRESS_EVENT}.progressDlg`);
-                onProgress("Finished!");
-                if (!options.postDelay || !dialog) {
-                    finish();
-                } else {
-                    setTimeout(function () {
+            promise
+                .then(val => {
+                    finalValue = val;
+                })
+                .catch(err => {
+                    finalError = err;
+                })
+                .finally(function () {
+                    progressTracker.off(`${Events.GIT_PROGRESS_EVENT}.progressDlg`);
+                    onProgress("Finished!");
+                    if (!options.postDelay || !dialog) {
                         finish();
-                    }, options.postDelay * 1000);
-                }
-            });
+                    } else {
+                        setTimeout(function () {
+                            finish();
+                        }, options.postDelay * 1000);
+                    }
+                });
 
         });
     }
@@ -6769,16 +6799,16 @@ define("src/dialogs/Progress", function (require, exports) {
 define("src/dialogs/Pull", function (require, exports) {
 
     // Brackets modules
-    var Dialogs = brackets.getModule("widgets/Dialogs"),
+    const Dialogs = brackets.getModule("widgets/Dialogs"),
         Mustache = brackets.getModule("thirdparty/mustache/mustache");
 
     // Local modules
-    var Preferences     = require("src/Preferences"),
+    const Preferences     = require("src/Preferences"),
         RemoteCommon    = require("src/dialogs/RemoteCommon"),
         Strings         = brackets.getModule("strings");
 
     // Templates
-    var template            = `<div id="git-pull-dialog" class="git modal">
+    const template            = `<div id="git-pull-dialog" class="git modal">
     <div class="modal-header">
         <h1 class="dialog-title">{{Strings.DIALOG_PULL_TITLE}} &mdash; {{config.remote}}</h1>
     </div>
@@ -6959,6 +6989,7 @@ define("src/dialogs/Pull", function (require, exports) {
     function show(pullConfig) {
         return new Promise((resolve, reject) => {
             pullConfig.pull = true;
+            // collectInfo never rejects
             RemoteCommon.collectInfo(pullConfig).then(()=>{
                 _show(pullConfig, resolve, reject);
             });
@@ -7160,6 +7191,7 @@ define("src/dialogs/Push", function (require, exports) {
     function show(pushConfig) {
         return new Promise((resolve, reject) => {
             pushConfig.push = true;
+            // collectInfo never rejects
             RemoteCommon.collectInfo(pushConfig).then(()=>{
                 _show(pushConfig, resolve, reject);
             });
@@ -7200,6 +7232,7 @@ define("src/dialogs/RemoteCommon", function (require, exports) {
         });
     }
 
+    // this should never reject for now, just show error message and bail out
     exports.collectInfo = function (config) {
         return Git.getCurrentUpstreamBranch().then(function (upstreamBranch) {
             config.currentTrackingBranch = upstreamBranch;
