@@ -64873,10 +64873,11 @@ define("nls/ar/strings", {
   "ERROR_NO_REMOTE_SELECTED": "لم يتم تحديد جهاز تحكم عن بعد لـ {0}!",
   "ERROR_BRANCH_LIST": "فشل عملية الحصول على قائمة الفروع",
   "ERROR_FETCH_REMOTE": "فشل جلب معلومات جهاز التحكم عن بعد",
+  "ERROR_PREPARING_COMMIT_DIALOG": "فشل تحضير مربع حوار الالتزام",
   "GIT_TOAST_TITLE": "استكشف ميزات Git في Phoenix Code",
   "GIT_TOAST_MESSAGE": "انقر على رمز لوحة Git لإدارة مستودعك. يمكنك بسهولة تنفيذ الالتزام والدفع والسحب وعرض سجل مشروعك - كل ذلك في مكان واحد.<br><a href='https://docs.phcode.dev/docs/Features/git'>تعرّف على المزيد حول لوحة Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "صوت للميزات التي ترغب برؤيتها تالياً!",
-  "ERROR_PREPARING_COMMIT_DIALOG": "فشل تحضير مربع حوار الالتزام"
+  "ERROR_STAGE_FAILED": "فشل تجهيز الملفات في Git"
 });
 /*
  * GNU AGPL-3.0 License
@@ -66222,10 +66223,11 @@ define("nls/bg/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Няма избрано отдалечено хранилище за {0}!",
   "ERROR_BRANCH_LIST": "Получаването на списъка с клонове е неуспешно",
   "ERROR_FETCH_REMOTE": "Извличането на информация за отдалеченото хранилище е неуспешно",
+  "ERROR_PREPARING_COMMIT_DIALOG": "Неуспешно подготвяне на диалогов прозорец за commit",
   "GIT_TOAST_TITLE": "Разгледайте Git функциите в Phoenix Code",
   "GIT_TOAST_MESSAGE": "Щракнете върху иконата на Git панела, за да управлявате хранилището си. Лесно създавайте commit, push, pull и преглеждайте историята на проекта си – всичко на едно място.<br><a href='https://docs.phcode.dev/docs/Features/git'>Научете повече за Git панела →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Гласувайте за функциите, които искате да видите следващи!",
-  "ERROR_PREPARING_COMMIT_DIALOG": "Неуспешно подготвяне на диалогов прозорец за commit"
+  "ERROR_STAGE_FAILED": "Неуспешно добавяне на файлове в индекса на Git"
 });
 /*
  * Copyright (c) 2013 Adobe Systems Incorporated. All rights reserved.
@@ -67600,10 +67602,11 @@ define("nls/cs/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Nebyl vybrán žádný vzdálený repozitář pro {0}!",
   "ERROR_BRANCH_LIST": "Získání seznamu větví selhalo",
   "ERROR_FETCH_REMOTE": "Získání informací o vzdáleném repozitáři selhalo",
+  "ERROR_PREPARING_COMMIT_DIALOG": "Chyba při přípravě dialogu pro commit",
   "GIT_TOAST_TITLE": "Prozkoumejte funkce Gitu v Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klikněte na ikonu panelu Git pro správu vašeho repozitáře. Snadno commitujte, pushujte, pullujte a prohlížejte si historii projektu – vše na jednom místě.<br><a href='https://docs.phcode.dev/docs/Features/git'>Zjistěte více o panelu Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Hlasujte pro funkce, které chcete vidět v další verzi!",
-  "ERROR_PREPARING_COMMIT_DIALOG": "Chyba při přípravě dialogu pro commit"
+  "ERROR_STAGE_FAILED": "Nepodařilo se připravit soubory ke commitu v Gitu"
 });
 /*
  * GNU AGPL-3.0 License
@@ -68976,10 +68979,11 @@ define("nls/da/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Ingen remote er valgt for {0}!",
   "ERROR_BRANCH_LIST": "Det lykkedes ikke at hente grenliste",
   "ERROR_FETCH_REMOTE": "Hentning af remote-information mislykkedes",
+  "ERROR_PREPARING_COMMIT_DIALOG": "Forberedelse af commit-dialog mislykkedes",
   "GIT_TOAST_TITLE": "Udforsk Git-funktioner i Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klik på Git-panelikonet for at administrere dit repository. Commit, push, pull og se din projekthistorik nemt – alt sammen på ét sted.<br><a href='https://docs.phcode.dev/docs/Features/git'>Læs mere om Git-panelet →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stem på de funktioner, du gerne vil se!",
-  "ERROR_PREPARING_COMMIT_DIALOG": "Forberedelse af commit-dialog mislykkedes"
+  "ERROR_STAGE_FAILED": "Kunne ikke stage filer i Git"
 });
 /*
  * GNU AGPL-3.0 License
@@ -70350,10 +70354,11 @@ define("nls/de/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Für {0} wurde kein Remote ausgewählt!",
   "ERROR_BRANCH_LIST": "Abrufen der Branch-Liste fehlgeschlagen",
   "ERROR_FETCH_REMOTE": "Abrufen der Remote-Informationen fehlgeschlagen",
+  "ERROR_PREPARING_COMMIT_DIALOG": "Fehler beim Vorbereiten des Commit-Dialogs",
   "GIT_TOAST_TITLE": "Git-Funktionen in Phoenix Code entdecken",
   "GIT_TOAST_MESSAGE": "Klicken Sie auf das Git-Panel-Symbol, um Ihr Repository zu verwalten. Committen, Pushen, Pullen und die Anzeige Ihres Projektverlaufs – alles an einem Ort.<br><a href='https://docs.phcode.dev/docs/Features/git'>Mehr über das Git-Panel erfahren →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stimmen Sie für die Funktionen ab, die Sie als Nächstes sehen möchten!",
-  "ERROR_PREPARING_COMMIT_DIALOG": "Fehler beim Vorbereiten des Commit-Dialogs"
+  "ERROR_STAGE_FAILED": "Fehler beim Staging der Dateien in Git"
 });
 /*
  * GNU AGPL-3.0 License
@@ -71726,10 +71731,11 @@ define("nls/el/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Δεν έχει επιλεγεί απομακρυσμένο για το {0}!",
   "ERROR_BRANCH_LIST": "Αποτυχία λήψης λίστας κλάδων",
   "ERROR_FETCH_REMOTE": "Αποτυχία λήψης πληροφοριών απομακρυσμένου",
+  "ERROR_PREPARING_COMMIT_DIALOG": "Αποτυχία προετοιμασίας παραθύρου δημιουργίας commit",
   "GIT_TOAST_TITLE": "Εξερευνήστε τις Λειτουργίες Git στο Phoenix Code",
   "GIT_TOAST_MESSAGE": "Κάντε κλικ στο εικονίδιο του πίνακα Git για να διαχειριστείτε το αποθετήριό σας. Κάντε εύκολα commit, push, pull και δείτε το ιστορικό του έργου σας—όλα σε ένα μέρος.<br><a href='https://docs.phcode.dev/docs/Features/git'>Μάθετε περισσότερα για τον πίνακα Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Ψηφίστε για τις λειτουργίες που θέλετε να δείτε στη συνέχεια!",
-  "ERROR_PREPARING_COMMIT_DIALOG": "Αποτυχία προετοιμασίας παραθύρου δημιουργίας commit"
+  "ERROR_STAGE_FAILED": "Αποτυχία προσθήκης αρχείων στο Git"
 });
 /*
  * GNU AGPL-3.0 License
@@ -73102,10 +73108,11 @@ define("nls/en-gb/strings", {
   "ERROR_NO_REMOTE_SELECTED": "No remote has been selected for {0}!",
   "ERROR_BRANCH_LIST": "Getting the branch list failed",
   "ERROR_FETCH_REMOTE": "Fetching remote information failed",
+  "ERROR_PREPARING_COMMIT_DIALOG": "Failed to prepare the commit dialogue",
   "GIT_TOAST_TITLE": "Explore Git Features in Phoenix Code",
   "GIT_TOAST_MESSAGE": "Click the Git panel icon to manage your repository. Easily commit, push, pull, and view your project history—all in one place.<br><a href='https://docs.phcode.dev/docs/Features/git'>Learn more about the Git panel →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote for the features you'd like to see next!",
-  "ERROR_PREPARING_COMMIT_DIALOG": "Failed to prepare the commit dialogue"
+  "ERROR_STAGE_FAILED": "Failed to stage files in Git"
 });
 /*
  * GNU AGPL-3.0 License
@@ -74451,10 +74458,11 @@ define("nls/es/strings", {
   "ERROR_NO_REMOTE_SELECTED": "No se ha seleccionado ningún remoto para {0}.",
   "ERROR_BRANCH_LIST": "Error al obtener la lista de ramas.",
   "ERROR_FETCH_REMOTE": "Error al obtener la información del remoto.",
+  "ERROR_PREPARING_COMMIT_DIALOG": "Error al preparar el diálogo de confirmación",
   "GIT_TOAST_TITLE": "Explora las funciones de Git en Phoenix Code",
   "GIT_TOAST_MESSAGE": "Haga clic en el icono del panel de Git para administrar su repositorio. Confirme, envíe (push), extraiga (pull) y vea el historial de su proyecto fácilmente, todo en un solo lugar.<br><a href='https://docs.phcode.dev/docs/Features/git'>Obtenga más información sobre el panel de Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "¡Vota por las funciones que quieres ver próximamente!",
-  "ERROR_PREPARING_COMMIT_DIALOG": "Error al preparar el diálogo de confirmación"
+  "ERROR_STAGE_FAILED": "Error al preparar los archivos en Git"
 });
 /*
  * GNU AGPL-3.0 License
@@ -75828,10 +75836,11 @@ define("nls/fa-ir/strings", {
   "ERROR_NO_REMOTE_SELECTED": "هیچ ریموتی برای {0} انتخاب نشده است!",
   "ERROR_BRANCH_LIST": "دریافت لیست شاخه‌ها با شکست مواجه شد",
   "ERROR_FETCH_REMOTE": "دریافت اطلاعات ریموت با شکست مواجه شد",
+  "ERROR_PREPARING_COMMIT_DIALOG": "خطا در آماده‌سازی پنجره ثبت کامیت",
   "GIT_TOAST_TITLE": "کاوش ویژگی‌های گیت در Phoenix Code",
   "GIT_TOAST_MESSAGE": "برای مدیریت مخزن خود روی آیکون پنل گیت کلیک کنید. به راحتی کامیت، پوش، پول و مشاهده تاریخچه پروژه خود را - همه در یک مکان - انجام دهید.<br><a href='https://docs.phcode.dev/docs/Features/git'>درباره پنل گیت بیشتر بدانید →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "برای قابلیت‌هایی که می‌خواهید در آینده ببینید، رأی دهید!",
-  "ERROR_PREPARING_COMMIT_DIALOG": "خطا در آماده‌سازی پنجره ثبت کامیت"
+  "ERROR_STAGE_FAILED": "خطا در مرحله‌بندی فایل‌ها در گیت"
 });
 /*
  * GNU AGPL-3.0 License
@@ -77204,10 +77213,11 @@ define("nls/fi/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Kohteelle {0} ei ole valittu etäyhteyttä!",
   "ERROR_BRANCH_LIST": "Haarojen listan haku epäonnistui",
   "ERROR_FETCH_REMOTE": "Etäyhteyden tietojen haku epäonnistui",
+  "ERROR_PREPARING_COMMIT_DIALOG": "Commit-valintaikkunan valmistelu epäonnistui",
   "GIT_TOAST_TITLE": "Tutustu Git-ominaisuuksiin Phoenix Codessa",
   "GIT_TOAST_MESSAGE": "Napsauta Git-paneelin kuvaketta hallitaksesi arkistoasi (repository). Tee commit, push ja pull helposti ja tarkastele projektihistoriaasi – kaikki yhdessä paikassa.<br><a href='https://docs.phcode.dev/docs/Features/git'>Lue lisää Git-paneelista →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Äänestä ominaisuuksia, jotka haluat nähdä seuraavaksi!",
-  "ERROR_PREPARING_COMMIT_DIALOG": "Commit-valintaikkunan valmistelu epäonnistui"
+  "ERROR_STAGE_FAILED": "Git-tiedostojen valmistelu epäonnistui"
 });
 /*
  * GNU AGPL-3.0 License
@@ -78580,10 +78590,11 @@ define("nls/fr/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Aucun dépôt distant n'a été sélectionné pour {0} !",
   "ERROR_BRANCH_LIST": "Échec de la récupération de la liste des branches",
   "ERROR_FETCH_REMOTE": "Échec de la récupération des informations du dépôt distant",
+  "ERROR_PREPARING_COMMIT_DIALOG": "Échec de la préparation de la boîte de dialogue de commit",
   "GIT_TOAST_TITLE": "Explorer les fonctionnalités Git dans Phoenix Code",
   "GIT_TOAST_MESSAGE": "Cliquez sur l'icône du panneau Git pour gérer votre dépôt. Validez, envoyez (push), récupérez (pull) et consultez l'historique de votre projet facilement, le tout au même endroit.<br><a href='https://docs.phcode.dev/docs/Features/git'>En savoir plus sur le panneau Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Votez pour les fonctionnalités que vous souhaitez voir apparaître !",
-  "ERROR_PREPARING_COMMIT_DIALOG": "Échec de la préparation de la boîte de dialogue de commit"
+  "ERROR_STAGE_FAILED": "Échec de l'indexation des fichiers dans Git"
 });
 /*
  * GNU AGPL-3.0 License
@@ -79956,10 +79967,11 @@ define("nls/gl/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Non se seleccionou ningún remoto para {0}!",
   "ERROR_BRANCH_LIST": "Fallou a obtención da lista de ramas",
   "ERROR_FETCH_REMOTE": "Fallou a obtención da información do remoto",
+  "ERROR_PREPARING_COMMIT_DIALOG": "Produciuse un erro ao preparar o diálogo de confirmación",
   "GIT_TOAST_TITLE": "Explora as funcionalidades de Git en Phoenix Code",
   "GIT_TOAST_MESSAGE": "Fai clic na icona do panel de Git para xestionar o teu repositorio. Fai commits, envía (push), obtén (pull) e visualiza o historial do teu proxecto facilmente, todo nun mesmo lugar.<br><a href='https://docs.phcode.dev/docs/Features/git'>Aprende máis sobre o panel de Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vota polas funcionalidades que queres ver a continuación!",
-  "ERROR_PREPARING_COMMIT_DIALOG": "Produciuse un erro ao preparar o diálogo de confirmación"
+  "ERROR_STAGE_FAILED": "Non se puideron preparar os ficheiros en Git"
 });
 /*
  * GNU AGPL-3.0 License
@@ -81305,10 +81317,11 @@ define("nls/hi/strings", {
   "ERROR_NO_REMOTE_SELECTED": "{0} के लिए कोई रिमोट चयनित नहीं है!",
   "ERROR_BRANCH_LIST": "शाखा सूची प्राप्त करने में विफलता",
   "ERROR_FETCH_REMOTE": "रिमोट जानकारी प्राप्त करने में विफलता",
+  "ERROR_PREPARING_COMMIT_DIALOG": "कमिट डायलॉग तैयार करने में विफल रहा",
   "GIT_TOAST_TITLE": "फ़ीनिक्स कोड में Git सुविधाओं का अन्वेषण करें",
   "GIT_TOAST_MESSAGE": "अपने रिपॉजिटरी को प्रबंधित करने के लिए Git पैनल आइकन पर क्लिक करें। आसानी से कमिट करें, पुश करें, पुल करें और अपने प्रोजेक्ट का इतिहास देखें—सब एक ही स्थान पर।<br><a href='https://docs.phcode.dev/docs/Features/git'>Git पैनल के बारे में अधिक जानें →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "उन विशेषताओं के लिए वोट करें जिन्हें आप आगे देखना चाहते हैं!",
-  "ERROR_PREPARING_COMMIT_DIALOG": "कमिट डायलॉग तैयार करने में विफल रहा"
+  "ERROR_STAGE_FAILED": "गिट में फ़ाइलों को स्टेज करने में विफल।"
 });
 /*
  * GNU AGPL-3.0 License
@@ -82654,10 +82667,11 @@ define("nls/hr/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Nije odabran udaljeni repozitorij za {0}!",
   "ERROR_BRANCH_LIST": "Dohvaćanje popisa grana nije uspjelo",
   "ERROR_FETCH_REMOTE": "Dohvaćanje informacija o udaljenom repozitoriju nije uspjelo",
+  "ERROR_PREPARING_COMMIT_DIALOG": "Priprema dijaloga za commit nije uspjela",
   "GIT_TOAST_TITLE": "Istražite Git značajke u Phoenix Codeu",
   "GIT_TOAST_MESSAGE": "Kliknite ikonu Git panela za upravljanje svojim repozitorijem. Jednostavno potvrdite (commit), pošaljite (push), preuzmite (pull) i pregledajte povijest svog projekta - sve na jednom mjestu.<br><a href='https://docs.phcode.dev/docs/Features/git'>Saznajte više o Git panelu →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Glasajte za značajke koje želite vidjeti sljedeće!",
-  "ERROR_PREPARING_COMMIT_DIALOG": "Priprema dijaloga za commit nije uspjela"
+  "ERROR_STAGE_FAILED": "Neuspješno dodavanje datoteka u pripremnu mapu Gita"
 });
 /*
  * GNU AGPL-3.0 License
@@ -84030,10 +84044,11 @@ define("nls/hu/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Nincs kiválasztva távoli adattár a(z) {0} számára!",
   "ERROR_BRANCH_LIST": "Ágak listájának lekérése sikertelen",
   "ERROR_FETCH_REMOTE": "Távoli adattár információinak lekérése sikertelen",
+  "ERROR_PREPARING_COMMIT_DIALOG": "A kommitdialógus előkészítése sikertelen volt",
   "GIT_TOAST_TITLE": "Fedezd fel a Git funkciókat a Phoenix Code-ban",
   "GIT_TOAST_MESSAGE": "Kattintson a Git panel ikonra a verziókövető rendszer kezeléséhez. Könnyedén végezhet commit, push és pull műveleteket, valamint megtekintheti a projekt előzményeit – mindezt egy helyen.<br><a href='https://docs.phcode.dev/docs/Features/git'>Tudj meg többet a Git panelről →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Szavazzon azokra a funkciókra, amelyeket a jövőben látni szeretne!",
-  "ERROR_PREPARING_COMMIT_DIALOG": "A kommitdialógus előkészítése sikertelen volt"
+  "ERROR_STAGE_FAILED": "Nem sikerült a fájlok staged állapotba állítása a Gitben"
 });
 /*
  * GNU AGPL-3.0 License
@@ -85379,10 +85394,11 @@ define("nls/id/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Tidak ada remote yang dipilih untuk {0}!",
   "ERROR_BRANCH_LIST": "Gagal mendapatkan daftar branch",
   "ERROR_FETCH_REMOTE": "Gagal mengambil informasi remote",
+  "ERROR_PREPARING_COMMIT_DIALOG": "Gagal mempersiapkan dialog commit",
   "GIT_TOAST_TITLE": "Jelajahi Fitur Git di Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klik ikon panel Git untuk mengelola repositori Anda. Lakukan commit, push, pull, dan lihat riwayat proyek Anda dengan mudah—semua di satu tempat.<br><a href='https://docs.phcode.dev/docs/Features/git'>Pelajari lebih lanjut tentang panel Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Pilih fitur yang ingin Anda lihat selanjutnya!",
-  "ERROR_PREPARING_COMMIT_DIALOG": "Gagal mempersiapkan dialog commit"
+  "ERROR_STAGE_FAILED": "Gagal men-stage berkas di Git"
 });
 /*
  * GNU AGPL-3.0 License
@@ -86754,10 +86770,11 @@ define("nls/it/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Nessun remote selezionato per {0}!",
   "ERROR_BRANCH_LIST": "Impossibile ottenere l'elenco dei branch",
   "ERROR_FETCH_REMOTE": "Recupero delle informazioni del remote non riuscito",
+  "ERROR_PREPARING_COMMIT_DIALOG": "Preparazione della finestra di commit non riuscita",
   "GIT_TOAST_TITLE": "Esplora le funzionalità Git in Phoenix Code",
   "GIT_TOAST_MESSAGE": "Fai clic sull'icona del pannello Git per gestire il tuo repository. Esegui commit, push, pull e visualizza la cronologia del tuo progetto, tutto in un unico posto.<br><a href='https://docs.phcode.dev/docs/Features/git'>Scopri di più sul pannello Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vota per le funzionalità che desideri vedere in futuro!",
-  "ERROR_PREPARING_COMMIT_DIALOG": "Preparazione della finestra di commit non riuscita"
+  "ERROR_STAGE_FAILED": "Impossibile aggiungere i file all'indice di Git"
 });
 /*
  * GNU AGPL-3.0 License
@@ -88130,10 +88147,11 @@ define("nls/ja/strings", {
   "ERROR_NO_REMOTE_SELECTED": "{0} に対してリモートが選択されていません！",
   "ERROR_BRANCH_LIST": "ブランチ一覧の取得に失敗しました。",
   "ERROR_FETCH_REMOTE": "リモート情報の取得に失敗しました。",
+  "ERROR_PREPARING_COMMIT_DIALOG": "コミットダイアログの準備に失敗しました",
   "GIT_TOAST_TITLE": "Phoenix CodeのGit機能を試す",
   "GIT_TOAST_MESSAGE": "Gitパネルアイコンをクリックしてリポジトリを管理します。コミット、プッシュ、プル、プロジェクト履歴の表示をすべて1か所で行えます。<br><a href='https://docs.phcode.dev/docs/Features/git'>Gitパネルの詳細はこちら →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "次に実装してほしい機能に投票してください！",
-  "ERROR_PREPARING_COMMIT_DIALOG": "コミットダイアログの準備に失敗しました"
+  "ERROR_STAGE_FAILED": "Gitでのファイルのステージングに失敗しました"
 });
 /*
  * GNU AGPL-3.0 License
@@ -89506,10 +89524,11 @@ define("nls/ko/strings", {
   "ERROR_NO_REMOTE_SELECTED": "{0}에 대해 선택된 리모트가 없습니다!",
   "ERROR_BRANCH_LIST": "브랜치 목록 가져오기 실패",
   "ERROR_FETCH_REMOTE": "리모트 정보 가져오기 실패",
+  "ERROR_PREPARING_COMMIT_DIALOG": "커밋 대화 상자 준비 실패",
   "GIT_TOAST_TITLE": "Phoenix Code의 Git 기능 살펴보기",
   "GIT_TOAST_MESSAGE": "Git 패널 아이콘을 클릭하여 저장소를 관리하세요. 커밋, 푸시, 풀, 프로젝트 기록 보기를 한 곳에서 간편하게 수행할 수 있습니다.<br><a href='https://docs.phcode.dev/docs/Features/git'>Git 패널에 대해 자세히 알아보기 →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "다음에 보고 싶은 기능에 투표하세요!",
-  "ERROR_PREPARING_COMMIT_DIALOG": "커밋 대화 상자 준비 실패"
+  "ERROR_STAGE_FAILED": "Git에서 파일 스테이징에 실패했습니다."
 });
 /*
  * GNU AGPL-3.0 License
@@ -90882,10 +90901,11 @@ define("nls/lv/strings", {
   "ERROR_NO_REMOTE_SELECTED": "{0} nav izvēlēta attālā krātuve!",
   "ERROR_BRANCH_LIST": "Neizdevās iegūt zaru sarakstu",
   "ERROR_FETCH_REMOTE": "Neizdevās iegūt informāciju par attālo krātuvi",
+  "ERROR_PREPARING_COMMIT_DIALOG": "Neizdevās sagatavot izmaiņu apstiprināšanas dialogu",
   "GIT_TOAST_TITLE": "Izpētiet Git funkcijas Phoenix Code",
   "GIT_TOAST_MESSAGE": "Noklikšķiniet uz Git paneļa ikonas, lai pārvaldītu savu repozitoriju. Ērti veiciet commit, push, pull un skatiet sava projekta vēsturi — viss vienā vietā.<br><a href='https://docs.phcode.dev/docs/Features/git'>Uzziniet vairāk par Git paneli →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Nobalsot par funkcijām, kuras vēlaties redzēt nākamreiz!",
-  "ERROR_PREPARING_COMMIT_DIALOG": "Neizdevās sagatavot izmaiņu apstiprināšanas dialogu"
+  "ERROR_STAGE_FAILED": "Neizdevās iestudēt failus Gitā"
 });
 /*
  * GNU AGPL-3.0 License
@@ -92231,10 +92251,11 @@ define("nls/ml/strings", {
   "ERROR_NO_REMOTE_SELECTED": "{0} എന്നതിന് റിമോട്ട് തിരഞ്ഞെടുത്തിട്ടില്ല!",
   "ERROR_BRANCH_LIST": "ബ്രാഞ്ച് ലിസ്റ്റ് എടുക്കുന്നതിൽ പിഴവ്",
   "ERROR_FETCH_REMOTE": "റിമോട്ട് വിവരങ്ങൾ എടുക്കുന്നതിൽ പിഴവ്",
+  "ERROR_PREPARING_COMMIT_DIALOG": "കമ്മിറ്റ് ഡയലോഗ് തയ്യാറാക്കുന്നതിൽ പിഴവ്",
   "GIT_TOAST_TITLE": "ഫീനിക്സ് കോഡിലെ ഗിറ്റ് സവിശേഷതകൾ പര്യവേക്ഷണം ചെയ്യുക",
   "GIT_TOAST_MESSAGE": "നിങ്ങളുടെ റെപ്പോസിറ്ററി കൈകാര്യം ചെയ്യാൻ ഗിറ്റ് പാനൽ ഐക്കണിൽ ക്ലിക്ക് ചെയ്യുക. എളുപ്പത്തിൽ കമ്മിറ്റ് ചെയ്യുക, പുഷ് ചെയ്യുക, പുൾ ചെയ്യുക, നിങ്ങളുടെ പ്രോജക്റ്റ് ചരിത്രം കാണുക—എല്ലാം ഒരിടത്ത്.<br><a href='https://docs.phcode.dev/docs/Features/git'>ഗിറ്റ് പാനലിനെക്കുറിച്ച് കൂടുതലറിയുക →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "നിങ്ങൾക്ക് അടുത്തതായി കാണാൻ ആഗ്രഹിക്കുന്ന സവിശേഷതകൾക്ക് വോട്ട് ചെയ്യുക!",
-  "ERROR_PREPARING_COMMIT_DIALOG": "കമ്മിറ്റ് ഡയലോഗ് തയ്യാറാക്കുന്നതിൽ പിഴവ്"
+  "ERROR_STAGE_FAILED": "ഗിറ്റിൽ ഫയലുകൾ സ്റ്റേജ് ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു"
 });
 /*
  * GNU AGPL-3.0 License
@@ -93580,10 +93601,11 @@ define("nls/nb/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Ingen eksternt repositorium er valgt for {0}!",
   "ERROR_BRANCH_LIST": "Kunne ikke hente grenliste",
   "ERROR_FETCH_REMOTE": "Kunne ikke hente informasjon om eksternt repositorium",
+  "ERROR_PREPARING_COMMIT_DIALOG": "Klargjøring av commit-dialogen feilet",
   "GIT_TOAST_TITLE": "Utforsk Git-funksjoner i Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klikk på Git-panelikonet for å administrere repositoriet ditt. Utfør commit, push, pull og se prosjektloggen din – alt på ett sted.<br><a href='https://docs.phcode.dev/docs/Features/git'>Lær mer om Git-panelet →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stem på funksjonene du ønsker å se neste!",
-  "ERROR_PREPARING_COMMIT_DIALOG": "Klargjøring av commit-dialogen feilet"
+  "ERROR_STAGE_FAILED": "Klarte ikke å legge til filer i Git-indeksen"
 });
 /*
  * GNU AGPL-3.0 License
@@ -94956,10 +94978,11 @@ define("nls/nl/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Er is geen remote geselecteerd voor {0}!",
   "ERROR_BRANCH_LIST": "Ophalen van branch-lijst mislukt",
   "ERROR_FETCH_REMOTE": "Ophalen van remote-informatie mislukt",
+  "ERROR_PREPARING_COMMIT_DIALOG": "Voorbereiden commit-dialoogvenster mislukt",
   "GIT_TOAST_TITLE": "Ontdek Git-functies in Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klik op het Git-paneelpictogram om uw repository te beheren. Commit, push, pull en bekijk uw projectgeschiedenis eenvoudig - alles op één plek.<br><a href='https://docs.phcode.dev/docs/Features/git'>Meer informatie over het Git-paneel →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stem op de functies die u graag wilt zien!",
-  "ERROR_PREPARING_COMMIT_DIALOG": "Voorbereiden commit-dialoogvenster mislukt"
+  "ERROR_STAGE_FAILED": "Bestanden konden niet worden gestaged in Git"
 });
 /*
  * GNU AGPL-3.0 License
@@ -96332,10 +96355,11 @@ define("nls/pl/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Nie wybrano zdalnego repozytorium dla {0}!",
   "ERROR_BRANCH_LIST": "Pobieranie listy gałęzi nie powiodło się",
   "ERROR_FETCH_REMOTE": "Pobieranie informacji o zdalnym repozytorium nie powiodło się",
+  "ERROR_PREPARING_COMMIT_DIALOG": "Przygotowanie okna dialogowego zatwierdzenia nie powiodło się",
   "GIT_TOAST_TITLE": "Poznaj funkcje Gita w Phoenix Code",
   "GIT_TOAST_MESSAGE": "Kliknij ikonę panelu Git, aby zarządzać swoim repozytorium. Łatwo zatwierdzaj, przesyłaj, pobieraj i przeglądaj historię swojego projektu — wszystko w jednym miejscu.<br><a href='https://docs.phcode.dev/docs/Features/git'>Dowiedz się więcej o panelu Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Zagłosuj na funkcje, które chcesz zobaczyć w przyszłości!",
-  "ERROR_PREPARING_COMMIT_DIALOG": "Przygotowanie okna dialogowego zatwierdzenia nie powiodło się"
+  "ERROR_STAGE_FAILED": "Nie udało się dodać plików do poczekalni Git"
 });
 /*
  * GNU AGPL-3.0 License
@@ -97708,10 +97732,11 @@ define("nls/pt-br/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Nenhum remoto foi selecionado para {0}!",
   "ERROR_BRANCH_LIST": "Falha ao obter a lista de branches",
   "ERROR_FETCH_REMOTE": "Falha ao buscar informações do remoto",
+  "ERROR_PREPARING_COMMIT_DIALOG": "Falha ao preparar a caixa de diálogo de commit",
   "GIT_TOAST_TITLE": "Explore os Recursos do Git no Phoenix Code",
   "GIT_TOAST_MESSAGE": "Clique no ícone do painel Git para gerenciar seu repositório. Faça commits, pushes, pulls e visualize o histórico do seu projeto com facilidade — tudo em um só lugar.<br><a href='https://docs.phcode.dev/docs/Features/git'>Saiba mais sobre o painel Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote nos recursos que você quer ver em seguida!",
-  "ERROR_PREPARING_COMMIT_DIALOG": "Falha ao preparar a caixa de diálogo de commit"
+  "ERROR_STAGE_FAILED": "Falha ao indexar arquivos no Git"
 });
 /*
  * GNU AGPL-3.0 License
@@ -99082,10 +99107,11 @@ define("nls/pt-pt/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Nenhum remoto foi selecionado para {0}!",
   "ERROR_BRANCH_LIST": "Falha ao obter a lista de ramos",
   "ERROR_FETCH_REMOTE": "Falha ao obter informações do remoto",
+  "ERROR_PREPARING_COMMIT_DIALOG": "Falha ao preparar a janela de _commit_",
   "GIT_TOAST_TITLE": "Explore as funcionalidades do Git no Phoenix Code",
   "GIT_TOAST_MESSAGE": "Clique no ícone do painel Git para gerir o seu repositório. Efetue commits, pushes, pulls e veja o histórico do seu projeto com facilidade — tudo num só lugar.<br><a href='https://docs.phcode.dev/docs/Features/git'>Saiba mais sobre o painel Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote nas funcionalidades que quer ver a seguir!",
-  "ERROR_PREPARING_COMMIT_DIALOG": "Falha ao preparar a janela de _commit_"
+  "ERROR_STAGE_FAILED": "Falha ao indexar ficheiros no Git"
 });
 /*
  * GNU AGPL-3.0 License
@@ -100456,10 +100482,11 @@ define("nls/ro/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Niciun depozit remote nu a fost selectat pentru {0}!",
   "ERROR_BRANCH_LIST": "Obținerea listei de branch-uri a eșuat",
   "ERROR_FETCH_REMOTE": "Obținerea informațiilor despre depozitul remote a eșuat",
+  "ERROR_PREPARING_COMMIT_DIALOG": "Pregătirea dialogului de commit a eșuat",
   "GIT_TOAST_TITLE": "Explorați funcțiile Git în Phoenix Code",
   "GIT_TOAST_MESSAGE": "Faceți clic pe pictograma panoului Git pentru a vă gestiona depozitul. Efectuați ușor commit, push, pull și vizualizați istoricul proiectului dvs. - totul într-un singur loc.<br><a href='https://docs.phcode.dev/docs/Features/git'>Aflați mai multe despre panoul Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Votează pentru funcționalitățile pe care dorești să le vezi în continuare!",
-  "ERROR_PREPARING_COMMIT_DIALOG": "Pregătirea dialogului de commit a eșuat"
+  "ERROR_STAGE_FAILED": "Eșuare la adăugarea fișierelor în indexul Git"
 });
 /*
  * GNU AGPL-3.0 License
@@ -103437,10 +103464,11 @@ define("nls/ru/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Для {0} не выбран удалённый репозиторий!",
   "ERROR_BRANCH_LIST": "Не удалось получить список веток",
   "ERROR_FETCH_REMOTE": "Не удалось получить информацию об удалённом репозитории",
+  "ERROR_PREPARING_COMMIT_DIALOG": "Не удалось подготовить диалог фиксации",
   "GIT_TOAST_TITLE": "Возможности Git в Phoenix Code",
   "GIT_TOAST_MESSAGE": "Нажмите на значок панели Git для управления вашим репозиторием. Легко выполняйте коммиты, отправляйте (push), получайте (pull) изменения и просматривайте историю вашего проекта — все в одном месте.<br><a href='https://docs.phcode.dev/docs/Features/git'>Узнать больше о панели Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Проголосуйте за функции, которые вы хотите увидеть в будущем!",
-  "ERROR_PREPARING_COMMIT_DIALOG": "Не удалось подготовить диалог фиксации"
+  "ERROR_STAGE_FAILED": "Не удалось проиндексировать файлы в Git"
 });
 /*
  * GNU AGPL-3.0 License
@@ -104813,10 +104841,11 @@ define("nls/sk/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Pre {0} nebol vybraný žiadny vzdialený repozitár!",
   "ERROR_BRANCH_LIST": "Získanie zoznamu vetiev zlyhalo",
   "ERROR_FETCH_REMOTE": "Získanie informácií o vzdialenom repozitári zlyhalo",
+  "ERROR_PREPARING_COMMIT_DIALOG": "Chyba pri príprave dialógového okna pre commit",
   "GIT_TOAST_TITLE": "Preskúmajte funkcie Gitu v Phoenix Code",
   "GIT_TOAST_MESSAGE": "Kliknite na ikonu panela Git pre správu vášho repozitára. Jednoducho commitujte, pushujte, pullujte a prezerajte si históriu vášho projektu – všetko na jednom mieste.<br><a href='https://docs.phcode.dev/docs/Features/git'>Zistite viac o paneli Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Hlasujte za funkcie, ktoré chcete vidieť v ďalšej verzii!",
-  "ERROR_PREPARING_COMMIT_DIALOG": "Chyba pri príprave dialógového okna pre commit"
+  "ERROR_STAGE_FAILED": "Nepodarilo sa pridať súbory do stagingu Gitu"
 });
 /*
  * GNU AGPL-3.0 License
@@ -106188,10 +106217,11 @@ define("nls/sr/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Није изабран удаљени репозиторијум за {0}!",
   "ERROR_BRANCH_LIST": "Преузимање листе грана није успело",
   "ERROR_FETCH_REMOTE": "Преузимање информација о удаљеном репозиторијуму није успело",
+  "ERROR_PREPARING_COMMIT_DIALOG": "Дошло је до грешке приликом припреме дијалога за креирање комита.",
   "GIT_TOAST_TITLE": "Истражите Гит функције у Phoenix Code-у",
   "GIT_TOAST_MESSAGE": "Кликните на икону Гит панела да бисте управљали својим спремиштем. Лако направите commit, push, pull и погледајте историју свог пројекта — све на једном месту.<br><a href='https://docs.phcode.dev/docs/Features/git'>Сазнајте више о Гит панелу →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Гласајте за функције које желите да видите у будућности!",
-  "ERROR_PREPARING_COMMIT_DIALOG": "Дошло је до грешке приликом припреме дијалога за креирање комита."
+  "ERROR_STAGE_FAILED": "Није успело постављање фајлова у Git"
 });
 /*
  * GNU AGPL-3.0 License
@@ -107647,10 +107677,11 @@ define("nls/sv/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Ingen fjärranslutning har valts för {0}!",
   "ERROR_BRANCH_LIST": "Det gick inte att hämta grenlistan",
   "ERROR_FETCH_REMOTE": "Det gick inte att hämta information om fjärranslutning",
+  "ERROR_PREPARING_COMMIT_DIALOG": "Det gick inte att förbereda commit-dialogrutan",
   "GIT_TOAST_TITLE": "Utforska Git-funktioner i Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klicka på Git-panelens ikon för att hantera din repository. Committa, pusha, pulla och se din projekthistorik enkelt – allt på ett ställe.<br><a href='https://docs.phcode.dev/docs/Features/git'>Läs mer om Git-panelen →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Rösta på funktionerna du vill se härnäst!",
-  "ERROR_PREPARING_COMMIT_DIALOG": "Det gick inte att förbereda commit-dialogrutan"
+  "ERROR_STAGE_FAILED": "Det gick inte att lägga till filer i Git-index"
 });
 /*
  * GNU AGPL-3.0 License
@@ -109023,10 +109054,11 @@ define("nls/tr/strings", {
   "ERROR_NO_REMOTE_SELECTED": "{0} için uzak depo seçilmedi!",
   "ERROR_BRANCH_LIST": "Dal listesi alınamadı",
   "ERROR_FETCH_REMOTE": "Uzak depo bilgileri alınamadı",
+  "ERROR_PREPARING_COMMIT_DIALOG": "Kaydetme iletişim kutusu hazırlanamadı",
   "GIT_TOAST_TITLE": "Phoenix Code'da Git Özelliklerini Keşfedin",
   "GIT_TOAST_MESSAGE": "Deponuzu yönetmek için Git paneli simgesine tıklayın. Proje geçmişinizi kolayca işleyin, gönderin, çekin ve görüntüleyin—hepsi tek bir yerde.<br><a href='https://docs.phcode.dev/docs/Features/git'>Git paneli hakkında daha fazla bilgi edinin →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Gelecekte görmek istediğiniz özellikler için oy verin!",
-  "ERROR_PREPARING_COMMIT_DIALOG": "Kaydetme iletişim kutusu hazırlanamadı"
+  "ERROR_STAGE_FAILED": "Git'te dosyalar hazırlama başarısız oldu"
 });
 /*
  * GNU AGPL-3.0 License
@@ -110399,10 +110431,11 @@ define("nls/uk/strings", {
   "ERROR_NO_REMOTE_SELECTED": "Для {0} не вибрано віддалений репозиторій!",
   "ERROR_BRANCH_LIST": "Не вдалося отримати список гілок",
   "ERROR_FETCH_REMOTE": "Не вдалося отримати інформацію про віддалений репозиторій",
+  "ERROR_PREPARING_COMMIT_DIALOG": "Не вдалося підготувати діалог коміту",
   "GIT_TOAST_TITLE": "Ознайомтеся з функціями Git у Phoenix Code",
   "GIT_TOAST_MESSAGE": "Натисніть піктограму панелі Git, щоб керувати вашим репозиторієм. Легко виконуйте коміти, пуші, пули та переглядайте історію вашого проєкту — все в одному місці.<br><a href='https://docs.phcode.dev/docs/Features/git'>Дізнайтеся більше про панель Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Проголосуйте за функції, які ви хочете бачити наступними!",
-  "ERROR_PREPARING_COMMIT_DIALOG": "Не вдалося підготувати діалог коміту"
+  "ERROR_STAGE_FAILED": "Не вдалося проіндексувати файли в Git"
 });
 /*
  * GNU AGPL-3.0 License
@@ -111775,10 +111808,11 @@ define("nls/ur/strings", {
   "ERROR_NO_REMOTE_SELECTED": "{0} کے لیے کوئی ریموٹ منتخب نہیں کیا گیا ہے۔",
   "ERROR_BRANCH_LIST": "برانچ لسٹ حاصل کرنے میں ناکامی۔",
   "ERROR_FETCH_REMOTE": "ریموٹ معلومات حاصل کرنے میں ناکامی۔",
+  "ERROR_PREPARING_COMMIT_DIALOG": "کمیٹ ڈائیلاگ تیار کرنے میں ناکام",
   "GIT_TOAST_TITLE": "فینکس کوڈ میں گٹ فیچرز دریافت کریں",
   "GIT_TOAST_MESSAGE": "اپنی ذخیرہ گاہ (repository) کو منظم کرنے کے لیے گٹ پینل آئیکن پر کلک کریں۔ آسانی سے کامٹ، پش، پل کریں، اور اپنے پروجیکٹ کی تاریخ دیکھیں—سب ایک ہی جگہ پر۔<br><a href='https://docs.phcode.dev/docs/Features/git'>گٹ پینل کے بارے میں مزید جانیں →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "اپنی پسندیدہ خصوصیات کے لیے ووٹ دیں!",
-  "ERROR_PREPARING_COMMIT_DIALOG": "کمیٹ ڈائیلاگ تیار کرنے میں ناکام"
+  "ERROR_STAGE_FAILED": "گٹ میں فائلز کو اسٹیج کرنے میں ناکام"
 });
 /*
  * GNU AGPL-3.0 License
@@ -113181,10 +113215,11 @@ define("nls/zh-cn/strings", {
   "ERROR_NO_REMOTE_SELECTED": "未为 {0} 选择远程仓库！",
   "ERROR_BRANCH_LIST": "获取分支列表失败",
   "ERROR_FETCH_REMOTE": "获取远程仓库信息失败",
+  "ERROR_PREPARING_COMMIT_DIALOG": "准备提交对话框失败",
   "GIT_TOAST_TITLE": "探索 Phoenix Code 中的 Git 功能",
   "GIT_TOAST_MESSAGE": "点击 Git 面板图标即可管理您的代码仓库。轻松提交、推送、拉取和查看项目历史记录，一切尽在一处。<br><a href='https://docs.phcode.dev/docs/Features/git'>了解更多关于 Git 面板的信息 →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "为您希望看到的下一个功能投票！",
-  "ERROR_PREPARING_COMMIT_DIALOG": "准备提交对话框失败"
+  "ERROR_STAGE_FAILED": "Git 文件暂存失败"
 });
 /*
  * GNU AGPL-3.0 License
@@ -114557,10 +114592,11 @@ define("nls/zh-tw/strings", {
   "ERROR_NO_REMOTE_SELECTED": "{0} 尚未選取任何遠端！",
   "ERROR_BRANCH_LIST": "取得分支列表失敗",
   "ERROR_FETCH_REMOTE": "擷取遠端資訊失敗",
+  "ERROR_PREPARING_COMMIT_DIALOG": "準備提交對話框失敗",
   "GIT_TOAST_TITLE": "在 Phoenix Code 中探索 Git 功能",
   "GIT_TOAST_MESSAGE": "按一下 Git 面板圖示即可管理您的儲存庫。輕鬆提交、推送、提取和檢視您的專案歷史記錄，一切盡在掌握之中。<br><a href='https://docs.phcode.dev/docs/Features/git'>深入瞭解 Git 面板 →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "投票選出您希望看到的下個功能！",
-  "ERROR_PREPARING_COMMIT_DIALOG": "準備提交對話框失敗"
+  "ERROR_STAGE_FAILED": "Git 檔案暫存失敗"
 });
 /*
  * GNU AGPL-3.0 License
