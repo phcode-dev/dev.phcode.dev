@@ -44593,6 +44593,7 @@ define("extensionsIntegrated/indentGuides/main", function (require, exports, mod
         } else if (shouldRerender || cm.__overlayEnabled !== enabled) {
             cm.__overlayEnabled = enabled;
             _reRenderOverlay();
+            // rare event, should not happen often. log if we are debugging performance related issues.
             console.log("Refreshing indent guides");
         }
     }
