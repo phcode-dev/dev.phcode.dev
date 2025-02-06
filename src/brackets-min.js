@@ -64866,6 +64866,7 @@ define("nls/ar/strings", {
   "ERROR_CREATE_TAG": "فشل إنشاء وسم",
   "ERROR_CODE_INSPECTION_FAILED": "فشل تنفيذ CodeInspection.inspectFile للملف",
   "ERROR_CANT_GET_STAGED_DIFF": "تعذر الحصول على فرق الملفات المرحلية",
+  "ERROR_STAGE_FAILED": "فشل تجهيز الملفات في Git",
   "ERROR_GIT_COMMIT_FAILED": "فشل عملية الـ Git Commit",
   "ERROR_GIT_BLAME_FAILED": "فشل عملية Git Blame",
   "ERROR_GIT_DIFF_FAILED": "فشل مُقارنة Git",
@@ -64886,7 +64887,7 @@ define("nls/ar/strings", {
   "GIT_TOAST_TITLE": "استكشف ميزات Git في Phoenix Code",
   "GIT_TOAST_MESSAGE": "انقر على رمز لوحة Git لإدارة مستودعك. يمكنك بسهولة تنفيذ الالتزام والدفع والسحب وعرض سجل مشروعك - كل ذلك في مكان واحد.<br><a href='https://docs.phcode.dev/docs/Features/git'>تعرّف على المزيد حول لوحة Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "صوت للميزات التي ترغب برؤيتها تالياً!",
-  "ERROR_STAGE_FAILED": "فشل تجهيز الملفات في Git"
+  "CMD_REPORT_ISSUE": "الإبلاغ عن مشكلة"
 });
 /*
  * GNU AGPL-3.0 License
@@ -66216,6 +66217,7 @@ define("nls/bg/strings", {
   "ERROR_CREATE_TAG": "Създаването на етикет е неуспешно",
   "ERROR_CODE_INSPECTION_FAILED": "CodeInspection.inspectFile не можа да се изпълни за файл",
   "ERROR_CANT_GET_STAGED_DIFF": "Не може да се получи разлика за индексирани файлове",
+  "ERROR_STAGE_FAILED": "Неуспешно добавяне на файлове в индекса на Git",
   "ERROR_GIT_COMMIT_FAILED": "Git commit е неуспешен",
   "ERROR_GIT_BLAME_FAILED": "Git blame е неуспешен",
   "ERROR_GIT_DIFF_FAILED": "Git diff е неуспешен",
@@ -66236,7 +66238,7 @@ define("nls/bg/strings", {
   "GIT_TOAST_TITLE": "Разгледайте Git функциите в Phoenix Code",
   "GIT_TOAST_MESSAGE": "Щракнете върху иконата на Git панела, за да управлявате хранилището си. Лесно създавайте commit, push, pull и преглеждайте историята на проекта си – всичко на едно място.<br><a href='https://docs.phcode.dev/docs/Features/git'>Научете повече за Git панела →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Гласувайте за функциите, които искате да видите следващи!",
-  "ERROR_STAGE_FAILED": "Неуспешно добавяне на файлове в индекса на Git"
+  "CMD_REPORT_ISSUE": "Докладване на проблем"
 });
 /*
  * Copyright (c) 2013 Adobe Systems Incorporated. All rights reserved.
@@ -67595,6 +67597,7 @@ define("nls/cs/strings", {
   "ERROR_CREATE_TAG": "Vytvoření tagu se nezdařilo",
   "ERROR_CODE_INSPECTION_FAILED": "CodeInspection.inspectFile se nepodařilo spustit pro soubor",
   "ERROR_CANT_GET_STAGED_DIFF": "Nelze získat diff pro připravené soubory",
+  "ERROR_STAGE_FAILED": "Nepodařilo se připravit soubory ke commitu v Gitu",
   "ERROR_GIT_COMMIT_FAILED": "Git commit se nezdařil",
   "ERROR_GIT_BLAME_FAILED": "Git blame se nezdařil",
   "ERROR_GIT_DIFF_FAILED": "Git diff se nezdařil",
@@ -67615,7 +67618,7 @@ define("nls/cs/strings", {
   "GIT_TOAST_TITLE": "Prozkoumejte funkce Gitu v Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klikněte na ikonu panelu Git pro správu vašeho repozitáře. Snadno commitujte, pushujte, pullujte a prohlížejte si historii projektu – vše na jednom místě.<br><a href='https://docs.phcode.dev/docs/Features/git'>Zjistěte více o panelu Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Hlasujte pro funkce, které chcete vidět v další verzi!",
-  "ERROR_STAGE_FAILED": "Nepodařilo se připravit soubory ke commitu v Gitu"
+  "CMD_REPORT_ISSUE": "Nahlásit problém"
 });
 /*
  * GNU AGPL-3.0 License
@@ -68972,6 +68975,7 @@ define("nls/da/strings", {
   "ERROR_CREATE_TAG": "Oprettelse af tag mislykkedes",
   "ERROR_CODE_INSPECTION_FAILED": "CodeInspection.inspectFile kunne ikke udføres for filen",
   "ERROR_CANT_GET_STAGED_DIFF": "Kan ikke hente diff for stagede filer",
+  "ERROR_STAGE_FAILED": "Kunne ikke stage filer i Git",
   "ERROR_GIT_COMMIT_FAILED": "Git-commit mislykkedes",
   "ERROR_GIT_BLAME_FAILED": "Git Blame mislykkedes",
   "ERROR_GIT_DIFF_FAILED": "Git Diff mislykkedes",
@@ -68992,7 +68996,7 @@ define("nls/da/strings", {
   "GIT_TOAST_TITLE": "Udforsk Git-funktioner i Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klik på Git-panelikonet for at administrere dit repository. Commit, push, pull og se din projekthistorik nemt – alt sammen på ét sted.<br><a href='https://docs.phcode.dev/docs/Features/git'>Læs mere om Git-panelet →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stem på de funktioner, du gerne vil se!",
-  "ERROR_STAGE_FAILED": "Kunne ikke stage filer i Git"
+  "CMD_REPORT_ISSUE": "Rapporter problem"
 });
 /*
  * GNU AGPL-3.0 License
@@ -70347,6 +70351,7 @@ define("nls/de/strings", {
   "ERROR_CREATE_TAG": "Tag-Erstellung fehlgeschlagen",
   "ERROR_CODE_INSPECTION_FAILED": "CodeInspection.inspectFile konnte für Datei nicht ausgeführt werden",
   "ERROR_CANT_GET_STAGED_DIFF": "Diff für bereitgestellte Dateien kann nicht abgerufen werden",
+  "ERROR_STAGE_FAILED": "Fehler beim Staging der Dateien in Git",
   "ERROR_GIT_COMMIT_FAILED": "Git-Commit fehlgeschlagen",
   "ERROR_GIT_BLAME_FAILED": "Git-Blame fehlgeschlagen",
   "ERROR_GIT_DIFF_FAILED": "Git-Diff fehlgeschlagen",
@@ -70367,7 +70372,7 @@ define("nls/de/strings", {
   "GIT_TOAST_TITLE": "Git-Funktionen in Phoenix Code entdecken",
   "GIT_TOAST_MESSAGE": "Klicken Sie auf das Git-Panel-Symbol, um Ihr Repository zu verwalten. Committen, Pushen, Pullen und die Anzeige Ihres Projektverlaufs – alles an einem Ort.<br><a href='https://docs.phcode.dev/docs/Features/git'>Mehr über das Git-Panel erfahren →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stimmen Sie für die Funktionen ab, die Sie als Nächstes sehen möchten!",
-  "ERROR_STAGE_FAILED": "Fehler beim Staging der Dateien in Git"
+  "CMD_REPORT_ISSUE": "Problem melden"
 });
 /*
  * GNU AGPL-3.0 License
@@ -71724,6 +71729,7 @@ define("nls/el/strings", {
   "ERROR_CREATE_TAG": "Αποτυχία δημιουργίας ετικέτας",
   "ERROR_CODE_INSPECTION_FAILED": "Απέτυχε η εκτέλεση του CodeInspection.inspectFile για το αρχείο",
   "ERROR_CANT_GET_STAGED_DIFF": "Δεν είναι δυνατή η λήψη διαφορών για τα αρχεία προς καταχώρηση",
+  "ERROR_STAGE_FAILED": "Αποτυχία προσθήκης αρχείων στο Git",
   "ERROR_GIT_COMMIT_FAILED": "Αποτυχία καταχώρησης Git",
   "ERROR_GIT_BLAME_FAILED": "Αποτυχία Git Blame",
   "ERROR_GIT_DIFF_FAILED": "Αποτυχία Git Diff",
@@ -71744,7 +71750,7 @@ define("nls/el/strings", {
   "GIT_TOAST_TITLE": "Εξερευνήστε τις Λειτουργίες Git στο Phoenix Code",
   "GIT_TOAST_MESSAGE": "Κάντε κλικ στο εικονίδιο του πίνακα Git για να διαχειριστείτε το αποθετήριό σας. Κάντε εύκολα commit, push, pull και δείτε το ιστορικό του έργου σας—όλα σε ένα μέρος.<br><a href='https://docs.phcode.dev/docs/Features/git'>Μάθετε περισσότερα για τον πίνακα Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Ψηφίστε για τις λειτουργίες που θέλετε να δείτε στη συνέχεια!",
-  "ERROR_STAGE_FAILED": "Αποτυχία προσθήκης αρχείων στο Git"
+  "CMD_REPORT_ISSUE": "Αναφορά Προβλήματος"
 });
 /*
  * GNU AGPL-3.0 License
@@ -73101,6 +73107,7 @@ define("nls/en-gb/strings", {
   "ERROR_CREATE_TAG": "Tag creation failed",
   "ERROR_CODE_INSPECTION_FAILED": "Code inspection failed for file",
   "ERROR_CANT_GET_STAGED_DIFF": "Can't get diff for staged files",
+  "ERROR_STAGE_FAILED": "Failed to stage files in Git",
   "ERROR_GIT_COMMIT_FAILED": "Git commit failed",
   "ERROR_GIT_BLAME_FAILED": "Git blame failed",
   "ERROR_GIT_DIFF_FAILED": "Git diff failed",
@@ -73121,7 +73128,7 @@ define("nls/en-gb/strings", {
   "GIT_TOAST_TITLE": "Explore Git Features in Phoenix Code",
   "GIT_TOAST_MESSAGE": "Click the Git panel icon to manage your repository. Easily commit, push, pull, and view your project history—all in one place.<br><a href='https://docs.phcode.dev/docs/Features/git'>Learn more about the Git panel →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote for the features you'd like to see next!",
-  "ERROR_STAGE_FAILED": "Failed to stage files in Git"
+  "CMD_REPORT_ISSUE": "Report Issue"
 });
 /*
  * GNU AGPL-3.0 License
@@ -74451,6 +74458,7 @@ define("nls/es/strings", {
   "ERROR_CREATE_TAG": "Error al crear la etiqueta",
   "ERROR_CODE_INSPECTION_FAILED": "CodeInspection.inspectFile no se pudo ejecutar para el archivo",
   "ERROR_CANT_GET_STAGED_DIFF": "No se puede obtener la diferencia para los archivos preparados",
+  "ERROR_STAGE_FAILED": "Error al preparar los archivos en Git",
   "ERROR_GIT_COMMIT_FAILED": "Error al realizar el commit de Git",
   "ERROR_GIT_BLAME_FAILED": "Error al obtener la información de autoría de Git (blame)",
   "ERROR_GIT_DIFF_FAILED": "Error al obtener la diferencia de Git (diff)",
@@ -74471,7 +74479,7 @@ define("nls/es/strings", {
   "GIT_TOAST_TITLE": "Explora las funciones de Git en Phoenix Code",
   "GIT_TOAST_MESSAGE": "Haga clic en el icono del panel de Git para administrar su repositorio. Confirme, envíe (push), extraiga (pull) y vea el historial de su proyecto fácilmente, todo en un solo lugar.<br><a href='https://docs.phcode.dev/docs/Features/git'>Obtenga más información sobre el panel de Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "¡Vota por las funciones que quieres ver próximamente!",
-  "ERROR_STAGE_FAILED": "Error al preparar los archivos en Git"
+  "CMD_REPORT_ISSUE": "Informar de un problema"
 });
 /*
  * GNU AGPL-3.0 License
@@ -75829,6 +75837,7 @@ define("nls/fa-ir/strings", {
   "ERROR_CREATE_TAG": "ایجاد برچسب ناموفق بود",
   "ERROR_CODE_INSPECTION_FAILED": "اجرای CodeInspection.inspectFile برای فایل ناموفق بود",
   "ERROR_CANT_GET_STAGED_DIFF": "دریافت تفاوت‌ها برای فایل‌های مرحله‌بندی‌شده امکان‌پذیر نیست",
+  "ERROR_STAGE_FAILED": "خطا در مرحله‌بندی فایل‌ها در گیت",
   "ERROR_GIT_COMMIT_FAILED": "انجام کامیت گیت ناموفق بود",
   "ERROR_GIT_BLAME_FAILED": "انجام Blame گیت ناموفق بود",
   "ERROR_GIT_DIFF_FAILED": "انجام Diff گیت ناموفق بود",
@@ -75849,7 +75858,7 @@ define("nls/fa-ir/strings", {
   "GIT_TOAST_TITLE": "کاوش ویژگی‌های گیت در Phoenix Code",
   "GIT_TOAST_MESSAGE": "برای مدیریت مخزن خود روی آیکون پنل گیت کلیک کنید. به راحتی کامیت، پوش، پول و مشاهده تاریخچه پروژه خود را - همه در یک مکان - انجام دهید.<br><a href='https://docs.phcode.dev/docs/Features/git'>درباره پنل گیت بیشتر بدانید →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "برای قابلیت‌هایی که می‌خواهید در آینده ببینید، رأی دهید!",
-  "ERROR_STAGE_FAILED": "خطا در مرحله‌بندی فایل‌ها در گیت"
+  "CMD_REPORT_ISSUE": "گزارش مشکل"
 });
 /*
  * GNU AGPL-3.0 License
@@ -77206,6 +77215,7 @@ define("nls/fi/strings", {
   "ERROR_CREATE_TAG": "Tunnisteen luonti epäonnistui",
   "ERROR_CODE_INSPECTION_FAILED": "CodeInspection.inspectFile-komennon suoritus epäonnistui tiedostolle",
   "ERROR_CANT_GET_STAGED_DIFF": "Ei voida hakea eroavaisuuksia valmisteltaville tiedostoille",
+  "ERROR_STAGE_FAILED": "Git-tiedostojen valmistelu epäonnistui",
   "ERROR_GIT_COMMIT_FAILED": "Git-komennon commit suoritus epäonnistui",
   "ERROR_GIT_BLAME_FAILED": "Git-komennon blame suoritus epäonnistui",
   "ERROR_GIT_DIFF_FAILED": "Git-komennon diff suoritus epäonnistui",
@@ -77226,7 +77236,7 @@ define("nls/fi/strings", {
   "GIT_TOAST_TITLE": "Tutustu Git-ominaisuuksiin Phoenix Codessa",
   "GIT_TOAST_MESSAGE": "Napsauta Git-paneelin kuvaketta hallitaksesi arkistoasi (repository). Tee commit, push ja pull helposti ja tarkastele projektihistoriaasi – kaikki yhdessä paikassa.<br><a href='https://docs.phcode.dev/docs/Features/git'>Lue lisää Git-paneelista →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Äänestä ominaisuuksia, jotka haluat nähdä seuraavaksi!",
-  "ERROR_STAGE_FAILED": "Git-tiedostojen valmistelu epäonnistui"
+  "CMD_REPORT_ISSUE": "Ilmoita ongelmasta"
 });
 /*
  * GNU AGPL-3.0 License
@@ -78583,6 +78593,7 @@ define("nls/fr/strings", {
   "ERROR_CREATE_TAG": "Échec de la création de l'étiquette",
   "ERROR_CODE_INSPECTION_FAILED": "Échec de l'exécution de CodeInspection.inspectFile pour le fichier",
   "ERROR_CANT_GET_STAGED_DIFF": "Impossible d'obtenir la différence pour les fichiers indexés",
+  "ERROR_STAGE_FAILED": "Échec de l'indexation des fichiers dans Git",
   "ERROR_GIT_COMMIT_FAILED": "Échec du commit Git",
   "ERROR_GIT_BLAME_FAILED": "Échec de Git Blame",
   "ERROR_GIT_DIFF_FAILED": "Échec de Git Diff",
@@ -78603,7 +78614,7 @@ define("nls/fr/strings", {
   "GIT_TOAST_TITLE": "Explorer les fonctionnalités Git dans Phoenix Code",
   "GIT_TOAST_MESSAGE": "Cliquez sur l'icône du panneau Git pour gérer votre dépôt. Validez, envoyez (push), récupérez (pull) et consultez l'historique de votre projet facilement, le tout au même endroit.<br><a href='https://docs.phcode.dev/docs/Features/git'>En savoir plus sur le panneau Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Votez pour les fonctionnalités que vous souhaitez voir apparaître !",
-  "ERROR_STAGE_FAILED": "Échec de l'indexation des fichiers dans Git"
+  "CMD_REPORT_ISSUE": "Signaler un problème"
 });
 /*
  * GNU AGPL-3.0 License
@@ -79960,6 +79971,7 @@ define("nls/gl/strings", {
   "ERROR_CREATE_TAG": "Fallou a creación da etiqueta",
   "ERROR_CODE_INSPECTION_FAILED": "Fallou a execución de CodeInspection.inspectFile para o ficheiro",
   "ERROR_CANT_GET_STAGED_DIFF": "Non se pode obter a diferenza para os ficheiros preparados",
+  "ERROR_STAGE_FAILED": "Non se puideron preparar os ficheiros en Git",
   "ERROR_GIT_COMMIT_FAILED": "Fallou a confirmación de Git",
   "ERROR_GIT_BLAME_FAILED": "Fallou a atribución de Git",
   "ERROR_GIT_DIFF_FAILED": "Fallou a diferenza de Git",
@@ -79980,7 +79992,7 @@ define("nls/gl/strings", {
   "GIT_TOAST_TITLE": "Explora as funcionalidades de Git en Phoenix Code",
   "GIT_TOAST_MESSAGE": "Fai clic na icona do panel de Git para xestionar o teu repositorio. Fai commits, envía (push), obtén (pull) e visualiza o historial do teu proxecto facilmente, todo nun mesmo lugar.<br><a href='https://docs.phcode.dev/docs/Features/git'>Aprende máis sobre o panel de Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vota polas funcionalidades que queres ver a continuación!",
-  "ERROR_STAGE_FAILED": "Non se puideron preparar os ficheiros en Git"
+  "CMD_REPORT_ISSUE": "Informar dun problema"
 });
 /*
  * GNU AGPL-3.0 License
@@ -81310,6 +81322,7 @@ define("nls/hi/strings", {
   "ERROR_CREATE_TAG": "टैग बनाना विफल रहा।",
   "ERROR_CODE_INSPECTION_FAILED": "फ़ाइल के लिए CodeInspection.inspectFile निष्पादित करने में विफल रहा।",
   "ERROR_CANT_GET_STAGED_DIFF": "स्टेज की गई फ़ाइलों के लिए अंतर प्राप्त नहीं कर सकते।",
+  "ERROR_STAGE_FAILED": "गिट में फ़ाइलों को स्टेज करने में विफल।",
   "ERROR_GIT_COMMIT_FAILED": "Git कमिट विफल रहा।",
   "ERROR_GIT_BLAME_FAILED": "Git ब्लेम विफल रहा।",
   "ERROR_GIT_DIFF_FAILED": "गिट डिफ विफल रहा",
@@ -81330,7 +81343,7 @@ define("nls/hi/strings", {
   "GIT_TOAST_TITLE": "फ़ीनिक्स कोड में Git सुविधाओं का अन्वेषण करें",
   "GIT_TOAST_MESSAGE": "अपने रिपॉजिटरी को प्रबंधित करने के लिए Git पैनल आइकन पर क्लिक करें। आसानी से कमिट करें, पुश करें, पुल करें और अपने प्रोजेक्ट का इतिहास देखें—सब एक ही स्थान पर।<br><a href='https://docs.phcode.dev/docs/Features/git'>Git पैनल के बारे में अधिक जानें →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "उन विशेषताओं के लिए वोट करें जिन्हें आप आगे देखना चाहते हैं!",
-  "ERROR_STAGE_FAILED": "गिट में फ़ाइलों को स्टेज करने में विफल।"
+  "CMD_REPORT_ISSUE": "समस्या की सूचना दें"
 });
 /*
  * GNU AGPL-3.0 License
@@ -82660,6 +82673,7 @@ define("nls/hr/strings", {
   "ERROR_CREATE_TAG": "Kreiranje oznake nije uspjelo",
   "ERROR_CODE_INSPECTION_FAILED": "CodeInspection.inspectFile nije uspio izvršiti za datoteku",
   "ERROR_CANT_GET_STAGED_DIFF": "Ne mogu dohvatiti razlike za datoteke u pripremi",
+  "ERROR_STAGE_FAILED": "Neuspješno dodavanje datoteka u pripremnu mapu Gita",
   "ERROR_GIT_COMMIT_FAILED": "Git commit nije uspio",
   "ERROR_GIT_BLAME_FAILED": "Git Blame nije uspio",
   "ERROR_GIT_DIFF_FAILED": "Git Diff nije uspio",
@@ -82680,7 +82694,7 @@ define("nls/hr/strings", {
   "GIT_TOAST_TITLE": "Istražite Git značajke u Phoenix Codeu",
   "GIT_TOAST_MESSAGE": "Kliknite ikonu Git panela za upravljanje svojim repozitorijem. Jednostavno potvrdite (commit), pošaljite (push), preuzmite (pull) i pregledajte povijest svog projekta - sve na jednom mjestu.<br><a href='https://docs.phcode.dev/docs/Features/git'>Saznajte više o Git panelu →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Glasajte za značajke koje želite vidjeti sljedeće!",
-  "ERROR_STAGE_FAILED": "Neuspješno dodavanje datoteka u pripremnu mapu Gita"
+  "CMD_REPORT_ISSUE": "Prijavi problem"
 });
 /*
  * GNU AGPL-3.0 License
@@ -84037,6 +84051,7 @@ define("nls/hu/strings", {
   "ERROR_CREATE_TAG": "Címke létrehozása sikertelen",
   "ERROR_CODE_INSPECTION_FAILED": "A CodeInspection.inspectFile végrehajtása sikertelen a következő fájlnál:",
   "ERROR_CANT_GET_STAGED_DIFF": "Nem lehet diff-et lekérni a staged fájlokhoz",
+  "ERROR_STAGE_FAILED": "Nem sikerült a fájlok staged állapotba állítása a Gitben",
   "ERROR_GIT_COMMIT_FAILED": "Git commit sikertelen",
   "ERROR_GIT_BLAME_FAILED": "Git hibáztatás (blame) sikertelen",
   "ERROR_GIT_DIFF_FAILED": "Git diff sikertelen",
@@ -84057,7 +84072,7 @@ define("nls/hu/strings", {
   "GIT_TOAST_TITLE": "Fedezd fel a Git funkciókat a Phoenix Code-ban",
   "GIT_TOAST_MESSAGE": "Kattintson a Git panel ikonra a verziókövető rendszer kezeléséhez. Könnyedén végezhet commit, push és pull műveleteket, valamint megtekintheti a projekt előzményeit – mindezt egy helyen.<br><a href='https://docs.phcode.dev/docs/Features/git'>Tudj meg többet a Git panelről →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Szavazzon azokra a funkciókra, amelyeket a jövőben látni szeretne!",
-  "ERROR_STAGE_FAILED": "Nem sikerült a fájlok staged állapotba állítása a Gitben"
+  "CMD_REPORT_ISSUE": "Hiba bejelentése"
 });
 /*
  * GNU AGPL-3.0 License
@@ -85387,6 +85402,7 @@ define("nls/id/strings", {
   "ERROR_CREATE_TAG": "Pembuatan tag gagal",
   "ERROR_CODE_INSPECTION_FAILED": "`CodeInspection.inspectFile` gagal dijalankan untuk berkas",
   "ERROR_CANT_GET_STAGED_DIFF": "Tidak dapat memperoleh perbedaan untuk berkas yang telah di-staging",
+  "ERROR_STAGE_FAILED": "Gagal men-stage berkas di Git",
   "ERROR_GIT_COMMIT_FAILED": "Commit Git gagal",
   "ERROR_GIT_BLAME_FAILED": "Git Blame gagal",
   "ERROR_GIT_DIFF_FAILED": "Git Diff gagal",
@@ -85407,7 +85423,7 @@ define("nls/id/strings", {
   "GIT_TOAST_TITLE": "Jelajahi Fitur Git di Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klik ikon panel Git untuk mengelola repositori Anda. Lakukan commit, push, pull, dan lihat riwayat proyek Anda dengan mudah—semua di satu tempat.<br><a href='https://docs.phcode.dev/docs/Features/git'>Pelajari lebih lanjut tentang panel Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Pilih fitur yang ingin Anda lihat selanjutnya!",
-  "ERROR_STAGE_FAILED": "Gagal men-stage berkas di Git"
+  "CMD_REPORT_ISSUE": "Laporkan Masalah"
 });
 /*
  * GNU AGPL-3.0 License
@@ -86763,6 +86779,7 @@ define("nls/it/strings", {
   "ERROR_CREATE_TAG": "Creazione tag non riuscita",
   "ERROR_CODE_INSPECTION_FAILED": "CodeInspection.inspectFile non è riuscito ad eseguire per il file",
   "ERROR_CANT_GET_STAGED_DIFF": "Impossibile ottenere le differenze per i file in staging",
+  "ERROR_STAGE_FAILED": "Impossibile aggiungere i file all'indice di Git",
   "ERROR_GIT_COMMIT_FAILED": "Commit Git non riuscito",
   "ERROR_GIT_BLAME_FAILED": "Blame Git non riuscito",
   "ERROR_GIT_DIFF_FAILED": "Diff Git non riuscito",
@@ -86783,7 +86800,7 @@ define("nls/it/strings", {
   "GIT_TOAST_TITLE": "Esplora le funzionalità Git in Phoenix Code",
   "GIT_TOAST_MESSAGE": "Fai clic sull'icona del pannello Git per gestire il tuo repository. Esegui commit, push, pull e visualizza la cronologia del tuo progetto, tutto in un unico posto.<br><a href='https://docs.phcode.dev/docs/Features/git'>Scopri di più sul pannello Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vota per le funzionalità che desideri vedere in futuro!",
-  "ERROR_STAGE_FAILED": "Impossibile aggiungere i file all'indice di Git"
+  "CMD_REPORT_ISSUE": "Segnala un problema"
 });
 /*
  * GNU AGPL-3.0 License
@@ -88140,6 +88157,7 @@ define("nls/ja/strings", {
   "ERROR_CREATE_TAG": "タグの作成に失敗しました",
   "ERROR_CODE_INSPECTION_FAILED": "ファイルに対する CodeInspection.inspectFile の実行に失敗しました",
   "ERROR_CANT_GET_STAGED_DIFF": "ステージングされたファイルの差分を取得できません",
+  "ERROR_STAGE_FAILED": "Gitでのファイルのステージングに失敗しました",
   "ERROR_GIT_COMMIT_FAILED": "Git コミットに失敗しました",
   "ERROR_GIT_BLAME_FAILED": "Git Blame に失敗しました",
   "ERROR_GIT_DIFF_FAILED": "Git 差分表示に失敗しました",
@@ -88160,7 +88178,7 @@ define("nls/ja/strings", {
   "GIT_TOAST_TITLE": "Phoenix CodeのGit機能を試す",
   "GIT_TOAST_MESSAGE": "Gitパネルアイコンをクリックしてリポジトリを管理します。コミット、プッシュ、プル、プロジェクト履歴の表示をすべて1か所で行えます。<br><a href='https://docs.phcode.dev/docs/Features/git'>Gitパネルの詳細はこちら →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "次に実装してほしい機能に投票してください！",
-  "ERROR_STAGE_FAILED": "Gitでのファイルのステージングに失敗しました"
+  "CMD_REPORT_ISSUE": "問題を報告"
 });
 /*
  * GNU AGPL-3.0 License
@@ -89517,6 +89535,7 @@ define("nls/ko/strings", {
   "ERROR_CREATE_TAG": "태그 생성 실패",
   "ERROR_CODE_INSPECTION_FAILED": "파일 {{file}}에 대한 CodeInspection.inspectFile 실행 실패",
   "ERROR_CANT_GET_STAGED_DIFF": "스테이징된 파일의 차이를 가져올 수 없습니다.",
+  "ERROR_STAGE_FAILED": "Git에서 파일 스테이징에 실패했습니다.",
   "ERROR_GIT_COMMIT_FAILED": "Git 커밋 실패",
   "ERROR_GIT_BLAME_FAILED": "Git 블레임 실패",
   "ERROR_GIT_DIFF_FAILED": "Git Diff 실패",
@@ -89537,7 +89556,7 @@ define("nls/ko/strings", {
   "GIT_TOAST_TITLE": "Phoenix Code의 Git 기능 살펴보기",
   "GIT_TOAST_MESSAGE": "Git 패널 아이콘을 클릭하여 저장소를 관리하세요. 커밋, 푸시, 풀, 프로젝트 기록 보기를 한 곳에서 간편하게 수행할 수 있습니다.<br><a href='https://docs.phcode.dev/docs/Features/git'>Git 패널에 대해 자세히 알아보기 →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "다음에 보고 싶은 기능에 투표하세요!",
-  "ERROR_STAGE_FAILED": "Git에서 파일 스테이징에 실패했습니다."
+  "CMD_REPORT_ISSUE": "문제 신고"
 });
 /*
  * GNU AGPL-3.0 License
@@ -90894,6 +90913,7 @@ define("nls/lv/strings", {
   "ERROR_CREATE_TAG": "Neizdevās izveidot tagu",
   "ERROR_CODE_INSPECTION_FAILED": "`CodeInspection.inspectFile` neizdevās izpildīt failam",
   "ERROR_CANT_GET_STAGED_DIFF": "Nevar iegūt izmaiņas sagatavotajiem failiem",
+  "ERROR_STAGE_FAILED": "Neizdevās iestudēt failus Gitā",
   "ERROR_GIT_COMMIT_FAILED": "Git commit neizdevās",
   "ERROR_GIT_BLAME_FAILED": "Git blame neizdevās",
   "ERROR_GIT_DIFF_FAILED": "Git diff neizdevās",
@@ -90914,7 +90934,7 @@ define("nls/lv/strings", {
   "GIT_TOAST_TITLE": "Izpētiet Git funkcijas Phoenix Code",
   "GIT_TOAST_MESSAGE": "Noklikšķiniet uz Git paneļa ikonas, lai pārvaldītu savu repozitoriju. Ērti veiciet commit, push, pull un skatiet sava projekta vēsturi — viss vienā vietā.<br><a href='https://docs.phcode.dev/docs/Features/git'>Uzziniet vairāk par Git paneli →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Nobalsot par funkcijām, kuras vēlaties redzēt nākamreiz!",
-  "ERROR_STAGE_FAILED": "Neizdevās iestudēt failus Gitā"
+  "CMD_REPORT_ISSUE": "Ziņot par problēmu"
 });
 /*
  * GNU AGPL-3.0 License
@@ -92244,6 +92264,7 @@ define("nls/ml/strings", {
   "ERROR_CREATE_TAG": "ടാഗ് സൃഷ്ടിക്കുന്നതിൽ പരാജയപ്പെറ്റു",
   "ERROR_CODE_INSPECTION_FAILED": "{{file}} എന്ന ഫയലിന് CodeInspection.inspectFile എക്സിക്യൂട്ട് ചെയ്യുന്നതിൽ പരാജയപ്പെറ്റു",
   "ERROR_CANT_GET_STAGED_DIFF": "സ്റ്റേജ് ചെയ്ത ഫയലുകൾക്കുള്ള വ്യത്യാസം കണ്ടെത്താനായില്ല",
+  "ERROR_STAGE_FAILED": "ഗിറ്റിൽ ഫയലുകൾ സ്റ്റേജ് ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു",
   "ERROR_GIT_COMMIT_FAILED": "ഗിറ്റ് കമ്മിറ്റ് പരാജയപ്പെട്ടു",
   "ERROR_GIT_BLAME_FAILED": "ഗിറ്റ് ബ്ലെയിം പരാജയപ്പെട്ടു",
   "ERROR_GIT_DIFF_FAILED": "ഗിറ്റ് ഡിഫ് പരാജയപ്പെട്ടു",
@@ -92264,7 +92285,7 @@ define("nls/ml/strings", {
   "GIT_TOAST_TITLE": "ഫീനിക്സ് കോഡിലെ ഗിറ്റ് സവിശേഷതകൾ പര്യവേക്ഷണം ചെയ്യുക",
   "GIT_TOAST_MESSAGE": "നിങ്ങളുടെ റെപ്പോസിറ്ററി കൈകാര്യം ചെയ്യാൻ ഗിറ്റ് പാനൽ ഐക്കണിൽ ക്ലിക്ക് ചെയ്യുക. എളുപ്പത്തിൽ കമ്മിറ്റ് ചെയ്യുക, പുഷ് ചെയ്യുക, പുൾ ചെയ്യുക, നിങ്ങളുടെ പ്രോജക്റ്റ് ചരിത്രം കാണുക—എല്ലാം ഒരിടത്ത്.<br><a href='https://docs.phcode.dev/docs/Features/git'>ഗിറ്റ് പാനലിനെക്കുറിച്ച് കൂടുതലറിയുക →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "നിങ്ങൾക്ക് അടുത്തതായി കാണാൻ ആഗ്രഹിക്കുന്ന സവിശേഷതകൾക്ക് വോട്ട് ചെയ്യുക!",
-  "ERROR_STAGE_FAILED": "ഗിറ്റിൽ ഫയലുകൾ സ്റ്റേജ് ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു"
+  "CMD_REPORT_ISSUE": "പ്രശ്‌നം റിപ്പോർട്ട് ചെയ്യുക"
 });
 /*
  * GNU AGPL-3.0 License
@@ -93594,6 +93615,7 @@ define("nls/nb/strings", {
   "ERROR_CREATE_TAG": "Klarte ikke å opprette tag",
   "ERROR_CODE_INSPECTION_FAILED": "CodeInspection.inspectFile mislyktes for filen",
   "ERROR_CANT_GET_STAGED_DIFF": "Kan ikke hente diff for indekserte filer",
+  "ERROR_STAGE_FAILED": "Klarte ikke å legge til filer i Git-indeksen",
   "ERROR_GIT_COMMIT_FAILED": "Git-commit mislyktes",
   "ERROR_GIT_BLAME_FAILED": "Git-blame mislyktes",
   "ERROR_GIT_DIFF_FAILED": "Git-diff mislyktes",
@@ -93614,7 +93636,7 @@ define("nls/nb/strings", {
   "GIT_TOAST_TITLE": "Utforsk Git-funksjoner i Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klikk på Git-panelikonet for å administrere repositoriet ditt. Utfør commit, push, pull og se prosjektloggen din – alt på ett sted.<br><a href='https://docs.phcode.dev/docs/Features/git'>Lær mer om Git-panelet →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stem på funksjonene du ønsker å se neste!",
-  "ERROR_STAGE_FAILED": "Klarte ikke å legge til filer i Git-indeksen"
+  "CMD_REPORT_ISSUE": "Rapporter problem"
 });
 /*
  * GNU AGPL-3.0 License
@@ -94971,6 +94993,7 @@ define("nls/nl/strings", {
   "ERROR_CREATE_TAG": "Aanmaken tag mislukt",
   "ERROR_CODE_INSPECTION_FAILED": "CodeInspection.inspectFile kon niet worden uitgevoerd voor bestand",
   "ERROR_CANT_GET_STAGED_DIFF": "Kan geen diff ophalen voor gestaged bestanden",
+  "ERROR_STAGE_FAILED": "Bestanden konden niet worden gestaged in Git",
   "ERROR_GIT_COMMIT_FAILED": "Git-commit mislukt",
   "ERROR_GIT_BLAME_FAILED": "Git Blame mislukt",
   "ERROR_GIT_DIFF_FAILED": "Git Diff mislukt",
@@ -94991,7 +95014,7 @@ define("nls/nl/strings", {
   "GIT_TOAST_TITLE": "Ontdek Git-functies in Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klik op het Git-paneelpictogram om uw repository te beheren. Commit, push, pull en bekijk uw projectgeschiedenis eenvoudig - alles op één plek.<br><a href='https://docs.phcode.dev/docs/Features/git'>Meer informatie over het Git-paneel →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stem op de functies die u graag wilt zien!",
-  "ERROR_STAGE_FAILED": "Bestanden konden niet worden gestaged in Git"
+  "CMD_REPORT_ISSUE": "Probleem melden"
 });
 /*
  * GNU AGPL-3.0 License
@@ -96348,6 +96371,7 @@ define("nls/pl/strings", {
   "ERROR_CREATE_TAG": "Utworzenie tagu nie powiodło się",
   "ERROR_CODE_INSPECTION_FAILED": "Wykonanie CodeInspection.inspectFile nie powiodło się dla pliku",
   "ERROR_CANT_GET_STAGED_DIFF": "Nie można pobrać różnic dla plików dodanych do zatwierdzenia",
+  "ERROR_STAGE_FAILED": "Nie udało się dodać plików do poczekalni Git",
   "ERROR_GIT_COMMIT_FAILED": "Zatwierdzenie Git nie powiodło się",
   "ERROR_GIT_BLAME_FAILED": "Git Blame nie powiodło się",
   "ERROR_GIT_DIFF_FAILED": "Git Diff nie powiodło się",
@@ -96368,7 +96392,7 @@ define("nls/pl/strings", {
   "GIT_TOAST_TITLE": "Poznaj funkcje Gita w Phoenix Code",
   "GIT_TOAST_MESSAGE": "Kliknij ikonę panelu Git, aby zarządzać swoim repozytorium. Łatwo zatwierdzaj, przesyłaj, pobieraj i przeglądaj historię swojego projektu — wszystko w jednym miejscu.<br><a href='https://docs.phcode.dev/docs/Features/git'>Dowiedz się więcej o panelu Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Zagłosuj na funkcje, które chcesz zobaczyć w przyszłości!",
-  "ERROR_STAGE_FAILED": "Nie udało się dodać plików do poczekalni Git"
+  "CMD_REPORT_ISSUE": "Zgłoś problem"
 });
 /*
  * GNU AGPL-3.0 License
@@ -97725,6 +97749,7 @@ define("nls/pt-br/strings", {
   "ERROR_CREATE_TAG": "Falha ao criar tag",
   "ERROR_CODE_INSPECTION_FAILED": "CodeInspection.inspectFile falhou ao executar para o arquivo",
   "ERROR_CANT_GET_STAGED_DIFF": "Não foi possível obter o diff dos arquivos em stage",
+  "ERROR_STAGE_FAILED": "Falha ao indexar arquivos no Git",
   "ERROR_GIT_COMMIT_FAILED": "Commit Git falhou",
   "ERROR_GIT_BLAME_FAILED": "Git Blame falhou",
   "ERROR_GIT_DIFF_FAILED": "Git Diff falhou",
@@ -97745,7 +97770,7 @@ define("nls/pt-br/strings", {
   "GIT_TOAST_TITLE": "Explore os Recursos do Git no Phoenix Code",
   "GIT_TOAST_MESSAGE": "Clique no ícone do painel Git para gerenciar seu repositório. Faça commits, pushes, pulls e visualize o histórico do seu projeto com facilidade — tudo em um só lugar.<br><a href='https://docs.phcode.dev/docs/Features/git'>Saiba mais sobre o painel Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote nos recursos que você quer ver em seguida!",
-  "ERROR_STAGE_FAILED": "Falha ao indexar arquivos no Git"
+  "CMD_REPORT_ISSUE": "Reportar um Problema"
 });
 /*
  * GNU AGPL-3.0 License
@@ -99100,6 +99125,7 @@ define("nls/pt-pt/strings", {
   "ERROR_CREATE_TAG": "Criação de etiqueta falhou",
   "ERROR_CODE_INSPECTION_FAILED": "Falha ao executar CodeInspection.inspectFile para o ficheiro",
   "ERROR_CANT_GET_STAGED_DIFF": "Não foi possível obter as diferenças para os ficheiros em stage",
+  "ERROR_STAGE_FAILED": "Falha ao indexar ficheiros no Git",
   "ERROR_GIT_COMMIT_FAILED": "Commit Git falhou",
   "ERROR_GIT_BLAME_FAILED": "Git Blame falhou",
   "ERROR_GIT_DIFF_FAILED": "Git Diff falhou",
@@ -99120,7 +99146,7 @@ define("nls/pt-pt/strings", {
   "GIT_TOAST_TITLE": "Explore as funcionalidades do Git no Phoenix Code",
   "GIT_TOAST_MESSAGE": "Clique no ícone do painel Git para gerir o seu repositório. Efetue commits, pushes, pulls e veja o histórico do seu projeto com facilidade — tudo num só lugar.<br><a href='https://docs.phcode.dev/docs/Features/git'>Saiba mais sobre o painel Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote nas funcionalidades que quer ver a seguir!",
-  "ERROR_STAGE_FAILED": "Falha ao indexar ficheiros no Git"
+  "CMD_REPORT_ISSUE": "Reportar Problema"
 });
 /*
  * GNU AGPL-3.0 License
@@ -100475,6 +100501,7 @@ define("nls/ro/strings", {
   "ERROR_CREATE_TAG": "Creare etichetă eșuată",
   "ERROR_CODE_INSPECTION_FAILED": "CodeInspection.inspectFile nu a reușit să se execute pentru fișierul",
   "ERROR_CANT_GET_STAGED_DIFF": "Nu se poate obține diff pentru fișierele pregătite",
+  "ERROR_STAGE_FAILED": "Eșuare la adăugarea fișierelor în indexul Git",
   "ERROR_GIT_COMMIT_FAILED": "Commit Git eșuat",
   "ERROR_GIT_BLAME_FAILED": "Blame Git eșuat",
   "ERROR_GIT_DIFF_FAILED": "Diff Git eșuat",
@@ -100495,7 +100522,7 @@ define("nls/ro/strings", {
   "GIT_TOAST_TITLE": "Explorați funcțiile Git în Phoenix Code",
   "GIT_TOAST_MESSAGE": "Faceți clic pe pictograma panoului Git pentru a vă gestiona depozitul. Efectuați ușor commit, push, pull și vizualizați istoricul proiectului dvs. - totul într-un singur loc.<br><a href='https://docs.phcode.dev/docs/Features/git'>Aflați mai multe despre panoul Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Votează pentru funcționalitățile pe care dorești să le vezi în continuare!",
-  "ERROR_STAGE_FAILED": "Eșuare la adăugarea fișierelor în indexul Git"
+  "CMD_REPORT_ISSUE": "Raportează o problemă"
 });
 /*
  * GNU AGPL-3.0 License
@@ -103458,6 +103485,7 @@ define("nls/ru/strings", {
   "ERROR_CREATE_TAG": "Не удалось создать тег",
   "ERROR_CODE_INSPECTION_FAILED": "CodeInspection.inspectFile не удалось выполнить для файла",
   "ERROR_CANT_GET_STAGED_DIFF": "Не удалось получить различия для проиндексированных файлов",
+  "ERROR_STAGE_FAILED": "Не удалось проиндексировать файлы в Git",
   "ERROR_GIT_COMMIT_FAILED": "Git: сбой фиксации изменений (коммита)",
   "ERROR_GIT_BLAME_FAILED": "Git: сбой операции Blame",
   "ERROR_GIT_DIFF_FAILED": "Git: сбой операции Diff",
@@ -103478,7 +103506,7 @@ define("nls/ru/strings", {
   "GIT_TOAST_TITLE": "Возможности Git в Phoenix Code",
   "GIT_TOAST_MESSAGE": "Нажмите на значок панели Git для управления вашим репозиторием. Легко выполняйте коммиты, отправляйте (push), получайте (pull) изменения и просматривайте историю вашего проекта — все в одном месте.<br><a href='https://docs.phcode.dev/docs/Features/git'>Узнать больше о панели Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Проголосуйте за функции, которые вы хотите увидеть в будущем!",
-  "ERROR_STAGE_FAILED": "Не удалось проиндексировать файлы в Git"
+  "CMD_REPORT_ISSUE": "Сообщить о проблеме"
 });
 /*
  * GNU AGPL-3.0 License
@@ -104835,6 +104863,7 @@ define("nls/sk/strings", {
   "ERROR_CREATE_TAG": "Vytvorenie značky zlyhalo",
   "ERROR_CODE_INSPECTION_FAILED": "CodeInspection.inspectFile zlyhal pri vykonávaní pre súbor",
   "ERROR_CANT_GET_STAGED_DIFF": "Neviem získať diff pre pridané súbory",
+  "ERROR_STAGE_FAILED": "Nepodarilo sa pridať súbory do stagingu Gitu",
   "ERROR_GIT_COMMIT_FAILED": "Git commit zlyhal",
   "ERROR_GIT_BLAME_FAILED": "Git blame zlyhal",
   "ERROR_GIT_DIFF_FAILED": "Git diff zlyhal",
@@ -104855,7 +104884,7 @@ define("nls/sk/strings", {
   "GIT_TOAST_TITLE": "Preskúmajte funkcie Gitu v Phoenix Code",
   "GIT_TOAST_MESSAGE": "Kliknite na ikonu panela Git pre správu vášho repozitára. Jednoducho commitujte, pushujte, pullujte a prezerajte si históriu vášho projektu – všetko na jednom mieste.<br><a href='https://docs.phcode.dev/docs/Features/git'>Zistite viac o paneli Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Hlasujte za funkcie, ktoré chcete vidieť v ďalšej verzii!",
-  "ERROR_STAGE_FAILED": "Nepodarilo sa pridať súbory do stagingu Gitu"
+  "CMD_REPORT_ISSUE": "Nahlásiť problém"
 });
 /*
  * GNU AGPL-3.0 License
@@ -106211,6 +106240,7 @@ define("nls/sr/strings", {
   "ERROR_CREATE_TAG": "Креирање ознаке није успело",
   "ERROR_CODE_INSPECTION_FAILED": "CodeInspection.inspectFile није успео да се изврши за датотеку",
   "ERROR_CANT_GET_STAGED_DIFF": "Не могу да се добију разлике за индексиране датотеке",
+  "ERROR_STAGE_FAILED": "Није успело постављање фајлова у Git",
   "ERROR_GIT_COMMIT_FAILED": "Git потврда (commit) није успела",
   "ERROR_GIT_BLAME_FAILED": "Git приказ аутора (blame) није успео",
   "ERROR_GIT_DIFF_FAILED": "Git приказ разлика (diff) није успео",
@@ -106231,7 +106261,7 @@ define("nls/sr/strings", {
   "GIT_TOAST_TITLE": "Истражите Гит функције у Phoenix Code-у",
   "GIT_TOAST_MESSAGE": "Кликните на икону Гит панела да бисте управљали својим спремиштем. Лако направите commit, push, pull и погледајте историју свог пројекта — све на једном месту.<br><a href='https://docs.phcode.dev/docs/Features/git'>Сазнајте више о Гит панелу →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Гласајте за функције које желите да видите у будућности!",
-  "ERROR_STAGE_FAILED": "Није успело постављање фајлова у Git"
+  "CMD_REPORT_ISSUE": "Пријави проблем"
 });
 /*
  * GNU AGPL-3.0 License
@@ -107671,6 +107701,7 @@ define("nls/sv/strings", {
   "ERROR_CREATE_TAG": "Det gick inte att skapa taggen",
   "ERROR_CODE_INSPECTION_FAILED": "CodeInspection.inspectFile kunde inte köras för filen",
   "ERROR_CANT_GET_STAGED_DIFF": "Kan inte hämta diff för mellanlagrade filer",
+  "ERROR_STAGE_FAILED": "Det gick inte att lägga till filer i Git-index",
   "ERROR_GIT_COMMIT_FAILED": "Git-commit misslyckades",
   "ERROR_GIT_BLAME_FAILED": "Git Blame misslyckades",
   "ERROR_GIT_DIFF_FAILED": "Git Diff misslyckades",
@@ -107691,7 +107722,7 @@ define("nls/sv/strings", {
   "GIT_TOAST_TITLE": "Utforska Git-funktioner i Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klicka på Git-panelens ikon för att hantera din repository. Committa, pusha, pulla och se din projekthistorik enkelt – allt på ett ställe.<br><a href='https://docs.phcode.dev/docs/Features/git'>Läs mer om Git-panelen →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Rösta på funktionerna du vill se härnäst!",
-  "ERROR_STAGE_FAILED": "Det gick inte att lägga till filer i Git-index"
+  "CMD_REPORT_ISSUE": "Rapportera problem"
 });
 /*
  * GNU AGPL-3.0 License
@@ -109048,6 +109079,7 @@ define("nls/tr/strings", {
   "ERROR_CREATE_TAG": "Etiket oluşturma başarısız oldu",
   "ERROR_CODE_INSPECTION_FAILED": "Dosya için CodeInspection.inspectFile yürütülemedi",
   "ERROR_CANT_GET_STAGED_DIFF": "Hazırlanan dosyalar için fark alınamıyor",
+  "ERROR_STAGE_FAILED": "Git'te dosyalar hazırlama başarısız oldu",
   "ERROR_GIT_COMMIT_FAILED": "Git Kaydı başarısız oldu",
   "ERROR_GIT_BLAME_FAILED": "Git Sorumlusu alınamadı",
   "ERROR_GIT_DIFF_FAILED": "Git Farkı alınamadı",
@@ -109068,7 +109100,7 @@ define("nls/tr/strings", {
   "GIT_TOAST_TITLE": "Phoenix Code'da Git Özelliklerini Keşfedin",
   "GIT_TOAST_MESSAGE": "Deponuzu yönetmek için Git paneli simgesine tıklayın. Proje geçmişinizi kolayca işleyin, gönderin, çekin ve görüntüleyin—hepsi tek bir yerde.<br><a href='https://docs.phcode.dev/docs/Features/git'>Git paneli hakkında daha fazla bilgi edinin →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Gelecekte görmek istediğiniz özellikler için oy verin!",
-  "ERROR_STAGE_FAILED": "Git'te dosyalar hazırlama başarısız oldu"
+  "CMD_REPORT_ISSUE": "Sorun Bildir"
 });
 /*
  * GNU AGPL-3.0 License
@@ -110425,6 +110457,7 @@ define("nls/uk/strings", {
   "ERROR_CREATE_TAG": "Не вдалося створити тег",
   "ERROR_CODE_INSPECTION_FAILED": "CodeInspection.inspectFile не виконався для файлу",
   "ERROR_CANT_GET_STAGED_DIFF": "Не вдалося отримати різницю для індексованих файлів",
+  "ERROR_STAGE_FAILED": "Не вдалося проіндексувати файли в Git",
   "ERROR_GIT_COMMIT_FAILED": "Помилка виконання Git Commit",
   "ERROR_GIT_BLAME_FAILED": "Помилка виконання Git Blame",
   "ERROR_GIT_DIFF_FAILED": "Помилка виконання Git Diff",
@@ -110445,7 +110478,7 @@ define("nls/uk/strings", {
   "GIT_TOAST_TITLE": "Ознайомтеся з функціями Git у Phoenix Code",
   "GIT_TOAST_MESSAGE": "Натисніть піктограму панелі Git, щоб керувати вашим репозиторієм. Легко виконуйте коміти, пуші, пули та переглядайте історію вашого проєкту — все в одному місці.<br><a href='https://docs.phcode.dev/docs/Features/git'>Дізнайтеся більше про панель Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Проголосуйте за функції, які ви хочете бачити наступними!",
-  "ERROR_STAGE_FAILED": "Не вдалося проіндексувати файли в Git"
+  "CMD_REPORT_ISSUE": "Повідомити про проблему"
 });
 /*
  * GNU AGPL-3.0 License
@@ -111802,6 +111835,7 @@ define("nls/ur/strings", {
   "ERROR_CREATE_TAG": "ٹیگ بنانا ناکام",
   "ERROR_CODE_INSPECTION_FAILED": "CodeInspection.inspectFile فائل پر عمل کرنے میں ناکام",
   "ERROR_CANT_GET_STAGED_DIFF": "اسٹیجڈ فائلوں کے لیے فرق حاصل نہیں کر سکے",
+  "ERROR_STAGE_FAILED": "گٹ میں فائلز کو اسٹیج کرنے میں ناکام",
   "ERROR_GIT_COMMIT_FAILED": "گٹ کمٹ ناکام",
   "ERROR_GIT_BLAME_FAILED": "گٹ بلیم ناکام",
   "ERROR_GIT_DIFF_FAILED": "گٹ فرق ناکام ہوگیا۔",
@@ -111822,7 +111856,7 @@ define("nls/ur/strings", {
   "GIT_TOAST_TITLE": "فینکس کوڈ میں گٹ فیچرز دریافت کریں",
   "GIT_TOAST_MESSAGE": "اپنی ذخیرہ گاہ (repository) کو منظم کرنے کے لیے گٹ پینل آئیکن پر کلک کریں۔ آسانی سے کامٹ، پش، پل کریں، اور اپنے پروجیکٹ کی تاریخ دیکھیں—سب ایک ہی جگہ پر۔<br><a href='https://docs.phcode.dev/docs/Features/git'>گٹ پینل کے بارے میں مزید جانیں →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "اپنی پسندیدہ خصوصیات کے لیے ووٹ دیں!",
-  "ERROR_STAGE_FAILED": "گٹ میں فائلز کو اسٹیج کرنے میں ناکام"
+  "CMD_REPORT_ISSUE": "مسئلہ کی اطلاع دیں"
 });
 /*
  * GNU AGPL-3.0 License
@@ -113209,6 +113243,7 @@ define("nls/zh-cn/strings", {
   "ERROR_CREATE_TAG": "创建标签失败",
   "ERROR_CODE_INSPECTION_FAILED": "CodeInspection.inspectFile 执行失败，文件：",
   "ERROR_CANT_GET_STAGED_DIFF": "无法获取已暂存文件的差异",
+  "ERROR_STAGE_FAILED": "Git 文件暂存失败",
   "ERROR_GIT_COMMIT_FAILED": "Git 提交失败",
   "ERROR_GIT_BLAME_FAILED": "Git 追溯失败",
   "ERROR_GIT_DIFF_FAILED": "Git 比较失败",
@@ -113229,7 +113264,7 @@ define("nls/zh-cn/strings", {
   "GIT_TOAST_TITLE": "探索 Phoenix Code 中的 Git 功能",
   "GIT_TOAST_MESSAGE": "点击 Git 面板图标即可管理您的代码仓库。轻松提交、推送、拉取和查看项目历史记录，一切尽在一处。<br><a href='https://docs.phcode.dev/docs/Features/git'>了解更多关于 Git 面板的信息 →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "为您希望看到的下一个功能投票！",
-  "ERROR_STAGE_FAILED": "Git 文件暂存失败"
+  "CMD_REPORT_ISSUE": "报告问题"
 });
 /*
  * GNU AGPL-3.0 License
@@ -114586,6 +114621,7 @@ define("nls/zh-tw/strings", {
   "ERROR_CREATE_TAG": "建立標籤失敗",
   "ERROR_CODE_INSPECTION_FAILED": "CodeInspection.inspectFile 無法執行檔案",
   "ERROR_CANT_GET_STAGED_DIFF": "無法取得已暫存檔案的差異",
+  "ERROR_STAGE_FAILED": "Git 檔案暫存失敗",
   "ERROR_GIT_COMMIT_FAILED": "Git 送交失敗",
   "ERROR_GIT_BLAME_FAILED": "Git 追溯失敗",
   "ERROR_GIT_DIFF_FAILED": "Git 比對失敗",
@@ -114606,7 +114642,7 @@ define("nls/zh-tw/strings", {
   "GIT_TOAST_TITLE": "在 Phoenix Code 中探索 Git 功能",
   "GIT_TOAST_MESSAGE": "按一下 Git 面板圖示即可管理您的儲存庫。輕鬆提交、推送、提取和檢視您的專案歷史記錄，一切盡在掌握之中。<br><a href='https://docs.phcode.dev/docs/Features/git'>深入瞭解 Git 面板 →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "投票選出您希望看到的下個功能！",
-  "ERROR_STAGE_FAILED": "Git 檔案暫存失敗"
+  "CMD_REPORT_ISSUE": "回報問題"
 });
 /*
  * GNU AGPL-3.0 License
