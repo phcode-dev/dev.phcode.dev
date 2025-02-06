@@ -8601,6 +8601,9 @@ define("command/Commands", function (require, exports, module) {
     /** Opens feature suggestion page */
     exports.HELP_SUGGEST                = "help.suggest";               // HelpCommandHandlers.js       _handleLinkMenuItem()
 
+    /** Opens report issue page */
+    exports.HELP_REPORT_ISSUE           = "help.reportIssue";               // HelpCommandHandlers.js       _handleLinkMenuItem()
+
     /** Opens release notes */
     exports.HELP_RELEASE_NOTES          = "help.releaseNotes";          // HelpCommandHandlers.js       _handleLinkMenuItem()
 
@@ -9039,8 +9042,12 @@ define("command/DefaultMenus", function (require, exports, module) {
         menu = Menus.addMenu(Strings.HELP_MENU, Menus.AppMenuBar.HELP_MENU);
         menu.addMenuItem(Commands.HELP_DOCS);
         menu.addMenuItem(Commands.HELP_SUPPORT);
+        menu.addMenuDivider();
         if (brackets.config.suggest_feature_url) {
             menu.addMenuItem(Commands.HELP_SUGGEST);
+        }
+        if (brackets.config.report_issue_url) {
+            menu.addMenuItem(Commands.HELP_REPORT_ISSUE);
         }
         if (brackets.config.get_involved_url) {
             menu.addMenuItem(Commands.HELP_GET_INVOLVED);
@@ -52977,6 +52984,7 @@ define("help/HelpCommandHandlers", function (require, exports, module) {
     CommandManager.register(Strings.CMD_DOCS,                   Commands.HELP_DOCS,                 _handleLinkMenuItem(brackets.config.docs_url));
     CommandManager.register(Strings.CMD_SUPPORT,                Commands.HELP_SUPPORT,              _handleLinkMenuItem(brackets.config.support_url));
     CommandManager.register(Strings.CMD_SUGGEST,                Commands.HELP_SUGGEST,              _handleLinkMenuItem(brackets.config.suggest_feature_url));
+    CommandManager.register(Strings.CMD_REPORT_ISSUE,           Commands.HELP_REPORT_ISSUE,         _handleLinkMenuItem(brackets.config.report_issue_url));
     CommandManager.register(Strings.CMD_RELEASE_NOTES,          Commands.HELP_RELEASE_NOTES,        _handleLinkMenuItem(brackets.config.release_notes_url));
     CommandManager.register(Strings.CMD_GET_INVOLVED,           Commands.HELP_GET_INVOLVED,         _handleLinkMenuItem(brackets.config.get_involved_url));
     CommandManager.register(Strings.CMD_SHOW_EXTENSIONS_FOLDER, Commands.HELP_SHOW_EXT_FOLDER,      _handleShowExtensionsFolder);
@@ -101174,6 +101182,7 @@ define("nls/root/strings", {
     "CMD_SUPPORT": "{APP_NAME} Support",
     "CMD_DOCS": "Help, Getting Started",
     "CMD_SUGGEST": "Suggest a Feature",
+    "CMD_REPORT_ISSUE": "Report Issue",
     "CMD_RELEASE_NOTES": "Release Notes",
     "CMD_GET_INVOLVED": "Get Involved",
     "CMD_SHOW_EXTENSIONS_FOLDER": "Show Extensions Folder",
