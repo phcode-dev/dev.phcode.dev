@@ -29479,7 +29479,7 @@ define("extensibility/ExtensionManager", function (require, exports, module) {
         // never rejects
         return new Promise((resolve) => {
             const registryFile = FileSystem.getFileForPath(REGISTRY_CACHE_PATH);
-            FileUtils.readAsText(registryFile)
+            FileUtils.readAsText(registryFile, true)
                 .done(resolve)
                 .fail(function (err) {
                     console.error(`Registry cache not found ${REGISTRY_CACHE_PATH}`, err);
@@ -29492,7 +29492,7 @@ define("extensibility/ExtensionManager", function (require, exports, module) {
         // never rejects
         return new Promise((resolve) => {
             const registryFile = FileSystem.getFileForPath(REGISTRY_CACHE_PATH);
-            FileUtils.writeText(registryFile, registryFileText)
+            FileUtils.writeText(registryFile, registryFileText, true)
                 .done(resolve)
                 .fail(function (err) {
                     logger.reportError(err, `Registry cache write error ${REGISTRY_CACHE_PATH}`);
@@ -48177,22 +48177,32 @@ define("file/FileUtils", function (require, exports, module) {
      * Asynchronously reads a file as UTF-8 encoded text.
      * @param {!File} file File to read
      * @param {boolean?} bypassCache - an optional argument, if specified will read from disc instead of using cache.
+     * @param {object} [options]
+     * @param {boolean} [options.ignoreFileSizeLimits]. Will read larger files than 16MB limit. will bypassCache +
+     *          won't cache if enabled.
+     * @param {boolean} [options.doNotCache] will not cache if enabled. Auto-enabled if ignoreFileSizeLimits = true
      * @return {$.Promise} a jQuery promise that will be resolved with the
      *  file's text content plus its timestamp, or rejected with a FileSystemError string
      *  constant if the file can not be read.
      */
-    function readAsText(file, bypassCache) {
+    function readAsText(file, bypassCache, options = {}) {
         const result = new $.Deferred();
+        let doNotCache = options.doNotCache;
+        if(options.ignoreFileSizeLimits) {
+            bypassCache = true;
+            doNotCache = true;
+        }
 
-        file.read({bypassCache: bypassCache}, function (err, data, _encoding, stat) {
-            if(!err && typeof data !== "string"){
-                result.reject(FileSystemError.UNSUPPORTED_ENCODING);
-            } else if (!err) {
-                result.resolve(data, stat.mtime);
-            } else {
-                result.reject(err);
-            }
-        });
+        file.read({ bypassCache: bypassCache, ignoreFileSizeLimits: options.ignoreFileSizeLimits, doNotCache},
+            function (err, data, _encoding, stat) {
+                if(!err && typeof data !== "string"){
+                    result.reject(FileSystemError.UNSUPPORTED_ENCODING);
+                } else if (!err) {
+                    result.resolve(data, stat.mtime);
+                } else {
+                    result.reject(err);
+                }
+            });
 
         return result.promise();
     }
@@ -49176,8 +49186,12 @@ define("filesystem/File", function (require, exports, module) {
     /**
      * Read a file.
      *
-     * @param {Object=} options properties \{encoding: 'one of format supported here:
-     * https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder/encoding'}
+     * @param {Object} options
+     * @param {string} [options.encoding] 'one of format supported here:
+     *        https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder/encoding'
+     * @param {boolean} [options.ignoreFileSizeLimits] by default max file size that can be read is 16MB.
+     * @param {boolean} [options.doNotCache] will not cache if enabled. Auto-enabled if ignoreFileSizeLimits = true
+     *
      * @param {function (?string, string=, FileSystemStats=)} callback Callback that is passed the
      *              FileSystemError string or the file's contents and its stats.
      */
@@ -49188,6 +49202,9 @@ define("filesystem/File", function (require, exports, module) {
             options.encoding = this._encoding;
         }
         options.encoding = options.encoding || this._encoding || "utf8";
+        if(options.ignoreFileSizeLimits) {
+            options.doNotCache = true;
+        }
 
         // We don't need to check isWatched() here because contents are only saved
         // for watched files. Note that we need to explicitly test this._contents
@@ -52612,7 +52629,7 @@ define("filesystem/impls/appshell/AppshellFileSystem", function (require, export
      * If both calls fail, the error from the read call is passed back.
      *
      * @param {string} path
-     * @param {{encoding: string=, stat: FileSystemStats=}} options
+     * @param {{encoding: string=, stat: FileSystemStats=, ignoreFileSizeLimits: boolean=}} options
      * @param {function(?string, string=, FileSystemStats=)} callback
      */
     function readFile(path, options, callback) {
@@ -52623,7 +52640,7 @@ define("filesystem/impls/appshell/AppshellFileSystem", function (require, export
         // callback to be executed when the call to stat completes
         //  or immediately if a stat object was passed as an argument
         function doReadFile(stat) {
-            if (stat.size > (FileUtils.MAX_FILE_SIZE)) {
+            if (!options.ignoreFileSizeLimits && stat.size > (FileUtils.MAX_FILE_SIZE)) {
                 callback(FileSystemError.EXCEEDS_MAX_FILE_SIZE);
             } else {
                 appshell.fs.readFile(path, encoding, function (_err, _data, encoding, preserveBOM) {
