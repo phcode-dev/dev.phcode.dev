@@ -8768,6 +8768,12 @@ define("command/Commands", function (require, exports, module) {
     /** Toggles display of untracked files */
     exports.CMD_GIT_TOGGLE_UNTRACKED = "git-toggle-untracked";
 
+    /** Toggles global history view in history panel */
+    exports.CMD_GIT_HISTORY_GLOBAL = "git-history-global";
+
+    /** Toggles file history view in history panel */
+    exports.CMD_GIT_HISTORY_FILE = "git-history-file";
+
     // DEPRECATED: Working Set Commands
     DeprecationWarning.deprecateConstant(exports, "SORT_WORKINGSET_BY_ADDED",   "CMD_WORKINGSET_SORT_BY_ADDED");
     DeprecationWarning.deprecateConstant(exports, "SORT_WORKINGSET_BY_NAME",    "CMD_WORKINGSET_SORT_BY_NAME");
@@ -102082,6 +102088,8 @@ define("nls/root/strings", {
     "TOOLTIP_REFRESH_PANEL": "Refresh panel",
     "TOOLTIP_SHOW_FILE_HISTORY": "Show file history",
     "TOOLTIP_SHOW_HISTORY": "Show history",
+    "GIT_SHOW_FILE_HISTORY": "File Commit history",
+    "GIT_SHOW_HISTORY": "Commit history",
     "UNDO_CHANGES": "Discard changes",
     "UNDO_CHANGES_BTN": "Discard changes\u2026",
     "UNDO_LAST_LOCAL_COMMIT": "Undo last local (not pushed) commit\u2026",

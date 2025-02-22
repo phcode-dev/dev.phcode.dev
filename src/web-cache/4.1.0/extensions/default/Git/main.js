@@ -1167,6 +1167,8 @@ define("src/Constants", function (require, exports) {
     exports.CMD_GIT_AUTHORS_OF_SELECTION = Commands.CMD_GIT_AUTHORS_OF_SELECTION;
     exports.CMD_GIT_AUTHORS_OF_FILE = Commands.CMD_GIT_AUTHORS_OF_FILE;
     exports.CMD_GIT_TOGGLE_UNTRACKED = Commands.CMD_GIT_TOGGLE_UNTRACKED;
+    exports.CMD_GIT_HISTORY_GLOBAL = Commands.CMD_GIT_HISTORY_GLOBAL;
+    exports.CMD_GIT_HISTORY_FILE = Commands.CMD_GIT_HISTORY_FILE;
 });
 
 define("src/ErrorHandler", function (require, exports) {
@@ -2638,8 +2640,8 @@ define("src/Main", function (require, exports) {
     const CMD_ADD_TO_IGNORE      = "git.addToIgnore",
         CMD_REMOVE_FROM_IGNORE = "git.removeFromIgnore",
         $icon                  = $(`<a id='git-toolbar-icon' title="${Strings.STATUSBAR_SHOW_GIT}" href='#'></a>`)
-                                    .addClass("forced-hidden")
-                                    .prependTo($(".bottom-buttons"));
+            .addClass("forced-hidden")
+            .prependTo($(".bottom-buttons"));
 
     let gitEnabled = false;
 
@@ -2769,7 +2771,7 @@ define("src/Main", function (require, exports) {
         const displayStr = StringUtils.format(Strings.RESET_DETAIL, commitDetailStr, gitCmdUsed);
         Utils.askQuestion(title,
             message + "<br><br>" + displayStr,
-            { booleanResponse: true, noescape: true ,
+            { booleanResponse: true, noescape: true,
                 customOkBtn: Strings.RESET, customOkBtnClass: "danger"})
             .then(function (response) {
                 if (response === true) {
@@ -2837,7 +2839,10 @@ define("src/Main", function (require, exports) {
             // "More options" context menu commands
             Constants.CMD_GIT_DISCARD_ALL_CHANGES,
             Constants.CMD_GIT_UNDO_LAST_COMMIT,
-            Constants.CMD_GIT_TOGGLE_UNTRACKED
+            Constants.CMD_GIT_TOGGLE_UNTRACKED,
+
+            Constants.CMD_GIT_HISTORY_GLOBAL,
+            Constants.CMD_GIT_HISTORY_FILE
         ];
 
         // Disable each command
@@ -2865,6 +2870,9 @@ define("src/Main", function (require, exports) {
         gitSubMenu.addMenuItem(Constants.CMD_GIT_GOTO_NEXT_CHANGE);
         gitSubMenu.addMenuItem(Constants.CMD_GIT_GOTO_PREVIOUS_CHANGE);
         gitSubMenu.addMenuItem(Constants.CMD_GIT_CLOSE_UNMODIFIED);
+        gitSubMenu.addMenuDivider();
+        gitSubMenu.addMenuItem(Constants.CMD_GIT_HISTORY_GLOBAL);
+        gitSubMenu.addMenuItem(Constants.CMD_GIT_HISTORY_FILE);
         gitSubMenu.addMenuDivider();
         gitSubMenu.addMenuItem(Constants.CMD_GIT_AUTHORS_OF_SELECTION);
         gitSubMenu.addMenuItem(Constants.CMD_GIT_AUTHORS_OF_FILE);
@@ -2912,6 +2920,9 @@ define("src/Main", function (require, exports) {
         Menus.ContextMenu.assignContextMenuToSelector(".git-more-options-btn", optionsCmenu);
         optionsCmenu.addMenuItem(Constants.CMD_GIT_DISCARD_ALL_CHANGES);
         optionsCmenu.addMenuItem(Constants.CMD_GIT_UNDO_LAST_COMMIT);
+        optionsCmenu.addMenuDivider();
+        optionsCmenu.addMenuItem(Constants.CMD_GIT_HISTORY_GLOBAL);
+        optionsCmenu.addMenuItem(Constants.CMD_GIT_HISTORY_FILE);
         optionsCmenu.addMenuDivider();
         optionsCmenu.addMenuItem(Constants.CMD_GIT_AUTHORS_OF_SELECTION);
         optionsCmenu.addMenuItem(Constants.CMD_GIT_AUTHORS_OF_FILE);
@@ -2978,6 +2989,9 @@ define("src/Main", function (require, exports) {
 
         Utils.enableCommand(Constants.CMD_GIT_AUTHORS_OF_SELECTION, enabled);
         Utils.enableCommand(Constants.CMD_GIT_AUTHORS_OF_FILE, enabled);
+
+        Utils.enableCommand(Constants.CMD_GIT_HISTORY_GLOBAL, enabled);
+        Utils.enableCommand(Constants.CMD_GIT_HISTORY_FILE, enabled);
 
         Utils.enableCommand(Constants.CMD_GIT_COMMIT_CURRENT, enabled);
         Utils.enableCommand(Constants.CMD_GIT_COMMIT_ALL, enabled);
@@ -4789,6 +4803,14 @@ define("src/Panel", function (require, exports) {
         CommandManager.register(Strings.HIDE_UNTRACKED, Constants.CMD_GIT_TOGGLE_UNTRACKED, handleToggleUntracked);
         CommandManager.register(Strings.GIT_INIT, Constants.CMD_GIT_INIT, EventEmitter.getEmitter(Events.HANDLE_GIT_INIT));
         CommandManager.register(Strings.GIT_CLONE, Constants.CMD_GIT_CLONE, EventEmitter.getEmitter(Events.HANDLE_GIT_CLONE));
+        CommandManager.register(Strings.GIT_SHOW_HISTORY, Constants.CMD_GIT_HISTORY_GLOBAL, ()=>{
+            toggle(true);
+            EventEmitter.emit(Events.HISTORY_SHOW_GLOBAL);
+        });
+        CommandManager.register(Strings.GIT_SHOW_FILE_HISTORY, Constants.CMD_GIT_HISTORY_FILE, ()=>{
+            toggle(true);
+            EventEmitter.emit(Events.HISTORY_SHOW_FILE);
+        });
 
         // Show gitPanel when appropriate
         if (Preferences.get("panelEnabled") && Setup.isExtensionActivated()) {
