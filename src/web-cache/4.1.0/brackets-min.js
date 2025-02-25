@@ -121,7 +121,6 @@ define(function (require, exports, module) {
     // load modules for later use
     require("utils/Global");
     require("editor/CSSInlineEditor");
-    require("preferences/AllPreferences");
     require("project/WorkingSetSort");
     require("search/QuickOpen");
     require("search/QuickOpenHelper");
@@ -8415,6 +8414,8 @@ define("command/Commands", function (require, exports, module) {
     /** Toggles code beautification on save */
     exports.EDIT_BEAUTIFY_CODE_ON_SAVE  = "edit.beautifyOnSave";         // CodeHintManager.js           _startNewSession()
 
+    exports.EDIT_EMMET                 = "edit.emmet";                 // HTMLCodeHints CSSCodeHints
+
     /** Opens find dialog */
     exports.CMD_FIND                    = "cmd.find";                   // FindReplace.js               _launchFind()
 
@@ -8781,7 +8782,6 @@ define("command/Commands", function (require, exports, module) {
     DeprecationWarning.deprecateConstant(exports, "SORT_WORKINGSET_AUTO",       "CMD_WORKING_SORT_TOGGLE_AUTO");
 });
 
-
 /*
  * GNU AGPL-3.0 License
  *
@@ -8969,6 +8969,8 @@ define("command/DefaultMenus", function (require, exports, module) {
         menu.addMenuItem(Commands.SHOW_CODE_HINTS);
         menu.addMenuDivider();
         menu.addMenuItem(Commands.TOGGLE_CLOSE_BRACKETS);
+        menu.addMenuItem(Commands.EDIT_EMMET);
+
 
         /*
          * Find menu
@@ -9257,7 +9259,6 @@ define("command/DefaultMenus", function (require, exports, module) {
         Menus.getContextMenu(Menus.ContextMenuIds.PROJECT_MENU).on("beforeContextMenuOpen", _setMenuItemsVisible);
     });
 });
-
 /*
  * GNU AGPL-3.0 License
  *
@@ -14647,6 +14648,30 @@ define("document/DocumentCommandHandlers", function (require, exports, module) {
         excludeFromHints: true
     });
     EventDispatcher.makeEventDispatcher(exports);
+
+
+    PreferencesManager.definePreference("emmet", "boolean", true, {
+        description: Strings.DESCRIPTION_EMMET
+    });
+
+    // Register the Emmet toggle command
+    const EMMET_COMMAND_ID = "edit.emmet";
+    const emmetCommand = CommandManager.register(Strings.CMD_TOGGLE_EMMET, EMMET_COMMAND_ID, toggleEmmet);
+
+    // Set initial state based on the preference
+    emmetCommand.setChecked(PreferencesManager.get("emmet"));
+
+    // Helper function to toggle the Emmet preference
+    function toggleEmmet() {
+        PreferencesManager.set("emmet", !PreferencesManager.get("emmet"));
+        emmetCommand.setChecked(PreferencesManager.get("emmet"));
+    }
+
+    // Listen for any change in the "emmet" preference and update the menu's toggle state
+    // this is needed because else the menu is not getting updated when the preference is changed
+    PreferencesManager.on("change", "emmet", function () {
+        emmetCommand.setChecked(PreferencesManager.get("emmet"));
+    });
 
     /**
      * Event triggered when File Save is cancelled, when prompted to save dirty files
@@ -101220,6 +101245,7 @@ define("nls/root/strings", {
     "CMD_BEAUTIFY_CODE": "Beautify Code",
     "CMD_BEAUTIFY_CODE_ON_SAVE": "Beautify Code After Save",
     "CMD_AUTO_RENAME_TAGS": "Auto Rename HTML Tags",
+    "CMD_TOGGLE_EMMET": "Emmet",
 
     // Search menu commands
     "FIND_MENU": "Find",
@@ -134744,56 +134770,6 @@ $3132870559d60e53$require$initFsLib($8adf1cfaed2eb5b1$exports);
 })();
 //# sourceMappingURL=virtualfs.js.map
 
-/*
- * GNU AGPL-3.0 License
- *
- * Copyright (c) 2021 - present core.ai . All rights reserved.
- * Original work Copyright (c) 2012 - 2021 Adobe Systems Incorporated. All rights reserved.
- *
- * This program is free software: you can redistribute it and/or modify it
- * under the terms of the GNU Affero General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
- * for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
- *
- */
-
-/*
- * This file houses all the preferences used across Phoenix.
- *
- * To use:
- * ```
- * const AllPreferences = brackets.getModule("preferences/AllPreferences");
- * function preferenceChanged() {
-       enabled = PreferencesManager.get(AllPreferences.EMMET);
-   }
- * PreferencesManager.on("change", AllPreferences.EMMET, preferenceChanged);
-   preferenceChanged();
- * ```
- */
-
-   define("preferences/AllPreferences", function (require, exports, module) {
-    const PreferencesManager = require("preferences/PreferencesManager");
-    const Strings = require("strings");
-
-    // list of all the preferences
-    const PREFERENCES_LIST = {
-        EMMET: "emmet"
-    };
-
-    PreferencesManager.definePreference(PREFERENCES_LIST.EMMET, "boolean", true, {
-        description: Strings.DESCRIPTION_EMMET
-    });
-
-    module.exports = PREFERENCES_LIST;
-});
 /*
  * GNU AGPL-3.0 License
  *
