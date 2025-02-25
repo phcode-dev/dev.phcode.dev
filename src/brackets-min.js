@@ -64846,6 +64846,8 @@ define("nls/ar/strings", {
   "TOOLTIP_REFRESH_PANEL": "تحديث اللوحة",
   "TOOLTIP_SHOW_FILE_HISTORY": "إظهار سجل الملف",
   "TOOLTIP_SHOW_HISTORY": "إظهار السجل",
+  "GIT_SHOW_FILE_HISTORY": "سجل التزامات الملف",
+  "GIT_SHOW_HISTORY": "سجل الالتزامات",
   "UNDO_CHANGES": "تجاهل التغييرات",
   "UNDO_CHANGES_BTN": "تجاهل التغييرات…",
   "UNDO_LAST_LOCAL_COMMIT": "التراجع عن آخر إيداع محلي (غير مدفوع)…",
@@ -64938,8 +64940,7 @@ define("nls/ar/strings", {
   "GIT_TOAST_TITLE": "استكشف ميزات Git في Phoenix Code",
   "GIT_TOAST_MESSAGE": "انقر على رمز لوحة Git لإدارة مستودعك. يمكنك بسهولة تنفيذ الالتزام والدفع والسحب وعرض سجل مشروعك - كل ذلك في مكان واحد.<br><a href='https://docs.phcode.dev/docs/Features/git'>تعرّف على المزيد حول لوحة Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "صوت للميزات التي ترغب برؤيتها تالياً!",
-  "GIT_SHOW_FILE_HISTORY": "سجل التزامات الملف",
-  "GIT_SHOW_HISTORY": "سجل الالتزامات"
+  "CMD_TOGGLE_EMMET": "إيميت"
 });
 /*
  * GNU AGPL-3.0 License
@@ -66200,6 +66201,8 @@ define("nls/bg/strings", {
   "TOOLTIP_REFRESH_PANEL": "Обнови панела",
   "TOOLTIP_SHOW_FILE_HISTORY": "Покажи историята на файла",
   "TOOLTIP_SHOW_HISTORY": "Покажи историята",
+  "GIT_SHOW_FILE_HISTORY": "История на файловите къмити",
+  "GIT_SHOW_HISTORY": "История на къмитите",
   "UNDO_CHANGES": "Отмени промените",
   "UNDO_CHANGES_BTN": "Отмени промените…",
   "UNDO_LAST_LOCAL_COMMIT": "Отмени последното локално (неизпратено) commit-ване…",
@@ -66292,8 +66295,7 @@ define("nls/bg/strings", {
   "GIT_TOAST_TITLE": "Разгледайте Git функциите в Phoenix Code",
   "GIT_TOAST_MESSAGE": "Щракнете върху иконата на Git панела, за да управлявате хранилището си. Лесно създавайте commit, push, pull и преглеждайте историята на проекта си – всичко на едно място.<br><a href='https://docs.phcode.dev/docs/Features/git'>Научете повече за Git панела →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Гласувайте за функциите, които искате да видите следващи!",
-  "GIT_SHOW_FILE_HISTORY": "История на файловите къмити",
-  "GIT_SHOW_HISTORY": "История на къмитите"
+  "CMD_TOGGLE_EMMET": "Емет"
 });
 /*
  * Copyright (c) 2013 Adobe Systems Incorporated. All rights reserved.
@@ -67583,6 +67585,8 @@ define("nls/cs/strings", {
   "TOOLTIP_REFRESH_PANEL": "Obnovit panel",
   "TOOLTIP_SHOW_FILE_HISTORY": "Zobrazit historii souboru",
   "TOOLTIP_SHOW_HISTORY": "Zobrazit historii",
+  "GIT_SHOW_FILE_HISTORY": "Historie commitů souboru",
+  "GIT_SHOW_HISTORY": "Historie commitů",
   "UNDO_CHANGES": "Zahodit změny",
   "UNDO_CHANGES_BTN": "Zahodit změny…",
   "UNDO_LAST_LOCAL_COMMIT": "Vrátit zpět poslední lokální (neodeslaný) commit…",
@@ -67675,8 +67679,7 @@ define("nls/cs/strings", {
   "GIT_TOAST_TITLE": "Prozkoumejte funkce Gitu v Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klikněte na ikonu panelu Git pro správu vašeho repozitáře. Snadno commitujte, pushujte, pullujte a prohlížejte si historii projektu – vše na jednom místě.<br><a href='https://docs.phcode.dev/docs/Features/git'>Zjistěte více o panelu Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Hlasujte pro funkce, které chcete vidět v další verzi!",
-  "GIT_SHOW_FILE_HISTORY": "Historie commitů souboru",
-  "GIT_SHOW_HISTORY": "Historie commitů"
+  "CMD_TOGGLE_EMMET": "Emmet"
 });
 /*
  * GNU AGPL-3.0 License
@@ -68964,6 +68967,8 @@ define("nls/da/strings", {
   "TOOLTIP_REFRESH_PANEL": "Opdater panel",
   "TOOLTIP_SHOW_FILE_HISTORY": "Vis filhistorik",
   "TOOLTIP_SHOW_HISTORY": "Vis historik",
+  "GIT_SHOW_FILE_HISTORY": "Filhistorik for commit",
+  "GIT_SHOW_HISTORY": "Commit-historik",
   "UNDO_CHANGES": "Fortryd ændringer",
   "UNDO_CHANGES_BTN": "Fortryd ændringer…",
   "UNDO_LAST_LOCAL_COMMIT": "Fortryd sidste lokale (ikke-pushede) commit…",
@@ -69056,8 +69061,7 @@ define("nls/da/strings", {
   "GIT_TOAST_TITLE": "Udforsk Git-funktioner i Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klik på Git-panelikonet for at administrere dit repository. Commit, push, pull og se din projekthistorik nemt – alt sammen på ét sted.<br><a href='https://docs.phcode.dev/docs/Features/git'>Læs mere om Git-panelet →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stem på de funktioner, du gerne vil se!",
-  "GIT_SHOW_FILE_HISTORY": "Filhistorik for commit",
-  "GIT_SHOW_HISTORY": "Commit-historik"
+  "CMD_TOGGLE_EMMET": "Emmet"
 });
 /*
  * GNU AGPL-3.0 License
@@ -70343,6 +70347,8 @@ define("nls/de/strings", {
   "TOOLTIP_REFRESH_PANEL": "Panel aktualisieren",
   "TOOLTIP_SHOW_FILE_HISTORY": "Dateiverlauf anzeigen",
   "TOOLTIP_SHOW_HISTORY": "Verlauf anzeigen",
+  "GIT_SHOW_FILE_HISTORY": "Datei-Commitverlauf",
+  "GIT_SHOW_HISTORY": "Commitverlauf",
   "UNDO_CHANGES": "Änderungen verwerfen",
   "UNDO_CHANGES_BTN": "Änderungen verwerfen…",
   "UNDO_LAST_LOCAL_COMMIT": "Letzten lokalen (nicht gepushten) Commit rückgängig machen…",
@@ -70435,8 +70441,7 @@ define("nls/de/strings", {
   "GIT_TOAST_TITLE": "Git-Funktionen in Phoenix Code entdecken",
   "GIT_TOAST_MESSAGE": "Klicken Sie auf das Git-Panel-Symbol, um Ihr Repository zu verwalten. Committen, Pushen, Pullen und die Anzeige Ihres Projektverlaufs – alles an einem Ort.<br><a href='https://docs.phcode.dev/docs/Features/git'>Mehr über das Git-Panel erfahren →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stimmen Sie für die Funktionen ab, die Sie als Nächstes sehen möchten!",
-  "GIT_SHOW_FILE_HISTORY": "Datei-Commitverlauf",
-  "GIT_SHOW_HISTORY": "Commitverlauf"
+  "CMD_TOGGLE_EMMET": "Emmet"
 });
 /*
  * GNU AGPL-3.0 License
@@ -71724,6 +71729,8 @@ define("nls/el/strings", {
   "TOOLTIP_REFRESH_PANEL": "Ανανέωση πίνακα",
   "TOOLTIP_SHOW_FILE_HISTORY": "Εμφάνιση ιστορικού αρχείου",
   "TOOLTIP_SHOW_HISTORY": "Εμφάνιση ιστορικού",
+  "GIT_SHOW_FILE_HISTORY": "Ιστορικό commit αρχείου",
+  "GIT_SHOW_HISTORY": "Ιστορικό commit",
   "UNDO_CHANGES": "Απόρριψη αλλαγών",
   "UNDO_CHANGES_BTN": "Απόρριψη αλλαγών…",
   "UNDO_LAST_LOCAL_COMMIT": "Αναίρεση τελευταίας τοπικής (μην προωθημένης) commit…",
@@ -71816,8 +71823,7 @@ define("nls/el/strings", {
   "GIT_TOAST_TITLE": "Εξερευνήστε τις Λειτουργίες Git στο Phoenix Code",
   "GIT_TOAST_MESSAGE": "Κάντε κλικ στο εικονίδιο του πίνακα Git για να διαχειριστείτε το αποθετήριό σας. Κάντε εύκολα commit, push, pull και δείτε το ιστορικό του έργου σας—όλα σε ένα μέρος.<br><a href='https://docs.phcode.dev/docs/Features/git'>Μάθετε περισσότερα για τον πίνακα Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Ψηφίστε για τις λειτουργίες που θέλετε να δείτε στη συνέχεια!",
-  "GIT_SHOW_FILE_HISTORY": "Ιστορικό commit αρχείου",
-  "GIT_SHOW_HISTORY": "Ιστορικό commit"
+  "CMD_TOGGLE_EMMET": "Emmet"
 });
 /*
  * GNU AGPL-3.0 License
@@ -73105,6 +73111,8 @@ define("nls/en-gb/strings", {
   "TOOLTIP_REFRESH_PANEL": "Refresh panel",
   "TOOLTIP_SHOW_FILE_HISTORY": "Show file history",
   "TOOLTIP_SHOW_HISTORY": "Show history",
+  "GIT_SHOW_FILE_HISTORY": "File commit history",
+  "GIT_SHOW_HISTORY": "Commit history",
   "UNDO_CHANGES": "Discard changes",
   "UNDO_CHANGES_BTN": "Discard changes…",
   "UNDO_LAST_LOCAL_COMMIT": "Undo last local (unpushed) commit…",
@@ -73197,8 +73205,7 @@ define("nls/en-gb/strings", {
   "GIT_TOAST_TITLE": "Explore Git Features in Phoenix Code",
   "GIT_TOAST_MESSAGE": "Click the Git panel icon to manage your repository. Easily commit, push, pull, and view your project history—all in one place.<br><a href='https://docs.phcode.dev/docs/Features/git'>Learn more about the Git panel →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote for the features you'd like to see next!",
-  "GIT_SHOW_FILE_HISTORY": "File commit history",
-  "GIT_SHOW_HISTORY": "Commit history"
+  "CMD_TOGGLE_EMMET": "Emmet"
 });
 /*
  * GNU AGPL-3.0 License
@@ -74459,6 +74466,8 @@ define("nls/es/strings", {
   "TOOLTIP_REFRESH_PANEL": "Actualizar panel",
   "TOOLTIP_SHOW_FILE_HISTORY": "Mostrar historial del archivo",
   "TOOLTIP_SHOW_HISTORY": "Mostrar historial",
+  "GIT_SHOW_FILE_HISTORY": "Historial de commits del archivo",
+  "GIT_SHOW_HISTORY": "Historial de commits",
   "UNDO_CHANGES": "Descartar cambios",
   "UNDO_CHANGES_BTN": "Descartar cambios…",
   "UNDO_LAST_LOCAL_COMMIT": "Deshacer último commit local (no subido)…",
@@ -74551,8 +74560,7 @@ define("nls/es/strings", {
   "GIT_TOAST_TITLE": "Explora las funciones de Git en Phoenix Code",
   "GIT_TOAST_MESSAGE": "Haga clic en el icono del panel de Git para administrar su repositorio. Confirme, envíe (push), extraiga (pull) y vea el historial de su proyecto fácilmente, todo en un solo lugar.<br><a href='https://docs.phcode.dev/docs/Features/git'>Obtenga más información sobre el panel de Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "¡Vota por las funciones que quieres ver próximamente!",
-  "GIT_SHOW_FILE_HISTORY": "Historial de commits del archivo",
-  "GIT_SHOW_HISTORY": "Historial de commits"
+  "CMD_TOGGLE_EMMET": "Emmet"
 });
 /*
  * GNU AGPL-3.0 License
@@ -75841,6 +75849,8 @@ define("nls/fa-ir/strings", {
   "TOOLTIP_REFRESH_PANEL": "به‌روزرسانی پنل",
   "TOOLTIP_SHOW_FILE_HISTORY": "نمایش تاریخچه فایل",
   "TOOLTIP_SHOW_HISTORY": "نمایش تاریخچه",
+  "GIT_SHOW_FILE_HISTORY": "تاریخچه‌ی کامیت‌های فایل",
+  "GIT_SHOW_HISTORY": "تاریخچه‌ی کامیت‌ها",
   "UNDO_CHANGES": "لغو تغییرات",
   "UNDO_CHANGES_BTN": "لغو تغییرات…",
   "UNDO_LAST_LOCAL_COMMIT": "بازگرداندن آخرین commit محلی (ارسال نشده)…",
@@ -75933,8 +75943,7 @@ define("nls/fa-ir/strings", {
   "GIT_TOAST_TITLE": "کاوش ویژگی‌های گیت در Phoenix Code",
   "GIT_TOAST_MESSAGE": "برای مدیریت مخزن خود روی آیکون پنل گیت کلیک کنید. به راحتی کامیت، پوش، پول و مشاهده تاریخچه پروژه خود را - همه در یک مکان - انجام دهید.<br><a href='https://docs.phcode.dev/docs/Features/git'>درباره پنل گیت بیشتر بدانید →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "برای قابلیت‌هایی که می‌خواهید در آینده ببینید، رأی دهید!",
-  "GIT_SHOW_FILE_HISTORY": "تاریخچه‌ی کامیت‌های فایل",
-  "GIT_SHOW_HISTORY": "تاریخچه‌ی کامیت‌ها"
+  "CMD_TOGGLE_EMMET": "امت"
 });
 /*
  * GNU AGPL-3.0 License
@@ -77222,6 +77231,8 @@ define("nls/fi/strings", {
   "TOOLTIP_REFRESH_PANEL": "Päivitä paneeli",
   "TOOLTIP_SHOW_FILE_HISTORY": "Näytä tiedoston historia",
   "TOOLTIP_SHOW_HISTORY": "Näytä historia",
+  "GIT_SHOW_FILE_HISTORY": "Tiedoston commit-historia",
+  "GIT_SHOW_HISTORY": "Commit-historia",
   "UNDO_CHANGES": "Hylkää muutokset",
   "UNDO_CHANGES_BTN": "Hylkää muutokset…",
   "UNDO_LAST_LOCAL_COMMIT": "Peru viimeisin paikallinen (ei pushattu) commit…",
@@ -77314,8 +77325,7 @@ define("nls/fi/strings", {
   "GIT_TOAST_TITLE": "Tutustu Git-ominaisuuksiin Phoenix Codessa",
   "GIT_TOAST_MESSAGE": "Napsauta Git-paneelin kuvaketta hallitaksesi arkistoasi (repository). Tee commit, push ja pull helposti ja tarkastele projektihistoriaasi – kaikki yhdessä paikassa.<br><a href='https://docs.phcode.dev/docs/Features/git'>Lue lisää Git-paneelista →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Äänestä ominaisuuksia, jotka haluat nähdä seuraavaksi!",
-  "GIT_SHOW_FILE_HISTORY": "Tiedoston commit-historia",
-  "GIT_SHOW_HISTORY": "Commit-historia"
+  "CMD_TOGGLE_EMMET": "Emmet"
 });
 /*
  * GNU AGPL-3.0 License
@@ -78603,6 +78613,8 @@ define("nls/fr/strings", {
   "TOOLTIP_REFRESH_PANEL": "Actualiser le panneau",
   "TOOLTIP_SHOW_FILE_HISTORY": "Afficher l'historique du fichier",
   "TOOLTIP_SHOW_HISTORY": "Afficher l'historique",
+  "GIT_SHOW_FILE_HISTORY": "Historique des commits du fichier",
+  "GIT_SHOW_HISTORY": "Historique des commits",
   "UNDO_CHANGES": "Annuler les modifications",
   "UNDO_CHANGES_BTN": "Annuler les modifications…",
   "UNDO_LAST_LOCAL_COMMIT": "Annuler le dernier commit local (non poussé)…",
@@ -78695,8 +78707,7 @@ define("nls/fr/strings", {
   "GIT_TOAST_TITLE": "Explorer les fonctionnalités Git dans Phoenix Code",
   "GIT_TOAST_MESSAGE": "Cliquez sur l'icône du panneau Git pour gérer votre dépôt. Validez, envoyez (push), récupérez (pull) et consultez l'historique de votre projet facilement, le tout au même endroit.<br><a href='https://docs.phcode.dev/docs/Features/git'>En savoir plus sur le panneau Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Votez pour les fonctionnalités que vous souhaitez voir apparaître !",
-  "GIT_SHOW_FILE_HISTORY": "Historique des commits du fichier",
-  "GIT_SHOW_HISTORY": "Historique des commits"
+  "CMD_TOGGLE_EMMET": "Emmet"
 });
 /*
  * GNU AGPL-3.0 License
@@ -79984,6 +79995,8 @@ define("nls/gl/strings", {
   "TOOLTIP_REFRESH_PANEL": "Actualizar o panel",
   "TOOLTIP_SHOW_FILE_HISTORY": "Mostrar o historial do ficheiro",
   "TOOLTIP_SHOW_HISTORY": "Mostrar o historial",
+  "GIT_SHOW_FILE_HISTORY": "Historial de commits do ficheiro",
+  "GIT_SHOW_HISTORY": "Historial de commits",
   "UNDO_CHANGES": "Descartar os cambios",
   "UNDO_CHANGES_BTN": "Descartar os cambios…",
   "UNDO_LAST_LOCAL_COMMIT": "Desfacer a última confirmación local (non enviada)…",
@@ -80076,8 +80089,7 @@ define("nls/gl/strings", {
   "GIT_TOAST_TITLE": "Explora as funcionalidades de Git en Phoenix Code",
   "GIT_TOAST_MESSAGE": "Fai clic na icona do panel de Git para xestionar o teu repositorio. Fai commits, envía (push), obtén (pull) e visualiza o historial do teu proxecto facilmente, todo nun mesmo lugar.<br><a href='https://docs.phcode.dev/docs/Features/git'>Aprende máis sobre o panel de Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vota polas funcionalidades que queres ver a continuación!",
-  "GIT_SHOW_FILE_HISTORY": "Historial de commits do ficheiro",
-  "GIT_SHOW_HISTORY": "Historial de commits"
+  "CMD_TOGGLE_EMMET": "Emmet"
 });
 /*
  * GNU AGPL-3.0 License
@@ -81338,6 +81350,8 @@ define("nls/hi/strings", {
   "TOOLTIP_REFRESH_PANEL": "पैनल रीफ़्रेश करें",
   "TOOLTIP_SHOW_FILE_HISTORY": "फ़ाइल इतिहास दिखाएँ",
   "TOOLTIP_SHOW_HISTORY": "इतिहास दिखाएँ",
+  "GIT_SHOW_FILE_HISTORY": "फ़ाइल कमिट इतिहास",
+  "GIT_SHOW_HISTORY": "कमिट इतिहास",
   "UNDO_CHANGES": "परिवर्तन रद्द करें",
   "UNDO_CHANGES_BTN": "परिवर्तन रद्द करें…",
   "UNDO_LAST_LOCAL_COMMIT": "अंतिम स्थानीय (पुश नहीं की गई) कमिट पूर्ववत करें…",
@@ -81430,8 +81444,7 @@ define("nls/hi/strings", {
   "GIT_TOAST_TITLE": "फ़ीनिक्स कोड में Git सुविधाओं का अन्वेषण करें",
   "GIT_TOAST_MESSAGE": "अपने रिपॉजिटरी को प्रबंधित करने के लिए Git पैनल आइकन पर क्लिक करें। आसानी से कमिट करें, पुश करें, पुल करें और अपने प्रोजेक्ट का इतिहास देखें—सब एक ही स्थान पर।<br><a href='https://docs.phcode.dev/docs/Features/git'>Git पैनल के बारे में अधिक जानें →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "उन विशेषताओं के लिए वोट करें जिन्हें आप आगे देखना चाहते हैं!",
-  "GIT_SHOW_FILE_HISTORY": "फ़ाइल कमिट इतिहास",
-  "GIT_SHOW_HISTORY": "कमिट इतिहास"
+  "CMD_TOGGLE_EMMET": "एमेट"
 });
 /*
  * GNU AGPL-3.0 License
@@ -82692,6 +82705,8 @@ define("nls/hr/strings", {
   "TOOLTIP_REFRESH_PANEL": "Osvježi ploču",
   "TOOLTIP_SHOW_FILE_HISTORY": "Prikaži povijest datoteke",
   "TOOLTIP_SHOW_HISTORY": "Prikaži povijest",
+  "GIT_SHOW_FILE_HISTORY": "Povijest commitova datoteke",
+  "GIT_SHOW_HISTORY": "Povijest commitova",
   "UNDO_CHANGES": "Odbaci promjene",
   "UNDO_CHANGES_BTN": "Odbaci promjene…",
   "UNDO_LAST_LOCAL_COMMIT": "Poništi zadnji lokalni (nepotisnuti) commit…",
@@ -82784,8 +82799,7 @@ define("nls/hr/strings", {
   "GIT_TOAST_TITLE": "Istražite Git značajke u Phoenix Codeu",
   "GIT_TOAST_MESSAGE": "Kliknite ikonu Git panela za upravljanje svojim repozitorijem. Jednostavno potvrdite (commit), pošaljite (push), preuzmite (pull) i pregledajte povijest svog projekta - sve na jednom mjestu.<br><a href='https://docs.phcode.dev/docs/Features/git'>Saznajte više o Git panelu →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Glasajte za značajke koje želite vidjeti sljedeće!",
-  "GIT_SHOW_FILE_HISTORY": "Povijest commitova datoteke",
-  "GIT_SHOW_HISTORY": "Povijest commitova"
+  "CMD_TOGGLE_EMMET": "Emmet"
 });
 /*
  * GNU AGPL-3.0 License
@@ -84073,6 +84087,8 @@ define("nls/hu/strings", {
   "TOOLTIP_REFRESH_PANEL": "Panel frissítése",
   "TOOLTIP_SHOW_FILE_HISTORY": "Fájlelőzmények megjelenítése",
   "TOOLTIP_SHOW_HISTORY": "Előzmények megjelenítése",
+  "GIT_SHOW_FILE_HISTORY": "Fájl commit előzményei",
+  "GIT_SHOW_HISTORY": "Commit előzmények",
   "UNDO_CHANGES": "Módosítások elvetése",
   "UNDO_CHANGES_BTN": "Módosítások elvetése…",
   "UNDO_LAST_LOCAL_COMMIT": "Utolsó helyi (nem küldött) commit visszavonása…",
@@ -84165,8 +84181,7 @@ define("nls/hu/strings", {
   "GIT_TOAST_TITLE": "Fedezd fel a Git funkciókat a Phoenix Code-ban",
   "GIT_TOAST_MESSAGE": "Kattintson a Git panel ikonra a verziókövető rendszer kezeléséhez. Könnyedén végezhet commit, push és pull műveleteket, valamint megtekintheti a projekt előzményeit – mindezt egy helyen.<br><a href='https://docs.phcode.dev/docs/Features/git'>Tudj meg többet a Git panelről →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Szavazzon azokra a funkciókra, amelyeket a jövőben látni szeretne!",
-  "GIT_SHOW_FILE_HISTORY": "Fájl commit előzményei",
-  "GIT_SHOW_HISTORY": "Commit előzmények"
+  "CMD_TOGGLE_EMMET": "Emmet"
 });
 /*
  * GNU AGPL-3.0 License
@@ -85427,6 +85442,8 @@ define("nls/id/strings", {
   "TOOLTIP_REFRESH_PANEL": "Segarkan panel",
   "TOOLTIP_SHOW_FILE_HISTORY": "Tampilkan riwayat berkas",
   "TOOLTIP_SHOW_HISTORY": "Tampilkan riwayat",
+  "GIT_SHOW_FILE_HISTORY": "Riwayat Komit Berkas",
+  "GIT_SHOW_HISTORY": "Riwayat Komit",
   "UNDO_CHANGES": "Buang perubahan",
   "UNDO_CHANGES_BTN": "Buang perubahan…",
   "UNDO_LAST_LOCAL_COMMIT": "Batalkan commit lokal terakhir (belum di-push)…",
@@ -85519,8 +85536,7 @@ define("nls/id/strings", {
   "GIT_TOAST_TITLE": "Jelajahi Fitur Git di Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klik ikon panel Git untuk mengelola repositori Anda. Lakukan commit, push, pull, dan lihat riwayat proyek Anda dengan mudah—semua di satu tempat.<br><a href='https://docs.phcode.dev/docs/Features/git'>Pelajari lebih lanjut tentang panel Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Pilih fitur yang ingin Anda lihat selanjutnya!",
-  "GIT_SHOW_FILE_HISTORY": "Riwayat Komit Berkas",
-  "GIT_SHOW_HISTORY": "Riwayat Komit"
+  "CMD_TOGGLE_EMMET": "Emmet"
 });
 /*
  * GNU AGPL-3.0 License
@@ -86807,6 +86823,8 @@ define("nls/it/strings", {
   "TOOLTIP_REFRESH_PANEL": "Aggiorna il pannello",
   "TOOLTIP_SHOW_FILE_HISTORY": "Mostra cronologia del file",
   "TOOLTIP_SHOW_HISTORY": "Mostra cronologia",
+  "GIT_SHOW_FILE_HISTORY": "Cronologia commit del file",
+  "GIT_SHOW_HISTORY": "Cronologia commit",
   "UNDO_CHANGES": "Annulla modifiche",
   "UNDO_CHANGES_BTN": "Annulla modifiche…",
   "UNDO_LAST_LOCAL_COMMIT": "Annulla ultimo commit locale (non pushato)…",
@@ -86899,8 +86917,7 @@ define("nls/it/strings", {
   "GIT_TOAST_TITLE": "Esplora le funzionalità Git in Phoenix Code",
   "GIT_TOAST_MESSAGE": "Fai clic sull'icona del pannello Git per gestire il tuo repository. Esegui commit, push, pull e visualizza la cronologia del tuo progetto, tutto in un unico posto.<br><a href='https://docs.phcode.dev/docs/Features/git'>Scopri di più sul pannello Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vota per le funzionalità che desideri vedere in futuro!",
-  "GIT_SHOW_FILE_HISTORY": "Cronologia commit del file",
-  "GIT_SHOW_HISTORY": "Cronologia commit"
+  "CMD_TOGGLE_EMMET": "Emmet"
 });
 /*
  * GNU AGPL-3.0 License
@@ -88188,6 +88205,8 @@ define("nls/ja/strings", {
   "TOOLTIP_REFRESH_PANEL": "パネルを更新",
   "TOOLTIP_SHOW_FILE_HISTORY": "ファイルの履歴を表示",
   "TOOLTIP_SHOW_HISTORY": "履歴を表示",
+  "GIT_SHOW_FILE_HISTORY": "ファイルのコミット履歴",
+  "GIT_SHOW_HISTORY": "コミット履歴",
   "UNDO_CHANGES": "変更を破棄",
   "UNDO_CHANGES_BTN": "変更を破棄…",
   "UNDO_LAST_LOCAL_COMMIT": "直前のローカルコミット（プッシュされていない）を元に戻す…",
@@ -88280,8 +88299,7 @@ define("nls/ja/strings", {
   "GIT_TOAST_TITLE": "Phoenix CodeのGit機能を試す",
   "GIT_TOAST_MESSAGE": "Gitパネルアイコンをクリックしてリポジトリを管理します。コミット、プッシュ、プル、プロジェクト履歴の表示をすべて1か所で行えます。<br><a href='https://docs.phcode.dev/docs/Features/git'>Gitパネルの詳細はこちら →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "次に実装してほしい機能に投票してください！",
-  "GIT_SHOW_FILE_HISTORY": "ファイルのコミット履歴",
-  "GIT_SHOW_HISTORY": "コミット履歴"
+  "CMD_TOGGLE_EMMET": "Emmet"
 });
 /*
  * GNU AGPL-3.0 License
@@ -89569,6 +89587,8 @@ define("nls/ko/strings", {
   "TOOLTIP_REFRESH_PANEL": "패널 새로 고침",
   "TOOLTIP_SHOW_FILE_HISTORY": "파일 변경 내역 보기",
   "TOOLTIP_SHOW_HISTORY": "변경 내역 보기",
+  "GIT_SHOW_FILE_HISTORY": "파일 커밋 내역",
+  "GIT_SHOW_HISTORY": "커밋 내역",
   "UNDO_CHANGES": "변경 사항 취소",
   "UNDO_CHANGES_BTN": "변경 사항 취소…",
   "UNDO_LAST_LOCAL_COMMIT": "마지막 로컬 (푸시되지 않은) 커밋 실행 취소…",
@@ -89661,8 +89681,7 @@ define("nls/ko/strings", {
   "GIT_TOAST_TITLE": "Phoenix Code의 Git 기능 살펴보기",
   "GIT_TOAST_MESSAGE": "Git 패널 아이콘을 클릭하여 저장소를 관리하세요. 커밋, 푸시, 풀, 프로젝트 기록 보기를 한 곳에서 간편하게 수행할 수 있습니다.<br><a href='https://docs.phcode.dev/docs/Features/git'>Git 패널에 대해 자세히 알아보기 →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "다음에 보고 싶은 기능에 투표하세요!",
-  "GIT_SHOW_FILE_HISTORY": "파일 커밋 내역",
-  "GIT_SHOW_HISTORY": "커밋 내역"
+  "CMD_TOGGLE_EMMET": "에밋"
 });
 /*
  * GNU AGPL-3.0 License
@@ -90950,6 +90969,8 @@ define("nls/lv/strings", {
   "TOOLTIP_REFRESH_PANEL": "Atsvaidzināt paneli",
   "TOOLTIP_SHOW_FILE_HISTORY": "Rādīt faila vēsturi",
   "TOOLTIP_SHOW_HISTORY": "Rādīt vēsturi",
+  "GIT_SHOW_FILE_HISTORY": "Faila paveikšanas vēsture",
+  "GIT_SHOW_HISTORY": "Paveikšanas vēsture",
   "UNDO_CHANGES": "Atcelt izmaiņas",
   "UNDO_CHANGES_BTN": "Atcelt izmaiņas…",
   "UNDO_LAST_LOCAL_COMMIT": "Atcelt pēdējo lokālo (nenosūtīto) commit…",
@@ -91042,8 +91063,7 @@ define("nls/lv/strings", {
   "GIT_TOAST_TITLE": "Izpētiet Git funkcijas Phoenix Code",
   "GIT_TOAST_MESSAGE": "Noklikšķiniet uz Git paneļa ikonas, lai pārvaldītu savu repozitoriju. Ērti veiciet commit, push, pull un skatiet sava projekta vēsturi — viss vienā vietā.<br><a href='https://docs.phcode.dev/docs/Features/git'>Uzziniet vairāk par Git paneli →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Nobalsot par funkcijām, kuras vēlaties redzēt nākamreiz!",
-  "GIT_SHOW_FILE_HISTORY": "Faila paveikšanas vēsture",
-  "GIT_SHOW_HISTORY": "Paveikšanas vēsture"
+  "CMD_TOGGLE_EMMET": "Emmet"
 });
 /*
  * GNU AGPL-3.0 License
@@ -92304,6 +92324,8 @@ define("nls/ml/strings", {
   "TOOLTIP_REFRESH_PANEL": "പാനൽ പുതുക്കുക",
   "TOOLTIP_SHOW_FILE_HISTORY": "ഫയൽ ചരിത്രം കാണിക്കുക",
   "TOOLTIP_SHOW_HISTORY": "ചരിത്രം കാണിക്കുക",
+  "GIT_SHOW_FILE_HISTORY": "ഫയൽ കമ്മിറ്റ് ചരിത്രം",
+  "GIT_SHOW_HISTORY": "കമ്മിറ്റ് ചരിത്രം",
   "UNDO_CHANGES": "മാറ്റങ്ങൾ ഉപേക്ഷിക്കുക",
   "UNDO_CHANGES_BTN": "മാറ്റങ്ങൾ ഉപേക്ഷിക്കുക…",
   "UNDO_LAST_LOCAL_COMMIT": "അവസാനത്തെ ലോക്കൽ (പുഷ് ചെയ്യാത്ത) കമ്മിറ്റ് പഴയപടിയാക്കുക…",
@@ -92396,8 +92418,7 @@ define("nls/ml/strings", {
   "GIT_TOAST_TITLE": "ഫീനിക്സ് കോഡിലെ ഗിറ്റ് സവിശേഷതകൾ പര്യവേക്ഷണം ചെയ്യുക",
   "GIT_TOAST_MESSAGE": "നിങ്ങളുടെ റെപ്പോസിറ്ററി കൈകാര്യം ചെയ്യാൻ ഗിറ്റ് പാനൽ ഐക്കണിൽ ക്ലിക്ക് ചെയ്യുക. എളുപ്പത്തിൽ കമ്മിറ്റ് ചെയ്യുക, പുഷ് ചെയ്യുക, പുൾ ചെയ്യുക, നിങ്ങളുടെ പ്രോജക്റ്റ് ചരിത്രം കാണുക—എല്ലാം ഒരിടത്ത്.<br><a href='https://docs.phcode.dev/docs/Features/git'>ഗിറ്റ് പാനലിനെക്കുറിച്ച് കൂടുതലറിയുക →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "നിങ്ങൾക്ക് അടുത്തതായി കാണാൻ ആഗ്രഹിക്കുന്ന സവിശേഷതകൾക്ക് വോട്ട് ചെയ്യുക!",
-  "GIT_SHOW_FILE_HISTORY": "ഫയൽ കമ്മിറ്റ് ചരിത്രം",
-  "GIT_SHOW_HISTORY": "കമ്മിറ്റ് ചരിത്രം"
+  "CMD_TOGGLE_EMMET": "എമ്മെറ്റ്"
 });
 /*
  * GNU AGPL-3.0 License
@@ -93658,6 +93679,8 @@ define("nls/nb/strings", {
   "TOOLTIP_REFRESH_PANEL": "Oppdater panel",
   "TOOLTIP_SHOW_FILE_HISTORY": "Vis filhistorikk",
   "TOOLTIP_SHOW_HISTORY": "Vis historikk",
+  "GIT_SHOW_FILE_HISTORY": "Filhistorikk for commit",
+  "GIT_SHOW_HISTORY": "Commit-historikk",
   "UNDO_CHANGES": "Forkast endringer",
   "UNDO_CHANGES_BTN": "Forkast endringer…",
   "UNDO_LAST_LOCAL_COMMIT": "Angre siste lokale (ikke pushet) commit…",
@@ -93750,8 +93773,7 @@ define("nls/nb/strings", {
   "GIT_TOAST_TITLE": "Utforsk Git-funksjoner i Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klikk på Git-panelikonet for å administrere repositoriet ditt. Utfør commit, push, pull og se prosjektloggen din – alt på ett sted.<br><a href='https://docs.phcode.dev/docs/Features/git'>Lær mer om Git-panelet →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stem på funksjonene du ønsker å se neste!",
-  "GIT_SHOW_FILE_HISTORY": "Filhistorikk for commit",
-  "GIT_SHOW_HISTORY": "Commit-historikk"
+  "CMD_TOGGLE_EMMET": "Emmet"
 });
 /*
  * GNU AGPL-3.0 License
@@ -95039,6 +95061,8 @@ define("nls/nl/strings", {
   "TOOLTIP_REFRESH_PANEL": "Paneel vernieuwen",
   "TOOLTIP_SHOW_FILE_HISTORY": "Bestandsgeschiedenis weergeven",
   "TOOLTIP_SHOW_HISTORY": "Geschiedenis weergeven",
+  "GIT_SHOW_FILE_HISTORY": "Bestandsgeschiedenis",
+  "GIT_SHOW_HISTORY": "Commitgeschiedenis",
   "UNDO_CHANGES": "Wijzigingen verwerpen",
   "UNDO_CHANGES_BTN": "Wijzigingen verwerpen…",
   "UNDO_LAST_LOCAL_COMMIT": "Laatste lokale (niet gepushte) commit ongedaan maken…",
@@ -95131,8 +95155,7 @@ define("nls/nl/strings", {
   "GIT_TOAST_TITLE": "Ontdek Git-functies in Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klik op het Git-paneelpictogram om uw repository te beheren. Commit, push, pull en bekijk uw projectgeschiedenis eenvoudig - alles op één plek.<br><a href='https://docs.phcode.dev/docs/Features/git'>Meer informatie over het Git-paneel →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stem op de functies die u graag wilt zien!",
-  "GIT_SHOW_FILE_HISTORY": "Bestandsgeschiedenis",
-  "GIT_SHOW_HISTORY": "Commitgeschiedenis"
+  "CMD_TOGGLE_EMMET": "Emmet"
 });
 /*
  * GNU AGPL-3.0 License
@@ -96420,6 +96443,8 @@ define("nls/pl/strings", {
   "TOOLTIP_REFRESH_PANEL": "Odśwież panel",
   "TOOLTIP_SHOW_FILE_HISTORY": "Pokaż historię pliku",
   "TOOLTIP_SHOW_HISTORY": "Pokaż historię",
+  "GIT_SHOW_FILE_HISTORY": "Historia zmian w pliku",
+  "GIT_SHOW_HISTORY": "Historia commitów",
   "UNDO_CHANGES": "Odrzuć zmiany",
   "UNDO_CHANGES_BTN": "Odrzuć zmiany…",
   "UNDO_LAST_LOCAL_COMMIT": "Cofnij ostatni lokalny commit (nie wypchnięty)…",
@@ -96512,8 +96537,7 @@ define("nls/pl/strings", {
   "GIT_TOAST_TITLE": "Poznaj funkcje Gita w Phoenix Code",
   "GIT_TOAST_MESSAGE": "Kliknij ikonę panelu Git, aby zarządzać swoim repozytorium. Łatwo zatwierdzaj, przesyłaj, pobieraj i przeglądaj historię swojego projektu — wszystko w jednym miejscu.<br><a href='https://docs.phcode.dev/docs/Features/git'>Dowiedz się więcej o panelu Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Zagłosuj na funkcje, które chcesz zobaczyć w przyszłości!",
-  "GIT_SHOW_FILE_HISTORY": "Historia zmian w pliku",
-  "GIT_SHOW_HISTORY": "Historia commitów"
+  "CMD_TOGGLE_EMMET": "Emmet"
 });
 /*
  * GNU AGPL-3.0 License
@@ -97801,6 +97825,8 @@ define("nls/pt-br/strings", {
   "TOOLTIP_REFRESH_PANEL": "Atualizar painel",
   "TOOLTIP_SHOW_FILE_HISTORY": "Mostrar histórico do arquivo",
   "TOOLTIP_SHOW_HISTORY": "Mostrar histórico",
+  "GIT_SHOW_FILE_HISTORY": "Histórico de commits do arquivo",
+  "GIT_SHOW_HISTORY": "Histórico de commits",
   "UNDO_CHANGES": "Descartar alterações",
   "UNDO_CHANGES_BTN": "Descartar alterações…",
   "UNDO_LAST_LOCAL_COMMIT": "Desfazer último commit local (não enviado)…",
@@ -97893,8 +97919,7 @@ define("nls/pt-br/strings", {
   "GIT_TOAST_TITLE": "Explore os Recursos do Git no Phoenix Code",
   "GIT_TOAST_MESSAGE": "Clique no ícone do painel Git para gerenciar seu repositório. Faça commits, pushes, pulls e visualize o histórico do seu projeto com facilidade — tudo em um só lugar.<br><a href='https://docs.phcode.dev/docs/Features/git'>Saiba mais sobre o painel Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote nos recursos que você quer ver em seguida!",
-  "GIT_SHOW_FILE_HISTORY": "Histórico de commits do arquivo",
-  "GIT_SHOW_HISTORY": "Histórico de commits"
+  "CMD_TOGGLE_EMMET": "Emmet"
 });
 /*
  * GNU AGPL-3.0 License
@@ -99180,6 +99205,8 @@ define("nls/pt-pt/strings", {
   "TOOLTIP_REFRESH_PANEL": "Atualizar painel",
   "TOOLTIP_SHOW_FILE_HISTORY": "Mostrar histórico do ficheiro",
   "TOOLTIP_SHOW_HISTORY": "Mostrar histórico",
+  "GIT_SHOW_FILE_HISTORY": "Histórico de commits do ficheiro",
+  "GIT_SHOW_HISTORY": "Histórico de commits",
   "UNDO_CHANGES": "Reverter alterações",
   "UNDO_CHANGES_BTN": "Reverter alterações…",
   "UNDO_LAST_LOCAL_COMMIT": "Reverter último commit local (não enviado)…",
@@ -99272,8 +99299,7 @@ define("nls/pt-pt/strings", {
   "GIT_TOAST_TITLE": "Explore as funcionalidades do Git no Phoenix Code",
   "GIT_TOAST_MESSAGE": "Clique no ícone do painel Git para gerir o seu repositório. Efetue commits, pushes, pulls e veja o histórico do seu projeto com facilidade — tudo num só lugar.<br><a href='https://docs.phcode.dev/docs/Features/git'>Saiba mais sobre o painel Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote nas funcionalidades que quer ver a seguir!",
-  "GIT_SHOW_FILE_HISTORY": "Histórico de commits do ficheiro",
-  "GIT_SHOW_HISTORY": "Histórico de commits"
+  "CMD_TOGGLE_EMMET": "Emmet"
 });
 /*
  * GNU AGPL-3.0 License
@@ -100559,6 +100585,8 @@ define("nls/ro/strings", {
   "TOOLTIP_REFRESH_PANEL": "Reîmprospătează panoul",
   "TOOLTIP_SHOW_FILE_HISTORY": "Afișează istoricul fișierului",
   "TOOLTIP_SHOW_HISTORY": "Afișează istoricul",
+  "GIT_SHOW_FILE_HISTORY": "Istoricul commit-urilor fișierului",
+  "GIT_SHOW_HISTORY": "Istoricul commit-urilor",
   "UNDO_CHANGES": "Renunță la modificări",
   "UNDO_CHANGES_BTN": "Renunță la modificări…",
   "UNDO_LAST_LOCAL_COMMIT": "Anulează ultima confirmare locală (neîncărcată)…",
@@ -100651,8 +100679,7 @@ define("nls/ro/strings", {
   "GIT_TOAST_TITLE": "Explorați funcțiile Git în Phoenix Code",
   "GIT_TOAST_MESSAGE": "Faceți clic pe pictograma panoului Git pentru a vă gestiona depozitul. Efectuați ușor commit, push, pull și vizualizați istoricul proiectului dvs. - totul într-un singur loc.<br><a href='https://docs.phcode.dev/docs/Features/git'>Aflați mai multe despre panoul Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Votează pentru funcționalitățile pe care dorești să le vezi în continuare!",
-  "GIT_SHOW_FILE_HISTORY": "Istoricul commit-urilor fișierului",
-  "GIT_SHOW_HISTORY": "Istoricul commit-urilor"
+  "CMD_TOGGLE_EMMET": "Emmet"
 });
 /*
  * GNU AGPL-3.0 License
@@ -103551,6 +103578,8 @@ define("nls/ru/strings", {
   "TOOLTIP_REFRESH_PANEL": "Обновить панель",
   "TOOLTIP_SHOW_FILE_HISTORY": "Показать историю файла",
   "TOOLTIP_SHOW_HISTORY": "Показать историю",
+  "GIT_SHOW_FILE_HISTORY": "История коммитов файла",
+  "GIT_SHOW_HISTORY": "История коммитов",
   "UNDO_CHANGES": "Отменить изменения",
   "UNDO_CHANGES_BTN": "Отменить изменения…",
   "UNDO_LAST_LOCAL_COMMIT": "Отменить последний локальный (неотправленный) коммит…",
@@ -103643,8 +103672,7 @@ define("nls/ru/strings", {
   "GIT_TOAST_TITLE": "Возможности Git в Phoenix Code",
   "GIT_TOAST_MESSAGE": "Нажмите на значок панели Git для управления вашим репозиторием. Легко выполняйте коммиты, отправляйте (push), получайте (pull) изменения и просматривайте историю вашего проекта — все в одном месте.<br><a href='https://docs.phcode.dev/docs/Features/git'>Узнать больше о панели Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Проголосуйте за функции, которые вы хотите увидеть в будущем!",
-  "GIT_SHOW_FILE_HISTORY": "История коммитов файла",
-  "GIT_SHOW_HISTORY": "История коммитов"
+  "CMD_TOGGLE_EMMET": "Эммет"
 });
 /*
  * GNU AGPL-3.0 License
@@ -104932,6 +104960,8 @@ define("nls/sk/strings", {
   "TOOLTIP_REFRESH_PANEL": "Obnoviť panel",
   "TOOLTIP_SHOW_FILE_HISTORY": "Zobraziť históriu súboru",
   "TOOLTIP_SHOW_HISTORY": "Zobraziť históriu",
+  "GIT_SHOW_FILE_HISTORY": "História commitov súboru",
+  "GIT_SHOW_HISTORY": "História commitov",
   "UNDO_CHANGES": "Zahodiť zmeny",
   "UNDO_CHANGES_BTN": "Zahodiť zmeny…",
   "UNDO_LAST_LOCAL_COMMIT": "Vrátiť späť posledný lokálny (neodoslaný) commit…",
@@ -105024,8 +105054,7 @@ define("nls/sk/strings", {
   "GIT_TOAST_TITLE": "Preskúmajte funkcie Gitu v Phoenix Code",
   "GIT_TOAST_MESSAGE": "Kliknite na ikonu panela Git pre správu vášho repozitára. Jednoducho commitujte, pushujte, pullujte a prezerajte si históriu vášho projektu – všetko na jednom mieste.<br><a href='https://docs.phcode.dev/docs/Features/git'>Zistite viac o paneli Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Hlasujte za funkcie, ktoré chcete vidieť v ďalšej verzii!",
-  "GIT_SHOW_FILE_HISTORY": "História commitov súboru",
-  "GIT_SHOW_HISTORY": "História commitov"
+  "CMD_TOGGLE_EMMET": "Emmet"
 });
 /*
  * GNU AGPL-3.0 License
@@ -106312,6 +106341,8 @@ define("nls/sr/strings", {
   "TOOLTIP_REFRESH_PANEL": "Освежи панел",
   "TOOLTIP_SHOW_FILE_HISTORY": "Прикажи историју датотеке",
   "TOOLTIP_SHOW_HISTORY": "Прикажи историју",
+  "GIT_SHOW_FILE_HISTORY": "Историјат измена датотеке",
+  "GIT_SHOW_HISTORY": "Историјат измена (commit-ова)",
   "UNDO_CHANGES": "Одустани од измена",
   "UNDO_CHANGES_BTN": "Одустани од измена…",
   "UNDO_LAST_LOCAL_COMMIT": "Поништи последњи локални (непослати) комит…",
@@ -106404,8 +106435,7 @@ define("nls/sr/strings", {
   "GIT_TOAST_TITLE": "Истражите Гит функције у Phoenix Code-у",
   "GIT_TOAST_MESSAGE": "Кликните на икону Гит панела да бисте управљали својим спремиштем. Лако направите commit, push, pull и погледајте историју свог пројекта — све на једном месту.<br><a href='https://docs.phcode.dev/docs/Features/git'>Сазнајте више о Гит панелу →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Гласајте за функције које желите да видите у будућности!",
-  "GIT_SHOW_FILE_HISTORY": "Историјат измена датотеке",
-  "GIT_SHOW_HISTORY": "Историјат измена (commit-ова)"
+  "CMD_TOGGLE_EMMET": "Емет"
 });
 /*
  * GNU AGPL-3.0 License
@@ -107776,6 +107806,8 @@ define("nls/sv/strings", {
   "TOOLTIP_REFRESH_PANEL": "Uppdatera panelen",
   "TOOLTIP_SHOW_FILE_HISTORY": "Visa filhistorik",
   "TOOLTIP_SHOW_HISTORY": "Visa historik",
+  "GIT_SHOW_FILE_HISTORY": "Filhistorik för commit",
+  "GIT_SHOW_HISTORY": "Commithistorik",
   "UNDO_CHANGES": "Återställ ändringar",
   "UNDO_CHANGES_BTN": "Återställ ändringar…",
   "UNDO_LAST_LOCAL_COMMIT": "Ångra senaste lokala (ej pushade) commit…",
@@ -107868,8 +107900,7 @@ define("nls/sv/strings", {
   "GIT_TOAST_TITLE": "Utforska Git-funktioner i Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klicka på Git-panelens ikon för att hantera din repository. Committa, pusha, pulla och se din projekthistorik enkelt – allt på ett ställe.<br><a href='https://docs.phcode.dev/docs/Features/git'>Läs mer om Git-panelen →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Rösta på funktionerna du vill se härnäst!",
-  "GIT_SHOW_FILE_HISTORY": "Filhistorik för commit",
-  "GIT_SHOW_HISTORY": "Commithistorik"
+  "CMD_TOGGLE_EMMET": "Emmet"
 });
 /*
  * GNU AGPL-3.0 License
@@ -109157,6 +109188,8 @@ define("nls/tr/strings", {
   "TOOLTIP_REFRESH_PANEL": "Paneli Yenile",
   "TOOLTIP_SHOW_FILE_HISTORY": "Dosya geçmişini göster",
   "TOOLTIP_SHOW_HISTORY": "Geçmişi göster",
+  "GIT_SHOW_FILE_HISTORY": "Dosya İşleme Geçmişi",
+  "GIT_SHOW_HISTORY": "İşleme Geçmişi",
   "UNDO_CHANGES": "Değişiklikleri iptal et",
   "UNDO_CHANGES_BTN": "Değişiklikleri iptal et…",
   "UNDO_LAST_LOCAL_COMMIT": "Son yerel (gönderilmemiş) commit'i geri al…",
@@ -109249,8 +109282,7 @@ define("nls/tr/strings", {
   "GIT_TOAST_TITLE": "Phoenix Code'da Git Özelliklerini Keşfedin",
   "GIT_TOAST_MESSAGE": "Deponuzu yönetmek için Git paneli simgesine tıklayın. Proje geçmişinizi kolayca işleyin, gönderin, çekin ve görüntüleyin—hepsi tek bir yerde.<br><a href='https://docs.phcode.dev/docs/Features/git'>Git paneli hakkında daha fazla bilgi edinin →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Gelecekte görmek istediğiniz özellikler için oy verin!",
-  "GIT_SHOW_FILE_HISTORY": "Dosya İşleme Geçmişi",
-  "GIT_SHOW_HISTORY": "İşleme Geçmişi"
+  "CMD_TOGGLE_EMMET": "Emmet"
 });
 /*
  * GNU AGPL-3.0 License
@@ -110538,6 +110570,8 @@ define("nls/uk/strings", {
   "TOOLTIP_REFRESH_PANEL": "Оновити панель",
   "TOOLTIP_SHOW_FILE_HISTORY": "Показати історію файлу",
   "TOOLTIP_SHOW_HISTORY": "Показати історію",
+  "GIT_SHOW_FILE_HISTORY": "Історія комітів файлу",
+  "GIT_SHOW_HISTORY": "Історія комітів",
   "UNDO_CHANGES": "Відкинути зміни",
   "UNDO_CHANGES_BTN": "Відкинути зміни…",
   "UNDO_LAST_LOCAL_COMMIT": "Скасувати останній локальний (не відправлений) коміт…",
@@ -110630,8 +110664,7 @@ define("nls/uk/strings", {
   "GIT_TOAST_TITLE": "Ознайомтеся з функціями Git у Phoenix Code",
   "GIT_TOAST_MESSAGE": "Натисніть піктограму панелі Git, щоб керувати вашим репозиторієм. Легко виконуйте коміти, пуші, пули та переглядайте історію вашого проєкту — все в одному місці.<br><a href='https://docs.phcode.dev/docs/Features/git'>Дізнайтеся більше про панель Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Проголосуйте за функції, які ви хочете бачити наступними!",
-  "GIT_SHOW_FILE_HISTORY": "Історія комітів файлу",
-  "GIT_SHOW_HISTORY": "Історія комітів"
+  "CMD_TOGGLE_EMMET": "Еммет"
 });
 /*
  * GNU AGPL-3.0 License
@@ -111919,6 +111952,8 @@ define("nls/ur/strings", {
   "TOOLTIP_REFRESH_PANEL": "پینل تازہ کریں۔",
   "TOOLTIP_SHOW_FILE_HISTORY": "فائل کی تاریخ دکھائیں۔",
   "TOOLTIP_SHOW_HISTORY": "تاریخ دکھائیں۔",
+  "GIT_SHOW_FILE_HISTORY": "فائل کی کمٹ ہسٹری",
+  "GIT_SHOW_HISTORY": "کمٹ ہسٹری",
   "UNDO_CHANGES": "تبدیلیاں رد کریں۔",
   "UNDO_CHANGES_BTN": "تبدیلیاں رد کریں۔۔۔",
   "UNDO_LAST_LOCAL_COMMIT": "آخری مقامی (پُش نہ کی گئی) کمٹ منسوخ کریں۔۔۔",
@@ -112011,8 +112046,7 @@ define("nls/ur/strings", {
   "GIT_TOAST_TITLE": "فینکس کوڈ میں گٹ فیچرز دریافت کریں",
   "GIT_TOAST_MESSAGE": "اپنی ذخیرہ گاہ (repository) کو منظم کرنے کے لیے گٹ پینل آئیکن پر کلک کریں۔ آسانی سے کامٹ، پش، پل کریں، اور اپنے پروجیکٹ کی تاریخ دیکھیں—سب ایک ہی جگہ پر۔<br><a href='https://docs.phcode.dev/docs/Features/git'>گٹ پینل کے بارے میں مزید جانیں →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "اپنی پسندیدہ خصوصیات کے لیے ووٹ دیں!",
-  "GIT_SHOW_FILE_HISTORY": "فائل کی کمٹ ہسٹری",
-  "GIT_SHOW_HISTORY": "کمٹ ہسٹری"
+  "CMD_TOGGLE_EMMET": "ایمٹ"
 });
 /*
  * GNU AGPL-3.0 License
@@ -113330,6 +113364,8 @@ define("nls/zh-cn/strings", {
   "TOOLTIP_REFRESH_PANEL": "刷新面板",
   "TOOLTIP_SHOW_FILE_HISTORY": "显示文件历史记录",
   "TOOLTIP_SHOW_HISTORY": "显示历史记录",
+  "GIT_SHOW_FILE_HISTORY": "文件提交历史",
+  "GIT_SHOW_HISTORY": "提交历史",
   "UNDO_CHANGES": "丢弃更改",
   "UNDO_CHANGES_BTN": "丢弃更改…",
   "UNDO_LAST_LOCAL_COMMIT": "撤销上次本地（未推送）提交…",
@@ -113422,8 +113458,7 @@ define("nls/zh-cn/strings", {
   "GIT_TOAST_TITLE": "探索 Phoenix Code 中的 Git 功能",
   "GIT_TOAST_MESSAGE": "点击 Git 面板图标即可管理您的代码仓库。轻松提交、推送、拉取和查看项目历史记录，一切尽在一处。<br><a href='https://docs.phcode.dev/docs/Features/git'>了解更多关于 Git 面板的信息 →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "为您希望看到的下一个功能投票！",
-  "GIT_SHOW_FILE_HISTORY": "文件提交历史",
-  "GIT_SHOW_HISTORY": "提交历史"
+  "CMD_TOGGLE_EMMET": "Emmet（代码补全）"
 });
 /*
  * GNU AGPL-3.0 License
@@ -114711,6 +114746,8 @@ define("nls/zh-tw/strings", {
   "TOOLTIP_REFRESH_PANEL": "重新整理面板",
   "TOOLTIP_SHOW_FILE_HISTORY": "顯示檔案歷史紀錄",
   "TOOLTIP_SHOW_HISTORY": "顯示歷史紀錄",
+  "GIT_SHOW_FILE_HISTORY": "檔案提交紀錄",
+  "GIT_SHOW_HISTORY": "提交紀錄",
   "UNDO_CHANGES": "捨棄變更",
   "UNDO_CHANGES_BTN": "捨棄變更…",
   "UNDO_LAST_LOCAL_COMMIT": "復原上次的本地（尚未推送的）提交…",
@@ -114803,8 +114840,7 @@ define("nls/zh-tw/strings", {
   "GIT_TOAST_TITLE": "在 Phoenix Code 中探索 Git 功能",
   "GIT_TOAST_MESSAGE": "按一下 Git 面板圖示即可管理您的儲存庫。輕鬆提交、推送、提取和檢視您的專案歷史記錄，一切盡在掌握之中。<br><a href='https://docs.phcode.dev/docs/Features/git'>深入瞭解 Git 面板 →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "投票選出您希望看到的下個功能！",
-  "GIT_SHOW_FILE_HISTORY": "檔案提交紀錄",
-  "GIT_SHOW_HISTORY": "提交紀錄"
+  "CMD_TOGGLE_EMMET": "Emmet (保留原文，因 Emmet 為專有名詞)"
 });
 /*
  * GNU AGPL-3.0 License
