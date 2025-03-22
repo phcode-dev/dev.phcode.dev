@@ -103678,6 +103678,7 @@ define("nls/root/strings", {
     "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>does not collect or process any personally identifiable information</strong>, but <strong>collects anonymous usage statistics</strong> to guard your privacy. Anonymous data is exempt from GDPR/CCPA notification requirements, but we believe you need to have a choice to opt out of anonymous data collection as well.<br><br> You can see your data or <strong>choose not to share any anonymous data</strong> by selecting <strong>Help > Health Report</strong>. These <strong>anonymous</strong> app usage statistics and error reports helps prioritize features, find bugs, and spot usability issues for improving your experience with {APP_NAME}. Without this data, we would not know what features it is worth building for you! <br>",
     "HEALTH_DATA_PREVIEW": "{APP_NAME} Health Report",
     "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>does not collect or process any personally identifiable information</strong>, but <strong>collects anonymous usage statistics</strong> to guard your privacy. These <strong>anonymous</strong> app usage statistics and error reports helps prioritize features, find bugs, and spot usability issues for improving your experience with {APP_NAME}.</p> <p>Below is a preview of the data that will be sent in your next Health Report <em>if</em> it is enabled. (Also see developer console for error logs marked 'Caught Critical error'.)</p>",
+    "HEALTH_DATA_PREVIEW_NECESSARY": "Security/app updates, analytics library initialization, user counts, and usage time are always anonymously collected as necessary app health indicators. These are aggregate statistics and no personal data is sent/logged.",
 
     // extensions/default/InlineTimingFunctionEditor
     "INLINE_TIMING_EDITOR_TIME": "Time",
@@ -104344,6 +104345,7 @@ define("nls/root/strings", {
     // surveys
     "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote for the features you want to see next!"
 });
+
 /*
  * GNU AGPL-3.0 License
  *
@@ -162165,6 +162167,7 @@ define("utils/Metrics", function (require, exports, module) {
     }
 
     function setDisabled(shouldDisable) {
+        Phoenix._setHealthTrackingDisabled(shouldDisable);
         disabled = shouldDisable;
     }
 

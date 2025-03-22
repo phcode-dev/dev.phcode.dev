@@ -175,6 +175,19 @@ define("HealthDataManager", function (require, exports, module) {
             isPowerUserFn: isPowerUser
         });
         healthDataDisabled = !prefs.get("healthDataTracking");
+        if (healthDataDisabled && !Phoenix.healthTrackingDisabled) {
+            // Phoenix.healthTrackingDisabled is initialized at boot using localStorage.
+            // However, there's a theoretical edge case where the browser may have cleared
+            // localStorage, causing a mismatch between the boot-time flag and the actual
+            // persisted user preference.
+            //
+            // This means we might unintentionally log some metrics during the short window
+            // before the real preference is loaded and applied.
+            //
+            // To track this discrepancy, we emit a one-time metric just before disabling tracking,
+            // so we’re aware of this inconsistency and can address it if needed.
+            Metrics.countEvent(Metrics.PLATFORM, "metricBoot", "disableErr");
+        }
         Metrics.setDisabled(healthDataDisabled);
         SendToAnalytics.sendPlatformMetrics();
         SendToAnalytics.sendThemesMetrics();
@@ -344,6 +357,10 @@ define("HealthDataPreview", function (require, exports, module) {
 	            <input type="checkbox" data-target="hdPref" {{#hdPref}}checked{{/hdPref}} />
 	            {{Strings.HEALTH_DATA_DO_TRACK}}
 	        </label>
+			<div style="display: flex; align-items: flex-start; gap: 8px; padding: 8px 10px; border-left: 3px solid #aaa; font-size: 13px; color: #666; margin: 8px 0;">
+				<span style="flex-shrink: 0;">ℹ️</span>
+				<span>{{Strings.HEALTH_DATA_PREVIEW_NECESSARY}}</span>
+			</div>
     	</div>
 	    <div class="dialog-message preview-content-container">
 	        <p class="preview-content">{{{content}}}</p>
@@ -433,13 +450,15 @@ define("HealthDataPreview", function (require, exports, module) {
  *
  */
 
-/*global Phoenix*/
+/*global AppConfig*/
 define("SendToAnalytics", function (require, exports, module) {
     const Metrics = brackets.getModule("utils/Metrics"),
         PreferencesManager  = brackets.getModule("preferences/PreferencesManager"),
         PerfUtils           = brackets.getModule("utils/PerfUtils"),
         NodeUtils           = brackets.getModule("utils/NodeUtils"),
         themesPref          = PreferencesManager.getExtensionPrefs("themes");
+
+    const BugsnagPerformance = window.BugsnagPerformance;
 
     const PLATFORM = Metrics.EVENT_TYPE.PLATFORM,
         PERFORMANCE = Metrics.EVENT_TYPE.PERFORMANCE,
@@ -545,17 +564,34 @@ define("SendToAnalytics", function (require, exports, module) {
         _sendStorageMetrics();
     }
 
+    let bugsnagPerformanceInited = false;
+    function _initBugsnagPerformance() {
+        bugsnagPerformanceInited = true;
+        BugsnagPerformance.start({
+            apiKey: '94ef94f4daf871ca0f2fc912c6d4764d',
+            appVersion: AppConfig.version,
+            releaseStage: window.__TAURI__ ?
+                `tauri-${AppConfig.config.bugsnagEnv}-${Phoenix.platform}` : AppConfig.config.bugsnagEnv,
+            autoInstrumentRouteChanges: false,
+            autoInstrumentNetworkRequests: false,
+            autoInstrumentFullPageLoads: false
+        });
+    }
+
     function _bugsnagPerformance(key, valueMs) {
-        if(Metrics.isDisabled() || !window.BugsnagPerformance || Phoenix.isTestWindow){
+        if(Metrics.isDisabled() || !BugsnagPerformance || Phoenix.isTestWindow){
             return;
+        }
+        if(!bugsnagPerformanceInited) {
+            _initBugsnagPerformance();
         }
         let activityStartTime = new Date();
         let activityEndTime = new Date(activityStartTime.getTime() + valueMs);
-        window.BugsnagPerformance
+        BugsnagPerformance
             .startSpan(key, { startTime: activityStartTime })
             .end(activityEndTime);
     }
-    
+
     // Performance
     function sendStartupPerformanceMetrics() {
         const healthReport = PerfUtils.getHealthReport();
