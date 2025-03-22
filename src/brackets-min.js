@@ -65810,6 +65810,7 @@ define("nls/ar/strings", {
   "CMD_BEAUTIFY_CODE": "تنسيق الشفرة",
   "CMD_BEAUTIFY_CODE_ON_SAVE": "تنسيق الشفرة بعد الحفظ",
   "CMD_AUTO_RENAME_TAGS": "إعادة تسمية وسوم HTML تلقائيًا",
+  "CMD_TOGGLE_EMMET": "إيميت",
   "FIND_MENU": "بحث",
   "CMD_FIND": "بحث",
   "CMD_FIND_NEXT": "البحث التالي",
@@ -66736,7 +66737,15 @@ define("nls/ar/strings", {
   "GIT_TOAST_TITLE": "استكشف ميزات Git في Phoenix Code",
   "GIT_TOAST_MESSAGE": "انقر على رمز لوحة Git لإدارة مستودعك. يمكنك بسهولة تنفيذ الالتزام والدفع والسحب وعرض سجل مشروعك - كل ذلك في مكان واحد.<br><a href='https://docs.phcode.dev/docs/Features/git'>تعرّف على المزيد حول لوحة Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "صوت للميزات التي ترغب برؤيتها تالياً!",
-  "CMD_TOGGLE_EMMET": "إيميت"
+  "CLOSE_TAB": "إغلاق علامة التبويب",
+  "CLOSE_ACTIVE_TAB": "إغلاق علامة التبويب النشطة",
+  "CLOSE_ALL_TABS": "إغلاق جميع علامات التبويب",
+  "CLOSE_UNMODIFIED_TABS": "إغلاق علامات التبويب غير المعدلة",
+  "REOPEN_CLOSED_FILE": "إعادة فتح الملف المغلق",
+  "CMD_TOGGLE_TABBAR": "تبديل شريط علامات التبويب",
+  "DESCRIPTION_TABBAR": "ضبط إعدادات شريط علامات التبويب.",
+  "DESCRIPTION_SHOW_TABBAR": "صحيح لإظهار شريط علامات التبويب، وإلا خطأ.",
+  "DESCRIPTION_NUMBER_OF_TABS": "عدد علامات التبويب التي سيتم عرضها في شريط علامات التبويب.  اضبط على -1 لعرض جميع علامات التبويب"
 });
 /*
  * GNU AGPL-3.0 License
@@ -67165,6 +67174,7 @@ define("nls/bg/strings", {
   "CMD_BEAUTIFY_CODE": "Форматирай код",
   "CMD_BEAUTIFY_CODE_ON_SAVE": "Форматирай код след запис",
   "CMD_AUTO_RENAME_TAGS": "Автоматично преименуване на HTML тагове",
+  "CMD_TOGGLE_EMMET": "Емет",
   "FIND_MENU": "Търсене",
   "CMD_FIND": "Търсене",
   "CMD_FIND_NEXT": "Търсене на следващото",
@@ -68091,7 +68101,15 @@ define("nls/bg/strings", {
   "GIT_TOAST_TITLE": "Разгледайте Git функциите в Phoenix Code",
   "GIT_TOAST_MESSAGE": "Щракнете върху иконата на Git панела, за да управлявате хранилището си. Лесно създавайте commit, push, pull и преглеждайте историята на проекта си – всичко на едно място.<br><a href='https://docs.phcode.dev/docs/Features/git'>Научете повече за Git панела →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Гласувайте за функциите, които искате да видите следващи!",
-  "CMD_TOGGLE_EMMET": "Емет"
+  "CLOSE_TAB": "Затвори раздел",
+  "CLOSE_ACTIVE_TAB": "Затвори активния раздел",
+  "CLOSE_ALL_TABS": "Затвори всички раздели",
+  "CLOSE_UNMODIFIED_TABS": "Затвори непроменените раздели",
+  "REOPEN_CLOSED_FILE": "Отвори отново затворения файл",
+  "CMD_TOGGLE_TABBAR": "Превключи лентата с раздели",
+  "DESCRIPTION_TABBAR": "Задай настройките на лентата с раздели.",
+  "DESCRIPTION_SHOW_TABBAR": "`true` за да се показва лентата с раздели, иначе `false`.",
+  "DESCRIPTION_NUMBER_OF_TABS": "Броят на разделите, които да се показват в лентата с раздели. Задайте на -1, за да се показват всички раздели."
 });
 /*
  * Copyright (c) 2013 Adobe Systems Incorporated. All rights reserved.
@@ -68549,6 +68567,7 @@ define("nls/cs/strings", {
   "CMD_BEAUTIFY_CODE": "Formátovat kód",
   "CMD_BEAUTIFY_CODE_ON_SAVE": "Formátovat kód po uložení",
   "CMD_AUTO_RENAME_TAGS": "Automatické přejmenování HTML tagů",
+  "CMD_TOGGLE_EMMET": "Emmet",
   "FIND_MENU": "Najít",
   "CMD_FIND": "Najít",
   "CMD_FIND_NEXT": "Najít další",
@@ -69475,7 +69494,15 @@ define("nls/cs/strings", {
   "GIT_TOAST_TITLE": "Prozkoumejte funkce Gitu v Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klikněte na ikonu panelu Git pro správu vašeho repozitáře. Snadno commitujte, pushujte, pullujte a prohlížejte si historii projektu – vše na jednom místě.<br><a href='https://docs.phcode.dev/docs/Features/git'>Zjistěte více o panelu Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Hlasujte pro funkce, které chcete vidět v další verzi!",
-  "CMD_TOGGLE_EMMET": "Emmet"
+  "CLOSE_TAB": "Zavřít kartu",
+  "CLOSE_ACTIVE_TAB": "Zavřít aktivní kartu",
+  "CLOSE_ALL_TABS": "Zavřít všechny karty",
+  "CLOSE_UNMODIFIED_TABS": "Zavřít nezměněné karty",
+  "REOPEN_CLOSED_FILE": "Znovu otevřít zavřený soubor",
+  "CMD_TOGGLE_TABBAR": "Přepnout panel karet",
+  "DESCRIPTION_TABBAR": "Nastavení panelu karet.",
+  "DESCRIPTION_SHOW_TABBAR": "`true` pro zobrazení panelu karet, jinak `false`.",
+  "DESCRIPTION_NUMBER_OF_TABS": "Počet karet zobrazených v panelu karet. Hodnota -1 zobrazí všechny karty."
 });
 /*
  * GNU AGPL-3.0 License
@@ -69931,6 +69958,7 @@ define("nls/da/strings", {
   "CMD_BEAUTIFY_CODE": "Formatér kode",
   "CMD_BEAUTIFY_CODE_ON_SAVE": "Formatér kode efter lagring",
   "CMD_AUTO_RENAME_TAGS": "Omdøb HTML-tags automatisk",
+  "CMD_TOGGLE_EMMET": "Emmet",
   "FIND_MENU": "Søg",
   "CMD_FIND": "Søg",
   "CMD_FIND_NEXT": "Find næste",
@@ -70857,7 +70885,15 @@ define("nls/da/strings", {
   "GIT_TOAST_TITLE": "Udforsk Git-funktioner i Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klik på Git-panelikonet for at administrere dit repository. Commit, push, pull og se din projekthistorik nemt – alt sammen på ét sted.<br><a href='https://docs.phcode.dev/docs/Features/git'>Læs mere om Git-panelet →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stem på de funktioner, du gerne vil se!",
-  "CMD_TOGGLE_EMMET": "Emmet"
+  "CLOSE_TAB": "Luk fane",
+  "CLOSE_ACTIVE_TAB": "Luk aktiv fane",
+  "CLOSE_ALL_TABS": "Luk alle faner",
+  "CLOSE_UNMODIFIED_TABS": "Luk uændrede faner",
+  "REOPEN_CLOSED_FILE": "Genåbn lukket fil",
+  "CMD_TOGGLE_TABBAR": "Skift fanebjælke",
+  "DESCRIPTION_TABBAR": "Indstil fanebjælkens indstillinger.",
+  "DESCRIPTION_SHOW_TABBAR": "Sandt for at vise fanebjælken, ellers falsk.",
+  "DESCRIPTION_NUMBER_OF_TABS": "Antallet af faner, der skal vises i fanebjælken. Indstil til -1 for at vise alle faner"
 });
 /*
  * GNU AGPL-3.0 License
@@ -71311,6 +71347,7 @@ define("nls/de/strings", {
   "CMD_BEAUTIFY_CODE": "Code verschönern",
   "CMD_BEAUTIFY_CODE_ON_SAVE": "Code nach dem Speichern verschönern",
   "CMD_AUTO_RENAME_TAGS": "HTML-Tags automatisch umbenennen",
+  "CMD_TOGGLE_EMMET": "Emmet",
   "FIND_MENU": "Suchen",
   "CMD_FIND": "Suchen",
   "CMD_FIND_NEXT": "Weitersuchen (vorwärts)",
@@ -72237,7 +72274,15 @@ define("nls/de/strings", {
   "GIT_TOAST_TITLE": "Git-Funktionen in Phoenix Code entdecken",
   "GIT_TOAST_MESSAGE": "Klicken Sie auf das Git-Panel-Symbol, um Ihr Repository zu verwalten. Committen, Pushen, Pullen und die Anzeige Ihres Projektverlaufs – alles an einem Ort.<br><a href='https://docs.phcode.dev/docs/Features/git'>Mehr über das Git-Panel erfahren →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stimmen Sie für die Funktionen ab, die Sie als Nächstes sehen möchten!",
-  "CMD_TOGGLE_EMMET": "Emmet"
+  "CLOSE_TAB": "Tab schließen",
+  "CLOSE_ACTIVE_TAB": "Aktiven Tab schließen",
+  "CLOSE_ALL_TABS": "Alle Tabs schließen",
+  "CLOSE_UNMODIFIED_TABS": "Nicht geänderte Tabs schließen",
+  "REOPEN_CLOSED_FILE": "Geschlossene Datei erneut öffnen",
+  "CMD_TOGGLE_TABBAR": "Tab-Leiste umschalten",
+  "DESCRIPTION_TABBAR": "Tab-Leisten-Einstellungen festlegen.",
+  "DESCRIPTION_SHOW_TABBAR": "`true`, um die Tab-Leiste anzuzeigen, sonst `false`.",
+  "DESCRIPTION_NUMBER_OF_TABS": "Die Anzahl der in der Tab-Leiste anzuzeigenden Tabs. Auf -1 setzen, um alle Tabs anzuzeigen."
 });
 /*
  * GNU AGPL-3.0 License
@@ -72693,6 +72738,7 @@ define("nls/el/strings", {
   "CMD_BEAUTIFY_CODE": "Καλλωπισμός Κώδικα",
   "CMD_BEAUTIFY_CODE_ON_SAVE": "Καλλωπισμός Κώδικα Μετά την Αποθήκευση",
   "CMD_AUTO_RENAME_TAGS": "Αυτόματη Μετονομασία Ετικετών HTML",
+  "CMD_TOGGLE_EMMET": "Emmet",
   "FIND_MENU": "Εύρεση",
   "CMD_FIND": "Εύρεση",
   "CMD_FIND_NEXT": "Εύρεση Επόμενου",
@@ -73619,7 +73665,15 @@ define("nls/el/strings", {
   "GIT_TOAST_TITLE": "Εξερευνήστε τις Λειτουργίες Git στο Phoenix Code",
   "GIT_TOAST_MESSAGE": "Κάντε κλικ στο εικονίδιο του πίνακα Git για να διαχειριστείτε το αποθετήριό σας. Κάντε εύκολα commit, push, pull και δείτε το ιστορικό του έργου σας—όλα σε ένα μέρος.<br><a href='https://docs.phcode.dev/docs/Features/git'>Μάθετε περισσότερα για τον πίνακα Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Ψηφίστε για τις λειτουργίες που θέλετε να δείτε στη συνέχεια!",
-  "CMD_TOGGLE_EMMET": "Emmet"
+  "CLOSE_TAB": "Κλείσιμο Καρτέλας",
+  "CLOSE_ACTIVE_TAB": "Κλείσιμο Ενεργής Καρτέλας",
+  "CLOSE_ALL_TABS": "Κλείσιμο Όλων των Καρτελών",
+  "CLOSE_UNMODIFIED_TABS": "Κλείσιμο μη Τροποποιημένων Καρτελών",
+  "REOPEN_CLOSED_FILE": "Άνοιγμα ξανά Κλειστού Αρχείου",
+  "CMD_TOGGLE_TABBAR": "Εμφάνιση/Απόκρυψη Γραμμής Καρτελών",
+  "DESCRIPTION_TABBAR": "Ρύθμιση των ρυθμίσεων της γραμμής καρτελών.",
+  "DESCRIPTION_SHOW_TABBAR": "true για εμφάνιση της γραμμής καρτελών, αλλιώς false.",
+  "DESCRIPTION_NUMBER_OF_TABS": "Ο αριθμός των καρτελών που θα εμφανίζονται στη γραμμή καρτελών. Ορίστε -1 για εμφάνιση όλων των καρτελών"
 });
 /*
  * GNU AGPL-3.0 License
@@ -74075,6 +74129,7 @@ define("nls/en-gb/strings", {
   "CMD_BEAUTIFY_CODE": "Beautify Code",
   "CMD_BEAUTIFY_CODE_ON_SAVE": "Beautify Code After Saving",
   "CMD_AUTO_RENAME_TAGS": "Auto-rename HTML Tags",
+  "CMD_TOGGLE_EMMET": "Emmet",
   "FIND_MENU": "Find",
   "CMD_FIND": "Find",
   "CMD_FIND_NEXT": "Find Next",
@@ -75001,7 +75056,15 @@ define("nls/en-gb/strings", {
   "GIT_TOAST_TITLE": "Explore Git Features in Phoenix Code",
   "GIT_TOAST_MESSAGE": "Click the Git panel icon to manage your repository. Easily commit, push, pull, and view your project history—all in one place.<br><a href='https://docs.phcode.dev/docs/Features/git'>Learn more about the Git panel →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote for the features you'd like to see next!",
-  "CMD_TOGGLE_EMMET": "Emmet"
+  "CLOSE_TAB": "Close Tab",
+  "CLOSE_ACTIVE_TAB": "Close Active Tab",
+  "CLOSE_ALL_TABS": "Close All Tabs",
+  "CLOSE_UNMODIFIED_TABS": "Close Unmodified Tabs",
+  "REOPEN_CLOSED_FILE": "Reopen Closed File",
+  "CMD_TOGGLE_TABBAR": "Toggle Tab Bar",
+  "DESCRIPTION_TABBAR": "Set the tab bar settings.",
+  "DESCRIPTION_SHOW_TABBAR": "`true` to show the tab bar, otherwise `false`.",
+  "DESCRIPTION_NUMBER_OF_TABS": "The number of tabs to show in the tab bar. Set to `-1` to show all tabs."
 });
 /*
  * GNU AGPL-3.0 License
@@ -75430,6 +75493,7 @@ define("nls/es/strings", {
   "CMD_BEAUTIFY_CODE": "Embellecer código",
   "CMD_BEAUTIFY_CODE_ON_SAVE": "Embellecer código al guardar",
   "CMD_AUTO_RENAME_TAGS": "Renombrar etiquetas HTML automáticamente",
+  "CMD_TOGGLE_EMMET": "Emmet",
   "FIND_MENU": "Buscar",
   "CMD_FIND": "Buscar",
   "CMD_FIND_NEXT": "Buscar siguiente",
@@ -76356,7 +76420,15 @@ define("nls/es/strings", {
   "GIT_TOAST_TITLE": "Explora las funciones de Git en Phoenix Code",
   "GIT_TOAST_MESSAGE": "Haga clic en el icono del panel de Git para administrar su repositorio. Confirme, envíe (push), extraiga (pull) y vea el historial de su proyecto fácilmente, todo en un solo lugar.<br><a href='https://docs.phcode.dev/docs/Features/git'>Obtenga más información sobre el panel de Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "¡Vota por las funciones que quieres ver próximamente!",
-  "CMD_TOGGLE_EMMET": "Emmet"
+  "CLOSE_TAB": "Cerrar pestaña",
+  "CLOSE_ACTIVE_TAB": "Cerrar pestaña activa",
+  "CLOSE_ALL_TABS": "Cerrar todas las pestañas",
+  "CLOSE_UNMODIFIED_TABS": "Cerrar pestañas sin modificar",
+  "REOPEN_CLOSED_FILE": "Reabrir archivo cerrado",
+  "CMD_TOGGLE_TABBAR": "Mostrar/Ocultar barra de pestañas",
+  "DESCRIPTION_TABBAR": "Configurar los ajustes de la barra de pestañas.",
+  "DESCRIPTION_SHOW_TABBAR": "`true` para mostrar la barra de pestañas, `false` para ocultarla.",
+  "DESCRIPTION_NUMBER_OF_TABS": "El número de pestañas a mostrar en la barra de pestañas.  Establecer en -1 para mostrar todas las pestañas."
 });
 /*
  * GNU AGPL-3.0 License
@@ -76813,6 +76885,7 @@ define("nls/fa-ir/strings", {
   "CMD_BEAUTIFY_CODE": "زیبا سازی کد",
   "CMD_BEAUTIFY_CODE_ON_SAVE": "زیبا سازی کد پس از ذخیره",
   "CMD_AUTO_RENAME_TAGS": "تغییر نام خودکار برچسب‌های HTML",
+  "CMD_TOGGLE_EMMET": "امت",
   "FIND_MENU": "یافتن",
   "CMD_FIND": "یافتن",
   "CMD_FIND_NEXT": "یافتن بعدی",
@@ -77739,7 +77812,15 @@ define("nls/fa-ir/strings", {
   "GIT_TOAST_TITLE": "کاوش ویژگی‌های گیت در Phoenix Code",
   "GIT_TOAST_MESSAGE": "برای مدیریت مخزن خود روی آیکون پنل گیت کلیک کنید. به راحتی کامیت، پوش، پول و مشاهده تاریخچه پروژه خود را - همه در یک مکان - انجام دهید.<br><a href='https://docs.phcode.dev/docs/Features/git'>درباره پنل گیت بیشتر بدانید →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "برای قابلیت‌هایی که می‌خواهید در آینده ببینید، رأی دهید!",
-  "CMD_TOGGLE_EMMET": "امت"
+  "CLOSE_TAB": "بستن برگه",
+  "CLOSE_ACTIVE_TAB": "بستن برگه فعال",
+  "CLOSE_ALL_TABS": "بستن همه برگه‌ها",
+  "CLOSE_UNMODIFIED_TABS": "بستن برگه‌های بدون تغییر",
+  "REOPEN_CLOSED_FILE": "باز کردن مجدد فایل بسته شده",
+  "CMD_TOGGLE_TABBAR": "نمایش/عدم نمایش نوار برگه‌ها",
+  "DESCRIPTION_TABBAR": "تنظیمات نوار برگه‌ها را تعیین کنید.",
+  "DESCRIPTION_SHOW_TABBAR": "مقدار «درست» برای نمایش نوار برگه‌ها و مقدار «نادرست» برای عدم نمایش.",
+  "DESCRIPTION_NUMBER_OF_TABS": "تعداد برگه‌هایی که در نوار برگه‌ها نمایش داده می‌شوند. مقدار ۱- برای نمایش همه برگه‌ها."
 });
 /*
  * GNU AGPL-3.0 License
@@ -78195,6 +78276,7 @@ define("nls/fi/strings", {
   "CMD_BEAUTIFY_CODE": "Kaunista koodi",
   "CMD_BEAUTIFY_CODE_ON_SAVE": "Kaunista koodi tallennuksen jälkeen",
   "CMD_AUTO_RENAME_TAGS": "Nimeä HTML-tagit automaattisesti uudelleen",
+  "CMD_TOGGLE_EMMET": "Emmet",
   "FIND_MENU": "Etsi",
   "CMD_FIND": "Etsi",
   "CMD_FIND_NEXT": "Etsi seuraava",
@@ -79121,7 +79203,15 @@ define("nls/fi/strings", {
   "GIT_TOAST_TITLE": "Tutustu Git-ominaisuuksiin Phoenix Codessa",
   "GIT_TOAST_MESSAGE": "Napsauta Git-paneelin kuvaketta hallitaksesi arkistoasi (repository). Tee commit, push ja pull helposti ja tarkastele projektihistoriaasi – kaikki yhdessä paikassa.<br><a href='https://docs.phcode.dev/docs/Features/git'>Lue lisää Git-paneelista →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Äänestä ominaisuuksia, jotka haluat nähdä seuraavaksi!",
-  "CMD_TOGGLE_EMMET": "Emmet"
+  "CLOSE_TAB": "Sulje välilehti",
+  "CLOSE_ACTIVE_TAB": "Sulje aktiivinen välilehti",
+  "CLOSE_ALL_TABS": "Sulje kaikki välilehdet",
+  "CLOSE_UNMODIFIED_TABS": "Sulje muokkaamattomat välilehdet",
+  "REOPEN_CLOSED_FILE": "Avaa suljettu tiedosto uudelleen",
+  "CMD_TOGGLE_TABBAR": "Näytä/piilota välilehtipalkki",
+  "DESCRIPTION_TABBAR": "Määritä välilehtipalkin asetukset.",
+  "DESCRIPTION_SHOW_TABBAR": "Aseta arvoksi `true` näyttääksesi välilehtipalkin, muuten `false`.",
+  "DESCRIPTION_NUMBER_OF_TABS": "Näytettävien välilehtien määrä välilehtipalkissa. Aseta arvoksi -1 näyttääksesi kaikki välilehdet."
 });
 /*
  * GNU AGPL-3.0 License
@@ -79577,6 +79667,7 @@ define("nls/fr/strings", {
   "CMD_BEAUTIFY_CODE": "Embellir le code",
   "CMD_BEAUTIFY_CODE_ON_SAVE": "Embellir le code après l'enregistrement",
   "CMD_AUTO_RENAME_TAGS": "Renommer automatiquement les balises HTML",
+  "CMD_TOGGLE_EMMET": "Emmet",
   "FIND_MENU": "Rechercher",
   "CMD_FIND": "Rechercher",
   "CMD_FIND_NEXT": "Rechercher suivant",
@@ -80503,7 +80594,15 @@ define("nls/fr/strings", {
   "GIT_TOAST_TITLE": "Explorer les fonctionnalités Git dans Phoenix Code",
   "GIT_TOAST_MESSAGE": "Cliquez sur l'icône du panneau Git pour gérer votre dépôt. Validez, envoyez (push), récupérez (pull) et consultez l'historique de votre projet facilement, le tout au même endroit.<br><a href='https://docs.phcode.dev/docs/Features/git'>En savoir plus sur le panneau Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Votez pour les fonctionnalités que vous souhaitez voir apparaître !",
-  "CMD_TOGGLE_EMMET": "Emmet"
+  "CLOSE_TAB": "Fermer l'onglet",
+  "CLOSE_ACTIVE_TAB": "Fermer l'onglet actif",
+  "CLOSE_ALL_TABS": "Fermer tous les onglets",
+  "CLOSE_UNMODIFIED_TABS": "Fermer les onglets non modifiés",
+  "REOPEN_CLOSED_FILE": "Rouvrir le fichier fermé",
+  "CMD_TOGGLE_TABBAR": "Afficher/Masquer la barre d'onglets",
+  "DESCRIPTION_TABBAR": "Définir les paramètres de la barre d'onglets.",
+  "DESCRIPTION_SHOW_TABBAR": "`true` pour afficher la barre d'onglets, sinon `false`.",
+  "DESCRIPTION_NUMBER_OF_TABS": "Le nombre d'onglets à afficher dans la barre d'onglets. Définissez sur -1 pour afficher tous les onglets."
 });
 /*
  * GNU AGPL-3.0 License
@@ -80959,6 +81058,7 @@ define("nls/gl/strings", {
   "CMD_BEAUTIFY_CODE": "Embelecer código",
   "CMD_BEAUTIFY_CODE_ON_SAVE": "Embelecer código despois de gardar",
   "CMD_AUTO_RENAME_TAGS": "Renomear etiquetas HTML automaticamente",
+  "CMD_TOGGLE_EMMET": "Emmet",
   "FIND_MENU": "Buscar",
   "CMD_FIND": "Buscar",
   "CMD_FIND_NEXT": "Buscar seguinte",
@@ -81885,7 +81985,15 @@ define("nls/gl/strings", {
   "GIT_TOAST_TITLE": "Explora as funcionalidades de Git en Phoenix Code",
   "GIT_TOAST_MESSAGE": "Fai clic na icona do panel de Git para xestionar o teu repositorio. Fai commits, envía (push), obtén (pull) e visualiza o historial do teu proxecto facilmente, todo nun mesmo lugar.<br><a href='https://docs.phcode.dev/docs/Features/git'>Aprende máis sobre o panel de Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vota polas funcionalidades que queres ver a continuación!",
-  "CMD_TOGGLE_EMMET": "Emmet"
+  "CLOSE_TAB": "Pechar lapela",
+  "CLOSE_ACTIVE_TAB": "Pechar a lapela activa",
+  "CLOSE_ALL_TABS": "Pechar todas as lapelas",
+  "CLOSE_UNMODIFIED_TABS": "Pechar as lapelas sen modificar",
+  "REOPEN_CLOSED_FILE": "Reabrir o ficheiro pechado",
+  "CMD_TOGGLE_TABBAR": "Alternar a barra de lapelas",
+  "DESCRIPTION_TABBAR": "Configurar os axustes da barra de lapelas.",
+  "DESCRIPTION_SHOW_TABBAR": "\"true\" para mostrar a barra de lapelas, se non \"false\".",
+  "DESCRIPTION_NUMBER_OF_TABS": "O número de lapelas a mostrar na barra de lapelas. Establécese en -1 para mostrar todas as lapelas"
 });
 /*
  * GNU AGPL-3.0 License
@@ -82314,6 +82422,7 @@ define("nls/hi/strings", {
   "CMD_BEAUTIFY_CODE": "कोड सुंदर बनाएँ",
   "CMD_BEAUTIFY_CODE_ON_SAVE": "सहेजने के बाद कोड सुंदर बनाएँ",
   "CMD_AUTO_RENAME_TAGS": "HTML टैग का नाम स्वतः बदलें",
+  "CMD_TOGGLE_EMMET": "एमेट",
   "FIND_MENU": "खोजें",
   "CMD_FIND": "खोजें",
   "CMD_FIND_NEXT": "अगला खोजें",
@@ -83240,7 +83349,15 @@ define("nls/hi/strings", {
   "GIT_TOAST_TITLE": "फ़ीनिक्स कोड में Git सुविधाओं का अन्वेषण करें",
   "GIT_TOAST_MESSAGE": "अपने रिपॉजिटरी को प्रबंधित करने के लिए Git पैनल आइकन पर क्लिक करें। आसानी से कमिट करें, पुश करें, पुल करें और अपने प्रोजेक्ट का इतिहास देखें—सब एक ही स्थान पर।<br><a href='https://docs.phcode.dev/docs/Features/git'>Git पैनल के बारे में अधिक जानें →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "उन विशेषताओं के लिए वोट करें जिन्हें आप आगे देखना चाहते हैं!",
-  "CMD_TOGGLE_EMMET": "एमेट"
+  "CLOSE_TAB": "टैब बंद करें",
+  "CLOSE_ACTIVE_TAB": "सक्रिय टैब बंद करें",
+  "CLOSE_ALL_TABS": "सभी टैब बंद करें",
+  "CLOSE_UNMODIFIED_TABS": "बिना बदलाव वाले टैब बंद करें",
+  "REOPEN_CLOSED_FILE": "बंद की गई फ़ाइल फिर से खोलें",
+  "CMD_TOGGLE_TABBAR": "टैब बार टॉगल करें",
+  "DESCRIPTION_TABBAR": "टैब बार सेटिंग सेट करें।",
+  "DESCRIPTION_SHOW_TABBAR": "टैब बार दिखाने के लिए true, अन्यथा false।",
+  "DESCRIPTION_NUMBER_OF_TABS": "टैब बार में दिखाने के लिए टैब की संख्या। सभी टैब दिखाने के लिए -1 पर सेट करें।"
 });
 /*
  * GNU AGPL-3.0 License
@@ -83669,6 +83786,7 @@ define("nls/hr/strings", {
   "CMD_BEAUTIFY_CODE": "Uredi kod",
   "CMD_BEAUTIFY_CODE_ON_SAVE": "Uredi kod nakon spremanja",
   "CMD_AUTO_RENAME_TAGS": "Automatsko preimenovanje HTML oznaka",
+  "CMD_TOGGLE_EMMET": "Emmet",
   "FIND_MENU": "Pronađi",
   "CMD_FIND": "Pronađi",
   "CMD_FIND_NEXT": "Pronađi sljedeće",
@@ -84595,7 +84713,15 @@ define("nls/hr/strings", {
   "GIT_TOAST_TITLE": "Istražite Git značajke u Phoenix Codeu",
   "GIT_TOAST_MESSAGE": "Kliknite ikonu Git panela za upravljanje svojim repozitorijem. Jednostavno potvrdite (commit), pošaljite (push), preuzmite (pull) i pregledajte povijest svog projekta - sve na jednom mjestu.<br><a href='https://docs.phcode.dev/docs/Features/git'>Saznajte više o Git panelu →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Glasajte za značajke koje želite vidjeti sljedeće!",
-  "CMD_TOGGLE_EMMET": "Emmet"
+  "CLOSE_TAB": "Zatvori karticu",
+  "CLOSE_ACTIVE_TAB": "Zatvori aktivnu karticu",
+  "CLOSE_ALL_TABS": "Zatvori sve kartice",
+  "CLOSE_UNMODIFIED_TABS": "Zatvori nepromijenjene kartice",
+  "REOPEN_CLOSED_FILE": "Ponovno otvori zatvorenu datoteku",
+  "CMD_TOGGLE_TABBAR": "Uključi/isključi traku kartica",
+  "DESCRIPTION_TABBAR": "Postavi postavke trake kartica.",
+  "DESCRIPTION_SHOW_TABBAR": "Vrijednost \"true\" za prikaz trake kartica, inače \"false\".",
+  "DESCRIPTION_NUMBER_OF_TABS": "Broj kartica za prikaz u traci kartica. Postavite na -1 za prikaz svih kartica"
 });
 /*
  * GNU AGPL-3.0 License
@@ -85051,6 +85177,7 @@ define("nls/hu/strings", {
   "CMD_BEAUTIFY_CODE": "Kód formázása",
   "CMD_BEAUTIFY_CODE_ON_SAVE": "Kód formázása mentés után",
   "CMD_AUTO_RENAME_TAGS": "HTML-címkék automatikus átnevezése",
+  "CMD_TOGGLE_EMMET": "Emmet",
   "FIND_MENU": "Keres",
   "CMD_FIND": "Keres",
   "CMD_FIND_NEXT": "Következő találat",
@@ -85977,7 +86104,15 @@ define("nls/hu/strings", {
   "GIT_TOAST_TITLE": "Fedezd fel a Git funkciókat a Phoenix Code-ban",
   "GIT_TOAST_MESSAGE": "Kattintson a Git panel ikonra a verziókövető rendszer kezeléséhez. Könnyedén végezhet commit, push és pull műveleteket, valamint megtekintheti a projekt előzményeit – mindezt egy helyen.<br><a href='https://docs.phcode.dev/docs/Features/git'>Tudj meg többet a Git panelről →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Szavazzon azokra a funkciókra, amelyeket a jövőben látni szeretne!",
-  "CMD_TOGGLE_EMMET": "Emmet"
+  "CLOSE_TAB": "Fül bezárása",
+  "CLOSE_ACTIVE_TAB": "Aktív fül bezárása",
+  "CLOSE_ALL_TABS": "Összes fül bezárása",
+  "CLOSE_UNMODIFIED_TABS": "Nem módosított fülek bezárása",
+  "REOPEN_CLOSED_FILE": "Bezárt fájl újranyitása",
+  "CMD_TOGGLE_TABBAR": "Fülsáv be/kikapcsolása",
+  "DESCRIPTION_TABBAR": "A fülsáv beállításainak megadása.",
+  "DESCRIPTION_SHOW_TABBAR": "`true` a fülsáv megjelenítéséhez, egyébként `false`.",
+  "DESCRIPTION_NUMBER_OF_TABS": "A fülsávon megjelenítendő fülek száma. Állítsa -1-re az összes fül megjelenítéséhez."
 });
 /*
  * GNU AGPL-3.0 License
@@ -86406,6 +86541,7 @@ define("nls/id/strings", {
   "CMD_BEAUTIFY_CODE": "Percantik Kode",
   "CMD_BEAUTIFY_CODE_ON_SAVE": "Percantik Kode Setelah Disimpan",
   "CMD_AUTO_RENAME_TAGS": "Ubah Nama Tag HTML Otomatis",
+  "CMD_TOGGLE_EMMET": "Emmet",
   "FIND_MENU": "Temukan",
   "CMD_FIND": "Temukan",
   "CMD_FIND_NEXT": "Temukan Berikutnya",
@@ -87332,7 +87468,15 @@ define("nls/id/strings", {
   "GIT_TOAST_TITLE": "Jelajahi Fitur Git di Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klik ikon panel Git untuk mengelola repositori Anda. Lakukan commit, push, pull, dan lihat riwayat proyek Anda dengan mudah—semua di satu tempat.<br><a href='https://docs.phcode.dev/docs/Features/git'>Pelajari lebih lanjut tentang panel Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Pilih fitur yang ingin Anda lihat selanjutnya!",
-  "CMD_TOGGLE_EMMET": "Emmet"
+  "CLOSE_TAB": "Tutup Tab",
+  "CLOSE_ACTIVE_TAB": "Tutup Tab Aktif",
+  "CLOSE_ALL_TABS": "Tutup Semua Tab",
+  "CLOSE_UNMODIFIED_TABS": "Tutup Tab yang Tidak Dimodifikasi",
+  "REOPEN_CLOSED_FILE": "Buka Kembali File yang Ditutup",
+  "CMD_TOGGLE_TABBAR": "Alihkan Bilah Tab",
+  "DESCRIPTION_TABBAR": "Atur pengaturan bilah tab.",
+  "DESCRIPTION_SHOW_TABBAR": "`true` untuk menampilkan bilah tab, selain itu `false`.",
+  "DESCRIPTION_NUMBER_OF_TABS": "Jumlah tab yang akan ditampilkan di bilah tab. Atur ke -1 untuk menampilkan semua tab."
 });
 /*
  * GNU AGPL-3.0 License
@@ -87787,6 +87931,7 @@ define("nls/it/strings", {
   "CMD_BEAUTIFY_CODE": "Formatta codice",
   "CMD_BEAUTIFY_CODE_ON_SAVE": "Formatta codice dopo il salvataggio",
   "CMD_AUTO_RENAME_TAGS": "Rinomina tag HTML automaticamente",
+  "CMD_TOGGLE_EMMET": "Emmet",
   "FIND_MENU": "Cerca",
   "CMD_FIND": "Cerca",
   "CMD_FIND_NEXT": "Cerca il successivo",
@@ -88713,7 +88858,15 @@ define("nls/it/strings", {
   "GIT_TOAST_TITLE": "Esplora le funzionalità Git in Phoenix Code",
   "GIT_TOAST_MESSAGE": "Fai clic sull'icona del pannello Git per gestire il tuo repository. Esegui commit, push, pull e visualizza la cronologia del tuo progetto, tutto in un unico posto.<br><a href='https://docs.phcode.dev/docs/Features/git'>Scopri di più sul pannello Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vota per le funzionalità che desideri vedere in futuro!",
-  "CMD_TOGGLE_EMMET": "Emmet"
+  "CLOSE_TAB": "Chiudi scheda",
+  "CLOSE_ACTIVE_TAB": "Chiudi scheda attiva",
+  "CLOSE_ALL_TABS": "Chiudi tutte le schede",
+  "CLOSE_UNMODIFIED_TABS": "Chiudi schede non modificate",
+  "REOPEN_CLOSED_FILE": "Riapri file chiuso",
+  "CMD_TOGGLE_TABBAR": "Mostra/Nascondi barra delle schede",
+  "DESCRIPTION_TABBAR": "Imposta le impostazioni della barra delle schede.",
+  "DESCRIPTION_SHOW_TABBAR": "`true` per mostrare la barra delle schede, altrimenti `false`.",
+  "DESCRIPTION_NUMBER_OF_TABS": "Il numero di schede da mostrare nella barra delle schede. Impostare a -1 per mostrare tutte le schede"
 });
 /*
  * GNU AGPL-3.0 License
@@ -89169,6 +89322,7 @@ define("nls/ja/strings", {
   "CMD_BEAUTIFY_CODE": "コードを整形",
   "CMD_BEAUTIFY_CODE_ON_SAVE": "保存時にコードを整形",
   "CMD_AUTO_RENAME_TAGS": "HTMLタグを自動リネーム",
+  "CMD_TOGGLE_EMMET": "Emmet",
   "FIND_MENU": "検索",
   "CMD_FIND": "検索",
   "CMD_FIND_NEXT": "次を検索",
@@ -90095,7 +90249,15 @@ define("nls/ja/strings", {
   "GIT_TOAST_TITLE": "Phoenix CodeのGit機能を試す",
   "GIT_TOAST_MESSAGE": "Gitパネルアイコンをクリックしてリポジトリを管理します。コミット、プッシュ、プル、プロジェクト履歴の表示をすべて1か所で行えます。<br><a href='https://docs.phcode.dev/docs/Features/git'>Gitパネルの詳細はこちら →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "次に実装してほしい機能に投票してください！",
-  "CMD_TOGGLE_EMMET": "Emmet"
+  "CLOSE_TAB": "タブを閉じる",
+  "CLOSE_ACTIVE_TAB": "アクティブなタブを閉じる",
+  "CLOSE_ALL_TABS": "すべてのタブを閉じる",
+  "CLOSE_UNMODIFIED_TABS": "変更されていないタブを閉じる",
+  "REOPEN_CLOSED_FILE": "閉じたファイルを再度開く",
+  "CMD_TOGGLE_TABBAR": "タブバーの表示/非表示を切り替え",
+  "DESCRIPTION_TABBAR": "タブバーの設定を行います。",
+  "DESCRIPTION_SHOW_TABBAR": "タブバーを表示する場合はtrue、それ以外の場合はfalse。",
+  "DESCRIPTION_NUMBER_OF_TABS": "タブバーに表示するタブの数。すべてのタブを表示する場合は-1を設定します。"
 });
 /*
  * GNU AGPL-3.0 License
@@ -90551,6 +90713,7 @@ define("nls/ko/strings", {
   "CMD_BEAUTIFY_CODE": "코드 정리",
   "CMD_BEAUTIFY_CODE_ON_SAVE": "저장 후 코드 정리",
   "CMD_AUTO_RENAME_TAGS": "HTML 태그 자동 이름 바꾸기",
+  "CMD_TOGGLE_EMMET": "에밋",
   "FIND_MENU": "찾기",
   "CMD_FIND": "찾기",
   "CMD_FIND_NEXT": "다음 찾기",
@@ -91477,7 +91640,15 @@ define("nls/ko/strings", {
   "GIT_TOAST_TITLE": "Phoenix Code의 Git 기능 살펴보기",
   "GIT_TOAST_MESSAGE": "Git 패널 아이콘을 클릭하여 저장소를 관리하세요. 커밋, 푸시, 풀, 프로젝트 기록 보기를 한 곳에서 간편하게 수행할 수 있습니다.<br><a href='https://docs.phcode.dev/docs/Features/git'>Git 패널에 대해 자세히 알아보기 →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "다음에 보고 싶은 기능에 투표하세요!",
-  "CMD_TOGGLE_EMMET": "에밋"
+  "CLOSE_TAB": "탭 닫기",
+  "CLOSE_ACTIVE_TAB": "현재 탭 닫기",
+  "CLOSE_ALL_TABS": "모든 탭 닫기",
+  "CLOSE_UNMODIFIED_TABS": "수정되지 않은 탭 닫기",
+  "REOPEN_CLOSED_FILE": "닫힌 파일 다시 열기",
+  "CMD_TOGGLE_TABBAR": "탭 표시줄 전환",
+  "DESCRIPTION_TABBAR": "탭 표시줄 설정을 지정합니다.",
+  "DESCRIPTION_SHOW_TABBAR": "탭 표시줄을 표시하려면 true, 그렇지 않으면 false입니다.",
+  "DESCRIPTION_NUMBER_OF_TABS": "탭 표시줄에 표시할 탭 수입니다. 모든 탭을 표시하려면 -1로 설정합니다."
 });
 /*
  * GNU AGPL-3.0 License
@@ -91933,6 +92104,7 @@ define("nls/lv/strings", {
   "CMD_BEAUTIFY_CODE": "Formatēt kodu",
   "CMD_BEAUTIFY_CODE_ON_SAVE": "Formatēt kodu pēc saglabāšanas",
   "CMD_AUTO_RENAME_TAGS": "Automātiski pārdēvēt HTML tagus",
+  "CMD_TOGGLE_EMMET": "Emmet",
   "FIND_MENU": "Meklēt",
   "CMD_FIND": "Meklēt",
   "CMD_FIND_NEXT": "Meklēt nākamo",
@@ -92859,7 +93031,15 @@ define("nls/lv/strings", {
   "GIT_TOAST_TITLE": "Izpētiet Git funkcijas Phoenix Code",
   "GIT_TOAST_MESSAGE": "Noklikšķiniet uz Git paneļa ikonas, lai pārvaldītu savu repozitoriju. Ērti veiciet commit, push, pull un skatiet sava projekta vēsturi — viss vienā vietā.<br><a href='https://docs.phcode.dev/docs/Features/git'>Uzziniet vairāk par Git paneli →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Nobalsot par funkcijām, kuras vēlaties redzēt nākamreiz!",
-  "CMD_TOGGLE_EMMET": "Emmet"
+  "CLOSE_TAB": "Aizvērt cilni",
+  "CLOSE_ACTIVE_TAB": "Aizvērt aktīvo cilni",
+  "CLOSE_ALL_TABS": "Aizvērt visas cilnes",
+  "CLOSE_UNMODIFIED_TABS": "Aizvērt nemodificētās cilnes",
+  "REOPEN_CLOSED_FILE": "Atvērt slēgto failu atkārtoti",
+  "CMD_TOGGLE_TABBAR": "Pārslēgt cilņu joslu",
+  "DESCRIPTION_TABBAR": "Iestatīt cilņu joslas iestatījumus.",
+  "DESCRIPTION_SHOW_TABBAR": "“true”, lai rādītu cilņu joslu, citādi “false”.",
+  "DESCRIPTION_NUMBER_OF_TABS": "Cilņu skaits, kas jāparāda cilņu joslā. Iestatiet uz -1, lai rādītu visas cilnes."
 });
 /*
  * GNU AGPL-3.0 License
@@ -93288,6 +93468,7 @@ define("nls/ml/strings", {
   "CMD_BEAUTIFY_CODE": "കോഡ് ഭംഗിയാക്കുക",
   "CMD_BEAUTIFY_CODE_ON_SAVE": "സേവ് ചെയ്തതിനുശേഷം കോഡ് ഭംഗിയാക്കുക",
   "CMD_AUTO_RENAME_TAGS": "HTML ടാഗുകൾ യാന്ത്രികമായി പുനർനാമകരണം ചെയ്യുക",
+  "CMD_TOGGLE_EMMET": "എമ്മെറ്റ്",
   "FIND_MENU": "കണ്ടെത്തുക",
   "CMD_FIND": "കണ്ടെത്തുക",
   "CMD_FIND_NEXT": "അടുത്തത് കണ്ടെത്തുക",
@@ -94214,7 +94395,15 @@ define("nls/ml/strings", {
   "GIT_TOAST_TITLE": "ഫീനിക്സ് കോഡിലെ ഗിറ്റ് സവിശേഷതകൾ പര്യവേക്ഷണം ചെയ്യുക",
   "GIT_TOAST_MESSAGE": "നിങ്ങളുടെ റെപ്പോസിറ്ററി കൈകാര്യം ചെയ്യാൻ ഗിറ്റ് പാനൽ ഐക്കണിൽ ക്ലിക്ക് ചെയ്യുക. എളുപ്പത്തിൽ കമ്മിറ്റ് ചെയ്യുക, പുഷ് ചെയ്യുക, പുൾ ചെയ്യുക, നിങ്ങളുടെ പ്രോജക്റ്റ് ചരിത്രം കാണുക—എല്ലാം ഒരിടത്ത്.<br><a href='https://docs.phcode.dev/docs/Features/git'>ഗിറ്റ് പാനലിനെക്കുറിച്ച് കൂടുതലറിയുക →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "നിങ്ങൾക്ക് അടുത്തതായി കാണാൻ ആഗ്രഹിക്കുന്ന സവിശേഷതകൾക്ക് വോട്ട് ചെയ്യുക!",
-  "CMD_TOGGLE_EMMET": "എമ്മെറ്റ്"
+  "CLOSE_TAB": "ടാബ് അടയ്ക്കുക",
+  "CLOSE_ACTIVE_TAB": "സജീവമായ ടാബ് അടയ്ക്കുക",
+  "CLOSE_ALL_TABS": "എല്ലാ ടാബുകളും അടയ്ക്കുക",
+  "CLOSE_UNMODIFIED_TABS": "മാറ്റം വരുത്താത്ത ടാബുകൾ അടയ്ക്കുക",
+  "REOPEN_CLOSED_FILE": "അടച്ച ഫയൽ വീണ്ടും തുറക്കുക",
+  "CMD_TOGGLE_TABBAR": "ടാബ് ബാർ ടോഗിൾ ചെയ്യുക",
+  "DESCRIPTION_TABBAR": "ടാബ് ബാർ ക്രമീകരണങ്ങൾ സജ്ജമാക്കുക.",
+  "DESCRIPTION_SHOW_TABBAR": "ടാബ് ബാർ കാണിക്കാൻ true, അല്ലെങ്കിൽ false.",
+  "DESCRIPTION_NUMBER_OF_TABS": "ടാബ് ബാറിൽ കാണിക്കേണ്ട ടാബുകളുടെ എണ്ണം. എല്ലാ ടാബുകളും കാണിക്കാൻ -1 ആയി സജ്ജമാക്കുക."
 });
 /*
  * GNU AGPL-3.0 License
@@ -94643,6 +94832,7 @@ define("nls/nb/strings", {
   "CMD_BEAUTIFY_CODE": "Formater kode",
   "CMD_BEAUTIFY_CODE_ON_SAVE": "Formater kode etter lagring",
   "CMD_AUTO_RENAME_TAGS": "Gi HTML-tagger nytt navn automatisk",
+  "CMD_TOGGLE_EMMET": "Emmet",
   "FIND_MENU": "Finn",
   "CMD_FIND": "Finn",
   "CMD_FIND_NEXT": "Finn neste",
@@ -95569,7 +95759,15 @@ define("nls/nb/strings", {
   "GIT_TOAST_TITLE": "Utforsk Git-funksjoner i Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klikk på Git-panelikonet for å administrere repositoriet ditt. Utfør commit, push, pull og se prosjektloggen din – alt på ett sted.<br><a href='https://docs.phcode.dev/docs/Features/git'>Lær mer om Git-panelet →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stem på funksjonene du ønsker å se neste!",
-  "CMD_TOGGLE_EMMET": "Emmet"
+  "CLOSE_TAB": "Lukk fane",
+  "CLOSE_ACTIVE_TAB": "Lukk aktiv fane",
+  "CLOSE_ALL_TABS": "Lukk alle faner",
+  "CLOSE_UNMODIFIED_TABS": "Lukk uendrede faner",
+  "REOPEN_CLOSED_FILE": "Åpne lukket fil på nytt",
+  "CMD_TOGGLE_TABBAR": "Vis/skjul fanelinje",
+  "DESCRIPTION_TABBAR": "Angi innstillinger for fanelinjen.",
+  "DESCRIPTION_SHOW_TABBAR": "`true` for å vise fanelinjen, ellers `false`.",
+  "DESCRIPTION_NUMBER_OF_TABS": "Antall faner som skal vises i fanelinjen. Sett til -1 for å vise alle faner."
 });
 /*
  * GNU AGPL-3.0 License
@@ -96025,6 +96223,7 @@ define("nls/nl/strings", {
   "CMD_BEAUTIFY_CODE": "Code opmaken",
   "CMD_BEAUTIFY_CODE_ON_SAVE": "Code opmaken na opslaan",
   "CMD_AUTO_RENAME_TAGS": "HTML-tags automatisch hernoemen",
+  "CMD_TOGGLE_EMMET": "Emmet",
   "FIND_MENU": "Zoek",
   "CMD_FIND": "Zoek",
   "CMD_FIND_NEXT": "Zoek volgende",
@@ -96951,7 +97150,15 @@ define("nls/nl/strings", {
   "GIT_TOAST_TITLE": "Ontdek Git-functies in Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klik op het Git-paneelpictogram om uw repository te beheren. Commit, push, pull en bekijk uw projectgeschiedenis eenvoudig - alles op één plek.<br><a href='https://docs.phcode.dev/docs/Features/git'>Meer informatie over het Git-paneel →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stem op de functies die u graag wilt zien!",
-  "CMD_TOGGLE_EMMET": "Emmet"
+  "CLOSE_TAB": "Tabblad sluiten",
+  "CLOSE_ACTIVE_TAB": "Actief tabblad sluiten",
+  "CLOSE_ALL_TABS": "Alle tabbladen sluiten",
+  "CLOSE_UNMODIFIED_TABS": "Niet-gewijzigde tabbladen sluiten",
+  "REOPEN_CLOSED_FILE": "Gesloten bestand opnieuw openen",
+  "CMD_TOGGLE_TABBAR": "Tabbalk in-/uitschakelen",
+  "DESCRIPTION_TABBAR": "Stel de instellingen van de tabbalk in.",
+  "DESCRIPTION_SHOW_TABBAR": "`true` om de tabbalk weer te geven, anders `false`.",
+  "DESCRIPTION_NUMBER_OF_TABS": "Het aantal tabbladen dat in de tabbalk wordt weergegeven. Stel in op -1 om alle tabbladen weer te geven."
 });
 /*
  * GNU AGPL-3.0 License
@@ -97407,6 +97614,7 @@ define("nls/pl/strings", {
   "CMD_BEAUTIFY_CODE": "Formatuj kod",
   "CMD_BEAUTIFY_CODE_ON_SAVE": "Formatuj kod po zapisaniu",
   "CMD_AUTO_RENAME_TAGS": "Automatycznie zmieniaj nazwy tagów HTML",
+  "CMD_TOGGLE_EMMET": "Emmet",
   "FIND_MENU": "Znajdź",
   "CMD_FIND": "Znajdź",
   "CMD_FIND_NEXT": "Znajdź następny",
@@ -98333,7 +98541,15 @@ define("nls/pl/strings", {
   "GIT_TOAST_TITLE": "Poznaj funkcje Gita w Phoenix Code",
   "GIT_TOAST_MESSAGE": "Kliknij ikonę panelu Git, aby zarządzać swoim repozytorium. Łatwo zatwierdzaj, przesyłaj, pobieraj i przeglądaj historię swojego projektu — wszystko w jednym miejscu.<br><a href='https://docs.phcode.dev/docs/Features/git'>Dowiedz się więcej o panelu Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Zagłosuj na funkcje, które chcesz zobaczyć w przyszłości!",
-  "CMD_TOGGLE_EMMET": "Emmet"
+  "CLOSE_TAB": "Zamknij kartę",
+  "CLOSE_ACTIVE_TAB": "Zamknij aktywną kartę",
+  "CLOSE_ALL_TABS": "Zamknij wszystkie karty",
+  "CLOSE_UNMODIFIED_TABS": "Zamknij niezmodyfikowane karty",
+  "REOPEN_CLOSED_FILE": "Ponownie otwórz zamknięty plik",
+  "CMD_TOGGLE_TABBAR": "Przełącz pasek kart",
+  "DESCRIPTION_TABBAR": "Ustawienia paska kart.",
+  "DESCRIPTION_SHOW_TABBAR": "`true`, aby pokazać pasek kart, w przeciwnym razie `false`.",
+  "DESCRIPTION_NUMBER_OF_TABS": "Liczba kart do wyświetlenia na pasku kart. Ustaw na -1, aby wyświetlić wszystkie karty."
 });
 /*
  * GNU AGPL-3.0 License
@@ -98789,6 +99005,7 @@ define("nls/pt-br/strings", {
   "CMD_BEAUTIFY_CODE": "Formatar Código",
   "CMD_BEAUTIFY_CODE_ON_SAVE": "Formatar Código ao Salvar",
   "CMD_AUTO_RENAME_TAGS": "Renomear Tags HTML Automaticamente",
+  "CMD_TOGGLE_EMMET": "Emmet",
   "FIND_MENU": "Localizar",
   "CMD_FIND": "Localizar",
   "CMD_FIND_NEXT": "Localizar próximo",
@@ -99715,7 +99932,15 @@ define("nls/pt-br/strings", {
   "GIT_TOAST_TITLE": "Explore os Recursos do Git no Phoenix Code",
   "GIT_TOAST_MESSAGE": "Clique no ícone do painel Git para gerenciar seu repositório. Faça commits, pushes, pulls e visualize o histórico do seu projeto com facilidade — tudo em um só lugar.<br><a href='https://docs.phcode.dev/docs/Features/git'>Saiba mais sobre o painel Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote nos recursos que você quer ver em seguida!",
-  "CMD_TOGGLE_EMMET": "Emmet"
+  "CLOSE_TAB": "Fechar Guia",
+  "CLOSE_ACTIVE_TAB": "Fechar Guia Ativa",
+  "CLOSE_ALL_TABS": "Fechar Todas as Guias",
+  "CLOSE_UNMODIFIED_TABS": "Fechar Guias Não Modificadas",
+  "REOPEN_CLOSED_FILE": "Reabrir Arquivo Fechado",
+  "CMD_TOGGLE_TABBAR": "Alternar Barra de Guias",
+  "DESCRIPTION_TABBAR": "Definir as configurações da barra de guias.",
+  "DESCRIPTION_SHOW_TABBAR": "`true` para mostrar a barra de guias, senão `false`.",
+  "DESCRIPTION_NUMBER_OF_TABS": "O número de guias a serem exibidas na barra de guias. Defina como -1 para mostrar todas as guias"
 });
 /*
  * GNU AGPL-3.0 License
@@ -100169,6 +100394,7 @@ define("nls/pt-pt/strings", {
   "CMD_BEAUTIFY_CODE": "Embelezar Código",
   "CMD_BEAUTIFY_CODE_ON_SAVE": "Embelezar Código Após Guardar",
   "CMD_AUTO_RENAME_TAGS": "Renomear Tags HTML Automaticamente",
+  "CMD_TOGGLE_EMMET": "Emmet",
   "FIND_MENU": "Encontrar",
   "CMD_FIND": "Encontrar",
   "CMD_FIND_NEXT": "Encontrar próximo",
@@ -101095,7 +101321,15 @@ define("nls/pt-pt/strings", {
   "GIT_TOAST_TITLE": "Explore as funcionalidades do Git no Phoenix Code",
   "GIT_TOAST_MESSAGE": "Clique no ícone do painel Git para gerir o seu repositório. Efetue commits, pushes, pulls e veja o histórico do seu projeto com facilidade — tudo num só lugar.<br><a href='https://docs.phcode.dev/docs/Features/git'>Saiba mais sobre o painel Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote nas funcionalidades que quer ver a seguir!",
-  "CMD_TOGGLE_EMMET": "Emmet"
+  "CLOSE_TAB": "Fechar Separador",
+  "CLOSE_ACTIVE_TAB": "Fechar Separador Ativo",
+  "CLOSE_ALL_TABS": "Fechar Todos os Separadores",
+  "CLOSE_UNMODIFIED_TABS": "Fechar Separadores Não Modificados",
+  "REOPEN_CLOSED_FILE": "Reabrir Ficheiro Fechado",
+  "CMD_TOGGLE_TABBAR": "Alternar Barra de Separadores",
+  "DESCRIPTION_TABBAR": "Definir as definições da barra de separadores.",
+  "DESCRIPTION_SHOW_TABBAR": "`true` para mostrar a barra de separadores, caso contrário `false`.",
+  "DESCRIPTION_NUMBER_OF_TABS": "O número de separadores a mostrar na barra de separadores. Defina como -1 para mostrar todos os separadores"
 });
 /*
  * GNU AGPL-3.0 License
@@ -101549,6 +101783,7 @@ define("nls/ro/strings", {
   "CMD_BEAUTIFY_CODE": "Formatează codul",
   "CMD_BEAUTIFY_CODE_ON_SAVE": "Formatează codul după salvare",
   "CMD_AUTO_RENAME_TAGS": "Redenumire automată a etichetelor HTML",
+  "CMD_TOGGLE_EMMET": "Emmet",
   "FIND_MENU": "Caută",
   "CMD_FIND": "Caută",
   "CMD_FIND_NEXT": "Caută următorul",
@@ -102475,7 +102710,15 @@ define("nls/ro/strings", {
   "GIT_TOAST_TITLE": "Explorați funcțiile Git în Phoenix Code",
   "GIT_TOAST_MESSAGE": "Faceți clic pe pictograma panoului Git pentru a vă gestiona depozitul. Efectuați ușor commit, push, pull și vizualizați istoricul proiectului dvs. - totul într-un singur loc.<br><a href='https://docs.phcode.dev/docs/Features/git'>Aflați mai multe despre panoul Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Votează pentru funcționalitățile pe care dorești să le vezi în continuare!",
-  "CMD_TOGGLE_EMMET": "Emmet"
+  "CLOSE_TAB": "Închide fila",
+  "CLOSE_ACTIVE_TAB": "Închide fila activă",
+  "CLOSE_ALL_TABS": "Închide toate filele",
+  "CLOSE_UNMODIFIED_TABS": "Închide filele nemodificate",
+  "REOPEN_CLOSED_FILE": "Redeschide fișierul închis",
+  "CMD_TOGGLE_TABBAR": "Comută bara de file",
+  "DESCRIPTION_TABBAR": "Setează setările barei de file.",
+  "DESCRIPTION_SHOW_TABBAR": "`true` pentru a afișa bara de file, altfel `false`.",
+  "DESCRIPTION_NUMBER_OF_TABS": "Numărul de file de afișat în bara de file. Setează la -1 pentru a afișa toate filele."
 });
 /*
  * GNU AGPL-3.0 License
@@ -104555,6 +104798,7 @@ define("nls/ru/strings", {
   "CMD_BEAUTIFY_CODE": "Форматировать код",
   "CMD_BEAUTIFY_CODE_ON_SAVE": "Форматировать код после сохранения",
   "CMD_AUTO_RENAME_TAGS": "Автоматически переименовывать HTML-теги",
+  "CMD_TOGGLE_EMMET": "Эммет",
   "FIND_MENU": "Найти",
   "CMD_FIND": "Найти",
   "CMD_FIND_NEXT": "Найти след.",
@@ -105481,7 +105725,15 @@ define("nls/ru/strings", {
   "GIT_TOAST_TITLE": "Возможности Git в Phoenix Code",
   "GIT_TOAST_MESSAGE": "Нажмите на значок панели Git для управления вашим репозиторием. Легко выполняйте коммиты, отправляйте (push), получайте (pull) изменения и просматривайте историю вашего проекта — все в одном месте.<br><a href='https://docs.phcode.dev/docs/Features/git'>Узнать больше о панели Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Проголосуйте за функции, которые вы хотите увидеть в будущем!",
-  "CMD_TOGGLE_EMMET": "Эммет"
+  "CLOSE_TAB": "Закрыть вкладку",
+  "CLOSE_ACTIVE_TAB": "Закрыть активную вкладку",
+  "CLOSE_ALL_TABS": "Закрыть все вкладки",
+  "CLOSE_UNMODIFIED_TABS": "Закрыть неизменённые вкладки",
+  "REOPEN_CLOSED_FILE": "Повторно открыть закрытый файл",
+  "CMD_TOGGLE_TABBAR": "Переключить панель вкладок",
+  "DESCRIPTION_TABBAR": "Настроить параметры панели вкладок.",
+  "DESCRIPTION_SHOW_TABBAR": "`true` для отображения панели вкладок, иначе `false`.",
+  "DESCRIPTION_NUMBER_OF_TABS": "Количество вкладок, отображаемых на панели вкладок. Значение -1 отображает все вкладки."
 });
 /*
  * GNU AGPL-3.0 License
@@ -105937,6 +106189,7 @@ define("nls/sk/strings", {
   "CMD_BEAUTIFY_CODE": "Skrášliť kód",
   "CMD_BEAUTIFY_CODE_ON_SAVE": "Skrášliť kód po uložení",
   "CMD_AUTO_RENAME_TAGS": "Automaticky premenovať HTML tagy",
+  "CMD_TOGGLE_EMMET": "Emmet",
   "FIND_MENU": "Vyhľadať",
   "CMD_FIND": "Vyhľadať",
   "CMD_FIND_NEXT": "Vyhľadať nasledujúci",
@@ -106863,7 +107116,15 @@ define("nls/sk/strings", {
   "GIT_TOAST_TITLE": "Preskúmajte funkcie Gitu v Phoenix Code",
   "GIT_TOAST_MESSAGE": "Kliknite na ikonu panela Git pre správu vášho repozitára. Jednoducho commitujte, pushujte, pullujte a prezerajte si históriu vášho projektu – všetko na jednom mieste.<br><a href='https://docs.phcode.dev/docs/Features/git'>Zistite viac o paneli Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Hlasujte za funkcie, ktoré chcete vidieť v ďalšej verzii!",
-  "CMD_TOGGLE_EMMET": "Emmet"
+  "CLOSE_TAB": "Zatvoriť kartu",
+  "CLOSE_ACTIVE_TAB": "Zatvoriť aktívnu kartu",
+  "CLOSE_ALL_TABS": "Zatvoriť všetky karty",
+  "CLOSE_UNMODIFIED_TABS": "Zatvoriť neuložené karty",
+  "REOPEN_CLOSED_FILE": "Znova otvoriť zatvorený súbor",
+  "CMD_TOGGLE_TABBAR": "Prepnúť panel kariet",
+  "DESCRIPTION_TABBAR": "Nastaviť nastavenia panela kariet.",
+  "DESCRIPTION_SHOW_TABBAR": "Pravda pre zobrazenie panela kariet, inak nepravda.",
+  "DESCRIPTION_NUMBER_OF_TABS": "Počet kariet, ktoré sa majú zobraziť na paneli kariet. Nastavte na -1 pre zobrazenie všetkých kariet"
 });
 /*
  * GNU AGPL-3.0 License
@@ -107318,6 +107579,7 @@ define("nls/sr/strings", {
   "CMD_BEAUTIFY_CODE": "Улепшај код",
   "CMD_BEAUTIFY_CODE_ON_SAVE": "Улепшај код након чувања",
   "CMD_AUTO_RENAME_TAGS": "Аутоматско преименовање HTML ознака",
+  "CMD_TOGGLE_EMMET": "Емет",
   "FIND_MENU": "Пронађи",
   "CMD_FIND": "Пронађи",
   "CMD_FIND_NEXT": "Пронађи следеће",
@@ -108244,7 +108506,15 @@ define("nls/sr/strings", {
   "GIT_TOAST_TITLE": "Истражите Гит функције у Phoenix Code-у",
   "GIT_TOAST_MESSAGE": "Кликните на икону Гит панела да бисте управљали својим спремиштем. Лако направите commit, push, pull и погледајте историју свог пројекта — све на једном месту.<br><a href='https://docs.phcode.dev/docs/Features/git'>Сазнајте више о Гит панелу →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Гласајте за функције које желите да видите у будућности!",
-  "CMD_TOGGLE_EMMET": "Емет"
+  "CLOSE_TAB": "Затвори картицу",
+  "CLOSE_ACTIVE_TAB": "Затвори активну картицу",
+  "CLOSE_ALL_TABS": "Затвори све картице",
+  "CLOSE_UNMODIFIED_TABS": "Затвори непромењене картице",
+  "REOPEN_CLOSED_FILE": "Поново отвори затворену датотеку",
+  "CMD_TOGGLE_TABBAR": "Прикажи/сакриј траку са картицама",
+  "DESCRIPTION_TABBAR": "Подешавање траке са картицама.",
+  "DESCRIPTION_SHOW_TABBAR": "`true` за приказивање траке са картицама, иначе `false`.",
+  "DESCRIPTION_NUMBER_OF_TABS": "Број картица које се приказују у траци. Поставите на -1 да бисте приказали све картице."
 });
 /*
  * GNU AGPL-3.0 License
@@ -108783,6 +109053,7 @@ define("nls/sv/strings", {
   "CMD_BEAUTIFY_CODE": "Formattera kod",
   "CMD_BEAUTIFY_CODE_ON_SAVE": "Formattera kod efter sparning",
   "CMD_AUTO_RENAME_TAGS": "Byt namn på HTML-taggar automatiskt",
+  "CMD_TOGGLE_EMMET": "Emmet",
   "FIND_MENU": "Sök",
   "CMD_FIND": "Sök",
   "CMD_FIND_NEXT": "Sök nästa",
@@ -109709,7 +109980,15 @@ define("nls/sv/strings", {
   "GIT_TOAST_TITLE": "Utforska Git-funktioner i Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klicka på Git-panelens ikon för att hantera din repository. Committa, pusha, pulla och se din projekthistorik enkelt – allt på ett ställe.<br><a href='https://docs.phcode.dev/docs/Features/git'>Läs mer om Git-panelen →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Rösta på funktionerna du vill se härnäst!",
-  "CMD_TOGGLE_EMMET": "Emmet"
+  "CLOSE_TAB": "Stäng flik",
+  "CLOSE_ACTIVE_TAB": "Stäng aktiv flik",
+  "CLOSE_ALL_TABS": "Stäng alla flikar",
+  "CLOSE_UNMODIFIED_TABS": "Stäng oförändrade flikar",
+  "REOPEN_CLOSED_FILE": "Återöppna stängd fil",
+  "CMD_TOGGLE_TABBAR": "Växla flikrad",
+  "DESCRIPTION_TABBAR": "Ange inställningar för flikraden.",
+  "DESCRIPTION_SHOW_TABBAR": "Sant för att visa flikraden, annars falskt.",
+  "DESCRIPTION_NUMBER_OF_TABS": "Antalet flikar som ska visas i flikraden. Ange -1 för att visa alla flikar."
 });
 /*
  * GNU AGPL-3.0 License
@@ -110165,6 +110444,7 @@ define("nls/tr/strings", {
   "CMD_BEAUTIFY_CODE": "Kodu Güzelleştir",
   "CMD_BEAUTIFY_CODE_ON_SAVE": "Kaydettikten Sonra Kodu Güzelleştir",
   "CMD_AUTO_RENAME_TAGS": "HTML Etiketlerini Otomatik Yeniden Adlandır",
+  "CMD_TOGGLE_EMMET": "Emmet",
   "FIND_MENU": "Bul",
   "CMD_FIND": "Bul",
   "CMD_FIND_NEXT": "Sonrakini Bul",
@@ -111091,7 +111371,15 @@ define("nls/tr/strings", {
   "GIT_TOAST_TITLE": "Phoenix Code'da Git Özelliklerini Keşfedin",
   "GIT_TOAST_MESSAGE": "Deponuzu yönetmek için Git paneli simgesine tıklayın. Proje geçmişinizi kolayca işleyin, gönderin, çekin ve görüntüleyin—hepsi tek bir yerde.<br><a href='https://docs.phcode.dev/docs/Features/git'>Git paneli hakkında daha fazla bilgi edinin →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Gelecekte görmek istediğiniz özellikler için oy verin!",
-  "CMD_TOGGLE_EMMET": "Emmet"
+  "CLOSE_TAB": "Sekmeyi Kapat",
+  "CLOSE_ACTIVE_TAB": "Aktif Sekmeyi Kapat",
+  "CLOSE_ALL_TABS": "Tüm Sekmeleri Kapat",
+  "CLOSE_UNMODIFIED_TABS": "Değiştirilmemiş Sekmeleri Kapat",
+  "REOPEN_CLOSED_FILE": "Kapalı Dosyayı Yeniden Aç",
+  "CMD_TOGGLE_TABBAR": "Sekme Çubuğunu Aç/Kapat",
+  "DESCRIPTION_TABBAR": "Sekme çubuğu ayarlarını belirleyin.",
+  "DESCRIPTION_SHOW_TABBAR": "Sekme çubuğunu göstermek için \"true\", gizlemek için \"false\".",
+  "DESCRIPTION_NUMBER_OF_TABS": "Sekme çubuğunda gösterilecek sekme sayısı. Tüm sekmeleri göstermek için -1 olarak ayarlayın."
 });
 /*
  * GNU AGPL-3.0 License
@@ -111547,6 +111835,7 @@ define("nls/uk/strings", {
   "CMD_BEAUTIFY_CODE": "Прикрасити код",
   "CMD_BEAUTIFY_CODE_ON_SAVE": "Прикрасити код після збереження",
   "CMD_AUTO_RENAME_TAGS": "Автоматично перейменувати HTML-теги",
+  "CMD_TOGGLE_EMMET": "Еммет",
   "FIND_MENU": "Знайти",
   "CMD_FIND": "Знайти",
   "CMD_FIND_NEXT": "Знайти наступний",
@@ -112473,7 +112762,15 @@ define("nls/uk/strings", {
   "GIT_TOAST_TITLE": "Ознайомтеся з функціями Git у Phoenix Code",
   "GIT_TOAST_MESSAGE": "Натисніть піктограму панелі Git, щоб керувати вашим репозиторієм. Легко виконуйте коміти, пуші, пули та переглядайте історію вашого проєкту — все в одному місці.<br><a href='https://docs.phcode.dev/docs/Features/git'>Дізнайтеся більше про панель Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Проголосуйте за функції, які ви хочете бачити наступними!",
-  "CMD_TOGGLE_EMMET": "Еммет"
+  "CLOSE_TAB": "Закрити вкладку",
+  "CLOSE_ACTIVE_TAB": "Закрити активну вкладку",
+  "CLOSE_ALL_TABS": "Закрити всі вкладки",
+  "CLOSE_UNMODIFIED_TABS": "Закрити незмінені вкладки",
+  "REOPEN_CLOSED_FILE": "Відкрити закритий файл",
+  "CMD_TOGGLE_TABBAR": "Перемкнути панель вкладок",
+  "DESCRIPTION_TABBAR": "Налаштувати параметри панелі вкладок.",
+  "DESCRIPTION_SHOW_TABBAR": "`true` для відображення панелі вкладок, інакше `false`.",
+  "DESCRIPTION_NUMBER_OF_TABS": "Кількість вкладок для відображення на панелі вкладок. Встановіть значення -1, щоб відобразити всі вкладки."
 });
 /*
  * GNU AGPL-3.0 License
@@ -112929,6 +113226,7 @@ define("nls/ur/strings", {
   "CMD_BEAUTIFY_CODE": "کوڈ کو خوبصورت بنائیں",
   "CMD_BEAUTIFY_CODE_ON_SAVE": "محفوظ کرنے کے بعد کوڈ کو خوبصورت بنائیں",
   "CMD_AUTO_RENAME_TAGS": "ایچ ٹی ایم ایل ٹیگز کا نام خودکار تبدیل کریں",
+  "CMD_TOGGLE_EMMET": "ایمٹ",
   "FIND_MENU": "تلاش کریں",
   "CMD_FIND": "تلاش کریں",
   "CMD_FIND_NEXT": "اگلا تلاش کریں",
@@ -113855,7 +114153,15 @@ define("nls/ur/strings", {
   "GIT_TOAST_TITLE": "فینکس کوڈ میں گٹ فیچرز دریافت کریں",
   "GIT_TOAST_MESSAGE": "اپنی ذخیرہ گاہ (repository) کو منظم کرنے کے لیے گٹ پینل آئیکن پر کلک کریں۔ آسانی سے کامٹ، پش، پل کریں، اور اپنے پروجیکٹ کی تاریخ دیکھیں—سب ایک ہی جگہ پر۔<br><a href='https://docs.phcode.dev/docs/Features/git'>گٹ پینل کے بارے میں مزید جانیں →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "اپنی پسندیدہ خصوصیات کے لیے ووٹ دیں!",
-  "CMD_TOGGLE_EMMET": "ایمٹ"
+  "CLOSE_TAB": "ٹیب بند کریں",
+  "CLOSE_ACTIVE_TAB": "موجودہ ٹیب بند کریں",
+  "CLOSE_ALL_TABS": "تمام ٹیبز بند کریں",
+  "CLOSE_UNMODIFIED_TABS": "غیر ترمیم شدہ ٹیبز بند کریں",
+  "REOPEN_CLOSED_FILE": "بند فائل دوبارہ کھولیں",
+  "CMD_TOGGLE_TABBAR": "ٹیب بار ٹوگل کریں",
+  "DESCRIPTION_TABBAR": "ٹیب بار کی ترتیبات مقرر کریں۔",
+  "DESCRIPTION_SHOW_TABBAR": "ٹیب بار دکھانے کے لیے true، ورنہ false۔",
+  "DESCRIPTION_NUMBER_OF_TABS": "ٹیب بار میں دکھانے کے لیے ٹیبز کی تعداد۔ تمام ٹیبز دکھانے کے لیے -1 پر سیٹ کریں۔"
 });
 /*
  * GNU AGPL-3.0 License
@@ -114341,6 +114647,7 @@ define("nls/zh-cn/strings", {
   "CMD_BEAUTIFY_CODE": "美化代码",
   "CMD_BEAUTIFY_CODE_ON_SAVE": "保存时美化代码",
   "CMD_AUTO_RENAME_TAGS": "自动重命名 HTML 标签",
+  "CMD_TOGGLE_EMMET": "Emmet（代码补全）",
   "FIND_MENU": "查找",
   "CMD_FIND": "查找",
   "CMD_FIND_NEXT": "查找下一个",
@@ -115267,7 +115574,15 @@ define("nls/zh-cn/strings", {
   "GIT_TOAST_TITLE": "探索 Phoenix Code 中的 Git 功能",
   "GIT_TOAST_MESSAGE": "点击 Git 面板图标即可管理您的代码仓库。轻松提交、推送、拉取和查看项目历史记录，一切尽在一处。<br><a href='https://docs.phcode.dev/docs/Features/git'>了解更多关于 Git 面板的信息 →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "为您希望看到的下一个功能投票！",
-  "CMD_TOGGLE_EMMET": "Emmet（代码补全）"
+  "CLOSE_TAB": "关闭标签页",
+  "CLOSE_ACTIVE_TAB": "关闭活动标签页",
+  "CLOSE_ALL_TABS": "关闭所有标签页",
+  "CLOSE_UNMODIFIED_TABS": "关闭未修改的标签页",
+  "REOPEN_CLOSED_FILE": "重新打开已关闭的文件",
+  "CMD_TOGGLE_TABBAR": "切换标签栏",
+  "DESCRIPTION_TABBAR": "设置标签栏设置。",
+  "DESCRIPTION_SHOW_TABBAR": "显示标签栏则为 true，否则为 false。",
+  "DESCRIPTION_NUMBER_OF_TABS": "标签栏中显示的标签页数量。设置为 -1 以显示所有标签页"
 });
 /*
  * GNU AGPL-3.0 License
@@ -115723,6 +116038,7 @@ define("nls/zh-tw/strings", {
   "CMD_BEAUTIFY_CODE": "格式化程式碼",
   "CMD_BEAUTIFY_CODE_ON_SAVE": "儲存後格式化程式碼",
   "CMD_AUTO_RENAME_TAGS": "自動重新命名 HTML 標籤",
+  "CMD_TOGGLE_EMMET": "Emmet (保留原文，因 Emmet 為專有名詞)",
   "FIND_MENU": "尋找",
   "CMD_FIND": "尋找",
   "CMD_FIND_NEXT": "找下一個",
@@ -116649,7 +116965,15 @@ define("nls/zh-tw/strings", {
   "GIT_TOAST_TITLE": "在 Phoenix Code 中探索 Git 功能",
   "GIT_TOAST_MESSAGE": "按一下 Git 面板圖示即可管理您的儲存庫。輕鬆提交、推送、提取和檢視您的專案歷史記錄，一切盡在掌握之中。<br><a href='https://docs.phcode.dev/docs/Features/git'>深入瞭解 Git 面板 →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "投票選出您希望看到的下個功能！",
-  "CMD_TOGGLE_EMMET": "Emmet (保留原文，因 Emmet 為專有名詞)"
+  "CLOSE_TAB": "關閉分頁",
+  "CLOSE_ACTIVE_TAB": "關閉目前分頁",
+  "CLOSE_ALL_TABS": "關閉所有分頁",
+  "CLOSE_UNMODIFIED_TABS": "關閉未修改的分頁",
+  "REOPEN_CLOSED_FILE": "重新開啟已關閉的檔案",
+  "CMD_TOGGLE_TABBAR": "切換分頁列顯示",
+  "DESCRIPTION_TABBAR": "設定分頁列設定。",
+  "DESCRIPTION_SHOW_TABBAR": "顯示分頁列設為 true，隱藏則設為 false。",
+  "DESCRIPTION_NUMBER_OF_TABS": "分頁列中顯示的分頁數量。設為 -1 則顯示所有分頁。"
 });
 /*
  * GNU AGPL-3.0 License
