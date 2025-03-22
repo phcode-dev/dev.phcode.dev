@@ -8459,6 +8459,10 @@ define("command/Commands", function (require, exports, module) {
     /** Toggles sidebar visibility */
     exports.VIEW_HIDE_SIDEBAR           = "view.toggleSidebar";         // SidebarView.js               toggle()
 
+    /** Toggles tabbar visibility */
+    exports.TOGGLE_TABBAR            = "view.toggleTabbar";
+    // extensionsIntegrated/TabBar/main.js
+
     /** Zooms in the editor view */
     exports.VIEW_ZOOM_IN                = "view.zoomIn";                // ViewCommandHandlers.js       _handleZoomIn()
 
@@ -43661,6 +43665,1797 @@ define("extensionsIntegrated/RemoteFileAdapter/main", function (require, exports
  *
  */
 
+
+/* This file houses the functionality for dragging and dropping tabs */
+/* eslint-disable no-invalid-this */
+define("extensionsIntegrated/TabBar/drag-drop", function (require, exports, module) {
+    const MainViewManager = require("view/MainViewManager");
+
+    /**
+     * These variables track the drag and drop state of tabs
+     * draggedTab: The tab that is currently being dragged
+     * dragOverTab: The tab that is currently being hovered over
+     * dragIndicator: Visual indicator showing where the tab will be dropped
+     * scrollInterval: Used for automatic scrolling when dragging near edges
+     */
+    let draggedTab = null;
+    let dragOverTab = null;
+    let dragIndicator = null;
+    let scrollInterval = null;
+
+
+    /**
+     * Initialize drag and drop functionality for tab bars
+     * This is called from `main.js`
+     * This function sets up event listeners for both panes' tab bars
+     * and creates the visual drag indicator
+     *
+     * @param {String} firstPaneSelector - Selector for the first pane tab bar $("#phoenix-tab-bar")
+     * @param {String} secondPaneSelector - Selector for the second pane tab bar $("#phoenix-tab-bar-2")
+     */
+    function init(firstPaneSelector, secondPaneSelector) {
+        // setup both the tab bars
+        setupDragForTabBar(firstPaneSelector);
+        setupDragForTabBar(secondPaneSelector);
+
+        // setup the container-level drag events to catch drops in empty areas and enable auto-scroll
+        setupContainerDrag(firstPaneSelector);
+        setupContainerDrag(secondPaneSelector);
+
+        // Create drag indicator element if it doesn't exist
+        if (!dragIndicator) {
+            dragIndicator = $('<div class="tab-drag-indicator"></div>');
+            $('body').append(dragIndicator);
+        }
+    }
+
+
+    /**
+     * Setup drag and drop for a specific tab bar
+     * Makes tabs draggable and adds all the necessary event listeners
+     *
+     * @param {String} tabBarSelector - The selector for the tab bar
+     */
+    function setupDragForTabBar(tabBarSelector) {
+        const $tabs = $(tabBarSelector).find(".tab");
+
+        // Make tabs draggable
+        $tabs.attr("draggable", "true");
+
+        // Remove any existing event listeners first to prevent duplicates
+        // This is important when the tab bar is recreated or updated
+        $tabs.off("dragstart dragover dragenter dragleave drop dragend");
+
+        // Add drag event listeners to each tab
+        // Each event has its own handler function for better organization
+        $tabs.on("dragstart", handleDragStart);
+        $tabs.on("dragover", handleDragOver);
+        $tabs.on("dragenter", handleDragEnter);
+        $tabs.on("dragleave", handleDragLeave);
+        $tabs.on("drop", handleDrop);
+        $tabs.on("dragend", handleDragEnd);
+    }
+
+
+    /**
+     * Setup container-level drag events
+     * This enables dropping tabs in empty spaces and auto-scrolling
+     * when dragging near the container's edges
+     *
+     * @param {String} containerSelector - The selector for the tab bar container
+     */
+    function setupContainerDrag(containerSelector) {
+        const $container = $(containerSelector);
+
+        // When dragging over the container but not directly over a tab element
+        $container.on("dragover", function (e) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+
+            // Clear any existing scroll interval
+            if (scrollInterval) {
+                clearInterval(scrollInterval);
+            }
+
+            // auto-scroll if near container edge
+            autoScrollContainer(this, e.originalEvent.clientX);
+
+            // Set up interval for continuous scrolling while dragging near the edge
+            scrollInterval = setInterval(() => {
+                if (draggedTab) { // Only continue scrolling if still dragging
+                    autoScrollContainer(this, e.originalEvent.clientX);
+                } else {
+                    clearInterval(scrollInterval);
+                    scrollInterval = null;
+                }
+            }, 16); // this is almost about 60fps
+
+
+            // if the target is not a tab, update the drag indicator using the container bounds
+            if ($(e.target).closest('.tab').length === 0) {
+                const containerRect = this.getBoundingClientRect();
+                const mouseX = e.originalEvent.clientX;
+
+                // determine if dropping on left or right half of container
+                const onLeftSide = mouseX < (containerRect.left + containerRect.width / 2);
+
+                const $tabs = $container.find('.tab');
+                if ($tabs.length) {
+                    // choose the first tab for left drop, last tab for right drop
+                    const targetTab = onLeftSide ? $tabs.first()[0] : $tabs.last()[0];
+                    updateDragIndicator(targetTab, onLeftSide);
+                }
+            }
+        });
+
+        // handle drop on the container (empty space)
+        $container.on("drop", function (e) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            // hide the drag indicator
+            updateDragIndicator(null);
+
+            // get container dimensions to determine drop position
+            const containerRect = this.getBoundingClientRect();
+            const mouseX = e.originalEvent.clientX;
+            // determine if dropping on left or right half of container
+            const onLeftSide = mouseX < (containerRect.left + containerRect.width / 2);
+
+            const $tabs = $container.find('.tab');
+            if ($tabs.length) {
+                // If dropping on left half, target the first tab; otherwise, target the last tab
+                const targetTab = onLeftSide ? $tabs.first()[0] : $tabs.last()[0];
+
+                // mkae sure that the draggedTab exists and isn't the same as the target
+                if (draggedTab && targetTab && draggedTab !== targetTab) {
+                    // check which pane the container belongs to
+                    const isSecondPane = $container.attr("id") === "phoenix-tab-bar-2";
+                    const paneId = isSecondPane ? "second-pane" : "first-pane";
+                    const draggedPath = $(draggedTab).attr("data-path");
+                    const targetPath = $(targetTab).attr("data-path");
+                    moveWorkingSetItem(paneId, draggedPath, targetPath, onLeftSide);
+                }
+            }
+        });
+    }
+
+
+    /**
+     * enhanced auto-scroll function for container when the mouse is near its left or right edge
+     * creates a smooth scrolling effect with speed based on proximity to the edge
+     *
+     * @param {HTMLElement} container - The scrollable container element
+     * @param {Number} mouseX - The current mouse X coordinate
+     */
+    function autoScrollContainer(container, mouseX) {
+        const rect = container.getBoundingClientRect();
+        const edgeThreshold = 50; // teh threshold distance from the edge
+
+        // Calculate distance from edges
+        const distanceFromLeft = mouseX - rect.left;
+        const distanceFromRight = rect.right - mouseX;
+
+        // Determine scroll speed based on distance from edge (closer = faster scroll)
+        let scrollSpeed = 0;
+
+        if (distanceFromLeft < edgeThreshold) {
+            // exponential scroll speed: faster as you get closer to the edge
+            scrollSpeed = -Math.pow(1 - (distanceFromLeft / edgeThreshold), 2) * 15;
+        } else if (distanceFromRight < edgeThreshold) {
+            scrollSpeed = Math.pow(1 - (distanceFromRight / edgeThreshold), 2) * 15;
+        }
+
+        // apply scrolling if needed
+        if (scrollSpeed !== 0) {
+            container.scrollLeft += scrollSpeed;
+
+            // If we're already at the edge, don't keep trying to scroll
+            if ((scrollSpeed < 0 && container.scrollLeft <= 0) ||
+                (scrollSpeed > 0 && container.scrollLeft >= container.scrollWidth - container.clientWidth)) {
+                return;
+            }
+        }
+    }
+
+
+    /**
+     * Handle the start of a drag operation
+     * Stores the tab being dragged and adds visual styling
+     *
+     * @param {Event} e - The event object
+     */
+    function handleDragStart(e) {
+        // store reference to the dragged tab
+        draggedTab = this;
+
+        // set data transfer (required for Firefox)
+        // Firefox requires data to be set for the drag operation to work
+        e.originalEvent.dataTransfer.effectAllowed = 'move';
+        e.originalEvent.dataTransfer.setData('text/html', this.innerHTML);
+
+        // Add dragging class for styling
+        $(this).addClass('dragging');
+
+        // Use a timeout to let the dragging class apply before taking measurements
+        // This ensures visual updates are applied before we calculate positions
+        setTimeout(() => {
+            updateDragIndicator(null);
+        }, 0);
+    }
+
+
+    /**
+     * Handle the dragover event to enable drop
+     * Updates the visual indicator showing where the tab will be dropped
+     *
+     * @param {Event} e - The event object
+     */
+    function handleDragOver(e) {
+        if (e.preventDefault) {
+            e.preventDefault(); // Allows us to drop
+        }
+        e.originalEvent.dataTransfer.dropEffect = 'move';
+
+        // Update the drag indicator position
+        // We need to determine if it should be on the left or right side of the target tab
+        const targetRect = this.getBoundingClientRect();
+        const mouseX = e.originalEvent.clientX;
+        const midPoint = targetRect.left + (targetRect.width / 2);
+        const onLeftSide = mouseX < midPoint;
+
+        updateDragIndicator(this, onLeftSide);
+
+        return false;
+    }
+
+
+    /**
+     * Handle entering a potential drop target
+     * Applies styling to indicate the current drop target
+     *
+     * @param {Event} e - The event object
+     */
+    function handleDragEnter(e) {
+        dragOverTab = this;
+        $(this).addClass('drag-target');
+    }
+
+
+    /**
+     * Handle leaving a potential drop target
+     * Removes styling when no longer hovering over a drop target
+     *
+     * @param {Event} e - The event object
+     */
+    function handleDragLeave(e) {
+        const relatedTarget = e.originalEvent.relatedTarget;
+        // Only remove the class if we're truly leaving this tab
+        // This prevents flickering when moving over child elements
+        if (!$(this).is(relatedTarget) && !$(this).has(relatedTarget).length) {
+            $(this).removeClass('drag-target');
+            if (dragOverTab === this) {
+                dragOverTab = null;
+            }
+        }
+    }
+
+
+    /**
+     * Handle dropping a tab onto a target
+     * Moves the file in the working set to the new position
+     *
+     * @param {Event} e - The event object
+     */
+    function handleDrop(e) {
+        if (e.stopPropagation) {
+            e.stopPropagation(); // Stops browser from redirecting
+        }
+        updateDragIndicator(null);
+
+        // Only process the drop if the dragged tab is different from the drop target
+        if (draggedTab !== this) {
+            // Determine which pane the drop target belongs to
+            const isSecondPane = $(this).closest("#phoenix-tab-bar-2").length > 0;
+            const paneId = isSecondPane ? "second-pane" : "first-pane";
+            const draggedPath = $(draggedTab).attr("data-path");
+            const targetPath = $(this).attr("data-path");
+
+            // Determine if we're dropping to the left or right of the target
+            const targetRect = this.getBoundingClientRect();
+            const mouseX = e.originalEvent.clientX;
+            const midPoint = targetRect.left + (targetRect.width / 2);
+            const onLeftSide = mouseX < midPoint;
+
+            // Move the tab in the working set
+            moveWorkingSetItem(paneId, draggedPath, targetPath, onLeftSide);
+        }
+        return false;
+    }
+
+
+    /**
+     * Handle the end of a drag operation
+     * Cleans up classes and resets state variables
+     *
+     * @param {Event} e - The event object
+     */
+    function handleDragEnd(e) {
+        $(".tab").removeClass('dragging drag-target');
+        updateDragIndicator(null);
+        draggedTab = null;
+        dragOverTab = null;
+
+        // Clear scroll interval if it exists
+        if (scrollInterval) {
+            clearInterval(scrollInterval);
+            scrollInterval = null;
+        }
+    }
+
+
+    /**
+     * Update the drag indicator position and visibility
+     * The indicator shows where the tab will be dropped
+     *
+     * @param {HTMLElement} targetTab - The tab being dragged over, or null to hide
+     * @param {Boolean} onLeftSide - Whether the indicator should be on the left or right side
+     */
+    function updateDragIndicator(targetTab, onLeftSide) {
+        if (!targetTab) {
+            dragIndicator.hide();
+            return;
+        }
+        // Get the target tab's position and size
+        const targetRect = targetTab.getBoundingClientRect();
+        if (onLeftSide) {
+            // Position indicator at the left edge of the target tab
+            dragIndicator.css({
+                top: targetRect.top,
+                left: targetRect.left,
+                height: targetRect.height
+            });
+        } else {
+            // Position indicator at the right edge of the target tab
+            dragIndicator.css({
+                top: targetRect.top,
+                left: targetRect.right,
+                height: targetRect.height
+            });
+        }
+        dragIndicator.show();
+    }
+
+    /**
+     * Move an item in the working set
+     * This function actually performs the reordering of tabs
+     *
+     * @param {String} paneId - The ID of the pane ("first-pane" or "second-pane")
+     * @param {String} draggedPath - Path of the dragged file
+     * @param {String} targetPath - Path of the drop target file
+     * @param {Boolean} beforeTarget - Whether to place before or after the target
+     */
+    function moveWorkingSetItem(paneId, draggedPath, targetPath, beforeTarget) {
+        const workingSet = MainViewManager.getWorkingSet(paneId);
+        let draggedIndex = -1;
+        let targetIndex = -1;
+
+        // Find the indices of both the dragged item and the target item
+        for (let i = 0; i < workingSet.length; i++) {
+            if (workingSet[i].fullPath === draggedPath) {
+                draggedIndex = i;
+            }
+            if (workingSet[i].fullPath === targetPath) {
+                targetIndex = i;
+            }
+        }
+
+        // Only move if we found both items
+        if (draggedIndex !== -1 && targetIndex !== -1) {
+            // Calculate the new position based on whether we're inserting before or after the target
+            let newPosition = beforeTarget ? targetIndex : targetIndex + 1;
+            // Adjust position if the dragged item is before the target
+            // This is necessary because removing the dragged item will shift all following items
+            if (draggedIndex < newPosition) {
+                newPosition--;
+            }
+            // Perform the actual move in the MainViewManager
+            MainViewManager._moveWorkingSetItem(paneId, draggedIndex, newPosition);
+        }
+    }
+
+    module.exports = {
+        init
+    };
+});
+
+/*
+ * GNU AGPL-3.0 License
+ *
+ * Copyright (c) 2021 - present core.ai . All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
+ *
+ */
+
+/*
+ * This file houses the global working set array
+ */
+define("extensionsIntegrated/TabBar/global", function (require, exports, module) {
+    /**
+     * This array's represents the current working set
+     * It holds all the working set items that are to be displayed in the tab bar
+     * Properties of each object:
+     * path: {String} full path of the file
+     * name: {String} name of the file
+     * isFile: {Boolean} whether the file is a file or a directory
+     * isDirty: {Boolean} whether the file is dirty
+     * isPinned: {Boolean} whether the file is pinned
+     * displayName: {String} name to display in the tab (may include directory info for duplicate files)
+     */
+    let firstPaneWorkingSet = [];
+    let secondPaneWorkingSet = [];
+
+    module.exports = {
+        firstPaneWorkingSet,
+        secondPaneWorkingSet
+    };
+});
+
+/*
+ * GNU AGPL-3.0 License
+ *
+ * Copyright (c) 2021 - present core.ai . All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
+ *
+ */
+
+/* This file contains helper functions for the tab bar */
+define("extensionsIntegrated/TabBar/helper", function (require, exports, module) {
+
+    const WorkspaceManager = require("view/WorkspaceManager");
+    const DocumentManager = require("document/DocumentManager");
+    const ViewUtils = require("utils/ViewUtils");
+    const WorkingSetView = require("project/WorkingSetView");
+    const FileUtils = require("file/FileUtils");
+
+
+    /**
+     * Shows the tab bar, when it is hidden.
+     * Its only shown when tab bar is enabled and there is atleast one working file
+     *
+     * @param {$.Element} $tabBar - The tab bar element
+     * @param {$.Element} $overflowButton - The overflow button element
+     */
+    function _showTabBar($tabBar, $overflowButton) {
+        if ($tabBar) {
+            $tabBar.show();
+            if($overflowButton) {
+                $overflowButton.show();
+            }
+            // when we add/remove something from the editor, the editor shifts up/down which leads to blank space
+            // so we need to recompute the layout to make sure things are in the right place
+            WorkspaceManager.recomputeLayout(true);
+        }
+    }
+
+    /**
+     * Hides the tab bar.
+     * Its hidden when tab bar feature is disabled or there are no working files
+     * both the tab bar and the overflow button are to be hidden to hide the tab bar container
+     *
+     * @param {$.Element} $tabBar - The tab bar element
+     * @param {$.Element} $overflowButton - The overflow button element
+     */
+    function _hideTabBar($tabBar, $overflowButton) {
+        if ($tabBar) {
+            $tabBar.hide();
+            if($overflowButton) {
+                $overflowButton.hide();
+            }
+            WorkspaceManager.recomputeLayout(true);
+        }
+    }
+
+
+    /**
+     * Entry is a single object that comes from MainViewManager's getWorkingSet
+     * We extract the required data from the entry
+     *
+     * @param {Object} entry - A single file entry from MainViewManager.getWorkingSet()
+     * @returns {Object} - the required data
+     */
+    function _getRequiredDataFromEntry(entry) {
+        return {
+            path: entry.fullPath,
+            name: entry.name,
+            isFile: entry.isFile,
+            isDirty: entry.isDirty,
+            isPinned: entry.isPinned,
+            displayName: entry.name // Initialize displayName with name, it will be updated if duplicates are found
+        };
+    }
+
+    /**
+     * checks whether a file is dirty or not
+     *
+     * @param {File} file - the file to check
+     * @return {boolean} true if the file is dirty, false otherwise
+     */
+    function _isFileModified(file) {
+        const doc = DocumentManager.getOpenDocumentForPath(file.fullPath);
+        return doc && doc.isDirty;
+    }
+
+
+    /**
+     * Returns a jQuery object containing the file icon for a given file
+     *
+     * @param {Object} fileData - The file data object
+     * @returns {jQuery} jQuery object containing the file icon
+     */
+    function _getFileIcon(fileData) {
+        const $link = $("<a href='#' class='mroitem'></a>").html(
+            ViewUtils.getFileEntryDisplay({ name: fileData.name })
+        );
+        WorkingSetView.useIconProviders({
+            fullPath: fileData.path,
+            name: fileData.name,
+            isFile: true
+        }, $link);
+        return $link.children().first();
+    }
+
+
+    /**
+     * Checks for duplicate file names in the working set and updates displayName accordingly
+     * if duplicate file names are found, we update the displayName to include the directory
+     *
+     * @param {Array} workingSet - The working set to check for duplicates
+     */
+    function _handleDuplicateFileNames(workingSet) {
+        // Create a map to track filename occurrences
+        const fileNameCount = {};
+
+        // First, count occurrences of each filename
+        workingSet.forEach(entry => {
+            if (!fileNameCount[entry.name]) {
+                fileNameCount[entry.name] = 1;
+            } else {
+                fileNameCount[entry.name]++;
+            }
+        });
+
+        // Then, update the displayName for files with duplicate names
+        workingSet.forEach(entry => {
+            if (fileNameCount[entry.name] > 1) {
+                // Get the parent directory name
+                const path = entry.path;
+                const parentDir = FileUtils.getDirectoryPath(path);
+
+                // Get just the directory name, not the full path
+                const dirName = parentDir.split("/");
+                // Get the parent directory name (second-to-last part of the path)
+                const parentDirName = dirName[dirName.length - 2] || "";
+
+                // Set the display name to include the parent directory
+                entry.displayName = parentDirName + "/" + entry.name;
+            } else {
+                entry.displayName = entry.name;
+            }
+        });
+    }
+
+
+    module.exports = {
+        _showTabBar,
+        _hideTabBar,
+        _getRequiredDataFromEntry,
+        _isFileModified,
+        _getFileIcon,
+        _handleDuplicateFileNames
+    };
+});
+
+/*
+ * GNU AGPL-3.0 License
+ *
+ * Copyright (c) 2021 - present core.ai . All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
+ *
+ */
+
+/* eslint-disable no-invalid-this */
+define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
+    const _ = require("thirdparty/lodash");
+    const AppInit = require("utils/AppInit");
+    const MainViewManager = require("view/MainViewManager");
+    const EditorManager = require("editor/EditorManager");
+    const FileSystem = require("filesystem/FileSystem");
+    const PreferencesManager = require("preferences/PreferencesManager");
+    const CommandManager = require("command/CommandManager");
+    const Commands = require("command/Commands");
+    const DocumentManager = require("document/DocumentManager");
+    const WorkspaceManager = require("view/WorkspaceManager");
+    const Menus = require("command/Menus");
+    const Strings = require("strings");
+
+    const Global = require("./global");
+    const Helper = require("./helper");
+    const Preference = require("./preference");
+    const MoreOptions = require("./more-options");
+    const Overflow = require("./overflow");
+    const DragDrop = require("./drag-drop");
+    const TabBarHTML = `<div id="tab-bar-container" class="tab-bar-container">
+    <div id="phoenix-tab-bar" class="phoenix-tab-bar">
+
+    </div>
+
+    <div id="overflow-button" class="overflow-button" title="Show hidden tabs">
+        <i class="fa-solid fa-chevron-down"></i>
+    </div>
+</div>`;
+    const TabBarHTML2 = `<div id="tab-bar-container" class="tab-bar-container">
+    <div id="phoenix-tab-bar-2" class="phoenix-tab-bar">
+
+    </div>
+
+    <div id="overflow-button-2" class="overflow-button-2" title="Show hidden tabs">
+        <i class="fa-solid fa-chevron-down"></i>
+    </div>
+</div>`;
+
+
+
+    /**
+     * This holds the tab bar element
+     * For tab bar structure, refer to `./html/tabbar-pane.html` and `./html/tabbar-second-pane.html`
+     * $tabBar is for the first pane and $tabBar2 is for the second pane
+     *
+     * @type {$.Element}
+     */
+    let $tabBar = null;
+    let $tabBar2 = null;
+
+
+    /**
+     * This function is responsible to take all the files from the working set and gets the working sets ready
+     * This is placed here instead of helper.js because it modifies the working sets
+     */
+    function getAllFilesFromWorkingSet() {
+        Global.firstPaneWorkingSet = [];
+        Global.secondPaneWorkingSet = [];
+
+        // this gives the list of panes. When both panes are open, it will be ['first-pane', 'second-pane']
+        const paneList = MainViewManager.getPaneIdList();
+
+        // to make sure atleast one pane is open
+        if (paneList && paneList.length > 0) {
+
+            // this gives the working set of the first pane
+            const currFirstPaneWorkingSet = MainViewManager.getWorkingSet(paneList[0]);
+
+            for (let i = 0; i < currFirstPaneWorkingSet.length; i++) {
+                // MainViewManager.getWorkingSet gives the working set of the first pane,
+                // but it has lot of details we don't need. Hence we use Helper._getRequiredDataFromEntry
+                Global.firstPaneWorkingSet.push(Helper._getRequiredDataFromEntry(currFirstPaneWorkingSet[i]));
+            }
+            // if there are duplicate file names, we update the displayName to include the directory
+            Helper._handleDuplicateFileNames(Global.firstPaneWorkingSet);
+
+            // check if second pane is open
+            if (paneList.length > 1) {
+                const currSecondPaneWorkingSet = MainViewManager.getWorkingSet(paneList[1]);
+
+                for (let i = 0; i < currSecondPaneWorkingSet.length; i++) {
+                    Global.secondPaneWorkingSet.push(Helper._getRequiredDataFromEntry(currSecondPaneWorkingSet[i]));
+                }
+                Helper._handleDuplicateFileNames(Global.secondPaneWorkingSet);
+            }
+
+            // Update dirty status for files in the first pane working set
+            Global.firstPaneWorkingSet.forEach(function (entry) {
+                const doc = DocumentManager.getOpenDocumentForPath(entry.path);
+                if (doc) {
+                    entry.isDirty = doc.isDirty;
+                }
+            });
+
+            // Update dirty status for files in the second pane working set
+            Global.secondPaneWorkingSet.forEach(function (entry) {
+                const doc = DocumentManager.getOpenDocumentForPath(entry.path);
+                if (doc) {
+                    entry.isDirty = doc.isDirty;
+                }
+            });
+        }
+    }
+
+
+
+    /**
+     * Responsible for creating the tab element
+     * Note: this creates a tab (for a single file) not the tab bar
+     *
+     * @param {Object} entry - the working set entry
+     * @param {String} paneId - the pane id 'first-pane' or 'second-pane'
+     * @returns {$.Element} the tab element
+     */
+    function createTab(entry, paneId) {
+        if (!$tabBar || !paneId) {
+            return;
+        }
+
+        // set up all the necessary properties
+        const activeEditor = EditorManager.getActiveEditor();
+        const activePath = activeEditor ? activeEditor.document.file.fullPath : null;
+
+        const currentActivePane = MainViewManager.getActivePaneId();
+        // if the file is the currently active file
+        // also verify that the tab belongs to the active pane
+        const isActive = (entry.path === activePath && paneId === currentActivePane);
+        const isDirty = Helper._isFileModified(FileSystem.getFileForPath(entry.path)); // if the file is dirty
+
+        // Create the tab element with the structure we need
+        // tab name is written as a separate div because it may include directory info which we style differently
+        const $tab = $(
+            `<div class="tab ${isActive ? 'active' : ''} ${isDirty ? 'dirty' : ''}" 
+            data-path="${entry.path}" 
+            title="${entry.path}">
+            <div class="tab-icon"></div>
+            <div class="tab-name"></div>
+            <div class="tab-close"><i class="fa-solid fa-times"></i></div>
+        </div>`);
+
+        // Add the file icon
+        const $icon = Helper._getFileIcon(entry);
+        $tab.find('.tab-icon').append($icon);
+
+        // Check if we have a directory part in the displayName
+        const $tabName = $tab.find('.tab-name');
+        if (entry.displayName && entry.displayName !== entry.name) {
+            // Split the displayName into directory and filename parts
+            const parts = entry.displayName.split('/');
+            const dirName = parts[0];
+            const fileName = parts[1];
+
+            // create the HTML for different styling for directory and filename
+            $tabName.html(`<span class="tab-dirname">${dirName}/</span>${fileName}`);
+        } else {
+            // Just the filename
+            $tabName.text(entry.name);
+        }
+
+        return $tab;
+    }
+
+
+    /**
+     * Creates the tab bar and adds it to the DOM
+     */
+    function createTabBar() {
+        if (!Preference.tabBarEnabled || Preference.numberOfTabs === 0) {
+            return;
+        }
+
+        // clean up any existing tab bars first and start fresh
+        cleanupTabBar();
+
+        if ($('.not-editor').length === 1) {
+            $tabBar = $(TabBarHTML);
+            // since we need to add the tab bar before the editor which has .not-editor class
+            $(".not-editor").before($tabBar);
+            WorkspaceManager.recomputeLayout(true);
+            updateTabs();
+
+        } else if ($('.not-editor').length === 2) {
+            $tabBar = $(TabBarHTML);
+            $tabBar2 = $(TabBarHTML2);
+
+            // eq(0) is for the first pane and eq(1) is for the second pane
+            // TODO: Fix bug where the tab bar gets hidden inside the editor in horizontal split
+            $(".not-editor").eq(0).before($tabBar);
+            $(".not-editor").eq(1).before($tabBar2);
+            WorkspaceManager.recomputeLayout(true);
+            updateTabs();
+        }
+    }
+
+
+    /**
+     * This function updates the tabs in the tab bar
+     * It is called when the working set changes. So instead of creating a new tab bar, we just update the existing one
+     */
+    function updateTabs() {
+        // Get all files from the working set. refer to `global.js`
+        getAllFilesFromWorkingSet();
+
+        // When there is only one file, we enforce the creation of the tab bar
+        // this is done because, given the situation:
+        // In a vertical split, when no files are present in 'second-pane' so the tab bar is hidden.
+        // Now, when the user adds a file in 'second-pane', the tab bar should be shown but since updateTabs() only,
+        // updates the tabs, so the tab bar never gets created.
+        if (Global.firstPaneWorkingSet.length === 1 &&
+            (!$('#phoenix-tab-bar').length || $('#phoenix-tab-bar').is(':hidden'))) {
+            createTabBar();
+        }
+
+        if (Global.secondPaneWorkingSet.length === 1 &&
+            (!$('#phoenix-tab-bar-2').length || $('#phoenix-tab-bar-2').is(':hidden'))) {
+            createTabBar();
+        }
+
+        const $firstTabBar = $('#phoenix-tab-bar');
+        // Update first pane's tabs
+        if ($firstTabBar.length) {
+            $firstTabBar.empty();
+            if (Global.firstPaneWorkingSet.length > 0) {
+
+                // get the count of tabs that we want to display in the tab bar (from preference settings)
+                // from preference settings or working set whichever smaller
+                let tabsCountP1 = Math.min(Global.firstPaneWorkingSet.length, Preference.tabBarNumberOfTabs);
+
+                // the value is generally '-1', but we check for less than 0 so that it can handle edge cases gracefully
+                // if the value is negative then we display all tabs
+                if (Preference.tabBarNumberOfTabs < 0) {
+                    tabsCountP1 = Global.firstPaneWorkingSet.length;
+                }
+
+                let displayedEntries = Global.firstPaneWorkingSet.slice(0, tabsCountP1);
+
+                const activeEditor = EditorManager.getActiveEditor();
+                const activePath = activeEditor ? activeEditor.document.file.fullPath : null;
+                if (activePath && !displayedEntries.some(entry => entry.path === activePath)) {
+                    let activeEntry = Global.firstPaneWorkingSet.find(entry => entry.path === activePath);
+                    if (activeEntry) {
+                        displayedEntries[displayedEntries.length - 1] = activeEntry;
+                    }
+                }
+                displayedEntries.forEach(function (entry) {
+                    $firstTabBar.append(createTab(entry, "first-pane"));
+                });
+            }
+        }
+
+        const $secondTabBar = $('#phoenix-tab-bar-2');
+        // Update second pane's tabs
+        if ($secondTabBar.length) {
+            $secondTabBar.empty();
+            if (Global.secondPaneWorkingSet.length > 0) {
+
+                let tabsCountP2 = Math.min(Global.secondPaneWorkingSet.length, Preference.tabBarNumberOfTabs);
+                if (Preference.tabBarNumberOfTabs < 0) {
+                    tabsCountP2 = Global.secondPaneWorkingSet.length;
+                }
+
+                let displayedEntries2 = Global.secondPaneWorkingSet.slice(0, tabsCountP2);
+                const activeEditor = EditorManager.getActiveEditor();
+                const activePath = activeEditor ? activeEditor.document.file.fullPath : null;
+                if (activePath && !displayedEntries2.some(entry => entry.path === activePath)) {
+                    let activeEntry = Global.secondPaneWorkingSet.find(entry => entry.path === activePath);
+                    if (activeEntry) {
+                        displayedEntries2[displayedEntries2.length - 1] = activeEntry;
+                    }
+                }
+                displayedEntries2.forEach(function (entry) {
+                    $secondTabBar.append(createTab(entry, "second-pane"));
+                });
+            }
+        }
+
+        // if no files are present in a pane, we want to hide the tab bar for that pane
+        if (Global.firstPaneWorkingSet.length === 0 && ($('#phoenix-tab-bar'))) {
+            Helper._hideTabBar($('#phoenix-tab-bar'), $('#overflow-button'));
+        }
+
+        if (Global.secondPaneWorkingSet.length === 0 && ($('#phoenix-tab-bar-2'))) {
+            Helper._hideTabBar($('#phoenix-tab-bar-2'), $('#overflow-button-2'));
+        }
+
+        const activePane = MainViewManager.getActivePaneId();
+
+        // Now that tabs are updated, scroll to the active tab if necessary.
+        if ($firstTabBar.length) {
+            Overflow.toggleOverflowVisibility("first-pane");
+
+            // we scroll only in the active pane
+            // this is because, lets say we have a same file in both the panes
+            // then when the file is opened in one of the pane and is towards the end of the tab bar,
+            // then we need to show the scrolling animation only on that pane and not on both the panes
+            if (activePane === "first-pane") {
+                setTimeout(function () {
+                    Overflow.scrollToActiveTab($firstTabBar);
+                }, 0);
+            }
+        }
+
+        if ($secondTabBar.length) {
+            Overflow.toggleOverflowVisibility("second-pane");
+            if (activePane === "second-pane") {
+                setTimeout(function () {
+                    Overflow.scrollToActiveTab($secondTabBar);
+                }, 0);
+            }
+        }
+
+        // handle drag and drop
+        DragDrop.init($('#phoenix-tab-bar'), $('#phoenix-tab-bar-2'));
+    }
+
+
+    /**
+     * Removes existing tab bar and cleans up
+     */
+    function cleanupTabBar() {
+        if ($tabBar) {
+            $tabBar.remove();
+            $tabBar = null;
+        }
+        if ($tabBar2) {
+            $tabBar2.remove();
+            $tabBar2 = null;
+        }
+        // Also check for any orphaned tab bars that might exist
+        $(".tab-bar-container").remove();
+    }
+
+
+    /**
+     * handle click events on the tabs to open the file
+     */
+    function handleTabClick() {
+
+        // delegate event handling for both tab bars
+        $(document).on("click", ".tab", function (event) {
+            // check if the clicked element is the close button
+            if ($(event.target).hasClass('fa-times') || $(event.target).closest('.tab-close').length) {
+                // Get the file path from the data-path attribute of the parent tab
+                const filePath = $(this).attr("data-path");
+
+                if (filePath) {
+                    // determine the pane inside which the tab belongs
+                    const isSecondPane = $(this).closest("#phoenix-tab-bar-2").length > 0;
+                    const paneId = isSecondPane ? "second-pane" : "first-pane";
+
+                    // get the file object
+                    const fileObj = FileSystem.getFileForPath(filePath);
+                    // close the file
+                    CommandManager.execute(
+                        Commands.FILE_CLOSE,
+                        { file: fileObj, paneId: paneId }
+                    );
+
+                    // Prevent default behavior
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                return;
+            }
+
+            // Get the file path from the data-path attribute
+            const filePath = $(this).attr("data-path");
+
+            if (filePath) {
+                CommandManager.execute(Commands.FILE_OPEN, { fullPath: filePath });
+
+                // Prevent default behavior
+                event.preventDefault();
+                event.stopPropagation();
+            }
+        });
+
+        // Add the contextmenu (right-click) handler
+        $(document).on("contextmenu", ".tab", function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            // get the file path from the data-path attribute
+            const filePath = $(this).attr("data-path");
+
+            // determine which pane the tab belongs to
+            const isSecondPane = $(this).closest("#phoenix-tab-bar-2").length > 0;
+            const paneId = isSecondPane ? "second-pane" : "first-pane";
+
+            // show the context menu at mouse position
+            MoreOptions.showMoreOptionsContextMenu(paneId, event.pageX, event.pageY, filePath);
+        });
+    }
+
+
+    /**
+     * Registers the event handlers
+     */
+    function registerHandlers() {
+        // For pane layout changes, recreate the entire tab bar container
+        MainViewManager.off("paneCreate paneDestroy paneLayoutChange", createTabBar);
+        MainViewManager.on("paneCreate paneDestroy paneLayoutChange", createTabBar);
+
+        // For active pane changes, update only the tabs
+        MainViewManager.off("activePaneChange", updateTabs);
+        MainViewManager.on("activePaneChange", updateTabs);
+
+        // For editor changes, update only the tabs.
+        EditorManager.off("activeEditorChange", updateTabs);
+        // debounce is used to prevent rapid consecutive calls to updateTabs,
+        // which was causing integration tests to fail in Firefox. Without it,
+        // the event fires too frequently when switching editors, leading to unexpected behavior
+        const debounceUpdateTabs = _.debounce(updateTabs, 2);
+        EditorManager.on("activeEditorChange", debounceUpdateTabs);
+
+        // For working set changes, update only the tabs.
+        const events = [
+            "workingSetAdd",
+            "workingSetRemove",
+            "workingSetSort",
+            "workingSetMove",
+            "workingSetAddList",
+            "workingSetRemoveList",
+            "workingSetUpdate",
+            "_workingSetDisableAutoSort"
+        ];
+        MainViewManager.off(events.join(" "), updateTabs);
+        MainViewManager.on(events.join(" "), updateTabs);
+
+        // When the sidebar UI changes, update the tabs to ensure the overflow menu is correct
+        $("#sidebar").off("panelCollapsed panelExpanded panelResizeEnd", updateTabs);
+        $("#sidebar").on("panelCollapsed panelExpanded panelResizeEnd", updateTabs);
+
+        // also update the tabs when the main plugin panel resizes
+        // main-plugin-panel[0] = live preview panel
+        new ResizeObserver(updateTabs).observe($("#main-plugin-panel")[0]);
+
+        // File dirty flag change handling
+        DocumentManager.on("dirtyFlagChange", function (event, doc) {
+            const filePath = doc.file.fullPath;
+
+            // Update UI
+            if ($tabBar) {
+                const $tab = $tabBar.find(`.tab[data-path="${filePath}"]`);
+                $tab.toggleClass('dirty', doc.isDirty);
+
+
+                // Update the working set data
+                // First pane
+                for (let i = 0; i < Global.firstPaneWorkingSet.length; i++) {
+                    if (Global.firstPaneWorkingSet[i].path === filePath) {
+                        Global.firstPaneWorkingSet[i].isDirty = doc.isDirty;
+                        break;
+                    }
+                }
+            }
+
+
+            // Also update the $tab2 if it exists
+            if ($tabBar2) {
+                const $tab2 = $tabBar2.find(`.tab[data-path="${filePath}"]`);
+                $tab2.toggleClass('dirty', doc.isDirty);
+
+                // Second pane
+                for (let i = 0; i < Global.secondPaneWorkingSet.length; i++) {
+                    if (Global.secondPaneWorkingSet[i].path === filePath) {
+                        Global.secondPaneWorkingSet[i].isDirty = doc.isDirty;
+                        break;
+                    }
+                }
+            }
+        });
+    }
+
+
+    /**
+     * This is called when the tab bar preference is changed either,
+     * from the preferences file or the menu bar
+     * It takes care of creating or cleaning up the tab bar
+     */
+    function preferenceChanged() {
+        const prefs = PreferencesManager.get(Preference.PREFERENCES_TAB_BAR);
+        Preference.tabBarEnabled = prefs.showTabBar;
+        Preference.tabBarNumberOfTabs = prefs.numberOfTabs;
+
+        // Update menu checkmark
+        CommandManager.get(Commands.TOGGLE_TABBAR).setChecked(prefs.showTabBar);
+
+        if (Preference.tabBarEnabled && Preference.tabBarNumberOfTabs !== 0) {
+            createTabBar();
+        } else {
+            cleanupTabBar();
+        }
+    }
+
+    /**
+     * Registers the commands,
+     * for toggling the tab bar from the menu bar
+     */
+    function _registerCommands() {
+        CommandManager.register(
+            Strings.CMD_TOGGLE_TABBAR,
+            Commands.TOGGLE_TABBAR,
+            () => {
+                const currentPref = PreferencesManager.get(Preference.PREFERENCES_TAB_BAR);
+                PreferencesManager.set(Preference.PREFERENCES_TAB_BAR, {
+                    ...currentPref,
+                    showTabBar: !currentPref.showTabBar
+                });
+            }
+        );
+    }
+
+
+    AppInit.appReady(function () {
+        _registerCommands();
+
+        // add the toggle tab bar command to the view menu
+        const viewMenu = Menus.getMenu(Menus.AppMenuBar.VIEW_MENU);
+        viewMenu.addMenuItem(Commands.TOGGLE_TABBAR, "", Menus.AFTER, Commands.VIEW_HIDE_SIDEBAR);
+
+        PreferencesManager.on("change", Preference.PREFERENCES_TAB_BAR, preferenceChanged);
+        // calling preference changed here itself to check if the tab bar is enabled,
+        // because if it is enabled, preferenceChange automatically calls createTabBar
+        preferenceChanged();
+
+        // this should be called at the last as everything should be setup before registering handlers
+        registerHandlers();
+
+        // handle when a single tab gets clicked
+        handleTabClick();
+
+        Overflow.init();
+        DragDrop.init($('#phoenix-tab-bar'), $('#phoenix-tab-bar-2'));
+    });
+});
+
+/*
+ * GNU AGPL-3.0 License
+ *
+ * Copyright (c) 2021 - present core.ai . All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
+ *
+ */
+
+/*
+ * This file manages the more options context menu.
+ * The more options context menu is shown when a tab is right-clicked
+ */
+define("extensionsIntegrated/TabBar/more-options", function (require, exports, module) {
+    const DropdownButton = require("widgets/DropdownButton");
+    const Strings = require("strings");
+    const CommandManager = require("command/CommandManager");
+    const Commands = require("command/Commands");
+    const FileSystem = require("filesystem/FileSystem");
+    const MainViewManager = require("view/MainViewManager");
+
+    const Global = require("./global");
+
+    // List of items to show in the context menu
+    // Strings defined in `src/nls/root/strings.js`
+    const items = [
+        Strings.CLOSE_TAB,
+        Strings.CLOSE_ACTIVE_TAB,
+        Strings.CLOSE_ALL_TABS,
+        Strings.CLOSE_UNMODIFIED_TABS,
+        "---",
+        Strings.REOPEN_CLOSED_FILE
+    ];
+
+
+    /**
+     * "CLOSE TAB"
+     * this function handles the closing of the tab that was right-clicked
+     *
+     * @param {String} filePath - path of the file to close
+     * @param {String} paneId - the id of the pane in which the file is present
+     */
+    function handleCloseTab(filePath, paneId) {
+        if (filePath) {
+            // Get the file object using FileSystem
+            const fileObj = FileSystem.getFileForPath(filePath);
+
+            // Execute close command with file object and pane ID
+            CommandManager.execute(
+                Commands.FILE_CLOSE,
+                { file: fileObj, paneId: paneId }
+            );
+        }
+    }
+
+
+    /**
+     * "CLOSE ACTIVE TAB"
+     * this closes the currently active tab
+     * doesn't matter if the context menu is opened from this tab or some other tab
+     */
+    function handleCloseActiveTab() {
+        // This simply executes the FILE_CLOSE command without parameters
+        // which will close the currently active file
+        CommandManager.execute(Commands.FILE_CLOSE);
+    }
+
+
+    /**
+     * "CLOSE ALL TABS"
+     * This will close all tabs no matter whether they are in first pane or second pane
+     */
+    function handleCloseAllTabs() {
+        CommandManager.execute(Commands.FILE_CLOSE_ALL);
+    }
+
+
+    /**
+     * "CLOSE UNMODIFIED TABS"
+     * This will close all tabs that are not modified
+     */
+    function handleCloseUnmodifiedTabs() {
+        const paneList = MainViewManager.getPaneIdList();
+
+        // for the first pane
+        if (paneList.length > 0 && Global.firstPaneWorkingSet.length > 0) {
+            // get all those entries that are not dirty
+            const unmodifiedEntries = Global.firstPaneWorkingSet.filter(entry => !entry.isDirty);
+
+            // close each unmodified file in the first pane
+            unmodifiedEntries.forEach(entry => {
+                const fileObj = FileSystem.getFileForPath(entry.path);
+                CommandManager.execute(
+                    Commands.FILE_CLOSE,
+                    { file: fileObj, paneId: "first-pane" }
+                );
+            });
+        }
+
+        // for second pane
+        if (paneList.length > 1 && Global.secondPaneWorkingSet.length > 0) {
+            const unmodifiedEntries = Global.secondPaneWorkingSet.filter(entry => !entry.isDirty);
+
+            unmodifiedEntries.forEach(entry => {
+                const fileObj = FileSystem.getFileForPath(entry.path);
+                CommandManager.execute(
+                    Commands.FILE_CLOSE,
+                    { file: fileObj, paneId: "second-pane" }
+                );
+            });
+        }
+    }
+
+
+    /**
+     * "REOPEN CLOSED FILE"
+     * This just calls the reopen closed file command. everthing else is handled there
+     * TODO: disable the command if there are no closed files, look into the file menu
+     */
+    function reopenClosedFile() {
+        CommandManager.execute(Commands.FILE_REOPEN_CLOSED);
+    }
+
+
+    /**
+     * This function is called when a tab is right-clicked
+     * This will show the more options context menu
+     *
+     * @param {String} paneId - the id of the pane ["first-pane", "second-pane"]
+     * @param {Number} x - the x coordinate for positioning the menu
+     * @param {Number} y - the y coordinate for positioning the menu
+     * @param {String} filePath - [optional] the path of the file that was right-clicked
+     */
+    function showMoreOptionsContextMenu(paneId, x, y, filePath) {
+        const dropdown = new DropdownButton.DropdownButton("", items);
+
+        // Append to document body for absolute positioning
+        $("body").append(dropdown.$button);
+
+        // Position the dropdown at the mouse coordinates
+        dropdown.$button.css({
+            position: "absolute",
+            left: x + "px",
+            top: y + "px",
+            zIndex: 1000
+        });
+
+        dropdown.showDropdown();
+
+        // handle the option selection
+        dropdown.on("select", function (e, item, index) {
+            _handleSelection(index, filePath, paneId);
+        });
+
+        // Remove the button after the dropdown is hidden
+        dropdown.$button.css({
+            display: "none"
+        });
+    }
+
+    /**
+     * Handles the selection of an option in the more options context menu
+     *
+     * @param {Number} index - the index of the selected option
+     * @param {String} filePath - the path of the file that was right-clicked
+     * @param {String} paneId - the id of the pane ["first-pane", "second-pane"]
+     */
+    function _handleSelection(index, filePath, paneId) {
+        switch (index) {
+        case 0:
+            // Close tab (the one that was right-clicked)
+            handleCloseTab(filePath, paneId);
+            break;
+        case 1:
+            // Close active tab
+            handleCloseActiveTab();
+            break;
+        case 2:
+            // Close all tabs
+            handleCloseAllTabs();
+            break;
+        case 3:
+            // Close unmodified tabs
+            handleCloseUnmodifiedTabs();
+            break;
+        case 5:
+            // Reopen closed file
+            reopenClosedFile();
+            break;
+        }
+    }
+
+    module.exports = {
+        showMoreOptionsContextMenu
+    };
+});
+
+/*
+ * GNU AGPL-3.0 License
+ *
+ * Copyright (c) 2021 - present core.ai . All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
+ *
+ */
+
+
+/*
+ * This file houses the functionality for overflow tabs,
+ * the overflow tabs appear when there are too many tabs in a pane
+ * overflow button when clicked opens up a dropdown menu which displays all the hidden tabs
+ * and allows the user to open them, close them and to achieve other functionalities from there
+ */
+/* eslint-disable no-invalid-this */
+define("extensionsIntegrated/TabBar/overflow", function (require, exports, module) {
+
+    const DropdownButton = require("widgets/DropdownButton");
+    const MainViewManager = require("view/MainViewManager");
+    const CommandManager = require("command/CommandManager");
+    const Commands = require("command/Commands");
+    const EditorManager = require("editor/EditorManager");
+    const FileSystem = require("filesystem/FileSystem");
+
+
+    /**
+     * This function determines which tabs are hidden in the tab bar due to overflow
+     * and returns them as an array of tab data objects
+     *
+     * @param {String} paneId - The ID of the pane ("first-pane" or "second-pane")
+     * @returns {Array} - Array of hidden tab data objects
+     */
+    function _getListOfHiddenTabs(paneId) {
+        // get the appropriate tab bar based on pane ID
+        const $currentTabBar = paneId === "first-pane"
+            ? $("#phoenix-tab-bar")
+            : $("#phoenix-tab-bar-2");
+
+        // access the DOM element to get its bounding rectangle
+        const tabBarRect = $currentTabBar[0].getBoundingClientRect();
+
+        // an array of hidden tabs objects which will store properties like
+        // path, name, isActive, isDirty and $icon
+        const hiddenTabs = [];
+
+        // check each tab to determine if it's visible
+        $currentTabBar.find('.tab').each(function () {
+            const tabRect = this.getBoundingClientRect();
+
+            // A tab is considered hidden if it is not completely visible
+            // 2 is added here, because when we scroll till the very end of the tab bar even though,
+            // the last tab was shown in the overflow menu even though it was completely visible
+            // this bug was coming because a part of the last tab got hidden inside the dropdown icon
+            const isVisible = tabRect.left >= tabBarRect.left &&
+                tabRect.right <= (tabBarRect.right + 2);
+
+            if (!isVisible) {
+                // extract and store information about the hidden tab
+                const $tab = $(this);
+                const tabData = {
+                    path: $tab.data('path'),
+                    name: $tab.find('.tab-name').text(),
+                    isActive: $tab.hasClass('active'),
+                    isDirty: $tab.hasClass('dirty'),
+                    $icon: $tab.find('.tab-icon').clone()
+                };
+
+                hiddenTabs.push(tabData);
+            }
+        });
+
+        return hiddenTabs;
+    }
+
+
+    /**
+     * Toggles the visibility of the overflow button based on whether
+     * there are any hidden tabs
+     * Hidden tabs are tabs that are currently not visible in the tab bar
+     *
+     * @param {String} paneId - The ID of the pane ("first-pane" or "second-pane")
+     */
+    function toggleOverflowVisibility(paneId) {
+        const hiddenTabs = _getListOfHiddenTabs(paneId);
+
+        if (paneId === "first-pane") {
+            // for the html element, refer to ./html/tabbar-pane.html
+            const $overflowButton = $("#overflow-button");
+
+            if (hiddenTabs.length > 0) {
+                $overflowButton.removeClass("hidden");
+            } else {
+                $overflowButton.addClass("hidden");
+            }
+        } else {
+            // for the html element, refer to ./html/tabbar-second-pane.html
+            const $overflowButton = $("#overflow-button-2");
+
+            if (hiddenTabs.length > 0) {
+                $overflowButton.removeClass("hidden");
+            } else {
+                $overflowButton.addClass("hidden");
+            }
+        }
+    }
+
+
+    /**
+     * This function is called when the overflow button is clicked
+     * This will show the overflow context menu
+     *
+     * @param {String} paneId - the id of the pane ["first-pane", "second-pane"]
+     * @param {Number} x - x coordinate for positioning the menu
+     * @param {Number} y - y coordinate for positioning the menu
+     */
+    function showOverflowMenu(paneId, x, y) {
+        const hiddenTabs = _getListOfHiddenTabs(paneId);
+
+        // first, remove any existing dropdown menus to prevent duplicates
+        $(".dropdown-overflow-menu").remove();
+
+        // Create a map to track tabs that are being closed
+        // Using paths as keys for quick lookup
+        const closingTabPaths = {};
+
+        // create the dropdown
+        const dropdown = new DropdownButton.DropdownButton("", hiddenTabs, function (item, index) {
+            const iconHtml = item.$icon[0].outerHTML; // the file icon
+            const dirtyHtml = item.isDirty
+                ? '<span class="tab-dirty-icon-overflow">•</span>'
+                : '<span class="tab-dirty-icon-overflow empty"></span>'; // adding an empty span for better alignment
+
+            const closeIconHtml =
+                `<span class="tab-close-icon-overflow" data-tab-path="${item.path}" data-tab-index="${index}">
+                <i class="fa-solid fa-times"></i>
+            </span>`;
+
+            // return html for this item
+            return {
+                html:
+                    `<div class="dropdown-tab-item" data-tab-path="${item.path}">
+                        <div class="tab-info-container">
+                            ${dirtyHtml}
+                            <span class="tab-icon-container">${iconHtml}</span>
+                            <span class="tab-name-container">${item.name}</span>
+                        </div>
+                        ${closeIconHtml}
+                    </div>`,
+                enabled: true
+            };
+        });
+
+        // add the custom classes for styling the dropdown
+        dropdown.dropdownExtraClasses = "dropdown-overflow-menu";
+        dropdown.$button.addClass("btn-overflow-tabs");
+
+        // appending to document body. we'll position this with absolute positioning
+        $("body").append(dropdown.$button);
+
+        // position the dropdown where the user clicked
+        dropdown.$button.css({
+            position: "absolute",
+            left: x + "px",
+            top: y + "px",
+            zIndex: 1000
+        });
+
+
+        // custom handler for close button clicks - must be set up BEFORE showing dropdown
+        // using one because we only want to run this handler once
+        $(document).one("mousedown", ".tab-close-icon-overflow", function (e) {
+            // store the path of the tab being closed
+            const tabPath = $(this).data("tab-path");
+            closingTabPaths[tabPath] = true;
+
+            // we don't stop propagation here - let the event bubble up
+            // because we want the tab click handler to run as we are not closing the tab here
+            // Why all this is done instead of simply closing the tab?
+            // There was no way to stop the tab click handler from running.
+            // Tried propagating the event, and all other stuff but that didn't work.
+            // So what used to happen was that the tab used to get closed but then appeared again
+
+            // But we do prevent the default action
+            e.preventDefault();
+        });
+
+        dropdown.showDropdown();
+
+        // handle the option selection
+        dropdown.on("select", function (e, item, index) {
+            // check if this tab was marked for closing
+            if (closingTabPaths[item.path]) {
+                // this tab is being closed, so handle the close operation
+                const file = FileSystem.getFileForPath(item.path);
+
+                if (file) {
+                    // use setTimeout to ensure this happens after all event handlers
+                    setTimeout(function () {
+                        CommandManager.execute(Commands.FILE_CLOSE, { file: file, paneId: paneId });
+                        // clean up
+                        delete closingTabPaths[item.path];
+                    }, 0);
+                }
+
+                return false;
+            }
+            // regular tab selection - open the file
+            const filePath = item.path;
+            if (filePath) {
+                // Set the active pane and open the file
+                MainViewManager.setActivePaneId(paneId);
+                CommandManager.execute(Commands.FILE_OPEN, { fullPath: filePath });
+            }
+        });
+
+        // clean up when the dropdown is closed
+        dropdown.$button.on("dropdown-closed", function () {
+            $(document).off("mousedown", ".tab-close-icon-overflow");
+            dropdown.$button.remove();
+        });
+
+        // a button was getting displayed on the screen wherever a click was made. not sure why
+        // but this fixes it
+        dropdown.$button.css({
+            display: "none"
+        });
+    }
+
+
+    /**
+     * Scrolls the tab bar to the active tab
+     *
+     * @param {JQuery} $tabBarElement - The tab bar element,
+     * this is either $('#phoenix-tab-bar') or $('phoenix-tab-bar-2')
+     */
+    function scrollToActiveTab($tabBarElement) {
+        if (!$tabBarElement || !$tabBarElement.length) {
+            return;
+        }
+
+        // make sure there is an active editor
+        const activeEditor = EditorManager.getActiveEditor();
+        if (!activeEditor || !activeEditor.document || !activeEditor.document.file) {
+            return;
+        }
+
+        const activePath = activeEditor.document.file.fullPath;
+        // get the active tab. the active tab is the tab that is currently open
+        const $activeTab = $tabBarElement.find(`.tab[data-path="${activePath}"]`);
+
+        if ($activeTab.length) {
+            // get the tab bar container's dimensions
+            const tabBarRect = $tabBarElement[0].getBoundingClientRect();
+            const tabBarVisibleWidth = tabBarRect.width;
+
+            // get the active tab's dimensions
+            const tabRect = $activeTab[0].getBoundingClientRect();
+
+            // calculate the tab's position relative to the tab bar container
+            const tabLeftRelative = tabRect.left - tabBarRect.left;
+            const tabRightRelative = tabRect.right - tabBarRect.left;
+
+            // get the current scroll position
+            const currentScroll = $tabBarElement.scrollLeft();
+
+            // animate the scroll change over 5 for a very fast effect
+            if (tabLeftRelative < 0) {
+                // Tab is too far to the left
+                $tabBarElement.animate(
+                    { scrollLeft: currentScroll + tabLeftRelative - 10 },
+                    5
+                );
+            } else if (tabRightRelative > tabBarVisibleWidth) {
+                // Tab is too far to the right
+                const scrollAdjustment = tabRightRelative - tabBarVisibleWidth + 10;
+                $tabBarElement.animate(
+                    { scrollLeft: currentScroll + scrollAdjustment },
+                    5
+                );
+            }
+        }
+    }
+
+
+    /**
+     * To setup the handlers for the overflow menu
+     */
+    function setupOverflowHandlers() {
+        // handle when the overflow button is clicked for the first pane
+        $(document).on("click", "#overflow-button", function (e) {
+            e.stopPropagation();
+            showOverflowMenu("first-pane", e.pageX, e.pageY);
+        });
+
+        // for second pane
+        $(document).on("click", "#overflow-button-2", function (e) {
+            e.stopPropagation();
+            showOverflowMenu("second-pane", e.pageX, e.pageY);
+        });
+    }
+
+    // initialize the handling of the overflow buttons
+    function init() {
+        setupOverflowHandlers();
+    }
+
+    module.exports = {
+        init,
+        toggleOverflowVisibility,
+        scrollToActiveTab
+    };
+});
+
+/*
+ * GNU AGPL-3.0 License
+ *
+ * Copyright (c) 2021 - present core.ai . All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
+ *
+ */
+
+/*
+ * This script contains the preference settings for the tab bar.
+ */
+define("extensionsIntegrated/TabBar/preference", function (require, exports, module) {
+    const PreferencesManager = require("preferences/PreferencesManager");
+    const Strings = require("strings");
+
+
+    // Preference settings
+    const PREFERENCES_TAB_BAR = "tabBar.options";   // Preference name
+    let tabBarEnabled = true;  // preference to check if the tab bar is enabled
+    let tabBarNumberOfTabs = -1; // preference to check the number of tabs, -1 means all tabs
+
+
+    PreferencesManager.definePreference(
+        PREFERENCES_TAB_BAR,
+        "object",
+        { showTabBar: true, numberOfTabs: -1 },
+        {
+            description: Strings.DESCRIPTION_TABBAR,
+            keys: {
+                showTabBar: {
+                    type: "boolean",
+                    description: Strings.DESCRIPTION_SHOW_TABBAR,
+                    initial: true
+                },
+                numberOfTabs: {
+                    type: "number",
+                    description: Strings.DESCRIPTION_NUMBER_OF_TABS,
+                    initial: -1
+                }
+            }
+        });
+
+
+    module.exports = {
+        PREFERENCES_TAB_BAR,
+        tabBarEnabled,
+        tabBarNumberOfTabs
+    };
+});
+
+/*
+ * GNU AGPL-3.0 License
+ *
+ * Copyright (c) 2021 - present core.ai . All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
+ *
+ */
+
 /*global logger, path*/
 
 // this file uses tauri APIs directly and is probably the only place where tauri apis are used outside of the
@@ -44712,6 +46507,7 @@ define("extensionsIntegrated/loader", function (require, exports, module) {
     require("./HtmlTagSyncEdit/main");
     require("./indentGuides/main");
     require("./CSSColorPreview/main");
+    require("./TabBar/main");
 });
 
 /*
@@ -101174,6 +102970,13 @@ define("nls/root/strings", {
     "STATUSBAR_TASKS_STOP": "Stop",
     "STATUSBAR_TASKS_RESTART": "Restart",
 
+    // Tab bar Strings
+    "CLOSE_TAB": "Close Tab",
+    "CLOSE_ACTIVE_TAB": "Close Active Tab",
+    "CLOSE_ALL_TABS": "Close All Tabs",
+    "CLOSE_UNMODIFIED_TABS": "Close Unmodified Tabs",
+    "REOPEN_CLOSED_FILE": "Reopen Closed File",
+
     // CodeInspection: errors/warnings
     "ERRORS_NO_FILE": "No File Open",
     "ERRORS_PANEL_TITLE_MULTIPLE": "{0} Problems - {1}",
@@ -101293,6 +103096,7 @@ define("nls/root/strings", {
     "CMD_HIDE_SIDEBAR": "Hide Sidebar",
     "CMD_SHOW_SIDEBAR": "Show Sidebar",
     "CMD_TOGGLE_SIDEBAR": "Toggle Sidebar",
+    "CMD_TOGGLE_TABBAR": "Toggle Tab Bar",
     "CMD_TOGGLE_PANELS": "Toggle Panels",
     "CMD_TOGGLE_PURE_CODE": "No Distractions",
     "CMD_TOGGLE_FULLSCREEN": "Fullscreen",
@@ -102015,6 +103819,11 @@ define("nls/root/strings", {
 
     // Emmet
     "DESCRIPTION_EMMET": "true to enable Emmet, else false.",
+
+    // Tabbar
+    "DESCRIPTION_TABBAR": "Set the tab bar settings.",
+    "DESCRIPTION_SHOW_TABBAR": "true to show the tab bar, else false.",
+    "DESCRIPTION_NUMBER_OF_TABS": "The number of tabs to show in the tab bar. Set to -1 to show all tabs",
 
     // Git extension
     "ENABLE_GIT": "Enable Git",
