@@ -123,26 +123,29 @@ define(function (require, exports, module) {
             return;
         }
 
-        // set up all the necessary properties
-        const activeEditor = EditorManager.getActiveEditor();
-        const activePath = activeEditor ? activeEditor.document.file.fullPath : null;
+        // get the current active file for this specific pane
+        const activeFileInPane = MainViewManager.getCurrentlyViewedFile(paneId);
+        const activePathInPane = activeFileInPane ? activeFileInPane.fullPath : null;
 
+        // Check if this file is active in its pane
+        const isActive = (entry.path === activePathInPane);
+
+        // Current active pane (used to determine whether to add the blue underline)
         const currentActivePane = MainViewManager.getActivePaneId();
-        // if the file is the currently active file
-        // also verify that the tab belongs to the active pane
-        const isActive = (entry.path === activePath && paneId === currentActivePane);
-        const isDirty = Helper._isFileModified(FileSystem.getFileForPath(entry.path)); // if the file is dirty
+        const isPaneActive = (paneId === currentActivePane);
 
-        // Create the tab element with the structure we need
-        // tab name is written as a separate div because it may include directory info which we style differently
+        const isDirty = Helper._isFileModified(FileSystem.getFileForPath(entry.path));
+
+        // create tab with active class
         const $tab = $(
-            `<div class="tab ${isActive ? 'active' : ''} ${isDirty ? 'dirty' : ''}" 
-            data-path="${entry.path}" 
-            title="${entry.path}">
-            <div class="tab-icon"></div>
-            <div class="tab-name"></div>
-            <div class="tab-close"><i class="fa-solid fa-times"></i></div>
-        </div>`);
+            `<div class="tab 
+                ${isActive ? 'active' : ''} 
+                ${isDirty ? 'dirty' : ''}" data-path="${entry.path}" title="${entry.path}">
+                <div class="tab-icon"></div>
+                <div class="tab-name"></div>
+                <div class="tab-close"><i class="fa-solid fa-times"></i></div>
+            </div>`
+        );
 
         // Add the file icon
         const $icon = Helper._getFileIcon(entry);
@@ -161,6 +164,13 @@ define(function (require, exports, module) {
         } else {
             // Just the filename
             $tabName.text(entry.name);
+        }
+
+        // only add the underline class if this is both active AND in the active pane
+        if (isActive && !isPaneActive) {
+            // if it's active but in a non-active pane, we add a special class
+            // to style differently in CSS to indicate that it's active but not in the active pane
+            $tab.addClass('active-in-inactive-pane');
         }
 
         return $tab;
@@ -517,6 +527,34 @@ define(function (require, exports, module) {
         );
     }
 
+    /**
+     * this function sets up mouse wheel scrolling functionality for the tab bars
+     * when the mouse wheel is scrolled up, the tab bar will scroll to the left
+     * when its scrolled down, the tab bar will scroll to the right
+     */
+    function setupTabBarScrolling() {
+
+        // common  handler for both the tab bars
+        function handleMouseWheel(e) {
+            // get the tab bar element that is being scrolled
+            const $scrolledTabBar = $(this);
+
+            // A negative deltaY means scrolling up so we need to scroll to the left,
+            // positive means scrolling down so we need to scroll to the right
+            // here we calculate the scroll amount (pixels)
+            // and multiply by 2.5 for increasing the scroll amount
+            const scrollAmount = e.originalEvent.deltaY * 2.5;
+
+            // calculate the new scroll position
+            const newScrollLeft = $scrolledTabBar.scrollLeft() + scrollAmount;
+
+            // apply the new scroll position
+            $scrolledTabBar.scrollLeft(newScrollLeft);
+        }
+
+        // attach the wheel event handler to both tab bars
+        $(document).on('wheel', '#phoenix-tab-bar, #phoenix-tab-bar-2', handleMouseWheel);
+    }
 
     AppInit.appReady(function () {
         _registerCommands();
@@ -538,5 +576,8 @@ define(function (require, exports, module) {
 
         Overflow.init();
         DragDrop.init($('#phoenix-tab-bar'), $('#phoenix-tab-bar-2'));
+
+        // setup the mouse wheel scrolling
+        setupTabBarScrolling();
     });
 });
