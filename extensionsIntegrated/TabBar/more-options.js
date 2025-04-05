@@ -37,6 +37,8 @@ define(function (require, exports, module) {
     const items = [
         Strings.CLOSE_TAB,
         Strings.CLOSE_ACTIVE_TAB,
+        Strings.CLOSE_TABS_TO_THE_LEFT,
+        Strings.CLOSE_TABS_TO_THE_RIGHT,
         Strings.CLOSE_ALL_TABS,
         Strings.CLOSE_UNMODIFIED_TABS,
         "---",
@@ -79,46 +81,132 @@ define(function (require, exports, module) {
 
     /**
      * "CLOSE ALL TABS"
-     * This will close all tabs no matter whether they are in first pane or second pane
+     * This will close all tabs in the specified pane
+     *
+     * @param {String} paneId - the id of the pane ["first-pane", "second-pane"]
      */
-    function handleCloseAllTabs() {
-        CommandManager.execute(Commands.FILE_CLOSE_ALL);
+    function handleCloseAllTabs(paneId) {
+        if (!paneId) {
+            return;
+        }
+
+        let workingSet;
+        workingSet = paneId === "first-pane" ? Global.firstPaneWorkingSet : Global.secondPaneWorkingSet;
+        if (!workingSet || workingSet.length === 0) {
+            return;
+        }
+
+        // close each file in the pane, start from the rightmost [to avoid index shifts]
+        for (let i = workingSet.length - 1; i >= 0; i--) {
+            const fileObj = FileSystem.getFileForPath(workingSet[i].path);
+            CommandManager.execute(
+                Commands.FILE_CLOSE,
+                { file: fileObj, paneId: paneId }
+            );
+        }
     }
 
 
     /**
      * "CLOSE UNMODIFIED TABS"
-     * This will close all tabs that are not modified
+     * This will close all tabs that are not modified in the specified pane
+     *
+     * @param {String} paneId - the id of the pane ["first-pane", "second-pane"]
      */
-    function handleCloseUnmodifiedTabs() {
-        const paneList = MainViewManager.getPaneIdList();
-
-        // for the first pane
-        if (paneList.length > 0 && Global.firstPaneWorkingSet.length > 0) {
-            // get all those entries that are not dirty
-            const unmodifiedEntries = Global.firstPaneWorkingSet.filter(entry => !entry.isDirty);
-
-            // close each unmodified file in the first pane
-            unmodifiedEntries.forEach(entry => {
-                const fileObj = FileSystem.getFileForPath(entry.path);
-                CommandManager.execute(
-                    Commands.FILE_CLOSE,
-                    { file: fileObj, paneId: "first-pane" }
-                );
-            });
+    function handleCloseUnmodifiedTabs(paneId) {
+        if (!paneId) {
+            return;
         }
 
-        // for second pane
-        if (paneList.length > 1 && Global.secondPaneWorkingSet.length > 0) {
-            const unmodifiedEntries = Global.secondPaneWorkingSet.filter(entry => !entry.isDirty);
+        let workingSet;
+        workingSet = paneId === "first-pane" ? Global.firstPaneWorkingSet : Global.secondPaneWorkingSet;
+        if (!workingSet || workingSet.length === 0) {
+            return;
+        }
 
-            unmodifiedEntries.forEach(entry => {
-                const fileObj = FileSystem.getFileForPath(entry.path);
+        // get all those entries that are not dirty
+        const unmodifiedEntries = workingSet.filter(entry => !entry.isDirty);
+
+        // close each unmodified file in the pane
+        for (let i = unmodifiedEntries.length - 1; i >= 0; i--) {
+            const fileObj = FileSystem.getFileForPath(unmodifiedEntries[i].path);
+            CommandManager.execute(
+                Commands.FILE_CLOSE,
+                { file: fileObj, paneId: paneId }
+            );
+        }
+    }
+
+
+    /**
+     * "CLOSE TABS TO THE LEFT"
+     * This function is responsible for closing all tabs to the left of the right-clicked tab
+     *
+     * @param {String} filePath - path of the file that was right-clicked
+     * @param {String} paneId - the id of the pane in which the file is present
+     */
+    function handleCloseTabsToTheLeft(filePath, paneId) {
+        if (!filePath) {
+            return;
+        }
+
+        let workingSet;
+        workingSet = paneId === "first-pane" ? Global.firstPaneWorkingSet : Global.secondPaneWorkingSet;
+        if (!workingSet) {
+            return;
+        }
+
+        // find the index of the current file in the working set
+        const currentIndex = workingSet.findIndex(entry => entry.path === filePath);
+
+        if (currentIndex > 0) { // we only proceed if there are tabs to the left
+            // get all files to the left of the current file
+            const filesToClose = workingSet.slice(0, currentIndex);
+
+            // Close each file, starting from the rightmost [to avoid index shifts]
+            for (let i = filesToClose.length - 1; i >= 0; i--) {
+                const fileObj = FileSystem.getFileForPath(filesToClose[i].path);
                 CommandManager.execute(
                     Commands.FILE_CLOSE,
-                    { file: fileObj, paneId: "second-pane" }
+                    { file: fileObj, paneId: paneId }
                 );
-            });
+            }
+        }
+    }
+
+
+    /**
+     * "CLOSE TABS TO THE RIGHT"
+     * This function is responsible for closing all tabs to the right of the right-clicked tab
+     *
+     * @param {String} filePath - path of the file that was right-clicked
+     * @param {String} paneId - the id of the pane in which the file is present
+     */
+    function handleCloseTabsToTheRight(filePath, paneId) {
+        if (!filePath) {
+            return;
+        }
+
+        let workingSet;
+        workingSet = paneId === "first-pane" ? Global.firstPaneWorkingSet : Global.secondPaneWorkingSet;
+        if (!workingSet) {
+            return;
+        }
+
+        // get the index of the current file in the working set
+        const currentIndex = workingSet.findIndex(entry => entry.path === filePath);
+        // only proceed if there are tabs to the right
+        if (currentIndex !== -1 && currentIndex < workingSet.length - 1) {
+            // get all files to the right of the current file
+            const filesToClose = workingSet.slice(currentIndex + 1);
+
+            for (let i = filesToClose.length - 1; i >= 0; i--) {
+                const fileObj = FileSystem.getFileForPath(filesToClose[i].path);
+                CommandManager.execute(
+                    Commands.FILE_CLOSE,
+                    { file: fileObj, paneId: paneId }
+                );
+            }
         }
     }
 
@@ -178,26 +266,34 @@ define(function (require, exports, module) {
      */
     function _handleSelection(index, filePath, paneId) {
         switch (index) {
-        case 0:
-            // Close tab (the one that was right-clicked)
-            handleCloseTab(filePath, paneId);
-            break;
-        case 1:
-            // Close active tab
-            handleCloseActiveTab();
-            break;
-        case 2:
-            // Close all tabs
-            handleCloseAllTabs();
-            break;
-        case 3:
-            // Close unmodified tabs
-            handleCloseUnmodifiedTabs();
-            break;
-        case 5:
-            // Reopen closed file
-            reopenClosedFile();
-            break;
+            case 0:
+                // Close tab (the one that was right-clicked)
+                handleCloseTab(filePath, paneId);
+                break;
+            case 1:
+                // Close active tab
+                handleCloseActiveTab();
+                break;
+            case 2:
+                // Close tabs to the left
+                handleCloseTabsToTheLeft(filePath, paneId);
+                break;
+            case 3:
+                // Close tabs to the right
+                handleCloseTabsToTheRight(filePath, paneId);
+                break;
+            case 4:
+                // Close all tabs
+                handleCloseAllTabs(paneId);
+                break;
+            case 5:
+                // Close unmodified tabs
+                handleCloseUnmodifiedTabs(paneId);
+                break;
+            case 6:
+                // Reopen closed file
+                reopenClosedFile();
+                break;
         }
     }
 
