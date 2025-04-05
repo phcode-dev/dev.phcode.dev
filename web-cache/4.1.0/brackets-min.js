@@ -66495,6 +66495,7 @@ define("nls/ar/strings", {
   "HEALTH_DATA_NOTIFICATION_MESSAGE": "لا يقوم تطبيق {APP_NAME} <strong>بجمع أو معالجة أي معلومات تعريف شخصية</strong>، ولكنه <strong>يجمع إحصاءات استخدام مجهولة المصدر</strong> لحماية خصوصيتك.  البيانات المجهولة معفاة من متطلبات إخطار النظام الأوروبي العام لحماية البيانات/قانون خصوصية المستهلك في كاليفورنيا، لكننا نعتقد أن لديك الحق في اختيار عدم المشاركة في جمع البيانات المجهولة المصدر أيضًا.<br><br> يمكنك الاطلاع على بياناتك أو <strong>اختيار عدم مشاركة أي بيانات مجهولة المصدر</strong> عن طريق تحديد <strong>مساعدة > تقرير الحالة</strong>. تساعد إحصاءات استخدام التطبيق <strong>المجهولة المصدر</strong> وتقارير الأخطاء على تحديد أولويات الميزات، والعثور على الأخطاء، وتحديد مشكلات سهولة الاستخدام لتحسين تجربتك مع {APP_NAME}. بدون هذه البيانات، لن نعرف الميزات التي تستحق تطويرها من أجلك! <br>",
   "HEALTH_DATA_PREVIEW": "تقرير حالة {APP_NAME}",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>لا تجمع أو تعالج أي معلومات تعريف شخصية</strong>، ولكنها <strong>تجمع إحصائيات استخدام مجهولة المصدر</strong> لحماية خصوصيتك. تساعد إحصائيات استخدام التطبيق وتقارير الأخطاء <strong>المجهولة المصدر</strong> هذه على تحديد أولويات الميزات، والعثور على الأخطاء، واكتشاف مشكلات سهولة الاستخدام لتحسين تجربتك مع {APP_NAME}.</p> <p>فيما يلي معاينة للبيانات التي سيتم إرسالها في تقرير الحالة التالي <em>إذا</em> كان مُمكّنًا. (راجع أيضًا وحدة تحكم المطور لسجلات الأخطاء التي تحمل علامة \"تم اكتشاف خطأ فادح\".)</p>",
+  "HEALTH_DATA_PREVIEW_NECESSARY": "يتم دائمًا جمع تحديثات الأمان/التطبيق، وتهيئة مكتبة التحليلات، وعدد المستخدمين، ووقت الاستخدام بشكل مجهول كمؤشرات ضرورية لصحة التطبيق. هذه إحصائيات مجمعة ولا يتم إرسال/تسجيل أي بيانات شخصية.",
   "INLINE_TIMING_EDITOR_TIME": "الوقت",
   "INLINE_TIMING_EDITOR_PROGRESSION": "التقدم",
   "BEZIER_EDITOR_INFO": "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> تحريك النقطة المحددة<br><kbd class='text'>Shift</kbd> تحريك بعشر وحدات<br><kbd class='text'>Tab</kbd> تبديل النقاط",
@@ -67102,7 +67103,8 @@ define("nls/ar/strings", {
   "GIT_TOAST_TITLE": "استكشف ميزات Git في Phoenix Code",
   "GIT_TOAST_MESSAGE": "انقر على رمز لوحة Git لإدارة مستودعك. يمكنك بسهولة تنفيذ الالتزام والدفع والسحب وعرض سجل مشروعك - كل ذلك في مكان واحد.<br><a href='https://docs.phcode.dev/docs/Features/git'>تعرّف على المزيد حول لوحة Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "صوت للميزات التي ترغب برؤيتها تالياً!",
-  "HEALTH_DATA_PREVIEW_NECESSARY": "يتم دائمًا جمع تحديثات الأمان/التطبيق، وتهيئة مكتبة التحليلات، وعدد المستخدمين، ووقت الاستخدام بشكل مجهول كمؤشرات ضرورية لصحة التطبيق. هذه إحصائيات مجمعة ولا يتم إرسال/تسجيل أي بيانات شخصية."
+  "CLOSE_TABS_TO_THE_RIGHT": "إغلاق علامات التبويب على اليمين",
+  "CLOSE_TABS_TO_THE_LEFT": "إغلاق علامات التبويب على اليسار"
 });
 /*
  * GNU AGPL-3.0 License
@@ -67860,6 +67862,7 @@ define("nls/bg/strings", {
   "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>не събира и не обработва никаква лична информация</strong>, но <strong>събира анонимна статистика за използването</strong>, за да защити вашата поверителност. Анонимните данни са освободени от изискванията за уведомяване по GDPR/CCPA, но ние вярваме, че трябва да имате избор да се откажете и от събирането на анонимни данни.<br><br> Можете да видите данните си или да <strong>изберете да не споделяте никакви анонимни данни</strong>, като изберете <strong>Помощ > Отчет за състоянието</strong>. Тази <strong>анонимна</strong> статистика за използването на приложението и отчетите за грешки ни помагат да приоритизираме функциите, да откриваме грешки и да забелязваме проблеми с използваемостта, за да подобрим вашето преживяване с {APP_NAME}. Без тези данни, ние не бихме знаели какви функции си струва да разработваме за вас! <br>",
   "HEALTH_DATA_PREVIEW": "Здравен доклад на {APP_NAME}",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>не събира и не обработва никаква лична информация</strong>, но <strong>събира анонимна статистика за използването</strong>, за да защити вашата поверителност. Тази <strong>анонимна</strong> статистика за използването на приложението и отчетите за грешки ни помагат да приоритизираме функциите, да откриваме грешки и да забелязваме проблеми с използваемостта, за да подобрим вашето изживяване с {APP_NAME}.</p> <p>По-долу е преглед на данните, които ще бъдат изпратени в следващия ви отчет за състоянието, <em>ако</em> е активиран. (Вижте също конзолата за разработчици за регистрационни файлове за грешки, маркирани като „Уловена критична грешка“.)</p>",
+  "HEALTH_DATA_PREVIEW_NECESSARY": "Актуализации на защитата/приложението, инициализация на библиотеката за анализи, брой потребители и време на използване винаги се събират анонимно като необходими показатели за състоянието на приложението. Това са обобщени статистики и не се изпращат/регистрират лични данни.",
   "INLINE_TIMING_EDITOR_TIME": "Време",
   "INLINE_TIMING_EDITOR_PROGRESSION": "Напредък",
   "BEZIER_EDITOR_INFO": "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> Преместване на избраната точка<br><kbd class='text'>Shift</kbd> Преместване с десет единици<br><kbd class='text'>Tab</kbd> Превключване на точката",
@@ -68467,7 +68470,8 @@ define("nls/bg/strings", {
   "GIT_TOAST_TITLE": "Разгледайте Git функциите в Phoenix Code",
   "GIT_TOAST_MESSAGE": "Щракнете върху иконата на Git панела, за да управлявате хранилището си. Лесно създавайте commit, push, pull и преглеждайте историята на проекта си – всичко на едно място.<br><a href='https://docs.phcode.dev/docs/Features/git'>Научете повече за Git панела →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Гласувайте за функциите, които искате да видите следващи!",
-  "HEALTH_DATA_PREVIEW_NECESSARY": "Актуализации на защитата/приложението, инициализация на библиотеката за анализи, брой потребители и време на използване винаги се събират анонимно като необходими показатели за състоянието на приложението. Това са обобщени статистики и не се изпращат/регистрират лични данни."
+  "CLOSE_TABS_TO_THE_RIGHT": "Затвори табовете отдясно",
+  "CLOSE_TABS_TO_THE_LEFT": "Затвори табовете отляво"
 });
 /*
  * Copyright (c) 2013 Adobe Systems Incorporated. All rights reserved.
@@ -69254,6 +69258,7 @@ define("nls/cs/strings", {
   "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>nesbírá ani nezpracovává žádné osobně identifikovatelné informace</strong>, ale <strong>sbírá anonymní statistiky používání</strong>, aby chránil vaše soukromí. Anonymní data jsou vyňata z požadavků na oznámení GDPR/CCPA, ale věříme, že byste měli mít možnost odhlásit se i ze sběru anonymních dat.<br><br> Svá data si můžete prohlédnout nebo se <strong>rozhodnout nesdílet žádná anonymní data</strong> výběrem možnosti <strong>Nápověda > Zpráva o stavu</strong>. Tyto <strong>anonymní</strong> statistiky používání aplikace a zprávy o chybách nám pomáhají upřednostňovat funkce, nacházet chyby a odhalovat problémy s použitelností, abychom zlepšili vaši zkušenost s aplikací {APP_NAME}. Bez těchto dat bychom nevěděli, jaké funkce pro vás stojí za to vyvíjet! <br>",
   "HEALTH_DATA_PREVIEW": "Hlášení o zdraví {APP_NAME}",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>neshromažďuje ani nezpracovává žádné osobní údaje</strong>, ale <strong>shromažďuje anonymní statistiky používání</strong> pro ochranu vašeho soukromí. Tyto <strong>anonymní</strong> statistiky používání aplikace a hlášení o chybách nám pomáhají upřednostňovat funkce, nacházet chyby a odhalovat problémy s použitelností pro zlepšení vaší zkušenosti s aplikací {APP_NAME}.</p> <p>Níže je uveden náhled dat, která budou odeslána ve vašem dalším hlášení o stavu, <em>pokud</em> je povoleno. (Viz také konzole pro vývojáře pro protokoly chyb označené 'Caught Critical error'.)</p>",
+  "HEALTH_DATA_PREVIEW_NECESSARY": "Aktualizace zabezpečení/aplikace, inicializace analytické knihovny, počty uživatelů a doba používání jsou vždy anonymně shromažďovány jako nezbytné indikátory stavu aplikace. Jedná se o souhrnné statistiky a žádné osobní údaje nejsou odesílány/zaznamenávány.",
   "INLINE_TIMING_EDITOR_TIME": "Doba",
   "INLINE_TIMING_EDITOR_PROGRESSION": "Postup",
   "BEZIER_EDITOR_INFO": "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> Posunout vybraný bod<br><kbd class='text'>Shift</kbd> Posunout o deset jednotek<br><kbd class='text'>Tab</kbd> Vyměnit body",
@@ -69861,7 +69866,8 @@ define("nls/cs/strings", {
   "GIT_TOAST_TITLE": "Prozkoumejte funkce Gitu v Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klikněte na ikonu panelu Git pro správu vašeho repozitáře. Snadno commitujte, pushujte, pullujte a prohlížejte si historii projektu – vše na jednom místě.<br><a href='https://docs.phcode.dev/docs/Features/git'>Zjistěte více o panelu Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Hlasujte pro funkce, které chcete vidět v další verzi!",
-  "HEALTH_DATA_PREVIEW_NECESSARY": "Aktualizace zabezpečení/aplikace, inicializace analytické knihovny, počty uživatelů a doba používání jsou vždy anonymně shromažďovány jako nezbytné indikátory stavu aplikace. Jedná se o souhrnné statistiky a žádné osobní údaje nejsou odesílány/zaznamenávány."
+  "CLOSE_TABS_TO_THE_RIGHT": "Zavřít karty napravo",
+  "CLOSE_TABS_TO_THE_LEFT": "Zavřít karty nalevo"
 });
 /*
  * GNU AGPL-3.0 License
@@ -70646,6 +70652,7 @@ define("nls/da/strings", {
   "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>indsamler eller behandler ingen personligt identificerbare oplysninger</strong>, men <strong>indsamler anonyme brugsstatistikker</strong> for at beskytte dit privatliv. Anonyme data er undtaget fra GDPR/CCPA-anmeldelseskrav, men vi mener, at du skal have mulighed for at fravælge indsamling af anonyme data.<br><br> Du kan se dine data eller <strong>vælge ikke at dele anonyme data</strong> ved at vælge <strong>Hjælp > Sundhedsrapport</strong>. Disse <strong>anonyme</strong> statistikker over appbrug og fejlrapporter hjælper med at prioritere funktioner, finde fejl og identificere brugervenlighedsproblemer for at forbedre din oplevelse med {APP_NAME}. Uden disse data ville vi ikke vide, hvilke funktioner det er værd at bygge for dig! <br>",
   "HEALTH_DATA_PREVIEW": "{APP_NAME} sundhedsrapport",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>indsamler eller behandler ingen personligt identificerbare oplysninger</strong>, men <strong>indsamler anonyme brugsstatistikker</strong> for at beskytte dit privatliv. Disse <strong>anonyme</strong> statistikker over appbrug og fejlrapporter hjælper med at prioritere funktioner, finde fejl og identificere brugervenlighedsproblemer for at forbedre din oplevelse med {APP_NAME}.</p> <p>Nedenfor er et eksempel på de data, der vil blive sendt i din næste sundhedsrapport, <em>hvis</em> den er aktiveret. (Se også udviklerkonsollen for fejllogger markeret 'Caught Critical error'.)</p>",
+  "HEALTH_DATA_PREVIEW_NECESSARY": "Sikkerheds-/appopdateringer, initialisering af analysebibliotek, antal brugere og brugstid indsamles altid anonymt som nødvendige indikatorer for appens sundhedstilstand. Disse er aggregerede statistikker, og ingen personlige data sendes/logges.",
   "INLINE_TIMING_EDITOR_TIME": "Tid",
   "INLINE_TIMING_EDITOR_PROGRESSION": "Forløb",
   "BEZIER_EDITOR_INFO": "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> Flyt valgte punkt<br><kbd class='text'>Skift</kbd> Flyt ti enheder af gangen<br><kbd class='text'>Tab</kbd> Skift punkter",
@@ -71253,7 +71260,8 @@ define("nls/da/strings", {
   "GIT_TOAST_TITLE": "Udforsk Git-funktioner i Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klik på Git-panelikonet for at administrere dit repository. Commit, push, pull og se din projekthistorik nemt – alt sammen på ét sted.<br><a href='https://docs.phcode.dev/docs/Features/git'>Læs mere om Git-panelet →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stem på de funktioner, du gerne vil se!",
-  "HEALTH_DATA_PREVIEW_NECESSARY": "Sikkerheds-/appopdateringer, initialisering af analysebibliotek, antal brugere og brugstid indsamles altid anonymt som nødvendige indikatorer for appens sundhedstilstand. Disse er aggregerede statistikker, og ingen personlige data sendes/logges."
+  "CLOSE_TABS_TO_THE_RIGHT": "Luk faner til højre",
+  "CLOSE_TABS_TO_THE_LEFT": "Luk faner til venstre"
 });
 /*
  * GNU AGPL-3.0 License
@@ -72036,6 +72044,7 @@ define("nls/de/strings", {
   "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>sammelt oder verarbeitet keine personenbezogenen Daten</strong>, aber <strong>erhebt anonyme Nutzungsstatistiken</strong>, um Ihre Privatsphäre zu schützen. Anonyme Daten sind von den Benachrichtigungsanforderungen der DSGVO/CCPA ausgenommen, aber wir glauben, dass Sie die Möglichkeit haben sollten, der Erfassung anonymer Daten zu widersprechen.<br><br> Sie können Ihre Daten einsehen oder <strong>die Weitergabe anonymer Daten deaktivieren</strong>, indem Sie <strong>Hilfe > Zustandsbericht</strong> auswählen. Diese <strong>anonymen</strong> App-Nutzungsstatistiken und Fehlerberichte helfen uns, Funktionen zu priorisieren, Fehler zu finden und Usability-Probleme zu erkennen, um Ihre Erfahrung mit {APP_NAME} zu verbessern. Ohne diese Daten wüssten wir nicht, welche Funktionen es sich lohnt, für Sie zu entwickeln! <br>",
   "HEALTH_DATA_PREVIEW": "{APP_NAME}-Statusbericht",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>erfasst oder verarbeitet keine personenbezogenen Daten</strong>, sondern <strong>erfasst anonyme Nutzungsstatistiken</strong>, um Ihre Privatsphäre zu schützen. Diese <strong>anonymen</strong> Nutzungsstatistiken und Fehlerberichte der App helfen uns, Funktionen zu priorisieren, Fehler zu finden und Usability-Probleme zu erkennen, um Ihre Erfahrung mit {APP_NAME} zu verbessern.</p> <p>Im Folgenden finden Sie eine Vorschau der Daten, die in Ihrem nächsten Zustandsbericht gesendet werden, <em>falls</em> dieser aktiviert ist. (Siehe auch die Entwicklerkonsole für Fehlerprotokolle mit der Kennzeichnung 'Schwerwiegender Fehler abgefangen'.)</p>",
+  "HEALTH_DATA_PREVIEW_NECESSARY": "Sicherheits-/App-Updates, die Initialisierung der Analysebibliothek, Benutzerzahlen und Nutzungsdauer werden stets anonym als notwendige App-Integritätsindikatoren erfasst. Hierbei handelt es sich um aggregierte Statistiken, und es werden keine personenbezogenen Daten gesendet/protokolliert.",
   "INLINE_TIMING_EDITOR_TIME": "Zeit",
   "INLINE_TIMING_EDITOR_PROGRESSION": "Verlauf",
   "BEZIER_EDITOR_INFO": "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> Ausgewählten Punkt bewegen<br><kbd class='text'>Umschalt</kbd> Um 10 Einheiten bewegen<br><kbd class='text'>Tab</kbd> Zwischen Punkten wechseln",
@@ -72643,7 +72652,8 @@ define("nls/de/strings", {
   "GIT_TOAST_TITLE": "Git-Funktionen in Phoenix Code entdecken",
   "GIT_TOAST_MESSAGE": "Klicken Sie auf das Git-Panel-Symbol, um Ihr Repository zu verwalten. Committen, Pushen, Pullen und die Anzeige Ihres Projektverlaufs – alles an einem Ort.<br><a href='https://docs.phcode.dev/docs/Features/git'>Mehr über das Git-Panel erfahren →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stimmen Sie für die Funktionen ab, die Sie als Nächstes sehen möchten!",
-  "HEALTH_DATA_PREVIEW_NECESSARY": "Sicherheits-/App-Updates, die Initialisierung der Analysebibliothek, Benutzerzahlen und Nutzungsdauer werden stets anonym als notwendige App-Integritätsindikatoren erfasst. Hierbei handelt es sich um aggregierte Statistiken, und es werden keine personenbezogenen Daten gesendet/protokolliert."
+  "CLOSE_TABS_TO_THE_RIGHT": "Rechts befindliche Tabs schließen",
+  "CLOSE_TABS_TO_THE_LEFT": "Links befindliche Tabs schließen"
 });
 /*
  * GNU AGPL-3.0 License
@@ -73428,6 +73438,7 @@ define("nls/el/strings", {
   "HEALTH_DATA_NOTIFICATION_MESSAGE": "Το {APP_NAME} <strong>δεν συλλέγει ή επεξεργάζεται προσωπικά δεδομένα</strong>, αλλά <strong>συλλέγει ανώνυμα στατιστικά χρήσης</strong> για την προστασία του απορρήτου σας. Τα ανώνυμα δεδομένα εξαιρούνται από τις απαιτήσεις ειδοποίησης GDPR/CCPA, αλλά πιστεύουμε ότι πρέπει να έχετε την επιλογή να εξαιρεθείτε από τη συλλογή ανώνυμων δεδομένων.<br><br> Μπορείτε να δείτε τα δεδομένα σας ή να <strong>επιλέξετε να μην κοινοποιήσετε ανώνυμα δεδομένα</strong> επιλέγοντας <strong>Βοήθεια > Αναφορά Υγείας</strong>. Αυτά τα <strong>ανώνυμα</strong> στατιστικά χρήσης εφαρμογών και οι αναφορές σφαλμάτων βοηθούν στην ιεράρχηση των λειτουργιών, στην εύρεση σφαλμάτων και στον εντοπισμό προβλημάτων χρηστικότητας για τη βελτίωση της εμπειρίας σας με το {APP_NAME}. Χωρίς αυτά τα δεδομένα, δεν θα γνωρίζαμε ποιες λειτουργίες αξίζει να δημιουργήσουμε για εσάς! <br>",
   "HEALTH_DATA_PREVIEW": "{APP_NAME} Health Report",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>Το {APP_NAME} <strong>δεν συλλέγει ή επεξεργάζεται προσωπικά δεδομένα</strong>, αλλά <strong>συλλέγει ανώνυμα στατιστικά χρήσης</strong> για την προστασία του απορρήτου σας. Αυτά τα <strong>ανώνυμα</strong> στατιστικά χρήσης εφαρμογών και οι αναφορές σφαλμάτων βοηθούν στην ιεράρχηση των λειτουργιών, στην εύρεση σφαλμάτων και στον εντοπισμό προβλημάτων χρηστικότητας για τη βελτίωση της εμπειρίας σας με το {APP_NAME}.</p> <p>Παρακάτω είναι μια προεπισκόπηση των δεδομένων που θα σταλούν στην επόμενη Αναφορά Υγείας σας <em>εάν</em> είναι ενεργοποιημένη. (Δείτε επίσης την κονσόλα προγραμματιστή για αρχεία καταγραφής σφαλμάτων με την ένδειξη 'Caught Critical error'.)</p>",
+  "HEALTH_DATA_PREVIEW_NECESSARY": "Συλλέγονται πάντα ανώνυμα, ως απαραίτητοι δείκτες εύρυθμης λειτουργίας της εφαρμογής, δεδομένα που αφορούν ενημερώσεις ασφαλείας/εφαρμογής, αρχικοποίηση της βιβλιοθήκης αναλυτικών στοιχείων, αριθμούς χρηστών και χρόνο χρήσης. Πρόκειται για συγκεντρωτικά στατιστικά στοιχεία και δεν αποστέλλονται/καταγράφονται προσωπικά δεδομένα.",
   "INLINE_TIMING_EDITOR_TIME": "Χρόνος",
   "INLINE_TIMING_EDITOR_PROGRESSION": "Πρόοδος",
   "BEZIER_EDITOR_INFO": "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> Μετακίνηση επιλεγμένου σημείου<br><kbd class='text'>Shift</kbd> Μετακίνηση κατά δέκα μονάδες<br><kbd class='text'>Tab</kbd> Εναλλαγή σημείων",
@@ -74035,7 +74046,8 @@ define("nls/el/strings", {
   "GIT_TOAST_TITLE": "Εξερευνήστε τις Λειτουργίες Git στο Phoenix Code",
   "GIT_TOAST_MESSAGE": "Κάντε κλικ στο εικονίδιο του πίνακα Git για να διαχειριστείτε το αποθετήριό σας. Κάντε εύκολα commit, push, pull και δείτε το ιστορικό του έργου σας—όλα σε ένα μέρος.<br><a href='https://docs.phcode.dev/docs/Features/git'>Μάθετε περισσότερα για τον πίνακα Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Ψηφίστε για τις λειτουργίες που θέλετε να δείτε στη συνέχεια!",
-  "HEALTH_DATA_PREVIEW_NECESSARY": "Συλλέγονται πάντα ανώνυμα, ως απαραίτητοι δείκτες εύρυθμης λειτουργίας της εφαρμογής, δεδομένα που αφορούν ενημερώσεις ασφαλείας/εφαρμογής, αρχικοποίηση της βιβλιοθήκης αναλυτικών στοιχείων, αριθμούς χρηστών και χρόνο χρήσης. Πρόκειται για συγκεντρωτικά στατιστικά στοιχεία και δεν αποστέλλονται/καταγράφονται προσωπικά δεδομένα."
+  "CLOSE_TABS_TO_THE_RIGHT": "Κλείσιμο καρτελών στα δεξιά",
+  "CLOSE_TABS_TO_THE_LEFT": "Κλείσιμο καρτελών στα αριστερά"
 });
 /*
  * GNU AGPL-3.0 License
@@ -74820,6 +74832,7 @@ define("nls/en-gb/strings", {
   "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>does not collect or process any personally identifiable information</strong>, but <strong>collects anonymous usage statistics</strong> to protect your privacy. Anonymous data is exempt from GDPR/CCPA notification requirements, but we believe you should have a choice to opt out of anonymous data collection as well.<br><br> You can see your data or <strong>choose not to share any anonymous data</strong> by selecting <strong>Help > Health Report</strong>. These <strong>anonymous</strong> app usage statistics and error reports help us prioritise features, find bugs, and spot usability issues to improve your experience with {APP_NAME}. Without this data, we wouldn't know what features are worth building for you! <br>",
   "HEALTH_DATA_PREVIEW": "{APP_NAME} Health Report",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>does not collect or process any personally identifiable information</strong>, but <strong>collects anonymous usage statistics</strong> to guard your privacy. These <strong>anonymous</strong> app usage statistics and error reports help prioritise features, find bugs, and spot usability issues for improving your experience with {APP_NAME}.</p> <p>Below is a preview of the data that will be sent in your next Health Report <em>if</em> it is enabled. (Also see developer console for error logs marked 'Caught Critical error'.)</p>",
+  "HEALTH_DATA_PREVIEW_NECESSARY": "Security/app updates, analytics library initialisation, user counts, and usage time are always anonymously collected as necessary app health indicators. These are aggregate statistics and no personal data is sent/logged.",
   "INLINE_TIMING_EDITOR_TIME": "Time",
   "INLINE_TIMING_EDITOR_PROGRESSION": "Progression",
   "BEZIER_EDITOR_INFO": "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> Move selected point<br><kbd class='text'>Shift</kbd> Move by ten units<br><kbd class='text'>Tab</kbd> Switch points",
@@ -75427,7 +75440,8 @@ define("nls/en-gb/strings", {
   "GIT_TOAST_TITLE": "Explore Git Features in Phoenix Code",
   "GIT_TOAST_MESSAGE": "Click the Git panel icon to manage your repository. Easily commit, push, pull, and view your project history—all in one place.<br><a href='https://docs.phcode.dev/docs/Features/git'>Learn more about the Git panel →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote for the features you'd like to see next!",
-  "HEALTH_DATA_PREVIEW_NECESSARY": "Security/app updates, analytics library initialisation, user counts, and usage time are always anonymously collected as necessary app health indicators. These are aggregate statistics and no personal data is sent/logged."
+  "CLOSE_TABS_TO_THE_RIGHT": "Close tabs to the right",
+  "CLOSE_TABS_TO_THE_LEFT": "Close tabs to the left"
 });
 /*
  * GNU AGPL-3.0 License
@@ -76185,6 +76199,7 @@ define("nls/es/strings", {
   "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>no recopila ni procesa ninguna información de identificación personal</strong>, pero <strong>recopila estadísticas de uso anónimas</strong> para proteger su privacidad. Los datos anónimos están exentos de los requisitos de notificación de GDPR/CCPA, pero creemos que debe tener la opción de no participar en la recopilación de datos anónimos también.<br><br> Puede ver sus datos o <strong>optar por no compartir ningún dato anónimo</strong> seleccionando <strong>Ayuda > Informe de estado</strong>. Estas estadísticas de uso de la aplicación <strong>anónimas</strong> y los informes de errores ayudan a priorizar las funciones, encontrar errores y detectar problemas de usabilidad para mejorar su experiencia con {APP_NAME}. ¡Sin estos datos, no sabríamos qué funciones vale la pena desarrollar para usted! <br>",
   "HEALTH_DATA_PREVIEW": "Reporte de estadísticas de {APP_NAME}",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>no recopila ni procesa ninguna información de identificación personal</strong>, pero <strong>recopila estadísticas de uso anónimas</strong> para proteger su privacidad. Estas estadísticas de uso de la aplicación <strong>anónimas</strong> y los informes de errores ayudan a priorizar las funciones, encontrar errores y detectar problemas de usabilidad para mejorar su experiencia con {APP_NAME}.</p> <p>A continuación se muestra una vista previa de los datos que se enviarán en su próximo Informe de estado <em>si</em> está habilitado. (Consulte también la consola del desarrollador para ver los registros de errores marcados como 'Error crítico detectado'.)</p>",
+  "HEALTH_DATA_PREVIEW_NECESSARY": "Las actualizaciones de seguridad/aplicación, la inicialización de la biblioteca de análisis, el recuento de usuarios y el tiempo de uso siempre se recopilan de forma anónima como indicadores necesarios del estado de la aplicación. Estas son estadísticas agregadas y no se envían/registran datos personales.",
   "INLINE_TIMING_EDITOR_TIME": "Tiempo",
   "INLINE_TIMING_EDITOR_PROGRESSION": "Progresión",
   "BEZIER_EDITOR_INFO": "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> Mueven el punto seleccionado<br><kbd class='text'>Shift</kbd> Mueve de a diez unidades<br><kbd class='text'>Tab</kbd> Cambia el punto seleccionado",
@@ -76792,7 +76807,8 @@ define("nls/es/strings", {
   "GIT_TOAST_TITLE": "Explora las funciones de Git en Phoenix Code",
   "GIT_TOAST_MESSAGE": "Haga clic en el icono del panel de Git para administrar su repositorio. Confirme, envíe (push), extraiga (pull) y vea el historial de su proyecto fácilmente, todo en un solo lugar.<br><a href='https://docs.phcode.dev/docs/Features/git'>Obtenga más información sobre el panel de Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "¡Vota por las funciones que quieres ver próximamente!",
-  "HEALTH_DATA_PREVIEW_NECESSARY": "Las actualizaciones de seguridad/aplicación, la inicialización de la biblioteca de análisis, el recuento de usuarios y el tiempo de uso siempre se recopilan de forma anónima como indicadores necesarios del estado de la aplicación. Estas son estadísticas agregadas y no se envían/registran datos personales."
+  "CLOSE_TABS_TO_THE_RIGHT": "Cerrar pestañas a la derecha",
+  "CLOSE_TABS_TO_THE_LEFT": "Cerrar pestañas a la izquierda"
 });
 /*
  * GNU AGPL-3.0 License
@@ -77578,6 +77594,7 @@ define("nls/fa-ir/strings", {
   "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>هیچگونه اطلاعات شخصی شما را جمع‌آوری یا پردازش نمی‌کند</strong>، اما <strong>آمار استفاده ناشناس را جمع‌آوری می‌کند</strong> تا از حریم خصوصی شما محافظت کند. داده‌های ناشناس از الزامات اطلاع‌رسانی GDPR/CCPA معاف هستند، اما ما معتقدیم که شما باید حق انتخاب عدم اشتراک‌گذاری داده‌های ناشناس را نیز داشته باشید.<br><br> می‌توانید داده‌های خود را مشاهده کنید یا <strong>انتخاب کنید که هیچ داده ناشناسی را به اشتراک نگذارید</strong> با انتخاب <strong>راهنما > گزارش سلامت</strong>. این آمار استفاده از برنامه و گزارش‌های خطای <strong>ناشناس</strong> به اولویت‌بندی ویژگی‌ها، یافتن اشکالات و شناسایی مشکلات کاربردپذیری برای بهبود تجربه شما با {APP_NAME} کمک می‌کند. بدون این داده‌ها، ما نمی‌دانیم که ساخت چه ویژگی‌هایی برای شما ارزشمند است! <br>",
   "HEALTH_DATA_PREVIEW": "گزارش سلامت {APP_NAME}",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>هیچگونه اطلاعات شخصی قابل شناسایی را جمع‌آوری یا پردازش نمی‌کند</strong>، اما <strong>آمار استفاده ناشناس را جمع‌آوری می‌کند</strong> تا از حریم خصوصی شما محافظت کند. این آمار استفاده از برنامه و گزارش‌های خطای <strong>ناشناس</strong> به اولویت‌بندی ویژگی‌ها، یافتن اشکالات و شناسایی مشکلات کاربردپذیری برای بهبود تجربه شما با {APP_NAME} کمک می‌کند.</p> <p>در زیر پیش‌نمایشی از داده‌هایی که در گزارش سلامت بعدی شما ارسال می‌شود <em>در صورت</em> فعال بودن آن، آمده است. (همچنین به کنسول توسعه‌دهنده برای گزارش‌های خطا با علامت 'Caught Critical error' مراجعه کنید.)</p>",
+  "HEALTH_DATA_PREVIEW_NECESSARY": "به‌روزرسانی‌های امنیتی/برنامه، مقداردهی اولیه کتابخانه تجزیه و تحلیل، تعداد کاربران و زمان استفاده همیشه به‌صورت ناشناس به‌عنوان شاخص‌های سلامت ضروری برنامه جمع‌آوری می‌شوند. این آمار کلی است و هیچ داده شخصی ارسال/ثبت نمی‌شود.",
   "INLINE_TIMING_EDITOR_TIME": "زمان",
   "INLINE_TIMING_EDITOR_PROGRESSION": "پیشرفت",
   "BEZIER_EDITOR_INFO": "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> انتخاب حرکت نشانگر<br><kbd class='text'>شیفت</kbd>حرکت با ده واحد<br><kbd class='text'>تب</kbd> نقاط تغییر",
@@ -78185,7 +78202,8 @@ define("nls/fa-ir/strings", {
   "GIT_TOAST_TITLE": "کاوش ویژگی‌های گیت در Phoenix Code",
   "GIT_TOAST_MESSAGE": "برای مدیریت مخزن خود روی آیکون پنل گیت کلیک کنید. به راحتی کامیت، پوش، پول و مشاهده تاریخچه پروژه خود را - همه در یک مکان - انجام دهید.<br><a href='https://docs.phcode.dev/docs/Features/git'>درباره پنل گیت بیشتر بدانید →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "برای قابلیت‌هایی که می‌خواهید در آینده ببینید، رأی دهید!",
-  "HEALTH_DATA_PREVIEW_NECESSARY": "به‌روزرسانی‌های امنیتی/برنامه، مقداردهی اولیه کتابخانه تجزیه و تحلیل، تعداد کاربران و زمان استفاده همیشه به‌صورت ناشناس به‌عنوان شاخص‌های سلامت ضروری برنامه جمع‌آوری می‌شوند. این آمار کلی است و هیچ داده شخصی ارسال/ثبت نمی‌شود."
+  "CLOSE_TABS_TO_THE_RIGHT": "بستن تب‌های سمت راست",
+  "CLOSE_TABS_TO_THE_LEFT": "بستن تب‌های سمت چپ"
 });
 /*
  * GNU AGPL-3.0 License
@@ -78970,6 +78988,7 @@ define("nls/fi/strings", {
   "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>ei kerää tai käsittele mitään henkilötietoja</strong>, mutta <strong>kerää anonyymejä käyttötilastoja</strong> yksityisyytesi suojaamiseksi. Anonyymi data ei kuulu GDPR/CCPA-ilmoitusvaatimusten piiriin, mutta uskomme, että sinulla tulee olla mahdollisuus kieltäytyä myös anonyymin datan keräämisestä.<br><br> Voit tarkastella dataasi tai <strong>valita, ettet jaa anonyymiä dataa</strong> valitsemalla <strong>Ohje > Terveysraportti</strong>. Nämä <strong>anonyymit</strong> sovelluksen käyttötilastot ja virheraporttien avulla voimme priorisoida ominaisuuksia, löytää bugeja ja havaita käytettävyysongelmia parantaaksemme {APP_NAME}-kokemustasi. Ilman tätä dataa emme tietäisi, mitä ominaisuuksia kannattaa rakentaa sinulle! <br>",
   "HEALTH_DATA_PREVIEW": "{APP_NAME}in terveydentilaraportti",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>ei kerää tai käsittele mitään henkilötietoja</strong>, mutta <strong>kerää anonyymejä käyttötilastoja</strong> yksityisyytesi suojaamiseksi. Nämä <strong>anonyymit</strong> sovelluksen käyttötilastot ja virheilmoitukset auttavat meitä priorisoimaan ominaisuuksia, löytämään virheitä ja havaitsemaan käytettävyysongelmia {APP_NAME}-kokemuksesi parantamiseksi.</p> <p>Alla on esikatselu tiedoista, jotka lähetetään seuraavassa käyttöraportissasi, <em>jos</em> se on käytössä. (Katso myös kehittäjäkonsolin virhelokit, jotka on merkitty 'Caught Critical error'.)</p>",
+  "HEALTH_DATA_PREVIEW_NECESSARY": "Sovelluksen tietoturva-/sovelluspäivitykset, analytiikkakirjaston alustus, käyttäjämäärät ja käyttöaika kerätään aina nimettömästi sovelluksen terveydentilan mittareina. Nämä ovat koottuja tilastoja, eikä henkilökohtaisia tietoja lähetetä/kirjata.",
   "INLINE_TIMING_EDITOR_TIME": "Aika",
   "INLINE_TIMING_EDITOR_PROGRESSION": "Edistyminen",
   "BEZIER_EDITOR_INFO": "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> Siirrä valittua pistettä<br><kbd class='text'>Vaihto</kbd> Siirrä kymmenen yksikköä<br><kbd class='text'>Tab</kbd> Vaihda pisteitä",
@@ -79577,7 +79596,8 @@ define("nls/fi/strings", {
   "GIT_TOAST_TITLE": "Tutustu Git-ominaisuuksiin Phoenix Codessa",
   "GIT_TOAST_MESSAGE": "Napsauta Git-paneelin kuvaketta hallitaksesi arkistoasi (repository). Tee commit, push ja pull helposti ja tarkastele projektihistoriaasi – kaikki yhdessä paikassa.<br><a href='https://docs.phcode.dev/docs/Features/git'>Lue lisää Git-paneelista →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Äänestä ominaisuuksia, jotka haluat nähdä seuraavaksi!",
-  "HEALTH_DATA_PREVIEW_NECESSARY": "Sovelluksen tietoturva-/sovelluspäivitykset, analytiikkakirjaston alustus, käyttäjämäärät ja käyttöaika kerätään aina nimettömästi sovelluksen terveydentilan mittareina. Nämä ovat koottuja tilastoja, eikä henkilökohtaisia tietoja lähetetä/kirjata."
+  "CLOSE_TABS_TO_THE_RIGHT": "Sulje välilehdet oikealta",
+  "CLOSE_TABS_TO_THE_LEFT": "Sulje välilehdet vasemmalta"
 });
 /*
  * GNU AGPL-3.0 License
@@ -80362,6 +80382,7 @@ define("nls/fr/strings", {
   "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>ne collecte ni ne traite aucune donnée personnelle</strong>, mais <strong>collecte des statistiques d'utilisation anonymes</strong> pour protéger votre vie privée. Les données anonymes sont exemptées des exigences de notification RGPD/CCPA, mais nous pensons que vous devez avoir le choix de refuser la collecte de données anonymes.<br><br> Vous pouvez consulter vos données ou <strong>choisir de ne pas partager de données anonymes</strong> en sélectionnant <strong>Aide > Rapport d'intégrité</strong>. Ces statistiques d'utilisation de l'application et rapports d'erreurs <strong>anonymes</strong> nous aident à prioriser les fonctionnalités, à trouver les bogues et à repérer les problèmes d'utilisation afin d'améliorer votre expérience avec {APP_NAME}. Sans ces données, nous ne saurions pas quelles fonctionnalités valent la peine d'être développées pour vous ! <br>",
   "HEALTH_DATA_PREVIEW": "Rapport d’intégrité de {APP_NAME}",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>ne collecte ni ne traite aucune information personnellement identifiable</strong>, mais <strong>collecte des statistiques d'utilisation anonymes</strong> pour protéger votre vie privée. Ces statistiques d'utilisation de l'application et rapports d'erreurs <strong>anonymes</strong> nous aident à prioriser les fonctionnalités, à trouver les bogues et à repérer les problèmes d'utilisation afin d'améliorer votre expérience avec {APP_NAME}.</p> <p>Vous trouverez ci-dessous un aperçu des données qui seront envoyées dans votre prochain rapport d'état <em>si</em> celui-ci est activé. (Voir également la console développeur pour les journaux d'erreurs marqués « Erreur critique détectée ».)</p>",
+  "HEALTH_DATA_PREVIEW_NECESSARY": "Les mises à jour de sécurité/de l'application, l'initialisation de la bibliothèque d'analyse, le nombre d'utilisateurs et la durée d'utilisation sont toujours collectés anonymement comme indicateurs de santé de l'application. Il s'agit de statistiques agrégées et aucune donnée personnelle n'est envoyée/enregistrée.",
   "INLINE_TIMING_EDITOR_TIME": "Temps",
   "INLINE_TIMING_EDITOR_PROGRESSION": "Progression",
   "BEZIER_EDITOR_INFO": "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> Déplacer le point sélectionné<br><kbd class='text'>Maj</kbd> Déplacer de dix unités<br><kbd class='text'>Tabulation</kbd> Permuter les points",
@@ -80969,7 +80990,8 @@ define("nls/fr/strings", {
   "GIT_TOAST_TITLE": "Explorer les fonctionnalités Git dans Phoenix Code",
   "GIT_TOAST_MESSAGE": "Cliquez sur l'icône du panneau Git pour gérer votre dépôt. Validez, envoyez (push), récupérez (pull) et consultez l'historique de votre projet facilement, le tout au même endroit.<br><a href='https://docs.phcode.dev/docs/Features/git'>En savoir plus sur le panneau Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Votez pour les fonctionnalités que vous souhaitez voir apparaître !",
-  "HEALTH_DATA_PREVIEW_NECESSARY": "Les mises à jour de sécurité/de l'application, l'initialisation de la bibliothèque d'analyse, le nombre d'utilisateurs et la durée d'utilisation sont toujours collectés anonymement comme indicateurs de santé de l'application. Il s'agit de statistiques agrégées et aucune donnée personnelle n'est envoyée/enregistrée."
+  "CLOSE_TABS_TO_THE_RIGHT": "Fermer les onglets à droite",
+  "CLOSE_TABS_TO_THE_LEFT": "Fermer les onglets à gauche"
 });
 /*
  * GNU AGPL-3.0 License
@@ -81754,6 +81776,7 @@ define("nls/gl/strings", {
   "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>non recompila nin procesa ningunha información persoal identificable</strong>, pero <strong>recopila estatísticas de uso anónimas</strong> para protexer a súa privacidade. Os datos anónimos están exentos dos requisitos de notificación do GDPR/CCPA, pero cremos que debe ter a opción de excluírse tamén da recompilación de datos anónimos.<br><br> Pode ver os seus datos ou <strong>escoller non compartir ningún dato anónimo</strong> seleccionando <strong>Axuda > Informe de saúde</strong>. Estas estatísticas de uso da aplicación e informes de erros <strong>anónimos</strong> axudan a priorizar as funcionalidades, atopar erros e detectar problemas de usabilidade para mellorar a súa experiencia con {APP_NAME}. Sen estes datos, non saberiamos que funcionalidades paga a pena construír para vostede! <br>",
   "HEALTH_DATA_PREVIEW": "Informe de saúde de {APP_NAME}",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>non recompila nin procesa ningunha información persoal identificable</strong>, pero <strong>recopila estatísticas de uso anónimas</strong> para protexer a súa privacidade. Estas estatísticas de uso da aplicación e informes de erros <strong>anónimos</strong> axudan a priorizar as funcionalidades, atopar erros e detectar problemas de usabilidade para mellorar a súa experiencia con {APP_NAME}.</p> <p>A continuación móstrase unha vista previa dos datos que se enviarán no seu próximo Informe de saúde <em>se</em> está activado. (Vexa tamén a consola do programador para os rexistros de erros marcados como \"Erro crítico detectado\".)</p>",
+  "HEALTH_DATA_PREVIEW_NECESSARY": "As actualizacións de seguranza/aplicación, a inicialización da biblioteca de análise, o reconto de usuarios e o tempo de uso recóllense sempre de forma anónima como indicadores necesarios do estado da aplicación. Trátase de estatísticas agregadas e non se envía/rexistra ningún dato persoal.",
   "INLINE_TIMING_EDITOR_TIME": "Tempo",
   "INLINE_TIMING_EDITOR_PROGRESSION": "Progresión",
   "BEZIER_EDITOR_INFO": "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> Moven o punto seleccionado<br><kbd class='text'>Shift</kbd> Move de a dez unidades<br><kbd class='text'>Tab</kbd> Cambia o punto seleccionado",
@@ -82361,7 +82384,8 @@ define("nls/gl/strings", {
   "GIT_TOAST_TITLE": "Explora as funcionalidades de Git en Phoenix Code",
   "GIT_TOAST_MESSAGE": "Fai clic na icona do panel de Git para xestionar o teu repositorio. Fai commits, envía (push), obtén (pull) e visualiza o historial do teu proxecto facilmente, todo nun mesmo lugar.<br><a href='https://docs.phcode.dev/docs/Features/git'>Aprende máis sobre o panel de Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vota polas funcionalidades que queres ver a continuación!",
-  "HEALTH_DATA_PREVIEW_NECESSARY": "As actualizacións de seguranza/aplicación, a inicialización da biblioteca de análise, o reconto de usuarios e o tempo de uso recóllense sempre de forma anónima como indicadores necesarios do estado da aplicación. Trátase de estatísticas agregadas e non se envía/rexistra ningún dato persoal."
+  "CLOSE_TABS_TO_THE_RIGHT": "Pechar lapelas á dereita",
+  "CLOSE_TABS_TO_THE_LEFT": "Pechar lapelas á esquerda"
 });
 /*
  * GNU AGPL-3.0 License
@@ -83119,6 +83143,7 @@ define("nls/hi/strings", {
   "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>कोई भी व्यक्तिगत रूप से पहचान योग्य जानकारी एकत्र या संसाधित नहीं करता है</strong>, लेकिन आपकी गोपनीयता की रक्षा के लिए <strong>अनाम उपयोग आँकड़े एकत्र करता है</strong>। अनाम डेटा GDPR/CCPA अधिसूचना आवश्यकताओं से मुक्त है, लेकिन हमारा मानना है कि आपके पास अनाम डेटा संग्रह से बाहर निकलने का विकल्प भी होना चाहिए।<br><br> आप अपना डेटा देख सकते हैं या <strong>कोई भी अनाम डेटा साझा न करने का विकल्प चुन सकते हैं</strong>, इसके लिए <strong>सहायता > स्वास्थ्य रिपोर्ट</strong> चुनें। ये <strong>अनाम</strong> ऐप उपयोग आँकड़े और त्रुटि रिपोर्ट {APP_NAME} के साथ आपके अनुभव को बेहतर बनाने के लिए सुविधाओं को प्राथमिकता देने, बग खोजने और उपयोगिता संबंधी समस्याओं का पता लगाने में मदद करते हैं। इस डेटा के बिना, हमें पता नहीं चलेगा कि आपके लिए कौन सी सुविधाएँ बनाना उचित है! <br>",
   "HEALTH_DATA_PREVIEW": "{APP_NAME} स्वास्थ्य रिपोर्ट",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>कोई भी व्यक्तिगत रूप से पहचान योग्य जानकारी एकत्र या संसाधित नहीं करता है</strong>, लेकिन आपकी गोपनीयता की रक्षा के लिए <strong>अनाम उपयोग के आंकड़े एकत्र करता है</strong>। ये <strong>अनाम</strong> ऐप उपयोग के आंकड़े और त्रुटि रिपोर्ट {APP_NAME} के साथ आपके अनुभव को बेहतर बनाने के लिए सुविधाओं को प्राथमिकता देने, बग ढूंढने और उपयोगिता संबंधी समस्याओं का पता लगाने में मदद करते हैं।</p> <p>नीचे उस डेटा का पूर्वावलोकन दिया गया है जो आपकी अगली स्वास्थ्य रिपोर्ट में भेजा जाएगा <em>यदि</em> यह सक्षम है। ('Caught Critical error' के रूप में चिह्नित त्रुटि लॉग के लिए डेवलपर कंसोल भी देखें।)</p>",
+  "HEALTH_DATA_PREVIEW_NECESSARY": "सुरक्षा/ऐप अपडेट, विश्लेषण लाइब्रेरी इनिशियलाइज़ेशन, उपयोगकर्ता संख्या, और उपयोग समय हमेशा आवश्यक ऐप स्वास्थ्य संकेतक के रूप में गुमनाम रूप से एकत्र किए जाते हैं। ये समग्र आँकड़े हैं और कोई भी व्यक्तिगत डेटा नहीं भेजा/लॉग किया जाता है।",
   "INLINE_TIMING_EDITOR_TIME": "समय",
   "INLINE_TIMING_EDITOR_PROGRESSION": "प्रगति",
   "BEZIER_EDITOR_INFO": "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> चयनित बिंदु को स्थानांतरित करें<br><kbd class='text'>Shift</kbd> दस इकाइयों द्वारा स्थानांतरित करें<br><kbd class='text'>Tab</kbd> बिंदुओं को स्विच करें",
@@ -83726,7 +83751,8 @@ define("nls/hi/strings", {
   "GIT_TOAST_TITLE": "फ़ीनिक्स कोड में Git सुविधाओं का अन्वेषण करें",
   "GIT_TOAST_MESSAGE": "अपने रिपॉजिटरी को प्रबंधित करने के लिए Git पैनल आइकन पर क्लिक करें। आसानी से कमिट करें, पुश करें, पुल करें और अपने प्रोजेक्ट का इतिहास देखें—सब एक ही स्थान पर।<br><a href='https://docs.phcode.dev/docs/Features/git'>Git पैनल के बारे में अधिक जानें →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "उन विशेषताओं के लिए वोट करें जिन्हें आप आगे देखना चाहते हैं!",
-  "HEALTH_DATA_PREVIEW_NECESSARY": "सुरक्षा/ऐप अपडेट, विश्लेषण लाइब्रेरी इनिशियलाइज़ेशन, उपयोगकर्ता संख्या, और उपयोग समय हमेशा आवश्यक ऐप स्वास्थ्य संकेतक के रूप में गुमनाम रूप से एकत्र किए जाते हैं। ये समग्र आँकड़े हैं और कोई भी व्यक्तिगत डेटा नहीं भेजा/लॉग किया जाता है।"
+  "CLOSE_TABS_TO_THE_RIGHT": "दाईं ओर के टैब बंद करें",
+  "CLOSE_TABS_TO_THE_LEFT": "बाईं ओर के टैब बंद करें"
 });
 /*
  * GNU AGPL-3.0 License
@@ -84484,6 +84510,7 @@ define("nls/hr/strings", {
   "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>ne prikuplja niti obrađuje nikakve osobne podatke</strong>, ali <strong>prikuplja anonimnu statistiku korištenja</strong> kako bi zaštitio vašu privatnost. Anonimni podaci su izuzeti od zahtjeva za obavijestima GDPR/CCPA, ali vjerujemo da trebate imati mogućnost isključivanja prikupljanja anonimnih podataka.<br><br> Možete vidjeti svoje podatke ili <strong>odabrati da ne dijelite nikakve anonimne podatke</strong> odabirom <strong>Pomoć > Izvješće o zdravlju</strong>. Ova <strong>anonimna</strong> statistika korištenja aplikacije i izvješća o pogreškama pomažu u određivanju prioriteta značajki, pronalaženju grešaka i uočavanju problema s upotrebljivošću radi poboljšanja vašeg iskustva s {APP_NAME}. Bez ovih podataka ne bismo znali koje značajke vrijedi izraditi za vas! <br>",
   "HEALTH_DATA_PREVIEW": "Izvješće o stanju {APP_NAME}",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>ne prikuplja niti obrađuje nikakve osobne podatke</strong>, već <strong>prikuplja anonimne statistike korištenja</strong> kako bi zaštitio vašu privatnost. Ove <strong>anonimne</strong> statistike korištenja aplikacije i izvješća o pogreškama pomažu u određivanju prioriteta značajki, pronalaženju grešaka i uočavanju problema s uporabom radi poboljšanja vašeg iskustva s {APP_NAME}.</p> <p>Ispod je pregled podataka koji će biti poslani u vašem sljedećem Izvješću o stanju <em>ako</em> je omogućeno. (Također pogledajte konzolu za razvojne programere za zapisnike pogrešaka označene s 'Uhvaćena kritična pogreška'.)</p>",
+  "HEALTH_DATA_PREVIEW_NECESSARY": "Sigurnosna ažuriranja/ažuriranja aplikacije, inicijalizacija analitičke biblioteke, broj korisnika i vrijeme korištenja uvijek se anonimno prikupljaju kao nužni pokazatelji ispravnosti aplikacije. Radi se o agregiranoj statistici i nikakvi osobni podaci se ne šalju/zapisuju.",
   "INLINE_TIMING_EDITOR_TIME": "Vrijeme",
   "INLINE_TIMING_EDITOR_PROGRESSION": "Napredak",
   "BEZIER_EDITOR_INFO": "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> Pomakni odabranu točku<br><kbd class='text'>Shift</kbd> Pomakni za 10 jedinica<br><kbd class='text'>Tab</kbd> Zamijeni točke.",
@@ -85091,7 +85118,8 @@ define("nls/hr/strings", {
   "GIT_TOAST_TITLE": "Istražite Git značajke u Phoenix Codeu",
   "GIT_TOAST_MESSAGE": "Kliknite ikonu Git panela za upravljanje svojim repozitorijem. Jednostavno potvrdite (commit), pošaljite (push), preuzmite (pull) i pregledajte povijest svog projekta - sve na jednom mjestu.<br><a href='https://docs.phcode.dev/docs/Features/git'>Saznajte više o Git panelu →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Glasajte za značajke koje želite vidjeti sljedeće!",
-  "HEALTH_DATA_PREVIEW_NECESSARY": "Sigurnosna ažuriranja/ažuriranja aplikacije, inicijalizacija analitičke biblioteke, broj korisnika i vrijeme korištenja uvijek se anonimno prikupljaju kao nužni pokazatelji ispravnosti aplikacije. Radi se o agregiranoj statistici i nikakvi osobni podaci se ne šalju/zapisuju."
+  "CLOSE_TABS_TO_THE_RIGHT": "Zatvori kartice desno",
+  "CLOSE_TABS_TO_THE_LEFT": "Zatvori kartice lijevo"
 });
 /*
  * GNU AGPL-3.0 License
@@ -85876,6 +85904,7 @@ define("nls/hu/strings", {
   "HEALTH_DATA_NOTIFICATION_MESSAGE": "A(z) {APP_NAME} <strong>nem gyűjt és nem dolgoz fel semmilyen személyazonosításra alkalmas információt</strong>, de <strong>gyűjt anonim használati statisztikákat</strong> az Ön adatainak védelme érdekében. Az anonim adatok mentesülnek a GDPR/CCPA értesítési követelményei alól, de úgy gondoljuk, hogy Önnek lehetősége kell legyen lemondani az anonim adatgyűjtésről is.<br><br> Megtekintheti adatait, vagy <strong>választhatja, hogy nem oszt meg semmilyen anonim adatot</strong> a <strong>Súgó > Állapotjelentés</strong> kiválasztásával. Ezek az <strong>anonim</strong> alkalmazáshasználati statisztikák és hibajelentések segítenek a funkciók priorizálásában, a hibák megtalálásában és a használhatósági problémák felderítésében, hogy javítsuk az Ön {APP_NAME} élményét. Ezen adatok nélkül nem tudnánk, hogy milyen funkciókat érdemes fejlesztenünk az Ön számára! <br>",
   "HEALTH_DATA_PREVIEW": "{APP_NAME} állapotjelentés",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>A(z) {APP_NAME} <strong>nem gyűjt és nem dolgoz fel semmilyen személyazonosító információt</strong>, de <strong>gyűjt névtelen használati statisztikákat</strong> az Ön adatainak védelme érdekében. Ezek a <strong>névtelen</strong> alkalmazáshasználati statisztikák és hibajelentések segítenek a funkciók rangsorolásában, a hibák megtalálásában és a használhatósági problémák felismerésében, hogy javítsuk a(z) {APP_NAME} használatával kapcsolatos élményét.</p> <p>Az alábbiakban megtekintheti a következő állapotjelentésben elküldendő adatok előnézetét, <em>amennyiben</em> az engedélyezve van. (A 'Kritikus hiba észlelése' jelzésű hibák naplóit a fejlesztői konzolban is megtekintheti.)</p>",
+  "HEALTH_DATA_PREVIEW_NECESSARY": "Biztonsági/alkalmazásfrissítések, analitikai könyvtár inicializálása, felhasználói számok és használati idő mindig névtelenül gyűjtésre kerülnek, mint szükséges alkalmazás állapotjelzők. Ezek összesített statisztikák, és semmilyen személyes adat nem kerül elküldésre/naplózásra.",
   "INLINE_TIMING_EDITOR_TIME": "Idő",
   "INLINE_TIMING_EDITOR_PROGRESSION": "Haladás",
   "BEZIER_EDITOR_INFO": "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> Kijelölt pont mozgatása<br><kbd class='text'>Shift</kbd> Mozgatás tízesével<br><kbd class='text'>Tab</kbd> Pontok váltása",
@@ -86483,7 +86512,8 @@ define("nls/hu/strings", {
   "GIT_TOAST_TITLE": "Fedezd fel a Git funkciókat a Phoenix Code-ban",
   "GIT_TOAST_MESSAGE": "Kattintson a Git panel ikonra a verziókövető rendszer kezeléséhez. Könnyedén végezhet commit, push és pull műveleteket, valamint megtekintheti a projekt előzményeit – mindezt egy helyen.<br><a href='https://docs.phcode.dev/docs/Features/git'>Tudj meg többet a Git panelről →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Szavazzon azokra a funkciókra, amelyeket a jövőben látni szeretne!",
-  "HEALTH_DATA_PREVIEW_NECESSARY": "Biztonsági/alkalmazásfrissítések, analitikai könyvtár inicializálása, felhasználói számok és használati idő mindig névtelenül gyűjtésre kerülnek, mint szükséges alkalmazás állapotjelzők. Ezek összesített statisztikák, és semmilyen személyes adat nem kerül elküldésre/naplózásra."
+  "CLOSE_TABS_TO_THE_RIGHT": "Jobb oldali fülek bezárása",
+  "CLOSE_TABS_TO_THE_LEFT": "Bal oldali fülek bezárása"
 });
 /*
  * GNU AGPL-3.0 License
@@ -87241,6 +87271,7 @@ define("nls/id/strings", {
   "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>tidak mengumpulkan atau memproses informasi identitas pribadi apa pun</strong>, tetapi <strong>mengumpulkan statistik penggunaan anonim</strong> untuk menjaga privasi Anda. Data anonim dikecualikan dari persyaratan pemberitahuan GDPR/CCPA, tetapi kami percaya Anda perlu memiliki pilihan untuk tidak ikut serta dalam pengumpulan data anonim juga.<br><br> Anda dapat melihat data Anda atau <strong>memilih untuk tidak membagikan data anonim apa pun</strong> dengan memilih <strong>Bantuan > Laporan Kesehatan</strong>. Statistik penggunaan aplikasi dan laporan kesalahan <strong>anonim</strong> ini membantu memprioritaskan fitur, menemukan bug, dan menemukan masalah kegunaan untuk meningkatkan pengalaman Anda dengan {APP_NAME}. Tanpa data ini, kami tidak akan tahu fitur apa yang layak dibuat untuk Anda! <br>",
   "HEALTH_DATA_PREVIEW": "Laporan Kesehatan {APP_NAME}",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>tidak mengumpulkan atau memproses informasi identitas pribadi apa pun</strong>, tetapi <strong>mengumpulkan statistik penggunaan anonim</strong> untuk menjaga privasi Anda. Statistik penggunaan aplikasi dan laporan kesalahan yang <strong>anonim</strong> ini membantu memprioritaskan fitur, menemukan bug, dan menemukan masalah kegunaan untuk meningkatkan pengalaman Anda dengan {APP_NAME}.</p> <p>Berikut adalah pratinjau data yang akan dikirim dalam Laporan Kesehatan Anda berikutnya <em>jika</em> diaktifkan. (Lihat juga konsol pengembang untuk log kesalahan yang ditandai 'Caught Critical error'.)</p>",
+  "HEALTH_DATA_PREVIEW_NECESSARY": "Pembaruan keamanan/aplikasi, inisialisasi pustaka analitik, jumlah pengguna, dan waktu penggunaan selalu dikumpulkan secara anonim sebagai indikator kesehatan aplikasi yang diperlukan. Data ini berupa statistik agregat dan tidak ada data pribadi yang dikirim/dicatat.",
   "INLINE_TIMING_EDITOR_TIME": "Waktu",
   "INLINE_TIMING_EDITOR_PROGRESSION": "Progres",
   "BEZIER_EDITOR_INFO": "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> Pindahkan titik yang dipilih<br><kbd class='text'>Shift</kbd> Pindahkan 10 unit<br><kbd class='text'>Tab</kbd> Tukar titik",
@@ -87848,7 +87879,8 @@ define("nls/id/strings", {
   "GIT_TOAST_TITLE": "Jelajahi Fitur Git di Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klik ikon panel Git untuk mengelola repositori Anda. Lakukan commit, push, pull, dan lihat riwayat proyek Anda dengan mudah—semua di satu tempat.<br><a href='https://docs.phcode.dev/docs/Features/git'>Pelajari lebih lanjut tentang panel Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Pilih fitur yang ingin Anda lihat selanjutnya!",
-  "HEALTH_DATA_PREVIEW_NECESSARY": "Pembaruan keamanan/aplikasi, inisialisasi pustaka analitik, jumlah pengguna, dan waktu penggunaan selalu dikumpulkan secara anonim sebagai indikator kesehatan aplikasi yang diperlukan. Data ini berupa statistik agregat dan tidak ada data pribadi yang dikirim/dicatat."
+  "CLOSE_TABS_TO_THE_RIGHT": "Tutup Tab di Sebelah Kanan",
+  "CLOSE_TABS_TO_THE_LEFT": "Tutup Tab di Sebelah Kiri"
 });
 /*
  * GNU AGPL-3.0 License
@@ -88632,6 +88664,7 @@ define("nls/it/strings", {
   "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>non raccoglie né elabora alcuna informazione personale identificativa</strong>, ma <strong>raccoglie statistiche di utilizzo anonime</strong> per tutelare la tua privacy. I dati anonimi sono esenti dai requisiti di notifica GDPR/CCPA, ma crediamo che tu debba avere la possibilità di scegliere di non condividere i dati anonimi.<br><br> Puoi visualizzare i tuoi dati o <strong>scegliere di non condividere alcun dato anonimo</strong> selezionando <strong>Aiuto > Report di integrità</strong>. Queste statistiche di utilizzo dell'app e i report sugli errori <strong>anonimi</strong> ci aiutano a dare priorità alle funzionalità, a trovare bug e a individuare problemi di usabilità per migliorare la tua esperienza con {APP_NAME}. Senza questi dati, non sapremmo quali funzionalità vale la pena sviluppare per te! <br>",
   "HEALTH_DATA_PREVIEW": "Anteprima Health Data",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>non raccoglie né elabora alcuna informazione personale identificabile</strong>, ma <strong>raccoglie statistiche di utilizzo anonime</strong> per tutelare la tua privacy. Queste statistiche di utilizzo dell'app e i rapporti sugli errori <strong>anonimi</strong> ci aiutano a dare priorità alle funzionalità, a trovare bug e a individuare problemi di usabilità per migliorare la tua esperienza con {APP_NAME}.</p> <p>Di seguito è riportata un'anteprima dei dati che verranno inviati nel tuo prossimo Rapporto sull'integrità <em>se</em> abilitato. (Vedi anche la console per sviluppatori per i registri degli errori contrassegnati come \"Errore critico rilevato\".)</p>",
+  "HEALTH_DATA_PREVIEW_NECESSARY": "Aggiornamenti di sicurezza/app, inizializzazione della libreria di analisi, conteggio utenti e tempo di utilizzo vengono sempre raccolti in forma anonima come indicatori di stato dell'app. Si tratta di statistiche aggregate e nessun dato personale viene inviato/registrato.",
   "INLINE_TIMING_EDITOR_TIME": "Tempo",
   "INLINE_TIMING_EDITOR_PROGRESSION": "Progresso",
   "BEZIER_EDITOR_INFO": "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> Sposta punto selezionato<br><kbd class='text'>Maiuscola</kbd> Muovi di dieci unità",
@@ -89239,7 +89272,8 @@ define("nls/it/strings", {
   "GIT_TOAST_TITLE": "Esplora le funzionalità Git in Phoenix Code",
   "GIT_TOAST_MESSAGE": "Fai clic sull'icona del pannello Git per gestire il tuo repository. Esegui commit, push, pull e visualizza la cronologia del tuo progetto, tutto in un unico posto.<br><a href='https://docs.phcode.dev/docs/Features/git'>Scopri di più sul pannello Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vota per le funzionalità che desideri vedere in futuro!",
-  "HEALTH_DATA_PREVIEW_NECESSARY": "Aggiornamenti di sicurezza/app, inizializzazione della libreria di analisi, conteggio utenti e tempo di utilizzo vengono sempre raccolti in forma anonima come indicatori di stato dell'app. Si tratta di statistiche aggregate e nessun dato personale viene inviato/registrato."
+  "CLOSE_TABS_TO_THE_RIGHT": "Chiudi schede a destra",
+  "CLOSE_TABS_TO_THE_LEFT": "Chiudi schede a sinistra"
 });
 /*
  * GNU AGPL-3.0 License
@@ -90024,6 +90058,7 @@ define("nls/ja/strings", {
   "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME}は<strong>個人を特定できる情報は一切収集または処理しませんが</strong>、お客様のプライバシー保護のため、<strong>匿名の利用状況統計を収集しています</strong>。匿名データはGDPR/CCPAの通知要件から除外されていますが、匿名データの収集をオプトアウトする選択肢も必要だと考えています。<br><br> <strong>ヘルプ > ヘルスレポート</strong>を選択することで、データの確認や<strong>匿名データの共有を停止する</strong>ことができます。これらの<strong>匿名の</strong>アプリ利用状況統計とエラーレポートは、{APP_NAME}におけるお客様のエクスペリエンス向上のため、機能の優先順位付け、バグの発見、ユーザビリティの問題の特定に役立ちます。このデータがなければ、お客様にとってどのような機能を構築する価値があるのかがわかりません。<br>",
   "HEALTH_DATA_PREVIEW": "{APP_NAME} の正常性レポート",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} は<strong>個人を特定できる情報を一切収集または処理しませんが</strong>、<strong>匿名の利用統計情報を収集しています</strong>。お客様のプライバシー保護のためです。これらの<strong>匿名の</strong>アプリ利用統計情報とエラーレポートは、{APP_NAME} の操作性を向上させるための機能の優先順位付け、バグの発見、ユーザビリティの問題の特定に役立ちます。</p> <p>以下は、有効になっている<em>場合</em>に、次回の健全性レポートで送信されるデータのプレビューです。（「重大なエラーをキャッチしました」とマークされたエラーログについては、開発者コンソールも参照してください。）</p>",
+  "HEALTH_DATA_PREVIEW_NECESSARY": "セキュリティ/アプリの更新、分析ライブラリの初期化、ユーザー数、および使用時間は、アプリの正常性指標として必要な範囲で常に匿名で収集されます。これらは集計統計であり、個人データは送信/記録されません。",
   "INLINE_TIMING_EDITOR_TIME": "時間",
   "INLINE_TIMING_EDITOR_PROGRESSION": "進行",
   "BEZIER_EDITOR_INFO": "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> 選択したポイントを移動<br><kbd class='text'>Shift</kbd> 10 単位ずつ移動<br><kbd class='text'>Tab</kbd> ポイントを切り替え",
@@ -90631,7 +90666,8 @@ define("nls/ja/strings", {
   "GIT_TOAST_TITLE": "Phoenix CodeのGit機能を試す",
   "GIT_TOAST_MESSAGE": "Gitパネルアイコンをクリックしてリポジトリを管理します。コミット、プッシュ、プル、プロジェクト履歴の表示をすべて1か所で行えます。<br><a href='https://docs.phcode.dev/docs/Features/git'>Gitパネルの詳細はこちら →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "次に実装してほしい機能に投票してください！",
-  "HEALTH_DATA_PREVIEW_NECESSARY": "セキュリティ/アプリの更新、分析ライブラリの初期化、ユーザー数、および使用時間は、アプリの正常性指標として必要な範囲で常に匿名で収集されます。これらは集計統計であり、個人データは送信/記録されません。"
+  "CLOSE_TABS_TO_THE_RIGHT": "右側のタブを閉じる",
+  "CLOSE_TABS_TO_THE_LEFT": "左側のタブを閉じる"
 });
 /*
  * GNU AGPL-3.0 License
@@ -91416,6 +91452,7 @@ define("nls/ko/strings", {
   "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME}은 <strong>어떠한 개인 식별 정보도 수집하거나 처리하지 않습니다</strong>. 하지만 사용자의 개인 정보를 보호하기 위해 <strong>익명의 사용 통계를 수집합니다</strong>. 익명 데이터는 GDPR/CCPA 알림 요구 사항에서 제외되지만, 익명 데이터 수집을 거부할 수 있는 선택권을 제공해야 한다고 생각합니다.<br><br> <strong>도움말 > 상태 보고서</strong>를 선택하여 데이터를 확인하거나 <strong>익명 데이터를 공유하지 않도록 선택</strong>할 수 있습니다. 이러한 <strong>익명</strong> 앱 사용 통계 및 오류 보고서는 기능 우선 순위 지정, 버그 발견 및 사용성 문제 파악에 도움이 되어 {APP_NAME} 사용 환경을 개선하는 데 도움이 됩니다. 이 데이터가 없으면 어떤 기능을 개발해야 할지 알 수 없습니다! <br>",
   "HEALTH_DATA_PREVIEW": "{APP_NAME} 상태 보고서",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME}은 <strong>개인 식별 정보를 수집하거나 처리하지 않지만</strong>, 사용자의 개인정보를 보호하기 위해 <strong>익명 사용 통계를 수집합니다</strong>. 이러한 <strong>익명</strong> 앱 사용 통계 및 오류 보고서는 {APP_NAME} 사용 환경 개선을 위해 기능 우선순위 지정, 버그 찾기 및 사용성 문제 파악에 도움이 됩니다.</p> <p>다음은 활성화된 경우 다음 상태 보고서에 전송될 데이터의 미려보기입니다. ('심각한 오류 포착'으로 표시된 오류 로그는 개발자 콘솔에서도 확인할 수 있습니다.)</p>",
+  "HEALTH_DATA_PREVIEW_NECESSARY": "앱 상태 지표를 위해 보안/앱 업데이트, 분석 라이브러리 초기화, 사용자 수 및 사용 시간이 항상 익명으로 수집됩니다. 이는 집계된 통계이며 개인 데이터는 전송/기록되지 않습니다.",
   "INLINE_TIMING_EDITOR_TIME": "시간",
   "INLINE_TIMING_EDITOR_PROGRESSION": "진행",
   "BEZIER_EDITOR_INFO": "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> Move selected point<br><kbd class='text'>Shift</kbd> Move by ten units<br><kbd class='text'>Tab</kbd> Switch points",
@@ -92023,7 +92060,8 @@ define("nls/ko/strings", {
   "GIT_TOAST_TITLE": "Phoenix Code의 Git 기능 살펴보기",
   "GIT_TOAST_MESSAGE": "Git 패널 아이콘을 클릭하여 저장소를 관리하세요. 커밋, 푸시, 풀, 프로젝트 기록 보기를 한 곳에서 간편하게 수행할 수 있습니다.<br><a href='https://docs.phcode.dev/docs/Features/git'>Git 패널에 대해 자세히 알아보기 →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "다음에 보고 싶은 기능에 투표하세요!",
-  "HEALTH_DATA_PREVIEW_NECESSARY": "앱 상태 지표를 위해 보안/앱 업데이트, 분석 라이브러리 초기화, 사용자 수 및 사용 시간이 항상 익명으로 수집됩니다. 이는 집계된 통계이며 개인 데이터는 전송/기록되지 않습니다."
+  "CLOSE_TABS_TO_THE_RIGHT": "오른쪽 탭 닫기",
+  "CLOSE_TABS_TO_THE_LEFT": "왼쪽 탭 닫기"
 });
 /*
  * GNU AGPL-3.0 License
@@ -92808,6 +92846,7 @@ define("nls/lv/strings", {
   "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>nevāc un neapstrādā nekādu personu identificējošu informāciju</strong>, bet <strong>vāc anonīmu lietošanas statistiku</strong>, lai aizsargātu jūsu privātumu. Anonīmi dati ir atbrīvoti no GDPR/CCPA paziņošanas prasībām, taču mēs uzskatām, ka jums ir jābūt iespējai atteikties arī no anonīmu datu vākšanas.<br><br> Jūs varat apskatīt savus datus vai <strong>izvēlēties nekopīgot anonīmus datus</strong>, atlasot <strong>Palīdzība > Statusa pārskats</strong>. Šī <strong>anonīmā</strong> lietotnes lietošanas statistika un kļūdu ziņojumi palīdz noteikt funkciju prioritātes, atrast kļūdas un pamanīt lietojamības problēmas, lai uzlabotu jūsu pieredzi ar {APP_NAME}. Bez šiem datiem mēs nezinātu, kādas funkcijas ir vērts jums izstrādāt! <br>",
   "HEALTH_DATA_PREVIEW": "{APP_NAME} veselības atskaite",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>nevāc un neapstrādā nekādu personiski identificējamu informāciju</strong>, bet <strong>vāc anonīmu lietošanas statistiku</strong>, lai aizsargātu jūsu privātumu. Šī <strong>anonīmā</strong> lietotnes lietošanas statistika un kļūdu ziņojumi palīdz noteikt prioritātes funkcijām, atrast kļūdas un noteikt lietojamības problēmas, lai uzlabotu jūsu pieredzi ar {APP_NAME}.</p> <p>Zemāk ir redzams priekšskatījums datiem, kas tiks nosūtīti jūsu nākamajā veselības ziņojumā, <em>ja</em> tas ir iespējots. (Skatīt arī izstrātāja konsoli kļūdu žurnāliem, kas atzīmēti ar 'Caught Critical error'.)</p>",
+  "HEALTH_DATA_PREVIEW_NECESSARY": "Drošības/lietotnes atjauninājumi, analītikas bibliotēkas inicializācija, lietotāju skaits un lietošanas laiks vienmēr tiek anonīmi apkopoti kā nepieciešamie lietotnes veselības rādītāji. Šī ir apkopota statistika, un nekādi personas dati netiek sūtīti/reģistrēti.",
   "INLINE_TIMING_EDITOR_TIME": "Laiks",
   "INLINE_TIMING_EDITOR_PROGRESSION": "Progress",
   "BEZIER_EDITOR_INFO": "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd>Pārvietot izvēlēto punktu<br><kbd class='text'>Shift</kbd> Pārvietot par desmit vienībām<br><kbd class='text'>Tabulācija</kbd> Pārslēgšanās punkti",
@@ -93415,7 +93454,8 @@ define("nls/lv/strings", {
   "GIT_TOAST_TITLE": "Izpētiet Git funkcijas Phoenix Code",
   "GIT_TOAST_MESSAGE": "Noklikšķiniet uz Git paneļa ikonas, lai pārvaldītu savu repozitoriju. Ērti veiciet commit, push, pull un skatiet sava projekta vēsturi — viss vienā vietā.<br><a href='https://docs.phcode.dev/docs/Features/git'>Uzziniet vairāk par Git paneli →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Nobalsot par funkcijām, kuras vēlaties redzēt nākamreiz!",
-  "HEALTH_DATA_PREVIEW_NECESSARY": "Drošības/lietotnes atjauninājumi, analītikas bibliotēkas inicializācija, lietotāju skaits un lietošanas laiks vienmēr tiek anonīmi apkopoti kā nepieciešamie lietotnes veselības rādītāji. Šī ir apkopota statistika, un nekādi personas dati netiek sūtīti/reģistrēti."
+  "CLOSE_TABS_TO_THE_RIGHT": "Aizvērt cilnes pa labi",
+  "CLOSE_TABS_TO_THE_LEFT": "Aizvērt cilnes pa kreisi"
 });
 /*
  * GNU AGPL-3.0 License
@@ -94173,6 +94213,7 @@ define("nls/ml/strings", {
   "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>നിങ്ങളുടെ സ്വകാര്യ വിവരങ്ങളൊന്നും ശേഖരിക്കുകയോ പ്രോസസ്സ് ചെയ്യുകയോ ചെയ്യുന്നില്ല</strong>, എന്നാൽ നിങ്ങളുടെ സ്വകാര്യത സംരക്ഷിക്കുന്നതിനായി <strong>അജ്ഞാത ഉപയോഗ സ്ഥിതിവിവരക്കണക്കുകൾ ശേഖരിക്കുന്നു</strong>. അജ്ഞാത ഡാറ്റ GDPR/CCPA വിജ്ഞാപന ആവശ്യകതകളിൽ നിന്ന് ഒഴിവാക്കിയിരിക്കുന്നു, എന്നാൽ അജ്ഞാത ഡാറ്റ ശേഖരണം ഒഴിവാക്കാനുള്ള ഒരു തിരഞ്ഞെടുപ്പ് നിങ്ങൾക്ക് ഉണ്ടായിരിക്കണമെന്ന് ഞങ്ങൾ വിശ്വസിക്കുന്നു.<br><br> നിങ്ങളുടെ ഡാറ്റ കാണാനോ <strong>എന്തെങ്കിലും അജ്ഞാത ഡാറ്റ പങ്കിടാതിരിക്കാനോ</strong> <strong>സഹായം > ആരോഗ്യ റിപ്പോർട്ട്</strong> തിരഞ്ഞെടുക്കാം. ഈ <strong>അജ്ഞാത</strong> ആപ്പ് ഉപയോഗ സ്ഥിതിവിവരക്കണക്കുകളും പിശക് റിപ്പോർട്ടുകളും {APP_NAME} ഉപയോഗിച്ചുള്ള നിങ്ങളുടെ അനുഭവം മെച്ചപ്പെടുത്തുന്നതിന് സവിശേഷതകൾക്ക് മുൻഗണന നൽകാനും ബഗുകൾ കണ്ടെത്താനും ഉപയോഗക്ഷമതാ പ്രശ്‌നങ്ങൾ കണ്ടെത്താനും സഹായിക്കുന്നു. ഈ ഡാറ്റ ഇല്ലെങ്കിൽ, നിങ്ങൾക്കായി ഏതൊക്കെ സവിശേഷതകൾ നിർമ്മിക്കണമെന്ന് ഞങ്ങൾക്ക് അറിയില്ല! <br>",
   "HEALTH_DATA_PREVIEW": "{APP_NAME} ആരോഗ്യ റിപ്പോർട്ട്",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>വ്യക്തിപരമായി തിരിച്ചറിയാൻ കഴിയുന്ന യാതൊരു വിവരവും ശേഖരിക്കുകയോ പ്രോസസ്സ് ചെയ്യുകയോ ചെയ്യുന്നില്ല</strong>, എന്നാൽ നിങ്ങളുടെ സ്വകാര്യത സംരക്ഷിക്കുന്നതിന് <strong>അജ്ഞാത ഉപയോഗ സ്ഥിതിവിവരക്കണക്കുകൾ ശേഖരിക്കുന്നു</strong>. ഈ <strong>അജ്ഞാത</strong> ആപ്പ് ഉപയോഗ സ്ഥിതിവിവരക്കണക്കുകളും പിശക് റിപ്പോർട്ടുകളും {APP_NAME} ഉപയോഗിച്ചുള്ള നിങ്ങളുടെ അനുഭവം മെച്ചപ്പെടുത്തുന്നതിന് സവിശേഷതകൾക്ക് മുൻഗണന നൽകാനും ബഗുകൾ കണ്ടെത്താനും ഉപയോഗക്ഷമത പ്രശ്നങ്ങൾ കണ്ടെത്താനും സഹായിക്കുന്നു.</p> <p>നിങ്ങളുടെ അടുത്ത ആരോഗ്യ റിപ്പോർട്ടിൽ അത് പ്രവർത്തനക്ഷമമാക്കിയിട്ടുണ്ടെങ്കിൽ <em>അയയ്‌ക്കുന്ന</em> ഡാറ്റയുടെ ഒരു പ്രിവ്യൂ ചുവടെയുണ്ട്. ('Caught Critical error' എന്ന് അടയാളപ്പെടുത്തിയ പിശക് ലോഗുകൾക്കായി ഡെവലപ്പർ കൺസോളും കാണുക.)</p>",
+  "HEALTH_DATA_PREVIEW_NECESSARY": "സുരക്ഷ/ആപ്പ് അപ്‌ഡേറ്റുകൾ, അനലിറ്റിക്സ് ലൈബ്രറി ഇനിഷ്യലൈസേഷൻ, ഉപയോക്തൃ എണ്ണം, ഉപയോഗ സമയം എന്നിവ ആപ്പിന്റെ ആരോഗ്യ സൂചകങ്ങളായി അജ്ഞാതമായി ശേഖരിക്കുന്നു. ഇവ സമാഹരിച്ച സ്ഥിതിവിവരക്കണക്കുകളാണ്, വ്യക്തിഗത വിവരങ്ങളൊന്നും അയയ്‌ക്കുകയോ ലോഗ് ചെയ്യുകയോ ചെയ്യുന്നില്ല.",
   "INLINE_TIMING_EDITOR_TIME": "സമയം",
   "INLINE_TIMING_EDITOR_PROGRESSION": "പുരോഗതി",
   "BEZIER_EDITOR_INFO": "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> തിരഞ്ഞെടുത്ത പോയിന്റ് നീക്കുക<br><kbd class='text'>Shift</kbd> പത്ത് യൂണിറ്റുകൾ വീതം നീക്കുക<br><kbd class='text'>Tab</kbd> പോയിന്റുകൾ മാറ്റുക",
@@ -94780,7 +94821,8 @@ define("nls/ml/strings", {
   "GIT_TOAST_TITLE": "ഫീനിക്സ് കോഡിലെ ഗിറ്റ് സവിശേഷതകൾ പര്യവേക്ഷണം ചെയ്യുക",
   "GIT_TOAST_MESSAGE": "നിങ്ങളുടെ റെപ്പോസിറ്ററി കൈകാര്യം ചെയ്യാൻ ഗിറ്റ് പാനൽ ഐക്കണിൽ ക്ലിക്ക് ചെയ്യുക. എളുപ്പത്തിൽ കമ്മിറ്റ് ചെയ്യുക, പുഷ് ചെയ്യുക, പുൾ ചെയ്യുക, നിങ്ങളുടെ പ്രോജക്റ്റ് ചരിത്രം കാണുക—എല്ലാം ഒരിടത്ത്.<br><a href='https://docs.phcode.dev/docs/Features/git'>ഗിറ്റ് പാനലിനെക്കുറിച്ച് കൂടുതലറിയുക →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "നിങ്ങൾക്ക് അടുത്തതായി കാണാൻ ആഗ്രഹിക്കുന്ന സവിശേഷതകൾക്ക് വോട്ട് ചെയ്യുക!",
-  "HEALTH_DATA_PREVIEW_NECESSARY": "സുരക്ഷ/ആപ്പ് അപ്‌ഡേറ്റുകൾ, അനലിറ്റിക്സ് ലൈബ്രറി ഇനിഷ്യലൈസേഷൻ, ഉപയോക്തൃ എണ്ണം, ഉപയോഗ സമയം എന്നിവ ആപ്പിന്റെ ആരോഗ്യ സൂചകങ്ങളായി അജ്ഞാതമായി ശേഖരിക്കുന്നു. ഇവ സമാഹരിച്ച സ്ഥിതിവിവരക്കണക്കുകളാണ്, വ്യക്തിഗത വിവരങ്ങളൊന്നും അയയ്‌ക്കുകയോ ലോഗ് ചെയ്യുകയോ ചെയ്യുന്നില്ല."
+  "CLOSE_TABS_TO_THE_RIGHT": "വലതുവശത്തുള്ള ടാബുകൾ അടയ്ക്കുക",
+  "CLOSE_TABS_TO_THE_LEFT": "ഇടതുവശത്തുള്ള ടാബുകൾ അടയ്ക്കുക"
 });
 /*
  * GNU AGPL-3.0 License
@@ -95538,6 +95580,7 @@ define("nls/nb/strings", {
   "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>samler ikke inn eller behandler noen personlig identifiserbar informasjon</strong>, men <strong>samler inn anonym bruksstatistikk</strong> for å beskytte personvernet ditt. Anonyme data er unntatt fra GDPR/CCPA-varslingsplikten, men vi mener du bør ha muligheten til å velge bort innsamling av anonyme data også.<br><br> Du kan se dataene dine eller <strong>velge å ikke dele noen anonyme data</strong> ved å velge <strong>Hjelp > Helse-rapport</strong>. Denne <strong>anonyme</strong> statistikken over appbruk og feilrapporter hjelper oss med å prioritere funksjoner, finne feil og oppdage brukervennlighetsproblemer for å forbedre din opplevelse med {APP_NAME}. Uten disse dataene ville vi ikke visst hvilke funksjoner det er verdt å bygge for deg! <br>",
   "HEALTH_DATA_PREVIEW": "{APP_NAME} helserapport",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>samler ikke inn eller behandler noen personlig identifiserbar informasjon</strong>, men <strong>samler inn anonym bruksstatistikk</strong> for å beskytte personvernet ditt. Denne <strong>anonyme</strong> statistikken over appbruk og feilrapporter hjelper oss med å prioritere funksjoner, finne feil og oppdage bruksproblemer for å forbedre opplevelsen din med {APP_NAME}.</p> <p>Nedenfor er en forhåndsvisning av dataene som vil bli sendt i din neste helserapport <em>hvis</em> den er aktivert. (Se også utviklerkonsollen for feillogger merket 'Caught Critical error'.)</p>",
+  "HEALTH_DATA_PREVIEW_NECESSARY": "Sikkerhets-/appoppdateringer, initialisering av analyseverktøy, brukerantall og brukstid samles alltid inn anonymt som nødvendige indikatorer for appens helse. Dette er aggregert statistikk, og ingen personlige data sendes/logges.",
   "INLINE_TIMING_EDITOR_TIME": "Tid",
   "INLINE_TIMING_EDITOR_PROGRESSION": "Progresjon",
   "BEZIER_EDITOR_INFO": "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> Flytt valgt punkt<br><kbd class='text'>Shift</kbd> Flytt med ti enheter<br><kbd class='text'>Tab</kbd> Bytt punkter",
@@ -96145,7 +96188,8 @@ define("nls/nb/strings", {
   "GIT_TOAST_TITLE": "Utforsk Git-funksjoner i Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klikk på Git-panelikonet for å administrere repositoriet ditt. Utfør commit, push, pull og se prosjektloggen din – alt på ett sted.<br><a href='https://docs.phcode.dev/docs/Features/git'>Lær mer om Git-panelet →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stem på funksjonene du ønsker å se neste!",
-  "HEALTH_DATA_PREVIEW_NECESSARY": "Sikkerhets-/appoppdateringer, initialisering av analyseverktøy, brukerantall og brukstid samles alltid inn anonymt som nødvendige indikatorer for appens helse. Dette er aggregert statistikk, og ingen personlige data sendes/logges."
+  "CLOSE_TABS_TO_THE_RIGHT": "Lukk faner til høyre",
+  "CLOSE_TABS_TO_THE_LEFT": "Lukk faner til venstre"
 });
 /*
  * GNU AGPL-3.0 License
@@ -96930,6 +96974,7 @@ define("nls/nl/strings", {
   "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>verzamelt of verwerkt geen persoonlijk identificeerbare informatie</strong>, maar <strong>verzamelt wel anonieme gebruiksstatistieken</strong> om uw privacy te beschermen. Anonieme gegevens zijn vrijgesteld van GDPR/CCPA-meldingsvereisten, maar wij vinden dat u de mogelijkheid moet hebben om u af te melden voor het verzamelen van anonieme gegevens.<br><br>U kunt uw gegevens bekijken of ervoor <strong>kiezen om geen anonieme gegevens te delen</strong> door <strong>Help > Statusrapport</strong> te selecteren. Deze <strong>anonieme</strong> gebruiksstatistieken en foutrapporten helpen bij het prioriteren van functies, het vinden van bugs en het opsporen van problemen met de bruikbaarheid om uw ervaring met {APP_NAME} te verbeteren. Zonder deze gegevens zouden we niet weten welke functies het waard zijn om voor u te ontwikkelen! <br>",
   "HEALTH_DATA_PREVIEW": "{APP_NAME} statusrapport",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>verzamelt of verwerkt geen persoonlijk identificeerbare informatie</strong>, maar <strong>verzamelt anonieme gebruiksstatistieken</strong> om uw privacy te beschermen. Deze <strong>anonieme</strong> gebruiksstatistieken en foutrapporten van de app helpen bij het prioriteren van functies, het vinden van bugs en het opsporen van problemen met de bruikbaarheid om uw ervaring met {APP_NAME} te verbeteren.</p> <p>Hieronder ziet u een voorbeeld van de gegevens die in uw volgende gezondheidsrapport worden verzonden <em>als</em> deze is ingeschakeld. (Zie ook de ontwikkelaarsconsole voor foutlogboeken gemarkeerd met 'Caught Critical error'.)</p>",
+  "HEALTH_DATA_PREVIEW_NECESSARY": "Beveiligings-/app-updates, initialisatie van de analysebibliotheek, gebruikersaantallen en gebruikstijd worden altijd anoniem verzameld als noodzakelijke indicatoren voor de app-status. Dit zijn geaggregeerde statistieken en er worden geen persoonlijke gegevens verzonden/gelogd.",
   "INLINE_TIMING_EDITOR_TIME": "Tijd",
   "INLINE_TIMING_EDITOR_PROGRESSION": "Voortgang",
   "BEZIER_EDITOR_INFO": "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> Verplaats geselecteerde punt<br><kbd class='text'>Shift</kbd> Verplaats met 10 units<br><kbd class='text'>Tab</kbd> Verwissel punten",
@@ -97537,7 +97582,8 @@ define("nls/nl/strings", {
   "GIT_TOAST_TITLE": "Ontdek Git-functies in Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klik op het Git-paneelpictogram om uw repository te beheren. Commit, push, pull en bekijk uw projectgeschiedenis eenvoudig - alles op één plek.<br><a href='https://docs.phcode.dev/docs/Features/git'>Meer informatie over het Git-paneel →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stem op de functies die u graag wilt zien!",
-  "HEALTH_DATA_PREVIEW_NECESSARY": "Beveiligings-/app-updates, initialisatie van de analysebibliotheek, gebruikersaantallen en gebruikstijd worden altijd anoniem verzameld als noodzakelijke indicatoren voor de app-status. Dit zijn geaggregeerde statistieken en er worden geen persoonlijke gegevens verzonden/gelogd."
+  "CLOSE_TABS_TO_THE_RIGHT": "Tabbladen rechts sluiten",
+  "CLOSE_TABS_TO_THE_LEFT": "Tabbladen links sluiten"
 });
 /*
  * GNU AGPL-3.0 License
@@ -98322,6 +98368,7 @@ define("nls/pl/strings", {
   "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>nie gromadzi ani nie przetwarza żadnych danych osobowych</strong>, ale <strong>zbiera anonimowe statystyki użytkowania</strong>, aby chronić Twoją prywatność. Anonimowe dane są zwolnione z wymogów powiadamiania RODO/CCPA, ale uważamy, że powinieneś mieć możliwość rezygnacji również z gromadzenia danych anonimowych.<br><br> Możesz zobaczyć swoje dane lub <strong>zrezygnować z udostępniania jakichkolwiek danych anonimowych</strong>, wybierając <strong>Pomoc > Raport o stanie</strong>. Te <strong>anonimowe</strong> statystyki użytkowania aplikacji i raporty o błędach pomagają nam ustalać priorytety funkcji, znajdować błędy i wykrywać problemy z użytecznością, aby poprawić Twoje wrażenia z korzystania z {APP_NAME}. Bez tych danych nie wiedzielibyśmy, jakie funkcje warto dla Ciebie tworzyć! <br>",
   "HEALTH_DATA_PREVIEW": "Raporty {APP_NAME}",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>nie gromadzi ani nie przetwarza żadnych danych osobowych</strong>, ale <strong>gromadzi anonimowe statystyki użytkowania</strong>, aby chronić Twoją prywatność. Te <strong>anonimowe</strong> statystyki użytkowania aplikacji i raporty o błędach pomagają priorytetyzować funkcje, znajdować błędy i wykrywać problemy z użytecznością, aby poprawić komfort korzystania z {APP_NAME}.</p> <p>Poniżej znajduje się podgląd danych, które zostaną wysłane w następnym Raporcie o stanie, <em>jeśli</em> będzie on włączony. (Zobacz także konsolę deweloperską, aby sprawdzić logi błędów oznaczone jako 'Caught Critical error'.)</p>",
+  "HEALTH_DATA_PREVIEW_NECESSARY": "Aktualizacje zabezpieczeń/aplikacji, inicjalizacja biblioteki analitycznej, liczba użytkowników i czas użytkowania są zawsze anonimowo zbierane jako niezbędne wskaźniki kondycji aplikacji. Są to zagregowane statystyki i żadne dane osobowe nie są wysyłane/logowane.",
   "INLINE_TIMING_EDITOR_TIME": "Czas",
   "INLINE_TIMING_EDITOR_PROGRESSION": "Postęp",
   "BEZIER_EDITOR_INFO": "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> Przenieś zaznaczony punkt<br><kbd class='text'>Shift</kbd> Przenieś o 10 jednostek<br><kbd class='text'>Tab</kbd> Zmień punkt",
@@ -98929,7 +98976,8 @@ define("nls/pl/strings", {
   "GIT_TOAST_TITLE": "Poznaj funkcje Gita w Phoenix Code",
   "GIT_TOAST_MESSAGE": "Kliknij ikonę panelu Git, aby zarządzać swoim repozytorium. Łatwo zatwierdzaj, przesyłaj, pobieraj i przeglądaj historię swojego projektu — wszystko w jednym miejscu.<br><a href='https://docs.phcode.dev/docs/Features/git'>Dowiedz się więcej o panelu Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Zagłosuj na funkcje, które chcesz zobaczyć w przyszłości!",
-  "HEALTH_DATA_PREVIEW_NECESSARY": "Aktualizacje zabezpieczeń/aplikacji, inicjalizacja biblioteki analitycznej, liczba użytkowników i czas użytkowania są zawsze anonimowo zbierane jako niezbędne wskaźniki kondycji aplikacji. Są to zagregowane statystyki i żadne dane osobowe nie są wysyłane/logowane."
+  "CLOSE_TABS_TO_THE_RIGHT": "Zamknij karty po prawej",
+  "CLOSE_TABS_TO_THE_LEFT": "Zamknij karty po lewej"
 });
 /*
  * GNU AGPL-3.0 License
@@ -99714,6 +99762,7 @@ define("nls/pt-br/strings", {
   "HEALTH_DATA_NOTIFICATION_MESSAGE": "O {APP_NAME} <strong>não coleta ou processa nenhuma informação pessoalmente identificável</strong>, mas <strong>coleta estatísticas anônimas de uso</strong> para proteger sua privacidade. Dados anônimos estão isentos dos requisitos de notificação da GDPR/CCPA, mas acreditamos que você precisa ter a opção de desativar a coleta de dados anônimos também.<br><br> Você pode ver seus dados ou <strong>optar por não compartilhar nenhum dado anônimo</strong> selecionando <strong>Ajuda > Relatório de Saúde</strong>. Essas estatísticas <strong>anônimas</strong> de uso do aplicativo e relatórios de erros ajudam a priorizar recursos, encontrar bugs e identificar problemas de usabilidade para melhorar sua experiência com o {APP_NAME}. Sem esses dados, não saberíamos quais recursos valem a pena desenvolver para você! <br>",
   "HEALTH_DATA_PREVIEW": "Relatório de saúde do {APP_NAME}",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>O {APP_NAME} <strong>não coleta nem processa qualquer informação pessoal identificável</strong>, mas <strong>coleta estatísticas de uso anônimas</strong> para proteger sua privacidade. Essas estatísticas de uso do aplicativo e relatórios de erros <strong>anônimos</strong> ajudam a priorizar recursos, encontrar bugs e identificar problemas de usabilidade para melhorar sua experiência com o {APP_NAME}.</p> <p>Abaixo está uma prévia dos dados que serão enviados em seu próximo Relatório de Saúde <em>se</em> ele estiver ativado. (Veja também o console do desenvolvedor para logs de erro marcados como 'Erro crítico detectado'.)</p>",
+  "HEALTH_DATA_PREVIEW_NECESSARY": "Atualizações de segurança/aplicativo, inicialização da biblioteca de análises, contagem de usuários e tempo de uso são sempre coletados anonimamente como indicadores essenciais de funcionamento do aplicativo. São estatísticas agregadas e nenhum dado pessoal é enviado/registrado.",
   "INLINE_TIMING_EDITOR_TIME": "Tempo",
   "INLINE_TIMING_EDITOR_PROGRESSION": "Progresso",
   "BEZIER_EDITOR_INFO": "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> Move o ponto selecionado<br><kbd class='text'>Shift</kbd> Move dez unidades<br><kbd class='text'>Tab</kbd> Troca pontos",
@@ -100321,7 +100370,8 @@ define("nls/pt-br/strings", {
   "GIT_TOAST_TITLE": "Explore os Recursos do Git no Phoenix Code",
   "GIT_TOAST_MESSAGE": "Clique no ícone do painel Git para gerenciar seu repositório. Faça commits, pushes, pulls e visualize o histórico do seu projeto com facilidade — tudo em um só lugar.<br><a href='https://docs.phcode.dev/docs/Features/git'>Saiba mais sobre o painel Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote nos recursos que você quer ver em seguida!",
-  "HEALTH_DATA_PREVIEW_NECESSARY": "Atualizações de segurança/aplicativo, inicialização da biblioteca de análises, contagem de usuários e tempo de uso são sempre coletados anonimamente como indicadores essenciais de funcionamento do aplicativo. São estatísticas agregadas e nenhum dado pessoal é enviado/registrado."
+  "CLOSE_TABS_TO_THE_RIGHT": "Fechar abas à direita",
+  "CLOSE_TABS_TO_THE_LEFT": "Fechar abas à esquerda"
 });
 /*
  * GNU AGPL-3.0 License
@@ -101104,6 +101154,7 @@ define("nls/pt-pt/strings", {
   "HEALTH_DATA_NOTIFICATION_MESSAGE": "O {APP_NAME} <strong>não recolhe nem processa qualquer informação pessoalmente identificável</strong>, mas <strong>recolhe estatísticas de utilização anónimas</strong> para proteger a sua privacidade. Os dados anónimos estão isentos dos requisitos de notificação do RGPD/CCPA, mas acreditamos que deve ter a opção de recusar a recolha de dados anónimos também.<br><br> Pode ver os seus dados ou <strong>optar por não partilhar quaisquer dados anónimos</strong> selecionando <strong>Ajuda > Relatório de Funcionamento</strong>. Estas estatísticas de utilização da aplicação e relatórios de erros <strong>anónimos</strong> ajudam a priorizar funcionalidades, encontrar erros e detetar problemas de usabilidade para melhorar a sua experiência com o {APP_NAME}. Sem estes dados, não saberíamos que funcionalidades valem a pena desenvolver para si! <br>",
   "HEALTH_DATA_PREVIEW": "Relatório de Estado do {APP_NAME}",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>O {APP_NAME} <strong>não recolhe nem processa qualquer informação pessoalmente identificável</strong>, mas <strong>recolhe estatísticas de utilização anónimas</strong> para proteger a sua privacidade. Estas estatísticas de utilização da aplicação e relatórios de erros <strong>anónimos</strong> ajudam a priorizar funcionalidades, encontrar erros e detetar problemas de usabilidade para melhorar a sua experiência com o {APP_NAME}.</p> <p>Abaixo encontra-se uma pré-visualização dos dados que serão enviados no seu próximo Relatório de Estado <em>se</em> este estiver ativado. (Consulte também a consola do programador para registos de erros marcados como 'Erro crítico detetado'.)</p>",
+  "HEALTH_DATA_PREVIEW_NECESSARY": "As atualizações de segurança/aplicação, a inicialização da biblioteca de análises, as contagens de utilizadores e o tempo de utilização são sempre recolhidos anonimamente como indicadores necessários para a saúde da aplicação. Estas são estatísticas agregadas e nenhum dado pessoal é enviado/registado.",
   "INLINE_TIMING_EDITOR_TIME": "Tempo",
   "INLINE_TIMING_EDITOR_PROGRESSION": "Progressão",
   "BEZIER_EDITOR_INFO": "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> Mover ponto selecionado<br><kbd class='text'>Shift</kbd> Mover em incrementos de dez unidades<br><kbd class='text'>Tab</kbd> Alternar entre pontos",
@@ -101711,7 +101762,8 @@ define("nls/pt-pt/strings", {
   "GIT_TOAST_TITLE": "Explore as funcionalidades do Git no Phoenix Code",
   "GIT_TOAST_MESSAGE": "Clique no ícone do painel Git para gerir o seu repositório. Efetue commits, pushes, pulls e veja o histórico do seu projeto com facilidade — tudo num só lugar.<br><a href='https://docs.phcode.dev/docs/Features/git'>Saiba mais sobre o painel Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote nas funcionalidades que quer ver a seguir!",
-  "HEALTH_DATA_PREVIEW_NECESSARY": "As atualizações de segurança/aplicação, a inicialização da biblioteca de análises, as contagens de utilizadores e o tempo de utilização são sempre recolhidos anonimamente como indicadores necessários para a saúde da aplicação. Estas são estatísticas agregadas e nenhum dado pessoal é enviado/registado."
+  "CLOSE_TABS_TO_THE_RIGHT": "Fechar Separadores à Direita",
+  "CLOSE_TABS_TO_THE_LEFT": "Fechar Separadores à Esquerda"
 });
 /*
  * GNU AGPL-3.0 License
@@ -102494,6 +102546,7 @@ define("nls/ro/strings", {
   "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>nu colectează și nu procesează nicio informație de identificare personală</strong>, dar <strong>colectează statistici anonime de utilizare</strong> pentru a vă proteja confidențialitatea. Datele anonime sunt exceptate de la cerințele de notificare GDPR/CCPA, dar credem că trebuie să aveți opțiunea de a renunța și la colectarea datelor anonime.<br><br> Puteți vedea datele dvs. sau <strong>alege să nu partajați nicio dată anonimă</strong> selectând <strong>Ajutor > Raport de stare</strong>. Aceste statistici <strong>anonime</strong> de utilizare a aplicației și rapoartele de erori ajută la prioritizarea funcțiilor, la găsirea erorilor și la identificarea problemelor de utilizare pentru a vă îmbunătăți experiența cu {APP_NAME}. Fără aceste date, nu am ști ce funcții merită să construim pentru dvs.! <br>",
   "HEALTH_DATA_PREVIEW": "Raport de sănătate {APP_NAME}",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>nu colectează și nu procesează nicio informație de identificare personală</strong>, dar <strong>colectează statistici anonime de utilizare</strong> pentru a vă proteja confidențialitatea. Aceste statistici <strong>anonime</strong> de utilizare a aplicației și rapoartele de erori ajută la prioritizarea funcțiilor, la găsirea erorilor și la identificarea problemelor de utilizare pentru a vă îmbunătăți experiența cu {APP_NAME}.</p> <p>Mai jos este o previzualizare a datelor care vor fi trimise în următorul dvs. Raport de sănătate <em>dacă</em> acesta este activat. (Consultați și consola dezvoltatorului pentru jurnalele de erori marcate cu „Eroare critică detectată”.)</p>",
+  "HEALTH_DATA_PREVIEW_NECESSARY": "Actualizările de securitate/aplicație, inițializarea bibliotecii de analiză, numărul de utilizatori și timpul de utilizare sunt întotdeauna colectate anonim ca indicatori necesari ai stării de funcționare a aplicației. Acestea sunt statistici agregate și nicio dată cu caracter personal nu este trimisă/înregistrată.",
   "INLINE_TIMING_EDITOR_TIME": "Timp",
   "INLINE_TIMING_EDITOR_PROGRESSION": "Progres",
   "BEZIER_EDITOR_INFO": "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> Mută punctul selectat<br><kbd class='text'>Shift</kbd> Mută cu zece unități<br><kbd class='text'>Tab</kbd> Comută punctele",
@@ -103101,7 +103154,8 @@ define("nls/ro/strings", {
   "GIT_TOAST_TITLE": "Explorați funcțiile Git în Phoenix Code",
   "GIT_TOAST_MESSAGE": "Faceți clic pe pictograma panoului Git pentru a vă gestiona depozitul. Efectuați ușor commit, push, pull și vizualizați istoricul proiectului dvs. - totul într-un singur loc.<br><a href='https://docs.phcode.dev/docs/Features/git'>Aflați mai multe despre panoul Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Votează pentru funcționalitățile pe care dorești să le vezi în continuare!",
-  "HEALTH_DATA_PREVIEW_NECESSARY": "Actualizările de securitate/aplicație, inițializarea bibliotecii de analiză, numărul de utilizatori și timpul de utilizare sunt întotdeauna colectate anonim ca indicatori necesari ai stării de funcționare a aplicației. Acestea sunt statistici agregate și nicio dată cu caracter personal nu este trimisă/înregistrată."
+  "CLOSE_TABS_TO_THE_RIGHT": "Închide filele din dreapta",
+  "CLOSE_TABS_TO_THE_LEFT": "Închide filele din stânga"
 });
 /*
  * GNU AGPL-3.0 License
@@ -105514,6 +105568,7 @@ define("nls/ru/strings", {
   "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>не собирает и не обрабатывает никакую персональную информацию</strong>, но <strong>собирает анонимную статистику использования</strong> для защиты вашей конфиденциальности. Анонимные данные не подпадают под требования GDPR/CCPA об уведомлении, но мы считаем, что у вас должна быть возможность отказаться от сбора анонимных данных.<br><br> Вы можете просмотреть свои данные или <strong>отказаться от предоставления анонимных данных</strong>, выбрав <strong>Справка > Отчет о работоспособности</strong>. Эта <strong>анонимная</strong> статистика использования приложения и отчеты об ошибках помогают нам расставлять приоритеты в функциях, находить ошибки и выявлять проблемы с удобством использования для улучшения вашей работы с {APP_NAME}. Без этих данных мы не будем знать, какие функции стоит разрабатывать для вас! <br>",
   "HEALTH_DATA_PREVIEW": "Отчет о работоспособности {APP_NAME}",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>не собирает и не обрабатывает никакую персональную информацию</strong>, но <strong>собирает анонимную статистику использования</strong> для защиты вашей конфиденциальности. Эта <strong>анонимная</strong> статистика использования приложения и отчеты об ошибках помогают расставлять приоритеты в функциях, находить ошибки и выявлять проблемы с удобством использования для улучшения вашей работы с {APP_NAME}.</p> <p>Ниже представлен предварительный просмотр данных, которые будут отправлены в вашем следующем отчете о работоспособности, <em>если</em> он включен. (Также см. консоль разработчика для журналов ошибок с пометкой «Перехвачена критическая ошибка».)</p>",
+  "HEALTH_DATA_PREVIEW_NECESSARY": "Данные о безопасности/обновлениях приложения, инициализации библиотеки аналитики, количестве пользователей и времени использования всегда анонимно собираются в качестве необходимых индикаторов работоспособности приложения. Это агрегированная статистика, и никакие персональные данные не отправляются и не регистрируются.",
   "INLINE_TIMING_EDITOR_TIME": "Время",
   "INLINE_TIMING_EDITOR_PROGRESSION": "Прогресс",
   "BEZIER_EDITOR_INFO": "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> Передвинуть выделенную точку<br><kbd class='text'>Shift</kbd> Передвинуться на десять единиц<br><kbd class='text'>Tab</kbd> Переключиться между точками",
@@ -106121,7 +106176,8 @@ define("nls/ru/strings", {
   "GIT_TOAST_TITLE": "Возможности Git в Phoenix Code",
   "GIT_TOAST_MESSAGE": "Нажмите на значок панели Git для управления вашим репозиторием. Легко выполняйте коммиты, отправляйте (push), получайте (pull) изменения и просматривайте историю вашего проекта — все в одном месте.<br><a href='https://docs.phcode.dev/docs/Features/git'>Узнать больше о панели Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Проголосуйте за функции, которые вы хотите увидеть в будущем!",
-  "HEALTH_DATA_PREVIEW_NECESSARY": "Данные о безопасности/обновлениях приложения, инициализации библиотеки аналитики, количестве пользователей и времени использования всегда анонимно собираются в качестве необходимых индикаторов работоспособности приложения. Это агрегированная статистика, и никакие персональные данные не отправляются и не регистрируются."
+  "CLOSE_TABS_TO_THE_RIGHT": "Закрыть вкладки справа",
+  "CLOSE_TABS_TO_THE_LEFT": "Закрыть вкладки слева"
 });
 /*
  * GNU AGPL-3.0 License
@@ -106906,6 +106962,7 @@ define("nls/sk/strings", {
   "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>nezbiera ani nespracováva žiadne osobné údaje</strong>, ale <strong>zbiera anonymné štatistiky používania</strong> na ochranu vášho súkromia. Anonymné údaje sú vyňaté z požiadaviek na oznámenie GDPR/CCPA, ale veríme, že by ste mali mať možnosť odmietnuť aj zber anonymných údajov.<br><br> Svoje údaje si môžete pozrieť alebo <strong>sa rozhodnúť nezdieľať žiadne anonymné údaje</strong> výberom možnosti <strong>Pomocník > Správa o stave</strong>. Tieto <strong>anonymné</strong> štatistiky používania aplikácie a hlásenia chýb nám pomáhajú uprednostňovať funkcie, nachádzať chyby a odhaľovať problémy s použiteľnosťou, aby sme zlepšili vašu skúsenosť s aplikáciou {APP_NAME}. Bez týchto údajov by sme nevedeli, aké funkcie sa pre vás oplatí vyvíjať! <br>",
   "HEALTH_DATA_PREVIEW": "Hlásenie o stave {APP_NAME}",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>nezbiera ani nespracováva žiadne osobné údaje</strong>, ale <strong>zbiera anonymné štatistiky používania</strong> na ochranu vášho súkromia. Tieto <strong>anonymné</strong> štatistiky používania aplikácie a hlásenia o chybách pomáhajú uprednostňovať funkcie, nachádzať chyby a odhaľovať problémy s použiteľnosťou na zlepšenie vašej skúsenosti s aplikáciou {APP_NAME}.</p> <p>Nižšie je uvedený náhľad údajov, ktoré budú odoslané vo vašom ďalšom hlásení o stave, <em>ak</em> je povolené. (Pozrite si aj konzolu pre vývojárov, kde nájdete záznamy chýb označené ako „Zachytená kritická chyba“.)</p>",
+  "HEALTH_DATA_PREVIEW_NECESSARY": "Aktualizácie zabezpečenia/aplikácie, inicializácia analytickej knižnice, počty používateľov a čas používania sa vždy anonymne zhromažďujú ako nevyhnutné indikátory stavu aplikácie. Ide o súhrnné štatistiky a žiadne osobné údaje sa neodosielajú/nezaznamenávajú.",
   "INLINE_TIMING_EDITOR_TIME": "Čas",
   "INLINE_TIMING_EDITOR_PROGRESSION": "Postup",
   "BEZIER_EDITOR_INFO": "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> Presunúť vybraný bod<br><kbd class='text'>Shift</kbd> Presunúť o desať jednotiek<br><kbd class='text'>Tab</kbd> Prepínať body",
@@ -107513,7 +107570,8 @@ define("nls/sk/strings", {
   "GIT_TOAST_TITLE": "Preskúmajte funkcie Gitu v Phoenix Code",
   "GIT_TOAST_MESSAGE": "Kliknite na ikonu panela Git pre správu vášho repozitára. Jednoducho commitujte, pushujte, pullujte a prezerajte si históriu vášho projektu – všetko na jednom mieste.<br><a href='https://docs.phcode.dev/docs/Features/git'>Zistite viac o paneli Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Hlasujte za funkcie, ktoré chcete vidieť v ďalšej verzii!",
-  "HEALTH_DATA_PREVIEW_NECESSARY": "Aktualizácie zabezpečenia/aplikácie, inicializácia analytickej knižnice, počty používateľov a čas používania sa vždy anonymne zhromažďujú ako nevyhnutné indikátory stavu aplikácie. Ide o súhrnné štatistiky a žiadne osobné údaje sa neodosielajú/nezaznamenávajú."
+  "CLOSE_TABS_TO_THE_RIGHT": "Zatvoriť karty napravo",
+  "CLOSE_TABS_TO_THE_LEFT": "Zatvoriť karty naľavo"
 });
 /*
  * GNU AGPL-3.0 License
@@ -108297,6 +108355,7 @@ define("nls/sr/strings", {
   "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>не прикупља нити обрађује било какве личне податке</strong>, али <strong>прикупља анонимну статистику коришћења</strong> ради заштите ваше приватности. Анонимни подаци су изузети од захтева за обавештавање GDPR/CCPA, али верујемо да треба да имате могућност да се искључите из прикупљања анонимних података.<br><br> Можете видети своје податке или <strong>изабрати да не делите никакве анонимне податке</strong> тако што ћете изабрати <strong>Помоћ > Извештај о здрављу</strong>. Ова <strong>анонимна</strong> статистика коришћења апликације и извештаји о грешкама помажу у одређивању приоритета функција, проналажењу грешака и уочавању проблема са употребљивошћу ради побољшања вашег искуства са {APP_NAME}. Без ових података, не бисмо знали које функције вреди направити за вас! <br>",
   "HEALTH_DATA_PREVIEW": "Извештај о исправности {APP_NAME}",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>не прикупља нити обрађује било какве личне податке</strong>, али <strong>прикупља анонимну статистику коришћења</strong> ради заштите ваше приватности. Ова <strong>анонимна</strong> статистика коришћења апликације и извештаји о грешкама помажу у одређивању приоритета функција, проналажењу грешака и уочавању проблема са употребљивошћу ради побољшања вашег искуства са {APP_NAME}.</p> <p>Испод је преглед података који ће бити послати у вашем следећем извештају о исправности <em>ако</em> је омогућен. (Такође погледајте конзолу за програмере за евиденцију грешака означену са 'Ухваћена критична грешка'.)</p>",
+  "HEALTH_DATA_PREVIEW_NECESSARY": "Ажурирања безбедности/апликације, иницијализација аналитичке библиотеке, број корисника и време коришћења се увек анонимно прикупљају као неопходни индикатори исправности апликације. Ово су агрегатне статистике и никакви лични подаци се не шаљу/бележе.",
   "INLINE_TIMING_EDITOR_TIME": "Време",
   "INLINE_TIMING_EDITOR_PROGRESSION": "Напредак",
   "BEZIER_EDITOR_INFO": "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> Помери изабрану тачку<br><kbd class='text'>Shift</kbd> Помери за десет јединица<br><kbd class='text'>Tab</kbd> Замени тачке",
@@ -108904,7 +108963,8 @@ define("nls/sr/strings", {
   "GIT_TOAST_TITLE": "Истражите Гит функције у Phoenix Code-у",
   "GIT_TOAST_MESSAGE": "Кликните на икону Гит панела да бисте управљали својим спремиштем. Лако направите commit, push, pull и погледајте историју свог пројекта — све на једном месту.<br><a href='https://docs.phcode.dev/docs/Features/git'>Сазнајте више о Гит панелу →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Гласајте за функције које желите да видите у будућности!",
-  "HEALTH_DATA_PREVIEW_NECESSARY": "Ажурирања безбедности/апликације, иницијализација аналитичке библиотеке, број корисника и време коришћења се увек анонимно прикупљају као неопходни индикатори исправности апликације. Ово су агрегатне статистике и никакви лични подаци се не шаљу/бележе."
+  "CLOSE_TABS_TO_THE_RIGHT": "Затвори картице десно",
+  "CLOSE_TABS_TO_THE_LEFT": "Затвори картице лево"
 });
 /*
  * GNU AGPL-3.0 License
@@ -109772,6 +109832,7 @@ define("nls/sv/strings", {
   "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>samlar inte in eller behandlar någon personligt identifierbar information</strong>, men <strong>samlar in anonym användningsstatistik</strong> för att skydda din integritet. Anonyma data är undantagna från GDPR/CCPA-anmälningskrav, men vi anser att du bör ha möjlighet att välja bort insamling av anonyma data också.<br><br> Du kan se dina data eller <strong>välja att inte dela några anonyma data</strong> genom att välja <strong>Hjälp > Hälsorapport</strong>. Denna <strong>anonyma</strong> statistik över appanvändning och felrapporter hjälper oss att prioritera funktioner, hitta buggar och upptäcka användbarhetsproblem för att förbättra din upplevelse med {APP_NAME}. Utan dessa data skulle vi inte veta vilka funktioner det är värt att bygga för dig! <br>",
   "HEALTH_DATA_PREVIEW": "{APP_NAME} Hälsorapport",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>samlar inte in eller behandlar någon personligt identifierbar information</strong>, men <strong>samlar in anonym användningsstatistik</strong> för att skydda din integritet. Denna <strong>anonyma</strong> statistik över appanvändning och felrapporter hjälper oss att prioritera funktioner, hitta buggar och upptäcka användbarhetsproblem för att förbättra din upplevelse med {APP_NAME}.</p> <p>Nedan visas en förhandsgranskning av de data som kommer att skickas i din nästa hälsorapport <em>om</em> den är aktiverad. (Se även utvecklarkonsolen för felloggar markerade 'Caught Critical error'.)</p>",
+  "HEALTH_DATA_PREVIEW_NECESSARY": "Säkerhets-/appuppdateringar, initiering av analysbibliotek, användarantal och användningstid samlas alltid in anonymt som nödvändiga apphälsoindikatorer. Dessa är aggregerad statistik och inga personuppgifter skickas/loggas.",
   "INLINE_TIMING_EDITOR_TIME": "Tid",
   "INLINE_TIMING_EDITOR_PROGRESSION": "Progression",
   "BEZIER_EDITOR_INFO": "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> Flytta markerad punkt<br><kbd class='text'>Shift</kbd> Flytta tio enheter",
@@ -110379,7 +110440,8 @@ define("nls/sv/strings", {
   "GIT_TOAST_TITLE": "Utforska Git-funktioner i Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klicka på Git-panelens ikon för att hantera din repository. Committa, pusha, pulla och se din projekthistorik enkelt – allt på ett ställe.<br><a href='https://docs.phcode.dev/docs/Features/git'>Läs mer om Git-panelen →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Rösta på funktionerna du vill se härnäst!",
-  "HEALTH_DATA_PREVIEW_NECESSARY": "Säkerhets-/appuppdateringar, initiering av analysbibliotek, användarantal och användningstid samlas alltid in anonymt som nödvändiga apphälsoindikatorer. Dessa är aggregerad statistik och inga personuppgifter skickas/loggas."
+  "CLOSE_TABS_TO_THE_RIGHT": "Stäng flikar till höger",
+  "CLOSE_TABS_TO_THE_LEFT": "Stäng flikar till vänster"
 });
 /*
  * GNU AGPL-3.0 License
@@ -111164,6 +111226,7 @@ define("nls/tr/strings", {
   "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>kişisel olarak tanımlanabilir hiçbir bilgiyi toplamaz veya işlemez</strong>, ancak gizliliğinizi korumak için <strong>anonim kullanım istatistikleri toplar</strong>. Anonim veriler GDPR/CCPA bildirim gerekliliklerinden muaftır, ancak anonim veri toplamayı da devre dışı bırakma seçeneğinizin olması gerektiğine inanıyoruz.<br><br> Verilerinizi görebilir veya <strong>Yardım > Sağlık Raporu</strong>'nu seçerek <strong>hiçbir anonim veriyi paylaşmamayı seçebilirsiniz</strong>. Bu <strong>anonim</strong> uygulama kullanım istatistikleri ve hata raporları, {APP_NAME} ile deneyiminizi iyileştirmek için özellikleri önceliklendirmeye, hataları bulmaya ve kullanılabilirlik sorunlarını tespit etmeye yardımcı olur. Bu veriler olmadan, sizin için hangi özellikleri geliştirmeye değer olduğunu bilemeyiz! <br>",
   "HEALTH_DATA_PREVIEW": "{APP_NAME} Sistem Durumu Raporu",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>kişisel olarak tanımlanabilir hiçbir bilgi toplamaz veya işlemez</strong>, ancak gizliliğinizi korumak için <strong>anonim kullanım istatistikleri toplar</strong>. Bu <strong>anonim</strong> uygulama kullanım istatistikleri ve hata raporları, {APP_NAME} ile deneyiminizi iyileştirmek için özellikleri önceliklendirmeye, hataları bulmaya ve kullanılabilirlik sorunlarını tespit etmeye yardımcı olur.</p> <p>Aşağıda, etkinleştirilmiş <em>ise</em> bir sonraki Sistem Durumu Raporunuzda gönderilecek verilerin bir önizlemesi yer almaktadır. ('Caught Critical error' olarak işaretlenmiş hata günlükleri için geliştirici konsoluna da bakın.)</p>",
+  "HEALTH_DATA_PREVIEW_NECESSARY": "Güvenlik/uygulama güncellemeleri, analiz kitaplığı başlatma, kullanıcı sayıları ve kullanım süresi, gerekli uygulama sağlık göstergeleri olarak her zaman anonim şekilde toplanır. Bunlar toplu istatistiklerdir ve hiçbir kişisel veri gönderilmez/kaydedilmez.",
   "INLINE_TIMING_EDITOR_TIME": "Zaman",
   "INLINE_TIMING_EDITOR_PROGRESSION": "İlerleme",
   "BEZIER_EDITOR_INFO": "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> Seçili noktayı taşı<br><kbd class='text'>Shift</kbd> On birim taşı<br><kbd class='text'>Tab</kbd> Noktalar arasında geçiş yap",
@@ -111771,7 +111834,8 @@ define("nls/tr/strings", {
   "GIT_TOAST_TITLE": "Phoenix Code'da Git Özelliklerini Keşfedin",
   "GIT_TOAST_MESSAGE": "Deponuzu yönetmek için Git paneli simgesine tıklayın. Proje geçmişinizi kolayca işleyin, gönderin, çekin ve görüntüleyin—hepsi tek bir yerde.<br><a href='https://docs.phcode.dev/docs/Features/git'>Git paneli hakkında daha fazla bilgi edinin →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Gelecekte görmek istediğiniz özellikler için oy verin!",
-  "HEALTH_DATA_PREVIEW_NECESSARY": "Güvenlik/uygulama güncellemeleri, analiz kitaplığı başlatma, kullanıcı sayıları ve kullanım süresi, gerekli uygulama sağlık göstergeleri olarak her zaman anonim şekilde toplanır. Bunlar toplu istatistiklerdir ve hiçbir kişisel veri gönderilmez/kaydedilmez."
+  "CLOSE_TABS_TO_THE_RIGHT": "Sağdaki Sekmeleri Kapat",
+  "CLOSE_TABS_TO_THE_LEFT": "Soldaki Sekmeleri Kapat"
 });
 /*
  * GNU AGPL-3.0 License
@@ -112556,6 +112620,7 @@ define("nls/uk/strings", {
   "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>не збирає та не обробляє жодної персональної інформації</strong>, але <strong>збирає анонімну статистику використання</strong> для захисту вашої конфіденційності. Анонімні дані не підпадають під вимоги GDPR/CCPA щодо повідомлення, але ми вважаємо, що ви повинні мати можливість відмовитися від збору анонімних даних.<br><br> Ви можете переглянути свої дані або <strong>відмовитися від надання будь-яких анонімних даних</strong>, обравши <strong>Довідка > Звіт про стан</strong>. Ця <strong>анонімна</strong> статистика використання програми та звіти про помилки допомагають нам визначити пріоритетність функцій, знаходити помилки та виявляти проблеми з зручністю використання для покращення вашого досвіду роботи з {APP_NAME}. Без цих даних ми не знатимемо, які функції варто розробляти для вас! <br>",
   "HEALTH_DATA_PREVIEW": "Звіт про стан {APP_NAME}",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>не збирає та не обробляє жодної інформації, що дозволяє встановити особу</strong>, але <strong>збирає анонімну статистику використання</strong> для захисту вашої конфіденційності. Ця <strong>анонімна</strong> статистика використання програми та звіти про помилки допомагають визначити пріоритетність функцій, знаходити помилки та виявляти проблеми з зручністю використання для покращення вашого досвіду роботи з {APP_NAME}.</p> <p>Нижче наведено попередній перегляд даних, які будуть надіслані у вашому наступному Звіті про стан, <em>якщо</em> він увімкнено. (Також див. консоль розробника для журналів помилок з позначкою 'Caught Critical error'.)</p>",
+  "HEALTH_DATA_PREVIEW_NECESSARY": "Оновлення безпеки/програми, ініціалізація бібліотеки аналітики, кількість користувачів та час використання завжди анонімно збираються як необхідні показники справності програми. Це зведені статистичні дані, і жодні персональні дані не надсилаються/не реєструються.",
   "INLINE_TIMING_EDITOR_TIME": "Час",
   "INLINE_TIMING_EDITOR_PROGRESSION": "Просування",
   "BEZIER_EDITOR_INFO": "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> Переміщення обраної точки<br><kbd class='text'>Shift</kbd> Переміщення на 10 одиниць<br><kbd class='text'>Tab</kbd> Навігація точками",
@@ -113163,7 +113228,8 @@ define("nls/uk/strings", {
   "GIT_TOAST_TITLE": "Ознайомтеся з функціями Git у Phoenix Code",
   "GIT_TOAST_MESSAGE": "Натисніть піктограму панелі Git, щоб керувати вашим репозиторієм. Легко виконуйте коміти, пуші, пули та переглядайте історію вашого проєкту — все в одному місці.<br><a href='https://docs.phcode.dev/docs/Features/git'>Дізнайтеся більше про панель Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Проголосуйте за функції, які ви хочете бачити наступними!",
-  "HEALTH_DATA_PREVIEW_NECESSARY": "Оновлення безпеки/програми, ініціалізація бібліотеки аналітики, кількість користувачів та час використання завжди анонімно збираються як необхідні показники справності програми. Це зведені статистичні дані, і жодні персональні дані не надсилаються/не реєструються."
+  "CLOSE_TABS_TO_THE_RIGHT": "Закрити вкладки праворуч",
+  "CLOSE_TABS_TO_THE_LEFT": "Закрити вкладки ліворуч"
 });
 /*
  * GNU AGPL-3.0 License
@@ -113948,6 +114014,7 @@ define("nls/ur/strings", {
   "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>کسی بھی قسم کی ذاتی معلومات جمع یا عمل نہیں کرتا</strong>، لیکن آپ کی رازداری کے تحفظ کے لیے <strong>گمنام استعمال کے اعدادوشمار جمع کرتا ہے</strong>۔ گمنام ڈیٹا GDPR/CCPA نوٹیفکیشن کی ضروریات سے مستثنیٰ ہے، لیکن ہمارا ماننا ہے کہ آپ کے پاس گمنام ڈیٹا کلیکشن سے دستبرداری کا اختیار بھی ہونا چاہیے۔<br><br> آپ اپنا ڈیٹا دیکھ سکتے ہیں یا <strong>کوئی بھی گمنام ڈیٹا شیئر نہ کرنے کا انتخاب کر سکتے ہیں</strong>، <strong>مدد > ہیلتھ رپورٹ</strong> کو منتخب کر کے۔ یہ <strong>گمنام</strong> ایپ کے استعمال کے اعدادوشمار اور ایرر رپورٹس خصوصیات کو ترجیح دینے، بگس کو تلاش کرنے، اور استعمال کے مسائل کو تلاش کرنے میں مدد کرتی ہیں تاکہ {APP_NAME} کے ساتھ آپ کے تجربے کو بہتر بنایا جا سکے۔ اس ڈیٹا کے بغیر، ہمیں معلوم نہیں ہوگا کہ آپ کے لیے کون سی خصوصیات بنانا قابل قدر ہیں۔ <br>",
   "HEALTH_DATA_PREVIEW": "{APP_NAME} ہیلتھ رپورٹ",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>کسی بھی قسم کی ذاتی معلومات اکٹھا یا عملدرآمد نہیں کرتا</strong>، لیکن آپ کی رازداری کے تحفظ کے لیے <strong>گمنام استعمال کے اعدادوشمار اکٹھا کرتا ہے</strong>۔ یہ <strong>گمنام</strong> ایپ کے استعمال کے اعدادوشمار اور ایرر رپورٹس {APP_NAME} کے ساتھ آپ کے تجربے کو بہتر بنانے کے لیے خصوصیات کو ترجیح دینے، کیڑے تلاش کرنے اور استعمال کے مسائل کو تلاش کرنے میں مدد کرتی ہیں۔</p> <p>ذیل میں اس ڈیٹا کا پیش نظارہ ہے جو آپ کی اگلی ہیلتھ رپورٹ میں بھیجا جائے گا <em>اگر</em> یہ فعال ہے۔ ('Caught Critical error' کے نشان والے ایرر لاگز کے لیے ڈویلپر کنسول بھی دیکھیں۔)</p>",
+  "HEALTH_DATA_PREVIEW_NECESSARY": "سیکیورٹی/ایپ اپ ڈیٹس، تجزیاتی لائبریری کی ابتدائی تشکیل، صارفین کی تعداد، اور استعمال کا وقت ہمیشہ گمنام طور پر ضروری ایپ ہیلتھ اشاریوں کے طور پر اکٹھا کیے جاتے ہیں۔ یہ مجموعی اعدادوشمار ہیں اور کوئی ذاتی ڈیٹا نہیں بھیجا/لاگ کیا جاتا ہے۔",
   "INLINE_TIMING_EDITOR_TIME": "وقت",
   "INLINE_TIMING_EDITOR_PROGRESSION": "پیش رفت",
   "BEZIER_EDITOR_INFO": "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> منتخب نقطہ کو منتقل کریں<br><kbd class='text'>Shift</kbd> دس اکائیوں سے منتقل کریں<br><kbd class='text'>Tab</kbd> نقاط کو تبدیل کریں",
@@ -114555,7 +114622,8 @@ define("nls/ur/strings", {
   "GIT_TOAST_TITLE": "فینکس کوڈ میں گٹ فیچرز دریافت کریں",
   "GIT_TOAST_MESSAGE": "اپنی ذخیرہ گاہ (repository) کو منظم کرنے کے لیے گٹ پینل آئیکن پر کلک کریں۔ آسانی سے کامٹ، پش، پل کریں، اور اپنے پروجیکٹ کی تاریخ دیکھیں—سب ایک ہی جگہ پر۔<br><a href='https://docs.phcode.dev/docs/Features/git'>گٹ پینل کے بارے میں مزید جانیں →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "اپنی پسندیدہ خصوصیات کے لیے ووٹ دیں!",
-  "HEALTH_DATA_PREVIEW_NECESSARY": "سیکیورٹی/ایپ اپ ڈیٹس، تجزیاتی لائبریری کی ابتدائی تشکیل، صارفین کی تعداد، اور استعمال کا وقت ہمیشہ گمنام طور پر ضروری ایپ ہیلتھ اشاریوں کے طور پر اکٹھا کیے جاتے ہیں۔ یہ مجموعی اعدادوشمار ہیں اور کوئی ذاتی ڈیٹا نہیں بھیجا/لاگ کیا جاتا ہے۔"
+  "CLOSE_TABS_TO_THE_RIGHT": "دائیں جانب والے ٹیبز بند کریں",
+  "CLOSE_TABS_TO_THE_LEFT": "بائیں جانب والے ٹیبز بند کریں"
 });
 /*
  * GNU AGPL-3.0 License
@@ -115370,6 +115438,7 @@ define("nls/zh-cn/strings", {
   "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>不会收集或处理任何个人身份信息</strong>，但<strong>会收集匿名的使用统计数据</strong>以保护您的隐私。匿名数据不受 GDPR/CCPA 通知要求的约束，但我们认为您也需要有选择退出匿名数据收集的权利。<br><br>您可以通过选择<strong>帮助 > 健康报告</strong>来查看您的数据或<strong>选择不共享任何匿名数据</strong>。这些<strong>匿名的</strong>应用使用统计数据和错误报告有助于确定功能优先级、查找错误和发现可用性问题，从而改善您使用 {APP_NAME} 的体验。如果没有这些数据，我们将无法了解哪些功能值得为您构建！<br>",
   "HEALTH_DATA_PREVIEW": "{APP_NAME} 健康报告",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>不会收集或处理任何个人身份信息</strong>，但会<strong>收集匿名使用统计数据</strong>来保护您的隐私。这些<strong>匿名</strong>应用使用统计数据和错误报告有助于确定功能优先级、查找错误和发现可用性问题，从而改善您使用 {APP_NAME} 的体验。</p> <p>以下是您的下一个健康报告<em>如果</em>启用将发送的数据预览。（另请参阅开发者控制台中标记为“Caught Critical error”的错误日志。）</p>",
+  "HEALTH_DATA_PREVIEW_NECESSARY": "安全/应用更新、分析库初始化、用户数量和使用时间等应用健康指标将以匿名方式收集。这些是聚合统计数据，不会发送/记录任何个人数据。",
   "INLINE_TIMING_EDITOR_TIME": "时间",
   "INLINE_TIMING_EDITOR_PROGRESSION": "进程",
   "BEZIER_EDITOR_INFO": "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> 移动选中点<br><kbd class='text'>Shift</kbd> 10倍移动<br><kbd class='text'>Tab</kbd> 切换点",
@@ -115977,7 +116046,8 @@ define("nls/zh-cn/strings", {
   "GIT_TOAST_TITLE": "探索 Phoenix Code 中的 Git 功能",
   "GIT_TOAST_MESSAGE": "点击 Git 面板图标即可管理您的代码仓库。轻松提交、推送、拉取和查看项目历史记录，一切尽在一处。<br><a href='https://docs.phcode.dev/docs/Features/git'>了解更多关于 Git 面板的信息 →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "为您希望看到的下一个功能投票！",
-  "HEALTH_DATA_PREVIEW_NECESSARY": "安全/应用更新、分析库初始化、用户数量和使用时间等应用健康指标将以匿名方式收集。这些是聚合统计数据，不会发送/记录任何个人数据。"
+  "CLOSE_TABS_TO_THE_RIGHT": "关闭右侧标签页",
+  "CLOSE_TABS_TO_THE_LEFT": "关闭左侧标签页"
 });
 /*
  * GNU AGPL-3.0 License
@@ -116762,6 +116832,7 @@ define("nls/zh-tw/strings", {
   "HEALTH_DATA_NOTIFICATION_MESSAGE": "{APP_NAME} <strong>不會收集或處理任何個人識別資訊</strong>，但<strong>會收集匿名使用統計數據</strong>以保護您的隱私。匿名數據不受 GDPR/CCPA 通知要求的約束，但我們認為您也需要有選擇退出匿名數據收集的權利。<br><br>您可以透過選擇<strong>說明 > 健康報告</strong>來查看您的數據或<strong>選擇不分享任何匿名數據</strong>。這些<strong>匿名</strong>應用程式使用統計數據和錯誤報告有助於我們排定功能優先順序、找出錯誤並發現可用性問題，以改善您使用 {APP_NAME} 的體驗。沒有這些數據，我們就不知道哪些功能值得為您打造！<br>",
   "HEALTH_DATA_PREVIEW": "{APP_NAME} 狀況報告",
   "HEALTH_DATA_PREVIEW_INTRO": "<p>{APP_NAME} <strong>不會收集或處理任何個人識別資訊</strong>，但<strong>會收集匿名使用統計資料</strong>以保障您的隱私。這些<strong>匿名</strong>應用程式使用統計資料和錯誤報告有助於我們排定功能優先順序、找出錯誤並發現可用性問題，以改善您使用 {APP_NAME} 的體驗。</p> <p>以下是<em>如果</em>已啟用健康報告，將在您的下次健康報告中傳送的資料預覽。（另請參閱開發人員主控台，查看標記為「攔截到嚴重錯誤」的錯誤日誌。）</p>",
+  "HEALTH_DATA_PREVIEW_NECESSARY": "安全性/應用程式更新、分析程式庫初始化、使用者人數和使用時間等應用程式健康指標，皆以匿名方式收集。這些皆為彙總統計數據，不會傳送/記錄任何個人資料。",
   "INLINE_TIMING_EDITOR_TIME": "時間",
   "INLINE_TIMING_EDITOR_PROGRESSION": "進度",
   "BEZIER_EDITOR_INFO": "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> 移動選取的控制點<br><kbd class='text'>Shift</kbd> 移動 10 個單位<br><kbd class='text'>Tab</kbd> 切換控制點",
@@ -117369,7 +117440,8 @@ define("nls/zh-tw/strings", {
   "GIT_TOAST_TITLE": "在 Phoenix Code 中探索 Git 功能",
   "GIT_TOAST_MESSAGE": "按一下 Git 面板圖示即可管理您的儲存庫。輕鬆提交、推送、提取和檢視您的專案歷史記錄，一切盡在掌握之中。<br><a href='https://docs.phcode.dev/docs/Features/git'>深入瞭解 Git 面板 →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "投票選出您希望看到的下個功能！",
-  "HEALTH_DATA_PREVIEW_NECESSARY": "安全性/應用程式更新、分析程式庫初始化、使用者人數和使用時間等應用程式健康指標，皆以匿名方式收集。這些皆為彙總統計數據，不會傳送/記錄任何個人資料。"
+  "CLOSE_TABS_TO_THE_RIGHT": "關閉右側分頁",
+  "CLOSE_TABS_TO_THE_LEFT": "關閉左側分頁"
 });
 /*
  * GNU AGPL-3.0 License
