@@ -44521,7 +44521,7 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
     const MoreOptions = require("./more-options");
     const Overflow = require("./overflow");
     const DragDrop = require("./drag-drop");
-    const TabBarHTML = `<div id="tab-bar-container" class="tab-bar-container">
+    const TabBarHTML = `<div class="tab-bar-container">
     <div id="phoenix-tab-bar" class="phoenix-tab-bar">
 
     </div>
@@ -44529,8 +44529,9 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
     <div id="overflow-button" class="overflow-button" title="Show hidden tabs">
         <i class="fa-solid fa-chevron-down"></i>
     </div>
-</div>`;
-    const TabBarHTML2 = `<div id="tab-bar-container" class="tab-bar-container">
+</div>
+`;
+    const TabBarHTML2 = `<div class="tab-bar-container">
     <div id="phoenix-tab-bar-2" class="phoenix-tab-bar">
 
     </div>
@@ -44538,7 +44539,8 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
     <div id="overflow-button-2" class="overflow-button-2" title="Show hidden tabs">
         <i class="fa-solid fa-chevron-down"></i>
     </div>
-</div>`;
+</div>
+`;
 
 
 
@@ -44686,21 +44688,22 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
         // clean up any existing tab bars first and start fresh
         cleanupTabBar();
 
-        if ($('.not-editor').length === 1) {
+        const $paneHeader = $('.pane-header');
+        if ($paneHeader.length === 1) {
             $tabBar = $(TabBarHTML);
             // since we need to add the tab bar before the editor which has .not-editor class
-            $(".not-editor").before($tabBar);
+            $(".pane-header").after($tabBar);
             WorkspaceManager.recomputeLayout(true);
             updateTabs();
 
-        } else if ($('.not-editor').length === 2) {
+        } else if ($paneHeader.length === 2) {
             $tabBar = $(TabBarHTML);
             $tabBar2 = $(TabBarHTML2);
 
             // eq(0) is for the first pane and eq(1) is for the second pane
             // TODO: Fix bug where the tab bar gets hidden inside the editor in horizontal split
-            $(".not-editor").eq(0).before($tabBar);
-            $(".not-editor").eq(1).before($tabBar2);
+            $paneHeader.eq(0).after($tabBar);
+            $paneHeader.eq(1).after($tabBar2);
             WorkspaceManager.recomputeLayout(true);
             updateTabs();
         }
@@ -44842,6 +44845,7 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
         }
         // Also check for any orphaned tab bars that might exist
         $(".tab-bar-container").remove();
+        WorkspaceManager.recomputeLayout(true);
     }
 
 
@@ -44851,7 +44855,7 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
     function handleTabClick() {
 
         // delegate event handling for both tab bars
-        $(document).on("click", ".tab", function (event) {
+        $(document).on("click", ".phoenix-tab-bar .tab", function (event) {
             // check if the clicked element is the close button
             if ($(event.target).hasClass('fa-times') || $(event.target).closest('.tab-close').length) {
                 // Get the file path from the data-path attribute of the parent tab
@@ -44874,23 +44878,35 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
                     event.preventDefault();
                     event.stopPropagation();
                 }
+            }
+        });
+
+        // delegate event handling for both tab bars
+        $(document).on("mousedown", ".phoenix-tab-bar .tab", function (event) {
+            if ($(event.target).hasClass('fa-times') || $(event.target).closest('.tab-close').length) {
                 return;
             }
-
             // Get the file path from the data-path attribute
             const filePath = $(this).attr("data-path");
 
             if (filePath) {
-                CommandManager.execute(Commands.FILE_OPEN, { fullPath: filePath });
+                // determine the pane inside which the tab belongs
+                const isSecondPane = $(this).closest("#phoenix-tab-bar-2").length > 0;
+                const paneId = isSecondPane ? "second-pane" : "first-pane";
+                const currentActivePane = MainViewManager.getActivePaneId();
+                const isPaneActive = (paneId === currentActivePane);
+                const currentFile = MainViewManager.getCurrentlyViewedFile(currentActivePane);
+                if(isPaneActive && currentFile && currentFile.fullPath === filePath) {
+                    return;
+                }
+                CommandManager.execute(Commands.FILE_OPEN, { fullPath: filePath, paneId: paneId });
 
-                // Prevent default behavior
-                event.preventDefault();
-                event.stopPropagation();
+                // We dont prevent default behavior here to enable drag and drop of this tab
             }
         });
 
         // Add the contextmenu (right-click) handler
-        $(document).on("contextmenu", ".tab", function (event) {
+        $(document).on("contextmenu", ".phoenix-tab-bar .tab", function (event) {
             event.preventDefault();
             event.stopPropagation();
 
@@ -44907,25 +44923,23 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
     }
 
 
+    // debounce is used to prevent rapid consecutive calls to updateTabs,
+    // which was causing integration tests to fail in Firefox. Without it,
+    // the event fires too frequently when switching editors, leading to unexpected behavior
+    const debounceUpdateTabs = _.debounce(updateTabs, 2);
+
     /**
      * Registers the event handlers
      */
-    function registerHandlers() {
+    function _registerHandlers() {
         // For pane layout changes, recreate the entire tab bar container
-        MainViewManager.off("paneCreate paneDestroy paneLayoutChange", createTabBar);
         MainViewManager.on("paneCreate paneDestroy paneLayoutChange", createTabBar);
 
         // For active pane changes, update only the tabs
-        MainViewManager.off("activePaneChange", updateTabs);
         MainViewManager.on("activePaneChange", updateTabs);
 
         // For editor changes, update only the tabs.
-        EditorManager.off("activeEditorChange", updateTabs);
-        // debounce is used to prevent rapid consecutive calls to updateTabs,
-        // which was causing integration tests to fail in Firefox. Without it,
-        // the event fires too frequently when switching editors, leading to unexpected behavior
-        const debounceUpdateTabs = _.debounce(updateTabs, 2);
-        EditorManager.on("activeEditorChange", debounceUpdateTabs);
+        MainViewManager.on(MainViewManager.EVENT_CURRENT_FILE_CHANGE, debounceUpdateTabs);
 
         // For working set changes, update only the tabs.
         const events = [
@@ -45067,7 +45081,7 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
         preferenceChanged();
 
         // this should be called at the last as everything should be setup before registering handlers
-        registerHandlers();
+        _registerHandlers();
 
         // handle when a single tab gets clicked
         handleTabClick();
@@ -45110,7 +45124,6 @@ define("extensionsIntegrated/TabBar/more-options", function (require, exports, m
     const CommandManager = require("command/CommandManager");
     const Commands = require("command/Commands");
     const FileSystem = require("filesystem/FileSystem");
-    const MainViewManager = require("view/MainViewManager");
 
     const Global = require("./global");
 
@@ -45118,7 +45131,6 @@ define("extensionsIntegrated/TabBar/more-options", function (require, exports, m
     // Strings defined in `src/nls/root/strings.js`
     const items = [
         Strings.CLOSE_TAB,
-        Strings.CLOSE_ACTIVE_TAB,
         Strings.CLOSE_TABS_TO_THE_LEFT,
         Strings.CLOSE_TABS_TO_THE_RIGHT,
         Strings.CLOSE_ALL_TABS,
@@ -45329,8 +45341,8 @@ define("extensionsIntegrated/TabBar/more-options", function (require, exports, m
         dropdown.showDropdown();
 
         // handle the option selection
-        dropdown.on("select", function (e, item, index) {
-            _handleSelection(index, filePath, paneId);
+        dropdown.on("select", function (e, item) {
+            _handleSelection(item, filePath, paneId);
         });
 
         // Remove the button after the dropdown is hidden
@@ -45342,40 +45354,30 @@ define("extensionsIntegrated/TabBar/more-options", function (require, exports, m
     /**
      * Handles the selection of an option in the more options context menu
      *
-     * @param {Number} index - the index of the selected option
+     * @param {String} item - the item being selected
      * @param {String} filePath - the path of the file that was right-clicked
      * @param {String} paneId - the id of the pane ["first-pane", "second-pane"]
      */
-    function _handleSelection(index, filePath, paneId) {
-        switch (index) {
-            case 0:
-                // Close tab (the one that was right-clicked)
-                handleCloseTab(filePath, paneId);
-                break;
-            case 1:
-                // Close active tab
-                handleCloseActiveTab();
-                break;
-            case 2:
-                // Close tabs to the left
-                handleCloseTabsToTheLeft(filePath, paneId);
-                break;
-            case 3:
-                // Close tabs to the right
-                handleCloseTabsToTheRight(filePath, paneId);
-                break;
-            case 4:
-                // Close all tabs
-                handleCloseAllTabs(paneId);
-                break;
-            case 5:
-                // Close unmodified tabs
-                handleCloseUnmodifiedTabs(paneId);
-                break;
-            case 6:
-                // Reopen closed file
-                reopenClosedFile();
-                break;
+    function _handleSelection(item, filePath, paneId) {
+        switch (item) {
+        case Strings.CLOSE_TAB:
+            handleCloseTab(filePath, paneId);
+            break;
+        case Strings.CLOSE_TABS_TO_THE_LEFT:
+            handleCloseTabsToTheLeft(filePath, paneId);
+            break;
+        case Strings.CLOSE_TABS_TO_THE_RIGHT:
+            handleCloseTabsToTheRight(filePath, paneId);
+            break;
+        case Strings.CLOSE_ALL_TABS:
+            handleCloseAllTabs(paneId);
+            break;
+        case Strings.CLOSE_UNMODIFIED_TABS:
+            handleCloseUnmodifiedTabs(paneId);
+            break;
+        case Strings.REOPEN_CLOSED_FILE:
+            reopenClosedFile();
+            break;
         }
     }
 
@@ -103659,7 +103661,6 @@ define("nls/root/strings", {
 
     // Tab bar Strings
     "CLOSE_TAB": "Close Tab",
-    "CLOSE_ACTIVE_TAB": "Close Active Tab",
     "CLOSE_TABS_TO_THE_RIGHT": "Close Tabs to the Right",
     "CLOSE_TABS_TO_THE_LEFT": "Close Tabs to the Left",
     "CLOSE_ALL_TABS": "Close All Tabs",
@@ -103785,7 +103786,7 @@ define("nls/root/strings", {
     "CMD_HIDE_SIDEBAR": "Hide Sidebar",
     "CMD_SHOW_SIDEBAR": "Show Sidebar",
     "CMD_TOGGLE_SIDEBAR": "Toggle Sidebar",
-    "CMD_TOGGLE_TABBAR": "Toggle Tab Bar",
+    "CMD_TOGGLE_TABBAR": "File Tab Bar",
     "CMD_TOGGLE_PANELS": "Toggle Panels",
     "CMD_TOGGLE_PURE_CODE": "No Distractions",
     "CMD_TOGGLE_FULLSCREEN": "Fullscreen",
@@ -171116,8 +171117,13 @@ define("view/Pane", function (require, exports, module) {
      * @private
      */
     Pane.prototype._updateHeaderHeight = function () {
-        var paneContentHeight = this.$el.height();
+        const $el = this.$el;
+        const $tabBar = $el.find(".tab-bar-container");
+        let paneContentHeight = $el.height();
 
+        if($tabBar.length > 0 && $tabBar.is(":visible")) {
+            paneContentHeight = paneContentHeight - $tabBar.height();
+        }
         // Adjust pane content height for header
         if (MainViewManager.getPaneCount() > 1) {
             this.$header.show();
