@@ -26474,7 +26474,7 @@ define("editor/EditorManager", function (require, exports, module) {
 
     // Set up event dispatching
     EventDispatcher.makeEventDispatcher(exports);
-    EventDispatcher.setLeakThresholdForEvent(EVENT_ACTIVE_EDITOR_CHANGED, 25);
+    EventDispatcher.setLeakThresholdForEvent(EVENT_ACTIVE_EDITOR_CHANGED, 30);
 
     // File-based preferences handling
     exports.on(EVENT_ACTIVE_EDITOR_CHANGED, function (e, current) {
@@ -33673,6 +33673,11 @@ define("extensionsIntegrated/CSSColorPreview/main", function (require, exports, 
 
     function _cursorActivity(_evt, editor){
         // this is to prevent a gutter gap in the active line if there is no color on this line.
+        if(editor.hasSelection()){
+            // we dont show the gutter gap color when there is a selection. also adding dummy gutter is expensive
+            // and make test selection with cursor choppy
+            return;
+        }
         _addDummyGutterMarkerIfNotExist(editor, editor.getCursorPos().line);
         if(editor._currentlyColorMarkedLine){
             editor.clearAllMarks(COLOR_MARK_NAME);
@@ -34791,7 +34796,9 @@ define("extensionsIntegrated/HtmlTagSyncEdit/main", function (require, exports, 
 
     function cursorActivity() {
         const cursor = activeEditor.getCursorPos();
-        if(activeEditor.hasMultipleCursors()){
+        const sel = activeEditor.getSelection();
+        const multiLineSelection = sel.start.line !== sel.end.line;
+        if(activeEditor.hasMultipleCursors() || multiLineSelection){
             clearRenameMarkers();
             return;
         }
