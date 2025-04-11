@@ -1231,7 +1231,6 @@ define("src/ErrorHandler", function (require, exports) {
     exports.showError = function (err, title, options = {}) {
         const dontStripError = options.dontStripError;
         const errorMetric = options.errorMetric;
-        Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'dialogErr', errorMetric || "Show");
         if (err.__shown) { return err; }
 
         exports.logError(err);
@@ -1256,6 +1255,7 @@ define("src/ErrorHandler", function (require, exports) {
         errorBody = window.debugMode ? `${errorBody}\n${errorStack}` : errorBody;
 
         if(options.useNotification){
+            Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'notifyErr', errorMetric || "Show");
             NotificationUI.createToastFromTemplate(title,
                 `<textarea readonly style="width: 200px; height: 200px; cursor: text; resize: none;">${errorBody}</textarea>`, {
                     toastStyle: NotificationUI.NOTIFICATION_STYLES_CSS_CLASS.ERROR,
@@ -1263,6 +1263,7 @@ define("src/ErrorHandler", function (require, exports) {
                     instantOpen: true
                 });
         } else {
+            Metrics.countEvent(Metrics.EVENT_TYPE.GIT, 'dialogErr', errorMetric || "Show");
             const compiledTemplate = Mustache.render(errorDialogTemplate, {
                 title: title,
                 body: errorBody,
