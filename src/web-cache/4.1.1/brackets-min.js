@@ -66780,6 +66780,7 @@ define("nls/ar/strings", {
   "CMD_HIDE_SIDEBAR": "إخفاء الشريط الجانبي",
   "CMD_SHOW_SIDEBAR": "إظهار الشريط الجانبي",
   "CMD_TOGGLE_SIDEBAR": "تبديل الشريط الجانبي",
+  "CMD_TOGGLE_TABBAR": "شريط تبويب الملف",
   "CMD_TOGGLE_PANELS": "تبديل الألواح",
   "CMD_TOGGLE_PURE_CODE": "بدون تشتيت",
   "CMD_TOGGLE_FULLSCREEN": "ملء الشاشة",
@@ -67694,7 +67695,7 @@ define("nls/ar/strings", {
   "GIT_TOAST_TITLE": "استكشف ميزات Git في Phoenix Code",
   "GIT_TOAST_MESSAGE": "انقر على رمز لوحة Git لإدارة مستودعك. يمكنك بسهولة تنفيذ الالتزام والدفع والسحب وعرض سجل مشروعك - كل ذلك في مكان واحد.<br><a href='https://docs.phcode.dev/docs/Features/git'>تعرّف على المزيد حول لوحة Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "صوت للميزات التي ترغب برؤيتها تالياً!",
-  "CMD_TOGGLE_TABBAR": "شريط تبويب الملف"
+  "CMD_USER_PROFILE": "ملف تعريف المستخدم"
 });
 /*
  * GNU AGPL-3.0 License
@@ -68146,6 +68147,7 @@ define("nls/bg/strings", {
   "CMD_HIDE_SIDEBAR": "Скриване на страничната лента",
   "CMD_SHOW_SIDEBAR": "Показване на страничната лента",
   "CMD_TOGGLE_SIDEBAR": "Превключване на страничната лента",
+  "CMD_TOGGLE_TABBAR": "Лента с раздели на файловете",
   "CMD_TOGGLE_PANELS": "Превключване на панелите",
   "CMD_TOGGLE_PURE_CODE": "Без разсейвания",
   "CMD_TOGGLE_FULLSCREEN": "Цял екран",
@@ -69060,7 +69062,7 @@ define("nls/bg/strings", {
   "GIT_TOAST_TITLE": "Разгледайте Git функциите в Phoenix Code",
   "GIT_TOAST_MESSAGE": "Щракнете върху иконата на Git панела, за да управлявате хранилището си. Лесно създавайте commit, push, pull и преглеждайте историята на проекта си – всичко на едно място.<br><a href='https://docs.phcode.dev/docs/Features/git'>Научете повече за Git панела →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Гласувайте за функциите, които искате да видите следващи!",
-  "CMD_TOGGLE_TABBAR": "Лента с раздели на файловете"
+  "CMD_USER_PROFILE": "Потребителски профил"
 });
 /*
  * Copyright (c) 2013 Adobe Systems Incorporated. All rights reserved.
@@ -69541,6 +69543,7 @@ define("nls/cs/strings", {
   "CMD_HIDE_SIDEBAR": "Skrýt boční menu",
   "CMD_SHOW_SIDEBAR": "Zobrazit boční menu",
   "CMD_TOGGLE_SIDEBAR": "Zobrazit/skrýt boční menu",
+  "CMD_TOGGLE_TABBAR": "Panel karet souborů",
   "CMD_TOGGLE_PANELS": "Zobrazit/skrýt panely",
   "CMD_TOGGLE_PURE_CODE": "Žádné rozptylování",
   "CMD_TOGGLE_FULLSCREEN": "Celá obrazovka",
@@ -70455,7 +70458,7 @@ define("nls/cs/strings", {
   "GIT_TOAST_TITLE": "Prozkoumejte funkce Gitu v Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klikněte na ikonu panelu Git pro správu vašeho repozitáře. Snadno commitujte, pushujte, pullujte a prohlížejte si historii projektu – vše na jednom místě.<br><a href='https://docs.phcode.dev/docs/Features/git'>Zjistěte více o panelu Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Hlasujte pro funkce, které chcete vidět v další verzi!",
-  "CMD_TOGGLE_TABBAR": "Panel karet souborů"
+  "CMD_USER_PROFILE": "Uživatelský profil"
 });
 /*
  * GNU AGPL-3.0 License
@@ -70934,6 +70937,7 @@ define("nls/da/strings", {
   "CMD_HIDE_SIDEBAR": "Skjul sidepanel",
   "CMD_SHOW_SIDEBAR": "Vis sidepanel",
   "CMD_TOGGLE_SIDEBAR": "Skift sidepanel",
+  "CMD_TOGGLE_TABBAR": "Fillister",
   "CMD_TOGGLE_PANELS": "Skift paneler",
   "CMD_TOGGLE_PURE_CODE": "Ingen distraktioner",
   "CMD_TOGGLE_FULLSCREEN": "Fuld skærm",
@@ -71848,7 +71852,7 @@ define("nls/da/strings", {
   "GIT_TOAST_TITLE": "Udforsk Git-funktioner i Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klik på Git-panelikonet for at administrere dit repository. Commit, push, pull og se din projekthistorik nemt – alt sammen på ét sted.<br><a href='https://docs.phcode.dev/docs/Features/git'>Læs mere om Git-panelet →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stem på de funktioner, du gerne vil se!",
-  "CMD_TOGGLE_TABBAR": "Fillister"
+  "CMD_USER_PROFILE": "Brugerprofil"
 });
 /*
  * GNU AGPL-3.0 License
@@ -72325,6 +72329,7 @@ define("nls/de/strings", {
   "CMD_HIDE_SIDEBAR": "Seitenleiste verbergen",
   "CMD_SHOW_SIDEBAR": "Seitenleiste zeigen",
   "CMD_TOGGLE_SIDEBAR": "Seitenleiste anzeigen/verbergen",
+  "CMD_TOGGLE_TABBAR": "Dateileisten-Registerkarte",
   "CMD_TOGGLE_PANELS": "Panels anzeigen/verbergen",
   "CMD_TOGGLE_PURE_CODE": "Ablenkungsfreier Modus",
   "CMD_TOGGLE_FULLSCREEN": "Vollbild",
@@ -73239,7 +73244,7 @@ define("nls/de/strings", {
   "GIT_TOAST_TITLE": "Git-Funktionen in Phoenix Code entdecken",
   "GIT_TOAST_MESSAGE": "Klicken Sie auf das Git-Panel-Symbol, um Ihr Repository zu verwalten. Committen, Pushen, Pullen und die Anzeige Ihres Projektverlaufs – alles an einem Ort.<br><a href='https://docs.phcode.dev/docs/Features/git'>Mehr über das Git-Panel erfahren →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stimmen Sie für die Funktionen ab, die Sie als Nächstes sehen möchten!",
-  "CMD_TOGGLE_TABBAR": "Dateileisten-Registerkarte"
+  "CMD_USER_PROFILE": "Benutzerprofil"
 });
 /*
  * GNU AGPL-3.0 License
@@ -73718,6 +73723,7 @@ define("nls/el/strings", {
   "CMD_HIDE_SIDEBAR": "Απόκρυψη Πλευρικής Εργαλειοθήκης",
   "CMD_SHOW_SIDEBAR": "Προβολή Πλευρικής Εργαλειοθήκης",
   "CMD_TOGGLE_SIDEBAR": "Εναλλαγή Πλευρικής Γραμμής",
+  "CMD_TOGGLE_TABBAR": "Γραμμή καρτελών αρχείων",
   "CMD_TOGGLE_PANELS": "Εναλλαγή Πλαισίων",
   "CMD_TOGGLE_PURE_CODE": "Χωρίς Περισπασμούς",
   "CMD_TOGGLE_FULLSCREEN": "Πλήρης Οθόνη",
@@ -74632,7 +74638,7 @@ define("nls/el/strings", {
   "GIT_TOAST_TITLE": "Εξερευνήστε τις Λειτουργίες Git στο Phoenix Code",
   "GIT_TOAST_MESSAGE": "Κάντε κλικ στο εικονίδιο του πίνακα Git για να διαχειριστείτε το αποθετήριό σας. Κάντε εύκολα commit, push, pull και δείτε το ιστορικό του έργου σας—όλα σε ένα μέρος.<br><a href='https://docs.phcode.dev/docs/Features/git'>Μάθετε περισσότερα για τον πίνακα Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Ψηφίστε για τις λειτουργίες που θέλετε να δείτε στη συνέχεια!",
-  "CMD_TOGGLE_TABBAR": "Γραμμή καρτελών αρχείων"
+  "CMD_USER_PROFILE": "Προφίλ Χρήστη"
 });
 /*
  * GNU AGPL-3.0 License
@@ -75111,6 +75117,7 @@ define("nls/en-gb/strings", {
   "CMD_HIDE_SIDEBAR": "Hide Sidebar",
   "CMD_SHOW_SIDEBAR": "Show sidebar",
   "CMD_TOGGLE_SIDEBAR": "Toggle sidebar",
+  "CMD_TOGGLE_TABBAR": "File Tab Bar",
   "CMD_TOGGLE_PANELS": "Toggle panels",
   "CMD_TOGGLE_PURE_CODE": "No distractions",
   "CMD_TOGGLE_FULLSCREEN": "Fullscreen",
@@ -76025,7 +76032,7 @@ define("nls/en-gb/strings", {
   "GIT_TOAST_TITLE": "Explore Git Features in Phoenix Code",
   "GIT_TOAST_MESSAGE": "Click the Git panel icon to manage your repository. Easily commit, push, pull, and view your project history—all in one place.<br><a href='https://docs.phcode.dev/docs/Features/git'>Learn more about the Git panel →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote for the features you'd like to see next!",
-  "CMD_TOGGLE_TABBAR": "File Tab Bar"
+  "CMD_USER_PROFILE": "User Profile"
 });
 /*
  * GNU AGPL-3.0 License
@@ -76477,6 +76484,7 @@ define("nls/es/strings", {
   "CMD_HIDE_SIDEBAR": "Ocultar menú lateral",
   "CMD_SHOW_SIDEBAR": "Mostrar menú lateral",
   "CMD_TOGGLE_SIDEBAR": "Alternar barra lateral",
+  "CMD_TOGGLE_TABBAR": "Barra de pestañas de archivos",
   "CMD_TOGGLE_PANELS": "Alternar paneles",
   "CMD_TOGGLE_PURE_CODE": "Sin distracciones",
   "CMD_TOGGLE_FULLSCREEN": "Pantalla completa",
@@ -77391,7 +77399,7 @@ define("nls/es/strings", {
   "GIT_TOAST_TITLE": "Explora las funciones de Git en Phoenix Code",
   "GIT_TOAST_MESSAGE": "Haga clic en el icono del panel de Git para administrar su repositorio. Confirme, envíe (push), extraiga (pull) y vea el historial de su proyecto fácilmente, todo en un solo lugar.<br><a href='https://docs.phcode.dev/docs/Features/git'>Obtenga más información sobre el panel de Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "¡Vota por las funciones que quieres ver próximamente!",
-  "CMD_TOGGLE_TABBAR": "Barra de pestañas de archivos"
+  "CMD_USER_PROFILE": "Perfil de usuario"
 });
 /*
  * GNU AGPL-3.0 License
@@ -77871,6 +77879,7 @@ define("nls/fa-ir/strings", {
   "CMD_HIDE_SIDEBAR": "پنهان کردن نوار کناری",
   "CMD_SHOW_SIDEBAR": "نمایش نوار کناری",
   "CMD_TOGGLE_SIDEBAR": "تغییر وضعیت نوار کناری",
+  "CMD_TOGGLE_TABBAR": "نوار برگه‌های فایل",
   "CMD_TOGGLE_PANELS": "تغییر وضعیت پنل‌ها",
   "CMD_TOGGLE_PURE_CODE": "بدون حواس‌پرتی",
   "CMD_TOGGLE_FULLSCREEN": "تمام صفحه",
@@ -78785,7 +78794,7 @@ define("nls/fa-ir/strings", {
   "GIT_TOAST_TITLE": "کاوش ویژگی‌های گیت در Phoenix Code",
   "GIT_TOAST_MESSAGE": "برای مدیریت مخزن خود روی آیکون پنل گیت کلیک کنید. به راحتی کامیت، پوش، پول و مشاهده تاریخچه پروژه خود را - همه در یک مکان - انجام دهید.<br><a href='https://docs.phcode.dev/docs/Features/git'>درباره پنل گیت بیشتر بدانید →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "برای قابلیت‌هایی که می‌خواهید در آینده ببینید، رأی دهید!",
-  "CMD_TOGGLE_TABBAR": "نوار برگه‌های فایل"
+  "CMD_USER_PROFILE": "پروفایل کاربر"
 });
 /*
  * GNU AGPL-3.0 License
@@ -79264,6 +79273,7 @@ define("nls/fi/strings", {
   "CMD_HIDE_SIDEBAR": "Piilota sivupalkki",
   "CMD_SHOW_SIDEBAR": "Näytä sivupalkki",
   "CMD_TOGGLE_SIDEBAR": "Näytä tai piilota sivupalkki",
+  "CMD_TOGGLE_TABBAR": "Tiedostovälilehtirivi",
   "CMD_TOGGLE_PANELS": "Näytä tai piilota paneelit",
   "CMD_TOGGLE_PURE_CODE": "Ei häiriötekijöitä",
   "CMD_TOGGLE_FULLSCREEN": "Koko näyttö",
@@ -80178,7 +80188,7 @@ define("nls/fi/strings", {
   "GIT_TOAST_TITLE": "Tutustu Git-ominaisuuksiin Phoenix Codessa",
   "GIT_TOAST_MESSAGE": "Napsauta Git-paneelin kuvaketta hallitaksesi arkistoasi (repository). Tee commit, push ja pull helposti ja tarkastele projektihistoriaasi – kaikki yhdessä paikassa.<br><a href='https://docs.phcode.dev/docs/Features/git'>Lue lisää Git-paneelista →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Äänestä ominaisuuksia, jotka haluat nähdä seuraavaksi!",
-  "CMD_TOGGLE_TABBAR": "Tiedostovälilehtirivi"
+  "CMD_USER_PROFILE": "Käyttäjäprofiili"
 });
 /*
  * GNU AGPL-3.0 License
@@ -80657,6 +80667,7 @@ define("nls/fr/strings", {
   "CMD_HIDE_SIDEBAR": "Masquer la barre latérale",
   "CMD_SHOW_SIDEBAR": "Afficher la barre latérale",
   "CMD_TOGGLE_SIDEBAR": "Afficher/Masquer la barre latérale",
+  "CMD_TOGGLE_TABBAR": "Barre d'onglets des fichiers",
   "CMD_TOGGLE_PANELS": "Afficher/Masquer les panneaux",
   "CMD_TOGGLE_PURE_CODE": "Pas de distraction",
   "CMD_TOGGLE_FULLSCREEN": "Plein écran",
@@ -81571,7 +81582,7 @@ define("nls/fr/strings", {
   "GIT_TOAST_TITLE": "Explorer les fonctionnalités Git dans Phoenix Code",
   "GIT_TOAST_MESSAGE": "Cliquez sur l'icône du panneau Git pour gérer votre dépôt. Validez, envoyez (push), récupérez (pull) et consultez l'historique de votre projet facilement, le tout au même endroit.<br><a href='https://docs.phcode.dev/docs/Features/git'>En savoir plus sur le panneau Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Votez pour les fonctionnalités que vous souhaitez voir apparaître !",
-  "CMD_TOGGLE_TABBAR": "Barre d'onglets des fichiers"
+  "CMD_USER_PROFILE": "Profil utilisateur"
 });
 /*
  * GNU AGPL-3.0 License
@@ -82050,6 +82061,7 @@ define("nls/gl/strings", {
   "CMD_HIDE_SIDEBAR": "Ocultar menú lateral",
   "CMD_SHOW_SIDEBAR": "Amosar menú lateral",
   "CMD_TOGGLE_SIDEBAR": "Alternar barra lateral",
+  "CMD_TOGGLE_TABBAR": "Barra de pestanas de ficheiros",
   "CMD_TOGGLE_PANELS": "Alternar paneis",
   "CMD_TOGGLE_PURE_CODE": "Sen distraccións",
   "CMD_TOGGLE_FULLSCREEN": "Pantalla completa",
@@ -82964,7 +82976,7 @@ define("nls/gl/strings", {
   "GIT_TOAST_TITLE": "Explora as funcionalidades de Git en Phoenix Code",
   "GIT_TOAST_MESSAGE": "Fai clic na icona do panel de Git para xestionar o teu repositorio. Fai commits, envía (push), obtén (pull) e visualiza o historial do teu proxecto facilmente, todo nun mesmo lugar.<br><a href='https://docs.phcode.dev/docs/Features/git'>Aprende máis sobre o panel de Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vota polas funcionalidades que queres ver a continuación!",
-  "CMD_TOGGLE_TABBAR": "Barra de pestanas de ficheiros"
+  "CMD_USER_PROFILE": "Perfil de usuario"
 });
 /*
  * GNU AGPL-3.0 License
@@ -83416,6 +83428,7 @@ define("nls/hi/strings", {
   "CMD_HIDE_SIDEBAR": "साइडबार छिपाएँ",
   "CMD_SHOW_SIDEBAR": "साइडबार दिखाएँ",
   "CMD_TOGGLE_SIDEBAR": "साइडबार टॉगल करें",
+  "CMD_TOGGLE_TABBAR": "फ़ाइल टैब बार",
   "CMD_TOGGLE_PANELS": "पैनल टॉगल करें",
   "CMD_TOGGLE_PURE_CODE": "कोई विकर्षण नहीं",
   "CMD_TOGGLE_FULLSCREEN": "फ़ुलस्क्रीन",
@@ -84330,7 +84343,7 @@ define("nls/hi/strings", {
   "GIT_TOAST_TITLE": "फ़ीनिक्स कोड में Git सुविधाओं का अन्वेषण करें",
   "GIT_TOAST_MESSAGE": "अपने रिपॉजिटरी को प्रबंधित करने के लिए Git पैनल आइकन पर क्लिक करें। आसानी से कमिट करें, पुश करें, पुल करें और अपने प्रोजेक्ट का इतिहास देखें—सब एक ही स्थान पर।<br><a href='https://docs.phcode.dev/docs/Features/git'>Git पैनल के बारे में अधिक जानें →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "उन विशेषताओं के लिए वोट करें जिन्हें आप आगे देखना चाहते हैं!",
-  "CMD_TOGGLE_TABBAR": "फ़ाइल टैब बार"
+  "CMD_USER_PROFILE": "उपयोगकर्ता प्रोफ़ाइल"
 });
 /*
  * GNU AGPL-3.0 License
@@ -84782,6 +84795,7 @@ define("nls/hr/strings", {
   "CMD_HIDE_SIDEBAR": "Sakrij bočnu traku",
   "CMD_SHOW_SIDEBAR": "Prikaži bočnu traku",
   "CMD_TOGGLE_SIDEBAR": "Toggle bočnu traku",
+  "CMD_TOGGLE_TABBAR": "Traka kartica datoteka",
   "CMD_TOGGLE_PANELS": "Toggle panele",
   "CMD_TOGGLE_PURE_CODE": "Bez odvraćanja pažnje",
   "CMD_TOGGLE_FULLSCREEN": "Preko cijelog zaslona",
@@ -85696,7 +85710,7 @@ define("nls/hr/strings", {
   "GIT_TOAST_TITLE": "Istražite Git značajke u Phoenix Codeu",
   "GIT_TOAST_MESSAGE": "Kliknite ikonu Git panela za upravljanje svojim repozitorijem. Jednostavno potvrdite (commit), pošaljite (push), preuzmite (pull) i pregledajte povijest svog projekta - sve na jednom mjestu.<br><a href='https://docs.phcode.dev/docs/Features/git'>Saznajte više o Git panelu →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Glasajte za značajke koje želite vidjeti sljedeće!",
-  "CMD_TOGGLE_TABBAR": "Traka kartica datoteka"
+  "CMD_USER_PROFILE": "Korisnički profil"
 });
 /*
  * GNU AGPL-3.0 License
@@ -86175,6 +86189,7 @@ define("nls/hu/strings", {
   "CMD_HIDE_SIDEBAR": "Oldalsáv Elrejtése",
   "CMD_SHOW_SIDEBAR": "Oldalsáv Mutatása",
   "CMD_TOGGLE_SIDEBAR": "Oldalsáv ki/bekapcsolása",
+  "CMD_TOGGLE_TABBAR": "Fájlfül sáv",
   "CMD_TOGGLE_PANELS": "Panelek ki/bekapcsolása",
   "CMD_TOGGLE_PURE_CODE": "Figyelemelterelések nélkül",
   "CMD_TOGGLE_FULLSCREEN": "Teljes képernyő",
@@ -87089,7 +87104,7 @@ define("nls/hu/strings", {
   "GIT_TOAST_TITLE": "Fedezd fel a Git funkciókat a Phoenix Code-ban",
   "GIT_TOAST_MESSAGE": "Kattintson a Git panel ikonra a verziókövető rendszer kezeléséhez. Könnyedén végezhet commit, push és pull műveleteket, valamint megtekintheti a projekt előzményeit – mindezt egy helyen.<br><a href='https://docs.phcode.dev/docs/Features/git'>Tudj meg többet a Git panelről →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Szavazzon azokra a funkciókra, amelyeket a jövőben látni szeretne!",
-  "CMD_TOGGLE_TABBAR": "Fájlfül sáv"
+  "CMD_USER_PROFILE": "Felhasználói profil"
 });
 /*
  * GNU AGPL-3.0 License
@@ -87541,6 +87556,7 @@ define("nls/id/strings", {
   "CMD_HIDE_SIDEBAR": "Sembunyikan Sidebar",
   "CMD_SHOW_SIDEBAR": "Tampilkan Sidebar",
   "CMD_TOGGLE_SIDEBAR": "Buka/Tutup Bilah Samping",
+  "CMD_TOGGLE_TABBAR": "Bilah Tab Berkas",
   "CMD_TOGGLE_PANELS": "Buka/Tutup Panel",
   "CMD_TOGGLE_PURE_CODE": "Tanpa Distraksi",
   "CMD_TOGGLE_FULLSCREEN": "Layar Penuh",
@@ -88455,7 +88471,7 @@ define("nls/id/strings", {
   "GIT_TOAST_TITLE": "Jelajahi Fitur Git di Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klik ikon panel Git untuk mengelola repositori Anda. Lakukan commit, push, pull, dan lihat riwayat proyek Anda dengan mudah—semua di satu tempat.<br><a href='https://docs.phcode.dev/docs/Features/git'>Pelajari lebih lanjut tentang panel Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Pilih fitur yang ingin Anda lihat selanjutnya!",
-  "CMD_TOGGLE_TABBAR": "Bilah Tab Berkas"
+  "CMD_USER_PROFILE": "Profil Pengguna"
 });
 /*
  * GNU AGPL-3.0 License
@@ -88933,6 +88949,7 @@ define("nls/it/strings", {
   "CMD_HIDE_SIDEBAR": "Nascondi barra laterale",
   "CMD_SHOW_SIDEBAR": "Mostra barra laterale",
   "CMD_TOGGLE_SIDEBAR": "Apri/Chiudi la barra laterale",
+  "CMD_TOGGLE_TABBAR": "Barra delle schede dei file",
   "CMD_TOGGLE_PANELS": "Apri/Chiudi i pannelli",
   "CMD_TOGGLE_PURE_CODE": "Nessuna distrazione",
   "CMD_TOGGLE_FULLSCREEN": "Schermo intero",
@@ -89847,7 +89864,7 @@ define("nls/it/strings", {
   "GIT_TOAST_TITLE": "Esplora le funzionalità Git in Phoenix Code",
   "GIT_TOAST_MESSAGE": "Fai clic sull'icona del pannello Git per gestire il tuo repository. Esegui commit, push, pull e visualizza la cronologia del tuo progetto, tutto in un unico posto.<br><a href='https://docs.phcode.dev/docs/Features/git'>Scopri di più sul pannello Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vota per le funzionalità che desideri vedere in futuro!",
-  "CMD_TOGGLE_TABBAR": "Barra delle schede dei file"
+  "CMD_USER_PROFILE": "Profilo utente"
 });
 /*
  * GNU AGPL-3.0 License
@@ -90326,6 +90343,7 @@ define("nls/ja/strings", {
   "CMD_HIDE_SIDEBAR": "サイドバーを隠す",
   "CMD_SHOW_SIDEBAR": "サイドバーを表示する",
   "CMD_TOGGLE_SIDEBAR": "サイドバーの切り替え",
+  "CMD_TOGGLE_TABBAR": "ファイルタブバー",
   "CMD_TOGGLE_PANELS": "パネルの表示切り替え",
   "CMD_TOGGLE_PURE_CODE": "簡易表示",
   "CMD_TOGGLE_FULLSCREEN": "全画面表示",
@@ -91240,7 +91258,7 @@ define("nls/ja/strings", {
   "GIT_TOAST_TITLE": "Phoenix CodeのGit機能を試す",
   "GIT_TOAST_MESSAGE": "Gitパネルアイコンをクリックしてリポジトリを管理します。コミット、プッシュ、プル、プロジェクト履歴の表示をすべて1か所で行えます。<br><a href='https://docs.phcode.dev/docs/Features/git'>Gitパネルの詳細はこちら →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "次に実装してほしい機能に投票してください！",
-  "CMD_TOGGLE_TABBAR": "ファイルタブバー"
+  "CMD_USER_PROFILE": "ユーザープロフィール"
 });
 /*
  * GNU AGPL-3.0 License
@@ -91719,6 +91737,7 @@ define("nls/ko/strings", {
   "CMD_HIDE_SIDEBAR": "사이드 바 숨기기",
   "CMD_SHOW_SIDEBAR": "사이드 바 표시",
   "CMD_TOGGLE_SIDEBAR": "사이드바 표시 전환",
+  "CMD_TOGGLE_TABBAR": "파일 탭 표시줄",
   "CMD_TOGGLE_PANELS": "패널 표시 전환",
   "CMD_TOGGLE_PURE_CODE": "코드만 보기",
   "CMD_TOGGLE_FULLSCREEN": "전체 화면",
@@ -92633,7 +92652,7 @@ define("nls/ko/strings", {
   "GIT_TOAST_TITLE": "Phoenix Code의 Git 기능 살펴보기",
   "GIT_TOAST_MESSAGE": "Git 패널 아이콘을 클릭하여 저장소를 관리하세요. 커밋, 푸시, 풀, 프로젝트 기록 보기를 한 곳에서 간편하게 수행할 수 있습니다.<br><a href='https://docs.phcode.dev/docs/Features/git'>Git 패널에 대해 자세히 알아보기 →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "다음에 보고 싶은 기능에 투표하세요!",
-  "CMD_TOGGLE_TABBAR": "파일 탭 표시줄"
+  "CMD_USER_PROFILE": "사용자 프로필"
 });
 /*
  * GNU AGPL-3.0 License
@@ -93112,6 +93131,7 @@ define("nls/lv/strings", {
   "CMD_HIDE_SIDEBAR": "Slēpt sānjoslu",
   "CMD_SHOW_SIDEBAR": "Rādīt sānjoslu",
   "CMD_TOGGLE_SIDEBAR": "Rādīt/slēpt sānjoslu",
+  "CMD_TOGGLE_TABBAR": "Failu cilņu josla",
   "CMD_TOGGLE_PANELS": "Rādīt/slēpt paneļus",
   "CMD_TOGGLE_PURE_CODE": "Rādīt/slēpt palīgjoslas",
   "CMD_TOGGLE_FULLSCREEN": "Pilnekrāna režīms",
@@ -94026,7 +94046,7 @@ define("nls/lv/strings", {
   "GIT_TOAST_TITLE": "Izpētiet Git funkcijas Phoenix Code",
   "GIT_TOAST_MESSAGE": "Noklikšķiniet uz Git paneļa ikonas, lai pārvaldītu savu repozitoriju. Ērti veiciet commit, push, pull un skatiet sava projekta vēsturi — viss vienā vietā.<br><a href='https://docs.phcode.dev/docs/Features/git'>Uzziniet vairāk par Git paneli →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Nobalsot par funkcijām, kuras vēlaties redzēt nākamreiz!",
-  "CMD_TOGGLE_TABBAR": "Failu cilņu josla"
+  "CMD_USER_PROFILE": "Lietotāja profils"
 });
 /*
  * GNU AGPL-3.0 License
@@ -94478,6 +94498,7 @@ define("nls/ml/strings", {
   "CMD_HIDE_SIDEBAR": "സൈഡ്‌ബാർ മറയ്ക്കുക",
   "CMD_SHOW_SIDEBAR": "സൈഡ്‌ബാർ കാണിക്കുക",
   "CMD_TOGGLE_SIDEBAR": "സൈഡ്‌ബാർ ടോഗിൾ ചെയ്യുക",
+  "CMD_TOGGLE_TABBAR": "ഫയൽ ടാബ് ബാർ",
   "CMD_TOGGLE_PANELS": "പാനലുകൾ ടോഗിൾ ചെയ്യുക",
   "CMD_TOGGLE_PURE_CODE": "ശ്രദ്ധാശൈഥില്യങ്ങൾ ഒഴിവാക്കുക",
   "CMD_TOGGLE_FULLSCREEN": "പൂർണ്ണ സ്‌ക്രീൻ",
@@ -95392,7 +95413,7 @@ define("nls/ml/strings", {
   "GIT_TOAST_TITLE": "ഫീനിക്സ് കോഡിലെ ഗിറ്റ് സവിശേഷതകൾ പര്യവേക്ഷണം ചെയ്യുക",
   "GIT_TOAST_MESSAGE": "നിങ്ങളുടെ റെപ്പോസിറ്ററി കൈകാര്യം ചെയ്യാൻ ഗിറ്റ് പാനൽ ഐക്കണിൽ ക്ലിക്ക് ചെയ്യുക. എളുപ്പത്തിൽ കമ്മിറ്റ് ചെയ്യുക, പുഷ് ചെയ്യുക, പുൾ ചെയ്യുക, നിങ്ങളുടെ പ്രോജക്റ്റ് ചരിത്രം കാണുക—എല്ലാം ഒരിടത്ത്.<br><a href='https://docs.phcode.dev/docs/Features/git'>ഗിറ്റ് പാനലിനെക്കുറിച്ച് കൂടുതലറിയുക →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "നിങ്ങൾക്ക് അടുത്തതായി കാണാൻ ആഗ്രഹിക്കുന്ന സവിശേഷതകൾക്ക് വോട്ട് ചെയ്യുക!",
-  "CMD_TOGGLE_TABBAR": "ഫയൽ ടാബ് ബാർ"
+  "CMD_USER_PROFILE": "ഉപയോക്തൃ പ്രൊഫൈൽ"
 });
 /*
  * GNU AGPL-3.0 License
@@ -95844,6 +95865,7 @@ define("nls/nb/strings", {
   "CMD_HIDE_SIDEBAR": "Gjem sidestolpe",
   "CMD_SHOW_SIDEBAR": "Vis sidestolpe",
   "CMD_TOGGLE_SIDEBAR": "Bytt sidepanel",
+  "CMD_TOGGLE_TABBAR": "Filfanelinje",
   "CMD_TOGGLE_PANELS": "Bytt paneler",
   "CMD_TOGGLE_PURE_CODE": "Ingen distraksjoner",
   "CMD_TOGGLE_FULLSCREEN": "Fullskjerm",
@@ -96758,7 +96780,7 @@ define("nls/nb/strings", {
   "GIT_TOAST_TITLE": "Utforsk Git-funksjoner i Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klikk på Git-panelikonet for å administrere repositoriet ditt. Utfør commit, push, pull og se prosjektloggen din – alt på ett sted.<br><a href='https://docs.phcode.dev/docs/Features/git'>Lær mer om Git-panelet →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stem på funksjonene du ønsker å se neste!",
-  "CMD_TOGGLE_TABBAR": "Filfanelinje"
+  "CMD_USER_PROFILE": "Brukerprofil"
 });
 /*
  * GNU AGPL-3.0 License
@@ -97237,6 +97259,7 @@ define("nls/nl/strings", {
   "CMD_HIDE_SIDEBAR": "Verberg zijbalk",
   "CMD_SHOW_SIDEBAR": "Toon zijbalk",
   "CMD_TOGGLE_SIDEBAR": "Zijbalk wisselen",
+  "CMD_TOGGLE_TABBAR": "Tabbalk Bestand",
   "CMD_TOGGLE_PANELS": "Panelen wisselen",
   "CMD_TOGGLE_PURE_CODE": "Geen afleidingen",
   "CMD_TOGGLE_FULLSCREEN": "Volledig scherm",
@@ -98151,7 +98174,7 @@ define("nls/nl/strings", {
   "GIT_TOAST_TITLE": "Ontdek Git-functies in Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klik op het Git-paneelpictogram om uw repository te beheren. Commit, push, pull en bekijk uw projectgeschiedenis eenvoudig - alles op één plek.<br><a href='https://docs.phcode.dev/docs/Features/git'>Meer informatie over het Git-paneel →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stem op de functies die u graag wilt zien!",
-  "CMD_TOGGLE_TABBAR": "Tabbalk Bestand"
+  "CMD_USER_PROFILE": "Gebruikersprofiel"
 });
 /*
  * GNU AGPL-3.0 License
@@ -98630,6 +98653,7 @@ define("nls/pl/strings", {
   "CMD_HIDE_SIDEBAR": "Ukryj pasek boczny",
   "CMD_SHOW_SIDEBAR": "Pokaż pasek boczny",
   "CMD_TOGGLE_SIDEBAR": "Przełącz pasek boczny",
+  "CMD_TOGGLE_TABBAR": "Pasek kart plików",
   "CMD_TOGGLE_PANELS": "Przełącz panele",
   "CMD_TOGGLE_PURE_CODE": "Tryb bez przeszkadzania",
   "CMD_TOGGLE_FULLSCREEN": "Pełny ekran",
@@ -99544,7 +99568,7 @@ define("nls/pl/strings", {
   "GIT_TOAST_TITLE": "Poznaj funkcje Gita w Phoenix Code",
   "GIT_TOAST_MESSAGE": "Kliknij ikonę panelu Git, aby zarządzać swoim repozytorium. Łatwo zatwierdzaj, przesyłaj, pobieraj i przeglądaj historię swojego projektu — wszystko w jednym miejscu.<br><a href='https://docs.phcode.dev/docs/Features/git'>Dowiedz się więcej o panelu Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Zagłosuj na funkcje, które chcesz zobaczyć w przyszłości!",
-  "CMD_TOGGLE_TABBAR": "Pasek kart plików"
+  "CMD_USER_PROFILE": "Profil użytkownika"
 });
 /*
  * GNU AGPL-3.0 License
@@ -100023,6 +100047,7 @@ define("nls/pt-br/strings", {
   "CMD_HIDE_SIDEBAR": "Esconder barra lateral",
   "CMD_SHOW_SIDEBAR": "Mostrar barra lateral",
   "CMD_TOGGLE_SIDEBAR": "Alternar Barra Lateral",
+  "CMD_TOGGLE_TABBAR": "Barra de Abas de Arquivos",
   "CMD_TOGGLE_PANELS": "Alternar Painéis",
   "CMD_TOGGLE_PURE_CODE": "Sem Distração",
   "CMD_TOGGLE_FULLSCREEN": "Tela Cheia",
@@ -100937,7 +100962,7 @@ define("nls/pt-br/strings", {
   "GIT_TOAST_TITLE": "Explore os Recursos do Git no Phoenix Code",
   "GIT_TOAST_MESSAGE": "Clique no ícone do painel Git para gerenciar seu repositório. Faça commits, pushes, pulls e visualize o histórico do seu projeto com facilidade — tudo em um só lugar.<br><a href='https://docs.phcode.dev/docs/Features/git'>Saiba mais sobre o painel Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote nos recursos que você quer ver em seguida!",
-  "CMD_TOGGLE_TABBAR": "Barra de Abas de Arquivos"
+  "CMD_USER_PROFILE": "Perfil do Usuário"
 });
 /*
  * GNU AGPL-3.0 License
@@ -101414,6 +101439,7 @@ define("nls/pt-pt/strings", {
   "CMD_HIDE_SIDEBAR": "Esconder barra lateral",
   "CMD_SHOW_SIDEBAR": "Mostrar barra lateral",
   "CMD_TOGGLE_SIDEBAR": "Alternar Barra Lateral",
+  "CMD_TOGGLE_TABBAR": "Barra de Separadores de Ficheiros",
   "CMD_TOGGLE_PANELS": "Alternar Painéis",
   "CMD_TOGGLE_PURE_CODE": "Sem Distrações",
   "CMD_TOGGLE_FULLSCREEN": "Ecrã Inteiro",
@@ -102328,7 +102354,7 @@ define("nls/pt-pt/strings", {
   "GIT_TOAST_TITLE": "Explore as funcionalidades do Git no Phoenix Code",
   "GIT_TOAST_MESSAGE": "Clique no ícone do painel Git para gerir o seu repositório. Efetue commits, pushes, pulls e veja o histórico do seu projeto com facilidade — tudo num só lugar.<br><a href='https://docs.phcode.dev/docs/Features/git'>Saiba mais sobre o painel Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote nas funcionalidades que quer ver a seguir!",
-  "CMD_TOGGLE_TABBAR": "Barra de Separadores de Ficheiros"
+  "CMD_USER_PROFILE": "Perfil do Utilizador"
 });
 /*
  * GNU AGPL-3.0 License
@@ -102805,6 +102831,7 @@ define("nls/ro/strings", {
   "CMD_HIDE_SIDEBAR": "Ascunde bara laterală",
   "CMD_SHOW_SIDEBAR": "Arată bara laterală",
   "CMD_TOGGLE_SIDEBAR": "Comută bara laterală",
+  "CMD_TOGGLE_TABBAR": "Bară Tab-uri Fișiere",
   "CMD_TOGGLE_PANELS": "Comută panourile",
   "CMD_TOGGLE_PURE_CODE": "Fără distragere",
   "CMD_TOGGLE_FULLSCREEN": "Ecran complet",
@@ -103719,7 +103746,7 @@ define("nls/ro/strings", {
   "GIT_TOAST_TITLE": "Explorați funcțiile Git în Phoenix Code",
   "GIT_TOAST_MESSAGE": "Faceți clic pe pictograma panoului Git pentru a vă gestiona depozitul. Efectuați ușor commit, push, pull și vizualizați istoricul proiectului dvs. - totul într-un singur loc.<br><a href='https://docs.phcode.dev/docs/Features/git'>Aflați mai multe despre panoul Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Votează pentru funcționalitățile pe care dorești să le vezi în continuare!",
-  "CMD_TOGGLE_TABBAR": "Bară Tab-uri Fișiere"
+  "CMD_USER_PROFILE": "Profil utilizator"
 });
 /*
  * GNU AGPL-3.0 License
@@ -105826,6 +105853,7 @@ define("nls/ru/strings", {
   "CMD_HIDE_SIDEBAR": "Скрыть боковую панель",
   "CMD_SHOW_SIDEBAR": "Показать боковую панель",
   "CMD_TOGGLE_SIDEBAR": "Переключить боковую панель",
+  "CMD_TOGGLE_TABBAR": "Панель вкладок файлов",
   "CMD_TOGGLE_PANELS": "Переключить панели",
   "CMD_TOGGLE_PURE_CODE": "Без отвлечений",
   "CMD_TOGGLE_FULLSCREEN": "Полноэкранный режим",
@@ -106740,7 +106768,7 @@ define("nls/ru/strings", {
   "GIT_TOAST_TITLE": "Возможности Git в Phoenix Code",
   "GIT_TOAST_MESSAGE": "Нажмите на значок панели Git для управления вашим репозиторием. Легко выполняйте коммиты, отправляйте (push), получайте (pull) изменения и просматривайте историю вашего проекта — все в одном месте.<br><a href='https://docs.phcode.dev/docs/Features/git'>Узнать больше о панели Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Проголосуйте за функции, которые вы хотите увидеть в будущем!",
-  "CMD_TOGGLE_TABBAR": "Панель вкладок файлов"
+  "CMD_USER_PROFILE": "Профиль пользователя"
 });
 /*
  * GNU AGPL-3.0 License
@@ -107219,6 +107247,7 @@ define("nls/sk/strings", {
   "CMD_HIDE_SIDEBAR": "Skryť bočný panel",
   "CMD_SHOW_SIDEBAR": "Zobraziť bočný panel",
   "CMD_TOGGLE_SIDEBAR": "Prepnúť bočný panel",
+  "CMD_TOGGLE_TABBAR": "Panel so záložkami súborov",
   "CMD_TOGGLE_PANELS": "Prepnúť panely",
   "CMD_TOGGLE_PURE_CODE": "Bez rušenia",
   "CMD_TOGGLE_FULLSCREEN": "Celá obrazovka",
@@ -108133,7 +108162,7 @@ define("nls/sk/strings", {
   "GIT_TOAST_TITLE": "Preskúmajte funkcie Gitu v Phoenix Code",
   "GIT_TOAST_MESSAGE": "Kliknite na ikonu panela Git pre správu vášho repozitára. Jednoducho commitujte, pushujte, pullujte a prezerajte si históriu vášho projektu – všetko na jednom mieste.<br><a href='https://docs.phcode.dev/docs/Features/git'>Zistite viac o paneli Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Hlasujte za funkcie, ktoré chcete vidieť v ďalšej verzii!",
-  "CMD_TOGGLE_TABBAR": "Panel so záložkami súborov"
+  "CMD_USER_PROFILE": "Profil používateľa"
 });
 /*
  * GNU AGPL-3.0 License
@@ -108611,6 +108640,7 @@ define("nls/sr/strings", {
   "CMD_HIDE_SIDEBAR": "Сакриј споредну траку",
   "CMD_SHOW_SIDEBAR": "Прикажи споредну траку",
   "CMD_TOGGLE_SIDEBAR": "Укључи/искључи бочну траку",
+  "CMD_TOGGLE_TABBAR": "Трака са картицама датотека",
   "CMD_TOGGLE_PANELS": "Укључи/искључи панеле",
   "CMD_TOGGLE_PURE_CODE": "Без ометања",
   "CMD_TOGGLE_FULLSCREEN": "Цео екран",
@@ -109525,7 +109555,7 @@ define("nls/sr/strings", {
   "GIT_TOAST_TITLE": "Истражите Гит функције у Phoenix Code-у",
   "GIT_TOAST_MESSAGE": "Кликните на икону Гит панела да бисте управљали својим спремиштем. Лако направите commit, push, pull и погледајте историју свог пројекта — све на једном месту.<br><a href='https://docs.phcode.dev/docs/Features/git'>Сазнајте више о Гит панелу →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Гласајте за функције које желите да видите у будућности!",
-  "CMD_TOGGLE_TABBAR": "Трака са картицама датотека"
+  "CMD_USER_PROFILE": "Кориснички профил"
 });
 /*
  * GNU AGPL-3.0 License
@@ -110087,6 +110117,7 @@ define("nls/sv/strings", {
   "CMD_HIDE_SIDEBAR": "Dölj sidomeny",
   "CMD_SHOW_SIDEBAR": "Visa sidomeny",
   "CMD_TOGGLE_SIDEBAR": "Växla på/av sidomeny",
+  "CMD_TOGGLE_TABBAR": "Flikfält för filer",
   "CMD_TOGGLE_PANELS": "Växla på/av paneler",
   "CMD_TOGGLE_PURE_CODE": "Inga distraktioner",
   "CMD_TOGGLE_FULLSCREEN": "Helskärm",
@@ -111001,7 +111032,7 @@ define("nls/sv/strings", {
   "GIT_TOAST_TITLE": "Utforska Git-funktioner i Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klicka på Git-panelens ikon för att hantera din repository. Committa, pusha, pulla och se din projekthistorik enkelt – allt på ett ställe.<br><a href='https://docs.phcode.dev/docs/Features/git'>Läs mer om Git-panelen →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Rösta på funktionerna du vill se härnäst!",
-  "CMD_TOGGLE_TABBAR": "Flikfält för filer"
+  "CMD_USER_PROFILE": "Användarprofil"
 });
 /*
  * GNU AGPL-3.0 License
@@ -111480,6 +111511,7 @@ define("nls/tr/strings", {
   "CMD_HIDE_SIDEBAR": "Kenar Çubuğunu Gizle",
   "CMD_SHOW_SIDEBAR": "Kenar Çubuğunu Göster",
   "CMD_TOGGLE_SIDEBAR": "Kenar Çubuğunu Aç/Kapat",
+  "CMD_TOGGLE_TABBAR": "Dosya Sekme Çubuğu",
   "CMD_TOGGLE_PANELS": "Panelleri Aç/Kapat",
   "CMD_TOGGLE_PURE_CODE": "Dikkat Dağıtıcı Olmadan",
   "CMD_TOGGLE_FULLSCREEN": "Tam Ekran",
@@ -112394,7 +112426,7 @@ define("nls/tr/strings", {
   "GIT_TOAST_TITLE": "Phoenix Code'da Git Özelliklerini Keşfedin",
   "GIT_TOAST_MESSAGE": "Deponuzu yönetmek için Git paneli simgesine tıklayın. Proje geçmişinizi kolayca işleyin, gönderin, çekin ve görüntüleyin—hepsi tek bir yerde.<br><a href='https://docs.phcode.dev/docs/Features/git'>Git paneli hakkında daha fazla bilgi edinin →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Gelecekte görmek istediğiniz özellikler için oy verin!",
-  "CMD_TOGGLE_TABBAR": "Dosya Sekme Çubuğu"
+  "CMD_USER_PROFILE": "Kullanıcı Profili"
 });
 /*
  * GNU AGPL-3.0 License
@@ -112873,6 +112905,7 @@ define("nls/uk/strings", {
   "CMD_HIDE_SIDEBAR": "Приховати бокову панель",
   "CMD_SHOW_SIDEBAR": "Показати бокову панель",
   "CMD_TOGGLE_SIDEBAR": "Перемкнути бічну панель",
+  "CMD_TOGGLE_TABBAR": "Панель вкладок файлів",
   "CMD_TOGGLE_PANELS": "Перемкнути панелі",
   "CMD_TOGGLE_PURE_CODE": "Без відволікань",
   "CMD_TOGGLE_FULLSCREEN": "Повноекранний режим",
@@ -113787,7 +113820,7 @@ define("nls/uk/strings", {
   "GIT_TOAST_TITLE": "Ознайомтеся з функціями Git у Phoenix Code",
   "GIT_TOAST_MESSAGE": "Натисніть піктограму панелі Git, щоб керувати вашим репозиторієм. Легко виконуйте коміти, пуші, пули та переглядайте історію вашого проєкту — все в одному місці.<br><a href='https://docs.phcode.dev/docs/Features/git'>Дізнайтеся більше про панель Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Проголосуйте за функції, які ви хочете бачити наступними!",
-  "CMD_TOGGLE_TABBAR": "Панель вкладок файлів"
+  "CMD_USER_PROFILE": "Профіль користувача"
 });
 /*
  * GNU AGPL-3.0 License
@@ -114266,6 +114299,7 @@ define("nls/ur/strings", {
   "CMD_HIDE_SIDEBAR": "سائڈبار چھپائیں",
   "CMD_SHOW_SIDEBAR": "سائڈبار دکھائیں",
   "CMD_TOGGLE_SIDEBAR": "سائڈبار ٹوگل کریں",
+  "CMD_TOGGLE_TABBAR": "فائل ٹیب بار",
   "CMD_TOGGLE_PANELS": "پینلز ٹوگل کریں",
   "CMD_TOGGLE_PURE_CODE": "کوئی خلفشار نہیں",
   "CMD_TOGGLE_FULLSCREEN": "فل سکرین",
@@ -115180,7 +115214,7 @@ define("nls/ur/strings", {
   "GIT_TOAST_TITLE": "فینکس کوڈ میں گٹ فیچرز دریافت کریں",
   "GIT_TOAST_MESSAGE": "اپنی ذخیرہ گاہ (repository) کو منظم کرنے کے لیے گٹ پینل آئیکن پر کلک کریں۔ آسانی سے کامٹ، پش، پل کریں، اور اپنے پروجیکٹ کی تاریخ دیکھیں—سب ایک ہی جگہ پر۔<br><a href='https://docs.phcode.dev/docs/Features/git'>گٹ پینل کے بارے میں مزید جانیں →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "اپنی پسندیدہ خصوصیات کے لیے ووٹ دیں!",
-  "CMD_TOGGLE_TABBAR": "فائل ٹیب بار"
+  "CMD_USER_PROFILE": "صارف کا پروفائل"
 });
 /*
  * GNU AGPL-3.0 License
@@ -115689,6 +115723,7 @@ define("nls/zh-cn/strings", {
   "CMD_HIDE_SIDEBAR": "隐藏边栏",
   "CMD_SHOW_SIDEBAR": "显示边栏",
   "CMD_TOGGLE_SIDEBAR": "显示/隐藏边栏",
+  "CMD_TOGGLE_TABBAR": "文件标签栏",
   "CMD_TOGGLE_PANELS": "显示/隐藏面板",
   "CMD_TOGGLE_PURE_CODE": "无干扰模式",
   "CMD_TOGGLE_FULLSCREEN": "全屏",
@@ -116603,7 +116638,7 @@ define("nls/zh-cn/strings", {
   "GIT_TOAST_TITLE": "探索 Phoenix Code 中的 Git 功能",
   "GIT_TOAST_MESSAGE": "点击 Git 面板图标即可管理您的代码仓库。轻松提交、推送、拉取和查看项目历史记录，一切尽在一处。<br><a href='https://docs.phcode.dev/docs/Features/git'>了解更多关于 Git 面板的信息 →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "为您希望看到的下一个功能投票！",
-  "CMD_TOGGLE_TABBAR": "文件标签栏"
+  "CMD_USER_PROFILE": "用户资料"
 });
 /*
  * GNU AGPL-3.0 License
@@ -117082,6 +117117,7 @@ define("nls/zh-tw/strings", {
   "CMD_HIDE_SIDEBAR": "隱藏側欄",
   "CMD_SHOW_SIDEBAR": "顯示側欄",
   "CMD_TOGGLE_SIDEBAR": "切換側邊欄",
+  "CMD_TOGGLE_TABBAR": "檔案標籤列",
   "CMD_TOGGLE_PANELS": "切換面板",
   "CMD_TOGGLE_PURE_CODE": "專注模式",
   "CMD_TOGGLE_FULLSCREEN": "全螢幕",
@@ -117996,7 +118032,7 @@ define("nls/zh-tw/strings", {
   "GIT_TOAST_TITLE": "在 Phoenix Code 中探索 Git 功能",
   "GIT_TOAST_MESSAGE": "按一下 Git 面板圖示即可管理您的儲存庫。輕鬆提交、推送、提取和檢視您的專案歷史記錄，一切盡在掌握之中。<br><a href='https://docs.phcode.dev/docs/Features/git'>深入瞭解 Git 面板 →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "投票選出您希望看到的下個功能！",
-  "CMD_TOGGLE_TABBAR": "檔案標籤列"
+  "CMD_USER_PROFILE": "使用者設定檔"
 });
 /*
  * GNU AGPL-3.0 License
