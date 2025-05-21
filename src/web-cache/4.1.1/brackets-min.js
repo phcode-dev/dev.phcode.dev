@@ -45386,9 +45386,9 @@ define("extensionsIntegrated/TabBar/more-options", function (require, exports, m
         Strings.CLOSE_ALL_TABS,
         Strings.CLOSE_UNMODIFIED_TABS,
         "---",
-        Strings.RENAME_TAB_FILE,
-        Strings.DELETE_TAB_FILE,
-        Strings.SHOW_IN_FILE_TREE,
+        Strings.CMD_FILE_RENAME,
+        Strings.CMD_FILE_DELETE,
+        Strings.CMD_SHOW_IN_TREE,
         "---",
         Strings.REOPEN_CLOSED_FILE
     ];
@@ -45655,13 +45655,13 @@ define("extensionsIntegrated/TabBar/more-options", function (require, exports, m
         case Strings.CLOSE_UNMODIFIED_TABS:
             handleCloseUnmodifiedTabs(paneId);
             break;
-        case Strings.RENAME_TAB_FILE:
+        case Strings.CMD_FILE_RENAME:
             handleFileRename(filePath);
             break;
-        case Strings.DELETE_TAB_FILE:
+        case Strings.CMD_FILE_DELETE:
             handleFileDelete(filePath);
             break;
-        case Strings.SHOW_IN_FILE_TREE:
+        case Strings.CMD_SHOW_IN_TREE:
             handleShowInFileTree(filePath);
             break;
         case Strings.REOPEN_CLOSED_FILE:
@@ -103942,9 +103942,6 @@ define("nls/root/strings", {
     "CLOSE_ALL_TABS": "Close All Tabs",
     "CLOSE_UNMODIFIED_TABS": "Close Unmodified Tabs",
     "REOPEN_CLOSED_FILE": "Reopen Closed File",
-    "RENAME_TAB_FILE": "Rename File",
-    "DELETE_TAB_FILE": "Delete File",
-    "SHOW_IN_FILE_TREE": "Show in File Tree",
 
     // CodeInspection: errors/warnings
     "ERRORS_NO_FILE": "No File Open",
