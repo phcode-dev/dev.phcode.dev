@@ -38104,23 +38104,24 @@ define("extensionsIntegrated/Phoenix/main", function (require, exports, module) 
         Strings      = require("strings"),
         Dialogs      = require("widgets/Dialogs"),
         NotificationUI  = require("widgets/NotificationUI"),
-        DefaultDialogs = require("widgets/DefaultDialogs");
+        DefaultDialogs = require("widgets/DefaultDialogs"),
+        ProfileMenu = require("./profile-menu");
 
     const PERSIST_STORAGE_DIALOG_DELAY_SECS = 60000;
     let $icon;
 
     function _addToolbarIcon() {
-        const helpButtonID = "help-button";
+        const helpButtonID = "user-profile-button";
         $icon = $("<a>")
             .attr({
                 id: helpButtonID,
                 href: "#",
-                class: "help",
-                title: Strings.CMD_SUPPORT
+                class: "user",
+                title: Strings.CMD_USER_PROFILE
             })
             .appendTo($("#main-toolbar .bottom-buttons"));
         $icon.on('click', ()=>{
-            Phoenix.app.openURLInDefaultBrowser(brackets.config.support_url);
+            ProfileMenu.init();
         });
     }
     function _showUnSupportedBrowserDialogue() {
@@ -38837,6 +38838,284 @@ define("extensionsIntegrated/Phoenix/newly-added-features", function (require, e
             _showNewUpdatesIfPresent();
         }
     };
+});
+
+define("extensionsIntegrated/Phoenix/profile-menu", function (require, exports, module) {
+    const Mustache = require("thirdparty/mustache/mustache");
+    const PopUpManager = require("widgets/PopUpManager");
+
+    // HTML templates
+    const loginTemplate = `<div class="profile-popup">
+    <div class="popup-header">
+        <h1 class="popup-title">{{welcomeTitle}}</h1>
+    </div>
+    <div class="popup-body">
+        <button id="phoenix-signin-btn" class="btn btn-primary">
+            <i class="fa fa-sign-in-alt"></i>
+            {{signInBtnText}}
+        </button>
+        <div class="support-link">
+            <button id="phoenix-support-btn" class="btn btn-link">
+                <i class="fa fa-question-circle"></i>
+                {{supportBtnText}}
+            </button>
+        </div>
+    </div>
+</div>
+`;
+    const profileTemplate = `<div class="profile-popup">
+    <div class="popup-header">
+        <div class="user-profile-header">
+            <div class="user-avatar">
+                {{initials}}
+            </div>
+            <div class="user-info">
+                <div class="user-name">{{userName}}</div>
+                <div class="user-plan">{{planName}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="popup-body">
+        <div class="quota-section">
+            <div class="quota-header">
+                <span>{{quotaLabel}}</span>
+                <span>{{quotaUsed}} / {{quotaTotal}} {{quotaUnit}}</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: {{quotaPercent}}%;"></div>
+            </div>
+        </div>
+
+        <button id="phoenix-account-btn" class="btn btn-default menu-button">
+            <i class="fa fa-user"></i>
+            {{accountBtnText}}
+        </button>
+
+        <button id="phoenix-support-btn" class="btn btn-default menu-button">
+            <i class="fa fa-question-circle"></i>
+            {{supportBtnText}}
+        </button>
+
+        <button id="phoenix-signout-btn" class="btn btn-default menu-button signout">
+            <i class="fa fa-sign-out-alt"></i>
+            {{signOutBtnText}}
+        </button>
+    </div>
+</div>
+`;
+
+    // for the popup DOM element
+    let $popup = null;
+
+    // this is to track whether the popup is visible or not
+    let isPopupVisible = false;
+
+    // if user is logged in we show the profile menu, otherwise we show the login menu
+    const isLoggedIn = false;
+
+    const defaultLoginData = {
+        welcomeTitle: "Welcome to Phoenix Code",
+        signInBtnText: "Sign in to your account",
+        supportBtnText: "Contact support"
+    };
+
+    const defaultProfileData = {
+        initials: "CA",
+        userName: "Charly A.",
+        planName: "Paid Plan",
+        quotaLabel: "AI quota used",
+        quotaUsed: "7,000",
+        quotaTotal: "10,000",
+        quotaUnit: "tokens",
+        quotaPercent: 70,
+        accountBtnText: "Account details",
+        supportBtnText: "Contact support",
+        signOutBtnText: "Sign out"
+    };
+
+    function _handleSignInBtnClick() {
+        console.log("User clicked sign in button");
+    }
+
+    function _handleSignOutBtnClick() {
+        console.log("User clicked sign out");
+    }
+
+    function _handleContactSupportBtnClick() {
+        Phoenix.app.openURLInDefaultBrowser(brackets.config.support_url);
+    }
+
+    function _handleAccountDetailsBtnClick() {
+        console.log("User clicked account details");
+    }
+
+    /**
+     * Close the popup if it's open
+     * this is called at various instances like when the user click on the profile icon even if the popup is open
+     * or when user clicks somewhere else on the document
+     */
+    function closePopup() {
+        if ($popup) {
+            PopUpManager.removePopUp($popup);
+            $popup = null;
+            isPopupVisible = false;
+        }
+    }
+
+    /**
+     * this function is to position the popup near the profile button
+     */
+    function positionPopup() {
+        const $profileButton = $("#user-profile-button");
+
+        if ($profileButton.length && $popup) {
+            const buttonPos = $profileButton.offset();
+            const popupWidth = $popup.outerWidth();
+            const windowWidth = $(window).width();
+
+            // pos above the profile button
+            let top = buttonPos.top - $popup.outerHeight() - 10;
+
+            // If popup would go off the right edge of the window, align right edge of popup with right edge of button
+            let left = Math.min(
+                buttonPos.left - popupWidth + $profileButton.outerWidth(),
+                windowWidth - popupWidth - 10
+            );
+
+            // never go off left edge
+            left = Math.max(10, left);
+
+            $popup.css({
+                top: top + "px",
+                left: left + "px"
+            });
+        }
+    }
+
+    /**
+     * Shows the sign-in popup when the user is not logged in
+     * @param {Object} loginData - Data to populate the template (optional)
+     */
+    function showLoginPopup(loginData) {
+        // If popup is already visible, just close it
+        if (isPopupVisible) {
+            closePopup();
+            return;
+        }
+
+        // Merge provided data with defaults
+        const templateData = $.extend({}, defaultLoginData, loginData || {});
+
+        // create the popup element
+        closePopup(); // close any existing popup first
+
+        // Render template with data
+        const renderedTemplate = Mustache.render(loginTemplate, templateData);
+        $popup = $(renderedTemplate);
+
+        $("body").append($popup);
+        isPopupVisible = true;
+
+        positionPopup();
+
+        PopUpManager.addPopUp($popup, function() {
+            $popup.remove();
+            $popup = null;
+            isPopupVisible = false;
+        }, true, { closeCurrentPopups: true });
+
+        // event handlers for buttons
+        $popup.find("#phoenix-signin-btn").on("click", function () {
+            _handleSignInBtnClick();
+            closePopup();
+        });
+
+        $popup.find("#phoenix-support-btn").on("click", function () {
+            _handleContactSupportBtnClick();
+            closePopup();
+        });
+
+        // handle window resize to reposition popup
+        $(window).on("resize.profilePopup", function () {
+            if (isPopupVisible) {
+                positionPopup();
+            }
+        });
+    }
+
+    /**
+     * Shows the user profile popup when the user is logged in
+     * @param {Object} profileData - Data to populate the template (optional)
+     */
+    function showProfilePopup(profileData) {
+        // If popup is already visible, just close it
+        if (isPopupVisible) {
+            closePopup();
+            return;
+        }
+
+        // Merge provided data with defaults
+        const templateData = $.extend({}, defaultProfileData, profileData || {});
+
+        closePopup();
+
+        // Render template with data
+        const renderedTemplate = Mustache.render(profileTemplate, templateData);
+        $popup = $(renderedTemplate);
+
+        $("body").append($popup);
+        isPopupVisible = true;
+        positionPopup();
+
+        PopUpManager.addPopUp($popup, function() {
+            $popup.remove();
+            $popup = null;
+            isPopupVisible = false;
+        }, true, { closeCurrentPopups: true });
+
+        $popup.find("#phoenix-account-btn").on("click", function () {
+            _handleAccountDetailsBtnClick();
+            closePopup();
+        });
+
+        $popup.find("#phoenix-support-btn").on("click", function () {
+            _handleContactSupportBtnClick();
+            closePopup();
+        });
+
+        $popup.find("#phoenix-signout-btn").on("click", function () {
+            _handleSignOutBtnClick();
+            closePopup();
+        });
+
+        // handle window resize to reposition popup
+        $(window).on("resize.profilePopup", function () {
+            if (isPopupVisible) {
+                positionPopup();
+            }
+        });
+    }
+
+    /**
+     * Toggle the profile popup based on the user's login status
+     * this function is called inside the src/extensionsIntegrated/Phoenix/main.js when user clicks on the profile icon
+     * @param {Object} data - Data to populate the templates (optional)
+     */
+    function init(data) {
+        // check if the popup is already visible or not. if visible close it
+        if (isPopupVisible) {
+            closePopup();
+            return;
+        }
+
+        if (isLoggedIn) {
+            showProfilePopup(data);
+        } else {
+            showLoginPopup(data);
+        }
+    }
+
+    exports.init = init;
 });
 
 /*
@@ -104135,6 +104414,7 @@ define("nls/root/strings", {
     "CMD_AUTO_UPDATE": "Auto Update",
     "CMD_HOW_TO_USE_BRACKETS": "How to Use {APP_NAME}",
     "CMD_SUPPORT": "{APP_NAME} Support",
+    "CMD_USER_PROFILE": "User Profile",
     "CMD_DOCS": "Help, Getting Started",
     "CMD_SUGGEST": "Suggest a Feature",
     "CMD_REPORT_ISSUE": "Report Issue",
