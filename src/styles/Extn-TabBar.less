@@ -80,7 +80,7 @@
 .tab {
     display: inline-flex;
     align-items: center;
-    padding: 0 0.5rem 0 0.85rem;
+    padding: 0 0.5rem 0 0.6rem;
     height: 100%;
     background-color: #f1f1f1;
     border-right: 1px solid rgba(0, 0, 0, 0.05);
@@ -108,6 +108,7 @@
     display: flex;
     align-items: center;
     margin-bottom: -2px;
+    margin-left: 0.7rem;
 }
 
 .tab-name {
@@ -136,6 +137,8 @@
     font-size: 0.7rem;
     opacity: 0.7;
     font-weight: normal;
+    position: relative;
+    top: 0.1rem;
 }
 
 .tab.active {
@@ -191,13 +194,17 @@
     background-color: #666;
 }
 
-.tab.dirty::before {
+.tab::before {
     content: "•";
-    color: #888;
-    font-size: 1.6rem;
+    color: transparent;
+    font-size: 1.5rem;
     position: absolute;
-    left: 0.75rem;
-    top: 0.25rem;
+    left: 0.4rem;
+    top: 0.33rem;
+}
+
+.tab.dirty::before {
+    color: #888;
 }
 
 .dark .tab.dirty::before {
@@ -205,12 +212,12 @@
 }
 
 .tab.dirty .tab-icon {
-    margin-left: 0.8rem;
+    margin-left: 0.7rem;
 }
 
 .tab-close {
     font-size: 0.75rem;
-    padding: 0.08rem 0.4rem;
+    padding: 0.1rem 0.4rem;
     margin-left: 0.25rem;
     color: #666;
     transition: all 0.2s ease;
@@ -302,30 +309,30 @@
 .tab-drag-indicator {
     position: fixed;
     width: 2px;
-    background-color: #0078D7;
+    background-color: rgba(0, 120, 215, 0.7);
     pointer-events: none;
     z-index: 10001;
-    box-shadow: 0 0 3px rgba(0, 120, 215, 0.5);
+    box-shadow: 0 0 3px rgba(0, 120, 215, 0.4);
     display: none;
-    animation: pulse 1.5s infinite;
+    animation: pulse 2s infinite;
 }
 
 .dark .tab-drag-indicator {
-    background-color: #75BEFF;
-    box-shadow: 0 0 3px rgba(117, 190, 255, 0.5);
+    background-color: rgba(117, 190, 255, 0.7);
+    box-shadow: 0 0 3px rgba(117, 190, 255, 0.4);
 }
 
 @keyframes pulse {
     0% {
-        opacity: 0.7;
+        opacity: 0.5;
     }
 
     50% {
-        opacity: 1;
+        opacity: 0.7;
     }
 
     100% {
-        opacity: 0.7;
+        opacity: 0.5;
     }
 }
 
@@ -408,4 +415,35 @@
 .dropdown-tab-item.placeholder-item .tab-name-container,
 .tab-name-container.placeholder-name {
     font-style: italic;
+}
+
+/* this is for invisible extended drag zone for tabs */
+#tab-drag-extended-zone {
+    background-color: transparent;
+    pointer-events: all;
+}
+
+/* ------ for the git status markers -------------- */
+.tab.git-modified > .tab-icon:before {
+    content: "|";
+    color: #f1ae1c;
+    position: absolute;
+    margin-left: -4px;
+    margin-bottom: 5px;
+}
+
+.dark .tab.git-modified > .tab-icon:before {
+    color: #E3B551;
+}
+
+.tab.git-new > .tab-icon:before {
+    content: "|";
+    color: #69a01f;
+    position: absolute;
+    margin-left: -4px;
+    margin-bottom: 5px;
+}
+
+.dark .tab.git-new > .tab-icon:before {
+    color: #91CC41;
 }

@@ -43672,7 +43672,6 @@ define("extensionsIntegrated/RemoteFileAdapter/main", function (require, exports
  *
  */
 
-
 /* This file houses the functionality for dragging and dropping tabs */
 /* eslint-disable no-invalid-this */
 define("extensionsIntegrated/TabBar/drag-drop", function (require, exports, module) {
@@ -43694,7 +43693,6 @@ define("extensionsIntegrated/TabBar/drag-drop", function (require, exports, modu
     let scrollInterval = null;
     let dragSourcePane = null;
 
-
     /**
      * Initialize drag and drop functionality for tab bars
      * This is called from `main.js`
@@ -43713,13 +43711,12 @@ define("extensionsIntegrated/TabBar/drag-drop", function (require, exports, modu
         // Create drag indicator element if it doesn't exist
         if (!dragIndicator) {
             dragIndicator = $('<div class="tab-drag-indicator"></div>');
-            $('body').append(dragIndicator);
+            $("body").append(dragIndicator);
         }
 
         // add initialization for empty panes
         initEmptyPaneDropTargets();
     }
-
 
     /**
      * Setup drag and drop for a specific tab bar
@@ -43747,7 +43744,6 @@ define("extensionsIntegrated/TabBar/drag-drop", function (require, exports, modu
         $tabs.on("dragend", handleDragEnd);
     }
 
-
     /**
      * Setup container-level drag events
      * This enables dropping tabs in empty spaces and auto-scrolling
@@ -43757,12 +43753,62 @@ define("extensionsIntegrated/TabBar/drag-drop", function (require, exports, modu
      */
     function setupContainerDrag(containerSelector) {
         const $container = $(containerSelector);
+        let lastKnownMousePosition = { x: 0 };
+        const boundaryTolerance = 50; // px tolerance outside the container that still allows dropping
+
+        // create a larger drop zone around the container
+        // this is done to make sure that even if the tab is not exactly over the tab bar, we still allow drag-drop
+        const createOuterDropZone = () => {
+            if (draggedTab && !$("#tab-drag-extended-zone").length) {
+                // an invisible larger zone around the container that can still receive drops
+                const containerRect = $container[0].getBoundingClientRect();
+                const $outerZone = $('<div id="tab-drag-extended-zone"></div>').css({
+                    position: "fixed",
+                    top: containerRect.top - boundaryTolerance,
+                    left: containerRect.left - boundaryTolerance,
+                    width: containerRect.width + boundaryTolerance * 2,
+                    height: containerRect.height + boundaryTolerance * 2,
+                    zIndex: 9999,
+                    pointerEvents: "all"
+                });
+
+                $("body").append($outerZone);
+
+                $outerZone.on("dragover", function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    lastKnownMousePosition.x = e.originalEvent.clientX;
+
+                    autoScrollContainer($container[0], lastKnownMousePosition.x);
+
+                    updateDragIndicatorFromOuterZone($container, lastKnownMousePosition.x);
+
+                    return false;
+                });
+
+                $outerZone.on("drop", function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    // to handle drop the same way as if it happened in the container
+                    handleOuterZoneDrop($container, lastKnownMousePosition.x);
+
+                    return false;
+                });
+            }
+        };
+
+        const removeOuterDropZone = () => {
+            $("#tab-drag-extended-zone").remove();
+        };
 
         // When dragging over the container but not directly over a tab element
         $container.on("dragover", function (e) {
             if (e.preventDefault) {
                 e.preventDefault();
             }
+
+            lastKnownMousePosition.x = e.originalEvent.clientX;
 
             // Clear any existing scroll interval
             if (scrollInterval) {
@@ -43774,29 +43820,34 @@ define("extensionsIntegrated/TabBar/drag-drop", function (require, exports, modu
 
             // Set up interval for continuous scrolling while dragging near the edge
             scrollInterval = setInterval(() => {
-                if (draggedTab) { // Only continue scrolling if still dragging
-                    autoScrollContainer(this, e.originalEvent.clientX);
+                if (draggedTab) {
+                    // Only continue scrolling if still dragging
+                    autoScrollContainer(this, lastKnownMousePosition.x);
                 } else {
                     clearInterval(scrollInterval);
                     scrollInterval = null;
                 }
             }, 16); // this is almost about 60fps
 
-
             // if the target is not a tab, update the drag indicator using the container bounds
-            if ($(e.target).closest('.tab').length === 0) {
+            if ($(e.target).closest(".tab").length === 0) {
                 const containerRect = this.getBoundingClientRect();
                 const mouseX = e.originalEvent.clientX;
 
                 // determine if dropping on left or right half of container
-                const onLeftSide = mouseX < (containerRect.left + containerRect.width / 2);
+                const onLeftSide = mouseX < containerRect.left + containerRect.width / 2;
 
-                const $tabs = $container.find('.tab');
+                const $tabs = $container.find(".tab");
                 if ($tabs.length) {
                     // choose the first tab for left drop, last tab for right drop
                     const targetTab = onLeftSide ? $tabs.first()[0] : $tabs.last()[0];
                     updateDragIndicator(targetTab, onLeftSide);
                 }
+            }
+
+            // Create the extended drop zone if we're actively dragging
+            if (draggedTab) {
+                createOuterDropZone();
             }
         });
 
@@ -43807,14 +43858,15 @@ define("extensionsIntegrated/TabBar/drag-drop", function (require, exports, modu
             }
             // hide the drag indicator
             updateDragIndicator(null);
+            removeOuterDropZone();
 
             // get container dimensions to determine drop position
             const containerRect = this.getBoundingClientRect();
             const mouseX = e.originalEvent.clientX;
             // determine if dropping on left or right half of container
-            const onLeftSide = mouseX < (containerRect.left + containerRect.width / 2);
+            const onLeftSide = mouseX < containerRect.left + containerRect.width / 2;
 
-            const $tabs = $container.find('.tab');
+            const $tabs = $container.find(".tab");
             if ($tabs.length) {
                 // If dropping on left half, target the first tab; otherwise, target the last tab
                 const targetTab = onLeftSide ? $tabs.first()[0] : $tabs.last()[0];
@@ -43838,8 +43890,86 @@ define("extensionsIntegrated/TabBar/drag-drop", function (require, exports, modu
                 }
             }
         });
-    }
 
+        /**
+         * Updates the drag indicator when mouse is in the extended zone (outside actual tab bar)
+         * @param {jQuery} $container - The tab bar container
+         * @param {number} mouseX - Current mouse X position
+         */
+        function updateDragIndicatorFromOuterZone($container, mouseX) {
+            const containerRect = $container[0].getBoundingClientRect();
+            const $tabs = $container.find(".tab");
+
+            if ($tabs.length) {
+                // Determine if dropping on left half or right half
+                let onLeftSide = true;
+                let targetTab;
+
+                // If beyond the right edge, use the last tab
+                if (mouseX > containerRect.right) {
+                    targetTab = $tabs.last()[0];
+                    onLeftSide = false;
+                }
+                // If beyond the left edge, use the first tab
+                else if (mouseX < containerRect.left) {
+                    targetTab = $tabs.first()[0];
+                    onLeftSide = true;
+                }
+                // If within bounds, find the closest tab
+                else {
+                    onLeftSide = mouseX < containerRect.left + containerRect.width / 2;
+                    targetTab = onLeftSide ? $tabs.first()[0] : $tabs.last()[0];
+                }
+
+                updateDragIndicator(targetTab, onLeftSide);
+            }
+        }
+
+        /**
+         * Handles drops that occur in the extended drop zone
+         * @param {jQuery} $container - The tab bar container
+         * @param {number} mouseX - Current mouse X position
+         */
+        function handleOuterZoneDrop($container, mouseX) {
+            const containerRect = $container[0].getBoundingClientRect();
+            const $tabs = $container.find(".tab");
+
+            if ($tabs.length && draggedTab) {
+                // Determine drop position similar to updateDragIndicatorFromOuterZone
+                let onLeftSide = true;
+                let targetTab;
+
+                if (mouseX > containerRect.right) {
+                    targetTab = $tabs.last()[0];
+                    onLeftSide = false;
+                } else if (mouseX < containerRect.left) {
+                    targetTab = $tabs.first()[0];
+                    onLeftSide = true;
+                } else {
+                    onLeftSide = mouseX < containerRect.left + containerRect.width / 2;
+                    targetTab = onLeftSide ? $tabs.first()[0] : $tabs.last()[0];
+                }
+
+                // Process the drop
+                const isSecondPane = $container.attr("id") === "phoenix-tab-bar-2";
+                const targetPaneId = isSecondPane ? "second-pane" : "first-pane";
+                const draggedPath = $(draggedTab).attr("data-path");
+                const targetPath = $(targetTab).attr("data-path");
+
+                if (dragSourcePane !== targetPaneId) {
+                    // cross-pane drop
+                    moveTabBetweenPanes(dragSourcePane, targetPaneId, draggedPath, targetPath, onLeftSide);
+                } else {
+                    // same pane drop
+                    moveWorkingSetItem(targetPaneId, draggedPath, targetPath, onLeftSide);
+                }
+            }
+
+            // Clean up
+            updateDragIndicator(null);
+            removeOuterDropZone();
+        }
+    }
 
     /**
      * enhanced auto-scroll function for container when the mouse is near its left or right edge
@@ -43850,34 +43980,37 @@ define("extensionsIntegrated/TabBar/drag-drop", function (require, exports, modu
      */
     function autoScrollContainer(container, mouseX) {
         const rect = container.getBoundingClientRect();
-        const edgeThreshold = 50; // teh threshold distance from the edge
+        const edgeThreshold = 100; // Increased threshold for edge detection (was 50)
+        const outerThreshold = 50; // Distance outside the container that still triggers scrolling
 
-        // Calculate distance from edges
-        const distanceFromLeft = mouseX - rect.left;
-        const distanceFromRight = rect.right - mouseX;
+        // Calculate distance from edges, allowing for mouse to be slightly outside bounds
+        const distanceFromLeft = mouseX - (rect.left - outerThreshold);
+        const distanceFromRight = rect.right + outerThreshold - mouseX;
 
         // Determine scroll speed based on distance from edge (closer = faster scroll)
         let scrollSpeed = 0;
 
-        if (distanceFromLeft < edgeThreshold) {
-            // exponential scroll speed: faster as you get closer to the edge
-            scrollSpeed = -Math.pow(1 - (distanceFromLeft / edgeThreshold), 2) * 15;
-        } else if (distanceFromRight < edgeThreshold) {
-            scrollSpeed = Math.pow(1 - (distanceFromRight / edgeThreshold), 2) * 15;
+        // Only activate scrolling when within the threshold (including the outer buffer)
+        if (distanceFromLeft < edgeThreshold + outerThreshold && mouseX < rect.right) {
+            // Non-linear scroll speed: faster as you get closer to the edge
+            scrollSpeed = -Math.pow(1 - distanceFromLeft / (edgeThreshold + outerThreshold), 2) * 25;
+        } else if (distanceFromRight < edgeThreshold + outerThreshold && mouseX > rect.left) {
+            scrollSpeed = Math.pow(1 - distanceFromRight / (edgeThreshold + outerThreshold), 2) * 25;
         }
 
-        // apply scrolling if needed
+        // Apply scrolling if needed
         if (scrollSpeed !== 0) {
             container.scrollLeft += scrollSpeed;
 
             // If we're already at the edge, don't keep trying to scroll
-            if ((scrollSpeed < 0 && container.scrollLeft <= 0) ||
-                (scrollSpeed > 0 && container.scrollLeft >= container.scrollWidth - container.clientWidth)) {
+            if (
+                (scrollSpeed < 0 && container.scrollLeft <= 0) ||
+                (scrollSpeed > 0 && container.scrollLeft >= container.scrollWidth - container.clientWidth)
+            ) {
                 return;
             }
         }
     }
-
 
     /**
      * Handle the start of a drag operation
@@ -43891,14 +44024,14 @@ define("extensionsIntegrated/TabBar/drag-drop", function (require, exports, modu
 
         // set data transfer (required for Firefox)
         // Firefox requires data to be set for the drag operation to work
-        e.originalEvent.dataTransfer.effectAllowed = 'move';
-        e.originalEvent.dataTransfer.setData('text/html', this.innerHTML);
+        e.originalEvent.dataTransfer.effectAllowed = "move";
+        e.originalEvent.dataTransfer.setData("text/html", this.innerHTML);
 
         // Store which pane this tab came from
         dragSourcePane = $(this).closest("#phoenix-tab-bar-2").length > 0 ? "second-pane" : "first-pane";
 
         // Add dragging class for styling
-        $(this).addClass('dragging');
+        $(this).addClass("dragging");
 
         // Use a timeout to let the dragging class apply before taking measurements
         // This ensures visual updates are applied before we calculate positions
@@ -43906,7 +44039,6 @@ define("extensionsIntegrated/TabBar/drag-drop", function (require, exports, modu
             updateDragIndicator(null);
         }, 0);
     }
-
 
     /**
      * Handle the dragover event to enable drop
@@ -43918,20 +44050,19 @@ define("extensionsIntegrated/TabBar/drag-drop", function (require, exports, modu
         if (e.preventDefault) {
             e.preventDefault(); // Allows us to drop
         }
-        e.originalEvent.dataTransfer.dropEffect = 'move';
+        e.originalEvent.dataTransfer.dropEffect = "move";
 
         // Update the drag indicator position
         // We need to determine if it should be on the left or right side of the target tab
         const targetRect = this.getBoundingClientRect();
         const mouseX = e.originalEvent.clientX;
-        const midPoint = targetRect.left + (targetRect.width / 2);
+        const midPoint = targetRect.left + targetRect.width / 2;
         const onLeftSide = mouseX < midPoint;
 
         updateDragIndicator(this, onLeftSide);
 
         return false;
     }
-
 
     /**
      * Handle entering a potential drop target
@@ -43941,9 +44072,8 @@ define("extensionsIntegrated/TabBar/drag-drop", function (require, exports, modu
      */
     function handleDragEnter(e) {
         dragOverTab = this;
-        $(this).addClass('drag-target');
+        $(this).addClass("drag-target");
     }
-
 
     /**
      * Handle leaving a potential drop target
@@ -43956,13 +44086,12 @@ define("extensionsIntegrated/TabBar/drag-drop", function (require, exports, modu
         // Only remove the class if we're truly leaving this tab
         // This prevents flickering when moving over child elements
         if (!$(this).is(relatedTarget) && !$(this).has(relatedTarget).length) {
-            $(this).removeClass('drag-target');
+            $(this).removeClass("drag-target");
             if (dragOverTab === this) {
                 dragOverTab = null;
             }
         }
     }
-
 
     /**
      * Handle dropping a tab onto a target
@@ -43987,7 +44116,7 @@ define("extensionsIntegrated/TabBar/drag-drop", function (require, exports, modu
             // Determine if we're dropping to the left or right of the target
             const targetRect = this.getBoundingClientRect();
             const mouseX = e.originalEvent.clientX;
-            const midPoint = targetRect.left + (targetRect.width / 2);
+            const midPoint = targetRect.left + targetRect.width / 2;
             const onLeftSide = mouseX < midPoint;
 
             // Check if dragging between different panes
@@ -44002,7 +44131,6 @@ define("extensionsIntegrated/TabBar/drag-drop", function (require, exports, modu
         return false;
     }
 
-
     /**
      * Handle the end of a drag operation
      * Cleans up classes and resets state variables
@@ -44010,7 +44138,7 @@ define("extensionsIntegrated/TabBar/drag-drop", function (require, exports, modu
      * @param {Event} e - The event object
      */
     function handleDragEnd(e) {
-        $(".tab").removeClass('dragging drag-target');
+        $(".tab").removeClass("dragging drag-target");
         updateDragIndicator(null);
         draggedTab = null;
         dragOverTab = null;
@@ -44021,12 +44149,15 @@ define("extensionsIntegrated/TabBar/drag-drop", function (require, exports, modu
             clearInterval(scrollInterval);
             scrollInterval = null;
         }
-    }
 
+        // Remove the extended drop zone if it exists
+        $("#tab-drag-extended-zone").remove();
+    }
 
     /**
      * Update the drag indicator position and visibility
      * The indicator shows where the tab will be dropped
+     * Ensures the indicator stays within the bounds of the tab bar
      *
      * @param {HTMLElement} targetTab - The tab being dragged over, or null to hide
      * @param {Boolean} onLeftSide - Whether the indicator should be on the left or right side
@@ -44036,20 +44167,30 @@ define("extensionsIntegrated/TabBar/drag-drop", function (require, exports, modu
             dragIndicator.hide();
             return;
         }
+
         // Get the target tab's position and size
         const targetRect = targetTab.getBoundingClientRect();
+
+        // Find the containing tab bar to ensure the indicator stays within bounds
+        const $tabBar = $(targetTab).closest("#phoenix-tab-bar, #phoenix-tab-bar-2");
+        const tabBarRect = $tabBar[0] ? $tabBar[0].getBoundingClientRect() : null;
+
         if (onLeftSide) {
             // Position indicator at the left edge of the target tab
+            // Ensure it doesn't go beyond the tab bar's left edge
+            const leftPos = tabBarRect ? Math.max(targetRect.left, tabBarRect.left) : targetRect.left;
             dragIndicator.css({
                 top: targetRect.top,
-                left: targetRect.left,
+                left: leftPos,
                 height: targetRect.height
             });
         } else {
             // Position indicator at the right edge of the target tab
+            // Ensure it doesn't go beyond the tab bar's right edge
+            const rightPos = tabBarRect ? Math.min(targetRect.right, tabBarRect.right) : targetRect.right;
             dragIndicator.css({
                 top: targetRect.top,
-                left: targetRect.right,
+                left: rightPos,
                 height: targetRect.height
             });
         }
@@ -44132,10 +44273,7 @@ define("extensionsIntegrated/TabBar/drag-drop", function (require, exports, modu
         // Only continue if we found the dragged file
         if (draggedIndex !== -1 && draggedFile) {
             // Remove the file from source pane
-            CommandManager.execute(
-                Commands.FILE_CLOSE,
-                { file: draggedFile, paneId: sourcePaneId }
-            );
+            CommandManager.execute(Commands.FILE_CLOSE, { file: draggedFile, paneId: sourcePaneId });
 
             // Calculate where to add it in the target pane
             let targetInsertIndex;
@@ -44175,7 +44313,6 @@ define("extensionsIntegrated/TabBar/drag-drop", function (require, exports, modu
         setupEmptyPaneDropTarget($secondPaneHolder, "second-pane");
     }
 
-
     /**
      * sets up the whole pane as a drop target when it has no tabs
      *
@@ -44200,7 +44337,7 @@ define("extensionsIntegrated/TabBar/drag-drop", function (require, exports, modu
                 $(this).addClass("empty-pane-drop-target");
 
                 // set the drop effect
-                e.originalEvent.dataTransfer.dropEffect = 'move';
+                e.originalEvent.dataTransfer.dropEffect = "move";
             }
         });
 
@@ -44225,8 +44362,8 @@ define("extensionsIntegrated/TabBar/drag-drop", function (require, exports, modu
                 const draggedPath = $(draggedTab).attr("data-path");
 
                 // Determine source pane
-                const sourcePaneId = $(draggedTab)
-                    .closest("#phoenix-tab-bar-2").length > 0 ? "second-pane" : "first-pane";
+                const sourcePaneId =
+                    $(draggedTab).closest("#phoenix-tab-bar-2").length > 0 ? "second-pane" : "first-pane";
 
                 // we don't want to do anything if dropping in the same pane
                 if (sourcePaneId !== paneId) {
@@ -44243,10 +44380,7 @@ define("extensionsIntegrated/TabBar/drag-drop", function (require, exports, modu
 
                     if (draggedFile) {
                         // close in the source pane
-                        CommandManager.execute(
-                            Commands.FILE_CLOSE,
-                            { file: draggedFile, paneId: sourcePaneId }
-                        );
+                        CommandManager.execute(Commands.FILE_CLOSE, { file: draggedFile, paneId: sourcePaneId });
 
                         // and open in the target pane
                         MainViewManager.addToWorkingSet(paneId, draggedFile);
@@ -44262,7 +44396,6 @@ define("extensionsIntegrated/TabBar/drag-drop", function (require, exports, modu
             }
         });
     }
-
 
     module.exports = {
         init
@@ -44542,8 +44675,6 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
 </div>
 `;
 
-
-
     /**
      * This holds the tab bar element
      * For tab bar structure, refer to `./html/tabbar-pane.html` and `./html/tabbar-second-pane.html`
@@ -44553,7 +44684,6 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
      */
     let $tabBar = null;
     let $tabBar2 = null;
-
 
     /**
      * This function is responsible to take all the files from the working set and gets the working sets ready
@@ -44568,7 +44698,6 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
 
         // to make sure atleast one pane is open
         if (paneList && paneList.length > 0) {
-
             // this gives the working set of the first pane
             const currFirstPaneWorkingSet = MainViewManager.getWorkingSet(paneList[0]);
 
@@ -44608,8 +44737,6 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
         }
     }
 
-
-
     /**
      * Responsible for creating the tab element
      * Note: this creates a tab (for a single file) not the tab bar
@@ -44628,23 +44755,42 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
         const activePathInPane = activeFileInPane ? activeFileInPane.fullPath : null;
 
         // Check if this file is active in its pane
-        const isActive = (entry.path === activePathInPane);
+        const isActive = entry.path === activePathInPane;
 
         // Current active pane (used to determine whether to add the blue underline)
         const currentActivePane = MainViewManager.getActivePaneId();
-        const isPaneActive = (paneId === currentActivePane);
+        const isPaneActive = paneId === currentActivePane;
 
         const isDirty = Helper._isFileModified(FileSystem.getFileForPath(entry.path));
         const isPlaceholder = entry.isPlaceholder === true;
 
+        let gitStatus = ""; // this will be shown in the tooltip when a tab is hovered
+        let gitStatusClass = ""; // for styling
+
+        if (window.phoenixGitEvents && window.phoenixGitEvents.TabBarIntegration) {
+            const TabBarIntegration = window.phoenixGitEvents.TabBarIntegration;
+
+            // find the Git status
+            // if untracked we add the git-new class and U char
+            // if modified we add the git-modified class and M char
+            if (TabBarIntegration.isUntracked(entry.path)) {
+                gitStatus = "Untracked";
+                gitStatusClass = "git-new";
+            } else if (TabBarIntegration.isModified(entry.path)) {
+                gitStatus = "Modified";
+                gitStatusClass = "git-modified";
+            }
+        }
+
         // create tab with all the appropriate classes
         const $tab = $(
             `<div class="tab 
-            ${isActive ? 'active' : ''} 
-            ${isDirty ? 'dirty' : ''}
-            ${isPlaceholder ? 'placeholder' : ''}" 
+            ${isActive ? "active" : ""}
+            ${isDirty ? "dirty" : ""}
+            ${isPlaceholder ? "placeholder" : ""}
+            ${gitStatusClass}"
             data-path="${entry.path}" 
-            title="${entry.path}">
+            title="${Phoenix.app.getDisplayPath(entry.path)}${gitStatus ? " (" + gitStatus + ")" : ""}">
             <div class="tab-icon"></div>
             <div class="tab-name"></div>
             <div class="tab-close"><i class="fa-solid fa-times"></i></div>
@@ -44653,13 +44799,13 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
 
         // Add the file icon
         const $icon = Helper._getFileIcon(entry);
-        $tab.find('.tab-icon').append($icon);
+        $tab.find(".tab-icon").append($icon);
 
         // Check if we have a directory part in the displayName
-        const $tabName = $tab.find('.tab-name');
+        const $tabName = $tab.find(".tab-name");
         if (entry.displayName && entry.displayName !== entry.name) {
             // Split the displayName into directory and filename parts
-            const parts = entry.displayName.split('/');
+            const parts = entry.displayName.split("/");
             const dirName = parts[0];
             const fileName = parts[1];
 
@@ -44674,39 +44820,38 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
         if (isActive && !isPaneActive) {
             // if it's active but in a non-active pane, we add a special class
             // to style differently in CSS to indicate that it's active but not in the active pane
-            $tab.addClass('active-in-inactive-pane');
+            $tab.addClass("active-in-inactive-pane");
         }
 
         // if this is a placeholder tab in inactive pane, we need to use the brown styling
         // instead of the blue one for active tabs
         if (isPlaceholder && isActive && !isPaneActive) {
-            $tab.removeClass('active');
-            $tab.addClass('active-in-inactive-pane');
+            $tab.removeClass("active");
+            $tab.addClass("active-in-inactive-pane");
         }
 
         return $tab;
     }
 
-
     /**
      * Creates the tab bar and adds it to the DOM
      */
     function createTabBar() {
-        if (!Preference.tabBarEnabled || Preference.numberOfTabs === 0) {
+        if (!Preference.tabBarEnabled || Preference.tabBarNumberOfTabs === 0) {
+            cleanupTabBar();
             return;
         }
 
         // clean up any existing tab bars first and start fresh
         cleanupTabBar();
 
-        const $paneHeader = $('.pane-header');
+        const $paneHeader = $(".pane-header");
         if ($paneHeader.length === 1) {
             $tabBar = $(TabBarHTML);
             // since we need to add the tab bar before the editor which has .not-editor class
             $(".pane-header").after($tabBar);
             WorkspaceManager.recomputeLayout(true);
             updateTabs();
-
         } else if ($paneHeader.length === 2) {
             $tabBar = $(TabBarHTML);
             $tabBar2 = $(TabBarHTML2);
@@ -44720,7 +44865,6 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
         }
     }
 
-
     /**
      * This function updates the tabs in the tab bar
      * It is called when the working set changes. So instead of creating a new tab bar, we just update the existing one
@@ -44728,6 +44872,12 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
     function updateTabs() {
         // Get all files from the working set. refer to `global.js`
         getAllFilesFromWorkingSet();
+
+        // just to make sure that the number of tabs is not set to 0
+        if (Preference.tabBarNumberOfTabs === 0) {
+            cleanupTabBar();
+            return;
+        }
 
         // Check for active files not in working set in any pane
         const activePane = MainViewManager.getActivePaneId();
@@ -44739,8 +44889,7 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
         let secondPanePlaceholder = null;
 
         // Check if active file in first pane is not in the working set
-        if (firstPaneFile &&
-            !Global.firstPaneWorkingSet.some(entry => entry.path === firstPaneFile.fullPath)) {
+        if (firstPaneFile && !Global.firstPaneWorkingSet.some((entry) => entry.path === firstPaneFile.fullPath)) {
             firstPanePlaceholder = {
                 path: firstPaneFile.fullPath,
                 name: firstPaneFile.name,
@@ -44750,8 +44899,7 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
         }
 
         // Check if active file in second pane is not in the working set
-        if (secondPaneFile &&
-            !Global.secondPaneWorkingSet.some(entry => entry.path === secondPaneFile.fullPath)) {
+        if (secondPaneFile && !Global.secondPaneWorkingSet.some((entry) => entry.path === secondPaneFile.fullPath)) {
             secondPanePlaceholder = {
                 path: secondPaneFile.fullPath,
                 name: secondPaneFile.name,
@@ -44763,9 +44911,7 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
         // check for duplicate file names between placeholder tabs and working set entries
         if (firstPanePlaceholder) {
             // if any working set file has the same name as the placeholder
-            const hasDuplicate = Global.firstPaneWorkingSet.some(entry =>
-                entry.name === firstPanePlaceholder.name
-            );
+            const hasDuplicate = Global.firstPaneWorkingSet.some((entry) => entry.name === firstPanePlaceholder.name);
 
             if (hasDuplicate) {
                 // extract directory name from path
@@ -44780,9 +44926,7 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
         }
 
         if (secondPanePlaceholder) {
-            const hasDuplicate = Global.secondPaneWorkingSet.some(entry =>
-                entry.name === secondPanePlaceholder.name
-            );
+            const hasDuplicate = Global.secondPaneWorkingSet.some((entry) => entry.name === secondPanePlaceholder.name);
 
             if (hasDuplicate) {
                 const path = secondPanePlaceholder.path;
@@ -44795,22 +44939,25 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
         }
 
         // Create tab bar if there's a placeholder or a file in the working set
-        if ((Global.firstPaneWorkingSet.length > 0 || firstPanePlaceholder) &&
-            (!$('#phoenix-tab-bar').length || $('#phoenix-tab-bar').is(':hidden'))) {
+        if (
+            (Global.firstPaneWorkingSet.length > 0 || firstPanePlaceholder) &&
+            (!$("#phoenix-tab-bar").length || $("#phoenix-tab-bar").is(":hidden"))
+        ) {
             createTabBar();
         }
 
-        if ((Global.secondPaneWorkingSet.length > 0 || secondPanePlaceholder) &&
-            (!$('#phoenix-tab-bar-2').length || $('#phoenix-tab-bar-2').is(':hidden'))) {
+        if (
+            (Global.secondPaneWorkingSet.length > 0 || secondPanePlaceholder) &&
+            (!$("#phoenix-tab-bar-2").length || $("#phoenix-tab-bar-2").is(":hidden"))
+        ) {
             createTabBar();
         }
 
-        const $firstTabBar = $('#phoenix-tab-bar');
+        const $firstTabBar = $("#phoenix-tab-bar");
         // Update first pane's tabs
         if ($firstTabBar.length) {
             $firstTabBar.empty();
             if (Global.firstPaneWorkingSet.length > 0 || firstPanePlaceholder) {
-
                 // get the count of tabs that we want to display in the tab bar (from preference settings)
                 // from preference settings or working set whichever smaller
                 let tabsCountP1 = Math.min(Global.firstPaneWorkingSet.length, Preference.tabBarNumberOfTabs);
@@ -44821,7 +44968,28 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
                     tabsCountP1 = Global.firstPaneWorkingSet.length;
                 }
 
-                let displayedEntries = Global.firstPaneWorkingSet.slice(0, tabsCountP1);
+                let displayedEntries = [];
+
+                // check if active file is in the working set but would be excluded by tab count
+                if (firstPaneFile && Preference.tabBarNumberOfTabs > 0) {
+                    const activeFileIndex = Global.firstPaneWorkingSet.findIndex(
+                        (entry) => entry.path === firstPaneFile.fullPath
+                    );
+
+                    if (activeFileIndex >= 0 && activeFileIndex >= Preference.tabBarNumberOfTabs) {
+                        // active file is in working set but would be excluded by tab count
+                        // Show active file and one less from the top N files
+                        displayedEntries = [
+                            ...Global.firstPaneWorkingSet.slice(0, Preference.tabBarNumberOfTabs - 1),
+                            Global.firstPaneWorkingSet[activeFileIndex]
+                        ];
+                    } else {
+                        // Active file is either not in working set or already included in top N files
+                        displayedEntries = Global.firstPaneWorkingSet.slice(0, tabsCountP1);
+                    }
+                } else {
+                    displayedEntries = Global.firstPaneWorkingSet.slice(0, tabsCountP1);
+                }
 
                 // Add working set tabs
                 displayedEntries.forEach(function (entry) {
@@ -44835,18 +45003,34 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
             }
         }
 
-        const $secondTabBar = $('#phoenix-tab-bar-2');
+        const $secondTabBar = $("#phoenix-tab-bar-2");
         // Update second pane's tabs
         if ($secondTabBar.length) {
             $secondTabBar.empty();
             if (Global.secondPaneWorkingSet.length > 0 || secondPanePlaceholder) {
-
                 let tabsCountP2 = Math.min(Global.secondPaneWorkingSet.length, Preference.tabBarNumberOfTabs);
                 if (Preference.tabBarNumberOfTabs < 0) {
                     tabsCountP2 = Global.secondPaneWorkingSet.length;
                 }
 
-                let displayedEntries2 = Global.secondPaneWorkingSet.slice(0, tabsCountP2);
+                let displayedEntries2 = [];
+
+                if (secondPaneFile && Preference.tabBarNumberOfTabs > 0) {
+                    const activeFileIndex = Global.secondPaneWorkingSet.findIndex(
+                        (entry) => entry.path === secondPaneFile.fullPath
+                    );
+
+                    if (activeFileIndex >= 0 && activeFileIndex >= Preference.tabBarNumberOfTabs) {
+                        displayedEntries2 = [
+                            ...Global.secondPaneWorkingSet.slice(0, Preference.tabBarNumberOfTabs - 1),
+                            Global.secondPaneWorkingSet[activeFileIndex]
+                        ];
+                    } else {
+                        displayedEntries2 = Global.secondPaneWorkingSet.slice(0, tabsCountP2);
+                    }
+                } else {
+                    displayedEntries2 = Global.secondPaneWorkingSet.slice(0, tabsCountP2);
+                }
 
                 // Add working set tabs
                 displayedEntries2.forEach(function (entry) {
@@ -44861,12 +45045,12 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
         }
 
         // if no files are present in a pane and no placeholder, we want to hide the tab bar for that pane
-        if (Global.firstPaneWorkingSet.length === 0 && !firstPanePlaceholder && ($('#phoenix-tab-bar'))) {
-            Helper._hideTabBar($('#phoenix-tab-bar'), $('#overflow-button'));
+        if (Global.firstPaneWorkingSet.length === 0 && !firstPanePlaceholder && $("#phoenix-tab-bar")) {
+            Helper._hideTabBar($("#phoenix-tab-bar"), $("#overflow-button"));
         }
 
-        if (Global.secondPaneWorkingSet.length === 0 && !secondPanePlaceholder && ($('#phoenix-tab-bar-2'))) {
-            Helper._hideTabBar($('#phoenix-tab-bar-2'), $('#overflow-button-2'));
+        if (Global.secondPaneWorkingSet.length === 0 && !secondPanePlaceholder && $("#phoenix-tab-bar-2")) {
+            Helper._hideTabBar($("#phoenix-tab-bar-2"), $("#overflow-button-2"));
         }
 
         // Now that tabs are updated, scroll to the active tab if necessary.
@@ -44894,9 +45078,8 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
         }
 
         // handle drag and drop
-        DragDrop.init($('#phoenix-tab-bar'), $('#phoenix-tab-bar-2'));
+        DragDrop.init($("#phoenix-tab-bar"), $("#phoenix-tab-bar-2"));
     }
-
 
     /**
      * Removes existing tab bar and cleans up
@@ -44915,16 +45098,14 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
         WorkspaceManager.recomputeLayout(true);
     }
 
-
     /**
      * handle click events on the tabs to open the file
      */
     function handleTabClick() {
-
         // delegate event handling for both tab bars
         $(document).on("click", ".phoenix-tab-bar .tab", function (event) {
             // check if the clicked element is the close button
-            if ($(event.target).hasClass('fa-times') || $(event.target).closest('.tab-close').length) {
+            if ($(event.target).hasClass("fa-times") || $(event.target).closest(".tab-close").length) {
                 // Get the file path from the data-path attribute of the parent tab
                 const filePath = $(this).attr("data-path");
 
@@ -44936,10 +45117,7 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
                     // get the file object
                     const fileObj = FileSystem.getFileForPath(filePath);
                     // close the file
-                    CommandManager.execute(
-                        Commands.FILE_CLOSE,
-                        { file: fileObj, paneId: paneId }
-                    );
+                    CommandManager.execute(Commands.FILE_CLOSE, { file: fileObj, paneId: paneId });
 
                     // Prevent default behavior
                     event.preventDefault();
@@ -44950,7 +45128,7 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
 
         // delegate event handling for both tab bars
         $(document).on("mousedown", ".phoenix-tab-bar .tab", function (event) {
-            if ($(event.target).hasClass('fa-times') || $(event.target).closest('.tab-close').length) {
+            if ($(event.target).hasClass("fa-times") || $(event.target).closest(".tab-close").length) {
                 return;
             }
             // Get the file path from the data-path attribute
@@ -44961,11 +45139,11 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
                 const isSecondPane = $(this).closest("#phoenix-tab-bar-2").length > 0;
                 const paneId = isSecondPane ? "second-pane" : "first-pane";
                 const currentActivePane = MainViewManager.getActivePaneId();
-                const isPaneActive = (paneId === currentActivePane);
+                const isPaneActive = paneId === currentActivePane;
                 const currentFile = MainViewManager.getCurrentlyViewedFile(currentActivePane);
 
                 // Check if this is a placeholder tab
-                if ($(this).hasClass('placeholder')) {
+                if ($(this).hasClass("placeholder")) {
                     // Add the file to the working set when placeholder tab is clicked
                     const fileObj = FileSystem.getFileForPath(filePath);
                     MainViewManager.addToWorkingSet(paneId, fileObj);
@@ -44997,7 +45175,6 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
         });
     }
 
-
     // debounce is used to prevent rapid consecutive calls to updateTabs,
     // which was causing integration tests to fail in Firefox. Without it,
     // the event fires too frequently when switching editors, leading to unexpected behavior
@@ -45015,6 +45192,12 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
 
         // For editor changes, update only the tabs.
         MainViewManager.on(MainViewManager.EVENT_CURRENT_FILE_CHANGE, debounceUpdateTabs);
+
+        // to listen for the Git status changes
+        // make sure that the git extension is available
+        if (window.phoenixGitEvents && window.phoenixGitEvents.EventEmitter) {
+            window.phoenixGitEvents.EventEmitter.on("GIT_FILE_STATUS_CHANGED", debounceUpdateTabs);
+        }
 
         // For working set changes, update only the tabs.
         const events = [
@@ -45045,8 +45228,7 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
             // Update UI
             if ($tabBar) {
                 const $tab = $tabBar.find(`.tab[data-path="${filePath}"]`);
-                $tab.toggleClass('dirty', doc.isDirty);
-
+                $tab.toggleClass("dirty", doc.isDirty);
 
                 // Update the working set data
                 // First pane
@@ -45058,11 +45240,10 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
                 }
             }
 
-
             // Also update the $tab2 if it exists
             if ($tabBar2) {
                 const $tab2 = $tabBar2.find(`.tab[data-path="${filePath}"]`);
-                $tab2.toggleClass('dirty', doc.isDirty);
+                $tab2.toggleClass("dirty", doc.isDirty);
 
                 // Second pane
                 for (let i = 0; i < Global.secondPaneWorkingSet.length; i++) {
@@ -45074,7 +45255,6 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
             }
         });
     }
-
 
     /**
      * This is called when the tab bar preference is changed either,
@@ -45101,17 +45281,13 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
      * for toggling the tab bar from the menu bar
      */
     function _registerCommands() {
-        CommandManager.register(
-            Strings.CMD_TOGGLE_TABBAR,
-            Commands.TOGGLE_TABBAR,
-            () => {
-                const currentPref = PreferencesManager.get(Preference.PREFERENCES_TAB_BAR);
-                PreferencesManager.set(Preference.PREFERENCES_TAB_BAR, {
-                    ...currentPref,
-                    showTabBar: !currentPref.showTabBar
-                });
-            }
-        );
+        CommandManager.register(Strings.CMD_TOGGLE_TABBAR, Commands.TOGGLE_TABBAR, () => {
+            const currentPref = PreferencesManager.get(Preference.PREFERENCES_TAB_BAR);
+            PreferencesManager.set(Preference.PREFERENCES_TAB_BAR, {
+                ...currentPref,
+                showTabBar: !currentPref.showTabBar
+            });
+        });
     }
 
     /**
@@ -45120,7 +45296,6 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
      * when its scrolled down, the tab bar will scroll to the right
      */
     function setupTabBarScrolling() {
-
         // common  handler for both the tab bars
         function handleMouseWheel(e) {
             // get the tab bar element that is being scrolled
@@ -45140,7 +45315,7 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
         }
 
         // attach the wheel event handler to both tab bars
-        $(document).on('wheel', '#phoenix-tab-bar, #phoenix-tab-bar-2', handleMouseWheel);
+        $(document).on("wheel", "#phoenix-tab-bar, #phoenix-tab-bar-2", handleMouseWheel);
     }
 
     AppInit.appReady(function () {
@@ -45162,7 +45337,7 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
         handleTabClick();
 
         Overflow.init();
-        DragDrop.init($('#phoenix-tab-bar'), $('#phoenix-tab-bar-2'));
+        DragDrop.init($("#phoenix-tab-bar"), $("#phoenix-tab-bar-2"));
 
         // setup the mouse wheel scrolling
         setupTabBarScrolling();
@@ -45211,9 +45386,12 @@ define("extensionsIntegrated/TabBar/more-options", function (require, exports, m
         Strings.CLOSE_ALL_TABS,
         Strings.CLOSE_UNMODIFIED_TABS,
         "---",
+        Strings.RENAME_TAB_FILE,
+        Strings.DELETE_TAB_FILE,
+        Strings.SHOW_IN_FILE_TREE,
+        "---",
         Strings.REOPEN_CLOSED_FILE
     ];
-
 
     /**
      * "CLOSE TAB"
@@ -45228,25 +45406,9 @@ define("extensionsIntegrated/TabBar/more-options", function (require, exports, m
             const fileObj = FileSystem.getFileForPath(filePath);
 
             // Execute close command with file object and pane ID
-            CommandManager.execute(
-                Commands.FILE_CLOSE,
-                { file: fileObj, paneId: paneId }
-            );
+            CommandManager.execute(Commands.FILE_CLOSE, { file: fileObj, paneId: paneId });
         }
     }
-
-
-    /**
-     * "CLOSE ACTIVE TAB"
-     * this closes the currently active tab
-     * doesn't matter if the context menu is opened from this tab or some other tab
-     */
-    function handleCloseActiveTab() {
-        // This simply executes the FILE_CLOSE command without parameters
-        // which will close the currently active file
-        CommandManager.execute(Commands.FILE_CLOSE);
-    }
-
 
     /**
      * "CLOSE ALL TABS"
@@ -45268,13 +45430,9 @@ define("extensionsIntegrated/TabBar/more-options", function (require, exports, m
         // close each file in the pane, start from the rightmost [to avoid index shifts]
         for (let i = workingSet.length - 1; i >= 0; i--) {
             const fileObj = FileSystem.getFileForPath(workingSet[i].path);
-            CommandManager.execute(
-                Commands.FILE_CLOSE,
-                { file: fileObj, paneId: paneId }
-            );
+            CommandManager.execute(Commands.FILE_CLOSE, { file: fileObj, paneId: paneId });
         }
     }
-
 
     /**
      * "CLOSE UNMODIFIED TABS"
@@ -45294,18 +45452,14 @@ define("extensionsIntegrated/TabBar/more-options", function (require, exports, m
         }
 
         // get all those entries that are not dirty
-        const unmodifiedEntries = workingSet.filter(entry => !entry.isDirty);
+        const unmodifiedEntries = workingSet.filter((entry) => !entry.isDirty);
 
         // close each unmodified file in the pane
         for (let i = unmodifiedEntries.length - 1; i >= 0; i--) {
             const fileObj = FileSystem.getFileForPath(unmodifiedEntries[i].path);
-            CommandManager.execute(
-                Commands.FILE_CLOSE,
-                { file: fileObj, paneId: paneId }
-            );
+            CommandManager.execute(Commands.FILE_CLOSE, { file: fileObj, paneId: paneId });
         }
     }
-
 
     /**
      * "CLOSE TABS TO THE LEFT"
@@ -45326,23 +45480,20 @@ define("extensionsIntegrated/TabBar/more-options", function (require, exports, m
         }
 
         // find the index of the current file in the working set
-        const currentIndex = workingSet.findIndex(entry => entry.path === filePath);
+        const currentIndex = workingSet.findIndex((entry) => entry.path === filePath);
 
-        if (currentIndex > 0) { // we only proceed if there are tabs to the left
+        if (currentIndex > 0) {
+            // we only proceed if there are tabs to the left
             // get all files to the left of the current file
             const filesToClose = workingSet.slice(0, currentIndex);
 
             // Close each file, starting from the rightmost [to avoid index shifts]
             for (let i = filesToClose.length - 1; i >= 0; i--) {
                 const fileObj = FileSystem.getFileForPath(filesToClose[i].path);
-                CommandManager.execute(
-                    Commands.FILE_CLOSE,
-                    { file: fileObj, paneId: paneId }
-                );
+                CommandManager.execute(Commands.FILE_CLOSE, { file: fileObj, paneId: paneId });
             }
         }
     }
-
 
     /**
      * "CLOSE TABS TO THE RIGHT"
@@ -45363,7 +45514,7 @@ define("extensionsIntegrated/TabBar/more-options", function (require, exports, m
         }
 
         // get the index of the current file in the working set
-        const currentIndex = workingSet.findIndex(entry => entry.path === filePath);
+        const currentIndex = workingSet.findIndex((entry) => entry.path === filePath);
         // only proceed if there are tabs to the right
         if (currentIndex !== -1 && currentIndex < workingSet.length - 1) {
             // get all files to the right of the current file
@@ -45371,14 +45522,10 @@ define("extensionsIntegrated/TabBar/more-options", function (require, exports, m
 
             for (let i = filesToClose.length - 1; i >= 0; i--) {
                 const fileObj = FileSystem.getFileForPath(filesToClose[i].path);
-                CommandManager.execute(
-                    Commands.FILE_CLOSE,
-                    { file: fileObj, paneId: paneId }
-                );
+                CommandManager.execute(Commands.FILE_CLOSE, { file: fileObj, paneId: paneId });
             }
         }
     }
-
 
     /**
      * "REOPEN CLOSED FILE"
@@ -45389,6 +45536,59 @@ define("extensionsIntegrated/TabBar/more-options", function (require, exports, m
         CommandManager.execute(Commands.FILE_REOPEN_CLOSED);
     }
 
+    /**
+     * "RENAME FILE"
+     * This function handles the renaming of the file that was right-clicked
+     *
+     * @param {String} filePath - path of the file to rename
+     */
+    function handleFileRename(filePath) {
+        if (filePath) {
+            // First ensure the sidebar is visible so users can see the rename action
+            CommandManager.execute(Commands.SHOW_SIDEBAR);
+
+            // Get the file object using FileSystem
+            const fileObj = FileSystem.getFileForPath(filePath);
+
+            // Execute the rename command with the file object
+            CommandManager.execute(Commands.FILE_RENAME, { file: fileObj });
+        }
+    }
+
+    /**
+     * "DELETE FILE"
+     * This function handles the deletion of the file that was right-clicked
+     *
+     * @param {String} filePath - path of the file to delete
+     */
+    function handleFileDelete(filePath) {
+        if (filePath) {
+            // Get the file object using FileSystem
+            const fileObj = FileSystem.getFileForPath(filePath);
+
+            // Execute the delete command with the file object
+            CommandManager.execute(Commands.FILE_DELETE, { file: fileObj });
+        }
+    }
+
+    /**
+     * "SHOW IN FILE TREE"
+     * This function handles showing the file in the file tree
+     *
+     * @param {String} filePath - path of the file to show in file tree
+     */
+    function handleShowInFileTree(filePath) {
+        if (filePath) {
+            // First ensure the sidebar is visible so users can see the file in the tree
+            CommandManager.execute(Commands.SHOW_SIDEBAR);
+
+            // Get the file object using FileSystem
+            const fileObj = FileSystem.getFileForPath(filePath);
+
+            // Execute the show in tree command with the file object
+            CommandManager.execute(Commands.NAVIGATE_SHOW_IN_FILE_TREE, { file: fileObj });
+        }
+    }
 
     /**
      * This function is called when a tab is right-clicked
@@ -45413,7 +45613,12 @@ define("extensionsIntegrated/TabBar/more-options", function (require, exports, m
             zIndex: 1000
         });
 
+        // Add a custom class to override the max-height, not sure why a scroll bar was coming but this did the trick
+        dropdown.dropdownExtraClasses = "tabbar-context-menu";
+
         dropdown.showDropdown();
+
+        $(".tabbar-context-menu").css("max-height", "300px");
 
         // handle the option selection
         dropdown.on("select", function (e, item) {
@@ -45449,6 +45654,15 @@ define("extensionsIntegrated/TabBar/more-options", function (require, exports, m
             break;
         case Strings.CLOSE_UNMODIFIED_TABS:
             handleCloseUnmodifiedTabs(paneId);
+            break;
+        case Strings.RENAME_TAB_FILE:
+            handleFileRename(filePath);
+            break;
+        case Strings.DELETE_TAB_FILE:
+            handleFileDelete(filePath);
+            break;
+        case Strings.SHOW_IN_FILE_TREE:
+            handleShowInFileTree(filePath);
             break;
         case Strings.REOPEN_CLOSED_FILE:
             reopenClosedFile();
@@ -103728,6 +103942,9 @@ define("nls/root/strings", {
     "CLOSE_ALL_TABS": "Close All Tabs",
     "CLOSE_UNMODIFIED_TABS": "Close Unmodified Tabs",
     "REOPEN_CLOSED_FILE": "Reopen Closed File",
+    "RENAME_TAB_FILE": "Rename File",
+    "DELETE_TAB_FILE": "Delete File",
+    "SHOW_IN_FILE_TREE": "Show in File Tree",
 
     // CodeInspection: errors/warnings
     "ERRORS_NO_FILE": "No File Open",
