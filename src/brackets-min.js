@@ -38864,7 +38864,7 @@ define("extensionsIntegrated/Phoenix/profile-menu", function (require, exports, 
             {{signInBtnText}}
         </button>
         <div class="support-link">
-            <button id="phoenix-support-btn" class="btn dialog-button">
+            <button id="phoenix-support-btn" class="text-link">
                 <i class="fa fa-question-circle"></i>
                 {{supportBtnText}}
             </button>
@@ -38900,15 +38900,17 @@ define("extensionsIntegrated/Phoenix/profile-menu", function (require, exports, 
             {{accountBtnText}}
         </button>
 
-        <button id="phoenix-support-btn" class="btn dialog-button menu-button">
-            <i class="fa fa-question-circle"></i>
-            {{supportBtnText}}
-        </button>
-
         <button id="phoenix-signout-btn" class="btn dialog-button menu-button signout">
             <i class="fa fa-sign-out-alt"></i>
             {{signOutBtnText}}
         </button>
+
+        <div class="support-link">
+            <button id="phoenix-support-btn" class="text-link">
+                <i class="fa fa-question-circle"></i>
+                {{supportBtnText}}
+            </button>
+        </div>
     </div>
 </div>
 `;
