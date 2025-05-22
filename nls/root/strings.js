@@ -328,6 +328,9 @@ define({
     "SPLITVIEW_MENU_TOOLTIP": "Split the editor vertically or horizontally",
     "GEAR_MENU_TOOLTIP": "Configure Working Set",
 
+    "CMD_TOGGLE_SHOW_WORKING_SET": "Show Working Set",
+    "CMD_TOGGLE_SHOW_FILE_TABS": "Show File Tab Bar",
+
     "SPLITVIEW_INFO_TITLE": "Already Open",
     "SPLITVIEW_MULTIPANE_WARNING": "The file is already open in another pane. {APP_NAME} will soon support opening the same file in more than one pane. Until then, the file will be shown in the pane it's already open in.<br /><br />(You'll only see this message once.)",
 
@@ -1278,6 +1281,9 @@ define({
 
     // Emmet
     "DESCRIPTION_EMMET": "true to enable Emmet, else false.",
+
+    // Hide/Show working set (that is displayed in the sidebar)
+    "DESCRIPTION_SHOW_WORKING_SET": "true to show the working set, false to hide it.",
 
     // Tabbar
     "DESCRIPTION_TABBAR": "Set the tab bar settings.",

@@ -8650,6 +8650,12 @@ define("command/Commands", function (require, exports, module) {
     /** Toggles automatic working set sorting */
     exports.CMD_WORKING_SORT_TOGGLE_AUTO  = "cmd.sortWorkingSetToggleAuto";  // WorkingSetSort.js       _handleToggleAutoSort()
 
+    /** Toggles working set visibility */
+    exports.CMD_TOGGLE_SHOW_WORKING_SET  = "cmd.toggleShowWorkingSet";      // SidebarView.js       _handleToggleWorkingSet()
+
+    /** Toggles file tabs visibility */
+    exports.CMD_TOGGLE_SHOW_FILE_TABS  = "cmd.toggleShowFileTabs";          // SidebarView.js       _handleToggleFileTabs()
+
     /** Opens keyboard navigation UI overlay */
     exports.CMD_KEYBOARD_NAV_UI_OVERLAY  = "cmd.keyboardNavUI";  // WorkingSetSort.js       _handleToggleAutoSort()
 
@@ -9133,6 +9139,9 @@ define("command/DefaultMenus", function (require, exports, module) {
         splitview_menu.addMenuDivider();
         splitview_menu.addMenuItem(Commands.CMD_WORKING_SORT_TOGGLE_AUTO);
         splitview_menu.addMenuItem(Commands.FILE_SHOW_FOLDERS_FIRST);
+        splitview_menu.addMenuDivider();
+        splitview_menu.addMenuItem(Commands.CMD_TOGGLE_SHOW_WORKING_SET);
+        splitview_menu.addMenuItem(Commands.CMD_TOGGLE_SHOW_FILE_TABS);
 
         var project_cmenu = Menus.registerContextMenu(Menus.ContextMenuIds.PROJECT_MENU);
         project_cmenu.addMenuItem(Commands.FILE_NEW);
@@ -104143,6 +104152,9 @@ define("nls/root/strings", {
     "SPLITVIEW_MENU_TOOLTIP": "Split the editor vertically or horizontally",
     "GEAR_MENU_TOOLTIP": "Configure Working Set",
 
+    "CMD_TOGGLE_SHOW_WORKING_SET": "Show Working Set",
+    "CMD_TOGGLE_SHOW_FILE_TABS": "Show File Tab Bar",
+
     "SPLITVIEW_INFO_TITLE": "Already Open",
     "SPLITVIEW_MULTIPANE_WARNING": "The file is already open in another pane. {APP_NAME} will soon support opening the same file in more than one pane. Until then, the file will be shown in the pane it's already open in.<br /><br />(You'll only see this message once.)",
 
@@ -105093,6 +105105,9 @@ define("nls/root/strings", {
 
     // Emmet
     "DESCRIPTION_EMMET": "true to enable Emmet, else false.",
+
+    // Hide/Show working set (that is displayed in the sidebar)
+    "DESCRIPTION_SHOW_WORKING_SET": "true to show the working set, false to hide it.",
 
     // Tabbar
     "DESCRIPTION_TABBAR": "Set the tab bar settings.",
@@ -148187,15 +148202,16 @@ define("project/ProjectModel", function (require, exports, module) {
 define("project/SidebarView", function (require, exports, module) {
 
 
-    var AppInit         = require("utils/AppInit"),
-        ProjectManager  = require("project/ProjectManager"),
-        WorkingSetView  = require("project/WorkingSetView"),
-        MainViewManager = require("view/MainViewManager"),
-        CommandManager  = require("command/CommandManager"),
-        Commands        = require("command/Commands"),
-        Strings         = require("strings"),
-        Resizer         = require("utils/Resizer"),
-        _               = require("thirdparty/lodash");
+    var AppInit             = require("utils/AppInit"),
+        ProjectManager      = require("project/ProjectManager"),
+        PreferencesManager  = require("preferences/PreferencesManager"),
+        WorkingSetView      = require("project/WorkingSetView"),
+        MainViewManager     = require("view/MainViewManager"),
+        CommandManager      = require("command/CommandManager"),
+        Commands            = require("command/Commands"),
+        Strings             = require("strings"),
+        Resizer             = require("utils/Resizer"),
+        _                   = require("thirdparty/lodash");
 
     // These vars are initialized by the htmlReady handler
     // below since they refer to DOM elements
@@ -148207,7 +148223,9 @@ define("project/SidebarView", function (require, exports, module) {
 
     var _cmdSplitNone,
         _cmdSplitVertical,
-        _cmdSplitHorizontal;
+        _cmdSplitHorizontal,
+        _cmdToggleWorkingSet,
+        _cmdToggleFileTabs;
 
     /**
      * @private
@@ -148327,6 +148345,30 @@ define("project/SidebarView", function (require, exports, module) {
         MainViewManager.setLayoutScheme(2, 1);
     }
 
+    /**
+     * Handle Toggle Working Set Command
+     * @private
+     */
+    function _handleToggleWorkingSet() {
+        const isCurrentlyShown = PreferencesManager.get("showWorkingSet");
+        PreferencesManager.set("showWorkingSet", !isCurrentlyShown);
+        CommandManager.get(Commands.CMD_TOGGLE_SHOW_WORKING_SET).setChecked(!isCurrentlyShown);
+    }
+
+    /**
+     * Handle Toggle File Tabs Command
+     * @private
+     */
+    function _handleToggleFileTabs() {
+        const prefs = PreferencesManager.get("tabBar.options");
+        const willBeShown = !prefs.showTabBar;
+        PreferencesManager.set("tabBar.options", {
+            showTabBar: willBeShown,
+            numberOfTabs: prefs.numberOfTabs
+        });
+        CommandManager.get(Commands.CMD_TOGGLE_SHOW_FILE_TABS).setChecked(willBeShown);
+    }
+
     // Initialize items dependent on HTML DOM
     AppInit.htmlReady(function () {
         $sidebar                  = $("#sidebar");
@@ -148334,6 +148376,12 @@ define("project/SidebarView", function (require, exports, module) {
         $projectTitle             = $sidebar.find("#project-title");
         $projectFilesContainer    = $sidebar.find("#project-files-container");
         $workingSetViewsContainer = $sidebar.find("#working-set-list-container");
+
+        // apply working set visibility immediately
+        // this is needed because otherwise when the working set is hidden there is a flashing issue
+        if (!PreferencesManager.get("showWorkingSet")) {
+            $workingSetViewsContainer.addClass("working-set-hidden");
+        }
 
         // init
         $sidebar.on("panelResizeStart", function (evt, width) {
@@ -148393,6 +148441,37 @@ define("project/SidebarView", function (require, exports, module) {
 
         // Tooltips
         $splitViewMenu.attr("title", Strings.GEAR_MENU_TOOLTIP);
+
+        _cmdToggleWorkingSet.setChecked(PreferencesManager.get("showWorkingSet"));
+        _cmdToggleFileTabs.setChecked(PreferencesManager.get("tabBar.options").showTabBar);
+
+        // to listen for tab bar preference changes from the preferences file
+        // because if user toggles the state of tab bar visibility either from the view menu or the preferences file
+        // we need to update the checked state here too
+        PreferencesManager.on("change", "tabBar.options", function () {
+            const prefs = PreferencesManager.get("tabBar.options");
+            _cmdToggleFileTabs.setChecked(prefs.showTabBar);
+        });
+
+        // Define the preference to decide whether to show the working set or not
+        PreferencesManager.definePreference("showWorkingSet", "boolean", true, {
+            description: Strings.DESCRIPTION_SHOW_WORKING_SET
+        })
+            .on("change", function () {
+                // 'working-set-list-container' is the id of the main working set element which we need to hide/show
+                const $workingSet = $(document.getElementById("working-set-list-container"));
+                const getPref = PreferencesManager.get("showWorkingSet");
+
+                if(getPref) {
+                    // refer to brackets.less file for styles
+                    $workingSet.removeClass("working-set-hidden");
+                } else {
+                    $workingSet.addClass("working-set-hidden");
+                }
+
+                // update the menu item checked state to match the preference
+                _cmdToggleWorkingSet.setChecked(getPref);
+            });
     });
 
     ProjectManager.on("projectOpen", _updateProjectTitle);
@@ -148404,6 +148483,8 @@ define("project/SidebarView", function (require, exports, module) {
     _cmdSplitNone       = CommandManager.register(Strings.CMD_SPLITVIEW_NONE,       Commands.CMD_SPLITVIEW_NONE,       _handleSplitViewNone);
     _cmdSplitVertical   = CommandManager.register(Strings.CMD_SPLITVIEW_VERTICAL,   Commands.CMD_SPLITVIEW_VERTICAL,   _handleSplitViewVertical);
     _cmdSplitHorizontal = CommandManager.register(Strings.CMD_SPLITVIEW_HORIZONTAL, Commands.CMD_SPLITVIEW_HORIZONTAL, _handleSplitViewHorizontal);
+    _cmdToggleWorkingSet = CommandManager.register(Strings.CMD_TOGGLE_SHOW_WORKING_SET, Commands.CMD_TOGGLE_SHOW_WORKING_SET, _handleToggleWorkingSet);
+    _cmdToggleFileTabs = CommandManager.register(Strings.CMD_TOGGLE_SHOW_FILE_TABS, Commands.CMD_TOGGLE_SHOW_FILE_TABS, _handleToggleFileTabs);
 
     CommandManager.register(Strings.CMD_TOGGLE_SIDEBAR, Commands.VIEW_HIDE_SIDEBAR, toggle);
     CommandManager.register(Strings.CMD_SHOW_SIDEBAR, Commands.SHOW_SIDEBAR, show);
