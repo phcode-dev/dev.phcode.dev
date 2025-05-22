@@ -38859,12 +38859,12 @@ define("extensionsIntegrated/Phoenix/profile-menu", function (require, exports, 
         <h1 class="popup-title">{{welcomeTitle}}</h1>
     </div>
     <div class="popup-body">
-        <button id="phoenix-signin-btn" class="btn btn-primary">
+        <button id="phoenix-signin-btn" class="btn dialog-button primary">
             <i class="fa fa-sign-in-alt"></i>
             {{signInBtnText}}
         </button>
         <div class="support-link">
-            <button id="phoenix-support-btn" class="btn btn-link">
+            <button id="phoenix-support-btn" class="btn dialog-button">
                 <i class="fa fa-question-circle"></i>
                 {{supportBtnText}}
             </button>
@@ -38895,17 +38895,17 @@ define("extensionsIntegrated/Phoenix/profile-menu", function (require, exports, 
             </div>
         </div>
 
-        <button id="phoenix-account-btn" class="btn btn-default menu-button">
+        <button id="phoenix-account-btn" class="btn dialog-button menu-button">
             <i class="fa fa-user"></i>
             {{accountBtnText}}
         </button>
 
-        <button id="phoenix-support-btn" class="btn btn-default menu-button">
+        <button id="phoenix-support-btn" class="btn dialog-button menu-button">
             <i class="fa fa-question-circle"></i>
             {{supportBtnText}}
         </button>
 
-        <button id="phoenix-signout-btn" class="btn btn-default menu-button signout">
+        <button id="phoenix-signout-btn" class="btn dialog-button menu-button signout">
             <i class="fa fa-sign-out-alt"></i>
             {{signOutBtnText}}
         </button>
@@ -38920,7 +38920,10 @@ define("extensionsIntegrated/Phoenix/profile-menu", function (require, exports, 
     let isPopupVisible = false;
 
     // if user is logged in we show the profile menu, otherwise we show the login menu
-    const isLoggedIn = false;
+    let isLoggedIn = false;
+
+    // this is to handle document click events to close popup
+    let documentClickHandler = null;
 
     const defaultLoginData = {
         welcomeTitle: "Welcome to Phoenix Code",
@@ -38944,10 +38947,16 @@ define("extensionsIntegrated/Phoenix/profile-menu", function (require, exports, 
 
     function _handleSignInBtnClick() {
         console.log("User clicked sign in button");
+        closePopup(); // need to close the current popup to show the new one
+        isLoggedIn = true;
+        showProfilePopup();
     }
 
     function _handleSignOutBtnClick() {
         console.log("User clicked sign out");
+        closePopup();
+        isLoggedIn = false;
+        showLoginPopup();
     }
 
     function _handleContactSupportBtnClick() {
@@ -38968,6 +38977,12 @@ define("extensionsIntegrated/Phoenix/profile-menu", function (require, exports, 
             PopUpManager.removePopUp($popup);
             $popup = null;
             isPopupVisible = false;
+        }
+
+        // we need to remove document click handler if it already exists
+        if (documentClickHandler) {
+            $(document).off("mousedown", documentClickHandler);
+            documentClickHandler = null;
         }
     }
 
@@ -38999,6 +39014,29 @@ define("extensionsIntegrated/Phoenix/profile-menu", function (require, exports, 
                 left: left + "px"
             });
         }
+    }
+
+    /**
+     * this function is responsible to set up a click handler to close the popup when clicking outside
+     */
+    function _setupDocumentClickHandler() {
+        // remove any existing handlers
+        if (documentClickHandler) {
+            $(document).off("mousedown", documentClickHandler);
+        }
+
+        // add the new click handler
+        documentClickHandler = function (event) {
+            // if the click is outside the popup and not on the profile button (which toggles the popup)
+            if ($popup && !$popup[0].contains(event.target) && !$("#user-profile-button")[0].contains(event.target)) {
+                closePopup();
+            }
+        };
+
+        // this is needed so we don't close the popup immediately as the profile button is clicked
+        setTimeout(function() {
+            $(document).on("mousedown", documentClickHandler);
+        }, 100);
     }
 
     /**
@@ -39036,7 +39074,6 @@ define("extensionsIntegrated/Phoenix/profile-menu", function (require, exports, 
         // event handlers for buttons
         $popup.find("#phoenix-signin-btn").on("click", function () {
             _handleSignInBtnClick();
-            closePopup();
         });
 
         $popup.find("#phoenix-support-btn").on("click", function () {
@@ -39050,6 +39087,8 @@ define("extensionsIntegrated/Phoenix/profile-menu", function (require, exports, 
                 positionPopup();
             }
         });
+
+        _setupDocumentClickHandler();
     }
 
     /**
@@ -39094,7 +39133,6 @@ define("extensionsIntegrated/Phoenix/profile-menu", function (require, exports, 
 
         $popup.find("#phoenix-signout-btn").on("click", function () {
             _handleSignOutBtnClick();
-            closePopup();
         });
 
         // handle window resize to reposition popup
@@ -39103,6 +39141,8 @@ define("extensionsIntegrated/Phoenix/profile-menu", function (require, exports, 
                 positionPopup();
             }
         });
+
+        _setupDocumentClickHandler();
     }
 
     /**
