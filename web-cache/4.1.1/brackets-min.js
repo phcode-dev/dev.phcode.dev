@@ -39272,14 +39272,15 @@ define("extensionsIntegrated/Phoenix/serverSync", function (require, exports, mo
                 resolve();
                 return;
             }
-            file.read({encoding: window.fs.BYTE_ARRAY_ENCODING}, function (err, content, encoding, stat) {
-                if (err){
-                    reject(err);
-                    return;
-                }
-                let blob = new Blob([content], {type:"application/octet-stream"});
-                _uploadFile(file.fullPath, blob, resolve, reject);
-            });
+            file.read({encoding: window.fs.BYTE_ARRAY_ENCODING, doNotCache: true},
+                function (err, content, encoding, stat) {
+                    if (err){
+                        reject(err);
+                        return;
+                    }
+                    let blob = new Blob([content], {type:"application/octet-stream"});
+                    _uploadFile(file.fullPath, blob, resolve, reject);
+                });
         });
     }
 
