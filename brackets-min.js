@@ -14583,6 +14583,21 @@ define("document/DocumentCommandHandlers", function (require, exports, module) {
         NodeUtils           = require("utils/NodeUtils"),
         _                   = require("thirdparty/lodash");
 
+    const KernalModeTrust = window.KernalModeTrust;
+    if(!KernalModeTrust){
+        throw new Error("KernalModeTrust is not defined. Cannot boot without trust ring");
+    }
+    async function _resetTauriTrustRingBeforeRestart() {
+        // This is needed as if for a given tauri window, the trust ring can only be set once. So reloading the app
+        // in the same window, tauri will deny setting new keys.
+        // this is a security measure to prevent a malicious extension from setting its own key.
+        try {
+            await KernalModeTrust.dismantleKeyring();
+        } catch (e) {
+            console.error("Error while resetting trust ring before restart", e);
+        }
+    }
+
     /**
      * Handlers for commands related to document handling (opening, saving, etc.)
      */
@@ -16595,6 +16610,9 @@ define("document/DocumentCommandHandlers", function (require, exports, module) {
                     .finally(()=>{
                         raceAgainstTime(_safeNodeTerminate(), 4000)
                             .finally(()=>{
+                                _resetTauriTrustRingBeforeRestart();
+                                // we do not wait/raceAgainstTime here purposefully to prevent attacks that will rely
+                                // on this brief window of no trust zone in while the kernal trust key is being reset.
                                 window.location.href = href;
                             });
                     });
@@ -162200,6 +162218,10 @@ define("utils/ExtensionLoader", function (require, exports, module) {
         // Create the extensions/disabled directory, too.
         var disabledExtensionPath = extensionPath.replace(/\/user$/, "/disabled");
         FileSystem.getDirectoryForPath(disabledExtensionPath).create();
+
+        // just before extensions are loaded, we need to delete the boot time trust ring keys so that extensions
+        // won't have keys to enter kernal mode in the app.
+        delete window.KernalModeTrust;
 
         var promise = Async.doInParallel(paths, function (extPath) {
             if(extPath === "default"){
