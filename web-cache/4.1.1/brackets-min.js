@@ -139,6 +139,7 @@ define(function (require, exports, module) {
     require("widgets/InlineMenu");
     require("thirdparty/tinycolor");
     require("utils/LocalizationUtils");
+    require("services/login");
 
     // DEPRECATED: In future we want to remove the global CodeMirror, but for now we
     // expose our required CodeMirror globally so as to avoid breaking extensions in the
@@ -20292,10 +20293,35 @@ define("editor/Editor", function (require, exports, module) {
             // this became a problem after we added the custom line height feature causing jumping scrolls esp in safari
             // and mac if we dont do this scroll scaling.
             const lineHeight = parseFloat(getComputedStyle($editor[0]).lineHeight);
-            const scrollDelta = event.deltaY;
             const defaultHeight = 14, scrollScaleFactor = lineHeight/defaultHeight;
-            $editor[0].scrollTop += (scrollDelta/scrollScaleFactor);
-            event.preventDefault();
+
+            // when user is pressing the 'Shift' key, we need to convert the vertical scroll to horizontal scroll
+            if (event.shiftKey) {
+                let horizontalDelta = event.deltaX;
+
+                if (event.deltaY !== 0) {
+                    horizontalDelta = event.deltaY;
+                }
+
+                // apply the horizontal scrolling
+                if (horizontalDelta !== 0) {
+                    $editor[0].scrollLeft += horizontalDelta;
+                    event.preventDefault();
+                    return;
+                }
+            }
+
+            // apply horizontal scrolling if present. for the diagonal scrolling
+            if (event.deltaX !== 0) {
+                $editor[0].scrollLeft += event.deltaX;
+            }
+
+            // apply the vertical scrolling normally
+            if (event.deltaY !== 0) {
+                const scrollDelta = event.deltaY;
+                $editor[0].scrollTop += (scrollDelta/scrollScaleFactor);
+                event.preventDefault();
+            }
         });
     }
 
@@ -38117,7 +38143,6 @@ define("extensionsIntegrated/Phoenix/guided-tour", function (require, exports, m
  *
  */
 
-/*global Phoenix*/
 /*eslint no-console: 0*/
 /*eslint strict: ["error", "global"]*/
 /* jshint ignore:start */
@@ -38131,26 +38156,10 @@ define("extensionsIntegrated/Phoenix/main", function (require, exports, module) 
         Strings      = require("strings"),
         Dialogs      = require("widgets/Dialogs"),
         NotificationUI  = require("widgets/NotificationUI"),
-        DefaultDialogs = require("widgets/DefaultDialogs"),
-        ProfileMenu = require("./profile-menu");
+        DefaultDialogs = require("widgets/DefaultDialogs");
 
     const PERSIST_STORAGE_DIALOG_DELAY_SECS = 60000;
-    let $icon;
 
-    function _addToolbarIcon() {
-        const helpButtonID = "user-profile-button";
-        $icon = $("<a>")
-            .attr({
-                id: helpButtonID,
-                href: "#",
-                class: "user",
-                title: Strings.CMD_USER_PROFILE
-            })
-            .appendTo($("#main-toolbar .bottom-buttons"));
-        $icon.on('click', ()=>{
-            ProfileMenu.init();
-        });
-    }
     function _showUnSupportedBrowserDialogue() {
         if(Phoenix.browser.isMobile || Phoenix.browser.isTablet){
             Dialogs.showModalDialog(
@@ -38208,7 +38217,6 @@ define("extensionsIntegrated/Phoenix/main", function (require, exports, module) 
         if(Phoenix.isSpecRunnerWindow){
             return;
         }
-        _addToolbarIcon();
         serverSync.init();
         defaultProjects.init();
         newProject.init();
@@ -38865,326 +38873,6 @@ define("extensionsIntegrated/Phoenix/newly-added-features", function (require, e
             _showNewUpdatesIfPresent();
         }
     };
-});
-
-define("extensionsIntegrated/Phoenix/profile-menu", function (require, exports, module) {
-    const Mustache = require("thirdparty/mustache/mustache");
-    const PopUpManager = require("widgets/PopUpManager");
-
-    // HTML templates
-    const loginTemplate = `<div class="profile-popup">
-    <div class="popup-header">
-        <h1 class="popup-title">{{welcomeTitle}}</h1>
-    </div>
-    <div class="popup-body">
-        <button id="phoenix-signin-btn" class="btn dialog-button primary">
-            <i class="fa fa-sign-in-alt"></i>
-            {{signInBtnText}}
-        </button>
-        <div class="support-link">
-            <button id="phoenix-support-btn" class="text-link">
-                <i class="fa fa-question-circle"></i>
-                {{supportBtnText}}
-            </button>
-        </div>
-    </div>
-</div>
-`;
-    const profileTemplate = `<div class="profile-popup">
-    <div class="popup-header">
-        <div class="user-profile-header">
-            <div class="user-avatar">
-                {{initials}}
-            </div>
-            <div class="user-info">
-                <div class="user-name">{{userName}}</div>
-                <div class="user-plan">{{planName}}</div>
-            </div>
-        </div>
-    </div>
-    <div class="popup-body">
-        <div class="quota-section">
-            <div class="quota-header">
-                <span>{{quotaLabel}}</span>
-                <span>{{quotaUsed}} / {{quotaTotal}} {{quotaUnit}}</span>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-fill" style="width: {{quotaPercent}}%;"></div>
-            </div>
-        </div>
-
-        <button id="phoenix-account-btn" class="btn dialog-button menu-button">
-            <i class="fa fa-user"></i>
-            {{accountBtnText}}
-        </button>
-
-        <button id="phoenix-signout-btn" class="btn dialog-button menu-button signout">
-            <i class="fa fa-sign-out-alt"></i>
-            {{signOutBtnText}}
-        </button>
-
-        <div class="support-link">
-            <button id="phoenix-support-btn" class="text-link">
-                <i class="fa fa-question-circle"></i>
-                {{supportBtnText}}
-            </button>
-        </div>
-    </div>
-</div>
-`;
-
-    // for the popup DOM element
-    let $popup = null;
-
-    // this is to track whether the popup is visible or not
-    let isPopupVisible = false;
-
-    // if user is logged in we show the profile menu, otherwise we show the login menu
-    let isLoggedIn = false;
-
-    // this is to handle document click events to close popup
-    let documentClickHandler = null;
-
-    const defaultLoginData = {
-        welcomeTitle: "Welcome to Phoenix Code",
-        signInBtnText: "Sign in to your account",
-        supportBtnText: "Contact support"
-    };
-
-    const defaultProfileData = {
-        initials: "CA",
-        userName: "Charly A.",
-        planName: "Paid Plan",
-        quotaLabel: "AI quota used",
-        quotaUsed: "7,000",
-        quotaTotal: "10,000",
-        quotaUnit: "tokens",
-        quotaPercent: 70,
-        accountBtnText: "Account details",
-        supportBtnText: "Contact support",
-        signOutBtnText: "Sign out"
-    };
-
-    function _handleSignInBtnClick() {
-        console.log("User clicked sign in button");
-        closePopup(); // need to close the current popup to show the new one
-        isLoggedIn = true;
-        showProfilePopup();
-    }
-
-    function _handleSignOutBtnClick() {
-        console.log("User clicked sign out");
-        closePopup();
-        isLoggedIn = false;
-        showLoginPopup();
-    }
-
-    function _handleContactSupportBtnClick() {
-        Phoenix.app.openURLInDefaultBrowser(brackets.config.support_url);
-    }
-
-    function _handleAccountDetailsBtnClick() {
-        console.log("User clicked account details");
-    }
-
-    /**
-     * Close the popup if it's open
-     * this is called at various instances like when the user click on the profile icon even if the popup is open
-     * or when user clicks somewhere else on the document
-     */
-    function closePopup() {
-        if ($popup) {
-            PopUpManager.removePopUp($popup);
-            $popup = null;
-            isPopupVisible = false;
-        }
-
-        // we need to remove document click handler if it already exists
-        if (documentClickHandler) {
-            $(document).off("mousedown", documentClickHandler);
-            documentClickHandler = null;
-        }
-    }
-
-    /**
-     * this function is to position the popup near the profile button
-     */
-    function positionPopup() {
-        const $profileButton = $("#user-profile-button");
-
-        if ($profileButton.length && $popup) {
-            const buttonPos = $profileButton.offset();
-            const popupWidth = $popup.outerWidth();
-            const windowWidth = $(window).width();
-
-            // pos above the profile button
-            let top = buttonPos.top - $popup.outerHeight() - 10;
-
-            // If popup would go off the right edge of the window, align right edge of popup with right edge of button
-            let left = Math.min(
-                buttonPos.left - popupWidth + $profileButton.outerWidth(),
-                windowWidth - popupWidth - 10
-            );
-
-            // never go off left edge
-            left = Math.max(10, left);
-
-            $popup.css({
-                top: top + "px",
-                left: left + "px"
-            });
-        }
-    }
-
-    /**
-     * this function is responsible to set up a click handler to close the popup when clicking outside
-     */
-    function _setupDocumentClickHandler() {
-        // remove any existing handlers
-        if (documentClickHandler) {
-            $(document).off("mousedown", documentClickHandler);
-        }
-
-        // add the new click handler
-        documentClickHandler = function (event) {
-            // if the click is outside the popup and not on the profile button (which toggles the popup)
-            if ($popup && !$popup[0].contains(event.target) && !$("#user-profile-button")[0].contains(event.target)) {
-                closePopup();
-            }
-        };
-
-        // this is needed so we don't close the popup immediately as the profile button is clicked
-        setTimeout(function() {
-            $(document).on("mousedown", documentClickHandler);
-        }, 100);
-    }
-
-    /**
-     * Shows the sign-in popup when the user is not logged in
-     * @param {Object} loginData - Data to populate the template (optional)
-     */
-    function showLoginPopup(loginData) {
-        // If popup is already visible, just close it
-        if (isPopupVisible) {
-            closePopup();
-            return;
-        }
-
-        // Merge provided data with defaults
-        const templateData = $.extend({}, defaultLoginData, loginData || {});
-
-        // create the popup element
-        closePopup(); // close any existing popup first
-
-        // Render template with data
-        const renderedTemplate = Mustache.render(loginTemplate, templateData);
-        $popup = $(renderedTemplate);
-
-        $("body").append($popup);
-        isPopupVisible = true;
-
-        positionPopup();
-
-        PopUpManager.addPopUp($popup, function() {
-            $popup.remove();
-            $popup = null;
-            isPopupVisible = false;
-        }, true, { closeCurrentPopups: true });
-
-        // event handlers for buttons
-        $popup.find("#phoenix-signin-btn").on("click", function () {
-            _handleSignInBtnClick();
-        });
-
-        $popup.find("#phoenix-support-btn").on("click", function () {
-            _handleContactSupportBtnClick();
-            closePopup();
-        });
-
-        // handle window resize to reposition popup
-        $(window).on("resize.profilePopup", function () {
-            if (isPopupVisible) {
-                positionPopup();
-            }
-        });
-
-        _setupDocumentClickHandler();
-    }
-
-    /**
-     * Shows the user profile popup when the user is logged in
-     * @param {Object} profileData - Data to populate the template (optional)
-     */
-    function showProfilePopup(profileData) {
-        // If popup is already visible, just close it
-        if (isPopupVisible) {
-            closePopup();
-            return;
-        }
-
-        // Merge provided data with defaults
-        const templateData = $.extend({}, defaultProfileData, profileData || {});
-
-        closePopup();
-
-        // Render template with data
-        const renderedTemplate = Mustache.render(profileTemplate, templateData);
-        $popup = $(renderedTemplate);
-
-        $("body").append($popup);
-        isPopupVisible = true;
-        positionPopup();
-
-        PopUpManager.addPopUp($popup, function() {
-            $popup.remove();
-            $popup = null;
-            isPopupVisible = false;
-        }, true, { closeCurrentPopups: true });
-
-        $popup.find("#phoenix-account-btn").on("click", function () {
-            _handleAccountDetailsBtnClick();
-            closePopup();
-        });
-
-        $popup.find("#phoenix-support-btn").on("click", function () {
-            _handleContactSupportBtnClick();
-            closePopup();
-        });
-
-        $popup.find("#phoenix-signout-btn").on("click", function () {
-            _handleSignOutBtnClick();
-        });
-
-        // handle window resize to reposition popup
-        $(window).on("resize.profilePopup", function () {
-            if (isPopupVisible) {
-                positionPopup();
-            }
-        });
-
-        _setupDocumentClickHandler();
-    }
-
-    /**
-     * Toggle the profile popup based on the user's login status
-     * this function is called inside the src/extensionsIntegrated/Phoenix/main.js when user clicks on the profile icon
-     * @param {Object} data - Data to populate the templates (optional)
-     */
-    function init(data) {
-        // check if the popup is already visible or not. if visible close it
-        if (isPopupVisible) {
-            closePopup();
-            return;
-        }
-
-        if (isLoggedIn) {
-            showProfilePopup(data);
-        } else {
-            showLoginPopup(data);
-        }
-    }
-
-    exports.init = init;
 });
 
 /*
@@ -104763,7 +104451,7 @@ define("nls/root/strings", {
     "CMD_AUTO_UPDATE": "Auto Update",
     "CMD_HOW_TO_USE_BRACKETS": "How to Use {APP_NAME}",
     "CMD_SUPPORT": "{APP_NAME} Support",
-    "CMD_USER_PROFILE": "User Profile",
+    "CMD_USER_PROFILE": "{APP_NAME} Account",
     "CMD_DOCS": "Help, Getting Started",
     "CMD_SUGGEST": "Suggest a Feature",
     "CMD_REPORT_ISSUE": "Report Issue",
@@ -105698,7 +105386,29 @@ define("nls/root/strings", {
     "GIT_TOAST_MESSAGE": "Click the Git panel icon to manage your repository. Easily commit, push, pull, and view your project history—all in one place.<br><a href='https://docs.phcode.dev/docs/Features/git'>Learn more about the Git panel →</a>",
 
     // surveys
-    "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote for the features you want to see next!"
+    "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote for the features you want to see next!",
+
+    // login
+    "SIGNED_OUT": "You have been signed out.",
+    "SIGNED_OUT_MESSAGE": "You have been signed out of your {APP_NAME} account. Please sign in again to continue.",
+    "SIGNED_OUT_MESSAGE_FRIENDLY": "Thank you for using {APP_NAME}. See you soon!",
+    "SIGNED_IN_OFFLINE_TITLE": "Offline - Cannot Sign In",
+    "SIGNED_IN_OFFLINE_MESSAGE": "Please connect to the internet to sign in to {APP_NAME}.",
+    "SIGNED_IN_FAILED_TITLE": "Cannot Sign In",
+    "SIGNED_IN_FAILED_MESSAGE": "Something went wrong while trying to sign in. Please try again.",
+    "SIGNED_OUT_FAILED_TITLE": "Failed to Sign Out",
+    "SIGNED_OUT_FAILED_MESSAGE": "Something went wrong while trying to sign out. Please try again.",
+    "VALIDATION_CODE_TITLE": "Sign In Verification Code",
+    "VALIDATION_CODE_MESSAGE": "Please use this Verification code to sign in to your {APP_NAME} account:",
+    "COPY_VALIDATION_CODE": "Copy Code",
+    "VALIDATION_CODE_COPIED": "Copied",
+    "OPEN_SIGN_IN_URL": "Open Sign In Page",
+    "PROFILE_POP_TITLE": "{APP_NAME} Account",
+    "PROFILE_SIGN_IN": "Sign in to your account",
+    "CONTACT_SUPPORT": "Contact support",
+    "SIGN_OUT": "Sign out",
+    "ACCOUNT_DETAILS": "Account Details",
+    "AI_QUOTA_USED": "AI quota used"
 });
 
 /*
@@ -158503,6 +158213,791 @@ define("search/SearchResultsView", function (require, exports, module) {
 
     // Public API
     exports.SearchResultsView = SearchResultsView;
+});
+
+/*
+ * GNU AGPL-3.0 License
+ *
+ * Copyright (c) 2021 - present core.ai . All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along
+ * with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
+ *
+ */
+
+
+define("services/login", function (require, exports, module) {
+    const EventDispatcher = require("utils/EventDispatcher"),
+        PreferencesManager  = require("preferences/PreferencesManager"),
+        Dialogs = require("widgets/Dialogs"),
+        DefaultDialogs = require("widgets/DefaultDialogs"),
+        Strings = require("strings"),
+        NativeApp = require("utils/NativeApp"),
+        ProfileMenu  = require("./profile-menu"),
+        Mustache = require("thirdparty/mustache/mustache"),
+        NodeConnector = require("NodeConnector"),
+        otpDialogTemplate = `<div class="otp-dialog modal">
+    <div class="modal-header">
+        <h1 class="dialog-title">{{Strings.VALIDATION_CODE_TITLE}}</h1>
+    </div>
+    <div class="modal-body">
+        <div class="validation-code-container">
+            <p>{{Strings.VALIDATION_CODE_MESSAGE}}</p>
+            <div class="validation-code" style="font-size: 24px; font-weight: bold; text-align: center; margin: 20px 0; padding: 10px; border-radius: 4px; letter-spacing: 2px; display: flex; justify-content: center; align-items: center;">
+                <span>{{validationCode}}</span>
+                <i class="fas fa-copy" data-button-id="copy" style="margin-left: 10px; cursor: pointer;" title="{{Strings.COPY_VALIDATION_CODE}}"></i>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-button-id="cancel">{{Strings.CANCEL}}</button>
+        <button class="btn primary" data-button-id="open">{{Strings.OPEN_SIGN_IN_URL}}</button>
+    </div>
+</div>
+`;
+
+    const KernalModeTrust = window.KernalModeTrust;
+    if(!KernalModeTrust){
+        // integrated extensions will have access to kernal mode, but not external extensions
+        throw new Error("Login service should have access to KernalModeTrust. Cannot boot without trust ring");
+    }
+    const secureExports = {};
+    KernalModeTrust.loginService = secureExports;
+    // user profile is something like "apiKey": "uuid...", validationCode: "dfdf", "firstName":"Aa","lastName":"bb",
+    // "email":"aaaa@sss.com", "customerID":"uuid...","loginTime":1750074393853,
+    // "profileIcon":{"color":"#14b8a6","initials":"AB"}
+    let userProfile = null;
+    let isLoggedInUser = false;
+
+    // just used as trigger to notify different windows about user profile changes
+    const PREF_USER_PROFILE_VERSION = "userProfileVersion";
+
+    EventDispatcher.makeEventDispatcher(exports);
+    EventDispatcher.makeEventDispatcher(secureExports);
+
+    const _EVT_PAGE_FOCUSED = "page_focused";
+    $(window).focus(function () {
+        exports.trigger(_EVT_PAGE_FOCUSED);
+    });
+
+    const AUTH_CONNECTOR_ID = "ph_auth";
+    const EVENT_CONNECTED = "connected";
+    let authNodeConnector;
+    if(Phoenix.isNativeApp) {
+        authNodeConnector = NodeConnector.createNodeConnector(AUTH_CONNECTOR_ID, exports);
+    }
+
+
+    function isLoggedIn() {
+        return isLoggedInUser;
+    }
+
+    function getProfile() {
+        return userProfile;
+    }
+
+    const ERR_RETRY_LATER = "retry_later";
+    const ERR_INVALID = "invalid";
+
+    /**
+     * Resolves the provided API key and verification code to user profile data
+     *
+     * @param {string} apiKey - The API key to be validated.
+     * @param {string} validationCode - The verification code associated with the API key.
+     * @return {Promise<Object>} A promise resolving to an object containing the user details if successful,
+     * or an error object with the relevant error code (`ERR_RETRY_LATER` or `ERR_INVALID`) if the operation fails.
+     * never rejects.
+     */
+    async function _resolveAPIKey(apiKey, validationCode) {
+        const resolveURL = `${Phoenix.config.account_url}resolveAppSessionID?appSessionID=${apiKey}&validationCode=${validationCode}`;
+        if (!navigator.onLine) {
+            return {err: ERR_RETRY_LATER};
+        }
+        try {
+            const response = await fetch(resolveURL);
+            if (response.status === 400 || response.status === 404) {
+                // 404 api key not found and 400 Bad Request, eg: verification code mismatch
+                return {err: ERR_INVALID};
+            } else if (response.ok) {
+                const userDetails = await response.json();
+                userDetails.apiKey = apiKey;
+                userDetails.validationCode = validationCode;
+                return {userDetails};
+            }
+            // Other errors like 500 are retriable
+            console.log('Other error:', response.status);
+            return {err: ERR_RETRY_LATER};
+        } catch (e) {
+            console.error(e, "Failed to call resolve API endpoint", resolveURL);
+            return {err: ERR_RETRY_LATER};
+        }
+    }
+
+    async function _resetAccountLogin() {
+        isLoggedInUser = false;
+        ProfileMenu.setNotLoggedIn();
+        await KernalModeTrust.removeCredential(KernalModeTrust.CRED_KEY_API);
+        // bump the version so that in multi windows, the other window gets notified of the change
+        PreferencesManager.stateManager.set(PREF_USER_PROFILE_VERSION, crypto.randomUUID());
+    }
+
+    async function _verifyLogin() {
+        const savedUserProfile = await KernalModeTrust.getCredential(KernalModeTrust.CRED_KEY_API);
+        if(!savedUserProfile){
+            console.log("No savedUserProfile found. Not logged in");
+            ProfileMenu.setNotLoggedIn();
+            isLoggedInUser = false;
+            return;
+        }
+        try {
+            userProfile = JSON.parse(savedUserProfile);
+        } catch (e) {
+            console.error(e, "Failed to parse saved user profile credentials");// this should never happen
+            ProfileMenu.setNotLoggedIn();
+            return; // not logged in if parse fails
+        }
+        isLoggedInUser = true;
+        // api key is present, verify if the key is valid. but just show user that we are logged in with
+        // stored credentials.
+        ProfileMenu.setLoggedIn(userProfile.profileIcon.initials, userProfile.profileIcon.color);
+        const resolveResponse = await _resolveAPIKey(userProfile.apiKey, userProfile.validationCode);
+        if(resolveResponse.userDetails) {
+            // a valid user account is in place. update the stored credentials
+            userProfile = resolveResponse.userDetails;
+            ProfileMenu.setLoggedIn(userProfile.profileIcon.initials, userProfile.profileIcon.color);
+            await KernalModeTrust.setCredential(KernalModeTrust.CRED_KEY_API, JSON.stringify(userProfile));
+            // we dont need to bump the PREF_USER_PROFILE_VERSION here as its just a cred update
+            // (maybe name) and may lead to infi loops.
+            return;
+        }
+        // some error happened.
+        if(resolveResponse.err === ERR_INVALID) { // the api key is invalid, we need to logout and tell user
+            _resetAccountLogin()
+                .catch(console.error);
+            Dialogs.showModalDialog(
+                DefaultDialogs.DIALOG_ID_ERROR,
+                Strings.SIGNED_OUT,
+                Strings.SIGNED_OUT_MESSAGE
+            );
+        }
+        // maybe some intermittent network error, ERR_RETRY_LATER is here. do nothing
+    }
+
+    function _getAutoAuthPortURL() {
+        const localAutoAuthURL = KernalModeTrust.localAutoAuthURL; // Eg: http://localhost:33577/AutoAuthDI0zAUJo
+        if(!localAutoAuthURL) {
+            return "9797/urlDoesntExist";
+        }
+        return localAutoAuthURL.replace("http://localhost:", "");
+    }
+
+    // never rejects.
+    async function _getAppAuthSession() {
+        const authPortURL = _getAutoAuthPortURL();
+        const appName = encodeURIComponent(`${Strings.APP_NAME} Desktop on ${Phoenix.platform}`);
+        const resolveURL = `${Phoenix.config.account_url}getAppAuthSession?autoAuthPort=${authPortURL}&appName=${appName}`;
+        // {"isSuccess":true,"appSessionID":"a uuid...","validationCode":"SWXP07"}
+        try {
+            const response = await fetch(resolveURL);
+            if (response.ok) {
+                const {appSessionID, validationCode} = await response.json();
+                if(!appSessionID || !validationCode) {
+                    throw new Error("Invalid response from getAppAuthSession API endpoint" + resolveURL);
+                }
+                return {appSessionID, validationCode};
+            }
+            return null;
+        } catch (e) {
+            console.error(e, "Failed to call getAppAuthSession API endpoint", resolveURL);
+            // todo raise metrics/log
+            return null;
+        }
+    }
+
+    async function setAutoVerificationCode(validationCode) {
+        const TIMEOUT_MS = 1000;
+        try {
+            await Promise.race([
+                authNodeConnector.execPeer("setVerificationCode", validationCode),
+                new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), TIMEOUT_MS))
+            ]);
+        } catch (e) {
+            console.error("failed to send auth login verification code to node", e);
+            // we ignore this and continue for manual verification
+            // todo raise metrics
+        }
+    }
+
+    async function signInToAccount() {
+        if (!navigator.onLine) {
+            Dialogs.showModalDialog(
+                DefaultDialogs.DIALOG_ID_ERROR,
+                Strings.SIGNED_IN_OFFLINE_TITLE,
+                Strings.SIGNED_IN_OFFLINE_MESSAGE
+            );
+            return;
+        }
+        const appAuthSession = await _getAppAuthSession();
+        if(!appAuthSession) {
+            Dialogs.showModalDialog(
+                DefaultDialogs.DIALOG_ID_ERROR,
+                Strings.SIGNED_IN_FAILED_TITLE,
+                Strings.SIGNED_IN_FAILED_MESSAGE
+            );
+            return;
+        }
+        const {appSessionID, validationCode} = appAuthSession;
+        await setAutoVerificationCode(validationCode);
+        const appSignInURL = `${Phoenix.config.account_url}authorizeApp?appSessionID=${appSessionID}`;
+
+        // Show dialog with validation code
+        const dialogData = {
+            validationCode: validationCode,
+            Strings: Strings
+        };
+
+        const $template = $(Mustache.render(otpDialogTemplate, dialogData));
+        const dialog = Dialogs.showModalDialogUsingTemplate($template);
+
+        // Set timeout to close dialog after 5 minutes, as validity is only 5 mins
+        const closeTimeout = setTimeout(() => {
+            dialog.close();
+        }, 5 * 60 * 1000);
+
+        // Handle button clicks
+        $template.on('click', '[data-button-id="copy"]', function() {
+            Phoenix.app.copyToClipboard(validationCode);
+
+            // Show "Copied" feedback
+            const $validationCodeSpan = $template.find('.validation-code span');
+            const originalText = $validationCodeSpan.text();
+
+            // Replace validation code with "Copied" text
+            $validationCodeSpan.text(Strings.VALIDATION_CODE_COPIED);
+
+            // Restore original validation code after 1.5 seconds
+            setTimeout(() => {
+                $validationCodeSpan.text(originalText);
+            }, 1500);
+        });
+
+        $template.on('click', '[data-button-id="open"]', function() {
+            NativeApp.openURLInDefaultBrowser(appSignInURL);
+        });
+        $template.on('click', '[data-button-id="cancel"]', function() {
+            dialog.close();
+        });
+
+        let checking = false, checkAgain = false;
+        async function checkLoginStatus() {
+            if(checking) {
+                checkAgain = true;
+                return;
+            }
+            checking = true;
+            try {
+                const resolveResponse = await _resolveAPIKey(appSessionID, validationCode);
+                if(resolveResponse.userDetails) {
+                    // the user has validated the creds
+                    userProfile = resolveResponse.userDetails;
+                    ProfileMenu.setLoggedIn(userProfile.profileIcon.initials, userProfile.profileIcon.color);
+                    await KernalModeTrust.setCredential(KernalModeTrust.CRED_KEY_API, JSON.stringify(userProfile));
+                    // bump the version so that in multi windows, the other window gets notified of the change
+                    PreferencesManager.stateManager.set(PREF_USER_PROFILE_VERSION, crypto.randomUUID());
+                    checkAgain = false;
+                    isLoggedInUser = true;
+                    dialog.close();
+                }
+            } catch (e) {
+                console.error("Failed to check login status.", e);
+            }
+            checking = false;
+            if(checkAgain) {
+                checkAgain = false;
+                setTimeout(checkLoginStatus, 100);
+            }
+        }
+        exports.on(_EVT_PAGE_FOCUSED, checkLoginStatus);
+        async function _AutoSignedIn() {
+            await checkLoginStatus();
+        }
+        authNodeConnector.one(EVENT_CONNECTED, _AutoSignedIn);
+
+        // Clean up when dialog is closed
+        dialog.done(function() {
+            exports.off(_EVT_PAGE_FOCUSED, checkLoginStatus);
+            authNodeConnector.off(EVENT_CONNECTED, _AutoSignedIn);
+            clearTimeout(closeTimeout);
+        });
+        NativeApp.openURLInDefaultBrowser(appSignInURL);
+    }
+
+    async function signOutAccount() {
+        try {
+            const resolveURL = `${Phoenix.config.account_url}logoutSession`;
+            let input = {
+                appSessionID: userProfile.apiKey
+            };
+
+            const response = await fetch(resolveURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(input)
+            });
+
+            const result = await response.json();
+
+            if (!result.isSuccess) {
+                console.error('Error logging out', result);
+                Dialogs.showModalDialog(
+                    DefaultDialogs.DIALOG_ID_ERROR,
+                    Strings.SIGNED_OUT_FAILED_TITLE,
+                    Strings.SIGNED_OUT_FAILED_MESSAGE
+                );
+                return;
+                // todo raise metrics
+            }
+            await _resetAccountLogin();
+            Dialogs.showModalDialog(
+                DefaultDialogs.DIALOG_ID_INFO,
+                Strings.SIGNED_OUT,
+                Strings.SIGNED_OUT_MESSAGE_FRIENDLY
+            );
+        } catch (error) {
+            console.error("Network error. Could not log out session.", error);
+            Dialogs.showModalDialog(
+                DefaultDialogs.DIALOG_ID_ERROR,
+                Strings.SIGNED_OUT_FAILED_TITLE,
+                Strings.SIGNED_OUT_FAILED_MESSAGE
+            );
+            // todo raise metrics
+        }
+    }
+
+    function init() {
+        ProfileMenu.init();
+        if(!Phoenix.isNativeApp){
+            console.warn("Login service is not supported in browser");
+            return;
+        }
+        _verifyLogin().catch(console.error);// todo raise metrics
+        const pref = PreferencesManager.stateManager.definePreference(PREF_USER_PROFILE_VERSION, 'string', '0');
+        pref.watchExternalChanges();
+        pref.on('change', _verifyLogin);
+    }
+
+    init();
+
+    // no sensitive apis or events should be triggered from the public exports of this module as extensions
+    // can read them. Always use KernalModeTrust.loginService for sensitive apis.
+
+    // kernal exports
+    secureExports.isLoggedIn = isLoggedIn;
+    secureExports.signInToAccount = signInToAccount;
+    secureExports.signOutAccount = signOutAccount;
+    secureExports.getProfile = getProfile;
+
+    // public exports
+    exports.isLoggedIn = isLoggedIn;
+
+});
+
+define("services/profile-menu", function (require, exports, module) {
+    const Mustache = require("thirdparty/mustache/mustache"),
+        PopUpManager = require("widgets/PopUpManager"),
+        Strings      = require("strings");
+
+    const KernalModeTrust = window.KernalModeTrust;
+    if(!KernalModeTrust){
+        // integrated extensions will have access to kernal mode, but not external extensions
+        throw new Error("profile menu should have access to KernalModeTrust. Cannot boot without trust ring");
+    }
+
+    let $icon;
+
+    function _createSVGIcon(initials, bgColor) {
+        return `<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10" fill="${bgColor}"/>
+  <text x="50%" y="58%" text-anchor="middle" font-size="11" fill="#fff" font-family="Inter, sans-serif" dy=".1em">
+    ${initials}</text>
+        </svg>`;
+    }
+
+    function _updateProfileIcon(initials, bgColor) {
+        $icon.empty()
+            .append(_createSVGIcon(initials, bgColor));
+    }
+
+    function _removeProfileIcon() {
+        $icon.empty();
+    }
+
+    // HTML templates
+    const loginTemplate = `<div class="profile-popup">
+    <div class="popup-header">
+        <h1 class="popup-title">{{Strings.PROFILE_POP_TITLE}}</h1>
+    </div>
+    <div class="popup-body">
+        <button id="phoenix-signin-btn" class="btn dialog-button primary">
+            <i class="fa fa-sign-in-alt"></i>
+            {{Strings.PROFILE_SIGN_IN}}
+        </button>
+        <div class="support-link">
+            <button id="phoenix-support-btn" class="text-link">
+                <i class="fa fa-question-circle"></i>
+                {{Strings.CONTACT_SUPPORT}}
+            </button>
+        </div>
+    </div>
+</div>
+`;
+    const profileTemplate = `<div class="profile-popup">
+    <div class="popup-header">
+        <div class="user-profile-header">
+            <div class="user-avatar" style="background-color: {{avatarColor}};">
+                {{initials}}
+            </div>
+            <div class="user-info">
+                <div class="user-name"><secure-name></secure-name></div>
+                <div class="user-email"><secure-email></secure-email></div>
+                <div class="{{planClass}}">{{planName}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="popup-body">
+        <div class="quota-section">
+            <div class="quota-header">
+                <span>{{Strings.AI_QUOTA_USED}}</span>
+                <span>{{quotaUsed}} / {{quotaTotal}} {{quotaUnit}}</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: {{quotaPercent}}%;"></div>
+            </div>
+        </div>
+
+        <button id="phoenix-account-btn" class="btn dialog-button menu-button">
+            <i class="fa fa-user"></i>
+            {{Strings.ACCOUNT_DETAILS}}
+        </button>
+
+        <button id="phoenix-signout-btn" class="btn dialog-button menu-button signout">
+            <i class="fa fa-sign-out-alt"></i>
+            {{Strings.SIGN_OUT}}
+        </button>
+
+        <div class="support-link">
+            <button id="phoenix-support-btn" class="text-link">
+                <i class="fa fa-question-circle"></i>
+                {{Strings.CONTACT_SUPPORT}}
+            </button>
+        </div>
+    </div>
+</div>
+`;
+
+    // for the popup DOM element
+    let $popup = null;
+
+    // this is to track whether the popup is visible or not
+    let isPopupVisible = false;
+
+    // this is to handle document click events to close popup
+    let documentClickHandler = null;
+
+    function _handleSignInBtnClick() {
+        closePopup(); // need to close the current popup to show the new one
+        KernalModeTrust.loginService.signInToAccount();
+    }
+
+    function _handleSignOutBtnClick() {
+        closePopup();
+        KernalModeTrust.loginService.signOutAccount();
+    }
+
+    function _handleContactSupportBtnClick() {
+        Phoenix.app.openURLInDefaultBrowser(brackets.config.support_url);
+    }
+
+    function _handleAccountDetailsBtnClick() {
+        Phoenix.app.openURLInDefaultBrowser(brackets.config.account_url);
+    }
+
+    /**
+     * Close the popup if it's open
+     * this is called at various instances like when the user click on the profile icon even if the popup is open
+     * or when user clicks somewhere else on the document
+     */
+    function closePopup() {
+        if ($popup) {
+            PopUpManager.removePopUp($popup);
+            $popup = null;
+            isPopupVisible = false;
+        }
+
+        // we need to remove document click handler if it already exists
+        if (documentClickHandler) {
+            $(document).off("mousedown", documentClickHandler);
+            documentClickHandler = null;
+        }
+    }
+
+    /**
+     * this function is to position the popup near the profile button
+     */
+    function positionPopup() {
+        const $profileButton = $("#user-profile-button");
+
+        if ($profileButton.length && $popup) {
+            const buttonPos = $profileButton.offset();
+            const popupWidth = $popup.outerWidth();
+            const windowWidth = $(window).width();
+
+            // pos above the profile button
+            let top = buttonPos.top - $popup.outerHeight() - 10;
+
+            // If popup would go off the right edge of the window, align right edge of popup with right edge of button
+            let left = Math.min(
+                buttonPos.left - popupWidth + $profileButton.outerWidth(),
+                windowWidth - popupWidth - 10
+            );
+
+            // never go off left edge
+            left = Math.max(10, left);
+
+            $popup.css({
+                top: top + "px",
+                left: left + "px"
+            });
+        }
+    }
+
+    /**
+     * this function is responsible to set up a click handler to close the popup when clicking outside
+     */
+    function _setupDocumentClickHandler() {
+        // remove any existing handlers
+        if (documentClickHandler) {
+            $(document).off("mousedown", documentClickHandler);
+        }
+
+        // add the new click handler
+        documentClickHandler = function (event) {
+            // if the click is outside the popup and not on the profile button (which toggles the popup)
+            if ($popup && !$popup[0].contains(event.target) && !$("#user-profile-button")[0].contains(event.target)) {
+                closePopup();
+            }
+        };
+
+        // this is needed so we don't close the popup immediately as the profile button is clicked
+        setTimeout(function() {
+            $(document).on("mousedown", documentClickHandler);
+        }, 100);
+    }
+
+    /**
+     * Shows the sign-in popup when the user is not logged in
+     */
+    function showLoginPopup() {
+        // If popup is already visible, just close it
+        if (isPopupVisible) {
+            closePopup();
+            return;
+        }
+
+        // create the popup element
+        closePopup(); // close any existing popup first
+
+        // Render template with data
+        const renderedTemplate = Mustache.render(loginTemplate, {Strings});
+        $popup = $(renderedTemplate);
+
+        $("body").append($popup);
+        isPopupVisible = true;
+
+        positionPopup();
+
+        PopUpManager.addPopUp($popup, function() {
+            $popup.remove();
+            $popup = null;
+            isPopupVisible = false;
+        }, true, { closeCurrentPopups: true });
+
+        // event handlers for buttons
+        $popup.find("#phoenix-signin-btn").on("click", function () {
+            _handleSignInBtnClick();
+        });
+
+        $popup.find("#phoenix-support-btn").on("click", function () {
+            _handleContactSupportBtnClick();
+            closePopup();
+        });
+
+        // handle window resize to reposition popup
+        $(window).on("resize.profilePopup", function () {
+            if (isPopupVisible) {
+                positionPopup();
+            }
+        });
+
+        _setupDocumentClickHandler();
+    }
+
+    let userEmail="";
+    class SecureEmail extends HTMLElement {
+        constructor() {
+            super();
+            // Create closed shadow root - this is for security that extensions wont be able to read email from DOM
+            const shadow = this.attachShadow({ mode: 'closed' });
+            // Create the email display with some obfuscation techniques
+            shadow.innerHTML = `<span>${userEmail}</span>`;
+        }
+    }
+    // Register the custom element
+    /* eslint-disable-next-line*/
+    customElements.define ('secure-email', SecureEmail); // space is must in define ( to prevent build fail
+
+    let userName="";
+    class SecureName extends HTMLElement {
+        constructor() {
+            super();
+            // Create closed shadow root - this is for security that extensions wont be able to read name from DOM
+            const shadow = this.attachShadow({ mode: 'closed' });
+            // Create the email display with some obfuscation techniques
+            shadow.innerHTML = `<span>${userName}</span>`;
+        }
+    }
+    // Register the custom element
+
+    /* eslint-disable-next-line*/
+    customElements.define ('secure-name', SecureName); // space is must in define ( to prevent build fail
+
+    /**
+     * Shows the user profile popup when the user is logged in
+     */
+    function showProfilePopup() {
+        // If popup is already visible, just close it
+        if (isPopupVisible) {
+            closePopup();
+            return;
+        }
+        const profileData = KernalModeTrust.loginService.getProfile();
+        userEmail = profileData.email;
+        userName = profileData.firstName + " " + profileData.lastName;
+        const templateData = {
+            initials: profileData.profileIcon.initials,
+            avatarColor: profileData.profileIcon.color,
+            planClass: "user-plan-free", // "user-plan-paid" for paid plan
+            planName: "Free Plan",
+            quotaUsed: "7,000",
+            quotaTotal: "10,000",
+            quotaUnit: "tokens",
+            quotaPercent: 70,
+            Strings: Strings
+        };
+
+        // Render template with data
+        const renderedTemplate = Mustache.render(profileTemplate, templateData);
+        $popup = $(renderedTemplate);
+
+        $("body").append($popup);
+        isPopupVisible = true;
+        positionPopup();
+
+        PopUpManager.addPopUp($popup, function() {
+            $popup.remove();
+            $popup = null;
+            isPopupVisible = false;
+        }, true, { closeCurrentPopups: true });
+
+        $popup.find("#phoenix-account-btn").on("click", function () {
+            _handleAccountDetailsBtnClick();
+            closePopup();
+        });
+
+        $popup.find("#phoenix-support-btn").on("click", function () {
+            _handleContactSupportBtnClick();
+            closePopup();
+        });
+
+        $popup.find("#phoenix-signout-btn").on("click", function () {
+            _handleSignOutBtnClick();
+        });
+
+        // handle window resize to reposition popup
+        $(window).on("resize.profilePopup", function () {
+            if (isPopupVisible) {
+                positionPopup();
+            }
+        });
+
+        _setupDocumentClickHandler();
+    }
+
+    /**
+     * Toggle the profile popup based on the user's login status
+     */
+    function togglePopup() {
+        // check if the popup is already visible or not. if visible close it
+        if (isPopupVisible) {
+            closePopup();
+            return;
+        }
+
+        if (KernalModeTrust.loginService.isLoggedIn()) {
+            showProfilePopup();
+        } else {
+            showLoginPopup();
+        }
+    }
+
+    function init() {
+        const helpButtonID = "user-profile-button";
+        $icon = $("<a>")
+            .attr({
+                id: helpButtonID,
+                href: "#",
+                class: "user",
+                title: Strings.CMD_USER_PROFILE
+            })
+            .appendTo($("#main-toolbar .bottom-buttons"));
+        // _updateProfileIcon("CA", "blue");
+        $icon.on('click', ()=>{
+            if(!Phoenix.isNativeApp){
+                // in browser app, we don't currently support login
+                Phoenix.app.openURLInDefaultBrowser("https://account.phcode.io");
+                return;
+            }
+            togglePopup();
+        });
+    }
+
+    function setNotLoggedIn() {
+        if (isPopupVisible) {
+            closePopup();
+        }
+        _removeProfileIcon();
+    }
+
+    function setLoggedIn(initial, color) {
+        if (isPopupVisible) {
+            closePopup();
+        }
+        _updateProfileIcon(initial, color);
+    }
+
+    exports.init = init;
+    exports.setNotLoggedIn = setNotLoggedIn;
+    exports.setLoggedIn = setLoggedIn;
 });
 
 /*
