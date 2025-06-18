@@ -158233,10 +158233,12 @@ define("search/SearchResultsView", function (require, exports, module) {
  *
  */
 
+/*global logger*/
 
 define("services/login", function (require, exports, module) {
     const EventDispatcher = require("utils/EventDispatcher"),
         PreferencesManager  = require("preferences/PreferencesManager"),
+        Metrics = require("utils/Metrics"),
         Dialogs = require("widgets/Dialogs"),
         DefaultDialogs = require("widgets/DefaultDialogs"),
         Strings = require("strings"),
@@ -158399,10 +158401,16 @@ define("services/login", function (require, exports, module) {
         return localAutoAuthURL.replace("http://localhost:", "");
     }
 
+    const PLATFORM_STRINGS = {
+        "win": "Windows",
+        "mac": "mac",
+        "linux": "Linux"
+    };
     // never rejects.
     async function _getAppAuthSession() {
         const authPortURL = _getAutoAuthPortURL();
-        const appName = encodeURIComponent(`${Strings.APP_NAME} Desktop on ${Phoenix.platform}`);
+        const platformStr = PLATFORM_STRINGS[Phoenix.platform] || Phoenix.platform;
+        const appName = encodeURIComponent(`${Strings.APP_NAME} Desktop on ${platformStr}`);
         const resolveURL = `${Phoenix.config.account_url}getAppAuthSession?autoAuthPort=${authPortURL}&appName=${appName}`;
         // {"isSuccess":true,"appSessionID":"a uuid...","validationCode":"SWXP07"}
         try {
@@ -158417,7 +158425,8 @@ define("services/login", function (require, exports, module) {
             return null;
         } catch (e) {
             console.error(e, "Failed to call getAppAuthSession API endpoint", resolveURL);
-            // todo raise metrics/log
+            Metrics.countEvent(Metrics.EVENT_TYPE.AUTH, 'getAppAuth', Phoenix.platform);
+            logger.reportError(e, "Failed to call getAppAuthSession API endpoint" + resolveURL);
             return null;
         }
     }
@@ -158432,7 +158441,7 @@ define("services/login", function (require, exports, module) {
         } catch (e) {
             console.error("failed to send auth login verification code to node", e);
             // we ignore this and continue for manual verification
-            // todo raise metrics
+            Metrics.countEvent(Metrics.EVENT_TYPE.AUTH, 'autoFail', Phoenix.platform);
         }
     }
 
@@ -158525,8 +158534,10 @@ define("services/login", function (require, exports, module) {
                 setTimeout(checkLoginStatus, 100);
             }
         }
+        let isAutoSignedIn = false;
         exports.on(_EVT_PAGE_FOCUSED, checkLoginStatus);
         async function _AutoSignedIn() {
+            isAutoSignedIn = true;
             await checkLoginStatus();
         }
         authNodeConnector.one(EVENT_CONNECTED, _AutoSignedIn);
@@ -158536,13 +158547,18 @@ define("services/login", function (require, exports, module) {
             exports.off(_EVT_PAGE_FOCUSED, checkLoginStatus);
             authNodeConnector.off(EVENT_CONNECTED, _AutoSignedIn);
             clearTimeout(closeTimeout);
+            Metrics.countEvent(Metrics.EVENT_TYPE.AUTH,
+                isAutoSignedIn ? 'autoLogin' : 'manLogin'
+                , Phoenix.platform);
+            Metrics.countEvent(Metrics.EVENT_TYPE.AUTH, "login",
+                isAutoSignedIn ? 'auto' : 'man');
         });
         NativeApp.openURLInDefaultBrowser(appSignInURL);
     }
 
     async function signOutAccount() {
+        const resolveURL = `${Phoenix.config.account_url}logoutSession`;
         try {
-            const resolveURL = `${Phoenix.config.account_url}logoutSession`;
             let input = {
                 appSessionID: userProfile.apiKey
             };
@@ -158564,8 +158580,8 @@ define("services/login", function (require, exports, module) {
                     Strings.SIGNED_OUT_FAILED_TITLE,
                     Strings.SIGNED_OUT_FAILED_MESSAGE
                 );
+                Metrics.countEvent(Metrics.EVENT_TYPE.AUTH, 'logoutFail', Phoenix.platform);
                 return;
-                // todo raise metrics
             }
             await _resetAccountLogin();
             Dialogs.showModalDialog(
@@ -158573,6 +158589,7 @@ define("services/login", function (require, exports, module) {
                 Strings.SIGNED_OUT,
                 Strings.SIGNED_OUT_MESSAGE_FRIENDLY
             );
+            Metrics.countEvent(Metrics.EVENT_TYPE.AUTH, 'logoutOK', Phoenix.platform);
         } catch (error) {
             console.error("Network error. Could not log out session.", error);
             Dialogs.showModalDialog(
@@ -158580,7 +158597,8 @@ define("services/login", function (require, exports, module) {
                 Strings.SIGNED_OUT_FAILED_TITLE,
                 Strings.SIGNED_OUT_FAILED_MESSAGE
             );
-            // todo raise metrics
+            Metrics.countEvent(Metrics.EVENT_TYPE.AUTH, 'getAppAuth', Phoenix.platform);
+            logger.reportError(error, "Failed to call logout calling" + resolveURL);
         }
     }
 
@@ -163857,7 +163875,8 @@ define("utils/Metrics", function (require, exports, module) {
         USER: "user",
         NODEJS: "node",
         LINT: "lint",
-        GIT: "git"
+        GIT: "git",
+        AUTH: "auth"
     };
 
     /**
