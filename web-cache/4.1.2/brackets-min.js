@@ -66774,6 +66774,7 @@ define("nls/ar/strings", {
   "CMD_AUTO_UPDATE": "التحديث التلقائي",
   "CMD_HOW_TO_USE_BRACKETS": "كيفية استخدام {APP_NAME}",
   "CMD_SUPPORT": "دعم {APP_NAME}",
+  "CMD_USER_PROFILE": "حساب {APP_NAME}",
   "CMD_DOCS": "مساعدة، البدء",
   "CMD_SUGGEST": "اقتراح ميزة",
   "CMD_REPORT_ISSUE": "الإبلاغ عن مشكلة",
@@ -67624,7 +67625,6 @@ define("nls/ar/strings", {
   "GIT_TOAST_TITLE": "استكشف ميزات Git في Phoenix Code",
   "GIT_TOAST_MESSAGE": "انقر على رمز لوحة Git لإدارة مستودعك. يمكنك بسهولة تنفيذ الالتزام والدفع والسحب وعرض سجل مشروعك - كل ذلك في مكان واحد.<br><a href='https://docs.phcode.dev/docs/Features/git'>تعرّف على المزيد حول لوحة Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "صوت للميزات التي ترغب برؤيتها تالياً!",
-  "CMD_USER_PROFILE": "حساب {APP_NAME}",
   "SIGNED_OUT": "تم تسجيل خروجك.",
   "SIGNED_OUT_MESSAGE": "تم تسجيل خروجك من حساب {APP_NAME} الخاص بك. يُرجى تسجيل الدخول مرة أخرى للمتابعة.",
   "SIGNED_OUT_MESSAGE_FRIENDLY": "شكرًا لك على استخدام {APP_NAME}. نلتقي قريبًا!",
@@ -67644,7 +67644,8 @@ define("nls/ar/strings", {
   "CONTACT_SUPPORT": "تواصل مع الدعم",
   "SIGN_OUT": "تسجيل الخروج",
   "ACCOUNT_DETAILS": "تفاصيل الحساب",
-  "AI_QUOTA_USED": "حصة الذكاء الاصطناعي المستخدمة"
+  "AI_QUOTA_USED": "حصة الذكاء الاصطناعي المستخدمة",
+  "LOGIN_REFRESH": "تحقق من حالة تسجيل الدخول"
 });
 /*
  * GNU AGPL-3.0 License
@@ -68164,6 +68165,7 @@ define("nls/bg/strings", {
   "CMD_AUTO_UPDATE": "Автоматично обновяване",
   "CMD_HOW_TO_USE_BRACKETS": "Как се използва {APP_NAME}",
   "CMD_SUPPORT": "Поддръжка на {APP_NAME}",
+  "CMD_USER_PROFILE": "Профил в {APP_NAME}",
   "CMD_DOCS": "Помощ, Първи стъпки",
   "CMD_SUGGEST": "Предложете функционалност",
   "CMD_REPORT_ISSUE": "Докладване на проблем",
@@ -69014,7 +69016,6 @@ define("nls/bg/strings", {
   "GIT_TOAST_TITLE": "Разгледайте Git функциите в Phoenix Code",
   "GIT_TOAST_MESSAGE": "Щракнете върху иконата на Git панела, за да управлявате хранилището си. Лесно създавайте commit, push, pull и преглеждайте историята на проекта си – всичко на едно място.<br><a href='https://docs.phcode.dev/docs/Features/git'>Научете повече за Git панела →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Гласувайте за функциите, които искате да видите следващи!",
-  "CMD_USER_PROFILE": "Профил в {APP_NAME}",
   "SIGNED_OUT": "Излязохте от профила си.",
   "SIGNED_OUT_MESSAGE": "Излязохте от профила си в {APP_NAME}. Моля, влезте отново, за да продължите.",
   "SIGNED_OUT_MESSAGE_FRIENDLY": "Благодарим ви, че използвате {APP_NAME}. До скоро!",
@@ -69034,7 +69035,8 @@ define("nls/bg/strings", {
   "CONTACT_SUPPORT": "Свържете се с поддръжката",
   "SIGN_OUT": "Изход",
   "ACCOUNT_DETAILS": "Данни за акаунта",
-  "AI_QUOTA_USED": "Използвана AI квота"
+  "AI_QUOTA_USED": "Използвана AI квота",
+  "LOGIN_REFRESH": "Проверка на състоянието за вход"
 });
 /*
  * Copyright (c) 2013 Adobe Systems Incorporated. All rights reserved.
@@ -69583,6 +69585,7 @@ define("nls/cs/strings", {
   "CMD_AUTO_UPDATE": "Automatická aktualizace",
   "CMD_HOW_TO_USE_BRACKETS": "Jak používat {APP_NAME}",
   "CMD_SUPPORT": "{APP_NAME} Podpora",
+  "CMD_USER_PROFILE": "Účet {APP_NAME}",
   "CMD_DOCS": "Nápověda, Začínáme",
   "CMD_SUGGEST": "Navrhněte funkci",
   "CMD_REPORT_ISSUE": "Nahlásit problém",
@@ -70433,7 +70436,6 @@ define("nls/cs/strings", {
   "GIT_TOAST_TITLE": "Prozkoumejte funkce Gitu v Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klikněte na ikonu panelu Git pro správu vašeho repozitáře. Snadno commitujte, pushujte, pullujte a prohlížejte si historii projektu – vše na jednom místě.<br><a href='https://docs.phcode.dev/docs/Features/git'>Zjistěte více o panelu Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Hlasujte pro funkce, které chcete vidět v další verzi!",
-  "CMD_USER_PROFILE": "Účet {APP_NAME}",
   "SIGNED_OUT": "Byli jste odhlášeni.",
   "SIGNED_OUT_MESSAGE": "Byli jste odhlášeni ze svého účtu {APP_NAME}. Pro pokračování se prosím znovu přihlaste.",
   "SIGNED_OUT_MESSAGE_FRIENDLY": "Děkujeme, že používáte {APP_NAME}. Brzy na viděnou!",
@@ -70453,7 +70455,8 @@ define("nls/cs/strings", {
   "CONTACT_SUPPORT": "Kontaktovat podporu",
   "SIGN_OUT": "Odhlásit se",
   "ACCOUNT_DETAILS": "Detaily účtu",
-  "AI_QUOTA_USED": "Vyčerpána kvóta pro AI"
+  "AI_QUOTA_USED": "Vyčerpána kvóta pro AI",
+  "LOGIN_REFRESH": "Zkontrolovat stav přihlášení"
 });
 /*
  * GNU AGPL-3.0 License
@@ -71000,6 +71003,7 @@ define("nls/da/strings", {
   "CMD_AUTO_UPDATE": "Automatisk opdatering",
   "CMD_HOW_TO_USE_BRACKETS": "Sådan bruger du {APP_NAME}",
   "CMD_SUPPORT": "{APP_NAME} support",
+  "CMD_USER_PROFILE": "{APP_NAME}-konto",
   "CMD_DOCS": "Hjælp, Kom godt i gang",
   "CMD_SUGGEST": "Foreslå en funktion",
   "CMD_REPORT_ISSUE": "Rapporter problem",
@@ -71850,7 +71854,6 @@ define("nls/da/strings", {
   "GIT_TOAST_TITLE": "Udforsk Git-funktioner i Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klik på Git-panelikonet for at administrere dit repository. Commit, push, pull og se din projekthistorik nemt – alt sammen på ét sted.<br><a href='https://docs.phcode.dev/docs/Features/git'>Læs mere om Git-panelet →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stem på de funktioner, du gerne vil se!",
-  "CMD_USER_PROFILE": "{APP_NAME}-konto",
   "SIGNED_OUT": "Du er blevet logget ud.",
   "SIGNED_OUT_MESSAGE": "Du er blevet logget ud af din {APP_NAME}-konto. Log venligst ind igen for at fortsætte.",
   "SIGNED_OUT_MESSAGE_FRIENDLY": "Tak for at bruge {APP_NAME}. På gensyn!",
@@ -71870,7 +71873,8 @@ define("nls/da/strings", {
   "CONTACT_SUPPORT": "Kontakt support",
   "SIGN_OUT": "Log ud",
   "ACCOUNT_DETAILS": "Kontooplysninger",
-  "AI_QUOTA_USED": "Brugt AI-kvote"
+  "AI_QUOTA_USED": "Brugt AI-kvote",
+  "LOGIN_REFRESH": "Tjek loginstatus"
 });
 /*
  * GNU AGPL-3.0 License
@@ -72415,6 +72419,7 @@ define("nls/de/strings", {
   "CMD_AUTO_UPDATE": "Automatische Updates",
   "CMD_HOW_TO_USE_BRACKETS": "So verwendet man {APP_NAME}",
   "CMD_SUPPORT": "{APP_NAME}-Support",
+  "CMD_USER_PROFILE": "{APP_NAME}-Konto",
   "CMD_DOCS": "Hilfe, Erste Schritte",
   "CMD_SUGGEST": "Ein Feature vorschlagen",
   "CMD_REPORT_ISSUE": "Problem melden",
@@ -73265,7 +73270,6 @@ define("nls/de/strings", {
   "GIT_TOAST_TITLE": "Git-Funktionen in Phoenix Code entdecken",
   "GIT_TOAST_MESSAGE": "Klicken Sie auf das Git-Panel-Symbol, um Ihr Repository zu verwalten. Committen, Pushen, Pullen und die Anzeige Ihres Projektverlaufs – alles an einem Ort.<br><a href='https://docs.phcode.dev/docs/Features/git'>Mehr über das Git-Panel erfahren →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stimmen Sie für die Funktionen ab, die Sie als Nächstes sehen möchten!",
-  "CMD_USER_PROFILE": "{APP_NAME}-Konto",
   "SIGNED_OUT": "Sie wurden abgemeldet.",
   "SIGNED_OUT_MESSAGE": "Sie wurden von Ihrem {APP_NAME}-Konto abgemeldet. Bitte melden Sie sich erneut an, um fortzufahren.",
   "SIGNED_OUT_MESSAGE_FRIENDLY": "Vielen Dank, dass Sie {APP_NAME} verwendet haben. Bis bald!",
@@ -73285,7 +73289,8 @@ define("nls/de/strings", {
   "CONTACT_SUPPORT": "Support kontaktieren",
   "SIGN_OUT": "Abmelden",
   "ACCOUNT_DETAILS": "Kontodetails",
-  "AI_QUOTA_USED": "Verbrauchte KI-Quote"
+  "AI_QUOTA_USED": "Verbrauchte KI-Quote",
+  "LOGIN_REFRESH": "Anmeldestatus überprüfen"
 });
 /*
  * GNU AGPL-3.0 License
@@ -73832,6 +73837,7 @@ define("nls/el/strings", {
   "CMD_AUTO_UPDATE": "Αυτόματη Ενημέρωση",
   "CMD_HOW_TO_USE_BRACKETS": "Πώς να Χρησιμοποιήσετε το {APP_NAME}",
   "CMD_SUPPORT": "Υποστήριξη {APP_NAME}",
+  "CMD_USER_PROFILE": "Λογαριασμός {APP_NAME}",
   "CMD_DOCS": "Βοήθεια, Ξεκινώντας",
   "CMD_SUGGEST": "Πρότεινε Feature",
   "CMD_REPORT_ISSUE": "Αναφορά Προβλήματος",
@@ -74682,7 +74688,6 @@ define("nls/el/strings", {
   "GIT_TOAST_TITLE": "Εξερευνήστε τις Λειτουργίες Git στο Phoenix Code",
   "GIT_TOAST_MESSAGE": "Κάντε κλικ στο εικονίδιο του πίνακα Git για να διαχειριστείτε το αποθετήριό σας. Κάντε εύκολα commit, push, pull και δείτε το ιστορικό του έργου σας—όλα σε ένα μέρος.<br><a href='https://docs.phcode.dev/docs/Features/git'>Μάθετε περισσότερα για τον πίνακα Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Ψηφίστε για τις λειτουργίες που θέλετε να δείτε στη συνέχεια!",
-  "CMD_USER_PROFILE": "Λογαριασμός {APP_NAME}",
   "SIGNED_OUT": "Αποσυνδεθήκατε.",
   "SIGNED_OUT_MESSAGE": "Αποσυνδεθήκατε από τον λογαριασμό σας στο {APP_NAME}. Παρακαλούμε συνδεθείτε ξανά για να συνεχίσετε.",
   "SIGNED_OUT_MESSAGE_FRIENDLY": "Ευχαριστούμε που χρησιμοποιήσατε το {APP_NAME}. Τα λέμε σύντομα!",
@@ -74702,7 +74707,8 @@ define("nls/el/strings", {
   "CONTACT_SUPPORT": "Επικοινωνία με την υποστήριξη",
   "SIGN_OUT": "Αποσύνδεση",
   "ACCOUNT_DETAILS": "Στοιχεία Λογαριασμού",
-  "AI_QUOTA_USED": "Χρήση ποσοστού AI"
+  "AI_QUOTA_USED": "Χρήση ποσοστού AI",
+  "LOGIN_REFRESH": "Έλεγχος Κατάστασης Σύνδεσης"
 });
 /*
  * GNU AGPL-3.0 License
@@ -75249,6 +75255,7 @@ define("nls/en-gb/strings", {
   "CMD_AUTO_UPDATE": "Auto Update",
   "CMD_HOW_TO_USE_BRACKETS": "How to Use {APP_NAME}",
   "CMD_SUPPORT": "{APP_NAME} Support",
+  "CMD_USER_PROFILE": "{APP_NAME} Account",
   "CMD_DOCS": "Help: Getting Started",
   "CMD_SUGGEST": "Suggest a Feature",
   "CMD_REPORT_ISSUE": "Report Issue",
@@ -76099,7 +76106,6 @@ define("nls/en-gb/strings", {
   "GIT_TOAST_TITLE": "Explore Git Features in Phoenix Code",
   "GIT_TOAST_MESSAGE": "Click the Git panel icon to manage your repository. Easily commit, push, pull, and view your project history—all in one place.<br><a href='https://docs.phcode.dev/docs/Features/git'>Learn more about the Git panel →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote for the features you'd like to see next!",
-  "CMD_USER_PROFILE": "{APP_NAME} Account",
   "SIGNED_OUT": "You've been signed out.",
   "SIGNED_OUT_MESSAGE": "You've been signed out of your {APP_NAME} account. Please sign in again to continue.",
   "SIGNED_OUT_MESSAGE_FRIENDLY": "Thanks for using {APP_NAME}. See you soon!",
@@ -76119,7 +76125,8 @@ define("nls/en-gb/strings", {
   "CONTACT_SUPPORT": "Contact support",
   "SIGN_OUT": "Sign out",
   "ACCOUNT_DETAILS": "Account Details",
-  "AI_QUOTA_USED": "AI quota used"
+  "AI_QUOTA_USED": "AI quota used",
+  "LOGIN_REFRESH": "Check Login Status"
 });
 /*
  * GNU AGPL-3.0 License
@@ -76639,6 +76646,7 @@ define("nls/es/strings", {
   "CMD_AUTO_UPDATE": "Actualización automática",
   "CMD_HOW_TO_USE_BRACKETS": "Cómo utilizar {APP_NAME}",
   "CMD_SUPPORT": "Soporte de {APP_NAME}",
+  "CMD_USER_PROFILE": "Cuenta de {APP_NAME}",
   "CMD_DOCS": "Ayuda, introducción",
   "CMD_SUGGEST": "Sugerir una mejora",
   "CMD_REPORT_ISSUE": "Informar de un problema",
@@ -77489,7 +77497,6 @@ define("nls/es/strings", {
   "GIT_TOAST_TITLE": "Explora las funciones de Git en Phoenix Code",
   "GIT_TOAST_MESSAGE": "Haga clic en el icono del panel de Git para administrar su repositorio. Confirme, envíe (push), extraiga (pull) y vea el historial de su proyecto fácilmente, todo en un solo lugar.<br><a href='https://docs.phcode.dev/docs/Features/git'>Obtenga más información sobre el panel de Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "¡Vota por las funciones que quieres ver próximamente!",
-  "CMD_USER_PROFILE": "Cuenta de {APP_NAME}",
   "SIGNED_OUT": "Se ha cerrado la sesión.",
   "SIGNED_OUT_MESSAGE": "Se ha cerrado la sesión de tu cuenta de {APP_NAME}. Inicia sesión de nuevo para continuar.",
   "SIGNED_OUT_MESSAGE_FRIENDLY": "Gracias por usar {APP_NAME}. ¡Hasta pronto!",
@@ -77509,7 +77516,8 @@ define("nls/es/strings", {
   "CONTACT_SUPPORT": "Contactar con soporte técnico",
   "SIGN_OUT": "Cerrar sesión",
   "ACCOUNT_DETAILS": "Detalles de la cuenta",
-  "AI_QUOTA_USED": "Cuota de IA utilizada"
+  "AI_QUOTA_USED": "Cuota de IA utilizada",
+  "LOGIN_REFRESH": "Verificar estado del inicio de sesión"
 });
 /*
  * GNU AGPL-3.0 License
@@ -78057,6 +78065,7 @@ define("nls/fa-ir/strings", {
   "CMD_AUTO_UPDATE": "به‌روزرسانی خودکار",
   "CMD_HOW_TO_USE_BRACKETS": "چگونگی استفاده از {APP_NAME}",
   "CMD_SUPPORT": "{APP_NAME} پشتیبانی",
+  "CMD_USER_PROFILE": "حساب کاربری {APP_NAME}",
   "CMD_DOCS": "راهنما، شروع به کار",
   "CMD_SUGGEST": "پیشنهاد یک امکان جدید",
   "CMD_REPORT_ISSUE": "گزارش مشکل",
@@ -78907,7 +78916,6 @@ define("nls/fa-ir/strings", {
   "GIT_TOAST_TITLE": "کاوش ویژگی‌های گیت در Phoenix Code",
   "GIT_TOAST_MESSAGE": "برای مدیریت مخزن خود روی آیکون پنل گیت کلیک کنید. به راحتی کامیت، پوش، پول و مشاهده تاریخچه پروژه خود را - همه در یک مکان - انجام دهید.<br><a href='https://docs.phcode.dev/docs/Features/git'>درباره پنل گیت بیشتر بدانید →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "برای قابلیت‌هایی که می‌خواهید در آینده ببینید، رأی دهید!",
-  "CMD_USER_PROFILE": "حساب کاربری {APP_NAME}",
   "SIGNED_OUT": "از حساب کاربری خارج شدید.",
   "SIGNED_OUT_MESSAGE": "از حساب کاربری {APP_NAME} خود خارج شدید. لطفاً برای ادامه دوباره وارد شوید.",
   "SIGNED_OUT_MESSAGE_FRIENDLY": "از استفاده از {APP_NAME} متشکریم. به زودی می‌بینیمتان!",
@@ -78927,7 +78935,8 @@ define("nls/fa-ir/strings", {
   "CONTACT_SUPPORT": "تماس با پشتیبانی",
   "SIGN_OUT": "خروج",
   "ACCOUNT_DETAILS": "جزئیات حساب کاربری",
-  "AI_QUOTA_USED": "سهمیه هوش مصنوعی استفاده شده"
+  "AI_QUOTA_USED": "سهمیه هوش مصنوعی استفاده شده",
+  "LOGIN_REFRESH": "بررسی وضعیت ورود"
 });
 /*
  * GNU AGPL-3.0 License
@@ -79474,6 +79483,7 @@ define("nls/fi/strings", {
   "CMD_AUTO_UPDATE": "Automaattinen päivitys",
   "CMD_HOW_TO_USE_BRACKETS": "Kuinka käyttää {APP_NAME}iä",
   "CMD_SUPPORT": "{APP_NAME}-tuki",
+  "CMD_USER_PROFILE": "{APP_NAME}-tili",
   "CMD_DOCS": "Ohje, aloittaminen",
   "CMD_SUGGEST": "Ehdota ominaisuutta",
   "CMD_REPORT_ISSUE": "Ilmoita ongelmasta",
@@ -80324,7 +80334,6 @@ define("nls/fi/strings", {
   "GIT_TOAST_TITLE": "Tutustu Git-ominaisuuksiin Phoenix Codessa",
   "GIT_TOAST_MESSAGE": "Napsauta Git-paneelin kuvaketta hallitaksesi arkistoasi (repository). Tee commit, push ja pull helposti ja tarkastele projektihistoriaasi – kaikki yhdessä paikassa.<br><a href='https://docs.phcode.dev/docs/Features/git'>Lue lisää Git-paneelista →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Äänestä ominaisuuksia, jotka haluat nähdä seuraavaksi!",
-  "CMD_USER_PROFILE": "{APP_NAME}-tili",
   "SIGNED_OUT": "Olet kirjautunut ulos.",
   "SIGNED_OUT_MESSAGE": "Olet kirjautunut ulos {APP_NAME}-tilistäsi. Kirjaudu sisään uudelleen jatkaaksesi.",
   "SIGNED_OUT_MESSAGE_FRIENDLY": "Kiitos, että käytit {APP_NAME}a. Nähdään pian!",
@@ -80344,7 +80353,8 @@ define("nls/fi/strings", {
   "CONTACT_SUPPORT": "Ota yhteyttä tukeen",
   "SIGN_OUT": "Kirjaudu ulos",
   "ACCOUNT_DETAILS": "Tilin tiedot",
-  "AI_QUOTA_USED": "Käytetty tekoälykiintiö"
+  "AI_QUOTA_USED": "Käytetty tekoälykiintiö",
+  "LOGIN_REFRESH": "Tarkista kirjautumistila"
 });
 /*
  * GNU AGPL-3.0 License
@@ -80891,6 +80901,7 @@ define("nls/fr/strings", {
   "CMD_AUTO_UPDATE": "Mise à jour automatique",
   "CMD_HOW_TO_USE_BRACKETS": "Comment utiliser {APP_NAME}",
   "CMD_SUPPORT": "Assistance {APP_NAME}",
+  "CMD_USER_PROFILE": "Compte {APP_NAME}",
   "CMD_DOCS": "Aide, Prise en main",
   "CMD_SUGGEST": "Suggérer une fonctionnalité",
   "CMD_REPORT_ISSUE": "Signaler un problème",
@@ -81741,7 +81752,6 @@ define("nls/fr/strings", {
   "GIT_TOAST_TITLE": "Explorer les fonctionnalités Git dans Phoenix Code",
   "GIT_TOAST_MESSAGE": "Cliquez sur l'icône du panneau Git pour gérer votre dépôt. Validez, envoyez (push), récupérez (pull) et consultez l'historique de votre projet facilement, le tout au même endroit.<br><a href='https://docs.phcode.dev/docs/Features/git'>En savoir plus sur le panneau Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Votez pour les fonctionnalités que vous souhaitez voir apparaître !",
-  "CMD_USER_PROFILE": "Compte {APP_NAME}",
   "SIGNED_OUT": "Vous avez été déconnecté(e).",
   "SIGNED_OUT_MESSAGE": "Vous avez été déconnecté(e) de votre compte {APP_NAME}. Veuillez vous reconnecter pour continuer.",
   "SIGNED_OUT_MESSAGE_FRIENDLY": "Merci d'avoir utilisé {APP_NAME}. À bientôt !",
@@ -81761,7 +81771,8 @@ define("nls/fr/strings", {
   "CONTACT_SUPPORT": "Contacter le support",
   "SIGN_OUT": "Se déconnecter",
   "ACCOUNT_DETAILS": "Détails du compte",
-  "AI_QUOTA_USED": "Quota IA utilisé"
+  "AI_QUOTA_USED": "Quota IA utilisé",
+  "LOGIN_REFRESH": "Vérifier l'état de la connexion"
 });
 /*
  * GNU AGPL-3.0 License
@@ -82308,6 +82319,7 @@ define("nls/gl/strings", {
   "CMD_AUTO_UPDATE": "Actualización automática",
   "CMD_HOW_TO_USE_BRACKETS": "Cómo utilizar {APP_NAME}",
   "CMD_SUPPORT": "Soporte de {APP_NAME}",
+  "CMD_USER_PROFILE": "Conta de {APP_NAME}",
   "CMD_DOCS": "Axuda, comezando",
   "CMD_SUGGEST": "Suxerir unha mellora",
   "CMD_REPORT_ISSUE": "Informar dun problema",
@@ -83158,7 +83170,6 @@ define("nls/gl/strings", {
   "GIT_TOAST_TITLE": "Explora as funcionalidades de Git en Phoenix Code",
   "GIT_TOAST_MESSAGE": "Fai clic na icona do panel de Git para xestionar o teu repositorio. Fai commits, envía (push), obtén (pull) e visualiza o historial do teu proxecto facilmente, todo nun mesmo lugar.<br><a href='https://docs.phcode.dev/docs/Features/git'>Aprende máis sobre o panel de Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vota polas funcionalidades que queres ver a continuación!",
-  "CMD_USER_PROFILE": "Conta de {APP_NAME}",
   "SIGNED_OUT": "Pechouse a sesión.",
   "SIGNED_OUT_MESSAGE": "Pechouse a sesión da súa conta de {APP_NAME}. Inicie sesión de novo para continuar.",
   "SIGNED_OUT_MESSAGE_FRIENDLY": "Grazas por usar {APP_NAME}. Até logo!",
@@ -83178,7 +83189,8 @@ define("nls/gl/strings", {
   "CONTACT_SUPPORT": "Contactar co soporte",
   "SIGN_OUT": "Pechar sesión",
   "ACCOUNT_DETAILS": "Detalles da conta",
-  "AI_QUOTA_USED": "Cota de IA usada"
+  "AI_QUOTA_USED": "Cota de IA usada",
+  "LOGIN_REFRESH": "Comprobar o estado do inicio de sesión"
 });
 /*
  * GNU AGPL-3.0 License
@@ -83698,6 +83710,7 @@ define("nls/hi/strings", {
   "CMD_AUTO_UPDATE": "स्वतः अपडेट",
   "CMD_HOW_TO_USE_BRACKETS": "{APP_NAME} का उपयोग कैसे करें",
   "CMD_SUPPORT": "{APP_NAME} सहायता",
+  "CMD_USER_PROFILE": "{APP_NAME} खाता",
   "CMD_DOCS": "सहायता, आरंभ करना",
   "CMD_SUGGEST": "एक सुविधा का सुझाव दें",
   "CMD_REPORT_ISSUE": "समस्या की सूचना दें",
@@ -84548,7 +84561,6 @@ define("nls/hi/strings", {
   "GIT_TOAST_TITLE": "फ़ीनिक्स कोड में Git सुविधाओं का अन्वेषण करें",
   "GIT_TOAST_MESSAGE": "अपने रिपॉजिटरी को प्रबंधित करने के लिए Git पैनल आइकन पर क्लिक करें। आसानी से कमिट करें, पुश करें, पुल करें और अपने प्रोजेक्ट का इतिहास देखें—सब एक ही स्थान पर।<br><a href='https://docs.phcode.dev/docs/Features/git'>Git पैनल के बारे में अधिक जानें →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "उन विशेषताओं के लिए वोट करें जिन्हें आप आगे देखना चाहते हैं!",
-  "CMD_USER_PROFILE": "{APP_NAME} खाता",
   "SIGNED_OUT": "आप साइन आउट हो गए हैं।",
   "SIGNED_OUT_MESSAGE": "आप अपने {APP_NAME} खाते से साइन आउट हो गए हैं। कृपया जारी रखने के लिए फिर से साइन इन करें।",
   "SIGNED_OUT_MESSAGE_FRIENDLY": "{APP_NAME} का उपयोग करने के लिए धन्यवाद। जल्द ही फिर मिलेंगे!",
@@ -84568,7 +84580,8 @@ define("nls/hi/strings", {
   "CONTACT_SUPPORT": "सहायता से संपर्क करें",
   "SIGN_OUT": "साइन आउट करें",
   "ACCOUNT_DETAILS": "खाता विवरण",
-  "AI_QUOTA_USED": "एआई कोटा उपयोग किया गया"
+  "AI_QUOTA_USED": "एआई कोटा उपयोग किया गया",
+  "LOGIN_REFRESH": "लॉगिन स्थिति जांचें"
 });
 /*
  * GNU AGPL-3.0 License
@@ -85088,6 +85101,7 @@ define("nls/hr/strings", {
   "CMD_AUTO_UPDATE": "Automatsko ažuriranje",
   "CMD_HOW_TO_USE_BRACKETS": "Kako koristiti {APP_NAME}",
   "CMD_SUPPORT": "{APP_NAME} Podrška (na engleskom)",
+  "CMD_USER_PROFILE": "{APP_NAME} račun",
   "CMD_DOCS": "Pomoć, Početak rada",
   "CMD_SUGGEST": "Predloži mogućnost / značajku",
   "CMD_REPORT_ISSUE": "Prijavi problem",
@@ -85938,7 +85952,6 @@ define("nls/hr/strings", {
   "GIT_TOAST_TITLE": "Istražite Git značajke u Phoenix Codeu",
   "GIT_TOAST_MESSAGE": "Kliknite ikonu Git panela za upravljanje svojim repozitorijem. Jednostavno potvrdite (commit), pošaljite (push), preuzmite (pull) i pregledajte povijest svog projekta - sve na jednom mjestu.<br><a href='https://docs.phcode.dev/docs/Features/git'>Saznajte više o Git panelu →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Glasajte za značajke koje želite vidjeti sljedeće!",
-  "CMD_USER_PROFILE": "{APP_NAME} račun",
   "SIGNED_OUT": "Odjavljeni ste.",
   "SIGNED_OUT_MESSAGE": "Odjavljeni ste iz svog {APP_NAME} računa. Prijavite se ponovno kako biste nastavili.",
   "SIGNED_OUT_MESSAGE_FRIENDLY": "Hvala vam što koristite {APP_NAME}. Vidimo se uskoro!",
@@ -85958,7 +85971,8 @@ define("nls/hr/strings", {
   "CONTACT_SUPPORT": "Kontaktirajte podršku",
   "SIGN_OUT": "Odjava",
   "ACCOUNT_DETAILS": "Podaci o računu",
-  "AI_QUOTA_USED": "Iskorištena AI kvota"
+  "AI_QUOTA_USED": "Iskorištena AI kvota",
+  "LOGIN_REFRESH": "Provjeri status prijave"
 });
 /*
  * GNU AGPL-3.0 License
@@ -86505,6 +86519,7 @@ define("nls/hu/strings", {
   "CMD_AUTO_UPDATE": "Automatikus frissítés",
   "CMD_HOW_TO_USE_BRACKETS": "{APP_NAME} használata",
   "CMD_SUPPORT": "{APP_NAME} támogatás",
+  "CMD_USER_PROFILE": "{APP_NAME} fiók",
   "CMD_DOCS": "Súgó, Első lépések",
   "CMD_SUGGEST": "Javaslat új funkcióra",
   "CMD_REPORT_ISSUE": "Hiba bejelentése",
@@ -87355,7 +87370,6 @@ define("nls/hu/strings", {
   "GIT_TOAST_TITLE": "Fedezd fel a Git funkciókat a Phoenix Code-ban",
   "GIT_TOAST_MESSAGE": "Kattintson a Git panel ikonra a verziókövető rendszer kezeléséhez. Könnyedén végezhet commit, push és pull műveleteket, valamint megtekintheti a projekt előzményeit – mindezt egy helyen.<br><a href='https://docs.phcode.dev/docs/Features/git'>Tudj meg többet a Git panelről →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Szavazzon azokra a funkciókra, amelyeket a jövőben látni szeretne!",
-  "CMD_USER_PROFILE": "{APP_NAME} fiók",
   "SIGNED_OUT": "Kijelentkeztél.",
   "SIGNED_OUT_MESSAGE": "Kijelentkeztél a(z) {APP_NAME} fiókodból. Kérjük, jelentkezz be újra a folytatáshoz.",
   "SIGNED_OUT_MESSAGE_FRIENDLY": "Köszönjük, hogy a(z) {APP_NAME} alkalmazást használtad. Viszontlátásra!",
@@ -87375,7 +87389,8 @@ define("nls/hu/strings", {
   "CONTACT_SUPPORT": "Ügyfélszolgálattal való kapcsolatfelvétel",
   "SIGN_OUT": "Kijelentkezés",
   "ACCOUNT_DETAILS": "Fiókadatok",
-  "AI_QUOTA_USED": "Felhasznált MI-kvóta"
+  "AI_QUOTA_USED": "Felhasznált MI-kvóta",
+  "LOGIN_REFRESH": "Bejelentkezés állapotának ellenőrzése"
 });
 /*
  * GNU AGPL-3.0 License
@@ -87895,6 +87910,7 @@ define("nls/id/strings", {
   "CMD_AUTO_UPDATE": "Pembaruan Otomatis",
   "CMD_HOW_TO_USE_BRACKETS": "Bagaimana Menggunakan {APP_NAME}",
   "CMD_SUPPORT": "Bantuan {APP_NAME}",
+  "CMD_USER_PROFILE": "Akun {APP_NAME}",
   "CMD_DOCS": "Bantuan, Memulai",
   "CMD_SUGGEST": "Sarankan Fitur",
   "CMD_REPORT_ISSUE": "Laporkan Masalah",
@@ -88745,7 +88761,6 @@ define("nls/id/strings", {
   "GIT_TOAST_TITLE": "Jelajahi Fitur Git di Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klik ikon panel Git untuk mengelola repositori Anda. Lakukan commit, push, pull, dan lihat riwayat proyek Anda dengan mudah—semua di satu tempat.<br><a href='https://docs.phcode.dev/docs/Features/git'>Pelajari lebih lanjut tentang panel Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Pilih fitur yang ingin Anda lihat selanjutnya!",
-  "CMD_USER_PROFILE": "Akun {APP_NAME}",
   "SIGNED_OUT": "Anda telah keluar.",
   "SIGNED_OUT_MESSAGE": "Anda telah keluar dari akun {APP_NAME} Anda. Silakan masuk lagi untuk melanjutkan.",
   "SIGNED_OUT_MESSAGE_FRIENDLY": "Terima kasih telah menggunakan {APP_NAME}. Sampai jumpa lagi!",
@@ -88765,7 +88780,8 @@ define("nls/id/strings", {
   "CONTACT_SUPPORT": "Hubungi dukungan",
   "SIGN_OUT": "Keluar",
   "ACCOUNT_DETAILS": "Detail Akun",
-  "AI_QUOTA_USED": "Kuota AI terpakai"
+  "AI_QUOTA_USED": "Kuota AI terpakai",
+  "LOGIN_REFRESH": "Periksa Status Login"
 });
 /*
  * GNU AGPL-3.0 License
@@ -89311,6 +89327,7 @@ define("nls/it/strings", {
   "CMD_AUTO_UPDATE": "Aggiornamento automatico",
   "CMD_HOW_TO_USE_BRACKETS": "Come usare {APP_NAME}",
   "CMD_SUPPORT": "Supporto per {APP_NAME}",
+  "CMD_USER_PROFILE": "Account {APP_NAME}",
   "CMD_DOCS": "Aiuto, Guida introduttiva",
   "CMD_SUGGEST": "Suggerisci una funzionalità",
   "CMD_REPORT_ISSUE": "Segnala un problema",
@@ -90161,7 +90178,6 @@ define("nls/it/strings", {
   "GIT_TOAST_TITLE": "Esplora le funzionalità Git in Phoenix Code",
   "GIT_TOAST_MESSAGE": "Fai clic sull'icona del pannello Git per gestire il tuo repository. Esegui commit, push, pull e visualizza la cronologia del tuo progetto, tutto in un unico posto.<br><a href='https://docs.phcode.dev/docs/Features/git'>Scopri di più sul pannello Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vota per le funzionalità che desideri vedere in futuro!",
-  "CMD_USER_PROFILE": "Account {APP_NAME}",
   "SIGNED_OUT": "Sessione terminata.",
   "SIGNED_OUT_MESSAGE": "La tua sessione per l'account {APP_NAME} è terminata. Accedi di nuovo per continuare.",
   "SIGNED_OUT_MESSAGE_FRIENDLY": "Grazie per aver utilizzato {APP_NAME}. A presto!",
@@ -90181,7 +90197,8 @@ define("nls/it/strings", {
   "CONTACT_SUPPORT": "Contatta l'assistenza",
   "SIGN_OUT": "Esci",
   "ACCOUNT_DETAILS": "Dettagli account",
-  "AI_QUOTA_USED": "Quota IA utilizzata"
+  "AI_QUOTA_USED": "Quota IA utilizzata",
+  "LOGIN_REFRESH": "Verifica stato accesso"
 });
 /*
  * GNU AGPL-3.0 License
@@ -90728,6 +90745,7 @@ define("nls/ja/strings", {
   "CMD_AUTO_UPDATE": "自動更新",
   "CMD_HOW_TO_USE_BRACKETS": "{APP_NAME} の使用方法",
   "CMD_SUPPORT": "{APP_NAME} サポート",
+  "CMD_USER_PROFILE": "{APP_NAME}アカウント",
   "CMD_DOCS": "ヘルプ、はじめに",
   "CMD_SUGGEST": "機能改善の提案",
   "CMD_REPORT_ISSUE": "問題を報告",
@@ -91578,7 +91596,6 @@ define("nls/ja/strings", {
   "GIT_TOAST_TITLE": "Phoenix CodeのGit機能を試す",
   "GIT_TOAST_MESSAGE": "Gitパネルアイコンをクリックしてリポジトリを管理します。コミット、プッシュ、プル、プロジェクト履歴の表示をすべて1か所で行えます。<br><a href='https://docs.phcode.dev/docs/Features/git'>Gitパネルの詳細はこちら →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "次に実装してほしい機能に投票してください！",
-  "CMD_USER_PROFILE": "{APP_NAME}アカウント",
   "SIGNED_OUT": "サインアウトしました。",
   "SIGNED_OUT_MESSAGE": "{APP_NAME}アカウントからサインアウトしました。続行するにはもう一度サインインしてください。",
   "SIGNED_OUT_MESSAGE_FRIENDLY": "{APP_NAME}をご利用いただきありがとうございます。またのご利用をお待ちしております！",
@@ -91598,7 +91615,8 @@ define("nls/ja/strings", {
   "CONTACT_SUPPORT": "サポートに問い合わせる",
   "SIGN_OUT": "サインアウト",
   "ACCOUNT_DETAILS": "アカウントの詳細",
-  "AI_QUOTA_USED": "AI利用量"
+  "AI_QUOTA_USED": "AI利用量",
+  "LOGIN_REFRESH": "ログイン状態を確認"
 });
 /*
  * GNU AGPL-3.0 License
@@ -92145,6 +92163,7 @@ define("nls/ko/strings", {
   "CMD_AUTO_UPDATE": "자동 업데이트",
   "CMD_HOW_TO_USE_BRACKETS": "{APP_NAME} 사용법",
   "CMD_SUPPORT": "{APP_NAME} 지원",
+  "CMD_USER_PROFILE": "{APP_NAME} 계정",
   "CMD_DOCS": "도움말, 시작하기",
   "CMD_SUGGEST": "기능 제안",
   "CMD_REPORT_ISSUE": "문제 신고",
@@ -92995,7 +93014,6 @@ define("nls/ko/strings", {
   "GIT_TOAST_TITLE": "Phoenix Code의 Git 기능 살펴보기",
   "GIT_TOAST_MESSAGE": "Git 패널 아이콘을 클릭하여 저장소를 관리하세요. 커밋, 푸시, 풀, 프로젝트 기록 보기를 한 곳에서 간편하게 수행할 수 있습니다.<br><a href='https://docs.phcode.dev/docs/Features/git'>Git 패널에 대해 자세히 알아보기 →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "다음에 보고 싶은 기능에 투표하세요!",
-  "CMD_USER_PROFILE": "{APP_NAME} 계정",
   "SIGNED_OUT": "로그아웃되었습니다.",
   "SIGNED_OUT_MESSAGE": "{APP_NAME} 계정에서 로그아웃되었습니다. 계속하려면 다시 로그인하세요.",
   "SIGNED_OUT_MESSAGE_FRIENDLY": "{APP_NAME}을(를) 이용해 주셔서 감사합니다. 다음에 또 만나요!",
@@ -93015,7 +93033,8 @@ define("nls/ko/strings", {
   "CONTACT_SUPPORT": "지원팀에 문의",
   "SIGN_OUT": "로그아웃",
   "ACCOUNT_DETAILS": "계정 세부정보",
-  "AI_QUOTA_USED": "사용된 AI 할당량"
+  "AI_QUOTA_USED": "사용된 AI 할당량",
+  "LOGIN_REFRESH": "로그인 상태 확인"
 });
 /*
  * GNU AGPL-3.0 License
@@ -93562,6 +93581,7 @@ define("nls/lv/strings", {
   "CMD_AUTO_UPDATE": "Automātiska atjaunināšana",
   "CMD_HOW_TO_USE_BRACKETS": "Kā lietot {APP_NAME}",
   "CMD_SUPPORT": "{APP_NAME} palīdzība",
+  "CMD_USER_PROFILE": "{APP_NAME} konts",
   "CMD_DOCS": "Palīdzība, Sākšana",
   "CMD_SUGGEST": "Ieteikt funkciju",
   "CMD_REPORT_ISSUE": "Ziņot par problēmu",
@@ -94412,7 +94432,6 @@ define("nls/lv/strings", {
   "GIT_TOAST_TITLE": "Izpētiet Git funkcijas Phoenix Code",
   "GIT_TOAST_MESSAGE": "Noklikšķiniet uz Git paneļa ikonas, lai pārvaldītu savu repozitoriju. Ērti veiciet commit, push, pull un skatiet sava projekta vēsturi — viss vienā vietā.<br><a href='https://docs.phcode.dev/docs/Features/git'>Uzziniet vairāk par Git paneli →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Nobalsot par funkcijām, kuras vēlaties redzēt nākamreiz!",
-  "CMD_USER_PROFILE": "{APP_NAME} konts",
   "SIGNED_OUT": "Jūs esat izrakstījies.",
   "SIGNED_OUT_MESSAGE": "Jūs esat izrakstījies no sava {APP_NAME} konta. Lūdzu, piesakieties vēlreiz, lai turpinātu.",
   "SIGNED_OUT_MESSAGE_FRIENDLY": "Paldies, ka izmantojāt {APP_NAME}. Uz tikšanos!",
@@ -94432,7 +94451,8 @@ define("nls/lv/strings", {
   "CONTACT_SUPPORT": "Sazināties ar atbalsta dienestu",
   "SIGN_OUT": "Izrakstīties",
   "ACCOUNT_DETAILS": "Konta informācija",
-  "AI_QUOTA_USED": "Izmantotā AI kvota"
+  "AI_QUOTA_USED": "Izmantotā AI kvota",
+  "LOGIN_REFRESH": "Pārbaudīt pieteikšanās statusu"
 });
 /*
  * GNU AGPL-3.0 License
@@ -94952,6 +94972,7 @@ define("nls/ml/strings", {
   "CMD_AUTO_UPDATE": "ഓട്ടോ അപ്ഡേറ്റ്",
   "CMD_HOW_TO_USE_BRACKETS": "{APP_NAME} എങ്ങനെ ഉപയോഗിക്കാം",
   "CMD_SUPPORT": "{APP_NAME} പിന്തുണ",
+  "CMD_USER_PROFILE": "{APP_NAME} അക്കൗണ്ട്",
   "CMD_DOCS": "സഹായം, തുടക്കക്കാർക്ക്",
   "CMD_SUGGEST": "ഒരു സവിശേഷത നിർദ്ദേശിക്കുക",
   "CMD_REPORT_ISSUE": "പ്രശ്‌നം റിപ്പോർട്ട് ചെയ്യുക",
@@ -95802,7 +95823,6 @@ define("nls/ml/strings", {
   "GIT_TOAST_TITLE": "ഫീനിക്സ് കോഡിലെ ഗിറ്റ് സവിശേഷതകൾ പര്യവേക്ഷണം ചെയ്യുക",
   "GIT_TOAST_MESSAGE": "നിങ്ങളുടെ റെപ്പോസിറ്ററി കൈകാര്യം ചെയ്യാൻ ഗിറ്റ് പാനൽ ഐക്കണിൽ ക്ലിക്ക് ചെയ്യുക. എളുപ്പത്തിൽ കമ്മിറ്റ് ചെയ്യുക, പുഷ് ചെയ്യുക, പുൾ ചെയ്യുക, നിങ്ങളുടെ പ്രോജക്റ്റ് ചരിത്രം കാണുക—എല്ലാം ഒരിടത്ത്.<br><a href='https://docs.phcode.dev/docs/Features/git'>ഗിറ്റ് പാനലിനെക്കുറിച്ച് കൂടുതലറിയുക →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "നിങ്ങൾക്ക് അടുത്തതായി കാണാൻ ആഗ്രഹിക്കുന്ന സവിശേഷതകൾക്ക് വോട്ട് ചെയ്യുക!",
-  "CMD_USER_PROFILE": "{APP_NAME} അക്കൗണ്ട്",
   "SIGNED_OUT": "നിങ്ങൾ സൈൻ ഔട്ട് ചെയ്‌തു.",
   "SIGNED_OUT_MESSAGE": "നിങ്ങളുടെ {APP_NAME} അക്കൗണ്ടിൽ നിന്ന് നിങ്ങൾ സൈൻ ഔട്ട് ചെയ്‌തു. തുടരാൻ വീണ്ടും സൈൻ ഇൻ ചെയ്യുക.",
   "SIGNED_OUT_MESSAGE_FRIENDLY": "{APP_NAME} ഉപയോഗിച്ചതിന് നന്ദി. വീണ്ടും കാണാം!",
@@ -95822,7 +95842,8 @@ define("nls/ml/strings", {
   "CONTACT_SUPPORT": "പിന്തുണയുമായി ബന്ധപ്പെടുക",
   "SIGN_OUT": "സൈൻ ഔട്ട് ചെയ്യുക",
   "ACCOUNT_DETAILS": "അക്കൗണ്ട് വിശദാംശങ്ങൾ",
-  "AI_QUOTA_USED": "എഐ ക്വാട്ട ഉപയോഗിച്ചു"
+  "AI_QUOTA_USED": "എഐ ക്വാട്ട ഉപയോഗിച്ചു",
+  "LOGIN_REFRESH": "ലോഗിൻ സ്റ്റാറ്റസ് പരിശോധിക്കുക"
 });
 /*
  * GNU AGPL-3.0 License
@@ -96342,6 +96363,7 @@ define("nls/nb/strings", {
   "CMD_AUTO_UPDATE": "Automatisk oppdatering",
   "CMD_HOW_TO_USE_BRACKETS": "Hvordan bruke {APP_NAME}",
   "CMD_SUPPORT": "{APP_NAME} support",
+  "CMD_USER_PROFILE": "{APP_NAME}-konto",
   "CMD_DOCS": "Hjelp, Kom i gang",
   "CMD_SUGGEST": "Foreslå en funksjonalitet",
   "CMD_REPORT_ISSUE": "Rapporter problem",
@@ -97192,7 +97214,6 @@ define("nls/nb/strings", {
   "GIT_TOAST_TITLE": "Utforsk Git-funksjoner i Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klikk på Git-panelikonet for å administrere repositoriet ditt. Utfør commit, push, pull og se prosjektloggen din – alt på ett sted.<br><a href='https://docs.phcode.dev/docs/Features/git'>Lær mer om Git-panelet →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stem på funksjonene du ønsker å se neste!",
-  "CMD_USER_PROFILE": "{APP_NAME}-konto",
   "SIGNED_OUT": "Du er logget ut.",
   "SIGNED_OUT_MESSAGE": "Du er logget ut av {APP_NAME}-kontoen din. Logg inn på nytt for å fortsette.",
   "SIGNED_OUT_MESSAGE_FRIENDLY": "Takk for at du bruker {APP_NAME}. Ser deg snart!",
@@ -97212,7 +97233,8 @@ define("nls/nb/strings", {
   "CONTACT_SUPPORT": "Kontakt kundestøtte",
   "SIGN_OUT": "Logg ut",
   "ACCOUNT_DETAILS": "Kontodetaljer",
-  "AI_QUOTA_USED": "AI-kvote brukt"
+  "AI_QUOTA_USED": "AI-kvote brukt",
+  "LOGIN_REFRESH": "Sjekk innloggingsstatus"
 });
 /*
  * GNU AGPL-3.0 License
@@ -97759,6 +97781,7 @@ define("nls/nl/strings", {
   "CMD_AUTO_UPDATE": "Automatisch bijwerken",
   "CMD_HOW_TO_USE_BRACKETS": "Hoe gebruik je {APP_NAME}",
   "CMD_SUPPORT": "{APP_NAME} ondersteuning",
+  "CMD_USER_PROFILE": "{APP_NAME}-account",
   "CMD_DOCS": "Help, aan de slag",
   "CMD_SUGGEST": "Stel een nieuwe functie voor",
   "CMD_REPORT_ISSUE": "Probleem melden",
@@ -98609,7 +98632,6 @@ define("nls/nl/strings", {
   "GIT_TOAST_TITLE": "Ontdek Git-functies in Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klik op het Git-paneelpictogram om uw repository te beheren. Commit, push, pull en bekijk uw projectgeschiedenis eenvoudig - alles op één plek.<br><a href='https://docs.phcode.dev/docs/Features/git'>Meer informatie over het Git-paneel →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stem op de functies die u graag wilt zien!",
-  "CMD_USER_PROFILE": "{APP_NAME}-account",
   "SIGNED_OUT": "U bent afgemeld.",
   "SIGNED_OUT_MESSAGE": "U bent afgemeld van uw {APP_NAME}-account. Meld u opnieuw aan om verder te gaan.",
   "SIGNED_OUT_MESSAGE_FRIENDLY": "Bedankt voor het gebruiken van {APP_NAME}. Tot ziens!",
@@ -98629,7 +98651,8 @@ define("nls/nl/strings", {
   "CONTACT_SUPPORT": "Contact opnemen met support",
   "SIGN_OUT": "Uitloggen",
   "ACCOUNT_DETAILS": "Accountgegevens",
-  "AI_QUOTA_USED": "Verbruikt AI-quotum"
+  "AI_QUOTA_USED": "Verbruikt AI-quotum",
+  "LOGIN_REFRESH": "Aanmeldstatus controleren"
 });
 /*
  * GNU AGPL-3.0 License
@@ -99176,6 +99199,7 @@ define("nls/pl/strings", {
   "CMD_AUTO_UPDATE": "Automatyczna aktualizacja",
   "CMD_HOW_TO_USE_BRACKETS": "Jak używać {APP_NAME}",
   "CMD_SUPPORT": "Wsparcie {APP_NAME}",
+  "CMD_USER_PROFILE": "Konto {APP_NAME}",
   "CMD_DOCS": "Pomoc, Pierwsze kroki",
   "CMD_SUGGEST": "Zaproponuj swój pomysł",
   "CMD_REPORT_ISSUE": "Zgłoś problem",
@@ -100026,7 +100050,6 @@ define("nls/pl/strings", {
   "GIT_TOAST_TITLE": "Poznaj funkcje Gita w Phoenix Code",
   "GIT_TOAST_MESSAGE": "Kliknij ikonę panelu Git, aby zarządzać swoim repozytorium. Łatwo zatwierdzaj, przesyłaj, pobieraj i przeglądaj historię swojego projektu — wszystko w jednym miejscu.<br><a href='https://docs.phcode.dev/docs/Features/git'>Dowiedz się więcej o panelu Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Zagłosuj na funkcje, które chcesz zobaczyć w przyszłości!",
-  "CMD_USER_PROFILE": "Konto {APP_NAME}",
   "SIGNED_OUT": "Wylogowano.",
   "SIGNED_OUT_MESSAGE": "Zostałeś wylogowany z konta {APP_NAME}. Zaloguj się ponownie, aby kontynuować.",
   "SIGNED_OUT_MESSAGE_FRIENDLY": "Dziękujemy za korzystanie z {APP_NAME}. Do zobaczenia wkrótce!",
@@ -100046,7 +100069,8 @@ define("nls/pl/strings", {
   "CONTACT_SUPPORT": "Skontaktuj się z pomocą techniczną",
   "SIGN_OUT": "Wyloguj się",
   "ACCOUNT_DETAILS": "Szczegóły konta",
-  "AI_QUOTA_USED": "Wykorzystany limit AI"
+  "AI_QUOTA_USED": "Wykorzystany limit AI",
+  "LOGIN_REFRESH": "Sprawdź status logowania"
 });
 /*
  * GNU AGPL-3.0 License
@@ -100593,6 +100617,7 @@ define("nls/pt-br/strings", {
   "CMD_AUTO_UPDATE": "Atualização automática",
   "CMD_HOW_TO_USE_BRACKETS": "Como usar o {APP_NAME}",
   "CMD_SUPPORT": "Ajuda do {APP_NAME}",
+  "CMD_USER_PROFILE": "Conta do {APP_NAME}",
   "CMD_DOCS": "Ajuda, Primeiros Passos",
   "CMD_SUGGEST": "Sugira um recurso",
   "CMD_REPORT_ISSUE": "Reportar um Problema",
@@ -101443,7 +101468,6 @@ define("nls/pt-br/strings", {
   "GIT_TOAST_TITLE": "Explore os Recursos do Git no Phoenix Code",
   "GIT_TOAST_MESSAGE": "Clique no ícone do painel Git para gerenciar seu repositório. Faça commits, pushes, pulls e visualize o histórico do seu projeto com facilidade — tudo em um só lugar.<br><a href='https://docs.phcode.dev/docs/Features/git'>Saiba mais sobre o painel Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote nos recursos que você quer ver em seguida!",
-  "CMD_USER_PROFILE": "Conta do {APP_NAME}",
   "SIGNED_OUT": "Você foi desconectado.",
   "SIGNED_OUT_MESSAGE": "Você foi desconectado da sua conta do {APP_NAME}. Faça login novamente para continuar.",
   "SIGNED_OUT_MESSAGE_FRIENDLY": "Obrigado por usar o {APP_NAME}. Até logo!",
@@ -101463,7 +101487,8 @@ define("nls/pt-br/strings", {
   "CONTACT_SUPPORT": "Contatar o suporte",
   "SIGN_OUT": "Sair",
   "ACCOUNT_DETAILS": "Detalhes da Conta",
-  "AI_QUOTA_USED": "Cota de IA usada"
+  "AI_QUOTA_USED": "Cota de IA usada",
+  "LOGIN_REFRESH": "Verificar Status de Login"
 });
 /*
  * GNU AGPL-3.0 License
@@ -102008,6 +102033,7 @@ define("nls/pt-pt/strings", {
   "CMD_AUTO_UPDATE": "Atualização automática",
   "CMD_HOW_TO_USE_BRACKETS": "Como usar o {APP_NAME}",
   "CMD_SUPPORT": "Suporte do {APP_NAME}",
+  "CMD_USER_PROFILE": "Conta {APP_NAME}",
   "CMD_DOCS": "Ajuda, Introdução",
   "CMD_SUGGEST": "Sugerir uma funcionalidade",
   "CMD_REPORT_ISSUE": "Reportar Problema",
@@ -102858,7 +102884,6 @@ define("nls/pt-pt/strings", {
   "GIT_TOAST_TITLE": "Explore as funcionalidades do Git no Phoenix Code",
   "GIT_TOAST_MESSAGE": "Clique no ícone do painel Git para gerir o seu repositório. Efetue commits, pushes, pulls e veja o histórico do seu projeto com facilidade — tudo num só lugar.<br><a href='https://docs.phcode.dev/docs/Features/git'>Saiba mais sobre o painel Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote nas funcionalidades que quer ver a seguir!",
-  "CMD_USER_PROFILE": "Conta {APP_NAME}",
   "SIGNED_OUT": "Terminou a sessão.",
   "SIGNED_OUT_MESSAGE": "Terminou a sessão da sua conta {APP_NAME}. Inicie sessão novamente para continuar.",
   "SIGNED_OUT_MESSAGE_FRIENDLY": "Obrigado por usar o {APP_NAME}. Até breve!",
@@ -102878,7 +102903,8 @@ define("nls/pt-pt/strings", {
   "CONTACT_SUPPORT": "Contactar o suporte",
   "SIGN_OUT": "Terminar Sessão",
   "ACCOUNT_DETAILS": "Detalhes da Conta",
-  "AI_QUOTA_USED": "Quota de IA utilizada"
+  "AI_QUOTA_USED": "Quota de IA utilizada",
+  "LOGIN_REFRESH": "Verificar estado de início de sessão"
 });
 /*
  * GNU AGPL-3.0 License
@@ -103423,6 +103449,7 @@ define("nls/ro/strings", {
   "CMD_AUTO_UPDATE": "Actualizare automată",
   "CMD_HOW_TO_USE_BRACKETS": "Cum să folosești {APP_NAME}",
   "CMD_SUPPORT": "Suport {APP_NAME}",
+  "CMD_USER_PROFILE": "Cont {APP_NAME}",
   "CMD_DOCS": "Ajutor, Noțiuni introductive",
   "CMD_SUGGEST": "Sugerează o funcționalitate",
   "CMD_REPORT_ISSUE": "Raportează o problemă",
@@ -104273,7 +104300,6 @@ define("nls/ro/strings", {
   "GIT_TOAST_TITLE": "Explorați funcțiile Git în Phoenix Code",
   "GIT_TOAST_MESSAGE": "Faceți clic pe pictograma panoului Git pentru a vă gestiona depozitul. Efectuați ușor commit, push, pull și vizualizați istoricul proiectului dvs. - totul într-un singur loc.<br><a href='https://docs.phcode.dev/docs/Features/git'>Aflați mai multe despre panoul Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Votează pentru funcționalitățile pe care dorești să le vezi în continuare!",
-  "CMD_USER_PROFILE": "Cont {APP_NAME}",
   "SIGNED_OUT": "Sesiunea a fost închisă.",
   "SIGNED_OUT_MESSAGE": "Sesiunea contului tău {APP_NAME} a fost închisă. Te rugăm să te autentifici din nou pentru a continua.",
   "SIGNED_OUT_MESSAGE_FRIENDLY": "Îți mulțumim că folosești {APP_NAME}. Pe curând!",
@@ -104293,7 +104319,8 @@ define("nls/ro/strings", {
   "CONTACT_SUPPORT": "Contactează asistența",
   "SIGN_OUT": "Deconectare",
   "ACCOUNT_DETAILS": "Detalii cont",
-  "AI_QUOTA_USED": "Cotă AI utilizată"
+  "AI_QUOTA_USED": "Cotă AI utilizată",
+  "LOGIN_REFRESH": "Verificare stare autentificare"
 });
 /*
  * GNU AGPL-3.0 License
@@ -106497,6 +106524,7 @@ define("nls/ru/strings", {
   "CMD_AUTO_UPDATE": "Автообновление",
   "CMD_HOW_TO_USE_BRACKETS": "Как использовать {APP_NAME}",
   "CMD_SUPPORT": "Поддержка {APP_NAME}",
+  "CMD_USER_PROFILE": "Учётная запись {APP_NAME}",
   "CMD_DOCS": "Справка, начало работы",
   "CMD_SUGGEST": "Предложить улучшение",
   "CMD_REPORT_ISSUE": "Сообщить о проблеме",
@@ -107347,7 +107375,6 @@ define("nls/ru/strings", {
   "GIT_TOAST_TITLE": "Возможности Git в Phoenix Code",
   "GIT_TOAST_MESSAGE": "Нажмите на значок панели Git для управления вашим репозиторием. Легко выполняйте коммиты, отправляйте (push), получайте (pull) изменения и просматривайте историю вашего проекта — все в одном месте.<br><a href='https://docs.phcode.dev/docs/Features/git'>Узнать больше о панели Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Проголосуйте за функции, которые вы хотите увидеть в будущем!",
-  "CMD_USER_PROFILE": "Учётная запись {APP_NAME}",
   "SIGNED_OUT": "Вы вышли из системы.",
   "SIGNED_OUT_MESSAGE": "Вы вышли из своей учётной записи {APP_NAME}. Пожалуйста, войдите снова, чтобы продолжить.",
   "SIGNED_OUT_MESSAGE_FRIENDLY": "Спасибо за использование {APP_NAME}. До скорой встречи!",
@@ -107367,7 +107394,8 @@ define("nls/ru/strings", {
   "CONTACT_SUPPORT": "Связаться с поддержкой",
   "SIGN_OUT": "Выйти",
   "ACCOUNT_DETAILS": "Сведения об учетной записи",
-  "AI_QUOTA_USED": "Использована квота ИИ"
+  "AI_QUOTA_USED": "Использована квота ИИ",
+  "LOGIN_REFRESH": "Проверить статус входа"
 });
 /*
  * GNU AGPL-3.0 License
@@ -107914,6 +107942,7 @@ define("nls/sk/strings", {
   "CMD_AUTO_UPDATE": "Automatická aktualizácia",
   "CMD_HOW_TO_USE_BRACKETS": "Ako používať {APP_NAME}",
   "CMD_SUPPORT": "Podpora pre {APP_NAME}",
+  "CMD_USER_PROFILE": "Účet {APP_NAME}",
   "CMD_DOCS": "Pomocník, Začíname",
   "CMD_SUGGEST": "Navrhnúť funkciu",
   "CMD_REPORT_ISSUE": "Nahlásiť problém",
@@ -108764,7 +108793,6 @@ define("nls/sk/strings", {
   "GIT_TOAST_TITLE": "Preskúmajte funkcie Gitu v Phoenix Code",
   "GIT_TOAST_MESSAGE": "Kliknite na ikonu panela Git pre správu vášho repozitára. Jednoducho commitujte, pushujte, pullujte a prezerajte si históriu vášho projektu – všetko na jednom mieste.<br><a href='https://docs.phcode.dev/docs/Features/git'>Zistite viac o paneli Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Hlasujte za funkcie, ktoré chcete vidieť v ďalšej verzii!",
-  "CMD_USER_PROFILE": "Účet {APP_NAME}",
   "SIGNED_OUT": "Boli ste odhlásení.",
   "SIGNED_OUT_MESSAGE": "Boli ste odhlásení z vášho účtu {APP_NAME}. Pre pokračovanie sa prosím prihláste.",
   "SIGNED_OUT_MESSAGE_FRIENDLY": "Ďakujeme, že používate {APP_NAME}. Dovidenia!",
@@ -108784,7 +108812,8 @@ define("nls/sk/strings", {
   "CONTACT_SUPPORT": "Kontaktovať podporu",
   "SIGN_OUT": "Odhlásiť sa",
   "ACCOUNT_DETAILS": "Detaily účtu",
-  "AI_QUOTA_USED": "Využité AI kvóty"
+  "AI_QUOTA_USED": "Využité AI kvóty",
+  "LOGIN_REFRESH": "Skontrolovať stav prihlásenia"
 });
 /*
  * GNU AGPL-3.0 License
@@ -109330,6 +109359,7 @@ define("nls/sr/strings", {
   "CMD_AUTO_UPDATE": "Аутоматско ажурирање",
   "CMD_HOW_TO_USE_BRACKETS": "Корисничко упутство за {APP_NAME}",
   "CMD_SUPPORT": "{APP_NAME} подршка",
+  "CMD_USER_PROFILE": "Налог за {APP_NAME}",
   "CMD_DOCS": "Помоћ, почетак рада",
   "CMD_SUGGEST": "Предложи нову функционалност",
   "CMD_REPORT_ISSUE": "Пријави проблем",
@@ -110180,7 +110210,6 @@ define("nls/sr/strings", {
   "GIT_TOAST_TITLE": "Истражите Гит функције у Phoenix Code-у",
   "GIT_TOAST_MESSAGE": "Кликните на икону Гит панела да бисте управљали својим спремиштем. Лако направите commit, push, pull и погледајте историју свог пројекта — све на једном месту.<br><a href='https://docs.phcode.dev/docs/Features/git'>Сазнајте више о Гит панелу →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Гласајте за функције које желите да видите у будућности!",
-  "CMD_USER_PROFILE": "Налог за {APP_NAME}",
   "SIGNED_OUT": "Одјавили сте се.",
   "SIGNED_OUT_MESSAGE": "Одјавили сте се са свог {APP_NAME} налога. Молимо вас да се поново пријавите да бисте наставили.",
   "SIGNED_OUT_MESSAGE_FRIENDLY": "Хвала вам што користите {APP_NAME}. Видимо се ускоро!",
@@ -110200,7 +110229,8 @@ define("nls/sr/strings", {
   "CONTACT_SUPPORT": "Контактирајте подршку",
   "SIGN_OUT": "Одјавите се",
   "ACCOUNT_DETAILS": "Подаци о налогу",
-  "AI_QUOTA_USED": "Искоришћена AI квота"
+  "AI_QUOTA_USED": "Искоришћена AI квота",
+  "LOGIN_REFRESH": "Провери статус пријаве"
 });
 /*
  * GNU AGPL-3.0 License
@@ -110830,6 +110860,7 @@ define("nls/sv/strings", {
   "CMD_AUTO_UPDATE": "Automatisk uppdatering",
   "CMD_HOW_TO_USE_BRACKETS": "Hur du använder {APP_NAME}",
   "CMD_SUPPORT": "{APP_NAME}-forum",
+  "CMD_USER_PROFILE": "{APP_NAME}-konto",
   "CMD_DOCS": "Hjälp, Kom igång",
   "CMD_SUGGEST": "Föreslå en funktion",
   "CMD_REPORT_ISSUE": "Rapportera problem",
@@ -111680,7 +111711,6 @@ define("nls/sv/strings", {
   "GIT_TOAST_TITLE": "Utforska Git-funktioner i Phoenix Code",
   "GIT_TOAST_MESSAGE": "Klicka på Git-panelens ikon för att hantera din repository. Committa, pusha, pulla och se din projekthistorik enkelt – allt på ett ställe.<br><a href='https://docs.phcode.dev/docs/Features/git'>Läs mer om Git-panelen →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Rösta på funktionerna du vill se härnäst!",
-  "CMD_USER_PROFILE": "{APP_NAME}-konto",
   "SIGNED_OUT": "Du har loggats ut.",
   "SIGNED_OUT_MESSAGE": "Du har loggats ut från ditt {APP_NAME}-konto. Logga in igen för att fortsätta.",
   "SIGNED_OUT_MESSAGE_FRIENDLY": "Tack för att du använder {APP_NAME}. Vi ses snart!",
@@ -111700,7 +111730,8 @@ define("nls/sv/strings", {
   "CONTACT_SUPPORT": "Kontakta supporten",
   "SIGN_OUT": "Logga ut",
   "ACCOUNT_DETAILS": "Kontodetaljer",
-  "AI_QUOTA_USED": "Använd AI-kvot"
+  "AI_QUOTA_USED": "Använd AI-kvot",
+  "LOGIN_REFRESH": "Kontrollera inloggningsstatus"
 });
 /*
  * GNU AGPL-3.0 License
@@ -112247,6 +112278,7 @@ define("nls/tr/strings", {
   "CMD_AUTO_UPDATE": "Otomatik Güncelleme",
   "CMD_HOW_TO_USE_BRACKETS": "{APP_NAME} Nasıl Kullanılır",
   "CMD_SUPPORT": "{APP_NAME} Desteği",
+  "CMD_USER_PROFILE": "{APP_NAME} Hesabı",
   "CMD_DOCS": "Yardım, Başlarken",
   "CMD_SUGGEST": "Yeni Özellik Öner",
   "CMD_REPORT_ISSUE": "Sorun Bildir",
@@ -113097,7 +113129,6 @@ define("nls/tr/strings", {
   "GIT_TOAST_TITLE": "Phoenix Code'da Git Özelliklerini Keşfedin",
   "GIT_TOAST_MESSAGE": "Deponuzu yönetmek için Git paneli simgesine tıklayın. Proje geçmişinizi kolayca işleyin, gönderin, çekin ve görüntüleyin—hepsi tek bir yerde.<br><a href='https://docs.phcode.dev/docs/Features/git'>Git paneli hakkında daha fazla bilgi edinin →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Gelecekte görmek istediğiniz özellikler için oy verin!",
-  "CMD_USER_PROFILE": "{APP_NAME} Hesabı",
   "SIGNED_OUT": "Oturumunuz kapatıldı.",
   "SIGNED_OUT_MESSAGE": "{APP_NAME} hesabınızdan çıkış yaptınız. Devam etmek için lütfen tekrar oturum açın.",
   "SIGNED_OUT_MESSAGE_FRIENDLY": "{APP_NAME}'i kullandığınız için teşekkürler. Yakında görüşürüz!",
@@ -113117,7 +113148,8 @@ define("nls/tr/strings", {
   "CONTACT_SUPPORT": "Destek ekibiyle iletişime geçin",
   "SIGN_OUT": "Oturumu kapat",
   "ACCOUNT_DETAILS": "Hesap Ayrıntıları",
-  "AI_QUOTA_USED": "Yapay Zeka kotası kullanıldı"
+  "AI_QUOTA_USED": "Yapay Zeka kotası kullanıldı",
+  "LOGIN_REFRESH": "Oturum Durumunu Kontrol Et"
 });
 /*
  * GNU AGPL-3.0 License
@@ -113664,6 +113696,7 @@ define("nls/uk/strings", {
   "CMD_AUTO_UPDATE": "Автоматичне оновлення",
   "CMD_HOW_TO_USE_BRACKETS": "Як використовувати {APP_NAME}",
   "CMD_SUPPORT": "Підтримка {APP_NAME}",
+  "CMD_USER_PROFILE": "Обліковий запис {APP_NAME}",
   "CMD_DOCS": "Довідка, початок роботи",
   "CMD_SUGGEST": "Запропонувати ідею",
   "CMD_REPORT_ISSUE": "Повідомити про проблему",
@@ -114514,7 +114547,6 @@ define("nls/uk/strings", {
   "GIT_TOAST_TITLE": "Ознайомтеся з функціями Git у Phoenix Code",
   "GIT_TOAST_MESSAGE": "Натисніть піктограму панелі Git, щоб керувати вашим репозиторієм. Легко виконуйте коміти, пуші, пули та переглядайте історію вашого проєкту — все в одному місці.<br><a href='https://docs.phcode.dev/docs/Features/git'>Дізнайтеся більше про панель Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Проголосуйте за функції, які ви хочете бачити наступними!",
-  "CMD_USER_PROFILE": "Обліковий запис {APP_NAME}",
   "SIGNED_OUT": "Ви вийшли з системи.",
   "SIGNED_OUT_MESSAGE": "Ви вийшли зі свого облікового запису {APP_NAME}. Будь ласка, увійдіть знову, щоб продовжити.",
   "SIGNED_OUT_MESSAGE_FRIENDLY": "Дякуємо за використання {APP_NAME}. До зустрічі!",
@@ -114534,7 +114566,8 @@ define("nls/uk/strings", {
   "CONTACT_SUPPORT": "Звернутися до служби підтримки",
   "SIGN_OUT": "Вийти",
   "ACCOUNT_DETAILS": "Дані облікового запису",
-  "AI_QUOTA_USED": "Використано квоту ШІ"
+  "AI_QUOTA_USED": "Використано квоту ШІ",
+  "LOGIN_REFRESH": "Перевірити статус входу"
 });
 /*
  * GNU AGPL-3.0 License
@@ -115081,6 +115114,7 @@ define("nls/ur/strings", {
   "CMD_AUTO_UPDATE": "خودکار اپ ڈیٹ",
   "CMD_HOW_TO_USE_BRACKETS": "{APP_NAME} استعمال کرنے کا طریقہ",
   "CMD_SUPPORT": "{APP_NAME} سپورٹ",
+  "CMD_USER_PROFILE": "{APP_NAME} اکاؤنٹ",
   "CMD_DOCS": "مدد، شروع کرنا",
   "CMD_SUGGEST": "خصوصیت تجویز کریں",
   "CMD_REPORT_ISSUE": "مسئلہ کی اطلاع دیں",
@@ -115931,7 +115965,6 @@ define("nls/ur/strings", {
   "GIT_TOAST_TITLE": "فینکس کوڈ میں گٹ فیچرز دریافت کریں",
   "GIT_TOAST_MESSAGE": "اپنی ذخیرہ گاہ (repository) کو منظم کرنے کے لیے گٹ پینل آئیکن پر کلک کریں۔ آسانی سے کامٹ، پش، پل کریں، اور اپنے پروجیکٹ کی تاریخ دیکھیں—سب ایک ہی جگہ پر۔<br><a href='https://docs.phcode.dev/docs/Features/git'>گٹ پینل کے بارے میں مزید جانیں →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "اپنی پسندیدہ خصوصیات کے لیے ووٹ دیں!",
-  "CMD_USER_PROFILE": "{APP_NAME} اکاؤنٹ",
   "SIGNED_OUT": "آپ سائن آؤٹ ہو گئے ہیں۔",
   "SIGNED_OUT_MESSAGE": "آپ اپنے {APP_NAME} اکاؤنٹ سے سائن آؤٹ ہو گئے ہیں۔ براہ کرم جاری رکھنے کے لیے دوبارہ سائن ان کریں۔",
   "SIGNED_OUT_MESSAGE_FRIENDLY": "{APP_NAME} استعمال کرنے کا شکریہ۔ جلد ملیں گے!",
@@ -115951,7 +115984,8 @@ define("nls/ur/strings", {
   "CONTACT_SUPPORT": "سپورٹ سے رابطہ کریں",
   "SIGN_OUT": "سائن آؤٹ کریں",
   "ACCOUNT_DETAILS": "اکاؤنٹ کی تفصیلات",
-  "AI_QUOTA_USED": "استعمال شدہ اے آئی کوٹہ"
+  "AI_QUOTA_USED": "استعمال شدہ اے آئی کوٹہ",
+  "LOGIN_REFRESH": "لاگ ان کی حیثیت چیک کریں"
 });
 /*
  * GNU AGPL-3.0 License
@@ -116528,6 +116562,7 @@ define("nls/zh-cn/strings", {
   "CMD_AUTO_UPDATE": "自动更新",
   "CMD_HOW_TO_USE_BRACKETS": "如何使用 {APP_NAME}",
   "CMD_SUPPORT": "{APP_NAME} 支持",
+  "CMD_USER_PROFILE": "{APP_NAME} 帐户",
   "CMD_DOCS": "帮助，入门指南",
   "CMD_SUGGEST": "推荐功能",
   "CMD_REPORT_ISSUE": "报告问题",
@@ -117378,7 +117413,6 @@ define("nls/zh-cn/strings", {
   "GIT_TOAST_TITLE": "探索 Phoenix Code 中的 Git 功能",
   "GIT_TOAST_MESSAGE": "点击 Git 面板图标即可管理您的代码仓库。轻松提交、推送、拉取和查看项目历史记录，一切尽在一处。<br><a href='https://docs.phcode.dev/docs/Features/git'>了解更多关于 Git 面板的信息 →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "为您希望看到的下一个功能投票！",
-  "CMD_USER_PROFILE": "{APP_NAME} 帐户",
   "SIGNED_OUT": "您已退出登录。",
   "SIGNED_OUT_MESSAGE": "您已退出 {APP_NAME} 帐户。请重新登录以继续。",
   "SIGNED_OUT_MESSAGE_FRIENDLY": "感谢您使用 {APP_NAME}。下次再见！",
@@ -117398,7 +117432,8 @@ define("nls/zh-cn/strings", {
   "CONTACT_SUPPORT": "联系客服",
   "SIGN_OUT": "退出登录",
   "ACCOUNT_DETAILS": "帐户详情",
-  "AI_QUOTA_USED": "AI 配额已用"
+  "AI_QUOTA_USED": "AI 配额已用",
+  "LOGIN_REFRESH": "检查登录状态"
 });
 /*
  * GNU AGPL-3.0 License
@@ -117945,6 +117980,7 @@ define("nls/zh-tw/strings", {
   "CMD_AUTO_UPDATE": "自動更新",
   "CMD_HOW_TO_USE_BRACKETS": "如何使用 {APP_NAME}",
   "CMD_SUPPORT": "{APP_NAME} 支援",
+  "CMD_USER_PROFILE": "{APP_NAME} 帳號",
   "CMD_DOCS": "說明、入門指南",
   "CMD_SUGGEST": "功能建議",
   "CMD_REPORT_ISSUE": "回報問題",
@@ -118795,7 +118831,6 @@ define("nls/zh-tw/strings", {
   "GIT_TOAST_TITLE": "在 Phoenix Code 中探索 Git 功能",
   "GIT_TOAST_MESSAGE": "按一下 Git 面板圖示即可管理您的儲存庫。輕鬆提交、推送、提取和檢視您的專案歷史記錄，一切盡在掌握之中。<br><a href='https://docs.phcode.dev/docs/Features/git'>深入瞭解 Git 面板 →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "投票選出您希望看到的下個功能！",
-  "CMD_USER_PROFILE": "{APP_NAME} 帳號",
   "SIGNED_OUT": "您已登出。",
   "SIGNED_OUT_MESSAGE": "您已登出 {APP_NAME} 帳號。請重新登入以繼續。",
   "SIGNED_OUT_MESSAGE_FRIENDLY": "感謝您使用 {APP_NAME}。下次見！",
@@ -118815,7 +118850,8 @@ define("nls/zh-tw/strings", {
   "CONTACT_SUPPORT": "聯絡客服支援",
   "SIGN_OUT": "登出",
   "ACCOUNT_DETAILS": "帳號詳細資訊",
-  "AI_QUOTA_USED": "AI 配額已使用"
+  "AI_QUOTA_USED": "AI 配額已使用",
+  "LOGIN_REFRESH": "檢查登入狀態"
 });
 /*
  * GNU AGPL-3.0 License
