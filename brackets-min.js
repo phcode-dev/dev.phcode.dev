@@ -105948,7 +105948,8 @@ define("nls/root/strings", {
     "CONTACT_SUPPORT": "Contact support",
     "SIGN_OUT": "Sign out",
     "ACCOUNT_DETAILS": "Account Details",
-    "AI_QUOTA_USED": "AI quota used"
+    "AI_QUOTA_USED": "AI quota used",
+    "LOGIN_REFRESH": "Check Login Status"
 });
 
 /*
@@ -158980,6 +158981,9 @@ define("services/login", function (require, exports, module) {
         </div>
     </div>
     <div class="modal-footer">
+        <div class="left">
+            <button class="btn" data-button-id="refresh">{{Strings.LOGIN_REFRESH}}</button>
+        </div>
         <button class="btn" data-button-id="cancel">{{Strings.CANCEL}}</button>
         <button class="btn primary" data-button-id="open">{{Strings.OPEN_SIGN_IN_URL}}</button>
     </div>
@@ -159224,8 +159228,12 @@ define("services/login", function (require, exports, module) {
         $template.on('click', '[data-button-id="cancel"]', function() {
             dialog.close();
         });
+        $template.on('click', '[data-button-id="refresh"]', function() {
+            checkLoginStatus();
+        });
 
         let checking = false, checkAgain = false;
+        // never rejects
         async function checkLoginStatus() {
             if(checking) {
                 checkAgain = true;
