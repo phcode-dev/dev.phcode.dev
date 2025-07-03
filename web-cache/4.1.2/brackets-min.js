@@ -19330,6 +19330,9 @@ define("editor/CodeHintManager", function (require, exports, module) {
         codeHintsEnabled = true,
         codeHintOpened   = false;
 
+    // API for extensions to show hints at the top
+    let hintsAtTopHandler = null;
+
     PreferencesManager.definePreference("showCodeHints", "boolean", true, {
         description: Strings.DESCRIPTION_SHOW_CODE_HINTS
     });
@@ -19511,11 +19514,27 @@ define("editor/CodeHintManager", function (require, exports, module) {
             return hintList.callMoveUp(callMoveUpEvent);
         }
 
-        var response = sessionProvider.getHints(lastChar);
+        var response = null;
+
+        // Get hints from regular provider if available
+        if (sessionProvider) {
+            response = sessionProvider.getHints(lastChar);
+        }
+
         lastChar = null;
 
+        // we need this to track if we used hintsAtTopHandler as fallback
+        // because otherwise we will end up calling it twice
+        var usedTopHintsAsFallback = false;
+
+        // If regular provider doesn't have hints, try hints-at-top handler
+        if (!response && hintsAtTopHandler && hintsAtTopHandler.getHints) {
+            response = hintsAtTopHandler.getHints(sessionEditor, lastChar);
+            usedTopHintsAsFallback = true;
+        }
+
         if (!response) {
-            // the provider wishes to close the session
+            // No provider wishes to show hints, close the session
             _endSession();
         } else {
             // if the response is true, end the session and begin another
@@ -19525,6 +19544,18 @@ define("editor/CodeHintManager", function (require, exports, module) {
                 _endSession();
                 _beginSession(previousEditor);
             } else if (response.hasOwnProperty("hints")) { // a synchronous response
+                // allow extensions to modify the response by adding hints at the top
+                // BUT only if we didn't already use the top hints as fallback
+                if (!usedTopHintsAsFallback && sessionProvider && hintsAtTopHandler && hintsAtTopHandler.getHints) {
+                    var topHints = hintsAtTopHandler.getHints(sessionEditor, lastChar);
+
+                    if (topHints && topHints.hints && topHints.hints.length > 0) {
+                        // Prepend the top hints to the existing response
+                        var combinedHints = topHints.hints.concat(response.hints);
+                        response = $.extend({}, response, { hints: combinedHints });
+                    }
+                }
+
                 if (hintList.isOpen()) {
                     // the session is open
                     hintList.update(response);
@@ -19541,6 +19572,15 @@ define("editor/CodeHintManager", function (require, exports, module) {
                     if (!hintList) {
                         return;
                     }
+                    // allow extensions to modify the response by adding hints at the top
+                    if (sessionProvider && hintsAtTopHandler && hintsAtTopHandler.getHints) {
+                        var topHints = hintsAtTopHandler.getHints(sessionEditor, lastChar);
+                        if (topHints && topHints.hints && topHints.hints.length > 0) {
+                            // Prepend the top hints to the existing response
+                            var combinedHints = topHints.hints.concat(hints.hints);
+                            hints = $.extend({}, hints, { hints: combinedHints });
+                        }
+                    }
 
                     if (hintList.isOpen()) {
                         // the session is open
@@ -19551,7 +19591,7 @@ define("editor/CodeHintManager", function (require, exports, module) {
                 });
             }
         }
-    }
+    };
 
     /**
      * Try to begin a new hinting session.
@@ -19573,21 +19613,29 @@ define("editor/CodeHintManager", function (require, exports, module) {
         var language = editor.getLanguageForSelection(),
             enabledProviders = _getProvidersForLanguageId(language.getId());
 
-        enabledProviders.some(function (item, index) {
-            if (item.provider.hasHints(editor, lastChar)) {
-                sessionProvider = item.provider;
-                return true;
-            }
-        });
+        // Check if hints-at-top handler has hints first to avoid duplication
+        var hasTopHints = false;
+        if (hintsAtTopHandler && hintsAtTopHandler.hasHints) {
+            hasTopHints = hintsAtTopHandler.hasHints(editor, lastChar);
+        }
 
-        // If a provider is found, initialize the hint list and update it
-        if (sessionProvider) {
-            var insertHintOnTab,
+        // Find a suitable provider only if hints-at-top handler doesn't have hints
+        if (!hasTopHints) {
+            enabledProviders.some(function (item, index) {
+                if (item.provider.hasHints(editor, lastChar)) {
+                    sessionProvider = item.provider;
+                    return true;
+                }
+            });
+        }
+
+        // If a provider is found or top hints are available, initialize the hint list and update it
+        if (sessionProvider || hasTopHints) {
+            var insertHintOnTab = PreferencesManager.get("insertHintOnTab"),
                 maxCodeHints = PreferencesManager.get("maxCodeHints");
-            if (sessionProvider.insertHintOnTab !== undefined) {
+
+            if (sessionProvider && sessionProvider.insertHintOnTab !== undefined) {
                 insertHintOnTab = sessionProvider.insertHintOnTab;
-            } else {
-                insertHintOnTab = PreferencesManager.get("insertHintOnTab");
             }
 
             sessionEditor = editor;
@@ -19595,26 +19643,41 @@ define("editor/CodeHintManager", function (require, exports, module) {
             hintList.onHighlight(function ($hint, $hintDescContainer, reason) {
                 if (hintList.enableDescription && $hintDescContainer && $hintDescContainer.length) {
                     // If the current hint provider listening for hint item highlight change
-                    if (sessionProvider.onHighlight) {
+                    if (sessionProvider && sessionProvider.onHighlight) {
                         sessionProvider.onHighlight($hint, $hintDescContainer, reason);
                     }
 
                     // Update the hint description
-                    if (sessionProvider.updateHintDescription) {
+                    if (sessionProvider && sessionProvider.updateHintDescription) {
                         sessionProvider.updateHintDescription($hint, $hintDescContainer);
                     }
                 } else {
-                    if (sessionProvider.onHighlight) {
+                    if (sessionProvider && sessionProvider.onHighlight) {
                         sessionProvider.onHighlight($hint, undefined, reason);
                     }
                 }
             });
             hintList.onSelect(function (hint) {
-                var restart = sessionProvider.insertHint(hint),
-                    previousEditor = sessionEditor;
-                _endSession();
-                if (restart) {
-                    _beginSession(previousEditor);
+                // allow extensions to handle special hint selections
+                var handled = false;
+                if (hintsAtTopHandler && hintsAtTopHandler.insertHint) {
+                    handled = hintsAtTopHandler.insertHint(hint);
+                }
+
+                if (handled) {
+                    // If hints-at-top handler handled it, end the session
+                    _endSession();
+                } else if (sessionProvider) {
+                    // Regular hint provider handling
+                    var restart = sessionProvider.insertHint(hint),
+                        previousEditor = sessionEditor;
+                    _endSession();
+                    if (restart) {
+                        _beginSession(previousEditor);
+                    }
+                } else {
+                    // if none of the provider handled it, we just end the session
+                    _endSession();
                 }
             });
             hintList.onClose(()=>{
@@ -19762,6 +19825,26 @@ define("editor/CodeHintManager", function (require, exports, module) {
     }
 
     /**
+     * Register a handler to show hints at the top of the hint list.
+     * This API allows extensions to add their own hints at the top of the standard hint list.
+     *
+     * @param {Object} handler - A hint provider object with standard methods:
+     *   - hasHints: function(editor, implicitChar) - returns true if hints are available
+     *   - getHints: function(editor, implicitChar) - returns hint response object with hints array
+     *   - insertHint: function(hint) - handles hint insertion, returns true if handled
+     */
+    function showHintsAtTop(handler) {
+        hintsAtTopHandler = handler;
+    }
+
+    /**
+     * Unregister the hints at top handler.
+     */
+    function clearHintsAtTop() {
+        hintsAtTopHandler = null;
+    }
+
+    /**
      * Explicitly start a new session. If we have an existing session,
      * then close the current one and restart a new one.
      * @private
@@ -19844,6 +19927,8 @@ define("editor/CodeHintManager", function (require, exports, module) {
     exports.isOpen                  = isOpen;
     exports.registerHintProvider    = registerHintProvider;
     exports.hasValidExclusion       = hasValidExclusion;
+    exports.showHintsAtTop          = showHintsAtTop;
+    exports.clearHintsAtTop         = clearHintsAtTop;
 
     exports.SELECTION_REASON        = CodeHintListModule._SELECTION_REASON;
 });
@@ -34001,6 +34086,2756 @@ define("extensionsIntegrated/CSSColorPreview/main", function (require, exports, 
  * GNU AGPL-3.0 License
  *
  * Copyright (c) 2021 - present core.ai . All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
+ *
+ */
+
+/* eslint-disable no-invalid-this */
+define("extensionsIntegrated/CustomSnippets/UIHelper", function (require, exports, module) {
+    const Global = require("./global");
+
+    /**
+     * this is a generic function to show error messages for input fields
+     *
+     * @param {string} inputId - input field id
+     * @param {string} wrapperId - wrapper element id
+     * @param {string} errorMessage - error message to display
+     * @param {string} errorId - Unique ID for the error message element
+     */
+    function showError(inputId, wrapperId, errorMessage, errorId) {
+        // First, clear any existing error messages for this input field
+        const $inputField = $(`#${inputId}`);
+        const $wrapper = $(`#${wrapperId}`);
+
+        // Remove any existing error messages in this wrapper
+        $wrapper.find(".error-message").remove();
+
+        // Remove error styling from the input field
+        $inputField.removeClass("error-input");
+
+        // Now show the new error message
+        const $errorMessage = $("<div>").attr("id", errorId).addClass("error-message").text(errorMessage);
+
+        $wrapper.append($errorMessage);
+
+        // highlight the input field with error
+        $inputField.addClass("error-input");
+
+        // to automatically remove it after 5 seconds
+        setTimeout(function () {
+            $(`#${errorId}`).fadeOut(function () {
+                $(this).remove();
+            });
+            $inputField.removeClass("error-input");
+        }, 5000);
+
+        $inputField.one("input", function () {
+            $(`#${errorId}`).remove();
+            $(this).removeClass("error-input");
+        });
+    }
+
+    /**
+     * This function is called when there are no available snippets to display
+     * this is called inside the 'showSnippetsList' function inside the snippetsList.js file
+     * in that case we need to show the empty snippet message
+     */
+    function showEmptySnippetMessage() {
+        const $emptySnippet = $("#no-snippets-wrapper");
+        const $snippetsList = $("#snippets-list-wrapper");
+
+        $emptySnippet.removeClass("hidden");
+        $snippetsList.addClass("hidden");
+    }
+
+    /**
+     * This function is called when there are snippets to display.
+     * Note: this function just updates the hidden state from the wrapper divs
+     * so this just unhides the wrapper. it doesn't add the snippet items
+     * this is called inside the 'showSnippetsList' function inside the snippetsList.js file
+     */
+    function showSnippetsList() {
+        const $emptySnippet = $("#no-snippets-wrapper");
+        const $snippetsList = $("#snippets-list-wrapper");
+
+        $emptySnippet.addClass("hidden");
+        $snippetsList.removeClass("hidden");
+    }
+
+    /**
+     * This function clears all the existing items inside the snippets list wrapper
+     * this is called everytime users switches back to the snippets list view,
+     * because we rebuild the snippets list menu everytime
+     */
+    function clearSnippetsList() {
+        const $snippetsListWrapper = $("#snippets-list-wrapper");
+        $snippetsListWrapper.empty();
+    }
+
+    /**
+     * This function is responsible to show the add snippet menu
+     * add snippet menu is the menu which allows users to create a new snippet
+     * this is called when user clicks on the plus button at the toolbar or the add new snippet button
+     */
+    function showAddSnippetMenu() {
+        const $addSnippetMenu = $("#custom-snippets-add-new");
+        const $snippetListMenu = $("#custom-snippets-list");
+        const $backToListMenuBtn = $("#back-to-list-menu-btn");
+        const $addNewSnippetBtn = $("#add-new-snippet-btn");
+        const $filterSnippetsPanel = $("#filter-snippets-panel");
+        const $toolbarTitle = $(".toolbar-title");
+
+        $addSnippetMenu.removeClass("hidden");
+        $snippetListMenu.addClass("hidden");
+
+        $backToListMenuBtn.removeClass("hidden");
+        $addNewSnippetBtn.addClass("hidden");
+        $filterSnippetsPanel.addClass("hidden");
+
+        $toolbarTitle.html('Add Snippet <span id="snippets-count" class="snippets-count"></span>');
+    }
+
+    /**
+     * This function is responsible to show the snippet list menu
+     * snippet list menu is the menu which shows the list of all the snippets
+     * this is called when user clicks on the back button from add snippet menu
+     */
+    function showSnippetListMenu() {
+        const $addSnippetMenu = $("#custom-snippets-add-new");
+        const $editSnippetMenu = $("#custom-snippets-edit");
+        const $snippetListMenu = $("#custom-snippets-list");
+        const $backToListMenuBtn = $("#back-to-list-menu-btn");
+        const $addNewSnippetBtn = $("#add-new-snippet-btn");
+        const $filterSnippetsPanel = $("#filter-snippets-panel");
+        const $toolbarTitle = $(".toolbar-title");
+
+        $addSnippetMenu.addClass("hidden");
+        $editSnippetMenu.addClass("hidden");
+        $snippetListMenu.removeClass("hidden");
+
+        $backToListMenuBtn.addClass("hidden");
+        $addNewSnippetBtn.removeClass("hidden");
+        $filterSnippetsPanel.removeClass("hidden");
+
+        // add the snippet count in the toolbar (the no. of snippets added)
+        const snippetCount = Global.SnippetHintsList.length;
+        const countText = snippetCount > 0 ? `(${snippetCount})` : "";
+        $toolbarTitle.html(`Custom Snippets <span id="snippets-count" class="snippets-count">${countText}</span>`);
+
+        $("#filter-snippets-input").val("");
+    }
+
+    /**
+     * This function is responsible to show the edit snippet menu
+     * edit snippet menu is the menu which allows users to edit an existing snippet
+     */
+    function showEditSnippetMenu() {
+        const $editSnippetMenu = $("#custom-snippets-edit");
+        const $snippetListMenu = $("#custom-snippets-list");
+        const $backToListMenuBtn = $("#back-to-list-menu-btn");
+        const $addNewSnippetBtn = $("#add-new-snippet-btn");
+        const $filterSnippetsPanel = $("#filter-snippets-panel");
+        const $toolbarTitle = $(".toolbar-title");
+
+        $editSnippetMenu.removeClass("hidden");
+        $snippetListMenu.addClass("hidden");
+
+        $backToListMenuBtn.removeClass("hidden");
+        $addNewSnippetBtn.addClass("hidden");
+        $filterSnippetsPanel.addClass("hidden");
+
+        // Update toolbar title
+        $toolbarTitle.html('Edit Snippet <span id="snippets-count" class="snippets-count"></span>');
+    }
+
+    /**
+     * Shows an error message when a snippet with the same abbreviation already exists
+     * and user is trying to add a new one
+     * @param {string} abbreviation - The abbreviation that's duplicated
+     * @param {boolean} isEditForm - Whether this is for the edit form (optional, defaults to false)
+     */
+    function showDuplicateAbbreviationError(abbreviation, isEditForm = false) {
+        const inputId = isEditForm ? "edit-abbr-box" : "abbr-box";
+        const wrapperId = isEditForm ? "edit-abbr-box-wrapper" : "abbr-box-wrapper";
+        const errorId = isEditForm ? "edit-abbreviation-duplicate-error" : "abbreviation-duplicate-error";
+
+        showError(inputId, wrapperId, `A snippet with abbreviation "${abbreviation}" already exists.`, errorId);
+    }
+
+    /**
+     * Shows the snippets list header
+     * this is called when there are snippets to display
+     */
+    function showSnippetsListHeader() {
+        const $snippetsListHeader = $("#snippets-list-header");
+        $snippetsListHeader.removeClass("hidden");
+    }
+
+    /**
+     * Hides the snippets list header
+     * this is called when there are no snippets to display (either none exist or all filtered out)
+     */
+    function hideSnippetsListHeader() {
+        const $snippetsListHeader = $("#snippets-list-header");
+        $snippetsListHeader.addClass("hidden");
+    }
+
+    /**
+     * Initializes the toolbar title for the list view
+     * This is called when the panel is first opened to ensure the snippet count is displayed
+     */
+    function initializeListViewToolbarTitle() {
+        const $toolbarTitle = $(".toolbar-title");
+        const snippetCount = Global.SnippetHintsList.length;
+        const countText = snippetCount > 0 ? `(${snippetCount})` : "";
+        $toolbarTitle.html(`Custom Snippets <span id="snippets-count" class="snippets-count">${countText}</span>`);
+    }
+
+    exports.showEmptySnippetMessage = showEmptySnippetMessage;
+    exports.showSnippetsList = showSnippetsList;
+    exports.clearSnippetsList = clearSnippetsList;
+    exports.showAddSnippetMenu = showAddSnippetMenu;
+    exports.showSnippetListMenu = showSnippetListMenu;
+    exports.showEditSnippetMenu = showEditSnippetMenu;
+    exports.showDuplicateAbbreviationError = showDuplicateAbbreviationError;
+    exports.showSnippetsListHeader = showSnippetsListHeader;
+    exports.hideSnippetsListHeader = hideSnippetsListHeader;
+    exports.initializeListViewToolbarTitle = initializeListViewToolbarTitle;
+    exports.showError = showError;
+});
+
+/*
+ * GNU AGPL-3.0 License
+ *
+ * Copyright (c) 2021 - present core.ai . All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
+ *
+ */
+
+define("extensionsIntegrated/CustomSnippets/codeHintIntegration", function (require, exports, module) {
+    const CodeHintManager = require("editor/CodeHintManager");
+    const EditorManager = require("editor/EditorManager");
+
+    const Global = require("./global");
+    const Driver = require("./driver");
+    const Helper = require("./helper");
+    const SnippetCursorManager = require("./snippetCursorManager");
+
+    /**
+     * Handler object for the CodeHintManager API
+     * This provides the interface for showing custom snippets at the top of hint lists
+     */
+    const CustomSnippetsHandler = {
+        /**
+         * Determines whether any custom snippets hints are available
+         * @param {Editor} editor - The current editor instance
+         * @param {string} implicitChar - The last character typed (null if explicit request)
+         * @return {boolean} - true if hints are available, false otherwise
+         */
+        hasHints: function (editor, implicitChar) {
+            // We only show hints for implicit requests (when user is typing)
+            if (implicitChar === null) {
+                return false;
+            }
+
+            try {
+                const needle = Driver.getWordBeforeCursor();
+                if (!needle || !needle.word) {
+                    return false;
+                }
+
+                // Check if there's at least one exact match using language context detection
+                const hasMatch = Helper.hasExactMatchingSnippet(needle.word.toLowerCase(), editor);
+                return hasMatch;
+            } catch (e) {
+                return false;
+            }
+        },
+
+        /**
+         * Get custom snippet hints to show at the top of the hint list
+         * @param {Editor} editor - The current editor instance
+         * @param {string} implicitChar - The last character typed (null if explicit request)
+         * @return {Object} - The hint response object with hints array
+         */
+        getHints: function (editor, implicitChar) {
+            try {
+                const needle = Driver.getWordBeforeCursor();
+                if (!needle || !needle.word) {
+                    return null;
+                }
+
+                const word = needle.word.toLowerCase();
+
+                // Check if there's at least one exact match using language context detection
+                if (!Helper.hasExactMatchingSnippet(word, editor)) {
+                    return null;
+                }
+
+                // Get all matching snippets using language context detection
+                const matchingSnippets = Helper.getMatchingSnippets(word, editor);
+
+                if (matchingSnippets.length > 0) {
+                    const customSnippetHints = matchingSnippets.map((snippet) => {
+                        return Helper.createHintItem(snippet.abbreviation, needle.word, snippet.description);
+                    });
+
+                    return {
+                        hints: customSnippetHints,
+                        selectInitial: true,
+                        handleWideResults: false
+                    };
+                }
+            } catch (e) {
+                console.log("Error getting custom snippets:", e);
+            }
+
+            return null;
+        },
+
+        /**
+         * Handle insertion of custom snippet hints
+         * @param {jQuery} hint - The selected hint element
+         * @return {boolean} - true if handled, false otherwise
+         */
+        insertHint: function (hint) {
+            // check if the hint is a custom snippet
+            if (hint && hint.jquery && hint.attr("data-isCustomSnippet")) {
+                // handle custom snippet insertion
+                const abbreviation = hint.attr("data-val");
+                if (Global.SnippetHintsList) {
+                    const matchedSnippet = Global.SnippetHintsList.find(
+                        (snippet) => snippet.abbreviation === abbreviation
+                    );
+                    if (matchedSnippet) {
+                        // Get current editor from EditorManager since it's not passed
+                        const editor = EditorManager.getFocusedEditor();
+
+                        if (editor) {
+                            // replace the typed abbreviation with the template text using cursor manager
+                            const wordInfo = Driver.getWordBeforeCursor();
+                            const start = { line: wordInfo.line, ch: wordInfo.ch + 1 };
+                            const end = editor.getCursorPos();
+
+                            SnippetCursorManager.insertSnippetWithTabStops(
+                                editor,
+                                matchedSnippet.templateText,
+                                start,
+                                end
+                            );
+                            return true; // handled
+                        }
+                    }
+                }
+            }
+
+            return false; // not handled
+        }
+    };
+
+    /**
+     * Initialize the code hint integration
+     * This should be called during extension initialization
+     */
+    function init() {
+        // Register our handler with the CodeHintManager API
+        CodeHintManager.showHintsAtTop(CustomSnippetsHandler);
+    }
+
+    exports.init = init;
+});
+
+/*
+ * GNU AGPL-3.0 License
+ *
+ * Copyright (c) 2021 - present core.ai . All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
+ *
+ */
+
+define("extensionsIntegrated/CustomSnippets/driver", function (require, exports, module) {
+    const EditorManager = require("editor/EditorManager");
+
+    const Global = require("./global");
+    const Helper = require("./helper");
+    const UIHelper = require("./UIHelper");
+    const SnippetsState = require("./snippetsState");
+    const SnippetsList = require("./snippetsList");
+
+    /**
+     * This function handles the save button click handler
+     * it does all the chores like fetching the data from the required fields, adding it to snippet list and all that
+     */
+    function handleSaveBtnClick() {
+        const snippetData = Helper.getSnippetData();
+
+        if (!snippetData.abbreviation || !snippetData.abbreviation.trim()) {
+            return;
+        }
+        if (!snippetData.templateText || !snippetData.templateText.trim()) {
+            return;
+        }
+
+        if (shouldAddSnippetToList(snippetData)) {
+            Global.SnippetHintsList.push(snippetData);
+            Helper.clearAllInputFields();
+            Helper.toggleSaveButtonDisability();
+            SnippetsState.saveSnippetsToState();
+
+            // we need to move back to snippets list view after a snippet is saved
+            UIHelper.showSnippetListMenu();
+            SnippetsList.showSnippetsList();
+        } else {
+            // false since this is from addSnippet and not from editSnippet
+            UIHelper.showDuplicateAbbreviationError(snippetData.abbreviation, false);
+        }
+    }
+
+    /**
+     * This function handles the save button click for editing a snippet
+     */
+    function handleEditSaveBtnClick() {
+        const editedData = Helper.getEditSnippetData();
+        const $editView = $("#custom-snippets-edit");
+        const originalSnippet = $editView.data("originalSnippet");
+        const snippetIndex = $editView.data("snippetIndex");
+
+        if (!editedData.abbreviation || !editedData.abbreviation.trim()) {
+            return;
+        }
+        if (!editedData.templateText || !editedData.templateText.trim()) {
+            return;
+        }
+
+        // check if abbreviation changed and if new abbreviation already exists
+        if (editedData.abbreviation !== originalSnippet.abbreviation) {
+            const existingSnippet = Global.SnippetHintsList.find(
+                (snippet) => snippet.abbreviation === editedData.abbreviation
+            );
+            if (existingSnippet) {
+                // true since this is from editSnippet and not from addSnippet
+                UIHelper.showDuplicateAbbreviationError(editedData.abbreviation, true);
+                return;
+            }
+        }
+
+        // update the snippet in the list
+        if (snippetIndex !== -1) {
+            Global.SnippetHintsList[snippetIndex] = editedData;
+            SnippetsState.saveSnippetsToState();
+
+            // clear the stored data
+            $editView.removeData("originalSnippet");
+            $editView.removeData("snippetIndex");
+
+            // go back to snippets list
+            UIHelper.showSnippetListMenu();
+            SnippetsList.showSnippetsList();
+        }
+    }
+
+    /**
+     * This function handles the reset button click for editing a snippet
+     * It restores the original snippet data in the edit form
+     */
+    function handleResetBtnClick() {
+        const $editView = $("#custom-snippets-edit");
+        const originalSnippet = $editView.data("originalSnippet");
+
+        if (originalSnippet) {
+            // restore original data in the form
+            Helper.populateEditForm(originalSnippet);
+            // update save button state
+            Helper.toggleEditSaveButtonDisability();
+        }
+    }
+
+    /**
+     * This function is to check whether we can add the new snippet to the snippets list
+     * because we don't want to add the new snippet if a snippet already exists with the same abbreviation
+     * @param   {object}  snippetData - the snippet data object
+     * @returns {boolean} - true if we can add the new snippet to the list otherwise false
+     */
+    function shouldAddSnippetToList(snippetData) {
+        const matchedItem = Global.SnippetHintsList.find(
+            (snippet) => snippet.abbreviation === snippetData.abbreviation
+        );
+
+        if (matchedItem) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * This function is responsible to get the word before the cursor
+     * this is required to check whether something matches the snippet list
+     * @returns {object} - an object in the format {word: 'pluto', line: 10, ch: 2}
+     */
+    function getWordBeforeCursor() {
+        const editor = EditorManager.getActiveEditor();
+        if (!editor) {
+            return;
+        }
+
+        const pos = editor.getCursorPos();
+        let word = ""; // this will store the actual word before the cursor
+        let i = pos.ch - 1; // index of the char right before the cursor
+        const breakWordAt = ["", " ", "\t"]; // we need to break the loop when we encounter this char's
+
+        while (i >= 0) {
+            const char = editor.getCharacterAtPosition({ line: pos.line, ch: i });
+            if (breakWordAt.includes(char)) {
+                break;
+            }
+            word = char + word;
+            i--;
+        }
+
+        return {
+            word: word,
+            line: pos.line,
+            ch: i
+        };
+    }
+
+
+
+    exports.getWordBeforeCursor = getWordBeforeCursor;
+    exports.handleSaveBtnClick = handleSaveBtnClick;
+    exports.handleEditSaveBtnClick = handleEditSaveBtnClick;
+    exports.handleResetBtnClick = handleResetBtnClick;
+});
+
+/*
+ * GNU AGPL-3.0 License
+ *
+ * Copyright (c) 2021 - present core.ai . All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
+ *
+ */
+
+define("extensionsIntegrated/CustomSnippets/filterSnippets", function (require, exports, module) {
+    /**
+     * this function creates a filter string for a snippet containing all the searchable fields
+     * the priority order: abbreviation > description > template text > file extension
+     *
+     * @private
+     * @param {object} snippetItem
+     * @returns {string} - all the searchable fields (in lowercase)
+     */
+    function _createFilterString(snippetItem) {
+        const fields = [
+            snippetItem.abbreviation || "",
+            snippetItem.description || "",
+            snippetItem.templateText || "",
+            snippetItem.fileExtension || ""
+        ];
+        return fields.join(" ").toLowerCase();
+    }
+
+    /**
+     * This function calculates a priority score for search matches
+     * the higher scores means better match and is shown before lower score matches
+     * priority order: abbreviation > description > template text > file extension
+     *
+     * @private
+     * @param {object} snippet
+     * @param {Array} filterTerms
+     * @returns {number} - priority score
+     */
+    function _calculateMatchPriority(snippet, filterTerms) {
+        let score = 0;
+        const abbr = (snippet.abbreviation || "").toLowerCase();
+        const desc = (snippet.description || "").toLowerCase();
+        const template = (snippet.templateText || "").toLowerCase();
+        const fileExt = (snippet.fileExtension || "").toLowerCase();
+
+        filterTerms.forEach(function (term) {
+            // abbreviation matching. this has the highest priority
+            if (abbr.indexOf(term) === 0) {
+                score += 1000; // exact start match in abbreviation
+            } else if (abbr.indexOf(term) > -1) {
+                score += 500; // partial match in abbreviation
+            }
+
+            // description matching. this has the second highest priority
+            if (desc.indexOf(term) === 0) {
+                score += 100;
+            } else if (desc.indexOf(term) > -1) {
+                score += 50;
+            }
+
+            // Template text matching. this has the third highest priority
+            if (template.indexOf(term) === 0) {
+                score += 20;
+            } else if (template.indexOf(term) > -1) {
+                score += 10;
+            }
+
+            // File extension matching, lowests priority
+            if (fileExt.indexOf(term) > -1) {
+                score += 5;
+            }
+        });
+
+        return score;
+    }
+
+    /**
+     * This function filters snippets based on the filter input value
+     *
+     * @param {Array} snippetList - array of snippet objects
+     * @returns {Array} - filtered array of snippet objects, sorted by relevance
+     */
+    function filterSnippets(snippetList) {
+        const $filterInput = $("#filter-snippets-input");
+        const filterText = $filterInput.val().trim().toLowerCase();
+
+        if (!filterText) {
+            return snippetList; // return all snippets if no filter
+        }
+
+        const filterTerms = filterText.split(/\s+/);
+
+        // filter snippets that match all terms
+        const matchingSnippets = snippetList.filter(function (snippet) {
+            const filterString = _createFilterString(snippet);
+
+            // all terms must match (AND logic)
+            return filterTerms.every(function (term) {
+                return filterString.indexOf(term) > -1;
+            });
+        });
+
+        // sort by relevance (higher priority scores first)
+        return matchingSnippets.sort(function (a, b) {
+            const scoreA = _calculateMatchPriority(a, filterTerms);
+            const scoreB = _calculateMatchPriority(b, filterTerms);
+            return scoreB - scoreA; // in descending order (highest score will be at first)
+        });
+    }
+
+    exports.filterSnippets = filterSnippets;
+});
+
+/*
+ * GNU AGPL-3.0 License
+ *
+ * Copyright (c) 2021 - present core.ai . All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
+ *
+ */
+
+define("extensionsIntegrated/CustomSnippets/global", function (require, exports, module) {
+    /**
+   * This is an array of objects. this will store the list of all the snippets
+   * it is an array of objects stored in the format
+   * [{
+   * abbreviation: 'clg',
+   * description: 'console log shortcut',
+   * templateText: 'console.log()',
+   * fileExtension: '.js, .css'
+   * }]
+   */
+    const SnippetHintsList = [];
+
+    exports.SnippetHintsList = SnippetHintsList;
+});
+
+/*
+ * GNU AGPL-3.0 License
+ *
+ * Copyright (c) 2021 - present core.ai . All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
+ *
+ */
+
+define("extensionsIntegrated/CustomSnippets/helper", function (require, exports, module) {
+    const StringMatch = require("utils/StringMatch");
+    const Global = require("./global");
+    const UIHelper = require("./UIHelper");
+
+    // list of all the navigation and function keys that are allowed inside the input fields
+    const ALLOWED_NAVIGATION_KEYS = [
+        "Backspace",
+        "Delete",
+        "Tab",
+        "Escape",
+        "Enter",
+        "ArrowLeft",
+        "ArrowRight",
+        "ArrowUp",
+        "ArrowDown",
+        "Home",
+        "End",
+        "PageUp",
+        "PageDown",
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F6",
+        "F7",
+        "F8",
+        "F9",
+        "F10",
+        "F11",
+        "F12"
+    ];
+
+    /**
+     * map the language IDs to their file extensions for snippet matching
+     * this is needed because we expect the user to enter file extensions and not the file type inside the input field
+     *
+     * @param {string} languageId - The language ID from Phoenix
+     * @returns {string} - The equivalent file extension for snippet matching
+     */
+    function mapLanguageToExtension(languageId) {
+        const languageMap = {
+            javascript: ".js",
+            css: ".css",
+            html: ".html",
+            php: ".php",
+            python: ".py",
+            java: ".java",
+            c: ".c",
+            cpp: ".cpp",
+            csharp: ".cs",
+            typescript: ".ts",
+            json: ".json",
+            xml: ".xml",
+            sql: ".sql",
+            sass: ".sass",
+            scss: ".scss",
+            less: ".less",
+            stylus: ".styl",
+            coffeescript: ".coffee",
+            markdown: ".md",
+            yaml: ".yml",
+            ruby: ".rb",
+            go: ".go",
+            rust: ".rs",
+            swift: ".swift",
+            kotlin: ".kt",
+            dart: ".dart",
+            vue: ".vue",
+            jsx: ".jsx",
+            tsx: ".tsx"
+        };
+
+        return languageMap[languageId] || languageId;
+    }
+
+    /**
+     * This function is responsible to get the snippet data from all the required input fields
+     * it is called when the save button is clicked
+     * @private
+     * @returns {object} - a snippet object
+     */
+    function getSnippetData() {
+        // get the values from all the input fields
+        const abbreviation = $("#abbr-box").val().trim();
+        const description = $("#desc-box").val().trim();
+        const templateText = $("#template-text-box").val().trim();
+        const fileExtension = $("#file-extn-box").val().trim();
+
+        return {
+            abbreviation: abbreviation,
+            description: description || "", // allow empty description
+            templateText: templateText,
+            fileExtension: fileExtension || "all" // default to "all" if empty
+        };
+    }
+
+    /**
+     * This function is responsible to enable/disable the save button
+     * when all the required input fields are not filled up as required then we need to disable the save button
+     * otherwise we enable it
+     * this is called inside the '_registerHandlers' function in the main.js file
+     */
+    function toggleSaveButtonDisability() {
+        // abbreviation and template text are required fields
+        // they both should have some value only then save button will be enabled
+        const $abbrInput = $("#abbr-box");
+        const $templateInput = $("#template-text-box");
+
+        const $saveBtn = $("#save-custom-snippet-btn button");
+
+        // make sure that the required fields has some value
+        const hasAbbr = $abbrInput.val().trim().length > 0;
+        const hasTemplate = $templateInput.val().trim().length > 0;
+        $saveBtn.prop("disabled", !(hasAbbr && hasTemplate));
+    }
+
+    /**
+     * this function is responsible to get the current language context,
+     * from the editor at cursor position
+     *
+     * @param {Editor} editor - The editor instance
+     * @returns {string|null} - The language ID or null if not available
+     */
+    function getCurrentLanguageContext(editor) {
+        // first try to get the language at cursor pos
+        // if it for some reason fails, then just go for the file extension
+        try {
+            const language = editor.getLanguageForPosition();
+            const languageId = language ? language.getId() : null;
+            return languageId;
+        } catch (e) {
+            return getCurrentFileExtension(editor);
+        }
+    }
+
+    /**
+     * Gets the current file extension from the editor
+     * @param {Editor} editor - The editor instance
+     * @returns {string|null} - The file extension or null if not available
+     */
+    function getCurrentFileExtension(editor) {
+        const filePath = editor && editor.document && editor.document.file ? editor.document.file.fullPath : undefined;
+        if (filePath) {
+            return filePath.substring(filePath.lastIndexOf(".")).toLowerCase();
+        }
+        return null;
+    }
+
+    /**
+     * Checks if a snippet is supported in the given language context
+     * Falls back to file extension matching if language mapping isn't available
+     *
+     * @param {Object} snippet - The snippet object
+     * @param {string|null} languageContext - The current language context
+     * @param {Editor} editor - The editor instance for fallback
+     * @returns {boolean} - True if the snippet is supported
+     */
+    function isSnippetSupportedInLanguageContext(snippet, languageContext, editor) {
+        if (snippet.fileExtension.toLowerCase() === "all") {
+            return true;
+        }
+
+        if (languageContext) {
+            const effectiveExtension = mapLanguageToExtension(languageContext);
+
+            // if we have a proper mapping (starts with .), use language context matching
+            if (effectiveExtension.startsWith(".")) {
+                const supportedExtensions = snippet.fileExtension
+                    .toLowerCase()
+                    .split(",")
+                    .map((ext) => ext.trim());
+
+                return supportedExtensions.some((ext) => ext === effectiveExtension);
+            }
+        }
+
+        // this is just a fallback if language context matching failed
+        // file extension matching
+        if (editor) {
+            const fileExtension = getCurrentFileExtension(editor);
+            return isSnippetSupportedInFile(snippet, fileExtension);
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if a snippet is supported in the given file extension
+     * @param {Object} snippet - The snippet object
+     * @param {string|null} fileExtension - The current file extension
+     * @returns {boolean} - True if the snippet is supported
+     */
+    function isSnippetSupportedInFile(snippet, fileExtension) {
+        if (snippet.fileExtension.toLowerCase() === "all") {
+            return true;
+        }
+
+        if (fileExtension) {
+            const supportedExtensions = snippet.fileExtension
+                .toLowerCase()
+                .split(",")
+                .map((ext) => ext.trim());
+            return supportedExtensions.some((ext) => ext === fileExtension);
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if there's at least one exact match for the query
+     * @param {string} query - The search query
+     * @param {Editor} editor - The editor instance
+     * @returns {boolean} - True if there's an exact match
+     */
+    function hasExactMatchingSnippet(query, editor) {
+        const queryLower = query.toLowerCase();
+        const languageContext = getCurrentLanguageContext(editor);
+
+        return Global.SnippetHintsList.some((snippet) => {
+            if (snippet.abbreviation.toLowerCase() === queryLower) {
+                return isSnippetSupportedInLanguageContext(snippet, languageContext, editor);
+            }
+            return false;
+        });
+    }
+
+    /**
+     * Gets all snippets that match the query (prefix matches)
+     * @param {string} query - The search query
+     * @param {Editor} editor - The editor instance
+     * @returns {Array} - an array of matching snippets, sorted with exact matches first
+     */
+    function getMatchingSnippets(query, editor) {
+        const queryLower = query.toLowerCase();
+        const languageContext = getCurrentLanguageContext(editor);
+
+        const matchingSnippets = Global.SnippetHintsList.filter((snippet) => {
+            if (snippet.abbreviation.toLowerCase().startsWith(queryLower)) {
+                return isSnippetSupportedInLanguageContext(snippet, languageContext, editor);
+            }
+            return false;
+        });
+
+        // sort snippets so that the exact matches will appear over the partial matches
+        return matchingSnippets.sort((a, b) => {
+            const aLower = a.abbreviation.toLowerCase();
+            const bLower = b.abbreviation.toLowerCase();
+
+            // check if either is an exact match
+            const aExact = aLower === queryLower;
+            const bExact = bLower === queryLower;
+
+            // because exact matches appear first
+            if (aExact && !bExact) {
+                return -1;
+            }
+            if (bExact && !aExact) {
+                return 1;
+            }
+
+            return aLower.localeCompare(bLower);
+        });
+    }
+
+    /**
+     * this function is responsible to create a hint item
+     * this is needed because along with the abbr in the code hint, we also want to show an icon saying 'Snippet',
+     * to give users an idea that this hint is coming from snippets
+     * this function is called inside the 'getHints' method in the codeHints.js file
+     * @param   {String} abbr - the abbreviation text that is to be displayed in the code hint
+     * @param   {String} query - the query string typed by the user for highlighting matching characters
+     * @param   {String} description - the description of the snippet to be displayed
+     * @returns {JQuery} - the jquery item that has the abbr text and the Snippet icon
+     */
+    function createHintItem(abbr, query, description) {
+        var $hint = $("<span>")
+            .addClass("brackets-css-hints brackets-hints custom-snippets-hint")
+            .attr("data-val", abbr)
+            .attr("data-isCustomSnippet", true);
+
+        // add the tooltip for the description shown when the hint is hovered
+        if (description && description.trim() !== "") {
+            $hint.attr("title", description.trim());
+        }
+
+        // create highlighting for matching characters like other hint providers
+        if (query && query.length > 0) {
+            // use the StringMatch to get proper highlighting ranges
+            const matchResult = StringMatch.stringMatch(abbr, query, { preferPrefixMatches: true });
+            if (matchResult && matchResult.stringRanges) {
+                matchResult.stringRanges.forEach(function (item) {
+                    if (item.matched) {
+                        $hint.append($("<span>").text(item.text).addClass("matched-hint"));
+                    } else {
+                        $hint.append(item.text);
+                    }
+                });
+            } else {
+                $hint.text(abbr);
+            }
+        } else {
+            $hint.text(abbr);
+        }
+
+        // the codehints related style is written in brackets_patterns_override.less file
+        let $icon = $(`<a href="#" class="custom-snippet-code-hint" style="text-decoration: none">Snippet</a>`);
+        $hint.append($icon);
+
+        if (description && description.trim() !== "") {
+            const fullDescription = description.trim();
+            // truncate description if longer than 80 characters
+            const displayDescription =
+                fullDescription.length > 80 ? fullDescription.substring(0, 80) + "..." : fullDescription;
+
+            const $desc = $(`<span class="snippet-description">${displayDescription}</span>`);
+            $hint.append($desc);
+        }
+
+        return $hint;
+    }
+
+    /**
+     * This function is responsible to clear all the input fields.
+     * when the save button is clicked we get the data from the input fields and then clear all of them
+     */
+    function clearAllInputFields() {
+        $("#abbr-box").val("");
+        $("#desc-box").val("");
+        $("#template-text-box").val("");
+        $("#file-extn-box").val("");
+    }
+
+    /**
+     * This function populates the edit form with snippet data
+     * @param {Object} snippetData - The snippet object to edit
+     */
+    function populateEditForm(snippetData) {
+        $("#edit-abbr-box").val(snippetData.abbreviation);
+        $("#edit-desc-box").val(snippetData.description || "");
+        $("#edit-template-text-box").val(snippetData.templateText);
+        $("#edit-file-extn-box").val(snippetData.fileExtension === "all" ? "" : snippetData.fileExtension);
+    }
+
+    /**
+     * This function is responsible to get the snippet data from all the edit form input fields
+     * @returns {object} - a snippet object
+     */
+    function getEditSnippetData() {
+        // get the values from all the edit input fields
+        const abbreviation = $("#edit-abbr-box").val().trim();
+        const description = $("#edit-desc-box").val().trim();
+        const templateText = $("#edit-template-text-box").val().trim();
+        const fileExtension = $("#edit-file-extn-box").val().trim();
+
+        return {
+            abbreviation: abbreviation,
+            description: description || "", // allow empty description
+            templateText: templateText,
+            fileExtension: fileExtension || "all" // default to "all" if empty
+        };
+    }
+
+    /**
+     * This function is responsible to enable/disable the save button in edit mode
+     */
+    function toggleEditSaveButtonDisability() {
+        // abbreviation and template text are required fields
+        const $abbrInput = $("#edit-abbr-box");
+        const $templateInput = $("#edit-template-text-box");
+
+        const $saveBtn = $("#save-edit-snippet-btn");
+
+        // make sure that the required fields has some value
+        const hasAbbr = $abbrInput.val().trim().length > 0;
+        const hasTemplate = $templateInput.val().trim().length > 0;
+        $saveBtn.prop("disabled", !(hasAbbr && hasTemplate));
+    }
+
+    /**
+     * This function clears all the edit form input fields
+     */
+    function clearEditInputFields() {
+        $("#edit-abbr-box").val("");
+        $("#edit-desc-box").val("");
+        $("#edit-template-text-box").val("");
+        $("#edit-file-extn-box").val("");
+    }
+
+    /**
+     * Updates the snippets count which is displayed in the toolbar at the left side
+     * @private
+     */
+    function updateSnippetsCount() {
+        const count = Global.SnippetHintsList.length;
+        const $countSpan = $("#snippets-count");
+        if (count > 0) {
+            $countSpan.text(`(${count})`);
+        } else {
+            $countSpan.text("");
+        }
+    }
+
+    /**
+     * validates and sanitizes file extension input
+     *
+     * @param {string} value - The input value to sanitize
+     * @returns {string} - The sanitized value
+     */
+    function sanitizeFileExtensionInput(value) {
+        value = value.replace(/[^a-zA-Z,.\s]/g, ""); // we only allow a-z, A-Z, comma, dot, space
+        value = value.replace(/\.{2,}/g, "."); // don't allow 2 consecutive dots
+        value = value.replace(/(\.)\1+/g, "$1"); // prevent two dots next to each other
+        return value;
+    }
+
+    /**
+     * handles file extension input event with validation
+     *
+     * @param {jQuery} $input - The input element
+     */
+    function handleFileExtensionInput($input) {
+        let value = $input.val();
+        const sanitizedValue = sanitizeFileExtensionInput(value);
+        $input.val(sanitizedValue);
+
+        // determine which save button to toggle based on input field
+        if ($input.attr("id") === "edit-file-extn-box") {
+            toggleEditSaveButtonDisability();
+        } else {
+            toggleSaveButtonDisability();
+        }
+    }
+
+    /**
+     * Handles file extension keypress event validation
+     *
+     * @param {Event} e - The keypress event
+     * @param {HTMLElement} input - The input element
+     * @returns {boolean} - Whether to allow the keypress
+     */
+    function handleFileExtensionKeypress(e, input) {
+        const char = String.fromCharCode(e.which);
+        const allowed = /^[a-zA-Z,.\s]$/;
+
+        // prevent two consecutive dots
+        if (char === "." && input.value.slice(-1) === ".") {
+            e.preventDefault();
+            return false;
+        }
+
+        if (!allowed.test(char)) {
+            e.preventDefault();
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Handles file extension paste event with validation
+     *
+     * @param {Event} e - The paste event
+     * @param {jQuery} $input - The input element
+     */
+    function handleFileExtensionPaste(e, $input) {
+        e.preventDefault();
+
+        const clipboardData = (e.originalEvent || e).clipboardData.getData("text");
+        let sanitized = sanitizeFileExtensionInput(clipboardData);
+
+        // insert sanitized value at current cursor position
+        const input = $input[0];
+        const start = input.selectionStart;
+        const end = input.selectionEnd;
+        const currentValue = input.value;
+
+        input.value = currentValue.substring(0, start) + sanitized + currentValue.substring(end);
+
+        // move the cursor to the end of the inserted text
+        const newPos = start + sanitized.length;
+        input.setSelectionRange(newPos, newPos);
+
+        // determine which save button to toggle based on input field
+        if ($input.attr("id") === "edit-file-extn-box") {
+            toggleEditSaveButtonDisability();
+        } else {
+            toggleSaveButtonDisability();
+        }
+    }
+
+    /**
+     * this function is responsible to handle tab key press in textarea to insert tab character instead of moving focus
+     *
+     * @param {Event} e - The keydown event
+     * @param {HTMLElement} textarea - The textarea element
+     */
+    function handleTextareaTabKey(e, textarea) {
+        // check if the key that is pressed is a tab key
+        if (e.keyCode === 9 || e.which === 9) {
+            e.preventDefault(); // to prevent focus change
+
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const value = textarea.value;
+
+            // to insert the tab character
+            textarea.value = value.substring(0, start) + "\t" + value.substring(end);
+            textarea.selectionStart = textarea.selectionEnd = start + 1;
+            $(textarea).trigger("input");
+        }
+    }
+
+    function validateAbbrInput(e, abbrBox) {
+        // Allow keyboard shortcuts and navigation keys
+        if (e.ctrlKey || e.metaKey || e.altKey) {
+            return;
+        }
+
+        // Allow navigation and function keys
+        if (ALLOWED_NAVIGATION_KEYS.includes(e.key)) {
+            return;
+        }
+
+        // Prevent space character
+        if (e.key === " ") {
+            e.preventDefault();
+
+            // Determine if this is the edit form or new form
+            const isEditForm = abbrBox.id === "edit-abbr-box";
+            const inputId = isEditForm ? "edit-abbr-box" : "abbr-box";
+            const wrapperId = isEditForm ? "edit-abbr-box-wrapper" : "abbr-box-wrapper";
+            const errorId = isEditForm ? "edit-abbreviation-space-error" : "abbreviation-space-error";
+
+            UIHelper.showError(inputId, wrapperId, "Space is not accepted as a valid abbreviation character.", errorId);
+            return;
+        }
+
+        // Check for character limit (30 characters) - only for printable characters
+        if (
+            abbrBox.value.length >= 30 &&
+            e.key.length === 1 &&
+            e.key.match(/[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/)
+        ) {
+            e.preventDefault();
+
+            // Determine if this is the edit form or new form
+            const isEditForm = abbrBox.id === "edit-abbr-box";
+            const inputId = isEditForm ? "edit-abbr-box" : "abbr-box";
+            const wrapperId = isEditForm ? "edit-abbr-box-wrapper" : "abbr-box-wrapper";
+            const errorId = isEditForm ? "edit-abbreviation-length-error" : "abbreviation-length-error";
+
+            UIHelper.showError(inputId, wrapperId, "Abbreviation cannot be more than 30 characters.", errorId);
+        }
+    }
+
+    function validateDescInput(e, descBox) {
+        // Allow keyboard shortcuts and navigation keys
+        if (e.ctrlKey || e.metaKey || e.altKey) {
+            return;
+        }
+
+        // Allow navigation and function keys
+        if (ALLOWED_NAVIGATION_KEYS.includes(e.key)) {
+            return;
+        }
+
+        // Check for character limit (80 characters) - only for printable characters (spaces allowed)
+        if (
+            descBox.value.length >= 80 &&
+            e.key.length === 1 &&
+            e.key.match(/[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\ ]/)
+        ) {
+            e.preventDefault();
+
+            // Determine if this is the edit form or new form
+            const isEditForm = descBox.id === "edit-desc-box";
+            const inputId = isEditForm ? "edit-desc-box" : "desc-box";
+            const wrapperId = isEditForm ? "edit-desc-box-wrapper" : "desc-box-wrapper";
+            const errorId = isEditForm ? "edit-description-length-error" : "description-length-error";
+
+            UIHelper.showError(inputId, wrapperId, "Description cannot be more than 80 characters.", errorId);
+        }
+    }
+
+    /**
+     * Handles abbreviation paste event with validation
+     * @param {Event} e - The paste event
+     * @param {jQuery} $input - The input element
+     */
+    function handleAbbrPaste(e, $input) {
+        e.preventDefault();
+
+        const clipboardData = (e.originalEvent || e).clipboardData.getData("text");
+
+        // Remove spaces and limit to 30 characters
+        let sanitized = clipboardData.replace(/\s/g, ""); // Remove all spaces
+        let wasTruncated = false;
+        let hadSpaces = clipboardData !== sanitized;
+
+        if (sanitized.length > 30) {
+            sanitized = sanitized.substring(0, 30);
+            wasTruncated = true;
+        }
+
+        // Insert sanitized value at current cursor position
+        const input = $input[0];
+        const start = input.selectionStart;
+        const end = input.selectionEnd;
+        const currentValue = input.value;
+
+        // Check if the final result would exceed 30 characters
+        const beforeCursor = currentValue.substring(0, start);
+        const afterCursor = currentValue.substring(end);
+        const finalValue = beforeCursor + sanitized + afterCursor;
+
+        if (finalValue.length > 30) {
+            // Trim the sanitized content to fit within the limit
+            const availableSpace = 30 - (beforeCursor.length + afterCursor.length);
+            if (availableSpace > 0) {
+                sanitized = sanitized.substring(0, availableSpace);
+                wasTruncated = true;
+            } else {
+                sanitized = ""; // No space available
+                wasTruncated = true;
+            }
+        }
+
+        // Insert the final sanitized value
+        input.value = beforeCursor + sanitized + afterCursor;
+
+        // Move the cursor to the end of the inserted text
+        const newPos = start + sanitized.length;
+        input.setSelectionRange(newPos, newPos);
+
+        // Show appropriate error message
+        if (wasTruncated || hadSpaces) {
+            const isEditForm = $input.attr("id") === "edit-abbr-box";
+            const inputId = isEditForm ? "edit-abbr-box" : "abbr-box";
+            const wrapperId = isEditForm ? "edit-abbr-box-wrapper" : "abbr-box-wrapper";
+
+            // Prioritize length error over space error if both occurred
+            if (wasTruncated) {
+                const errorId = isEditForm ? "edit-abbreviation-paste-length-error" : "abbreviation-paste-length-error";
+                UIHelper.showError(inputId, wrapperId, "Abbreviation cannot be more than 30 characters.", errorId);
+            } else if (hadSpaces) {
+                const errorId = isEditForm ? "edit-abbreviation-paste-space-error" : "abbreviation-paste-space-error";
+                UIHelper.showError(
+                    inputId,
+                    wrapperId,
+                    "Space is not accepted as a valid abbreviation character.",
+                    errorId
+                );
+            }
+        }
+
+        // Determine which save button to toggle based on input field
+        if ($input.attr("id") === "edit-abbr-box") {
+            toggleEditSaveButtonDisability();
+        } else {
+            toggleSaveButtonDisability();
+        }
+    }
+
+    /**
+     * Handles description paste event with validation
+     * @param {Event} e - The paste event
+     * @param {jQuery} $input - The input element
+     */
+    function handleDescPaste(e, $input) {
+        e.preventDefault();
+
+        const clipboardData = (e.originalEvent || e).clipboardData.getData("text");
+
+        // Keep spaces but limit to 80 characters
+        let sanitized = clipboardData;
+        let wasTruncated = false;
+
+        if (sanitized.length > 80) {
+            sanitized = sanitized.substring(0, 80);
+            wasTruncated = true;
+        }
+
+        // Insert sanitized value at current cursor position
+        const input = $input[0];
+        const start = input.selectionStart;
+        const end = input.selectionEnd;
+        const currentValue = input.value;
+
+        // Check if the final result would exceed 80 characters
+        const beforeCursor = currentValue.substring(0, start);
+        const afterCursor = currentValue.substring(end);
+        const finalValue = beforeCursor + sanitized + afterCursor;
+
+        if (finalValue.length > 80) {
+            // Trim the sanitized content to fit within the limit
+            const availableSpace = 80 - (beforeCursor.length + afterCursor.length);
+            if (availableSpace > 0) {
+                sanitized = sanitized.substring(0, availableSpace);
+                wasTruncated = true;
+            } else {
+                sanitized = ""; // No space available
+                wasTruncated = true;
+            }
+        }
+
+        // Insert the final sanitized value
+        input.value = beforeCursor + sanitized + afterCursor;
+
+        // Move the cursor to the end of the inserted text
+        const newPos = start + sanitized.length;
+        input.setSelectionRange(newPos, newPos);
+
+        // Show error message if content was truncated
+        if (wasTruncated) {
+            const isEditForm = $input.attr("id") === "edit-desc-box";
+            const inputId = isEditForm ? "edit-desc-box" : "desc-box";
+            const wrapperId = isEditForm ? "edit-desc-box-wrapper" : "desc-box-wrapper";
+            const errorId = isEditForm ? "edit-description-paste-length-error" : "description-paste-length-error";
+
+            UIHelper.showError(inputId, wrapperId, "Description cannot be more than 80 characters.", errorId);
+        }
+
+        // Determine which save button to toggle based on input field
+        if ($input.attr("id") === "edit-desc-box") {
+            toggleEditSaveButtonDisability();
+        } else {
+            toggleSaveButtonDisability();
+        }
+    }
+
+    exports.toggleSaveButtonDisability = toggleSaveButtonDisability;
+    exports.createHintItem = createHintItem;
+    exports.clearAllInputFields = clearAllInputFields;
+    exports.getSnippetData = getSnippetData;
+    exports.getCurrentLanguageContext = getCurrentLanguageContext;
+    exports.getCurrentFileExtension = getCurrentFileExtension;
+    exports.mapLanguageToExtension = mapLanguageToExtension;
+    exports.isSnippetSupportedInLanguageContext = isSnippetSupportedInLanguageContext;
+    exports.isSnippetSupportedInFile = isSnippetSupportedInFile;
+    exports.hasExactMatchingSnippet = hasExactMatchingSnippet;
+    exports.getMatchingSnippets = getMatchingSnippets;
+    exports.updateSnippetsCount = updateSnippetsCount;
+    exports.sanitizeFileExtensionInput = sanitizeFileExtensionInput;
+    exports.handleFileExtensionInput = handleFileExtensionInput;
+    exports.handleFileExtensionKeypress = handleFileExtensionKeypress;
+    exports.handleFileExtensionPaste = handleFileExtensionPaste;
+    exports.populateEditForm = populateEditForm;
+    exports.getEditSnippetData = getEditSnippetData;
+    exports.toggleEditSaveButtonDisability = toggleEditSaveButtonDisability;
+    exports.clearEditInputFields = clearEditInputFields;
+    exports.handleTextareaTabKey = handleTextareaTabKey;
+    exports.validateAbbrInput = validateAbbrInput;
+    exports.validateDescInput = validateDescInput;
+    exports.handleAbbrPaste = handleAbbrPaste;
+    exports.handleDescPaste = handleDescPaste;
+});
+
+/*
+ * GNU AGPL-3.0 License
+ *
+ * Copyright (c) 2021 - present core.ai . All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
+ *
+ */
+
+/* eslint-disable no-invalid-this */
+define("extensionsIntegrated/CustomSnippets/main", function (require, exports, module) {
+    const AppInit = require("utils/AppInit");
+    const CommandManager = require("command/CommandManager");
+    const Menus = require("command/Menus");
+    const Commands = require("command/Commands");
+    const WorkspaceManager = require("view/WorkspaceManager");
+
+    const Driver = require("./driver");
+    const SnippetsList = require("./snippetsList");
+    const CodeHintIntegration = require("./codeHintIntegration");
+    const Helper = require("./helper");
+    const UIHelper = require("./UIHelper");
+    const SnippetsState = require("./snippetsState");
+    const SnippetCursorManager = require("./snippetCursorManager");
+
+    const snippetsPanelTpl = `<div id="custom-snippets-panel" class="custom-snippets-panel bottom-panel vert-resizable top-resizer no-focus">
+    <div id="custom-snippets-toolbar" class="toolbar simple-toolbar-layout">
+        <div class="title-wrapper">
+            <span class="title toolbar-title">Custom Snippets <span id="snippets-count" class="snippets-count"></span></span>
+            <div id="add-new-snippet-btn" class="custom-snippet-btn">
+                <button title="Add new snippet">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+            <div id="back-to-list-menu-btn" class="custom-snippet-btn hidden">
+                <button title="Back to snippets list">
+                    <i class="fas fa-chevron-left"></i> Back
+                </button>
+            </div>
+        </div>
+        <div class="buttons">
+            <div id="filter-snippets-panel" class="filter-snippets-panel">
+                <input id="filter-snippets-input" type="text" placeholder="Filter..." autocomplete="off" />
+            </div>
+            <div id="close-custom-snippets-panel-btn">
+                <button><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="resizable-content">
+        <!--this will display the list of all the already existing snippets-->
+        <div id="custom-snippets-list" class="custom-snippes-list">
+            <div id="no-snippets-wrapper" class="no-snippets-wrapper">
+                <div id="no-snippets-message">No custom snippets added yet!</div>
+                <div id="add-snippet-btn">
+                    <button>Add Snippet</button>
+                </div>
+            </div>
+
+            <div id="snippets-list-header" class="snippets-list-header">
+                <div id="snippet-abbr-header">Abbreviation</div>
+                <div id="snippet-template-header">Template Text</div>
+                <div id="snippet-description-header">Description</div>
+                <div id="snippet-file-extension-header">File Extension</div>
+                <div id="snippet-actions-header"></div>
+            </div>
+
+            <div id="snippets-list-wrapper" class="snippets-list-wrapper hidden">
+                <!--leaving here for format reference-->
+                <!--
+                <div id="snippet-item">
+                    <div id="snippet-abbr">
+                        clg
+                    </div>
+                    <div id="snippet-template">
+                        console.log()
+                    </div>
+                    <div id="snippet-description">
+                        console log shortcut
+                    </div>
+                    <div id="snippet-files">
+                        all
+                    </div>
+                    <div id="delete-snippet-btn" class="delete-snippet-btn">
+                        <i class="fas fa-trash"></i>
+                    </div>
+                </div>
+                -->
+            </div>
+        </div>
+
+        <!--this view will open up when user clicks on add a new snippet button-->
+        <div id="custom-snippets-add-new" class="custom-snippets-add-new hidden">
+            <div id="abbr-box-wrapper" class="field-wrapper">
+                <div class="field-row">
+                    <label for="abbr-box"
+                           title="Enter a short abbreviation (e.g., 'clg', 'fn', 'div'). This is what you'll type to trigger the snippet."
+                           data-placement="top">
+                        Abbreviation:
+                    </label>
+                    <input id="abbr-box" type="text" placeholder="clg" autocomplete="off" />
+                </div>
+            </div>
+
+            <div id="desc-box-wrapper" class="field-wrapper">
+                <div class="field-row">
+                    <label for="desc-box"
+                           title="Brief description of what this snippet does. Leave empty if no description needed."
+                           data-placement="top">
+                        Description:
+                    </label>
+                    <input id="desc-box" type="text" placeholder="console log shortcut (optional)" autocomplete="off" />
+                </div>
+            </div>
+
+            <div id="file-extn-box-wrapper" class="field-wrapper">
+                <div class="field-row">
+                    <label for="file-extn-box"
+                           title="Specify file types where this snippet should be available (e.g., '.js', '.html', '.css'). Leave empty to make it available for all files."
+                           data-placement="top">
+                        File Extension:
+                    </label>
+                    <input id="file-extn-box" type="text" placeholder="Leave empty for all files, or specify like .js, .html" autocomplete="off" />
+                </div>
+            </div>
+
+            <div id="template-text-box-wrapper" class="field-wrapper">
+                <div class="field-row">
+                    <label for="template-text-box"
+                           title="The actual code that will be inserted. Use ${1}, ${2}, ${3}, etc. for cursor positions. ${1} is the initial position, tab moves to ${2}, ${3}, etc. ${0} is the final position."
+                           data-placement="top">
+                        Template Text:
+                    </label>
+                    <textarea id="template-text-box" placeholder="console.log(${1});" autocomplete="off"></textarea>
+                </div>
+            </div>
+
+            <div id="save-custom-snippet-btn">
+                <button class="dialog-button btn primary" disabled>Save</button>
+            </div>
+        </div>
+
+        <!--this view will open up when user clicks on a snippet item to edit it-->
+        <div id="custom-snippets-edit" class="custom-snippets-edit hidden">
+            <div id="edit-abbr-box-wrapper" class="field-wrapper">
+                <div class="field-row">
+                    <label for="edit-abbr-box"
+                           title="Enter a short abbreviation (e.g., 'clg', 'fn', 'div'). This is what you'll type to trigger the snippet."
+                           data-placement="top">
+                        Abbreviation:
+                    </label>
+                    <input id="edit-abbr-box" type="text" placeholder="clg" autocomplete="off" />
+                </div>
+            </div>
+
+            <div id="edit-desc-box-wrapper" class="field-wrapper">
+                <div class="field-row">
+                    <label for="edit-desc-box"
+                           title="Brief description of what this snippet does. Leave empty if no description needed."
+                           data-placement="top">
+                        Description:
+                    </label>
+                    <input id="edit-desc-box" type="text" placeholder="console log shortcut (optional)" autocomplete="off" />
+                </div>
+            </div>
+
+            <div id="edit-file-extn-box-wrapper" class="field-wrapper">
+                <div class="field-row">
+                    <label for="edit-file-extn-box"
+                           title="Specify file types where this snippet should be available (e.g., '.js', '.html', '.css'). Leave empty to make it available for all files."
+                           data-placement="top">
+                        File Extension:
+                    </label>
+                    <input id="edit-file-extn-box" type="text" placeholder="Leave empty for all files, or specify like .js, .html" autocomplete="off" />
+                </div>
+            </div>
+
+            <div id="edit-template-text-box-wrapper" class="field-wrapper">
+                <div class="field-row">
+                    <label for="edit-template-text-box"
+                           title="The actual code that will be inserted. Use ${1}, ${2}, ${3}, etc. for cursor positions. ${1} is the initial position, tab moves to ${2}, ${3}, etc. ${0} is the final position."
+                           data-placement="top">
+                        Template Text:
+                    </label>
+                    <textarea id="edit-template-text-box" placeholder="console.log(${1});" autocomplete="off"></textarea>
+                </div>
+            </div>
+
+            <div id="edit-snippet-buttons">
+                <button id="reset-snippet-btn" class="dialog-button btn">Reset</button>
+                <button id="save-edit-snippet-btn" class="dialog-button btn primary" disabled>Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+`;
+    // the html content of the panel will be stored in this variable
+    let $snippetsPanel;
+
+    const MY_COMMAND_ID = "custom_snippets";
+    const PANEL_ID = "customSnippets.panel";
+    const MENU_ITEM_NAME = "Custom Snippets..."; // this name will appear as the menu item
+    const PANEL_MIN_SIZE = 100; // the minimum size more than which its height cannot be decreased
+
+    // this is to store the panel reference,
+    // as we only need to create this once. rest of the time we can just toggle the visibility of the panel
+    let customSnippetsPanel;
+
+    /**
+     * This function is called when the first time the custom snippets panel button is clicked
+     * this is responsible to create the custom snippets bottom panel and show that
+     * @private
+     */
+    function _createPanel() {
+        customSnippetsPanel = WorkspaceManager.createBottomPanel(PANEL_ID, $snippetsPanel, PANEL_MIN_SIZE);
+        customSnippetsPanel.show();
+
+        // also register the handlers
+        _registerHandlers();
+
+        $("#filter-snippets-input").val("");
+        UIHelper.initializeListViewToolbarTitle();
+        SnippetsList.showSnippetsList(); // to show the snippets list in the snippets panel
+    }
+
+    /**
+     * This function is responsible to toggle the visibility of the panel
+     * this is called every time (after the panel is created) to show/hide the panel
+     * @private
+     */
+    function _togglePanelVisibility() {
+        if (customSnippetsPanel.isVisible()) {
+            customSnippetsPanel.hide();
+        } else {
+            customSnippetsPanel.show();
+
+            $("#filter-snippets-input").val("");
+            UIHelper.initializeListViewToolbarTitle();
+            SnippetsList.showSnippetsList(); // we just remake the snippets list UI to make sure it is always on point
+        }
+    }
+
+    /**
+     * This function is responsible to hide the panel
+     * this is called when user clicks on the 'cross' icon inside the panel itself and that is the reason,
+     * why we don't need to check whether the panel is visible or not
+     * @private
+     */
+    function _hidePanel() {
+        customSnippetsPanel.hide();
+    }
+
+    /**
+     * This function is responsible to create the bottom panel, if not created
+     * if panel is already created, we just toggle its visibility
+     * this will be called when the custom snippets menu item is clicked from the menu bar
+     */
+    function showCustomSnippetsPanel() {
+        // make sure that the panel is not created,
+        // if it is then we can just toggle its visibility
+        if (!customSnippetsPanel) {
+            _createPanel();
+        } else {
+            _togglePanelVisibility();
+        }
+    }
+
+    /**
+     * This function is responsible to add the Custom Snippets menu item to the menu bar
+     * @private
+     */
+    function _addToMenu() {
+        const menu = Menus.getMenu(Menus.AppMenuBar.FILE_MENU);
+        menu.addMenuItem(MY_COMMAND_ID, "", Menus.BEFORE, Commands.FILE_EXTENSION_MANAGER);
+    }
+
+    /**
+     * This function is responsible to register all the required handlers
+     * @private
+     */
+    function _registerHandlers() {
+        const $closePanelBtn = $("#close-custom-snippets-panel-btn");
+        const $saveCustomSnippetBtn = $("#save-custom-snippet-btn");
+        const $abbrInput = $("#abbr-box");
+        const $descInput = $("#desc-box");
+        const $templateInput = $("#template-text-box");
+        const $fileExtnInput = $("#file-extn-box");
+        const $addSnippetBtn = $("#add-snippet-btn");
+        const $addNewSnippetBtn = $("#add-new-snippet-btn");
+        const $backToListMenuBtn = $("#back-to-list-menu-btn");
+        const $filterInput = $("#filter-snippets-input");
+
+        const $editAbbrInput = $("#edit-abbr-box");
+        const $editDescInput = $("#edit-desc-box");
+        const $editTemplateInput = $("#edit-template-text-box");
+        const $editFileExtnInput = $("#edit-file-extn-box");
+        const $saveEditSnippetBtn = $("#save-edit-snippet-btn");
+        const $resetSnippetBtn = $("#reset-snippet-btn");
+
+        $addSnippetBtn.on("click", function () {
+            UIHelper.showAddSnippetMenu();
+        });
+
+        $addNewSnippetBtn.on("click", function () {
+            UIHelper.showAddSnippetMenu();
+        });
+
+        $backToListMenuBtn.on("click", function () {
+            UIHelper.showSnippetListMenu();
+            SnippetsList.showSnippetsList();
+        });
+
+        $closePanelBtn.on("click", function () {
+            _hidePanel();
+        });
+
+        $saveCustomSnippetBtn.on("click", function () {
+            Driver.handleSaveBtnClick();
+        });
+
+        $abbrInput.on("input", Helper.toggleSaveButtonDisability);
+        $templateInput.on("input", Helper.toggleSaveButtonDisability);
+
+        $abbrInput.on("keydown", function (e) {
+            Helper.validateAbbrInput(e, this);
+        });
+        $abbrInput.on("paste", function (e) {
+            Helper.handleAbbrPaste(e, $(this));
+        });
+
+        $descInput.on("keydown", function (e) {
+            Helper.validateDescInput(e, this);
+        });
+        $descInput.on("paste", function (e) {
+            Helper.handleDescPaste(e, $(this));
+        });
+
+        $templateInput.on("keydown", function (e) {
+            Helper.handleTextareaTabKey(e, this);
+        });
+
+        $fileExtnInput.on("input", function () {
+            Helper.handleFileExtensionInput($(this));
+        });
+        $fileExtnInput.on("keypress", function (e) {
+            Helper.handleFileExtensionKeypress(e, this);
+        });
+        $fileExtnInput.on("paste", function (e) {
+            Helper.handleFileExtensionPaste(e, $(this));
+        });
+
+        $editAbbrInput.on("input", Helper.toggleEditSaveButtonDisability);
+        $editTemplateInput.on("input", Helper.toggleEditSaveButtonDisability);
+
+        $editAbbrInput.on("keydown", function (e) {
+            Helper.validateAbbrInput(e, this);
+        });
+        $editAbbrInput.on("paste", function (e) {
+            Helper.handleAbbrPaste(e, $(this));
+        });
+
+        $editDescInput.on("keydown", function (e) {
+            Helper.validateDescInput(e, this);
+        });
+        $editDescInput.on("paste", function (e) {
+            Helper.handleDescPaste(e, $(this));
+        });
+
+        $editTemplateInput.on("keydown", function (e) {
+            Helper.handleTextareaTabKey(e, this);
+        });
+
+        $editFileExtnInput.on("input", function () {
+            Helper.handleFileExtensionInput($(this));
+        });
+        $editFileExtnInput.on("keypress", function (e) {
+            Helper.handleFileExtensionKeypress(e, this);
+        });
+        $editFileExtnInput.on("paste", function (e) {
+            Helper.handleFileExtensionPaste(e, $(this));
+        });
+
+        $saveEditSnippetBtn.on("click", function () {
+            Driver.handleEditSaveBtnClick();
+        });
+
+        $resetSnippetBtn.on("click", function () {
+            Driver.handleResetBtnClick();
+        });
+
+        // filter input event handler
+        $filterInput.on("keyup input", function (event) {
+            // if user presses 'esc' we clear the input field
+            if (event && event.key === "Escape") {
+                $(this).val("");
+                SnippetsList.showSnippetsList();
+                return;
+            }
+            SnippetsList.showSnippetsList();
+        });
+    }
+
+    AppInit.appReady(function () {
+        CommandManager.register(MENU_ITEM_NAME, MY_COMMAND_ID, showCustomSnippetsPanel);
+        $snippetsPanel = $(snippetsPanelTpl);
+        _addToMenu();
+        CodeHintIntegration.init();
+        SnippetsState.loadSnippetsFromState();
+        SnippetCursorManager.registerHandlers();
+    });
+});
+
+/*
+ * GNU AGPL-3.0 License
+ *
+ * Copyright (c) 2021 - present core.ai . All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
+ *
+ */
+
+define("extensionsIntegrated/CustomSnippets/snippetCursorManager", function (require, exports, module) {
+    const KeyEvent = require("utils/KeyEvent");
+    const EditorManager = require("editor/EditorManager");
+
+    // tab stops regex to handle ${1}, ${2}.... etc.
+    const TAB_STOP_REGEX = /\$\{(\d+)\}/g;
+
+    // this is to check whether an active snippet session is on or off
+    let activeSnippetSession = null;
+
+    /**
+     * this represents an active snippet session with tab stops
+     */
+    function SnippetSession(editor, tabStops, startLine, endLine) {
+        this.editor = editor;
+        this.tabStops = tabStops; // this is an array of {number, line} sorted by number
+        this.currentTabNumber = tabStops.length > 0 ? tabStops[0].number : 1;
+        this.startLine = startLine;
+        this.endLine = endLine;
+        this.isActive = true;
+    }
+
+    /**
+     * this function is responsible to parse the template text and extract all the tab stops
+     *
+     * @param {string} templateText - the template text with tab stops
+     * @returns {Object} - Object containing the text and tab stop information
+     */
+    function parseTemplateText(templateText) {
+        const tabStops = [];
+        let match;
+
+        // reset regex
+        TAB_STOP_REGEX.lastIndex = 0;
+
+        // find all the tab stops
+        while ((match = TAB_STOP_REGEX.exec(templateText)) !== null) {
+            const tabNumber = parseInt(match[1], 10);
+            tabStops.push({
+                number: tabNumber
+            });
+        }
+
+        // sort the tab stops by number. note: 0 should come at last
+        tabStops.sort((a, b) => {
+            if (a.number === 0) {
+                return 1;
+            }
+            if (b.number === 0) {
+                return -1;
+            }
+            return a.number - b.number;
+        });
+
+        return {
+            text: templateText,
+            tabStops: tabStops
+        };
+    }
+
+    /**
+     * Find tab stops in the snippet lines and return their positions
+     * this is called after snippet insertion to find actual positions in the editor
+     *
+     * @param {Editor} editor - editor instance
+     * @param {number} startLine - Start line of snippet
+     * @param {number} endLine - End line of snippet
+     * @returns {Array} - array of {number, line, start, end} sorted by number
+     */
+    function findTabStops(editor, startLine, endLine) {
+        const tabStops = [];
+        const document = editor.document;
+
+        for (let line = startLine; line <= endLine; line++) {
+            const lineText = document.getLine(line);
+            let match;
+
+            TAB_STOP_REGEX.lastIndex = 0;
+            while ((match = TAB_STOP_REGEX.exec(lineText)) !== null) {
+                const tabNumber = parseInt(match[1], 10);
+                tabStops.push({
+                    number: tabNumber,
+                    line: line,
+                    start: { line: line, ch: match.index },
+                    end: { line: line, ch: match.index + match[0].length }
+                });
+            }
+        }
+
+        tabStops.sort((a, b) => {
+            if (a.number === 0) {
+                return 1;
+            }
+            if (b.number === 0) {
+                return -1;
+            }
+            return a.number - b.number;
+        });
+
+        return tabStops;
+    }
+
+    /**
+     * responsible to check if session should continue (tab stops still exist in template area)
+     * we need this because users can delete tab stops while typing
+     *
+     * @returns {boolean}
+     */
+    function shouldContinueSession() {
+        if (!activeSnippetSession || !activeSnippetSession.isActive) {
+            return false;
+        }
+
+        const session = activeSnippetSession;
+        const tabStops = findTabStops(session.editor, session.startLine, session.endLine);
+
+        // update the session with current tab stops
+        session.tabStops = tabStops;
+
+        return tabStops.length > 0;
+    }
+
+    /**
+     * this function is responsible to calculate the indentation level for the current line
+     *
+     * @param {Editor} editor - the editor instance
+     * @param {Object} position - position object with line number
+     * @returns {String} - the indentation string
+     */
+    function getLineIndentation(editor, position) {
+        const line = editor.document.getLine(position.line);
+        const match = line.match(/^\s*/);
+        return match ? match[0] : '';
+    }
+
+    /**
+     * this function is to add proper indentation to multiline snippet text
+     *
+     * @param {String} templateText - the template text with multiple lines
+     * @param {String} baseIndent - the base indentation string from the current cursor position
+     * @returns {String} - properly indented text
+     */
+    function addIndentationToSnippet(templateText, baseIndent) {
+        const lines = templateText.split(/(\r\n|\n)/g);
+
+        let result = '';
+        let isFirstLine = true;
+
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i];
+
+            if (line === '\n' || line === '\r\n') {
+                result += line;
+                continue;
+            }
+
+            if (line.trim() === '') {
+                result += line;
+                continue;
+            }
+
+            // we don't want to indent the first line as it inherits the current indent
+            if (isFirstLine) {
+                result += line;
+                isFirstLine = false;
+            } else {
+                // add base indent plus the existing indent in the template text
+                result += baseIndent + line;
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Insert snippet with tab stops and start navigation session
+     * this is the main function that handles snippet insertion with cursor positioning
+     *
+     * @param {Editor} editor - editor instance
+     * @param {string} templateText - Template text with tab stops
+     * @param {Object} startPos - Start position for insertion
+     * @param {Object} endPos - End position for insertion
+     */
+    function insertSnippetWithTabStops(editor, templateText, startPos, endPos) {
+        const parsed = parseTemplateText(templateText);
+
+        // Get the current line's indentation to apply to all subsequent lines
+        const baseIndent = getLineIndentation(editor, startPos);
+
+        // Apply proper indentation to the snippet text for multi-line snippets
+        const indentedText = addIndentationToSnippet(parsed.text, baseIndent);
+
+        editor.document.replaceRange(indentedText, startPos, endPos);
+
+        // calculate snippet bounds
+        const lines = indentedText.split("\n");
+        const startLine = startPos.line;
+        const endLine = startPos.line + lines.length - 1;
+
+        // find tab stops in the inserted snippet
+        const tabStops = findTabStops(editor, startLine, endLine);
+
+        if (tabStops.length > 0) {
+            activeSnippetSession = new SnippetSession(editor, tabStops, startLine, endLine);
+
+            // move to first tab stop. this is the default behaviour
+            navigateToTabStop(activeSnippetSession.currentTabNumber);
+        } else {
+            // when no tab stops, we just place cursor at end
+            const finalPos = {
+                line: endLine,
+                ch: lines.length === 1 ? startPos.ch + lines[0].length : lines[lines.length - 1].length
+            };
+            editor.setCursorPos(finalPos);
+        }
+    }
+
+    /**
+     * Navigate to a specific tab stop by number
+     * @param {number} tabNumber - Tab stop number to navigate to
+     */
+    function navigateToTabStop(tabNumber) {
+        if (!shouldContinueSession()) {
+            endSnippetSession();
+            return;
+        }
+
+        const session = activeSnippetSession;
+
+        // find the tab stop with the specified number
+        const tabStop = session.tabStops.find((t) => t.number === tabNumber);
+
+        if (tabStop) {
+            session.currentTabNumber = tabNumber;
+
+            // select the entire tab stop placeholder
+            session.editor.setSelection(tabStop.start, tabStop.end);
+            session.editor.focus();
+        } else {
+            endSnippetSession();
+        }
+    }
+
+    /**
+     * Navigate to the next tab stop
+     * this handles the logic for finding the next available tab stop in sequence
+     */
+    function navigateToNextTabStop() {
+        if (!shouldContinueSession()) {
+            endSnippetSession();
+            return false;
+        }
+
+        const session = activeSnippetSession;
+        const currentNumber = session.currentTabNumber;
+
+        let nextTabStop = null;
+
+        // If we're currently at ${0}, there's no next tab stop so we need to end the session
+        if (currentNumber === 0) {
+            endSnippetSession();
+            return false;
+        }
+
+        // at first, look for the next numbered tab stop (greater than current)
+        for (let i = 0; i < session.tabStops.length; i++) {
+            if (session.tabStops[i].number > currentNumber && session.tabStops[i].number !== 0) {
+                nextTabStop = session.tabStops[i];
+                break;
+            }
+        }
+
+        // If no numbered tab stop found, look for ${0} as the final stop
+        if (!nextTabStop) {
+            nextTabStop = session.tabStops.find((t) => t.number === 0);
+        }
+
+        if (nextTabStop) {
+            navigateToTabStop(nextTabStop.number);
+            return true;
+        }
+        endSnippetSession();
+        return false;
+    }
+
+    /**
+     * Navigate to the previous tab stop
+     * this handles shift+tab navigation to go backwards
+     */
+    function navigateToPreviousTabStop() {
+        if (!shouldContinueSession()) {
+            endSnippetSession();
+            return false;
+        }
+
+        const session = activeSnippetSession;
+        const currentNumber = session.currentTabNumber;
+
+        // Find the previous tab stop number in the sorted array
+        let prevTabStop = null;
+
+        // If we're currently at ${0}, find the highest numbered tab stop
+        if (currentNumber === 0) {
+            let maxNumber = -1;
+            for (let i = 0; i < session.tabStops.length; i++) {
+                if (session.tabStops[i].number !== 0 && session.tabStops[i].number > maxNumber) {
+                    maxNumber = session.tabStops[i].number;
+                    prevTabStop = session.tabStops[i];
+                }
+            }
+        } else {
+            // Find the previous numbered tab stop (less than current, but not 0)
+            for (let i = session.tabStops.length - 1; i >= 0; i--) {
+                if (session.tabStops[i].number < currentNumber && session.tabStops[i].number !== 0) {
+                    prevTabStop = session.tabStops[i];
+                    break;
+                }
+            }
+        }
+
+        if (prevTabStop) {
+            navigateToTabStop(prevTabStop.number);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * End the current snippet session
+     * this cleans up all remaining tab stop placeholders and resets the session
+     */
+    function endSnippetSession() {
+        if (activeSnippetSession) {
+            const session = activeSnippetSession;
+
+            // Remove any remaining tab stop placeholders
+            const tabStops = findTabStops(session.editor, session.startLine, session.endLine);
+            tabStops.reverse().forEach((tabStop) => {
+                session.editor.document.replaceRange("", tabStop.start, tabStop.end);
+            });
+
+            activeSnippetSession.isActive = false;
+            activeSnippetSession = null;
+        }
+    }
+
+    /**
+     * Check if we're currently in a snippet session
+     * @returns {boolean}
+     */
+    function isInSnippetSession() {
+        return activeSnippetSession && activeSnippetSession.isActive;
+    }
+
+    /**
+     * Check if cursor is within snippet lines
+     * we need this to end the session if user moves cursor outside the snippet area
+     *
+     * @param {Object} cursorPos - Current cursor position
+     * @returns {boolean}
+     */
+    function isCursorInSnippetLines(cursorPos) {
+        if (!activeSnippetSession) {
+            return false;
+        }
+
+        return cursorPos.line >= activeSnippetSession.startLine && cursorPos.line <= activeSnippetSession.endLine;
+    }
+
+    /**
+     * Handle key events for tab navigation
+     * this is where all the tab/shift+tab/escape key handling happens
+     *
+     * @param {Event} jqEvent - jQuery event
+     * @param {Editor} editor - Editor instance
+     * @param {KeyboardEvent} event - Keyboard event
+     */
+    function handleKeyEvent(jqEvent, editor, event) {
+        if (!isInSnippetSession() || activeSnippetSession.editor !== editor) {
+            return false;
+        }
+
+        // make sure that the cursor is still within snippet lines
+        const cursorPos = editor.getCursorPos();
+        if (!isCursorInSnippetLines(cursorPos)) {
+            endSnippetSession();
+            return false;
+        }
+
+        // Tab key handling
+        if (event.keyCode === KeyEvent.DOM_VK_TAB) {
+            if (event.shiftKey) {
+                // Shift+Tab: go to previous tab stop
+                if (navigateToPreviousTabStop()) {
+                    event.preventDefault();
+                    return true;
+                }
+            } else {
+                // Tab: go to next tab stop
+                if (navigateToNextTabStop()) {
+                    event.preventDefault();
+                    return true;
+                }
+            }
+        }
+
+        // 'Esc' key to end snippet session
+        if (event.keyCode === KeyEvent.DOM_VK_ESCAPE) {
+            endSnippetSession();
+            event.preventDefault();
+            return true;
+        }
+
+        // handle Delete/Backspace - check if session should continue
+        // we need this because users might delete the template text from the editor
+        if (event.keyCode === KeyEvent.DOM_VK_DELETE || event.keyCode === KeyEvent.DOM_VK_BACK_SPACE) {
+            // just to let the delete/backspace complete
+            setTimeout(() => {
+                if (!shouldContinueSession()) {
+                    endSnippetSession();
+                }
+            }, 10);
+        }
+
+        return false;
+    }
+
+    /**
+     * Handle cursor position changes
+     * this ends the session if user moves cursor outside snippet bounds or creates multiple selections
+     * @param {Event} event - Cursor activity event
+     * @param {Editor} editor - Editor instance
+     */
+    function handleCursorActivity(event, editor) {
+        if (!isInSnippetSession() || activeSnippetSession.editor !== editor) {
+            return;
+        }
+
+        // end session if user creates multiple selections
+        if (editor.getSelections().length > 1) {
+            endSnippetSession();
+            return;
+        }
+
+        const cursorPos = editor.getCursorPos();
+        if (!isCursorInSnippetLines(cursorPos)) {
+            endSnippetSession();
+        }
+    }
+
+    /**
+     * This function is responsible to register all the required handers
+     * we need this to set up all the event listeners for cursor navigation
+     */
+    function registerHandlers() {
+        // register the event handler for snippet cursor navigation
+        const editorHolder = $("#editor-holder")[0];
+        if (editorHolder) {
+            editorHolder.addEventListener(
+                "keydown",
+                function (event) {
+                    const editor = EditorManager.getActiveEditor();
+                    if (editor) {
+                        handleKeyEvent(null, editor, event);
+                    }
+                },
+                true
+            );
+        }
+
+        // Listen for editor changes to end snippet sessions
+        EditorManager.on("activeEditorChange", function (event, current, previous) {
+            if (isInSnippetSession()) {
+                endSnippetSession();
+            }
+        });
+
+        // Register cursor activity handler for current and future editors
+        function registerCursorActivityForEditor(editor) {
+            if (editor) {
+                editor.on("cursorActivity", handleCursorActivity);
+            }
+        }
+
+        // Register for current editor
+        const currentEditor = EditorManager.getActiveEditor();
+        if (currentEditor) {
+            registerCursorActivityForEditor(currentEditor);
+        }
+
+        // Register for editor changes
+        EditorManager.on("activeEditorChange", function (event, current, previous) {
+            if (previous) {
+                previous.off("cursorActivity", handleCursorActivity);
+            }
+            if (current) {
+                registerCursorActivityForEditor(current);
+            }
+            if (isInSnippetSession()) {
+                endSnippetSession();
+            }
+        });
+    }
+
+    exports.parseTemplateText = parseTemplateText;
+    exports.insertSnippetWithTabStops = insertSnippetWithTabStops;
+    exports.isInSnippetSession = isInSnippetSession;
+    exports.handleKeyEvent = handleKeyEvent;
+    exports.handleCursorActivity = handleCursorActivity;
+    exports.endSnippetSession = endSnippetSession;
+    exports.registerHandlers = registerHandlers;
+});
+
+/*
+ * GNU AGPL-3.0 License
+ *
+ * Copyright (c) 2021 - present core.ai . All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
+ *
+ */
+
+/*
+ * This file handles the display and management of the snippets list that is shown in the UI
+ * Note: when there are no snippets present, a message like no snippets are added yet is shown. refer to the html file
+ */
+
+/* eslint-disable no-invalid-this */
+define("extensionsIntegrated/CustomSnippets/snippetsList", function (require, exports, module) {
+    const Global = require("./global");
+    const SnippetsState = require("./snippetsState");
+    const UIHelper = require("./UIHelper");
+    const FilterSnippets = require("./filterSnippets");
+    const Helper = require("./helper");
+
+    /**
+     * This function is responsible to create a snippet item
+     * refer to html file for the structure of the snippet item
+     * @private
+     * @param {object} snippetItem
+     */
+    function _createSnippetItem(snippetItem) {
+        // the main snippet item container,
+        // all the items like abbr, description and all that will be appended into this
+        const $snippetItem = $("<div>").attr("data-abbr", snippetItem.abbreviation).addClass("snippet-item");
+
+        const $snippetAbbr = $("<div>")
+            .text(snippetItem.abbreviation)
+            .attr("id", "snippet-abbr")
+            .attr("title", `Abbreviation: ${snippetItem.abbreviation}`);
+
+        const $snippetTemplate = $("<div>")
+            .text(snippetItem.templateText)
+            .attr("id", "snippet-template")
+            .attr("title", `Template: ${snippetItem.templateText}`);
+
+        const $snippetDescription = $("<div>")
+            .text(
+                snippetItem.description && snippetItem.description.trim() !== ""
+                    ? snippetItem.description
+                    : "No description"
+            )
+            .attr("id", "snippet-description")
+            .attr(
+                "title",
+                snippetItem.description && snippetItem.description.trim() !== ""
+                    ? `Description: ${snippetItem.description}`
+                    : "No description provided"
+            );
+
+        const $snippetFiles = $("<div>")
+            .text(snippetItem.fileExtension || "all")
+            .attr("id", "snippet-files")
+            .attr("title", `File extensions: ${snippetItem.fileExtension}`);
+
+        const $deleteSnippet = $("<div>")
+            .html(`<i class="fas fa-trash"></i>`)
+            .attr("id", "delete-snippet-btn")
+            .addClass("delete-snippet-btn");
+
+        $snippetItem.append($snippetAbbr, $snippetTemplate, $snippetDescription, $snippetFiles, $deleteSnippet);
+        $snippetItem.data("snippet", snippetItem); // store full object. this is needed for deletion purposes
+
+        // finally when the snippet item is ready, we append it to the snippets-list-wrapper
+        $("#snippets-list-wrapper").append($snippetItem);
+
+        // here we register the delete button click handler
+        _registerHandlers();
+    }
+
+    /**
+     * Shows the appropriate empty state message based on context
+     * the context might be either one of the two cases:
+     * when no snippets are added
+     * or
+     * when no snippets match the filtered text
+     * @private
+     */
+    function _showEmptyState() {
+        UIHelper.showEmptySnippetMessage();
+        UIHelper.hideSnippetsListHeader();
+        const $emptyMessage = $("#no-snippets-message");
+        const $filterInput = $("#filter-snippets-input");
+        const filterText = $filterInput.val().trim();
+
+        if (filterText) {
+            $emptyMessage.text(`No snippets match "${filterText}"`);
+        } else {
+            $emptyMessage.text("No custom snippets added yet!");
+        }
+    }
+
+    /**
+     * this function is responsible to render the filtered snippets list
+     * @private
+     * @param {Array} filteredSnippets - array of filtered snippet objects
+     */
+    function _renderSnippetsList(filteredSnippets) {
+        UIHelper.showSnippetsList(); // show the snippets list wrapper
+        UIHelper.showSnippetsListHeader(); // show header when there are snippets to display
+
+        // add each filtered snippet to the list
+        filteredSnippets.forEach(function (snippetItem) {
+            _createSnippetItem(snippetItem);
+        });
+    }
+
+    /**
+     * This function is called when the user clicks on the custom snippets button from the file menu
+     * this also gets called when user clicks on the 'back' button to move back to the snippets list menu
+     * refer to '_registerHandlers' function inside the main.js file
+     */
+    function showSnippetsList() {
+        UIHelper.clearSnippetsList(); // clear existing snippets list, as we'll rebuild it
+        const snippetList = Global.SnippetHintsList; // get the list of snippets
+
+        // handle empty snippets case
+        if (snippetList.length === 0) {
+            _showEmptyState();
+            return;
+        }
+
+        // apply the filtering and get results
+        const filteredSnippets = FilterSnippets.filterSnippets(snippetList);
+
+        // if there are no matches after filtering
+        if (filteredSnippets.length === 0) {
+            _showEmptyState();
+            return;
+        }
+
+        // render the filtered snippets
+        _renderSnippetsList(filteredSnippets);
+    }
+
+    /**
+     * This function is responsible to delete the snippet for which delete button was clicked
+     */
+    function deleteSnippet() {
+        // get the element
+        const $snippetItem = $(this).closest(".snippet-item");
+        const snippetItem = $snippetItem.data("snippet"); // this gives the actual object with all the keys and vals
+
+        const index = Global.SnippetHintsList.findIndex((s) => s.abbreviation === snippetItem.abbreviation);
+
+        if (index !== -1) {
+            Global.SnippetHintsList.splice(index, 1); // removes it from the actual array
+            // save to preferences after deleting snippet
+            SnippetsState.saveSnippetsToState();
+            // update the snippets count in toolbar
+            Helper.updateSnippetsCount();
+            // Refresh the entire list to properly handle filtering
+            showSnippetsList();
+        }
+    }
+
+    /**
+     * This function is responsible to register the delete snippet button handler
+     * @private
+     */
+    function _registerHandlers() {
+        const $snippetsListWrapper = $("#snippets-list-wrapper");
+
+        $snippetsListWrapper.off("click.deleteSnippet");
+        $snippetsListWrapper.on("click.deleteSnippet", ".delete-snippet-btn", function (e) {
+            e.stopPropagation(); // prevent triggering the edit handler
+            deleteSnippet.call(this);
+        });
+
+        // Use event delegation for snippet item clicks to enable editing
+        $snippetsListWrapper.off("click.editSnippet");
+        $snippetsListWrapper.on("click.editSnippet", ".snippet-item", function (e) {
+            // don't trigger edit if clicking on delete button
+            if ($(e.target).closest(".delete-snippet-btn").length === 0) {
+                editSnippet.call(this);
+            }
+        });
+    }
+
+    /**
+     * This function handles editing a snippet when the snippet item is clicked
+     */
+    function editSnippet() {
+        // get the snippet data from the clicked item
+        const $snippetItem = $(this).closest(".snippet-item");
+        const snippetItem = $snippetItem.data("snippet");
+
+        // populate the edit form with current snippet data
+        Helper.populateEditForm(snippetItem);
+
+        // store the original data for reset functionality
+        $("#custom-snippets-edit").data("originalSnippet", snippetItem);
+        $("#custom-snippets-edit").data(
+            "snippetIndex",
+            Global.SnippetHintsList.findIndex((s) => s.abbreviation === snippetItem.abbreviation)
+        );
+
+        // show the edit form
+        UIHelper.showEditSnippetMenu();
+
+        // enable the save button based on current data
+        Helper.toggleEditSaveButtonDisability();
+    }
+
+    exports.showSnippetsList = showSnippetsList;
+    exports.deleteSnippet = deleteSnippet;
+    exports.editSnippet = editSnippet;
+});
+
+/*
+ * GNU AGPL-3.0 License
+ *
+ * Copyright (c) 2021 - present core.ai . All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
+ *
+ */
+
+define("extensionsIntegrated/CustomSnippets/snippetsState", function (require, exports, module) {
+    const PreferencesManager = require("preferences/PreferencesManager");
+
+    const Global = require("./global");
+
+    // create extension preferences
+    const prefs = PreferencesManager.getExtensionPrefs("CustomSnippets");
+
+    // define preference for storing snippets
+    prefs.definePreference("snippetsList", "array", [], {
+        description: "List of custom code snippets"
+    });
+
+    /**
+     * Load snippets from preferences
+     * This is called on startup to restore previously saved snippets
+     */
+    function loadSnippetsFromState() {
+        try {
+            const savedSnippets = prefs.get("snippetsList");
+            if (Array.isArray(savedSnippets)) {
+                // clear existing snippets and load from saved state
+                Global.SnippetHintsList.length = 0;
+                Global.SnippetHintsList.push(...savedSnippets);
+            }
+        } catch (e) {
+            console.error("something went wrong when trying to load custom snippets from preferences:", e);
+        }
+    }
+
+    /**
+     * Save snippets to preferences
+     * This is called whenever snippets are modified
+     */
+    function saveSnippetsToState() {
+        try {
+            prefs.set("snippetsList", [...Global.SnippetHintsList]);
+        } catch (e) {
+            console.error("something went wrong when saving custom snippets to preferences:", e);
+        }
+    }
+
+    exports.loadSnippetsFromState = loadSnippetsFromState;
+    exports.saveSnippetsToState = saveSnippetsToState;
+});
+
+/*
+ * GNU AGPL-3.0 License
+ *
+ * Copyright (c) 2021 - present core.ai . All rights reserved.
  * Original work Copyright (c) 2018 - 2021 Adobe Systems Incorporated. All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify it
@@ -47381,6 +50216,7 @@ define("extensionsIntegrated/loader", function (require, exports, module) {
     require("./indentGuides/main");
     require("./CSSColorPreview/main");
     require("./TabBar/main");
+    require("./CustomSnippets/main");
 });
 
 /*
