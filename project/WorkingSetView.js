@@ -1001,26 +1001,69 @@ define(function (require, exports, module) {
     };
 
     /**
-     * Adds full directory names to elements representing passed files in working tree
+     * adds the directory name to external project files
+     * when the directory length is more than 3, we show it in this format: `<root directory>/.../<parent directory>`
+     * otherwise the full path
      * @private
-     * @param {Array.<string>} filesPathList - list of fullPath strings
+     * @param {Array.<string>} externalProjectFiles - the list of the external project files
      */
-    WorkingSetView.prototype._addFullDirectoryNamesToWorkingTreeFiles = function (filesPathList) {
-        // filesList must have at least two files in it for this to make sense
-        if (!filesPathList.length) {
+    WorkingSetView.prototype._addDirectoryNameToExternalProjectFiles = function (externalProjectFiles) {
+        if(!externalProjectFiles.length) {
             return;
         }
 
-        // Go through open files and add directories to appropriate entries
         this.$openFilesContainer.find("ul > li").each(function () {
             const $li = $(this);
             let filePath = $li.data(_FILE_KEY).fullPath;
-            const io = filesPathList.indexOf(filePath);
+            const io = externalProjectFiles.indexOf(filePath);
             if (io !== -1) {
+                const displayPath = Phoenix.app.getDisplayPath(filePath);
                 let dirPath = path.dirname(filePath);
-                dirPath = Phoenix.app.getDisplayPath(dirPath);
-                const $dir = $(`<span title='${Phoenix.app.getDisplayPath(filePath)}' class='directory'/>`)
-                    .html(" &mdash; " + dirPath);
+                // this will be displayed on hover GetDisplayPath returns
+                // windows: C://some/path , linux/mac: /some/path
+                // a relative path of the form `folder/file.txt` (no-leading slash) for fs access paths- /mnt/paths
+                // or virtual path if its a browser indexed db - backed path like /fs/virtual/path
+                const displayDirPath = Phoenix.app.getDisplayPath(dirPath);
+
+                let sep;
+                if (Phoenix.isNativeApp && brackets.platform === "win") {
+                    sep =  "\\";
+                } else {
+                    sep = "/";
+                }
+
+                // Split the path and filter out empty segments
+                let dirSplit = displayDirPath.split(sep).filter(segment => segment !== '');
+
+                let truncatedPath = displayDirPath; // truncatedPath value will be shown in the UI
+                if (dirSplit.length > 3) {
+                    const rootDirName = dirSplit[0];
+                    const secondLastSegment = dirSplit[dirSplit.length - 2];
+                    const lastSeg = dirSplit[dirSplit.length - 1];
+
+                    if (Phoenix.isNativeApp && brackets.platform === "win") {
+                        // Eg: C:\long\path\to\fileDir - > C:\...\to\fileDir -- [rootDirName = c: here]
+                        truncatedPath = `${rootDirName}${sep}\u2026${sep}${secondLastSegment}${sep}${lastSeg}`;
+                    } else if (Phoenix.isNativeApp) {
+                        // an absolute path of the form /abs/path/to/file in linux/mac desktop
+                        // Eg: /application/path/to/fileDir - > /application/.../to/fileDir
+                        truncatedPath = `${sep}${rootDirName}${sep}\u2026${sep}${secondLastSegment}${sep}${lastSeg}`;
+                    } else if (!Phoenix.isNativeApp && !displayDirPath.startsWith('/')){
+                        // browser fs access path: `folder/fileDir` (no-leading slash) fs access paths- /mnt/paths
+                        // Eg: opened/folder/path/to/fileDir - > opened/.../to/fileDir (no-leading slash)
+                        truncatedPath = `${rootDirName}${sep}\u2026${sep}${secondLastSegment}${sep}${lastSeg}`;
+                    } else {
+                        //this is an internal indexed db backed virtual path. This can only happen if we allow virtual
+                        // project locations from one project to be opened in another. So just print the trim path
+                        // path in this case. In future, when we add this support, the get display path fn should be
+                        // modified to  give somethings like what we do for fs access path.
+                        // Eg: /application/path/to/fileDir - > /application/.../to/fileDir
+                        truncatedPath = `${sep}${rootDirName}${sep}\u2026${sep}${secondLastSegment}${sep}${lastSeg}`;
+                    }
+                }
+
+                const $dir = $(`<span title='${displayPath}' class='directory'/>`)
+                    .html(" &mdash; " + truncatedPath);
                 $li.children("a").append($dir);
             }
         });
@@ -1084,7 +1127,7 @@ define(function (require, exports, module) {
             }
         });
 
-        self._addFullDirectoryNamesToWorkingTreeFiles(externalProjectFiles);
+        self._addDirectoryNameToExternalProjectFiles(externalProjectFiles);
 
         // Go through the map and solve the arrays with length over 1. Ignore the rest.
         _.forEach(map, function (value) {
