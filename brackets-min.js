@@ -69521,7 +69521,6 @@ define("nls/ar/strings", {
   "CLOSE_TABS_TO_THE_RIGHT": "إغلاق علامات التبويب على اليمين",
   "CLOSE_TABS_TO_THE_LEFT": "إغلاق علامات التبويب على اليسار",
   "CLOSE_ALL_TABS": "إغلاق جميع علامات التبويب",
-  "CLOSE_UNMODIFIED_TABS": "إغلاق علامات التبويب غير المعدلة",
   "REOPEN_CLOSED_FILE": "إعادة فتح الملف المغلق",
   "ERRORS_NO_FILE": "لا يوجد ملف مفتوح",
   "ERRORS_PANEL_TITLE_MULTIPLE": "{0} مشاكل - {1}",
@@ -70565,7 +70564,8 @@ define("nls/ar/strings", {
   "SIGN_OUT": "تسجيل الخروج",
   "ACCOUNT_DETAILS": "تفاصيل الحساب",
   "AI_QUOTA_USED": "حصة الذكاء الاصطناعي المستخدمة",
-  "LOGIN_REFRESH": "تحقق من حالة تسجيل الدخول"
+  "LOGIN_REFRESH": "تحقق من حالة تسجيل الدخول",
+  "CLOSE_SAVED_TABS": "إغلاق علامات التبويب المحفوظة"
 });
 /*
  * GNU AGPL-3.0 License
@@ -70912,7 +70912,6 @@ define("nls/bg/strings", {
   "CLOSE_TABS_TO_THE_RIGHT": "Затвори табовете отдясно",
   "CLOSE_TABS_TO_THE_LEFT": "Затвори табовете отляво",
   "CLOSE_ALL_TABS": "Затвори всички раздели",
-  "CLOSE_UNMODIFIED_TABS": "Затвори непроменените раздели",
   "REOPEN_CLOSED_FILE": "Отвори отново затворения файл",
   "ERRORS_NO_FILE": "Няма отворен файл",
   "ERRORS_PANEL_TITLE_MULTIPLE": "{0} проблема - {1}",
@@ -71956,7 +71955,8 @@ define("nls/bg/strings", {
   "SIGN_OUT": "Изход",
   "ACCOUNT_DETAILS": "Данни за акаунта",
   "AI_QUOTA_USED": "Използвана AI квота",
-  "LOGIN_REFRESH": "Проверка на състоянието за вход"
+  "LOGIN_REFRESH": "Проверка на състоянието за вход",
+  "CLOSE_SAVED_TABS": "Затваряне на запазените раздели"
 });
 /*
  * Copyright (c) 2013 Adobe Systems Incorporated. All rights reserved.
@@ -72332,7 +72332,6 @@ define("nls/cs/strings", {
   "CLOSE_TABS_TO_THE_RIGHT": "Zavřít karty napravo",
   "CLOSE_TABS_TO_THE_LEFT": "Zavřít karty nalevo",
   "CLOSE_ALL_TABS": "Zavřít všechny karty",
-  "CLOSE_UNMODIFIED_TABS": "Zavřít nezměněné karty",
   "REOPEN_CLOSED_FILE": "Znovu otevřít zavřený soubor",
   "ERRORS_NO_FILE": "Žádný otevřený soubor",
   "ERRORS_PANEL_TITLE_MULTIPLE": "{0} problémů - {1}",
@@ -73376,7 +73375,8 @@ define("nls/cs/strings", {
   "SIGN_OUT": "Odhlásit se",
   "ACCOUNT_DETAILS": "Detaily účtu",
   "AI_QUOTA_USED": "Vyčerpána kvóta pro AI",
-  "LOGIN_REFRESH": "Zkontrolovat stav přihlášení"
+  "LOGIN_REFRESH": "Zkontrolovat stav přihlášení",
+  "CLOSE_SAVED_TABS": "Zavřít uložené karty"
 });
 /*
  * GNU AGPL-3.0 License
@@ -73750,7 +73750,6 @@ define("nls/da/strings", {
   "CLOSE_TABS_TO_THE_RIGHT": "Luk faner til højre",
   "CLOSE_TABS_TO_THE_LEFT": "Luk faner til venstre",
   "CLOSE_ALL_TABS": "Luk alle faner",
-  "CLOSE_UNMODIFIED_TABS": "Luk uændrede faner",
   "REOPEN_CLOSED_FILE": "Genåbn lukket fil",
   "ERRORS_NO_FILE": "Ingen fil åben",
   "ERRORS_PANEL_TITLE_MULTIPLE": "{0} problemer - {1}",
@@ -74794,7 +74793,8 @@ define("nls/da/strings", {
   "SIGN_OUT": "Log ud",
   "ACCOUNT_DETAILS": "Kontooplysninger",
   "AI_QUOTA_USED": "Brugt AI-kvote",
-  "LOGIN_REFRESH": "Tjek loginstatus"
+  "LOGIN_REFRESH": "Tjek loginstatus",
+  "CLOSE_SAVED_TABS": "Luk gemte faner"
 });
 /*
  * GNU AGPL-3.0 License
@@ -75166,7 +75166,6 @@ define("nls/de/strings", {
   "CLOSE_TABS_TO_THE_RIGHT": "Rechts befindliche Tabs schließen",
   "CLOSE_TABS_TO_THE_LEFT": "Links befindliche Tabs schließen",
   "CLOSE_ALL_TABS": "Alle Tabs schließen",
-  "CLOSE_UNMODIFIED_TABS": "Nicht geänderte Tabs schließen",
   "REOPEN_CLOSED_FILE": "Geschlossene Datei erneut öffnen",
   "ERRORS_NO_FILE": "Keine Datei geöffnet",
   "ERRORS_PANEL_TITLE_MULTIPLE": "{0} Probleme - {1}",
@@ -76210,7 +76209,8 @@ define("nls/de/strings", {
   "SIGN_OUT": "Abmelden",
   "ACCOUNT_DETAILS": "Kontodetails",
   "AI_QUOTA_USED": "Verbrauchte KI-Quote",
-  "LOGIN_REFRESH": "Anmeldestatus überprüfen"
+  "LOGIN_REFRESH": "Anmeldestatus überprüfen",
+  "CLOSE_SAVED_TABS": "Geschlossene Tabs wiederherstellen"
 });
 /*
  * GNU AGPL-3.0 License
@@ -76584,7 +76584,6 @@ define("nls/el/strings", {
   "CLOSE_TABS_TO_THE_RIGHT": "Κλείσιμο καρτελών στα δεξιά",
   "CLOSE_TABS_TO_THE_LEFT": "Κλείσιμο καρτελών στα αριστερά",
   "CLOSE_ALL_TABS": "Κλείσιμο Όλων των Καρτελών",
-  "CLOSE_UNMODIFIED_TABS": "Κλείσιμο μη Τροποποιημένων Καρτελών",
   "REOPEN_CLOSED_FILE": "Άνοιγμα ξανά Κλειστού Αρχείου",
   "ERRORS_NO_FILE": "Δεν Υπάρχει Ανοιχτό Αρχείο",
   "ERRORS_PANEL_TITLE_MULTIPLE": "{0} Προβλήματα - {1}",
@@ -77628,7 +77627,8 @@ define("nls/el/strings", {
   "SIGN_OUT": "Αποσύνδεση",
   "ACCOUNT_DETAILS": "Στοιχεία Λογαριασμού",
   "AI_QUOTA_USED": "Χρήση ποσοστού AI",
-  "LOGIN_REFRESH": "Έλεγχος Κατάστασης Σύνδεσης"
+  "LOGIN_REFRESH": "Έλεγχος Κατάστασης Σύνδεσης",
+  "CLOSE_SAVED_TABS": "Κλείσιμο Αποθηκευμένων Καρτελών"
 });
 /*
  * GNU AGPL-3.0 License
@@ -78002,7 +78002,6 @@ define("nls/en-gb/strings", {
   "CLOSE_TABS_TO_THE_RIGHT": "Close tabs to the right",
   "CLOSE_TABS_TO_THE_LEFT": "Close tabs to the left",
   "CLOSE_ALL_TABS": "Close All Tabs",
-  "CLOSE_UNMODIFIED_TABS": "Close Unmodified Tabs",
   "REOPEN_CLOSED_FILE": "Reopen Closed File",
   "ERRORS_NO_FILE": "No file open",
   "ERRORS_PANEL_TITLE_MULTIPLE": "{0} Problems - {1}",
@@ -79046,7 +79045,8 @@ define("nls/en-gb/strings", {
   "SIGN_OUT": "Sign out",
   "ACCOUNT_DETAILS": "Account Details",
   "AI_QUOTA_USED": "AI quota used",
-  "LOGIN_REFRESH": "Check Login Status"
+  "LOGIN_REFRESH": "Check Login Status",
+  "CLOSE_SAVED_TABS": "Close Saved Tabs"
 });
 /*
  * GNU AGPL-3.0 License
@@ -79393,7 +79393,6 @@ define("nls/es/strings", {
   "CLOSE_TABS_TO_THE_RIGHT": "Cerrar pestañas a la derecha",
   "CLOSE_TABS_TO_THE_LEFT": "Cerrar pestañas a la izquierda",
   "CLOSE_ALL_TABS": "Cerrar todas las pestañas",
-  "CLOSE_UNMODIFIED_TABS": "Cerrar pestañas sin modificar",
   "REOPEN_CLOSED_FILE": "Reabrir archivo cerrado",
   "ERRORS_NO_FILE": "No hay ningún archivo abierto",
   "ERRORS_PANEL_TITLE_MULTIPLE": "{0} Problemas - {1}",
@@ -80437,7 +80436,8 @@ define("nls/es/strings", {
   "SIGN_OUT": "Cerrar sesión",
   "ACCOUNT_DETAILS": "Detalles de la cuenta",
   "AI_QUOTA_USED": "Cuota de IA utilizada",
-  "LOGIN_REFRESH": "Verificar estado del inicio de sesión"
+  "LOGIN_REFRESH": "Verificar estado del inicio de sesión",
+  "CLOSE_SAVED_TABS": "Cerrar pestañas guardadas"
 });
 /*
  * GNU AGPL-3.0 License
@@ -80812,7 +80812,6 @@ define("nls/fa-ir/strings", {
   "CLOSE_TABS_TO_THE_RIGHT": "بستن تب‌های سمت راست",
   "CLOSE_TABS_TO_THE_LEFT": "بستن تب‌های سمت چپ",
   "CLOSE_ALL_TABS": "بستن همه برگه‌ها",
-  "CLOSE_UNMODIFIED_TABS": "بستن برگه‌های بدون تغییر",
   "REOPEN_CLOSED_FILE": "باز کردن مجدد فایل بسته شده",
   "ERRORS_NO_FILE": "فایلی باز نیست",
   "ERRORS_PANEL_TITLE_MULTIPLE": "{0} مشکل - {1}",
@@ -81856,7 +81855,8 @@ define("nls/fa-ir/strings", {
   "SIGN_OUT": "خروج",
   "ACCOUNT_DETAILS": "جزئیات حساب کاربری",
   "AI_QUOTA_USED": "سهمیه هوش مصنوعی استفاده شده",
-  "LOGIN_REFRESH": "بررسی وضعیت ورود"
+  "LOGIN_REFRESH": "بررسی وضعیت ورود",
+  "CLOSE_SAVED_TABS": "بستن برگه‌های ذخیره‌شده"
 });
 /*
  * GNU AGPL-3.0 License
@@ -82230,7 +82230,6 @@ define("nls/fi/strings", {
   "CLOSE_TABS_TO_THE_RIGHT": "Sulje välilehdet oikealta",
   "CLOSE_TABS_TO_THE_LEFT": "Sulje välilehdet vasemmalta",
   "CLOSE_ALL_TABS": "Sulje kaikki välilehdet",
-  "CLOSE_UNMODIFIED_TABS": "Sulje muokkaamattomat välilehdet",
   "REOPEN_CLOSED_FILE": "Avaa suljettu tiedosto uudelleen",
   "ERRORS_NO_FILE": "Ei avoinna olevaa tiedostoa",
   "ERRORS_PANEL_TITLE_MULTIPLE": "{0} ongelmaa - {1}",
@@ -83274,7 +83273,8 @@ define("nls/fi/strings", {
   "SIGN_OUT": "Kirjaudu ulos",
   "ACCOUNT_DETAILS": "Tilin tiedot",
   "AI_QUOTA_USED": "Käytetty tekoälykiintiö",
-  "LOGIN_REFRESH": "Tarkista kirjautumistila"
+  "LOGIN_REFRESH": "Tarkista kirjautumistila",
+  "CLOSE_SAVED_TABS": "Sulje tallennetut välilehdet"
 });
 /*
  * GNU AGPL-3.0 License
@@ -83648,7 +83648,6 @@ define("nls/fr/strings", {
   "CLOSE_TABS_TO_THE_RIGHT": "Fermer les onglets à droite",
   "CLOSE_TABS_TO_THE_LEFT": "Fermer les onglets à gauche",
   "CLOSE_ALL_TABS": "Fermer tous les onglets",
-  "CLOSE_UNMODIFIED_TABS": "Fermer les onglets non modifiés",
   "REOPEN_CLOSED_FILE": "Rouvrir le fichier fermé",
   "ERRORS_NO_FILE": "Aucun fichier ouvert",
   "ERRORS_PANEL_TITLE_MULTIPLE": "{0} Problèmes - {1}",
@@ -84692,7 +84691,8 @@ define("nls/fr/strings", {
   "SIGN_OUT": "Se déconnecter",
   "ACCOUNT_DETAILS": "Détails du compte",
   "AI_QUOTA_USED": "Quota IA utilisé",
-  "LOGIN_REFRESH": "Vérifier l'état de la connexion"
+  "LOGIN_REFRESH": "Vérifier l'état de la connexion",
+  "CLOSE_SAVED_TABS": "Fermer les onglets enregistrés"
 });
 /*
  * GNU AGPL-3.0 License
@@ -85066,7 +85066,6 @@ define("nls/gl/strings", {
   "CLOSE_TABS_TO_THE_RIGHT": "Pechar lapelas á dereita",
   "CLOSE_TABS_TO_THE_LEFT": "Pechar lapelas á esquerda",
   "CLOSE_ALL_TABS": "Pechar todas as lapelas",
-  "CLOSE_UNMODIFIED_TABS": "Pechar as lapelas sen modificar",
   "REOPEN_CLOSED_FILE": "Reabrir o ficheiro pechado",
   "ERRORS_NO_FILE": "Non hai ningún ficheiro aberto",
   "ERRORS_PANEL_TITLE_MULTIPLE": "{0} Problemas - {1}",
@@ -86110,7 +86109,8 @@ define("nls/gl/strings", {
   "SIGN_OUT": "Pechar sesión",
   "ACCOUNT_DETAILS": "Detalles da conta",
   "AI_QUOTA_USED": "Cota de IA usada",
-  "LOGIN_REFRESH": "Comprobar o estado do inicio de sesión"
+  "LOGIN_REFRESH": "Comprobar o estado do inicio de sesión",
+  "CLOSE_SAVED_TABS": "Pechar lapelas gardadas"
 });
 /*
  * GNU AGPL-3.0 License
@@ -86457,7 +86457,6 @@ define("nls/hi/strings", {
   "CLOSE_TABS_TO_THE_RIGHT": "दाईं ओर के टैब बंद करें",
   "CLOSE_TABS_TO_THE_LEFT": "बाईं ओर के टैब बंद करें",
   "CLOSE_ALL_TABS": "सभी टैब बंद करें",
-  "CLOSE_UNMODIFIED_TABS": "बिना बदलाव वाले टैब बंद करें",
   "REOPEN_CLOSED_FILE": "बंद की गई फ़ाइल फिर से खोलें",
   "ERRORS_NO_FILE": "कोई फ़ाइल नहीं खुली",
   "ERRORS_PANEL_TITLE_MULTIPLE": "{0} समस्याएँ - {1}",
@@ -87501,7 +87500,8 @@ define("nls/hi/strings", {
   "SIGN_OUT": "साइन आउट करें",
   "ACCOUNT_DETAILS": "खाता विवरण",
   "AI_QUOTA_USED": "एआई कोटा उपयोग किया गया",
-  "LOGIN_REFRESH": "लॉगिन स्थिति जांचें"
+  "LOGIN_REFRESH": "लॉगिन स्थिति जांचें",
+  "CLOSE_SAVED_TABS": "सहेजे गए टैब बंद करें"
 });
 /*
  * GNU AGPL-3.0 License
@@ -87848,7 +87848,6 @@ define("nls/hr/strings", {
   "CLOSE_TABS_TO_THE_RIGHT": "Zatvori kartice desno",
   "CLOSE_TABS_TO_THE_LEFT": "Zatvori kartice lijevo",
   "CLOSE_ALL_TABS": "Zatvori sve kartice",
-  "CLOSE_UNMODIFIED_TABS": "Zatvori nepromijenjene kartice",
   "REOPEN_CLOSED_FILE": "Ponovno otvori zatvorenu datoteku",
   "ERRORS_NO_FILE": "Nema otvorene datoteke",
   "ERRORS_PANEL_TITLE_MULTIPLE": "{0} problema - {1}",
@@ -88892,7 +88891,8 @@ define("nls/hr/strings", {
   "SIGN_OUT": "Odjava",
   "ACCOUNT_DETAILS": "Podaci o računu",
   "AI_QUOTA_USED": "Iskorištena AI kvota",
-  "LOGIN_REFRESH": "Provjeri status prijave"
+  "LOGIN_REFRESH": "Provjeri status prijave",
+  "CLOSE_SAVED_TABS": "Zatvori spremljene kartice"
 });
 /*
  * GNU AGPL-3.0 License
@@ -89266,7 +89266,6 @@ define("nls/hu/strings", {
   "CLOSE_TABS_TO_THE_RIGHT": "Jobb oldali fülek bezárása",
   "CLOSE_TABS_TO_THE_LEFT": "Bal oldali fülek bezárása",
   "CLOSE_ALL_TABS": "Összes fül bezárása",
-  "CLOSE_UNMODIFIED_TABS": "Nem módosított fülek bezárása",
   "REOPEN_CLOSED_FILE": "Bezárt fájl újranyitása",
   "ERRORS_NO_FILE": "Nincs megnyitott fájl",
   "ERRORS_PANEL_TITLE_MULTIPLE": "{0} probléma - {1}",
@@ -90310,7 +90309,8 @@ define("nls/hu/strings", {
   "SIGN_OUT": "Kijelentkezés",
   "ACCOUNT_DETAILS": "Fiókadatok",
   "AI_QUOTA_USED": "Felhasznált MI-kvóta",
-  "LOGIN_REFRESH": "Bejelentkezés állapotának ellenőrzése"
+  "LOGIN_REFRESH": "Bejelentkezés állapotának ellenőrzése",
+  "CLOSE_SAVED_TABS": "Mentett fülek bezárása"
 });
 /*
  * GNU AGPL-3.0 License
@@ -90657,7 +90657,6 @@ define("nls/id/strings", {
   "CLOSE_TABS_TO_THE_RIGHT": "Tutup Tab di Sebelah Kanan",
   "CLOSE_TABS_TO_THE_LEFT": "Tutup Tab di Sebelah Kiri",
   "CLOSE_ALL_TABS": "Tutup Semua Tab",
-  "CLOSE_UNMODIFIED_TABS": "Tutup Tab yang Tidak Dimodifikasi",
   "REOPEN_CLOSED_FILE": "Buka Kembali File yang Ditutup",
   "ERRORS_NO_FILE": "Tidak Ada Berkas yang Dibuka",
   "ERRORS_PANEL_TITLE_MULTIPLE": "{0} Masalah - {1}",
@@ -91701,7 +91700,8 @@ define("nls/id/strings", {
   "SIGN_OUT": "Keluar",
   "ACCOUNT_DETAILS": "Detail Akun",
   "AI_QUOTA_USED": "Kuota AI terpakai",
-  "LOGIN_REFRESH": "Periksa Status Login"
+  "LOGIN_REFRESH": "Periksa Status Login",
+  "CLOSE_SAVED_TABS": "Tutup Tab yang Disimpan"
 });
 /*
  * GNU AGPL-3.0 License
@@ -92074,7 +92074,6 @@ define("nls/it/strings", {
   "CLOSE_TABS_TO_THE_RIGHT": "Chiudi schede a destra",
   "CLOSE_TABS_TO_THE_LEFT": "Chiudi schede a sinistra",
   "CLOSE_ALL_TABS": "Chiudi tutte le schede",
-  "CLOSE_UNMODIFIED_TABS": "Chiudi schede non modificate",
   "REOPEN_CLOSED_FILE": "Riapri file chiuso",
   "ERRORS_NO_FILE": "Nessun file aperto",
   "ERRORS_PANEL_TITLE_MULTIPLE": "{0} Problemi - {1}",
@@ -93118,7 +93117,8 @@ define("nls/it/strings", {
   "SIGN_OUT": "Esci",
   "ACCOUNT_DETAILS": "Dettagli account",
   "AI_QUOTA_USED": "Quota IA utilizzata",
-  "LOGIN_REFRESH": "Verifica stato accesso"
+  "LOGIN_REFRESH": "Verifica stato accesso",
+  "CLOSE_SAVED_TABS": "Chiudi Schede Salvate"
 });
 /*
  * GNU AGPL-3.0 License
@@ -93492,7 +93492,6 @@ define("nls/ja/strings", {
   "CLOSE_TABS_TO_THE_RIGHT": "右側のタブを閉じる",
   "CLOSE_TABS_TO_THE_LEFT": "左側のタブを閉じる",
   "CLOSE_ALL_TABS": "すべてのタブを閉じる",
-  "CLOSE_UNMODIFIED_TABS": "変更されていないタブを閉じる",
   "REOPEN_CLOSED_FILE": "閉じたファイルを再度開く",
   "ERRORS_NO_FILE": "ファイルが開かれていません",
   "ERRORS_PANEL_TITLE_MULTIPLE": "{0} 個の問題 - {1}",
@@ -94536,7 +94535,8 @@ define("nls/ja/strings", {
   "SIGN_OUT": "サインアウト",
   "ACCOUNT_DETAILS": "アカウントの詳細",
   "AI_QUOTA_USED": "AI利用量",
-  "LOGIN_REFRESH": "ログイン状態を確認"
+  "LOGIN_REFRESH": "ログイン状態を確認",
+  "CLOSE_SAVED_TABS": "保存済みタブを閉じる"
 });
 /*
  * GNU AGPL-3.0 License
@@ -94910,7 +94910,6 @@ define("nls/ko/strings", {
   "CLOSE_TABS_TO_THE_RIGHT": "오른쪽 탭 닫기",
   "CLOSE_TABS_TO_THE_LEFT": "왼쪽 탭 닫기",
   "CLOSE_ALL_TABS": "모든 탭 닫기",
-  "CLOSE_UNMODIFIED_TABS": "수정되지 않은 탭 닫기",
   "REOPEN_CLOSED_FILE": "닫힌 파일 다시 열기",
   "ERRORS_NO_FILE": "열려 있는 파일 없음",
   "ERRORS_PANEL_TITLE_MULTIPLE": "{0}개의 문제 - {1}",
@@ -95954,7 +95953,8 @@ define("nls/ko/strings", {
   "SIGN_OUT": "로그아웃",
   "ACCOUNT_DETAILS": "계정 세부정보",
   "AI_QUOTA_USED": "사용된 AI 할당량",
-  "LOGIN_REFRESH": "로그인 상태 확인"
+  "LOGIN_REFRESH": "로그인 상태 확인",
+  "CLOSE_SAVED_TABS": "저장된 탭 닫기"
 });
 /*
  * GNU AGPL-3.0 License
@@ -96328,7 +96328,6 @@ define("nls/lv/strings", {
   "CLOSE_TABS_TO_THE_RIGHT": "Aizvērt cilnes pa labi",
   "CLOSE_TABS_TO_THE_LEFT": "Aizvērt cilnes pa kreisi",
   "CLOSE_ALL_TABS": "Aizvērt visas cilnes",
-  "CLOSE_UNMODIFIED_TABS": "Aizvērt nemodificētās cilnes",
   "REOPEN_CLOSED_FILE": "Atvērt slēgto failu atkārtoti",
   "ERRORS_NO_FILE": "Nav atvērts neviens fails",
   "ERRORS_PANEL_TITLE_MULTIPLE": "{0} problēmas - {1}",
@@ -97372,7 +97371,8 @@ define("nls/lv/strings", {
   "SIGN_OUT": "Izrakstīties",
   "ACCOUNT_DETAILS": "Konta informācija",
   "AI_QUOTA_USED": "Izmantotā AI kvota",
-  "LOGIN_REFRESH": "Pārbaudīt pieteikšanās statusu"
+  "LOGIN_REFRESH": "Pārbaudīt pieteikšanās statusu",
+  "CLOSE_SAVED_TABS": "Aizvērt saglabātās cilnes"
 });
 /*
  * GNU AGPL-3.0 License
@@ -97719,7 +97719,6 @@ define("nls/ml/strings", {
   "CLOSE_TABS_TO_THE_RIGHT": "വലതുവശത്തുള്ള ടാബുകൾ അടയ്ക്കുക",
   "CLOSE_TABS_TO_THE_LEFT": "ഇടതുവശത്തുള്ള ടാബുകൾ അടയ്ക്കുക",
   "CLOSE_ALL_TABS": "എല്ലാ ടാബുകളും അടയ്ക്കുക",
-  "CLOSE_UNMODIFIED_TABS": "മാറ്റം വരുത്താത്ത ടാബുകൾ അടയ്ക്കുക",
   "REOPEN_CLOSED_FILE": "അടച്ച ഫയൽ വീണ്ടും തുറക്കുക",
   "ERRORS_NO_FILE": "ഫയൽ തുറന്നിട്ടില്ല",
   "ERRORS_PANEL_TITLE_MULTIPLE": "{0} പ്രശ്നങ്ങൾ - {1}",
@@ -98763,7 +98762,8 @@ define("nls/ml/strings", {
   "SIGN_OUT": "സൈൻ ഔട്ട് ചെയ്യുക",
   "ACCOUNT_DETAILS": "അക്കൗണ്ട് വിശദാംശങ്ങൾ",
   "AI_QUOTA_USED": "എഐ ക്വാട്ട ഉപയോഗിച്ചു",
-  "LOGIN_REFRESH": "ലോഗിൻ സ്റ്റാറ്റസ് പരിശോധിക്കുക"
+  "LOGIN_REFRESH": "ലോഗിൻ സ്റ്റാറ്റസ് പരിശോധിക്കുക",
+  "CLOSE_SAVED_TABS": "സേവ് ചെയ്ത ടാബുകൾ അടയ്ക്കുക"
 });
 /*
  * GNU AGPL-3.0 License
@@ -99110,7 +99110,6 @@ define("nls/nb/strings", {
   "CLOSE_TABS_TO_THE_RIGHT": "Lukk faner til høyre",
   "CLOSE_TABS_TO_THE_LEFT": "Lukk faner til venstre",
   "CLOSE_ALL_TABS": "Lukk alle faner",
-  "CLOSE_UNMODIFIED_TABS": "Lukk uendrede faner",
   "REOPEN_CLOSED_FILE": "Åpne lukket fil på nytt",
   "ERRORS_NO_FILE": "Ingen fil åpen",
   "ERRORS_PANEL_TITLE_MULTIPLE": "{0} problemer - {1}",
@@ -100154,7 +100153,8 @@ define("nls/nb/strings", {
   "SIGN_OUT": "Logg ut",
   "ACCOUNT_DETAILS": "Kontodetaljer",
   "AI_QUOTA_USED": "AI-kvote brukt",
-  "LOGIN_REFRESH": "Sjekk innloggingsstatus"
+  "LOGIN_REFRESH": "Sjekk innloggingsstatus",
+  "CLOSE_SAVED_TABS": "Lukk lagrede faner"
 });
 /*
  * GNU AGPL-3.0 License
@@ -100528,7 +100528,6 @@ define("nls/nl/strings", {
   "CLOSE_TABS_TO_THE_RIGHT": "Tabbladen rechts sluiten",
   "CLOSE_TABS_TO_THE_LEFT": "Tabbladen links sluiten",
   "CLOSE_ALL_TABS": "Alle tabbladen sluiten",
-  "CLOSE_UNMODIFIED_TABS": "Niet-gewijzigde tabbladen sluiten",
   "REOPEN_CLOSED_FILE": "Gesloten bestand opnieuw openen",
   "ERRORS_NO_FILE": "Geen bestand geopend",
   "ERRORS_PANEL_TITLE_MULTIPLE": "{0} problemen - {1}",
@@ -101572,7 +101571,8 @@ define("nls/nl/strings", {
   "SIGN_OUT": "Uitloggen",
   "ACCOUNT_DETAILS": "Accountgegevens",
   "AI_QUOTA_USED": "Verbruikt AI-quotum",
-  "LOGIN_REFRESH": "Aanmeldstatus controleren"
+  "LOGIN_REFRESH": "Aanmeldstatus controleren",
+  "CLOSE_SAVED_TABS": "Opgeslagen tabbladen sluiten"
 });
 /*
  * GNU AGPL-3.0 License
@@ -101946,7 +101946,6 @@ define("nls/pl/strings", {
   "CLOSE_TABS_TO_THE_RIGHT": "Zamknij karty po prawej",
   "CLOSE_TABS_TO_THE_LEFT": "Zamknij karty po lewej",
   "CLOSE_ALL_TABS": "Zamknij wszystkie karty",
-  "CLOSE_UNMODIFIED_TABS": "Zamknij niezmodyfikowane karty",
   "REOPEN_CLOSED_FILE": "Ponownie otwórz zamknięty plik",
   "ERRORS_NO_FILE": "Brak otwartego pliku",
   "ERRORS_PANEL_TITLE_MULTIPLE": "{0} problemów - {1}",
@@ -102990,7 +102989,8 @@ define("nls/pl/strings", {
   "SIGN_OUT": "Wyloguj się",
   "ACCOUNT_DETAILS": "Szczegóły konta",
   "AI_QUOTA_USED": "Wykorzystany limit AI",
-  "LOGIN_REFRESH": "Sprawdź status logowania"
+  "LOGIN_REFRESH": "Sprawdź status logowania",
+  "CLOSE_SAVED_TABS": "Zamknij zapisane karty"
 });
 /*
  * GNU AGPL-3.0 License
@@ -103364,7 +103364,6 @@ define("nls/pt-br/strings", {
   "CLOSE_TABS_TO_THE_RIGHT": "Fechar abas à direita",
   "CLOSE_TABS_TO_THE_LEFT": "Fechar abas à esquerda",
   "CLOSE_ALL_TABS": "Fechar Todas as Guias",
-  "CLOSE_UNMODIFIED_TABS": "Fechar Guias Não Modificadas",
   "REOPEN_CLOSED_FILE": "Reabrir Arquivo Fechado",
   "ERRORS_NO_FILE": "Nenhum Arquivo Aberto",
   "ERRORS_PANEL_TITLE_MULTIPLE": "{0} Problemas - {1}",
@@ -104408,7 +104407,8 @@ define("nls/pt-br/strings", {
   "SIGN_OUT": "Sair",
   "ACCOUNT_DETAILS": "Detalhes da Conta",
   "AI_QUOTA_USED": "Cota de IA usada",
-  "LOGIN_REFRESH": "Verificar Status de Login"
+  "LOGIN_REFRESH": "Verificar Status de Login",
+  "CLOSE_SAVED_TABS": "Fechar Abas Salvas"
 });
 /*
  * GNU AGPL-3.0 License
@@ -104780,7 +104780,6 @@ define("nls/pt-pt/strings", {
   "CLOSE_TABS_TO_THE_RIGHT": "Fechar Separadores à Direita",
   "CLOSE_TABS_TO_THE_LEFT": "Fechar Separadores à Esquerda",
   "CLOSE_ALL_TABS": "Fechar Todos os Separadores",
-  "CLOSE_UNMODIFIED_TABS": "Fechar Separadores Não Modificados",
   "REOPEN_CLOSED_FILE": "Reabrir Ficheiro Fechado",
   "ERRORS_NO_FILE": "Nenhum Ficheiro Aberto",
   "ERRORS_PANEL_TITLE_MULTIPLE": "{0} Problemas - {1}",
@@ -105824,7 +105823,8 @@ define("nls/pt-pt/strings", {
   "SIGN_OUT": "Terminar Sessão",
   "ACCOUNT_DETAILS": "Detalhes da Conta",
   "AI_QUOTA_USED": "Quota de IA utilizada",
-  "LOGIN_REFRESH": "Verificar estado de início de sessão"
+  "LOGIN_REFRESH": "Verificar estado de início de sessão",
+  "CLOSE_SAVED_TABS": "Fechar Separadores Guardados"
 });
 /*
  * GNU AGPL-3.0 License
@@ -106196,7 +106196,6 @@ define("nls/ro/strings", {
   "CLOSE_TABS_TO_THE_RIGHT": "Închide filele din dreapta",
   "CLOSE_TABS_TO_THE_LEFT": "Închide filele din stânga",
   "CLOSE_ALL_TABS": "Închide toate filele",
-  "CLOSE_UNMODIFIED_TABS": "Închide filele nemodificate",
   "REOPEN_CLOSED_FILE": "Redeschide fișierul închis",
   "ERRORS_NO_FILE": "Niciun fișier deschis",
   "ERRORS_PANEL_TITLE_MULTIPLE": "{0} Probleme - {1}",
@@ -107240,7 +107239,8 @@ define("nls/ro/strings", {
   "SIGN_OUT": "Deconectare",
   "ACCOUNT_DETAILS": "Detalii cont",
   "AI_QUOTA_USED": "Cotă AI utilizată",
-  "LOGIN_REFRESH": "Verificare stare autentificare"
+  "LOGIN_REFRESH": "Verificare stare autentificare",
+  "CLOSE_SAVED_TABS": "Închide filele salvate"
 });
 /*
  * GNU AGPL-3.0 License
@@ -109271,7 +109271,6 @@ define("nls/ru/strings", {
   "CLOSE_TABS_TO_THE_RIGHT": "Закрыть вкладки справа",
   "CLOSE_TABS_TO_THE_LEFT": "Закрыть вкладки слева",
   "CLOSE_ALL_TABS": "Закрыть все вкладки",
-  "CLOSE_UNMODIFIED_TABS": "Закрыть неизменённые вкладки",
   "REOPEN_CLOSED_FILE": "Повторно открыть закрытый файл",
   "ERRORS_NO_FILE": "Нет открытого файла",
   "ERRORS_PANEL_TITLE_MULTIPLE": "{0} проблем - {1}",
@@ -110315,7 +110314,8 @@ define("nls/ru/strings", {
   "SIGN_OUT": "Выйти",
   "ACCOUNT_DETAILS": "Сведения об учетной записи",
   "AI_QUOTA_USED": "Использована квота ИИ",
-  "LOGIN_REFRESH": "Проверить статус входа"
+  "LOGIN_REFRESH": "Проверить статус входа",
+  "CLOSE_SAVED_TABS": "Закрыть сохранённые вкладки"
 });
 /*
  * GNU AGPL-3.0 License
@@ -110689,7 +110689,6 @@ define("nls/sk/strings", {
   "CLOSE_TABS_TO_THE_RIGHT": "Zatvoriť karty napravo",
   "CLOSE_TABS_TO_THE_LEFT": "Zatvoriť karty naľavo",
   "CLOSE_ALL_TABS": "Zatvoriť všetky karty",
-  "CLOSE_UNMODIFIED_TABS": "Zatvoriť neuložené karty",
   "REOPEN_CLOSED_FILE": "Znova otvoriť zatvorený súbor",
   "ERRORS_NO_FILE": "Žiadny otvorený súbor",
   "ERRORS_PANEL_TITLE_MULTIPLE": "{0} problémov - {1}",
@@ -111733,7 +111732,8 @@ define("nls/sk/strings", {
   "SIGN_OUT": "Odhlásiť sa",
   "ACCOUNT_DETAILS": "Detaily účtu",
   "AI_QUOTA_USED": "Využité AI kvóty",
-  "LOGIN_REFRESH": "Skontrolovať stav prihlásenia"
+  "LOGIN_REFRESH": "Skontrolovať stav prihlásenia",
+  "CLOSE_SAVED_TABS": "Zatvoriť uložené karty"
 });
 /*
  * GNU AGPL-3.0 License
@@ -112106,7 +112106,6 @@ define("nls/sr/strings", {
   "CLOSE_TABS_TO_THE_RIGHT": "Затвори картице десно",
   "CLOSE_TABS_TO_THE_LEFT": "Затвори картице лево",
   "CLOSE_ALL_TABS": "Затвори све картице",
-  "CLOSE_UNMODIFIED_TABS": "Затвори непромењене картице",
   "REOPEN_CLOSED_FILE": "Поново отвори затворену датотеку",
   "ERRORS_NO_FILE": "Нема отворених датотека",
   "ERRORS_PANEL_TITLE_MULTIPLE": "{0} проблема - {1}",
@@ -113150,7 +113149,8 @@ define("nls/sr/strings", {
   "SIGN_OUT": "Одјавите се",
   "ACCOUNT_DETAILS": "Подаци о налогу",
   "AI_QUOTA_USED": "Искоришћена AI квота",
-  "LOGIN_REFRESH": "Провери статус пријаве"
+  "LOGIN_REFRESH": "Провери статус пријаве",
+  "CLOSE_SAVED_TABS": "Затвори сачуване картице"
 });
 /*
  * GNU AGPL-3.0 License
@@ -113607,7 +113607,6 @@ define("nls/sv/strings", {
   "CLOSE_TABS_TO_THE_RIGHT": "Stäng flikar till höger",
   "CLOSE_TABS_TO_THE_LEFT": "Stäng flikar till vänster",
   "CLOSE_ALL_TABS": "Stäng alla flikar",
-  "CLOSE_UNMODIFIED_TABS": "Stäng oförändrade flikar",
   "REOPEN_CLOSED_FILE": "Återöppna stängd fil",
   "ERRORS_NO_FILE": "Ingen fil öppen",
   "ERRORS_PANEL_TITLE_MULTIPLE": "{0} problem - {1}",
@@ -114651,7 +114650,8 @@ define("nls/sv/strings", {
   "SIGN_OUT": "Logga ut",
   "ACCOUNT_DETAILS": "Kontodetaljer",
   "AI_QUOTA_USED": "Använd AI-kvot",
-  "LOGIN_REFRESH": "Kontrollera inloggningsstatus"
+  "LOGIN_REFRESH": "Kontrollera inloggningsstatus",
+  "CLOSE_SAVED_TABS": "Stäng sparade flikar"
 });
 /*
  * GNU AGPL-3.0 License
@@ -115025,7 +115025,6 @@ define("nls/tr/strings", {
   "CLOSE_TABS_TO_THE_RIGHT": "Sağdaki Sekmeleri Kapat",
   "CLOSE_TABS_TO_THE_LEFT": "Soldaki Sekmeleri Kapat",
   "CLOSE_ALL_TABS": "Tüm Sekmeleri Kapat",
-  "CLOSE_UNMODIFIED_TABS": "Değiştirilmemiş Sekmeleri Kapat",
   "REOPEN_CLOSED_FILE": "Kapalı Dosyayı Yeniden Aç",
   "ERRORS_NO_FILE": "Açık Dosya Yok",
   "ERRORS_PANEL_TITLE_MULTIPLE": "{0} Sorun - {1}",
@@ -116069,7 +116068,8 @@ define("nls/tr/strings", {
   "SIGN_OUT": "Oturumu kapat",
   "ACCOUNT_DETAILS": "Hesap Ayrıntıları",
   "AI_QUOTA_USED": "Yapay Zeka kotası kullanıldı",
-  "LOGIN_REFRESH": "Oturum Durumunu Kontrol Et"
+  "LOGIN_REFRESH": "Oturum Durumunu Kontrol Et",
+  "CLOSE_SAVED_TABS": "Kaydedilen Sekmeleri Kapat"
 });
 /*
  * GNU AGPL-3.0 License
@@ -116443,7 +116443,6 @@ define("nls/uk/strings", {
   "CLOSE_TABS_TO_THE_RIGHT": "Закрити вкладки праворуч",
   "CLOSE_TABS_TO_THE_LEFT": "Закрити вкладки ліворуч",
   "CLOSE_ALL_TABS": "Закрити всі вкладки",
-  "CLOSE_UNMODIFIED_TABS": "Закрити незмінені вкладки",
   "REOPEN_CLOSED_FILE": "Відкрити закритий файл",
   "ERRORS_NO_FILE": "Немає відкритого файлу",
   "ERRORS_PANEL_TITLE_MULTIPLE": "{0} проблем - {1}",
@@ -117487,7 +117486,8 @@ define("nls/uk/strings", {
   "SIGN_OUT": "Вийти",
   "ACCOUNT_DETAILS": "Дані облікового запису",
   "AI_QUOTA_USED": "Використано квоту ШІ",
-  "LOGIN_REFRESH": "Перевірити статус входу"
+  "LOGIN_REFRESH": "Перевірити статус входу",
+  "CLOSE_SAVED_TABS": "Закрити збережені вкладки"
 });
 /*
  * GNU AGPL-3.0 License
@@ -117861,7 +117861,6 @@ define("nls/ur/strings", {
   "CLOSE_TABS_TO_THE_RIGHT": "دائیں جانب والے ٹیبز بند کریں",
   "CLOSE_TABS_TO_THE_LEFT": "بائیں جانب والے ٹیبز بند کریں",
   "CLOSE_ALL_TABS": "تمام ٹیبز بند کریں",
-  "CLOSE_UNMODIFIED_TABS": "غیر ترمیم شدہ ٹیبز بند کریں",
   "REOPEN_CLOSED_FILE": "بند فائل دوبارہ کھولیں",
   "ERRORS_NO_FILE": "کوئی فائل کھلی نہیں",
   "ERRORS_PANEL_TITLE_MULTIPLE": "{0} مسائل - {1}",
@@ -118905,7 +118904,8 @@ define("nls/ur/strings", {
   "SIGN_OUT": "سائن آؤٹ کریں",
   "ACCOUNT_DETAILS": "اکاؤنٹ کی تفصیلات",
   "AI_QUOTA_USED": "استعمال شدہ اے آئی کوٹہ",
-  "LOGIN_REFRESH": "لاگ ان کی حیثیت چیک کریں"
+  "LOGIN_REFRESH": "لاگ ان کی حیثیت چیک کریں",
+  "CLOSE_SAVED_TABS": "محفوظ ٹیبز بند کریں"
 });
 /*
  * GNU AGPL-3.0 License
@@ -119309,7 +119309,6 @@ define("nls/zh-cn/strings", {
   "CLOSE_TABS_TO_THE_RIGHT": "关闭右侧标签页",
   "CLOSE_TABS_TO_THE_LEFT": "关闭左侧标签页",
   "CLOSE_ALL_TABS": "关闭所有标签页",
-  "CLOSE_UNMODIFIED_TABS": "关闭未修改的标签页",
   "REOPEN_CLOSED_FILE": "重新打开已关闭的文件",
   "ERRORS_NO_FILE": "未打开文件",
   "ERRORS_PANEL_TITLE_MULTIPLE": "{0} 个问题 - {1}",
@@ -120353,7 +120352,8 @@ define("nls/zh-cn/strings", {
   "SIGN_OUT": "退出登录",
   "ACCOUNT_DETAILS": "帐户详情",
   "AI_QUOTA_USED": "AI 配额已用",
-  "LOGIN_REFRESH": "检查登录状态"
+  "LOGIN_REFRESH": "检查登录状态",
+  "CLOSE_SAVED_TABS": "关闭已保存的标签页"
 });
 /*
  * GNU AGPL-3.0 License
@@ -120727,7 +120727,6 @@ define("nls/zh-tw/strings", {
   "CLOSE_TABS_TO_THE_RIGHT": "關閉右側分頁",
   "CLOSE_TABS_TO_THE_LEFT": "關閉左側分頁",
   "CLOSE_ALL_TABS": "關閉所有分頁",
-  "CLOSE_UNMODIFIED_TABS": "關閉未修改的分頁",
   "REOPEN_CLOSED_FILE": "重新開啟已關閉的檔案",
   "ERRORS_NO_FILE": "尚未開啟檔案",
   "ERRORS_PANEL_TITLE_MULTIPLE": "{0} 個問題 - {1}",
@@ -121771,7 +121770,8 @@ define("nls/zh-tw/strings", {
   "SIGN_OUT": "登出",
   "ACCOUNT_DETAILS": "帳號詳細資訊",
   "AI_QUOTA_USED": "AI 配額已使用",
-  "LOGIN_REFRESH": "檢查登入狀態"
+  "LOGIN_REFRESH": "檢查登入狀態",
+  "CLOSE_SAVED_TABS": "關閉已儲存的索引標籤"
 });
 /*
  * GNU AGPL-3.0 License
