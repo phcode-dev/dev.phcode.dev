@@ -47391,7 +47391,9 @@ define("extensionsIntegrated/TabBar/drag-drop", function (require, exports, modu
                 $(this).addClass("empty-pane-drop-target");
 
                 // set the drop effect
-                e.originalEvent.dataTransfer.dropEffect = "move";
+                if (e.originalEvent && e.originalEvent.dataTransfer) {
+                    e.originalEvent.dataTransfer.dropEffect = "move";
+                }
             }
         });
 
@@ -48504,8 +48506,8 @@ define("extensionsIntegrated/TabBar/more-options", function (require, exports, m
         Strings.CLOSE_TAB,
         Strings.CLOSE_TABS_TO_THE_LEFT,
         Strings.CLOSE_TABS_TO_THE_RIGHT,
+        Strings.CLOSE_SAVED_TABS,
         Strings.CLOSE_ALL_TABS,
-        Strings.CLOSE_UNMODIFIED_TABS,
         "---",
         Strings.CMD_FILE_RENAME,
         Strings.CMD_FILE_DELETE,
@@ -48556,12 +48558,12 @@ define("extensionsIntegrated/TabBar/more-options", function (require, exports, m
     }
 
     /**
-     * "CLOSE UNMODIFIED TABS"
-     * This will close all tabs that are not modified in the specified pane
+     * "CLOSE SAVED TABS"
+     * This will close all tabs that are not dirty in the specified pane
      *
      * @param {String} paneId - the id of the pane ["first-pane", "second-pane"]
      */
-    function handleCloseUnmodifiedTabs(paneId) {
+    function handleCloseSavedTabs(paneId) {
         if (!paneId) {
             return;
         }
@@ -48575,7 +48577,7 @@ define("extensionsIntegrated/TabBar/more-options", function (require, exports, m
         // get all those entries that are not dirty
         const unmodifiedEntries = workingSet.filter((entry) => !entry.isDirty);
 
-        // close each unmodified file in the pane
+        // close each non-dirty file in the pane
         for (let i = unmodifiedEntries.length - 1; i >= 0; i--) {
             const fileObj = FileSystem.getFileForPath(unmodifiedEntries[i].path);
             CommandManager.execute(Commands.FILE_CLOSE, { file: fileObj, paneId: paneId });
@@ -48773,8 +48775,8 @@ define("extensionsIntegrated/TabBar/more-options", function (require, exports, m
         case Strings.CLOSE_ALL_TABS:
             handleCloseAllTabs(paneId);
             break;
-        case Strings.CLOSE_UNMODIFIED_TABS:
-            handleCloseUnmodifiedTabs(paneId);
+        case Strings.CLOSE_SAVED_TABS:
+            handleCloseSavedTabs(paneId);
             break;
         case Strings.CMD_FILE_RENAME:
             handleFileRename(filePath);
@@ -107741,7 +107743,7 @@ define("nls/root/strings", {
     "CLOSE_TABS_TO_THE_RIGHT": "Close Tabs to the Right",
     "CLOSE_TABS_TO_THE_LEFT": "Close Tabs to the Left",
     "CLOSE_ALL_TABS": "Close All Tabs",
-    "CLOSE_UNMODIFIED_TABS": "Close Unmodified Tabs",
+    "CLOSE_SAVED_TABS": "Close Saved Tabs",
     "REOPEN_CLOSED_FILE": "Reopen Closed File",
 
     // CodeInspection: errors/warnings
