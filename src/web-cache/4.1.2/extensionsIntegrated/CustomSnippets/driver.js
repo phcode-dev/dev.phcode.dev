@@ -18,8 +18,10 @@
  *
  */
 
+/* global logger */
 define(function (require, exports, module) {
     const EditorManager = require("editor/EditorManager");
+    const Metrics = require("utils/Metrics");
 
     const Global = require("./global");
     const Helper = require("./helper");
@@ -43,9 +45,19 @@ define(function (require, exports, module) {
 
         if (shouldAddSnippetToList(snippetData)) {
             Global.SnippetHintsList.push(snippetData);
+            Helper.rebuildOptimizedStructures();
             Helper.clearAllInputFields();
             Helper.toggleSaveButtonDisability();
-            SnippetsState.saveSnippetsToState();
+
+            // snippet creating metrics
+            const fileCategory = Helper.categorizeFileExtensionForMetrics(snippetData.fileExtension);
+            Metrics.countEvent(Metrics.EVENT_TYPE.EDITOR, "snipt", `add.${fileCategory}`);
+
+            // save to file storage
+            SnippetsState.saveSnippetsToState()
+                .catch(function (error) {
+                    logger.reportError(error, "Custom Snippets: failed to save new snippet to file storage");
+                });
 
             // we need to move back to snippets list view after a snippet is saved
             UIHelper.showSnippetListMenu();
@@ -87,7 +99,13 @@ define(function (require, exports, module) {
         // update the snippet in the list
         if (snippetIndex !== -1) {
             Global.SnippetHintsList[snippetIndex] = editedData;
-            SnippetsState.saveSnippetsToState();
+            Helper.rebuildOptimizedStructures();
+
+            // save to file storage
+            SnippetsState.saveSnippetsToState()
+                .catch(function (error) {
+                    logger.reportError(error, "Custom Snippets: failed to save edited snippet to file storage");
+                });
 
             // clear the stored data
             $editView.removeData("originalSnippet");
@@ -100,19 +118,24 @@ define(function (require, exports, module) {
     }
 
     /**
-     * This function handles the reset button click for editing a snippet
-     * It restores the original snippet data in the edit form
+     * This function is responsible to handle the cancel button click in the edit-snippet panel
+     * this resets the format to the last saved values and then moves back to the snippets-list panel
      */
-    function handleResetBtnClick() {
+    function handleCancelEditBtnClick() {
         const $editView = $("#custom-snippets-edit");
         const originalSnippet = $editView.data("originalSnippet");
 
         if (originalSnippet) {
-            // restore original data in the form
+            // restore original data in the form to reset any changes
             Helper.populateEditForm(originalSnippet);
-            // update save button state
-            Helper.toggleEditSaveButtonDisability();
         }
+
+        $editView.removeData("originalSnippet");
+        $editView.removeData("snippetIndex");
+
+        // navigate back to snippets list
+        UIHelper.showSnippetListMenu();
+        SnippetsList.showSnippetsList();
     }
 
     /**
@@ -164,10 +187,8 @@ define(function (require, exports, module) {
         };
     }
 
-
-
     exports.getWordBeforeCursor = getWordBeforeCursor;
     exports.handleSaveBtnClick = handleSaveBtnClick;
     exports.handleEditSaveBtnClick = handleEditSaveBtnClick;
-    exports.handleResetBtnClick = handleResetBtnClick;
+    exports.handleCancelEditBtnClick = handleCancelEditBtnClick;
 });

@@ -25,11 +25,15 @@
 
 /* eslint-disable no-invalid-this */
 define(function (require, exports, module) {
+    const StringUtils = require("utils/StringUtils");
+    const Metrics = require("utils/Metrics");
+
     const Global = require("./global");
     const SnippetsState = require("./snippetsState");
     const UIHelper = require("./UIHelper");
     const FilterSnippets = require("./filterSnippets");
     const Helper = require("./helper");
+    const Strings = require("strings");
 
     /**
      * This function is responsible to create a snippet item
@@ -45,31 +49,31 @@ define(function (require, exports, module) {
         const $snippetAbbr = $("<div>")
             .text(snippetItem.abbreviation)
             .attr("id", "snippet-abbr")
-            .attr("title", `Abbreviation: ${snippetItem.abbreviation}`);
+            .attr("title", StringUtils.format(Strings.CUSTOM_SNIPPETS_EDIT_ABBR_TOOLTIP, snippetItem.abbreviation));
 
         const $snippetTemplate = $("<div>")
             .text(snippetItem.templateText)
             .attr("id", "snippet-template")
-            .attr("title", `Template: ${snippetItem.templateText}`);
+            .attr("title", StringUtils.format(Strings.CUSTOM_SNIPPETS_EDIT_TEMPLATE_TOOLTIP, snippetItem.templateText));
 
         const $snippetDescription = $("<div>")
             .text(
                 snippetItem.description && snippetItem.description.trim() !== ""
                     ? snippetItem.description
-                    : "No description"
+                    : Strings.CUSTOM_SNIPPETS_NO_DESCRIPTION
             )
             .attr("id", "snippet-description")
             .attr(
                 "title",
                 snippetItem.description && snippetItem.description.trim() !== ""
-                    ? `Description: ${snippetItem.description}`
-                    : "No description provided"
+                    ? StringUtils.format(Strings.CUSTOM_SNIPPETS_EDIT_DESC_TOOLTIP, snippetItem.description)
+                    : Strings.CUSTOM_SNIPPETS_ADD_DESC_TOOLTIP
             );
 
         const $snippetFiles = $("<div>")
             .text(snippetItem.fileExtension || "all")
             .attr("id", "snippet-files")
-            .attr("title", `File extensions: ${snippetItem.fileExtension}`);
+            .attr("title", StringUtils.format(Strings.CUSTOM_SNIPPETS_EDIT_FILE_EXT_TOOLTIP, snippetItem.fileExtension || "all"));
 
         const $deleteSnippet = $("<div>")
             .html(`<i class="fas fa-trash"></i>`)
@@ -102,9 +106,9 @@ define(function (require, exports, module) {
         const filterText = $filterInput.val().trim();
 
         if (filterText) {
-            $emptyMessage.text(`No snippets match "${filterText}"`);
+            $emptyMessage.text(StringUtils.format(Strings.CUSTOM_SNIPPETS_NO_MATCHES, filterText));
         } else {
-            $emptyMessage.text("No custom snippets added yet!");
+            $emptyMessage.html(Strings.CUSTOM_SNIPPETS_LEARN_MORE);
         }
     }
 
@@ -162,9 +166,19 @@ define(function (require, exports, module) {
         const index = Global.SnippetHintsList.findIndex((s) => s.abbreviation === snippetItem.abbreviation);
 
         if (index !== -1) {
+            // track the snippet deletion metrics before removing
+            const fileCategory = Helper.categorizeFileExtensionForMetrics(snippetItem.fileExtension);
+            Metrics.countEvent(Metrics.EVENT_TYPE.EDITOR, "snipt", `del.${fileCategory}`);
+
             Global.SnippetHintsList.splice(index, 1); // removes it from the actual array
-            // save to preferences after deleting snippet
-            SnippetsState.saveSnippetsToState();
+            Helper.rebuildOptimizedStructures();
+
+            // save to file storage
+            SnippetsState.saveSnippetsToState()
+                .catch(function (error) {
+                    console.error("failed to delete custom snippet correctly:", error);
+                });
+
             // update the snippets count in toolbar
             Helper.updateSnippetsCount();
             // Refresh the entire list to properly handle filtering

@@ -34185,7 +34185,9 @@ define("extensionsIntegrated/CollapseFolders/main", function (require, exports, 
 
 /* eslint-disable no-invalid-this */
 define("extensionsIntegrated/CustomSnippets/UIHelper", function (require, exports, module) {
+    const StringUtils = require("utils/StringUtils");
     const Global = require("./global");
+    const Strings = require("strings");
 
     /**
      * this is a generic function to show error messages for input fields
@@ -34352,7 +34354,7 @@ define("extensionsIntegrated/CustomSnippets/UIHelper", function (require, export
         const wrapperId = isEditForm ? "edit-abbr-box-wrapper" : "abbr-box-wrapper";
         const errorId = isEditForm ? "edit-abbreviation-duplicate-error" : "abbreviation-duplicate-error";
 
-        showError(inputId, wrapperId, `A snippet with abbreviation "${abbreviation}" already exists.`, errorId);
+        showError(inputId, wrapperId, StringUtils.format(Strings.CUSTOM_SNIPPETS_DUPLICATE_ERROR, abbreviation), errorId);
     }
 
     /**
@@ -34420,6 +34422,7 @@ define("extensionsIntegrated/CustomSnippets/UIHelper", function (require, export
 define("extensionsIntegrated/CustomSnippets/codeHintIntegration", function (require, exports, module) {
     const CodeHintManager = require("editor/CodeHintManager");
     const EditorManager = require("editor/EditorManager");
+    const Metrics = require("utils/Metrics");
 
     const Global = require("./global");
     const Driver = require("./driver");
@@ -34517,6 +34520,10 @@ define("extensionsIntegrated/CustomSnippets/codeHintIntegration", function (requ
                         const editor = EditorManager.getFocusedEditor();
 
                         if (editor) {
+                            // to track the usage metrics
+                            const fileCategory = Helper.categorizeFileExtensionForMetrics(matchedSnippet.fileExtension);
+                            Metrics.countEvent(Metrics.EVENT_TYPE.EDITOR, "snipt", `use.${fileCategory}`);
+
                             // replace the typed abbreviation with the template text using cursor manager
                             const wordInfo = Driver.getWordBeforeCursor();
                             const start = { line: wordInfo.line, ch: wordInfo.ch + 1 };
@@ -34570,8 +34577,10 @@ define("extensionsIntegrated/CustomSnippets/codeHintIntegration", function (requ
  *
  */
 
+/* global logger */
 define("extensionsIntegrated/CustomSnippets/driver", function (require, exports, module) {
     const EditorManager = require("editor/EditorManager");
+    const Metrics = require("utils/Metrics");
 
     const Global = require("./global");
     const Helper = require("./helper");
@@ -34595,9 +34604,19 @@ define("extensionsIntegrated/CustomSnippets/driver", function (require, exports,
 
         if (shouldAddSnippetToList(snippetData)) {
             Global.SnippetHintsList.push(snippetData);
+            Helper.rebuildOptimizedStructures();
             Helper.clearAllInputFields();
             Helper.toggleSaveButtonDisability();
-            SnippetsState.saveSnippetsToState();
+
+            // snippet creating metrics
+            const fileCategory = Helper.categorizeFileExtensionForMetrics(snippetData.fileExtension);
+            Metrics.countEvent(Metrics.EVENT_TYPE.EDITOR, "snipt", `add.${fileCategory}`);
+
+            // save to file storage
+            SnippetsState.saveSnippetsToState()
+                .catch(function (error) {
+                    logger.reportError(error, "Custom Snippets: failed to save new snippet to file storage");
+                });
 
             // we need to move back to snippets list view after a snippet is saved
             UIHelper.showSnippetListMenu();
@@ -34639,7 +34658,13 @@ define("extensionsIntegrated/CustomSnippets/driver", function (require, exports,
         // update the snippet in the list
         if (snippetIndex !== -1) {
             Global.SnippetHintsList[snippetIndex] = editedData;
-            SnippetsState.saveSnippetsToState();
+            Helper.rebuildOptimizedStructures();
+
+            // save to file storage
+            SnippetsState.saveSnippetsToState()
+                .catch(function (error) {
+                    logger.reportError(error, "Custom Snippets: failed to save edited snippet to file storage");
+                });
 
             // clear the stored data
             $editView.removeData("originalSnippet");
@@ -34652,19 +34677,24 @@ define("extensionsIntegrated/CustomSnippets/driver", function (require, exports,
     }
 
     /**
-     * This function handles the reset button click for editing a snippet
-     * It restores the original snippet data in the edit form
+     * This function is responsible to handle the cancel button click in the edit-snippet panel
+     * this resets the format to the last saved values and then moves back to the snippets-list panel
      */
-    function handleResetBtnClick() {
+    function handleCancelEditBtnClick() {
         const $editView = $("#custom-snippets-edit");
         const originalSnippet = $editView.data("originalSnippet");
 
         if (originalSnippet) {
-            // restore original data in the form
+            // restore original data in the form to reset any changes
             Helper.populateEditForm(originalSnippet);
-            // update save button state
-            Helper.toggleEditSaveButtonDisability();
         }
+
+        $editView.removeData("originalSnippet");
+        $editView.removeData("snippetIndex");
+
+        // navigate back to snippets list
+        UIHelper.showSnippetListMenu();
+        SnippetsList.showSnippetsList();
     }
 
     /**
@@ -34716,12 +34746,10 @@ define("extensionsIntegrated/CustomSnippets/driver", function (require, exports,
         };
     }
 
-
-
     exports.getWordBeforeCursor = getWordBeforeCursor;
     exports.handleSaveBtnClick = handleSaveBtnClick;
     exports.handleEditSaveBtnClick = handleEditSaveBtnClick;
-    exports.handleResetBtnClick = handleResetBtnClick;
+    exports.handleCancelEditBtnClick = handleCancelEditBtnClick;
 });
 
 /*
@@ -34908,6 +34936,7 @@ define("extensionsIntegrated/CustomSnippets/helper", function (require, exports,
     const StringMatch = require("utils/StringMatch");
     const Global = require("./global");
     const UIHelper = require("./UIHelper");
+    const Strings = require("strings");
 
     // list of all the navigation and function keys that are allowed inside the input fields
     const ALLOWED_NAVIGATION_KEYS = [
@@ -34937,6 +34966,77 @@ define("extensionsIntegrated/CustomSnippets/helper", function (require, exports,
         "F11",
         "F12"
     ];
+
+    // Optimized data structures for fast snippet lookups
+    let snippetsByLanguage = new Map();
+    let snippetsByAbbreviation = new Map();
+    let allSnippetsOptimized = [];
+
+    /**
+     * Preprocesses a snippet to add optimized lookup properties
+     * @param {Object} snippet - The original snippet object
+     * @returns {Object} - The snippet with added optimization properties
+     */
+    function preprocessSnippet(snippet) {
+        const optimizedSnippet = { ...snippet };
+
+        // pre-compute lowercase abbreviation for faster matching
+        optimizedSnippet.abbreviationLower = snippet.abbreviation.toLowerCase();
+
+        // parse and create a Set of supported extensions for O(1) lookup
+        if (snippet.fileExtension.toLowerCase() === "all") {
+            optimizedSnippet.supportedLangSet = new Set(["all"]);
+            optimizedSnippet.supportsAllLanguages = true;
+        } else {
+            const extensions = snippet.fileExtension
+                .toLowerCase()
+                .split(",")
+                .map(ext => ext.trim())
+                .filter(ext => ext);
+            optimizedSnippet.supportedLangSet = new Set(extensions);
+            optimizedSnippet.supportsAllLanguages = false;
+        }
+
+        return optimizedSnippet;
+    }
+
+    /**
+     * Rebuilds optimized data structures from the current snippet list
+     * we call this function whenever snippets are loaded, added, modified, or deleted
+     * i.e. whenever the snippetList is updated
+     */
+    function rebuildOptimizedStructures() {
+        // clear existing structures
+        snippetsByLanguage.clear();
+        snippetsByAbbreviation.clear();
+        allSnippetsOptimized.length = 0;
+
+        // Process each snippet
+        Global.SnippetHintsList.forEach(snippet => {
+            const optimizedSnippet = preprocessSnippet(snippet);
+            allSnippetsOptimized.push(optimizedSnippet);
+
+            // Index by abbreviation (lowercase) for exact matches
+            snippetsByAbbreviation.set(optimizedSnippet.abbreviationLower, optimizedSnippet);
+
+            // Index by supported languages/extensions
+            if (optimizedSnippet.supportsAllLanguages) {
+                // Add to a special "all" key for universal snippets
+                if (!snippetsByLanguage.has("all")) {
+                    snippetsByLanguage.set("all", new Set());
+                }
+                snippetsByLanguage.get("all").add(optimizedSnippet);
+            } else {
+                // Add to each supported extension
+                optimizedSnippet.supportedLangSet.forEach(ext => {
+                    if (!snippetsByLanguage.has(ext)) {
+                        snippetsByLanguage.set(ext, new Set());
+                    }
+                    snippetsByLanguage.get(ext).add(optimizedSnippet);
+                });
+            }
+        });
+    }
 
     /**
      * map the language IDs to their file extensions for snippet matching
@@ -34982,6 +35082,67 @@ define("extensionsIntegrated/CustomSnippets/helper", function (require, exports,
     }
 
     /**
+     * This function is to make sure file extensions are properly formatted with leading dots
+     * because user may provide values in not very consistent manner, we need to handle all those cases
+     * For ex: what we expect: `.js, .html, .css`
+     * what user may provide: `js, html, css` or: `js html css` etc
+     *
+     * This function processes file extensions in various formats and ensures they:
+     * - Have a leading dot (if not empty or "all")
+     * - Are properly separated with commas and spaces
+     * - Don't contain empty or standalone dots
+     * - No consecutive commas
+     *
+     * @param {string} extension - The file extension(s) to process
+     * @returns {string} - The properly formatted file extension(s)
+     */
+    function processFileExtensionInput(extension) {
+        if (!extension || extension === "all") {
+            return extension;
+        }
+
+        // Step 1: normalize the input by converting spaces to commas if no commas exist
+        if (extension.includes(" ")) {
+            extension = extension.replace(/\s+/g, ",");
+        }
+
+        let result = "";
+
+        // Step 2: process comma-separated extensions FIRST (before dot-separated)
+        // this prevents issues with inputs like ".js,.html,." or ".js,,.html"
+        if (extension.includes(",")) {
+            result = extension
+                .split(",")
+                .map((ext) => {
+                    ext = ext.trim();
+                    // skip all the standalone dots or empty entries
+                    if (ext === "." || ext === "") {
+                        return "";
+                    }
+                    // Add leading dot if missing
+                    return ext.startsWith(".") ? ext : "." + ext;
+                })
+                .filter((ext) => ext !== "") // Remove empty entries
+                .join(", ");
+        } else {
+            // Step 3: Handle single extension
+            if (extension === ".") {
+                result = ""; // remove standalone dot
+            } else {
+                // Add leading dot if missing
+                result = extension.startsWith(".") ? extension : "." + extension;
+            }
+        }
+
+        // this is just the final safeguard to remove any consecutive commas and clean up spacing
+        result = result.replace(/,\s*,+/g, ",").replace(/,\s*$/, "").replace(/^\s*,/, "").trim();
+        // remove trailing dots (like .css. -> .css)
+        result = result.endsWith('.') ? result.slice(0, -1) : result;
+
+        return result;
+    }
+
+    /**
      * This function is responsible to get the snippet data from all the required input fields
      * it is called when the save button is clicked
      * @private
@@ -34994,11 +35155,14 @@ define("extensionsIntegrated/CustomSnippets/helper", function (require, exports,
         const templateText = $("#template-text-box").val().trim();
         const fileExtension = $("#file-extn-box").val().trim();
 
+        // process the file extension so that we can get the value in the required format
+        const processedFileExtension = processFileExtensionInput(fileExtension);
+
         return {
             abbreviation: abbreviation,
             description: description || "", // allow empty description
             templateText: templateText,
-            fileExtension: fileExtension || "all" // default to "all" if empty
+            fileExtension: processedFileExtension || "all" // default to "all" if empty
         };
     }
 
@@ -35014,7 +35178,7 @@ define("extensionsIntegrated/CustomSnippets/helper", function (require, exports,
         const $abbrInput = $("#abbr-box");
         const $templateInput = $("#template-text-box");
 
-        const $saveBtn = $("#save-custom-snippet-btn button");
+        const $saveBtn = $("#save-custom-snippet-btn");
 
         // make sure that the required fields has some value
         const hasAbbr = $abbrInput.val().trim().length > 0;
@@ -35030,15 +35194,9 @@ define("extensionsIntegrated/CustomSnippets/helper", function (require, exports,
      * @returns {string|null} - The language ID or null if not available
      */
     function getCurrentLanguageContext(editor) {
-        // first try to get the language at cursor pos
-        // if it for some reason fails, then just go for the file extension
-        try {
-            const language = editor.getLanguageForPosition();
-            const languageId = language ? language.getId() : null;
-            return languageId;
-        } catch (e) {
-            return getCurrentFileExtension(editor);
-        }
+        const language = editor.getLanguageForPosition();
+        const languageId = language ? language.getId() : null;
+        return languageId;
     }
 
     /**
@@ -35058,32 +35216,40 @@ define("extensionsIntegrated/CustomSnippets/helper", function (require, exports,
      * Checks if a snippet is supported in the given language context
      * Falls back to file extension matching if language mapping isn't available
      *
-     * @param {Object} snippet - The snippet object
+     * @param {Object} snippet - The snippet object (optimized or regular)
      * @param {string|null} languageContext - The current language context
      * @param {Editor} editor - The editor instance for fallback
      * @returns {boolean} - True if the snippet is supported
      */
     function isSnippetSupportedInLanguageContext(snippet, languageContext, editor) {
-        if (snippet.fileExtension.toLowerCase() === "all") {
+        // Check for "all" languages support (both optimized and non-optimized)
+        if (
+            snippet.supportsAllLanguages === true ||
+            (snippet.fileExtension && snippet.fileExtension.toLowerCase() === "all")
+        ) {
             return true;
         }
 
+        // Try language context matching if available
         if (languageContext) {
             const effectiveExtension = mapLanguageToExtension(languageContext);
 
             // if we have a proper mapping (starts with .), use language context matching
             if (effectiveExtension.startsWith(".")) {
+                // Use optimized path if available
+                if (snippet.supportedLangSet) {
+                    return snippet.supportedLangSet.has(effectiveExtension);
+                }
+                // Fallback for non-optimized snippets
                 const supportedExtensions = snippet.fileExtension
                     .toLowerCase()
                     .split(",")
                     .map((ext) => ext.trim());
-
                 return supportedExtensions.some((ext) => ext === effectiveExtension);
             }
         }
 
-        // this is just a fallback if language context matching failed
-        // file extension matching
+        // final fallback for file extension matching if language context matching failed
         if (editor) {
             const fileExtension = getCurrentFileExtension(editor);
             return isSnippetSupportedInFile(snippet, fileExtension);
@@ -35124,12 +35290,12 @@ define("extensionsIntegrated/CustomSnippets/helper", function (require, exports,
         const queryLower = query.toLowerCase();
         const languageContext = getCurrentLanguageContext(editor);
 
-        return Global.SnippetHintsList.some((snippet) => {
-            if (snippet.abbreviation.toLowerCase() === queryLower) {
-                return isSnippetSupportedInLanguageContext(snippet, languageContext, editor);
-            }
-            return false;
-        });
+        const snippet = snippetsByAbbreviation.get(queryLower);
+        if (snippet) {
+            return isSnippetSupportedInLanguageContext(snippet, languageContext, editor);
+        }
+
+        return false;
     }
 
     /**
@@ -35142,21 +35308,41 @@ define("extensionsIntegrated/CustomSnippets/helper", function (require, exports,
         const queryLower = query.toLowerCase();
         const languageContext = getCurrentLanguageContext(editor);
 
-        const matchingSnippets = Global.SnippetHintsList.filter((snippet) => {
-            if (snippet.abbreviation.toLowerCase().startsWith(queryLower)) {
-                return isSnippetSupportedInLanguageContext(snippet, languageContext, editor);
+        // Get the candidate snippets for the current language/extension
+        let candidateSnippets = new Set();
+
+        // Add universal snippets (support "all" languages)
+        const universalSnippets = snippetsByLanguage.get("all");
+        if (universalSnippets) {
+            universalSnippets.forEach(snippet => candidateSnippets.add(snippet));
+        }
+
+        // Add language-specific snippets
+        if (languageContext) {
+            const effectiveExtension = mapLanguageToExtension(languageContext);
+            if (effectiveExtension.startsWith(".")) {
+                const languageSnippets = snippetsByLanguage.get(effectiveExtension);
+                if (languageSnippets) {
+                    languageSnippets.forEach(snippet => candidateSnippets.add(snippet));
+                }
             }
-            return false;
+        }
+
+        // Fallback: if we can't determine language, check all snippets
+        if (candidateSnippets.size === 0) {
+            candidateSnippets = new Set(allSnippetsOptimized);
+        }
+
+        // Filter candidates by prefix match using pre-computed lowercase abbreviations
+        const matchingSnippets = Array.from(candidateSnippets).filter((snippet) => {
+            return snippet.abbreviationLower.startsWith(queryLower);
         });
 
         // sort snippets so that the exact matches will appear over the partial matches
         return matchingSnippets.sort((a, b) => {
-            const aLower = a.abbreviation.toLowerCase();
-            const bLower = b.abbreviation.toLowerCase();
-
             // check if either is an exact match
-            const aExact = aLower === queryLower;
-            const bExact = bLower === queryLower;
+            const aExact = a.abbreviationLower === queryLower;
+            const bExact = b.abbreviationLower === queryLower;
 
             // because exact matches appear first
             if (aExact && !bExact) {
@@ -35166,7 +35352,7 @@ define("extensionsIntegrated/CustomSnippets/helper", function (require, exports,
                 return 1;
             }
 
-            return aLower.localeCompare(bLower);
+            return a.abbreviationLower.localeCompare(b.abbreviationLower);
         });
     }
 
@@ -35211,7 +35397,7 @@ define("extensionsIntegrated/CustomSnippets/helper", function (require, exports,
         }
 
         // the codehints related style is written in brackets_patterns_override.less file
-        let $icon = $(`<a href="#" class="custom-snippet-code-hint" style="text-decoration: none">Snippet</a>`);
+        let $icon = $(`<a href="#" class="custom-snippet-code-hint" style="text-decoration: none">${Strings.CUSTOM_SNIPPETS_HINT_LABEL}</a>`);
         $hint.append($icon);
 
         if (description && description.trim() !== "") {
@@ -35260,11 +35446,14 @@ define("extensionsIntegrated/CustomSnippets/helper", function (require, exports,
         const templateText = $("#edit-template-text-box").val().trim();
         const fileExtension = $("#edit-file-extn-box").val().trim();
 
+        // process the file extension so that we can get the value in the required format
+        const processedFileExtension = processFileExtensionInput(fileExtension);
+
         return {
             abbreviation: abbreviation,
             description: description || "", // allow empty description
             templateText: templateText,
-            fileExtension: fileExtension || "all" // default to "all" if empty
+            fileExtension: processedFileExtension || "all" // default to "all" if empty
         };
     }
 
@@ -35439,7 +35628,7 @@ define("extensionsIntegrated/CustomSnippets/helper", function (require, exports,
             const wrapperId = isEditForm ? "edit-abbr-box-wrapper" : "abbr-box-wrapper";
             const errorId = isEditForm ? "edit-abbreviation-space-error" : "abbreviation-space-error";
 
-            UIHelper.showError(inputId, wrapperId, "Space is not accepted as a valid abbreviation character.", errorId);
+            UIHelper.showError(inputId, wrapperId, Strings.CUSTOM_SNIPPETS_SPACE_ERROR, errorId);
             return;
         }
 
@@ -35457,7 +35646,7 @@ define("extensionsIntegrated/CustomSnippets/helper", function (require, exports,
             const wrapperId = isEditForm ? "edit-abbr-box-wrapper" : "abbr-box-wrapper";
             const errorId = isEditForm ? "edit-abbreviation-length-error" : "abbreviation-length-error";
 
-            UIHelper.showError(inputId, wrapperId, "Abbreviation cannot be more than 30 characters.", errorId);
+            UIHelper.showError(inputId, wrapperId, Strings.CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR, errorId);
         }
     }
 
@@ -35486,7 +35675,7 @@ define("extensionsIntegrated/CustomSnippets/helper", function (require, exports,
             const wrapperId = isEditForm ? "edit-desc-box-wrapper" : "desc-box-wrapper";
             const errorId = isEditForm ? "edit-description-length-error" : "description-length-error";
 
-            UIHelper.showError(inputId, wrapperId, "Description cannot be more than 80 characters.", errorId);
+            UIHelper.showError(inputId, wrapperId, Strings.CUSTOM_SNIPPETS_DESC_LENGTH_ERROR, errorId);
         }
     }
 
@@ -35549,15 +35738,10 @@ define("extensionsIntegrated/CustomSnippets/helper", function (require, exports,
             // Prioritize length error over space error if both occurred
             if (wasTruncated) {
                 const errorId = isEditForm ? "edit-abbreviation-paste-length-error" : "abbreviation-paste-length-error";
-                UIHelper.showError(inputId, wrapperId, "Abbreviation cannot be more than 30 characters.", errorId);
+                UIHelper.showError(inputId, wrapperId, Strings.CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR, errorId);
             } else if (hadSpaces) {
                 const errorId = isEditForm ? "edit-abbreviation-paste-space-error" : "abbreviation-paste-space-error";
-                UIHelper.showError(
-                    inputId,
-                    wrapperId,
-                    "Space is not accepted as a valid abbreviation character.",
-                    errorId
-                );
+                UIHelper.showError(inputId, wrapperId, Strings.CUSTOM_SNIPPETS_SPACE_ERROR, errorId);
             }
         }
 
@@ -35625,7 +35809,7 @@ define("extensionsIntegrated/CustomSnippets/helper", function (require, exports,
             const wrapperId = isEditForm ? "edit-desc-box-wrapper" : "desc-box-wrapper";
             const errorId = isEditForm ? "edit-description-paste-length-error" : "description-paste-length-error";
 
-            UIHelper.showError(inputId, wrapperId, "Description cannot be more than 80 characters.", errorId);
+            UIHelper.showError(inputId, wrapperId, Strings.CUSTOM_SNIPPETS_DESC_LENGTH_ERROR, errorId);
         }
 
         // Determine which save button to toggle based on input field
@@ -35636,6 +35820,20 @@ define("extensionsIntegrated/CustomSnippets/helper", function (require, exports,
         }
     }
 
+    /**
+     * Categorize file extension for metrics tracking
+     * @param {string} fileExtension - The file extension from snippet
+     * @returns {string} - "all" if snippet is enabled for all files, otherwise "file"
+     */
+    function categorizeFileExtensionForMetrics(fileExtension) {
+        if (!fileExtension || fileExtension === "all") {
+            return "all";
+        }
+
+        // if not enabled for "all", we just return "file"
+        return "file";
+    }
+
     exports.toggleSaveButtonDisability = toggleSaveButtonDisability;
     exports.createHintItem = createHintItem;
     exports.clearAllInputFields = clearAllInputFields;
@@ -35643,6 +35841,7 @@ define("extensionsIntegrated/CustomSnippets/helper", function (require, exports,
     exports.getCurrentLanguageContext = getCurrentLanguageContext;
     exports.getCurrentFileExtension = getCurrentFileExtension;
     exports.mapLanguageToExtension = mapLanguageToExtension;
+    exports.rebuildOptimizedStructures = rebuildOptimizedStructures;
     exports.isSnippetSupportedInLanguageContext = isSnippetSupportedInLanguageContext;
     exports.isSnippetSupportedInFile = isSnippetSupportedInFile;
     exports.hasExactMatchingSnippet = hasExactMatchingSnippet;
@@ -35655,6 +35854,7 @@ define("extensionsIntegrated/CustomSnippets/helper", function (require, exports,
     exports.populateEditForm = populateEditForm;
     exports.getEditSnippetData = getEditSnippetData;
     exports.toggleEditSaveButtonDisability = toggleEditSaveButtonDisability;
+    exports.categorizeFileExtensionForMetrics = categorizeFileExtensionForMetrics;
     exports.clearEditInputFields = clearEditInputFields;
     exports.handleTextareaTabKey = handleTextareaTabKey;
     exports.validateAbbrInput = validateAbbrInput;
@@ -35684,12 +35884,16 @@ define("extensionsIntegrated/CustomSnippets/helper", function (require, exports,
  */
 
 /* eslint-disable no-invalid-this */
+/* global logger */
 define("extensionsIntegrated/CustomSnippets/main", function (require, exports, module) {
     const AppInit = require("utils/AppInit");
     const CommandManager = require("command/CommandManager");
     const Menus = require("command/Menus");
     const Commands = require("command/Commands");
     const WorkspaceManager = require("view/WorkspaceManager");
+    const Strings = require("strings");
+    const Mustache = require("thirdparty/mustache/mustache");
+    const Metrics = require("utils/Metrics");
 
     const Driver = require("./driver");
     const SnippetsList = require("./snippetsList");
@@ -35698,29 +35902,29 @@ define("extensionsIntegrated/CustomSnippets/main", function (require, exports, m
     const UIHelper = require("./UIHelper");
     const SnippetsState = require("./snippetsState");
     const SnippetCursorManager = require("./snippetCursorManager");
+    const Global = require("./global");
 
     const snippetsPanelTpl = `<div id="custom-snippets-panel" class="custom-snippets-panel bottom-panel vert-resizable top-resizer no-focus">
     <div id="custom-snippets-toolbar" class="toolbar simple-toolbar-layout">
         <div class="title-wrapper">
-            <span class="title toolbar-title">Custom Snippets <span id="snippets-count" class="snippets-count"></span></span>
+            <span class="title toolbar-title">{{Strings.CUSTOM_SNIPPETS_PANEL_TITLE}} <span id="snippets-count" class="snippets-count"></span></span>
             <div id="add-new-snippet-btn" class="custom-snippet-btn">
-                <button title="Add new snippet">
+                <button title="{{Strings.CUSTOM_SNIPPETS_ADD_NEW_TITLE}}">
                     <i class="fas fa-plus"></i>
                 </button>
             </div>
             <div id="back-to-list-menu-btn" class="custom-snippet-btn hidden">
-                <button title="Back to snippets list">
-                    <i class="fas fa-chevron-left"></i> Back
+                <button title="{{Strings.CUSTOM_SNIPPETS_BACK_TO_LIST_TITLE}}">
+                    <i class="back-btn-left-icon fas fa-chevron-left"></i>
+                    <span class="back-btn-text">{{Strings.CUSTOM_SNIPPETS_BACK}}</span>
                 </button>
             </div>
         </div>
         <div class="buttons">
             <div id="filter-snippets-panel" class="filter-snippets-panel">
-                <input id="filter-snippets-input" type="text" placeholder="Filter..." autocomplete="off" />
+                <input id="filter-snippets-input" type="text" placeholder="{{Strings.CUSTOM_SNIPPETS_FILTER_PLACEHOLDER}}" autocomplete="off" />
             </div>
-            <div id="close-custom-snippets-panel-btn">
-                <button><i class="fas fa-times"></i></button>
-            </div>
+            <a href="#" class="close" id="close-custom-snippets-panel-btn">&times;</a>
         </div>
     </div>
 
@@ -35728,17 +35932,17 @@ define("extensionsIntegrated/CustomSnippets/main", function (require, exports, m
         <!--this will display the list of all the already existing snippets-->
         <div id="custom-snippets-list" class="custom-snippes-list">
             <div id="no-snippets-wrapper" class="no-snippets-wrapper">
-                <div id="no-snippets-message">No custom snippets added yet!</div>
+                <div id="no-snippets-message">{{Strings.CUSTOM_SNIPPETS_NO_SNIPPETS_MESSAGE}}</div>
                 <div id="add-snippet-btn">
-                    <button>Add Snippet</button>
+                    <button>{{Strings.CUSTOM_SNIPPETS_ADD_SNIPPET_BTN}}</button>
                 </div>
             </div>
 
             <div id="snippets-list-header" class="snippets-list-header">
-                <div id="snippet-abbr-header">Abbreviation</div>
-                <div id="snippet-template-header">Template Text</div>
-                <div id="snippet-description-header">Description</div>
-                <div id="snippet-file-extension-header">File Extension</div>
+                <div id="snippet-abbr-header">{{Strings.CUSTOM_SNIPPETS_HEADER_ABBREVIATION}}</div>
+                <div id="snippet-template-header">{{Strings.CUSTOM_SNIPPETS_HEADER_TEMPLATE}}</div>
+                <div id="snippet-description-header">{{Strings.CUSTOM_SNIPPETS_HEADER_DESCRIPTION}}</div>
+                <div id="snippet-file-extension-header">{{Strings.CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION}}</div>
                 <div id="snippet-actions-header"></div>
             </div>
 
@@ -35771,9 +35975,9 @@ define("extensionsIntegrated/CustomSnippets/main", function (require, exports, m
             <div id="abbr-box-wrapper" class="field-wrapper">
                 <div class="field-row">
                     <label for="abbr-box"
-                           title="Enter a short abbreviation (e.g., 'clg', 'fn', 'div'). This is what you'll type to trigger the snippet."
+                           title="{{Strings.CUSTOM_SNIPPETS_ABBR_INPUT_TOOLTIP}}"
                            data-placement="top">
-                        Abbreviation:
+                        {{Strings.CUSTOM_SNIPPETS_ABBREVIATION_LABEL}}
                     </label>
                     <input id="abbr-box" type="text" placeholder="clg" autocomplete="off" />
                 </div>
@@ -35782,38 +35986,39 @@ define("extensionsIntegrated/CustomSnippets/main", function (require, exports, m
             <div id="desc-box-wrapper" class="field-wrapper">
                 <div class="field-row">
                     <label for="desc-box"
-                           title="Brief description of what this snippet does. Leave empty if no description needed."
+                           title="{{Strings.CUSTOM_SNIPPETS_DESC_INPUT_TOOLTIP}}"
                            data-placement="top">
-                        Description:
+                        {{Strings.CUSTOM_SNIPPETS_DESCRIPTION_LABEL}}
                     </label>
-                    <input id="desc-box" type="text" placeholder="console log shortcut (optional)" autocomplete="off" />
+                    <input id="desc-box" type="text" placeholder="{{Strings.CUSTOM_SNIPPETS_DESC_PLACEHOLDER}}" autocomplete="off" />
                 </div>
             </div>
 
             <div id="file-extn-box-wrapper" class="field-wrapper">
                 <div class="field-row">
                     <label for="file-extn-box"
-                           title="Specify file types where this snippet should be available (e.g., '.js', '.html', '.css'). Leave empty to make it available for all files."
+                           title="{{Strings.CUSTOM_SNIPPETS_FILE_EXT_INPUT_TOOLTIP}}"
                            data-placement="top">
-                        File Extension:
+                        {{Strings.CUSTOM_SNIPPETS_FILE_EXTENSION_LABEL}}
                     </label>
-                    <input id="file-extn-box" type="text" placeholder="Leave empty for all files, or specify like .js, .html" autocomplete="off" />
+                    <input id="file-extn-box" type="text" placeholder="{{Strings.CUSTOM_SNIPPETS_FILE_EXT_PLACEHOLDER}}" autocomplete="off" />
                 </div>
             </div>
 
             <div id="template-text-box-wrapper" class="field-wrapper">
                 <div class="field-row">
                     <label for="template-text-box"
-                           title="The actual code that will be inserted. Use ${1}, ${2}, ${3}, etc. for cursor positions. ${1} is the initial position, tab moves to ${2}, ${3}, etc. ${0} is the final position."
+                           title="{{Strings.CUSTOM_SNIPPETS_TEMPLATE_INPUT_TOOLTIP}}"
                            data-placement="top">
-                        Template Text:
+                        {{Strings.CUSTOM_SNIPPETS_TEMPLATE_TEXT_LABEL}}
                     </label>
-                    <textarea id="template-text-box" placeholder="console.log(${1});" autocomplete="off"></textarea>
+                    <textarea id="template-text-box" placeholder="{{Strings.CUSTOM_SNIPPETS_TEMPLATE_PLACEHOLDER}}" autocomplete="off"></textarea>
                 </div>
             </div>
 
-            <div id="save-custom-snippet-btn">
-                <button class="dialog-button btn primary" disabled>Save</button>
+            <div id="add-custom-snippet-panel-buttons">
+                <button id="cancel-custom-snippet-btn" class="dialog-button btn">{{Strings.CUSTOM_SNIPPETS_CANCEL}}</button>
+                <button id="save-custom-snippet-btn" class="dialog-button btn primary" disabled>{{Strings.CUSTOM_SNIPPETS_SAVE}}</button>
             </div>
         </div>
 
@@ -35822,9 +36027,9 @@ define("extensionsIntegrated/CustomSnippets/main", function (require, exports, m
             <div id="edit-abbr-box-wrapper" class="field-wrapper">
                 <div class="field-row">
                     <label for="edit-abbr-box"
-                           title="Enter a short abbreviation (e.g., 'clg', 'fn', 'div'). This is what you'll type to trigger the snippet."
+                           title="{{Strings.CUSTOM_SNIPPETS_ABBR_INPUT_TOOLTIP}}"
                            data-placement="top">
-                        Abbreviation:
+                        {{Strings.CUSTOM_SNIPPETS_ABBREVIATION_LABEL}}
                     </label>
                     <input id="edit-abbr-box" type="text" placeholder="clg" autocomplete="off" />
                 </div>
@@ -35833,39 +36038,39 @@ define("extensionsIntegrated/CustomSnippets/main", function (require, exports, m
             <div id="edit-desc-box-wrapper" class="field-wrapper">
                 <div class="field-row">
                     <label for="edit-desc-box"
-                           title="Brief description of what this snippet does. Leave empty if no description needed."
+                           title="{{Strings.CUSTOM_SNIPPETS_DESC_INPUT_TOOLTIP}}"
                            data-placement="top">
-                        Description:
+                        {{Strings.CUSTOM_SNIPPETS_DESCRIPTION_LABEL}}
                     </label>
-                    <input id="edit-desc-box" type="text" placeholder="console log shortcut (optional)" autocomplete="off" />
+                    <input id="edit-desc-box" type="text" placeholder="{{Strings.CUSTOM_SNIPPETS_DESC_PLACEHOLDER}}" autocomplete="off" />
                 </div>
             </div>
 
             <div id="edit-file-extn-box-wrapper" class="field-wrapper">
                 <div class="field-row">
                     <label for="edit-file-extn-box"
-                           title="Specify file types where this snippet should be available (e.g., '.js', '.html', '.css'). Leave empty to make it available for all files."
+                           title="{{Strings.CUSTOM_SNIPPETS_FILE_EXT_INPUT_TOOLTIP}}"
                            data-placement="top">
-                        File Extension:
+                        {{Strings.CUSTOM_SNIPPETS_FILE_EXTENSION_LABEL}}
                     </label>
-                    <input id="edit-file-extn-box" type="text" placeholder="Leave empty for all files, or specify like .js, .html" autocomplete="off" />
+                    <input id="edit-file-extn-box" type="text" placeholder="{{Strings.CUSTOM_SNIPPETS_FILE_EXT_PLACEHOLDER}}" autocomplete="off" />
                 </div>
             </div>
 
             <div id="edit-template-text-box-wrapper" class="field-wrapper">
                 <div class="field-row">
                     <label for="edit-template-text-box"
-                           title="The actual code that will be inserted. Use ${1}, ${2}, ${3}, etc. for cursor positions. ${1} is the initial position, tab moves to ${2}, ${3}, etc. ${0} is the final position."
+                           title="{{Strings.CUSTOM_SNIPPETS_TEMPLATE_INPUT_TOOLTIP}}"
                            data-placement="top">
-                        Template Text:
+                        {{Strings.CUSTOM_SNIPPETS_TEMPLATE_TEXT_LABEL}}
                     </label>
-                    <textarea id="edit-template-text-box" placeholder="console.log(${1});" autocomplete="off"></textarea>
+                    <textarea id="edit-template-text-box" placeholder="{{Strings.CUSTOM_SNIPPETS_TEMPLATE_PLACEHOLDER}}" autocomplete="off" />
                 </div>
             </div>
 
             <div id="edit-snippet-buttons">
-                <button id="reset-snippet-btn" class="dialog-button btn">Reset</button>
-                <button id="save-edit-snippet-btn" class="dialog-button btn primary" disabled>Save</button>
+                <button id="cancel-edit-snippet-btn" class="dialog-button btn">{{Strings.CUSTOM_SNIPPETS_CANCEL}}</button>
+                <button id="save-edit-snippet-btn" class="dialog-button btn primary" disabled>{{Strings.CUSTOM_SNIPPETS_SAVE}}</button>
             </div>
         </div>
     </div>
@@ -35876,8 +36081,8 @@ define("extensionsIntegrated/CustomSnippets/main", function (require, exports, m
 
     const MY_COMMAND_ID = "custom_snippets";
     const PANEL_ID = "customSnippets.panel";
-    const MENU_ITEM_NAME = "Custom Snippets..."; // this name will appear as the menu item
-    const PANEL_MIN_SIZE = 100; // the minimum size more than which its height cannot be decreased
+    const MENU_ITEM_NAME = Strings.CUSTOM_SNIPPETS_MENU_ITEM_NAME; // this name will appear as the menu item
+    const PANEL_MIN_SIZE = 340; // the minimum size more than which its height cannot be decreased
 
     // this is to store the panel reference,
     // as we only need to create this once. rest of the time we can just toggle the visibility of the panel
@@ -35908,8 +36113,10 @@ define("extensionsIntegrated/CustomSnippets/main", function (require, exports, m
     function _togglePanelVisibility() {
         if (customSnippetsPanel.isVisible()) {
             customSnippetsPanel.hide();
+            CommandManager.get(MY_COMMAND_ID).setChecked(false);
         } else {
             customSnippetsPanel.show();
+            CommandManager.get(MY_COMMAND_ID).setChecked(true);
 
             $("#filter-snippets-input").val("");
             UIHelper.initializeListViewToolbarTitle();
@@ -35925,6 +36132,7 @@ define("extensionsIntegrated/CustomSnippets/main", function (require, exports, m
      */
     function _hidePanel() {
         customSnippetsPanel.hide();
+        CommandManager.get(MY_COMMAND_ID).setChecked(false);
     }
 
     /**
@@ -35937,6 +36145,7 @@ define("extensionsIntegrated/CustomSnippets/main", function (require, exports, m
         // if it is then we can just toggle its visibility
         if (!customSnippetsPanel) {
             _createPanel();
+            CommandManager.get(MY_COMMAND_ID).setChecked(true);
         } else {
             _togglePanelVisibility();
         }
@@ -35958,6 +36167,7 @@ define("extensionsIntegrated/CustomSnippets/main", function (require, exports, m
     function _registerHandlers() {
         const $closePanelBtn = $("#close-custom-snippets-panel-btn");
         const $saveCustomSnippetBtn = $("#save-custom-snippet-btn");
+        const $cancelCustomSnippetBtn = $("#cancel-custom-snippet-btn");
         const $abbrInput = $("#abbr-box");
         const $descInput = $("#desc-box");
         const $templateInput = $("#template-text-box");
@@ -35972,7 +36182,7 @@ define("extensionsIntegrated/CustomSnippets/main", function (require, exports, m
         const $editTemplateInput = $("#edit-template-text-box");
         const $editFileExtnInput = $("#edit-file-extn-box");
         const $saveEditSnippetBtn = $("#save-edit-snippet-btn");
-        const $resetSnippetBtn = $("#reset-snippet-btn");
+        const $cancelEditSnippetBtn = $("#cancel-edit-snippet-btn");
 
         $addSnippetBtn.on("click", function () {
             UIHelper.showAddSnippetMenu();
@@ -35993,6 +36203,11 @@ define("extensionsIntegrated/CustomSnippets/main", function (require, exports, m
 
         $saveCustomSnippetBtn.on("click", function () {
             Driver.handleSaveBtnClick();
+        });
+
+        $cancelCustomSnippetBtn.on("click", function () {
+            UIHelper.showSnippetListMenu();
+            SnippetsList.showSnippetsList();
         });
 
         $abbrInput.on("input", Helper.toggleSaveButtonDisability);
@@ -36027,7 +36242,9 @@ define("extensionsIntegrated/CustomSnippets/main", function (require, exports, m
         });
 
         $editAbbrInput.on("input", Helper.toggleEditSaveButtonDisability);
+        $editDescInput.on("input", Helper.toggleEditSaveButtonDisability);
         $editTemplateInput.on("input", Helper.toggleEditSaveButtonDisability);
+        $editFileExtnInput.on("input", Helper.toggleEditSaveButtonDisability);
 
         $editAbbrInput.on("keydown", function (e) {
             Helper.validateAbbrInput(e, this);
@@ -36061,8 +36278,8 @@ define("extensionsIntegrated/CustomSnippets/main", function (require, exports, m
             Driver.handleEditSaveBtnClick();
         });
 
-        $resetSnippetBtn.on("click", function () {
-            Driver.handleResetBtnClick();
+        $cancelEditSnippetBtn.on("click", function () {
+            Driver.handleCancelEditBtnClick();
         });
 
         // filter input event handler
@@ -36079,10 +36296,26 @@ define("extensionsIntegrated/CustomSnippets/main", function (require, exports, m
 
     AppInit.appReady(function () {
         CommandManager.register(MENU_ITEM_NAME, MY_COMMAND_ID, showCustomSnippetsPanel);
-        $snippetsPanel = $(snippetsPanelTpl);
+        // Render template with localized strings
+        const renderedHtml = Mustache.render(snippetsPanelTpl, {Strings: Strings});
+        $snippetsPanel = $(renderedHtml);
         _addToMenu();
         CodeHintIntegration.init();
-        SnippetsState.loadSnippetsFromState();
+
+        // load snippets from file storage
+        SnippetsState.loadSnippetsFromState()
+            .then(function () {
+                // track boot-time snippet count (only if user has snippets)
+                const snippetCount = Global.SnippetHintsList.length;
+                if (snippetCount > 0) {
+                    const countRange = Metrics.getRangeName(snippetCount);
+                    Metrics.countEvent(Metrics.EVENT_TYPE.EDITOR, "snipt", `boot.${countRange}`);
+                }
+            })
+            .catch(function (error) {
+                logger.reportError(error, "Custom Snippets: didn't load on app init");
+            });
+
         SnippetCursorManager.registerHandlers();
     });
 });
@@ -36647,11 +36880,15 @@ define("extensionsIntegrated/CustomSnippets/snippetCursorManager", function (req
 
 /* eslint-disable no-invalid-this */
 define("extensionsIntegrated/CustomSnippets/snippetsList", function (require, exports, module) {
+    const StringUtils = require("utils/StringUtils");
+    const Metrics = require("utils/Metrics");
+
     const Global = require("./global");
     const SnippetsState = require("./snippetsState");
     const UIHelper = require("./UIHelper");
     const FilterSnippets = require("./filterSnippets");
     const Helper = require("./helper");
+    const Strings = require("strings");
 
     /**
      * This function is responsible to create a snippet item
@@ -36667,31 +36904,31 @@ define("extensionsIntegrated/CustomSnippets/snippetsList", function (require, ex
         const $snippetAbbr = $("<div>")
             .text(snippetItem.abbreviation)
             .attr("id", "snippet-abbr")
-            .attr("title", `Abbreviation: ${snippetItem.abbreviation}`);
+            .attr("title", StringUtils.format(Strings.CUSTOM_SNIPPETS_EDIT_ABBR_TOOLTIP, snippetItem.abbreviation));
 
         const $snippetTemplate = $("<div>")
             .text(snippetItem.templateText)
             .attr("id", "snippet-template")
-            .attr("title", `Template: ${snippetItem.templateText}`);
+            .attr("title", StringUtils.format(Strings.CUSTOM_SNIPPETS_EDIT_TEMPLATE_TOOLTIP, snippetItem.templateText));
 
         const $snippetDescription = $("<div>")
             .text(
                 snippetItem.description && snippetItem.description.trim() !== ""
                     ? snippetItem.description
-                    : "No description"
+                    : Strings.CUSTOM_SNIPPETS_NO_DESCRIPTION
             )
             .attr("id", "snippet-description")
             .attr(
                 "title",
                 snippetItem.description && snippetItem.description.trim() !== ""
-                    ? `Description: ${snippetItem.description}`
-                    : "No description provided"
+                    ? StringUtils.format(Strings.CUSTOM_SNIPPETS_EDIT_DESC_TOOLTIP, snippetItem.description)
+                    : Strings.CUSTOM_SNIPPETS_ADD_DESC_TOOLTIP
             );
 
         const $snippetFiles = $("<div>")
             .text(snippetItem.fileExtension || "all")
             .attr("id", "snippet-files")
-            .attr("title", `File extensions: ${snippetItem.fileExtension}`);
+            .attr("title", StringUtils.format(Strings.CUSTOM_SNIPPETS_EDIT_FILE_EXT_TOOLTIP, snippetItem.fileExtension || "all"));
 
         const $deleteSnippet = $("<div>")
             .html(`<i class="fas fa-trash"></i>`)
@@ -36724,9 +36961,9 @@ define("extensionsIntegrated/CustomSnippets/snippetsList", function (require, ex
         const filterText = $filterInput.val().trim();
 
         if (filterText) {
-            $emptyMessage.text(`No snippets match "${filterText}"`);
+            $emptyMessage.text(StringUtils.format(Strings.CUSTOM_SNIPPETS_NO_MATCHES, filterText));
         } else {
-            $emptyMessage.text("No custom snippets added yet!");
+            $emptyMessage.html(Strings.CUSTOM_SNIPPETS_LEARN_MORE);
         }
     }
 
@@ -36784,9 +37021,19 @@ define("extensionsIntegrated/CustomSnippets/snippetsList", function (require, ex
         const index = Global.SnippetHintsList.findIndex((s) => s.abbreviation === snippetItem.abbreviation);
 
         if (index !== -1) {
+            // track the snippet deletion metrics before removing
+            const fileCategory = Helper.categorizeFileExtensionForMetrics(snippetItem.fileExtension);
+            Metrics.countEvent(Metrics.EVENT_TYPE.EDITOR, "snipt", `del.${fileCategory}`);
+
             Global.SnippetHintsList.splice(index, 1); // removes it from the actual array
-            // save to preferences after deleting snippet
-            SnippetsState.saveSnippetsToState();
+            Helper.rebuildOptimizedStructures();
+
+            // save to file storage
+            SnippetsState.saveSnippetsToState()
+                .catch(function (error) {
+                    console.error("failed to delete custom snippet correctly:", error);
+                });
+
             // update the snippets count in toolbar
             Helper.updateSnippetsCount();
             // Refresh the entire list to properly handle filtering
@@ -36867,46 +37114,80 @@ define("extensionsIntegrated/CustomSnippets/snippetsList", function (require, ex
  *
  */
 
+/* global jsPromise, logger */
 define("extensionsIntegrated/CustomSnippets/snippetsState", function (require, exports, module) {
-    const PreferencesManager = require("preferences/PreferencesManager");
-
     const Global = require("./global");
+    const FileSystem = require("filesystem/FileSystem");
+    const FileUtils = require("file/FileUtils");
+    const FileSystemError = require("filesystem/FileSystemError");
+    const Helper = require("./helper");
 
-    // create extension preferences
-    const prefs = PreferencesManager.getExtensionPrefs("CustomSnippets");
-
-    // define preference for storing snippets
-    prefs.definePreference("snippetsList", "array", [], {
-        description: "List of custom code snippets"
-    });
+    const SNIPPETS_FILE_PATH = brackets.app.getApplicationSupportDirectory() + "/customSnippets.json";
 
     /**
-     * Load snippets from preferences
-     * This is called on startup to restore previously saved snippets
+     * This function is responsible to load snippets from file storage
+     * @returns {Promise} a promise that resolves when snippets are loaded
      */
     function loadSnippetsFromState() {
-        try {
-            const savedSnippets = prefs.get("snippetsList");
-            if (Array.isArray(savedSnippets)) {
-                // clear existing snippets and load from saved state
-                Global.SnippetHintsList.length = 0;
-                Global.SnippetHintsList.push(...savedSnippets);
-            }
-        } catch (e) {
-            console.error("something went wrong when trying to load custom snippets from preferences:", e);
-        }
+        return new Promise((resolve, reject) => {
+            const file = FileSystem.getFileForPath(SNIPPETS_FILE_PATH);
+
+            // true is for bypassCache, to get the latest content always
+            const readPromise = FileUtils.readAsText(file, true);
+
+            readPromise
+                .done(function (text) {
+                    try {
+                        const data = JSON.parse(text);
+                        if (data && data.snippets && Array.isArray(data.snippets)) {
+                            Global.SnippetHintsList = data.snippets;
+                        } else {
+                            // no snippets are present
+                            Global.SnippetHintsList = [];
+                        }
+                        // rebuild the optimized data structures after loading snippets
+                        Helper.rebuildOptimizedStructures();
+                        resolve();
+                    } catch (error) {
+                        logger.reportError(
+                            error,
+                            "Custom Snippets: Failed to parse snippets JSON file. File might be corrupted."
+                        );
+                        Global.SnippetHintsList = []; // fallback
+                        Helper.rebuildOptimizedStructures();
+                        resolve();
+                    }
+                })
+                .fail(function (error) {
+                    if (error === FileSystemError.NOT_FOUND) {
+                        // file is not present, empty array
+                        Global.SnippetHintsList = [];
+                        Helper.rebuildOptimizedStructures();
+                        resolve();
+                    } else {
+                        logger.reportError(error, "Custom Snippets: unexpected file system error loading snippets");
+                        Global.SnippetHintsList = [];
+                        Helper.rebuildOptimizedStructures();
+                        resolve();
+                    }
+                });
+        });
     }
 
     /**
-     * Save snippets to preferences
-     * This is called whenever snippets are modified
+     * this function is responsible to save snippets to file storage
+     * @returns {Promise} a promise that resolves when snippets are saved
      */
     function saveSnippetsToState() {
-        try {
-            prefs.set("snippetsList", [...Global.SnippetHintsList]);
-        } catch (e) {
-            console.error("something went wrong when saving custom snippets to preferences:", e);
-        }
+        const dataToSave = {
+            snippets: Global.SnippetHintsList
+        };
+
+        const file = FileSystem.getFileForPath(SNIPPETS_FILE_PATH);
+        const jsonText = JSON.stringify(dataToSave);
+
+        // true is allowBlindWrite to overwrite without checking file contents
+        return jsPromise(FileUtils.writeText(file, jsonText, true));
     }
 
     exports.loadSnippetsFromState = loadSnippetsFromState;
@@ -108896,7 +109177,47 @@ define("nls/root/strings", {
     "SIGN_OUT": "Sign out",
     "ACCOUNT_DETAILS": "Account Details",
     "AI_QUOTA_USED": "AI quota used",
-    "LOGIN_REFRESH": "Check Login Status"
+    "LOGIN_REFRESH": "Check Login Status",
+
+    // Custom Snippets
+    "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Custom Snippets\u2026",
+    "CUSTOM_SNIPPETS_PANEL_TITLE": "Custom Snippets",
+    "CUSTOM_SNIPPETS_ADD_NEW_TITLE": "Add new snippet",
+    "CUSTOM_SNIPPETS_BACK_TO_LIST_TITLE": "Back to snippets list",
+    "CUSTOM_SNIPPETS_BACK": "Back",
+    "CUSTOM_SNIPPETS_FILTER_PLACEHOLDER": "Filter...",
+    "CUSTOM_SNIPPETS_NO_SNIPPETS_MESSAGE": "No custom snippets added yet!",
+    "CUSTOM_SNIPPETS_ADD_SNIPPET_BTN": "Add Snippet",
+    "CUSTOM_SNIPPETS_ABBREVIATION_LABEL": "Abbreviation:",
+    "CUSTOM_SNIPPETS_TEMPLATE_TEXT_LABEL": "Template Text:",
+    "CUSTOM_SNIPPETS_DESCRIPTION_LABEL": "Description:",
+    "CUSTOM_SNIPPETS_FILE_EXTENSION_LABEL": "File Extension:",
+    "CUSTOM_SNIPPETS_CANCEL": "Cancel",
+    "CUSTOM_SNIPPETS_SAVE": "Save",
+    "CUSTOM_SNIPPETS_NO_DESCRIPTION": "No description",
+    "CUSTOM_SNIPPETS_NO_MATCHES": "No snippets match \"{0}\"",
+    "CUSTOM_SNIPPETS_LEARN_MORE": "Add your own code hints to speed up coding - <a href=\"https://docs.phcode.dev\" target=\"_blank\">Learn More</a>",
+    "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "A snippet with abbreviation \"{0}\" already exists.",
+    "CUSTOM_SNIPPETS_SPACE_ERROR": "Space is not accepted as a valid abbreviation character.",
+    "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "Abbreviation cannot be more than 30 characters.",
+    "CUSTOM_SNIPPETS_DESC_LENGTH_ERROR": "Description cannot be more than 80 characters.",
+    "CUSTOM_SNIPPETS_HINT_LABEL": "Snippet",
+    "CUSTOM_SNIPPETS_EDIT_ABBR_TOOLTIP": "Click to edit abbreviation - {0}",
+    "CUSTOM_SNIPPETS_EDIT_TEMPLATE_TOOLTIP": "Click to edit template text -\n{0}",
+    "CUSTOM_SNIPPETS_EDIT_DESC_TOOLTIP": "Click to edit description - {0}",
+    "CUSTOM_SNIPPETS_ADD_DESC_TOOLTIP": "Click to add description",
+    "CUSTOM_SNIPPETS_EDIT_FILE_EXT_TOOLTIP": "Click to edit file extensions - {0}",
+    "CUSTOM_SNIPPETS_ABBR_INPUT_TOOLTIP": "Enter a short abbreviation (e.g., 'clg', 'fn', 'div'). This is what you'll type to trigger the snippet.",
+    "CUSTOM_SNIPPETS_DESC_INPUT_TOOLTIP": "Brief description of what this snippet does. Leave empty if no description needed.",
+    "CUSTOM_SNIPPETS_FILE_EXT_INPUT_TOOLTIP": "Specify file types where this snippet should be available (e.g., '.js', '.html', '.css'). Leave empty to make it available for all files.",
+    "CUSTOM_SNIPPETS_TEMPLATE_INPUT_TOOLTIP": "The actual code that will be inserted. Use ${1}, ${2}, ${3}, etc. for cursor positions. ${1} is the initial position, tab moves to ${2}, ${3}, etc. ${0} is the final position.",
+    "CUSTOM_SNIPPETS_DESC_PLACEHOLDER": "console log shortcut (optional)",
+    "CUSTOM_SNIPPETS_FILE_EXT_PLACEHOLDER": "Leave empty for all files, or specify like .js, .html",
+    "CUSTOM_SNIPPETS_TEMPLATE_PLACEHOLDER": "console.log(${1});",
+    "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Abbreviation",
+    "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Template Text",
+    "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Description",
+    "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "File Extension"
 });
 
 /*
@@ -162372,9 +162693,9 @@ define("services/profile-menu", function (require, exports, module) {
 
     function _createSVGIcon(initials, bgColor) {
         return `<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="12" cy="12" r="10" fill="${bgColor}"/>
-  <text x="50%" y="58%" text-anchor="middle" font-size="11" fill="#fff" font-family="Inter, sans-serif" dy=".1em">
-    ${initials}</text>
+                <circle cx="12" cy="12" r="10" fill="${bgColor}"/>
+            <text x="12" y="12" text-anchor="middle" dominant-baseline="central" font-size="10" fill="#fff" font-family="Inter, sans-serif">
+            ${initials}</text>
         </svg>`;
     }
 

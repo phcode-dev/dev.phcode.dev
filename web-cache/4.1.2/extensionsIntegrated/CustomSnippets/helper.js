@@ -22,6 +22,7 @@ define(function (require, exports, module) {
     const StringMatch = require("utils/StringMatch");
     const Global = require("./global");
     const UIHelper = require("./UIHelper");
+    const Strings = require("strings");
 
     // list of all the navigation and function keys that are allowed inside the input fields
     const ALLOWED_NAVIGATION_KEYS = [
@@ -51,6 +52,77 @@ define(function (require, exports, module) {
         "F11",
         "F12"
     ];
+
+    // Optimized data structures for fast snippet lookups
+    let snippetsByLanguage = new Map();
+    let snippetsByAbbreviation = new Map();
+    let allSnippetsOptimized = [];
+
+    /**
+     * Preprocesses a snippet to add optimized lookup properties
+     * @param {Object} snippet - The original snippet object
+     * @returns {Object} - The snippet with added optimization properties
+     */
+    function preprocessSnippet(snippet) {
+        const optimizedSnippet = { ...snippet };
+
+        // pre-compute lowercase abbreviation for faster matching
+        optimizedSnippet.abbreviationLower = snippet.abbreviation.toLowerCase();
+
+        // parse and create a Set of supported extensions for O(1) lookup
+        if (snippet.fileExtension.toLowerCase() === "all") {
+            optimizedSnippet.supportedLangSet = new Set(["all"]);
+            optimizedSnippet.supportsAllLanguages = true;
+        } else {
+            const extensions = snippet.fileExtension
+                .toLowerCase()
+                .split(",")
+                .map(ext => ext.trim())
+                .filter(ext => ext);
+            optimizedSnippet.supportedLangSet = new Set(extensions);
+            optimizedSnippet.supportsAllLanguages = false;
+        }
+
+        return optimizedSnippet;
+    }
+
+    /**
+     * Rebuilds optimized data structures from the current snippet list
+     * we call this function whenever snippets are loaded, added, modified, or deleted
+     * i.e. whenever the snippetList is updated
+     */
+    function rebuildOptimizedStructures() {
+        // clear existing structures
+        snippetsByLanguage.clear();
+        snippetsByAbbreviation.clear();
+        allSnippetsOptimized.length = 0;
+
+        // Process each snippet
+        Global.SnippetHintsList.forEach(snippet => {
+            const optimizedSnippet = preprocessSnippet(snippet);
+            allSnippetsOptimized.push(optimizedSnippet);
+
+            // Index by abbreviation (lowercase) for exact matches
+            snippetsByAbbreviation.set(optimizedSnippet.abbreviationLower, optimizedSnippet);
+
+            // Index by supported languages/extensions
+            if (optimizedSnippet.supportsAllLanguages) {
+                // Add to a special "all" key for universal snippets
+                if (!snippetsByLanguage.has("all")) {
+                    snippetsByLanguage.set("all", new Set());
+                }
+                snippetsByLanguage.get("all").add(optimizedSnippet);
+            } else {
+                // Add to each supported extension
+                optimizedSnippet.supportedLangSet.forEach(ext => {
+                    if (!snippetsByLanguage.has(ext)) {
+                        snippetsByLanguage.set(ext, new Set());
+                    }
+                    snippetsByLanguage.get(ext).add(optimizedSnippet);
+                });
+            }
+        });
+    }
 
     /**
      * map the language IDs to their file extensions for snippet matching
@@ -96,6 +168,67 @@ define(function (require, exports, module) {
     }
 
     /**
+     * This function is to make sure file extensions are properly formatted with leading dots
+     * because user may provide values in not very consistent manner, we need to handle all those cases
+     * For ex: what we expect: `.js, .html, .css`
+     * what user may provide: `js, html, css` or: `js html css` etc
+     *
+     * This function processes file extensions in various formats and ensures they:
+     * - Have a leading dot (if not empty or "all")
+     * - Are properly separated with commas and spaces
+     * - Don't contain empty or standalone dots
+     * - No consecutive commas
+     *
+     * @param {string} extension - The file extension(s) to process
+     * @returns {string} - The properly formatted file extension(s)
+     */
+    function processFileExtensionInput(extension) {
+        if (!extension || extension === "all") {
+            return extension;
+        }
+
+        // Step 1: normalize the input by converting spaces to commas if no commas exist
+        if (extension.includes(" ")) {
+            extension = extension.replace(/\s+/g, ",");
+        }
+
+        let result = "";
+
+        // Step 2: process comma-separated extensions FIRST (before dot-separated)
+        // this prevents issues with inputs like ".js,.html,." or ".js,,.html"
+        if (extension.includes(",")) {
+            result = extension
+                .split(",")
+                .map((ext) => {
+                    ext = ext.trim();
+                    // skip all the standalone dots or empty entries
+                    if (ext === "." || ext === "") {
+                        return "";
+                    }
+                    // Add leading dot if missing
+                    return ext.startsWith(".") ? ext : "." + ext;
+                })
+                .filter((ext) => ext !== "") // Remove empty entries
+                .join(", ");
+        } else {
+            // Step 3: Handle single extension
+            if (extension === ".") {
+                result = ""; // remove standalone dot
+            } else {
+                // Add leading dot if missing
+                result = extension.startsWith(".") ? extension : "." + extension;
+            }
+        }
+
+        // this is just the final safeguard to remove any consecutive commas and clean up spacing
+        result = result.replace(/,\s*,+/g, ",").replace(/,\s*$/, "").replace(/^\s*,/, "").trim();
+        // remove trailing dots (like .css. -> .css)
+        result = result.endsWith('.') ? result.slice(0, -1) : result;
+
+        return result;
+    }
+
+    /**
      * This function is responsible to get the snippet data from all the required input fields
      * it is called when the save button is clicked
      * @private
@@ -108,11 +241,14 @@ define(function (require, exports, module) {
         const templateText = $("#template-text-box").val().trim();
         const fileExtension = $("#file-extn-box").val().trim();
 
+        // process the file extension so that we can get the value in the required format
+        const processedFileExtension = processFileExtensionInput(fileExtension);
+
         return {
             abbreviation: abbreviation,
             description: description || "", // allow empty description
             templateText: templateText,
-            fileExtension: fileExtension || "all" // default to "all" if empty
+            fileExtension: processedFileExtension || "all" // default to "all" if empty
         };
     }
 
@@ -128,7 +264,7 @@ define(function (require, exports, module) {
         const $abbrInput = $("#abbr-box");
         const $templateInput = $("#template-text-box");
 
-        const $saveBtn = $("#save-custom-snippet-btn button");
+        const $saveBtn = $("#save-custom-snippet-btn");
 
         // make sure that the required fields has some value
         const hasAbbr = $abbrInput.val().trim().length > 0;
@@ -144,15 +280,9 @@ define(function (require, exports, module) {
      * @returns {string|null} - The language ID or null if not available
      */
     function getCurrentLanguageContext(editor) {
-        // first try to get the language at cursor pos
-        // if it for some reason fails, then just go for the file extension
-        try {
-            const language = editor.getLanguageForPosition();
-            const languageId = language ? language.getId() : null;
-            return languageId;
-        } catch (e) {
-            return getCurrentFileExtension(editor);
-        }
+        const language = editor.getLanguageForPosition();
+        const languageId = language ? language.getId() : null;
+        return languageId;
     }
 
     /**
@@ -172,32 +302,40 @@ define(function (require, exports, module) {
      * Checks if a snippet is supported in the given language context
      * Falls back to file extension matching if language mapping isn't available
      *
-     * @param {Object} snippet - The snippet object
+     * @param {Object} snippet - The snippet object (optimized or regular)
      * @param {string|null} languageContext - The current language context
      * @param {Editor} editor - The editor instance for fallback
      * @returns {boolean} - True if the snippet is supported
      */
     function isSnippetSupportedInLanguageContext(snippet, languageContext, editor) {
-        if (snippet.fileExtension.toLowerCase() === "all") {
+        // Check for "all" languages support (both optimized and non-optimized)
+        if (
+            snippet.supportsAllLanguages === true ||
+            (snippet.fileExtension && snippet.fileExtension.toLowerCase() === "all")
+        ) {
             return true;
         }
 
+        // Try language context matching if available
         if (languageContext) {
             const effectiveExtension = mapLanguageToExtension(languageContext);
 
             // if we have a proper mapping (starts with .), use language context matching
             if (effectiveExtension.startsWith(".")) {
+                // Use optimized path if available
+                if (snippet.supportedLangSet) {
+                    return snippet.supportedLangSet.has(effectiveExtension);
+                }
+                // Fallback for non-optimized snippets
                 const supportedExtensions = snippet.fileExtension
                     .toLowerCase()
                     .split(",")
                     .map((ext) => ext.trim());
-
                 return supportedExtensions.some((ext) => ext === effectiveExtension);
             }
         }
 
-        // this is just a fallback if language context matching failed
-        // file extension matching
+        // final fallback for file extension matching if language context matching failed
         if (editor) {
             const fileExtension = getCurrentFileExtension(editor);
             return isSnippetSupportedInFile(snippet, fileExtension);
@@ -238,12 +376,12 @@ define(function (require, exports, module) {
         const queryLower = query.toLowerCase();
         const languageContext = getCurrentLanguageContext(editor);
 
-        return Global.SnippetHintsList.some((snippet) => {
-            if (snippet.abbreviation.toLowerCase() === queryLower) {
-                return isSnippetSupportedInLanguageContext(snippet, languageContext, editor);
-            }
-            return false;
-        });
+        const snippet = snippetsByAbbreviation.get(queryLower);
+        if (snippet) {
+            return isSnippetSupportedInLanguageContext(snippet, languageContext, editor);
+        }
+
+        return false;
     }
 
     /**
@@ -256,21 +394,41 @@ define(function (require, exports, module) {
         const queryLower = query.toLowerCase();
         const languageContext = getCurrentLanguageContext(editor);
 
-        const matchingSnippets = Global.SnippetHintsList.filter((snippet) => {
-            if (snippet.abbreviation.toLowerCase().startsWith(queryLower)) {
-                return isSnippetSupportedInLanguageContext(snippet, languageContext, editor);
+        // Get the candidate snippets for the current language/extension
+        let candidateSnippets = new Set();
+
+        // Add universal snippets (support "all" languages)
+        const universalSnippets = snippetsByLanguage.get("all");
+        if (universalSnippets) {
+            universalSnippets.forEach(snippet => candidateSnippets.add(snippet));
+        }
+
+        // Add language-specific snippets
+        if (languageContext) {
+            const effectiveExtension = mapLanguageToExtension(languageContext);
+            if (effectiveExtension.startsWith(".")) {
+                const languageSnippets = snippetsByLanguage.get(effectiveExtension);
+                if (languageSnippets) {
+                    languageSnippets.forEach(snippet => candidateSnippets.add(snippet));
+                }
             }
-            return false;
+        }
+
+        // Fallback: if we can't determine language, check all snippets
+        if (candidateSnippets.size === 0) {
+            candidateSnippets = new Set(allSnippetsOptimized);
+        }
+
+        // Filter candidates by prefix match using pre-computed lowercase abbreviations
+        const matchingSnippets = Array.from(candidateSnippets).filter((snippet) => {
+            return snippet.abbreviationLower.startsWith(queryLower);
         });
 
         // sort snippets so that the exact matches will appear over the partial matches
         return matchingSnippets.sort((a, b) => {
-            const aLower = a.abbreviation.toLowerCase();
-            const bLower = b.abbreviation.toLowerCase();
-
             // check if either is an exact match
-            const aExact = aLower === queryLower;
-            const bExact = bLower === queryLower;
+            const aExact = a.abbreviationLower === queryLower;
+            const bExact = b.abbreviationLower === queryLower;
 
             // because exact matches appear first
             if (aExact && !bExact) {
@@ -280,7 +438,7 @@ define(function (require, exports, module) {
                 return 1;
             }
 
-            return aLower.localeCompare(bLower);
+            return a.abbreviationLower.localeCompare(b.abbreviationLower);
         });
     }
 
@@ -325,7 +483,7 @@ define(function (require, exports, module) {
         }
 
         // the codehints related style is written in brackets_patterns_override.less file
-        let $icon = $(`<a href="#" class="custom-snippet-code-hint" style="text-decoration: none">Snippet</a>`);
+        let $icon = $(`<a href="#" class="custom-snippet-code-hint" style="text-decoration: none">${Strings.CUSTOM_SNIPPETS_HINT_LABEL}</a>`);
         $hint.append($icon);
 
         if (description && description.trim() !== "") {
@@ -374,11 +532,14 @@ define(function (require, exports, module) {
         const templateText = $("#edit-template-text-box").val().trim();
         const fileExtension = $("#edit-file-extn-box").val().trim();
 
+        // process the file extension so that we can get the value in the required format
+        const processedFileExtension = processFileExtensionInput(fileExtension);
+
         return {
             abbreviation: abbreviation,
             description: description || "", // allow empty description
             templateText: templateText,
-            fileExtension: fileExtension || "all" // default to "all" if empty
+            fileExtension: processedFileExtension || "all" // default to "all" if empty
         };
     }
 
@@ -553,7 +714,7 @@ define(function (require, exports, module) {
             const wrapperId = isEditForm ? "edit-abbr-box-wrapper" : "abbr-box-wrapper";
             const errorId = isEditForm ? "edit-abbreviation-space-error" : "abbreviation-space-error";
 
-            UIHelper.showError(inputId, wrapperId, "Space is not accepted as a valid abbreviation character.", errorId);
+            UIHelper.showError(inputId, wrapperId, Strings.CUSTOM_SNIPPETS_SPACE_ERROR, errorId);
             return;
         }
 
@@ -571,7 +732,7 @@ define(function (require, exports, module) {
             const wrapperId = isEditForm ? "edit-abbr-box-wrapper" : "abbr-box-wrapper";
             const errorId = isEditForm ? "edit-abbreviation-length-error" : "abbreviation-length-error";
 
-            UIHelper.showError(inputId, wrapperId, "Abbreviation cannot be more than 30 characters.", errorId);
+            UIHelper.showError(inputId, wrapperId, Strings.CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR, errorId);
         }
     }
 
@@ -600,7 +761,7 @@ define(function (require, exports, module) {
             const wrapperId = isEditForm ? "edit-desc-box-wrapper" : "desc-box-wrapper";
             const errorId = isEditForm ? "edit-description-length-error" : "description-length-error";
 
-            UIHelper.showError(inputId, wrapperId, "Description cannot be more than 80 characters.", errorId);
+            UIHelper.showError(inputId, wrapperId, Strings.CUSTOM_SNIPPETS_DESC_LENGTH_ERROR, errorId);
         }
     }
 
@@ -663,15 +824,10 @@ define(function (require, exports, module) {
             // Prioritize length error over space error if both occurred
             if (wasTruncated) {
                 const errorId = isEditForm ? "edit-abbreviation-paste-length-error" : "abbreviation-paste-length-error";
-                UIHelper.showError(inputId, wrapperId, "Abbreviation cannot be more than 30 characters.", errorId);
+                UIHelper.showError(inputId, wrapperId, Strings.CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR, errorId);
             } else if (hadSpaces) {
                 const errorId = isEditForm ? "edit-abbreviation-paste-space-error" : "abbreviation-paste-space-error";
-                UIHelper.showError(
-                    inputId,
-                    wrapperId,
-                    "Space is not accepted as a valid abbreviation character.",
-                    errorId
-                );
+                UIHelper.showError(inputId, wrapperId, Strings.CUSTOM_SNIPPETS_SPACE_ERROR, errorId);
             }
         }
 
@@ -739,7 +895,7 @@ define(function (require, exports, module) {
             const wrapperId = isEditForm ? "edit-desc-box-wrapper" : "desc-box-wrapper";
             const errorId = isEditForm ? "edit-description-paste-length-error" : "description-paste-length-error";
 
-            UIHelper.showError(inputId, wrapperId, "Description cannot be more than 80 characters.", errorId);
+            UIHelper.showError(inputId, wrapperId, Strings.CUSTOM_SNIPPETS_DESC_LENGTH_ERROR, errorId);
         }
 
         // Determine which save button to toggle based on input field
@@ -750,6 +906,20 @@ define(function (require, exports, module) {
         }
     }
 
+    /**
+     * Categorize file extension for metrics tracking
+     * @param {string} fileExtension - The file extension from snippet
+     * @returns {string} - "all" if snippet is enabled for all files, otherwise "file"
+     */
+    function categorizeFileExtensionForMetrics(fileExtension) {
+        if (!fileExtension || fileExtension === "all") {
+            return "all";
+        }
+
+        // if not enabled for "all", we just return "file"
+        return "file";
+    }
+
     exports.toggleSaveButtonDisability = toggleSaveButtonDisability;
     exports.createHintItem = createHintItem;
     exports.clearAllInputFields = clearAllInputFields;
@@ -757,6 +927,7 @@ define(function (require, exports, module) {
     exports.getCurrentLanguageContext = getCurrentLanguageContext;
     exports.getCurrentFileExtension = getCurrentFileExtension;
     exports.mapLanguageToExtension = mapLanguageToExtension;
+    exports.rebuildOptimizedStructures = rebuildOptimizedStructures;
     exports.isSnippetSupportedInLanguageContext = isSnippetSupportedInLanguageContext;
     exports.isSnippetSupportedInFile = isSnippetSupportedInFile;
     exports.hasExactMatchingSnippet = hasExactMatchingSnippet;
@@ -769,6 +940,7 @@ define(function (require, exports, module) {
     exports.populateEditForm = populateEditForm;
     exports.getEditSnippetData = getEditSnippetData;
     exports.toggleEditSaveButtonDisability = toggleEditSaveButtonDisability;
+    exports.categorizeFileExtensionForMetrics = categorizeFileExtensionForMetrics;
     exports.clearEditInputFields = clearEditInputFields;
     exports.handleTextareaTabKey = handleTextareaTabKey;
     exports.validateAbbrInput = validateAbbrInput;

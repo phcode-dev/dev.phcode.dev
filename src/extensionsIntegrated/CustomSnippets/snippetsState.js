@@ -18,46 +18,80 @@
  *
  */
 
+/* global jsPromise, logger */
 define(function (require, exports, module) {
-    const PreferencesManager = require("preferences/PreferencesManager");
-
     const Global = require("./global");
+    const FileSystem = require("filesystem/FileSystem");
+    const FileUtils = require("file/FileUtils");
+    const FileSystemError = require("filesystem/FileSystemError");
+    const Helper = require("./helper");
 
-    // create extension preferences
-    const prefs = PreferencesManager.getExtensionPrefs("CustomSnippets");
-
-    // define preference for storing snippets
-    prefs.definePreference("snippetsList", "array", [], {
-        description: "List of custom code snippets"
-    });
+    const SNIPPETS_FILE_PATH = brackets.app.getApplicationSupportDirectory() + "/customSnippets.json";
 
     /**
-     * Load snippets from preferences
-     * This is called on startup to restore previously saved snippets
+     * This function is responsible to load snippets from file storage
+     * @returns {Promise} a promise that resolves when snippets are loaded
      */
     function loadSnippetsFromState() {
-        try {
-            const savedSnippets = prefs.get("snippetsList");
-            if (Array.isArray(savedSnippets)) {
-                // clear existing snippets and load from saved state
-                Global.SnippetHintsList.length = 0;
-                Global.SnippetHintsList.push(...savedSnippets);
-            }
-        } catch (e) {
-            console.error("something went wrong when trying to load custom snippets from preferences:", e);
-        }
+        return new Promise((resolve, reject) => {
+            const file = FileSystem.getFileForPath(SNIPPETS_FILE_PATH);
+
+            // true is for bypassCache, to get the latest content always
+            const readPromise = FileUtils.readAsText(file, true);
+
+            readPromise
+                .done(function (text) {
+                    try {
+                        const data = JSON.parse(text);
+                        if (data && data.snippets && Array.isArray(data.snippets)) {
+                            Global.SnippetHintsList = data.snippets;
+                        } else {
+                            // no snippets are present
+                            Global.SnippetHintsList = [];
+                        }
+                        // rebuild the optimized data structures after loading snippets
+                        Helper.rebuildOptimizedStructures();
+                        resolve();
+                    } catch (error) {
+                        logger.reportError(
+                            error,
+                            "Custom Snippets: Failed to parse snippets JSON file. File might be corrupted."
+                        );
+                        Global.SnippetHintsList = []; // fallback
+                        Helper.rebuildOptimizedStructures();
+                        resolve();
+                    }
+                })
+                .fail(function (error) {
+                    if (error === FileSystemError.NOT_FOUND) {
+                        // file is not present, empty array
+                        Global.SnippetHintsList = [];
+                        Helper.rebuildOptimizedStructures();
+                        resolve();
+                    } else {
+                        logger.reportError(error, "Custom Snippets: unexpected file system error loading snippets");
+                        Global.SnippetHintsList = [];
+                        Helper.rebuildOptimizedStructures();
+                        resolve();
+                    }
+                });
+        });
     }
 
     /**
-     * Save snippets to preferences
-     * This is called whenever snippets are modified
+     * this function is responsible to save snippets to file storage
+     * @returns {Promise} a promise that resolves when snippets are saved
      */
     function saveSnippetsToState() {
-        try {
-            prefs.set("snippetsList", [...Global.SnippetHintsList]);
-        } catch (e) {
-            console.error("something went wrong when saving custom snippets to preferences:", e);
-        }
+        const dataToSave = {
+            snippets: Global.SnippetHintsList
+        };
+
+        const file = FileSystem.getFileForPath(SNIPPETS_FILE_PATH);
+        const jsonText = JSON.stringify(dataToSave);
+
+        // true is allowBlindWrite to overwrite without checking file contents
+        return jsPromise(FileUtils.writeText(file, jsonText, true));
     }
 
     exports.loadSnippetsFromState = loadSnippetsFromState;

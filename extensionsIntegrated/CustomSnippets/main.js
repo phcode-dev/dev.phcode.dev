@@ -19,12 +19,16 @@
  */
 
 /* eslint-disable no-invalid-this */
+/* global logger */
 define(function (require, exports, module) {
     const AppInit = require("utils/AppInit");
     const CommandManager = require("command/CommandManager");
     const Menus = require("command/Menus");
     const Commands = require("command/Commands");
     const WorkspaceManager = require("view/WorkspaceManager");
+    const Strings = require("strings");
+    const Mustache = require("thirdparty/mustache/mustache");
+    const Metrics = require("utils/Metrics");
 
     const Driver = require("./driver");
     const SnippetsList = require("./snippetsList");
@@ -33,6 +37,7 @@ define(function (require, exports, module) {
     const UIHelper = require("./UIHelper");
     const SnippetsState = require("./snippetsState");
     const SnippetCursorManager = require("./snippetCursorManager");
+    const Global = require("./global");
 
     const snippetsPanelTpl = require("text!./htmlContent/snippets-panel.html");
     // the html content of the panel will be stored in this variable
@@ -40,8 +45,8 @@ define(function (require, exports, module) {
 
     const MY_COMMAND_ID = "custom_snippets";
     const PANEL_ID = "customSnippets.panel";
-    const MENU_ITEM_NAME = "Custom Snippets..."; // this name will appear as the menu item
-    const PANEL_MIN_SIZE = 100; // the minimum size more than which its height cannot be decreased
+    const MENU_ITEM_NAME = Strings.CUSTOM_SNIPPETS_MENU_ITEM_NAME; // this name will appear as the menu item
+    const PANEL_MIN_SIZE = 340; // the minimum size more than which its height cannot be decreased
 
     // this is to store the panel reference,
     // as we only need to create this once. rest of the time we can just toggle the visibility of the panel
@@ -72,8 +77,10 @@ define(function (require, exports, module) {
     function _togglePanelVisibility() {
         if (customSnippetsPanel.isVisible()) {
             customSnippetsPanel.hide();
+            CommandManager.get(MY_COMMAND_ID).setChecked(false);
         } else {
             customSnippetsPanel.show();
+            CommandManager.get(MY_COMMAND_ID).setChecked(true);
 
             $("#filter-snippets-input").val("");
             UIHelper.initializeListViewToolbarTitle();
@@ -89,6 +96,7 @@ define(function (require, exports, module) {
      */
     function _hidePanel() {
         customSnippetsPanel.hide();
+        CommandManager.get(MY_COMMAND_ID).setChecked(false);
     }
 
     /**
@@ -101,6 +109,7 @@ define(function (require, exports, module) {
         // if it is then we can just toggle its visibility
         if (!customSnippetsPanel) {
             _createPanel();
+            CommandManager.get(MY_COMMAND_ID).setChecked(true);
         } else {
             _togglePanelVisibility();
         }
@@ -122,6 +131,7 @@ define(function (require, exports, module) {
     function _registerHandlers() {
         const $closePanelBtn = $("#close-custom-snippets-panel-btn");
         const $saveCustomSnippetBtn = $("#save-custom-snippet-btn");
+        const $cancelCustomSnippetBtn = $("#cancel-custom-snippet-btn");
         const $abbrInput = $("#abbr-box");
         const $descInput = $("#desc-box");
         const $templateInput = $("#template-text-box");
@@ -136,7 +146,7 @@ define(function (require, exports, module) {
         const $editTemplateInput = $("#edit-template-text-box");
         const $editFileExtnInput = $("#edit-file-extn-box");
         const $saveEditSnippetBtn = $("#save-edit-snippet-btn");
-        const $resetSnippetBtn = $("#reset-snippet-btn");
+        const $cancelEditSnippetBtn = $("#cancel-edit-snippet-btn");
 
         $addSnippetBtn.on("click", function () {
             UIHelper.showAddSnippetMenu();
@@ -157,6 +167,11 @@ define(function (require, exports, module) {
 
         $saveCustomSnippetBtn.on("click", function () {
             Driver.handleSaveBtnClick();
+        });
+
+        $cancelCustomSnippetBtn.on("click", function () {
+            UIHelper.showSnippetListMenu();
+            SnippetsList.showSnippetsList();
         });
 
         $abbrInput.on("input", Helper.toggleSaveButtonDisability);
@@ -191,7 +206,9 @@ define(function (require, exports, module) {
         });
 
         $editAbbrInput.on("input", Helper.toggleEditSaveButtonDisability);
+        $editDescInput.on("input", Helper.toggleEditSaveButtonDisability);
         $editTemplateInput.on("input", Helper.toggleEditSaveButtonDisability);
+        $editFileExtnInput.on("input", Helper.toggleEditSaveButtonDisability);
 
         $editAbbrInput.on("keydown", function (e) {
             Helper.validateAbbrInput(e, this);
@@ -225,8 +242,8 @@ define(function (require, exports, module) {
             Driver.handleEditSaveBtnClick();
         });
 
-        $resetSnippetBtn.on("click", function () {
-            Driver.handleResetBtnClick();
+        $cancelEditSnippetBtn.on("click", function () {
+            Driver.handleCancelEditBtnClick();
         });
 
         // filter input event handler
@@ -243,10 +260,26 @@ define(function (require, exports, module) {
 
     AppInit.appReady(function () {
         CommandManager.register(MENU_ITEM_NAME, MY_COMMAND_ID, showCustomSnippetsPanel);
-        $snippetsPanel = $(snippetsPanelTpl);
+        // Render template with localized strings
+        const renderedHtml = Mustache.render(snippetsPanelTpl, {Strings: Strings});
+        $snippetsPanel = $(renderedHtml);
         _addToMenu();
         CodeHintIntegration.init();
-        SnippetsState.loadSnippetsFromState();
+
+        // load snippets from file storage
+        SnippetsState.loadSnippetsFromState()
+            .then(function () {
+                // track boot-time snippet count (only if user has snippets)
+                const snippetCount = Global.SnippetHintsList.length;
+                if (snippetCount > 0) {
+                    const countRange = Metrics.getRangeName(snippetCount);
+                    Metrics.countEvent(Metrics.EVENT_TYPE.EDITOR, "snipt", `boot.${countRange}`);
+                }
+            })
+            .catch(function (error) {
+                logger.reportError(error, "Custom Snippets: didn't load on app init");
+            });
+
         SnippetCursorManager.registerHandlers();
     });
 });
