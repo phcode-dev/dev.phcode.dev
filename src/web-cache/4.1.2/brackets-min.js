@@ -34287,7 +34287,7 @@ define("extensionsIntegrated/CustomSnippets/UIHelper", function (require, export
         $addNewSnippetBtn.addClass("hidden");
         $filterSnippetsPanel.addClass("hidden");
 
-        $toolbarTitle.html('Add Snippet <span id="snippets-count" class="snippets-count"></span>');
+        $toolbarTitle.html(`${Strings.CUSTOM_SNIPPETS_ADD_PANEL_TITLE} <span id="snippets-count" class="snippets-count"></span>`);
     }
 
     /**
@@ -34315,7 +34315,9 @@ define("extensionsIntegrated/CustomSnippets/UIHelper", function (require, export
         // add the snippet count in the toolbar (the no. of snippets added)
         const snippetCount = Global.SnippetHintsList.length;
         const countText = snippetCount > 0 ? `(${snippetCount})` : "";
-        $toolbarTitle.html(`Custom Snippets <span id="snippets-count" class="snippets-count">${countText}</span>`);
+        $toolbarTitle.html(
+            `${Strings.CUSTOM_SNIPPETS_PANEL_TITLE} <span id="snippets-count" class="snippets-count">${countText}</span>`
+        );
 
         $("#filter-snippets-input").val("");
     }
@@ -34340,7 +34342,7 @@ define("extensionsIntegrated/CustomSnippets/UIHelper", function (require, export
         $filterSnippetsPanel.addClass("hidden");
 
         // Update toolbar title
-        $toolbarTitle.html('Edit Snippet <span id="snippets-count" class="snippets-count"></span>');
+        $toolbarTitle.html(`${Strings.CUSTOM_SNIPPETS_EDIT_PANEL_TITLE} <span id="snippets-count" class="snippets-count"></span>`);
     }
 
     /**
@@ -34383,7 +34385,9 @@ define("extensionsIntegrated/CustomSnippets/UIHelper", function (require, export
         const $toolbarTitle = $(".toolbar-title");
         const snippetCount = Global.SnippetHintsList.length;
         const countText = snippetCount > 0 ? `(${snippetCount})` : "";
-        $toolbarTitle.html(`Custom Snippets <span id="snippets-count" class="snippets-count">${countText}</span>`);
+        $toolbarTitle.html(
+            `${Strings.CUSTOM_SNIPPETS_PANEL_TITLE} <span id="snippets-count" class="snippets-count">${countText}</span>`
+        );
     }
 
     exports.showEmptySnippetMessage = showEmptySnippetMessage;
@@ -110208,6 +110212,8 @@ define("nls/root/strings", {
     // Custom Snippets
     "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Custom Snippets\u2026",
     "CUSTOM_SNIPPETS_PANEL_TITLE": "Custom Snippets",
+    "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Add Snippet",
+    "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "Edit Snippet",
     "CUSTOM_SNIPPETS_ADD_NEW_TITLE": "Add new snippet",
     "CUSTOM_SNIPPETS_BACK_TO_LIST_TITLE": "Back to snippets list",
     "CUSTOM_SNIPPETS_BACK": "Back",
