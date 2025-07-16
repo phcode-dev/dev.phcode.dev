@@ -70888,7 +70888,9 @@ define("nls/ar/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "اختصار",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "نص القالب",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "الوصف",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "امتداد الملف"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "امتداد الملف",
+  "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "إضافة مقتطف برمجي",
+  "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "تعديل مقتطف برمجي"
 });
 /*
  * GNU AGPL-3.0 License
@@ -72280,9 +72282,6 @@ define("nls/bg/strings", {
   "ACCOUNT_DETAILS": "Данни за акаунта",
   "AI_QUOTA_USED": "Използвана AI квота",
   "LOGIN_REFRESH": "Проверка на състоянието за вход",
-  "CUSTOM_SNIPPETS_CANCEL": "Отказ",
-  "CUSTOM_SNIPPETS_SAVE": "Запазване",
-  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Няма описание",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Персонализирани фрагменти…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Персонализирани фрагменти",
   "CUSTOM_SNIPPETS_ADD_NEW_TITLE": "Добавяне на нов фрагмент",
@@ -72295,6 +72294,9 @@ define("nls/bg/strings", {
   "CUSTOM_SNIPPETS_TEMPLATE_TEXT_LABEL": "Текст на шаблона:",
   "CUSTOM_SNIPPETS_DESCRIPTION_LABEL": "Описание:",
   "CUSTOM_SNIPPETS_FILE_EXTENSION_LABEL": "Разширение на файла:",
+  "CUSTOM_SNIPPETS_CANCEL": "Отказ",
+  "CUSTOM_SNIPPETS_SAVE": "Запазване",
+  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Няма описание",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Няма съвпадения за \"{0}\"",
   "CUSTOM_SNIPPETS_LEARN_MORE": "Добавете свои собствени подсказки за код, за да ускорите писането - <a href=\"https://docs.phcode.dev\" target=\"_blank\">Научете повече</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Вече съществува фрагмент с абревиатура \"{0}\".",
@@ -72317,7 +72319,9 @@ define("nls/bg/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Съкращение",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Текст на шаблон",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Описание",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Разширение на файл"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Разширение на файл",
+  "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Добавяне на фрагмент",
+  "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "Редактиране на фрагмент"
 });
 /*
  * Copyright (c) 2013 Adobe Systems Incorporated. All rights reserved.
@@ -73738,9 +73742,6 @@ define("nls/cs/strings", {
   "ACCOUNT_DETAILS": "Detaily účtu",
   "AI_QUOTA_USED": "Vyčerpána kvóta pro AI",
   "LOGIN_REFRESH": "Zkontrolovat stav přihlášení",
-  "CUSTOM_SNIPPETS_CANCEL": "Zrušit",
-  "CUSTOM_SNIPPETS_SAVE": "Uložit",
-  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Bez popisu",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Vlastní úryvky…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Vlastní úryvky",
   "CUSTOM_SNIPPETS_ADD_NEW_TITLE": "Přidat nový úryvek",
@@ -73753,6 +73754,9 @@ define("nls/cs/strings", {
   "CUSTOM_SNIPPETS_TEMPLATE_TEXT_LABEL": "Text šablony:",
   "CUSTOM_SNIPPETS_DESCRIPTION_LABEL": "Popis:",
   "CUSTOM_SNIPPETS_FILE_EXTENSION_LABEL": "Přípona souboru:",
+  "CUSTOM_SNIPPETS_CANCEL": "Zrušit",
+  "CUSTOM_SNIPPETS_SAVE": "Uložit",
+  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Bez popisu",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Žádný úryvek neodpovídá \"{0}\"",
   "CUSTOM_SNIPPETS_LEARN_MORE": "Přidejte si vlastní nápovědy kódu pro rychlejší kódování - <a href=\"https://docs.phcode.dev\" target=\"_blank\">Více informací</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Úryvek se zkratkou \"{0}\" již existuje.",
@@ -73775,7 +73779,9 @@ define("nls/cs/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Zkratka",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Text šablony",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Popis",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Přípona souboru"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Přípona souboru",
+  "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Přidat úryvek",
+  "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "Upravit úryvek"
 });
 /*
  * GNU AGPL-3.0 License
@@ -75194,9 +75200,6 @@ define("nls/da/strings", {
   "ACCOUNT_DETAILS": "Kontooplysninger",
   "AI_QUOTA_USED": "Brugt AI-kvote",
   "LOGIN_REFRESH": "Tjek loginstatus",
-  "CUSTOM_SNIPPETS_CANCEL": "Annuller",
-  "CUSTOM_SNIPPETS_SAVE": "Gem",
-  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Ingen beskrivelse",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Brugerdefinerede snippets…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Brugerdefinerede snippets",
   "CUSTOM_SNIPPETS_ADD_NEW_TITLE": "Tilføj nyt snippet",
@@ -75209,6 +75212,9 @@ define("nls/da/strings", {
   "CUSTOM_SNIPPETS_TEMPLATE_TEXT_LABEL": "Skabelontekst:",
   "CUSTOM_SNIPPETS_DESCRIPTION_LABEL": "Beskrivelse:",
   "CUSTOM_SNIPPETS_FILE_EXTENSION_LABEL": "Filtypenavn:",
+  "CUSTOM_SNIPPETS_CANCEL": "Annuller",
+  "CUSTOM_SNIPPETS_SAVE": "Gem",
+  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Ingen beskrivelse",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Ingen snippets matcher \"{0}\"",
   "CUSTOM_SNIPPETS_LEARN_MORE": "Tilføj dine egne kodehints for at skrive kode hurtigere - <a href=\"https://docs.phcode.dev\" target=\"_blank\">Læs mere</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Et snippet med forkortelsen \"{0}\" findes allerede.",
@@ -75231,7 +75237,9 @@ define("nls/da/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Forkortelse",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Skabelontekst",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Beskrivelse",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Filtypenavn"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Filtypenavn",
+  "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Tilføj snippet",
+  "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "Rediger snippet"
 });
 /*
  * GNU AGPL-3.0 License
@@ -76648,9 +76656,6 @@ define("nls/de/strings", {
   "ACCOUNT_DETAILS": "Kontodetails",
   "AI_QUOTA_USED": "Verbrauchte KI-Quote",
   "LOGIN_REFRESH": "Anmeldestatus überprüfen",
-  "CUSTOM_SNIPPETS_CANCEL": "Abbrechen",
-  "CUSTOM_SNIPPETS_SAVE": "Speichern",
-  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Keine Beschreibung",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Benutzerdefinierte Snippets…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Benutzerdefinierte Snippets",
   "CUSTOM_SNIPPETS_ADD_NEW_TITLE": "Neues Snippet hinzufügen",
@@ -76663,6 +76668,9 @@ define("nls/de/strings", {
   "CUSTOM_SNIPPETS_TEMPLATE_TEXT_LABEL": "Vorlagentext:",
   "CUSTOM_SNIPPETS_DESCRIPTION_LABEL": "Beschreibung:",
   "CUSTOM_SNIPPETS_FILE_EXTENSION_LABEL": "Dateierweiterung:",
+  "CUSTOM_SNIPPETS_CANCEL": "Abbrechen",
+  "CUSTOM_SNIPPETS_SAVE": "Speichern",
+  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Keine Beschreibung",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Keine Snippets entsprechen \"{0}\"",
   "CUSTOM_SNIPPETS_LEARN_MORE": "Füge deine eigenen Codehinweise hinzu, um schneller zu programmieren - <a href=\"https://docs.phcode.dev\" target=\"_blank\">Mehr erfahren</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Ein Snippet mit der Abkürzung \"{0}\" existiert bereits.",
@@ -76685,7 +76693,9 @@ define("nls/de/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Kürzel",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Vorlagentext",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Beschreibung",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Dateierweiterung"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Dateierweiterung",
+  "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Schnipsel hinzufügen",
+  "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "Schnipsel bearbeiten"
 });
 /*
  * GNU AGPL-3.0 License
@@ -78104,9 +78114,6 @@ define("nls/el/strings", {
   "ACCOUNT_DETAILS": "Στοιχεία Λογαριασμού",
   "AI_QUOTA_USED": "Χρήση ποσοστού AI",
   "LOGIN_REFRESH": "Έλεγχος Κατάστασης Σύνδεσης",
-  "CUSTOM_SNIPPETS_CANCEL": "Ακύρωση",
-  "CUSTOM_SNIPPETS_SAVE": "Αποθήκευση",
-  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Δεν υπάρχει περιγραφή",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Προσαρμοσμένα αποσπάσματα…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Προσαρμοσμένα αποσπάσματα",
   "CUSTOM_SNIPPETS_ADD_NEW_TITLE": "Προσθήκη νέου αποσπάσματος",
@@ -78119,6 +78126,9 @@ define("nls/el/strings", {
   "CUSTOM_SNIPPETS_TEMPLATE_TEXT_LABEL": "Κείμενο Προτύπου:",
   "CUSTOM_SNIPPETS_DESCRIPTION_LABEL": "Περιγραφή:",
   "CUSTOM_SNIPPETS_FILE_EXTENSION_LABEL": "Επέκταση Αρχείου:",
+  "CUSTOM_SNIPPETS_CANCEL": "Ακύρωση",
+  "CUSTOM_SNIPPETS_SAVE": "Αποθήκευση",
+  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Δεν υπάρχει περιγραφή",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Δεν υπάρχουν αποσπάσματα κώδικα που να ταιριάζουν με \"{0}\"",
   "CUSTOM_SNIPPETS_LEARN_MORE": "Προσθέστε τις δικές σας υποδείξεις κώδικα για να επιταχύνετε τον προγραμματισμό - <a href=\"https://docs.phcode.dev\" target=\"_blank\">Μάθετε Περισσότερα</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Ένα απόσπασμα κώδικα με συντομογραφία \"{0}\" υπάρχει ήδη.",
@@ -78141,7 +78151,9 @@ define("nls/el/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Συντομογραφία",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Κείμενο Προτύπου",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Περιγραφή",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Επέκταση Αρχείου"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Επέκταση Αρχείου",
+  "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Προσθήκη Αποσπάσματος",
+  "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "Επεξεργασία Αποσπάσματος"
 });
 /*
  * GNU AGPL-3.0 License
@@ -79597,7 +79609,9 @@ define("nls/en-gb/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Abbreviation",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Template Text",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Description",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "File Extension"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "File Extension",
+  "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Add snippet",
+  "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "Edit snippet"
 });
 /*
  * GNU AGPL-3.0 License
@@ -80989,9 +81003,6 @@ define("nls/es/strings", {
   "ACCOUNT_DETAILS": "Detalles de la cuenta",
   "AI_QUOTA_USED": "Cuota de IA utilizada",
   "LOGIN_REFRESH": "Verificar estado del inicio de sesión",
-  "CUSTOM_SNIPPETS_CANCEL": "Cancelar",
-  "CUSTOM_SNIPPETS_SAVE": "Guardar",
-  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Sin descripción",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Fragmentos de código personalizados…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Fragmentos de código personalizados",
   "CUSTOM_SNIPPETS_ADD_NEW_TITLE": "Añadir nuevo fragmento",
@@ -81004,6 +81015,9 @@ define("nls/es/strings", {
   "CUSTOM_SNIPPETS_TEMPLATE_TEXT_LABEL": "Texto de plantilla:",
   "CUSTOM_SNIPPETS_DESCRIPTION_LABEL": "Descripción:",
   "CUSTOM_SNIPPETS_FILE_EXTENSION_LABEL": "Extensión de archivo:",
+  "CUSTOM_SNIPPETS_CANCEL": "Cancelar",
+  "CUSTOM_SNIPPETS_SAVE": "Guardar",
+  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Sin descripción",
   "CUSTOM_SNIPPETS_NO_MATCHES": "No hay fragmentos que coincidan con \"{0}\"",
   "CUSTOM_SNIPPETS_LEARN_MORE": "Añade tus propias sugerencias de código para acelerar la codificación - <a href=\"https://docs.phcode.dev\" target=\"_blank\">Más información</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Ya existe un fragmento con la abreviatura \"{0}\".",
@@ -81026,7 +81040,9 @@ define("nls/es/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Abreviatura",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Texto de la plantilla",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Descripción",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensión de archivo"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensión de archivo",
+  "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Añadir fragmento de código",
+  "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "Editar fragmento de código"
 });
 /*
  * GNU AGPL-3.0 License
@@ -82446,9 +82462,6 @@ define("nls/fa-ir/strings", {
   "ACCOUNT_DETAILS": "جزئیات حساب کاربری",
   "AI_QUOTA_USED": "سهمیه هوش مصنوعی استفاده شده",
   "LOGIN_REFRESH": "بررسی وضعیت ورود",
-  "CUSTOM_SNIPPETS_CANCEL": "لغو",
-  "CUSTOM_SNIPPETS_SAVE": "ذخیره",
-  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "بدون شرح",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "قطعه‌کدهای سفارشی…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "قطعه‌کدهای سفارشی",
   "CUSTOM_SNIPPETS_ADD_NEW_TITLE": "افزودن قطعه‌کد جدید",
@@ -82461,6 +82474,9 @@ define("nls/fa-ir/strings", {
   "CUSTOM_SNIPPETS_TEMPLATE_TEXT_LABEL": "متن الگو:",
   "CUSTOM_SNIPPETS_DESCRIPTION_LABEL": "شرح:",
   "CUSTOM_SNIPPETS_FILE_EXTENSION_LABEL": "پسوند فایل:",
+  "CUSTOM_SNIPPETS_CANCEL": "لغو",
+  "CUSTOM_SNIPPETS_SAVE": "ذخیره",
+  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "بدون شرح",
   "CUSTOM_SNIPPETS_NO_MATCHES": "هیچ قطعه کدی با \"{0}\" مطابقت ندارد.",
   "CUSTOM_SNIPPETS_LEARN_MORE": "подсказки کد خود را اضافه کنید تا سرعت کدنویسی را افزایش دهید - <a href=\"https://docs.phcode.dev\" target=\"_blank\">بیشتر بدانید</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "قطعه کدی با مخفف \"{0}\" از قبل وجود دارد.",
@@ -82483,7 +82499,9 @@ define("nls/fa-ir/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "مخفف",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "متن الگو",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "توضیحات",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "پسوند فایل"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "پسوند فایل",
+  "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "افزودن قطعه کد",
+  "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "ویرایش قطعه کد"
 });
 /*
  * GNU AGPL-3.0 License
@@ -83902,9 +83920,6 @@ define("nls/fi/strings", {
   "ACCOUNT_DETAILS": "Tilin tiedot",
   "AI_QUOTA_USED": "Käytetty tekoälykiintiö",
   "LOGIN_REFRESH": "Tarkista kirjautumistila",
-  "CUSTOM_SNIPPETS_CANCEL": "Peruuta",
-  "CUSTOM_SNIPPETS_SAVE": "Tallenna",
-  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Ei kuvausta",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Omat koodinpätkät…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Omat koodinpätkät",
   "CUSTOM_SNIPPETS_ADD_NEW_TITLE": "Lisää uusi koodinpätkä",
@@ -83917,6 +83932,9 @@ define("nls/fi/strings", {
   "CUSTOM_SNIPPETS_TEMPLATE_TEXT_LABEL": "Malliteksti:",
   "CUSTOM_SNIPPETS_DESCRIPTION_LABEL": "Kuvaus:",
   "CUSTOM_SNIPPETS_FILE_EXTENSION_LABEL": "Tiedostopääte:",
+  "CUSTOM_SNIPPETS_CANCEL": "Peruuta",
+  "CUSTOM_SNIPPETS_SAVE": "Tallenna",
+  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Ei kuvausta",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Hakusanalla \"{0}\" ei löytynyt koodinpätkiä.",
   "CUSTOM_SNIPPETS_LEARN_MORE": "Lisää omia koodinpätkiäsi nopeuttaaksesi koodausta - <a href=\"https://docs.phcode.dev\" target=\"_blank\">Lue lisää</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Lyhenteellä \"{0}\" on jo olemassa koodinpätkä.",
@@ -83939,7 +83957,9 @@ define("nls/fi/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Lyhenne",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Malliteksti",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Kuvaus",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Tiedostopääte"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Tiedostopääte",
+  "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Lisää koodinpätkä",
+  "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "Muokkaa koodinpätkää"
 });
 /*
  * GNU AGPL-3.0 License
@@ -85358,9 +85378,6 @@ define("nls/fr/strings", {
   "ACCOUNT_DETAILS": "Détails du compte",
   "AI_QUOTA_USED": "Quota IA utilisé",
   "LOGIN_REFRESH": "Vérifier l'état de la connexion",
-  "CUSTOM_SNIPPETS_CANCEL": "Annuler",
-  "CUSTOM_SNIPPETS_SAVE": "Enregistrer",
-  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Aucune description",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Extraits personnalisés…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Extraits personnalisés",
   "CUSTOM_SNIPPETS_ADD_NEW_TITLE": "Ajouter un extrait",
@@ -85373,6 +85390,9 @@ define("nls/fr/strings", {
   "CUSTOM_SNIPPETS_TEMPLATE_TEXT_LABEL": "Texte du modèle :",
   "CUSTOM_SNIPPETS_DESCRIPTION_LABEL": "Description :",
   "CUSTOM_SNIPPETS_FILE_EXTENSION_LABEL": "Extension du fichier :",
+  "CUSTOM_SNIPPETS_CANCEL": "Annuler",
+  "CUSTOM_SNIPPETS_SAVE": "Enregistrer",
+  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Aucune description",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Aucun extrait ne correspond à « {0} »",
   "CUSTOM_SNIPPETS_LEARN_MORE": "Ajoutez vos propres conseils de code pour accélérer le codage - <a href=\"https://docs.phcode.dev\" target=\"_blank\">En savoir plus</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Un extrait avec l'abréviation « {0} » existe déjà.",
@@ -85395,7 +85415,9 @@ define("nls/fr/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Abréviation",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Texte du modèle",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Description",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extension de fichier"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extension de fichier",
+  "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Ajouter un extrait de code",
+  "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "Modifier un extrait de code"
 });
 /*
  * GNU AGPL-3.0 License
@@ -86814,9 +86836,6 @@ define("nls/gl/strings", {
   "ACCOUNT_DETAILS": "Detalles da conta",
   "AI_QUOTA_USED": "Cota de IA usada",
   "LOGIN_REFRESH": "Comprobar o estado do inicio de sesión",
-  "CUSTOM_SNIPPETS_CANCEL": "Cancelar",
-  "CUSTOM_SNIPPETS_SAVE": "Gardar",
-  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Sen descripción",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Fragmentos personalizados…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Fragmentos personalizados",
   "CUSTOM_SNIPPETS_ADD_NEW_TITLE": "Engadir novo fragmento",
@@ -86829,6 +86848,9 @@ define("nls/gl/strings", {
   "CUSTOM_SNIPPETS_TEMPLATE_TEXT_LABEL": "Texto do modelo:",
   "CUSTOM_SNIPPETS_DESCRIPTION_LABEL": "Descrición:",
   "CUSTOM_SNIPPETS_FILE_EXTENSION_LABEL": "Extensión de ficheiro:",
+  "CUSTOM_SNIPPETS_CANCEL": "Cancelar",
+  "CUSTOM_SNIPPETS_SAVE": "Gardar",
+  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Sen descripción",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Non hai fragmentos que coincidan con \"{0}\"",
   "CUSTOM_SNIPPETS_LEARN_MORE": "Engade as túas propias suxestións de código para acelerar a codificación - <a href=\"https://docs.phcode.dev\" target=\"_blank\">Máis información</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Xa existe un fragmento coa abreviatura \"{0}\".",
@@ -86851,7 +86873,9 @@ define("nls/gl/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Abreviatura",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Texto do modelo",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Descrición",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensión de ficheiro"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensión de ficheiro",
+  "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Engadir Fragmento",
+  "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "Editar Fragmento"
 });
 /*
  * GNU AGPL-3.0 License
@@ -88280,7 +88304,9 @@ define("nls/hi/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "संक्षिप्त नाम",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "टेम्पलेट टेक्स्ट",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "विवरण",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "फ़ाइल एक्सटेंशन"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "फ़ाइल एक्सटेंशन",
+  "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "स्निपेट जोड़ें",
+  "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "स्निपेट संपादित करें"
 });
 /*
  * GNU AGPL-3.0 License
@@ -89672,9 +89698,6 @@ define("nls/hr/strings", {
   "ACCOUNT_DETAILS": "Podaci o računu",
   "AI_QUOTA_USED": "Iskorištena AI kvota",
   "LOGIN_REFRESH": "Provjeri status prijave",
-  "CUSTOM_SNIPPETS_CANCEL": "Otkaži",
-  "CUSTOM_SNIPPETS_SAVE": "Sačuvaj",
-  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Nema opisa",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Prilagođeni isječci…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Prilagođeni isječci",
   "CUSTOM_SNIPPETS_ADD_NEW_TITLE": "Dodaj novi isječak",
@@ -89687,6 +89710,9 @@ define("nls/hr/strings", {
   "CUSTOM_SNIPPETS_TEMPLATE_TEXT_LABEL": "Tekst predloška:",
   "CUSTOM_SNIPPETS_DESCRIPTION_LABEL": "Opis:",
   "CUSTOM_SNIPPETS_FILE_EXTENSION_LABEL": "Ekstenzija datoteke:",
+  "CUSTOM_SNIPPETS_CANCEL": "Otkaži",
+  "CUSTOM_SNIPPETS_SAVE": "Sačuvaj",
+  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Nema opisa",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Nema isječaka koji odgovaraju \"{0}\"",
   "CUSTOM_SNIPPETS_LEARN_MORE": "Dodajte vlastite savjete za kod kako biste ubrzali kodiranje - <a href=\"https://docs.phcode.dev\" target=\"_blank\">Saznajte više</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Isječak s kraticom \"{0}\" već postoji.",
@@ -89709,7 +89735,9 @@ define("nls/hr/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Kratica",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Tekst predloška",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Opis",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Ekstenzija datoteke"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Ekstenzija datoteke",
+  "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Dodaj isječak koda",
+  "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "Uredi isječak koda"
 });
 /*
  * GNU AGPL-3.0 License
@@ -91128,9 +91156,6 @@ define("nls/hu/strings", {
   "ACCOUNT_DETAILS": "Fiókadatok",
   "AI_QUOTA_USED": "Felhasznált MI-kvóta",
   "LOGIN_REFRESH": "Bejelentkezés állapotának ellenőrzése",
-  "CUSTOM_SNIPPETS_CANCEL": "Mégsem",
-  "CUSTOM_SNIPPETS_SAVE": "Mentés",
-  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Nincs leírás",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Egyéni kódrészletek…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Egyéni kódrészletek",
   "CUSTOM_SNIPPETS_ADD_NEW_TITLE": "Új kódrészlet hozzáadása",
@@ -91143,6 +91168,9 @@ define("nls/hu/strings", {
   "CUSTOM_SNIPPETS_TEMPLATE_TEXT_LABEL": "Sablon szövege:",
   "CUSTOM_SNIPPETS_DESCRIPTION_LABEL": "Leírás:",
   "CUSTOM_SNIPPETS_FILE_EXTENSION_LABEL": "Fájlkiterjesztés:",
+  "CUSTOM_SNIPPETS_CANCEL": "Mégsem",
+  "CUSTOM_SNIPPETS_SAVE": "Mentés",
+  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Nincs leírás",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Nincsenek „{0}” kifejezésre illeszkedő kódrészletek.",
   "CUSTOM_SNIPPETS_LEARN_MORE": "Hozz létre saját kódrészleteket a gyorsabb kódolásért - <a href=\"https://docs.phcode.dev\" target=\"_blank\">Tudj meg többet</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Már létezik egy „{0}” rövidítésű kódrészlet.",
@@ -91165,7 +91193,9 @@ define("nls/hu/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Rövidítés",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Sablonszöveg",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Leírás",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Fájlkiterjesztés"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Fájlkiterjesztés",
+  "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Kódrészlet hozzáadása",
+  "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "Kódrészlet szerkesztése"
 });
 /*
  * GNU AGPL-3.0 License
@@ -92557,9 +92587,6 @@ define("nls/id/strings", {
   "ACCOUNT_DETAILS": "Detail Akun",
   "AI_QUOTA_USED": "Kuota AI terpakai",
   "LOGIN_REFRESH": "Periksa Status Login",
-  "CUSTOM_SNIPPETS_CANCEL": "Batal",
-  "CUSTOM_SNIPPETS_SAVE": "Simpan",
-  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Tanpa keterangan",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Cuplikan Kustom…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Cuplikan Kustom",
   "CUSTOM_SNIPPETS_ADD_NEW_TITLE": "Tambah cuplikan baru",
@@ -92572,6 +92599,9 @@ define("nls/id/strings", {
   "CUSTOM_SNIPPETS_TEMPLATE_TEXT_LABEL": "Teks Template:",
   "CUSTOM_SNIPPETS_DESCRIPTION_LABEL": "Deskripsi:",
   "CUSTOM_SNIPPETS_FILE_EXTENSION_LABEL": "Ekstensi Berkas:",
+  "CUSTOM_SNIPPETS_CANCEL": "Batal",
+  "CUSTOM_SNIPPETS_SAVE": "Simpan",
+  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Tanpa keterangan",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Tidak ada cuplikan yang cocok dengan \"{0}\"",
   "CUSTOM_SNIPPETS_LEARN_MORE": "Tambahkan petunjuk kode Anda sendiri untuk mempercepat pengkodean - <a href=\"https://docs.phcode.dev\" target=\"_blank\">Pelajari Lebih Lanjut</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Cuplikan dengan singkatan \"{0}\" sudah ada.",
@@ -92594,7 +92624,9 @@ define("nls/id/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Singkatan",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Teks Templat",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Deskripsi",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Ekstensi Berkas"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Ekstensi Berkas",
+  "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Tambah Cuplikan",
+  "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "Edit Cuplikan"
 });
 /*
  * GNU AGPL-3.0 License
@@ -94012,9 +94044,6 @@ define("nls/it/strings", {
   "ACCOUNT_DETAILS": "Dettagli account",
   "AI_QUOTA_USED": "Quota IA utilizzata",
   "LOGIN_REFRESH": "Verifica stato accesso",
-  "CUSTOM_SNIPPETS_CANCEL": "Annulla",
-  "CUSTOM_SNIPPETS_SAVE": "Salva",
-  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Nessuna descrizione",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Frammenti personalizzati…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Frammenti personalizzati",
   "CUSTOM_SNIPPETS_ADD_NEW_TITLE": "Aggiungi nuovo frammento",
@@ -94027,6 +94056,9 @@ define("nls/it/strings", {
   "CUSTOM_SNIPPETS_TEMPLATE_TEXT_LABEL": "Testo del modello:",
   "CUSTOM_SNIPPETS_DESCRIPTION_LABEL": "Descrizione:",
   "CUSTOM_SNIPPETS_FILE_EXTENSION_LABEL": "Estensione file:",
+  "CUSTOM_SNIPPETS_CANCEL": "Annulla",
+  "CUSTOM_SNIPPETS_SAVE": "Salva",
+  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Nessuna descrizione",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Nessuno snippet corrisponde a \"{0}\"",
   "CUSTOM_SNIPPETS_LEARN_MORE": "Aggiungi i tuoi suggerimenti di codice per velocizzare la programmazione - <a href=\"https://docs.phcode.dev\" target=\"_blank\">Scopri di più</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Esiste già uno snippet con l'abbreviazione \"{0}\".",
@@ -94049,7 +94081,9 @@ define("nls/it/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Abbreviazione",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Testo del Modello",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Descrizione",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Estensione del File"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Estensione del File",
+  "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Aggiungi snippet",
+  "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "Modifica snippet"
 });
 /*
  * GNU AGPL-3.0 License
@@ -95468,9 +95502,6 @@ define("nls/ja/strings", {
   "ACCOUNT_DETAILS": "アカウントの詳細",
   "AI_QUOTA_USED": "AI利用量",
   "LOGIN_REFRESH": "ログイン状態を確認",
-  "CUSTOM_SNIPPETS_CANCEL": "キャンセル",
-  "CUSTOM_SNIPPETS_SAVE": "保存",
-  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "説明なし",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "カスタムスニペット…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "カスタムスニペット",
   "CUSTOM_SNIPPETS_ADD_NEW_TITLE": "新しいスニペットを追加",
@@ -95483,6 +95514,9 @@ define("nls/ja/strings", {
   "CUSTOM_SNIPPETS_TEMPLATE_TEXT_LABEL": "テンプレートテキスト：",
   "CUSTOM_SNIPPETS_DESCRIPTION_LABEL": "説明：",
   "CUSTOM_SNIPPETS_FILE_EXTENSION_LABEL": "ファイル拡張子：",
+  "CUSTOM_SNIPPETS_CANCEL": "キャンセル",
+  "CUSTOM_SNIPPETS_SAVE": "保存",
+  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "説明なし",
   "CUSTOM_SNIPPETS_NO_MATCHES": "「{0}」に一致するスニペットはありません",
   "CUSTOM_SNIPPETS_LEARN_MORE": "コーディングをスピードアップするための独自のコードヒントを追加する - <a href=\"https://docs.phcode.dev\" target=\"_blank\">詳細はこちら</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "略語「{0}」のスニペットは既に存在します。",
@@ -95505,7 +95539,9 @@ define("nls/ja/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "略語",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "テンプレートテキスト",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "説明",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "ファイル拡張子"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "ファイル拡張子",
+  "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "スニペットを追加",
+  "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "スニペットを編集"
 });
 /*
  * GNU AGPL-3.0 License
@@ -96924,9 +96960,6 @@ define("nls/ko/strings", {
   "ACCOUNT_DETAILS": "계정 세부정보",
   "AI_QUOTA_USED": "사용된 AI 할당량",
   "LOGIN_REFRESH": "로그인 상태 확인",
-  "CUSTOM_SNIPPETS_CANCEL": "취소",
-  "CUSTOM_SNIPPETS_SAVE": "저장",
-  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "설명 없음",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "사용자 정의 스니펫…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "사용자 정의 스니펫",
   "CUSTOM_SNIPPETS_ADD_NEW_TITLE": "새 스니펫 추가",
@@ -96939,6 +96972,9 @@ define("nls/ko/strings", {
   "CUSTOM_SNIPPETS_TEMPLATE_TEXT_LABEL": "템플릿 텍스트:",
   "CUSTOM_SNIPPETS_DESCRIPTION_LABEL": "설명:",
   "CUSTOM_SNIPPETS_FILE_EXTENSION_LABEL": "파일 확장자:",
+  "CUSTOM_SNIPPETS_CANCEL": "취소",
+  "CUSTOM_SNIPPETS_SAVE": "저장",
+  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "설명 없음",
   "CUSTOM_SNIPPETS_NO_MATCHES": "\"{0}\"(와)과 일치하는 스니펫이 없습니다.",
   "CUSTOM_SNIPPETS_LEARN_MORE": "코딩 속도를 높이려면 나만의 코드 힌트를 추가하세요 - <a href=\"https://docs.phcode.dev\" target=\"_blank\">자세히 알아보기</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "\"{0}\" 약어를 가진 스니펫이 이미 존재합니다.",
@@ -96961,7 +96997,9 @@ define("nls/ko/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "약어",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "템플릿 텍스트",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "설명",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "파일 확장자"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "파일 확장자",
+  "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "스니펫 추가",
+  "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "스니펫 편집"
 });
 /*
  * GNU AGPL-3.0 License
@@ -98380,9 +98418,6 @@ define("nls/lv/strings", {
   "ACCOUNT_DETAILS": "Konta informācija",
   "AI_QUOTA_USED": "Izmantotā AI kvota",
   "LOGIN_REFRESH": "Pārbaudīt pieteikšanās statusu",
-  "CUSTOM_SNIPPETS_CANCEL": "Atcelt",
-  "CUSTOM_SNIPPETS_SAVE": "Saglabāt",
-  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Nav apraksta",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Pielāgoti fragmenti…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Pielāgoti fragmenti",
   "CUSTOM_SNIPPETS_ADD_NEW_TITLE": "Pievienot jaunu fragmentu",
@@ -98395,6 +98430,9 @@ define("nls/lv/strings", {
   "CUSTOM_SNIPPETS_TEMPLATE_TEXT_LABEL": "Veidnes teksts:",
   "CUSTOM_SNIPPETS_DESCRIPTION_LABEL": "Apraksts:",
   "CUSTOM_SNIPPETS_FILE_EXTENSION_LABEL": "Faila paplašinājums:",
+  "CUSTOM_SNIPPETS_CANCEL": "Atcelt",
+  "CUSTOM_SNIPPETS_SAVE": "Saglabāt",
+  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Nav apraksta",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Nav fragmentu, kas atbilst \"{0}\"",
   "CUSTOM_SNIPPETS_LEARN_MORE": "Pievienojiet savus koda padomus, lai paātrinātu kodēšanu - <a href=\"https://docs.phcode.dev\" target=\"_blank\">Uzzināt vairāk</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Fragments ar abreviatūru \"{0}\" jau pastāv.",
@@ -98417,7 +98455,9 @@ define("nls/lv/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Saīsinājums",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Veidnes teksts",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Apraksts",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Faila paplašinājums"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Faila paplašinājums",
+  "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Pievienot fragmentu",
+  "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "Rediģēt fragmentu"
 });
 /*
  * GNU AGPL-3.0 License
@@ -99846,7 +99886,9 @@ define("nls/ml/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "ചുരുക്കെഴുത്ത്",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "ടെംപ്ലേറ്റ് ടെക്സ്റ്റ്",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "വിവരണം",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "ഫയൽ എക്സ്റ്റൻഷൻ"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "ഫയൽ എക്സ്റ്റൻഷൻ",
+  "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "സ്നിപ്പറ്റ് ചേർക്കുക",
+  "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "സ്നിപ്പറ്റ് എഡിറ്റ് ചെയ്യുക"
 });
 /*
  * GNU AGPL-3.0 License
@@ -101238,9 +101280,6 @@ define("nls/nb/strings", {
   "ACCOUNT_DETAILS": "Kontodetaljer",
   "AI_QUOTA_USED": "AI-kvote brukt",
   "LOGIN_REFRESH": "Sjekk innloggingsstatus",
-  "CUSTOM_SNIPPETS_CANCEL": "Avbryt",
-  "CUSTOM_SNIPPETS_SAVE": "Lagre",
-  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Ingen beskrivelse",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Egendefinerte kodesnutter…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Egendefinerte kodesnutter",
   "CUSTOM_SNIPPETS_ADD_NEW_TITLE": "Legg til ny kodesnutt",
@@ -101253,6 +101292,9 @@ define("nls/nb/strings", {
   "CUSTOM_SNIPPETS_TEMPLATE_TEXT_LABEL": "Maltekst:",
   "CUSTOM_SNIPPETS_DESCRIPTION_LABEL": "Beskrivelse:",
   "CUSTOM_SNIPPETS_FILE_EXTENSION_LABEL": "Filtype:",
+  "CUSTOM_SNIPPETS_CANCEL": "Avbryt",
+  "CUSTOM_SNIPPETS_SAVE": "Lagre",
+  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Ingen beskrivelse",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Ingen snutter samsvarer med \"{0}\"",
   "CUSTOM_SNIPPETS_LEARN_MORE": "Legg til dine egne kodehint for raskere koding - <a href=\"https://docs.phcode.dev\" target=\"_blank\">Lær mer</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "En snutt med forkortelsen \"{0}\" finnes allerede.",
@@ -101275,7 +101317,9 @@ define("nls/nb/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Forkortelse",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Maltekst",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Beskrivelse",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Filtype"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Filtype",
+  "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Legg til snutt",
+  "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "Rediger snutt"
 });
 /*
  * GNU AGPL-3.0 License
@@ -102694,9 +102738,6 @@ define("nls/nl/strings", {
   "ACCOUNT_DETAILS": "Accountgegevens",
   "AI_QUOTA_USED": "Verbruikt AI-quotum",
   "LOGIN_REFRESH": "Aanmeldstatus controleren",
-  "CUSTOM_SNIPPETS_CANCEL": "Annuleren",
-  "CUSTOM_SNIPPETS_SAVE": "Opslaan",
-  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Geen beschrijving",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Aangepaste fragmenten…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Aangepaste fragmenten",
   "CUSTOM_SNIPPETS_ADD_NEW_TITLE": "Nieuw fragment toevoegen",
@@ -102709,6 +102750,9 @@ define("nls/nl/strings", {
   "CUSTOM_SNIPPETS_TEMPLATE_TEXT_LABEL": "Sjabloontekst:",
   "CUSTOM_SNIPPETS_DESCRIPTION_LABEL": "Beschrijving:",
   "CUSTOM_SNIPPETS_FILE_EXTENSION_LABEL": "Bestandsextensie:",
+  "CUSTOM_SNIPPETS_CANCEL": "Annuleren",
+  "CUSTOM_SNIPPETS_SAVE": "Opslaan",
+  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Geen beschrijving",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Geen snippets gevonden voor \"{0}\"",
   "CUSTOM_SNIPPETS_LEARN_MORE": "Voeg je eigen codehints toe om sneller te coderen - <a href=\"https://docs.phcode.dev\" target=\"_blank\">Meer informatie</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Er bestaat al een snippet met de afkorting \"{0}\".",
@@ -102731,7 +102775,9 @@ define("nls/nl/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Afkorting",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Sjabloontekst",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Beschrijving",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Bestandsextensie"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Bestandsextensie",
+  "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Fragment toevoegen",
+  "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "Fragment bewerken"
 });
 /*
  * GNU AGPL-3.0 License
@@ -104150,9 +104196,6 @@ define("nls/pl/strings", {
   "ACCOUNT_DETAILS": "Szczegóły konta",
   "AI_QUOTA_USED": "Wykorzystany limit AI",
   "LOGIN_REFRESH": "Sprawdź status logowania",
-  "CUSTOM_SNIPPETS_CANCEL": "Anuluj",
-  "CUSTOM_SNIPPETS_SAVE": "Zapisz",
-  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Brak opisu",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Własne fragmenty kodu…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Własne fragmenty kodu",
   "CUSTOM_SNIPPETS_ADD_NEW_TITLE": "Dodaj nowy fragment",
@@ -104165,6 +104208,9 @@ define("nls/pl/strings", {
   "CUSTOM_SNIPPETS_TEMPLATE_TEXT_LABEL": "Treść szablonu:",
   "CUSTOM_SNIPPETS_DESCRIPTION_LABEL": "Opis:",
   "CUSTOM_SNIPPETS_FILE_EXTENSION_LABEL": "Rozszerzenie pliku:",
+  "CUSTOM_SNIPPETS_CANCEL": "Anuluj",
+  "CUSTOM_SNIPPETS_SAVE": "Zapisz",
+  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Brak opisu",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Brak fragmentów kodu pasujących do \"{0}\"",
   "CUSTOM_SNIPPETS_LEARN_MORE": "Dodaj własne podpowiedzi kodu, aby przyspieszyć kodowanie - <a href=\"https://docs.phcode.dev\" target=\"_blank\">Dowiedz się więcej</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Fragment kodu ze skrótem \"{0}\" już istnieje.",
@@ -104187,7 +104233,9 @@ define("nls/pl/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Skrót",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Treść szablonu",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Opis",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Rozszerzenie pliku"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Rozszerzenie pliku",
+  "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Dodaj fragment kodu",
+  "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "Edytuj fragment kodu"
 });
 /*
  * GNU AGPL-3.0 License
@@ -105606,9 +105654,6 @@ define("nls/pt-br/strings", {
   "ACCOUNT_DETAILS": "Detalhes da Conta",
   "AI_QUOTA_USED": "Cota de IA usada",
   "LOGIN_REFRESH": "Verificar Status de Login",
-  "CUSTOM_SNIPPETS_CANCEL": "Cancelar",
-  "CUSTOM_SNIPPETS_SAVE": "Salvar",
-  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Sem descrição",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Trechos Personalizados…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Trechos Personalizados",
   "CUSTOM_SNIPPETS_ADD_NEW_TITLE": "Adicionar novo trecho",
@@ -105621,6 +105666,9 @@ define("nls/pt-br/strings", {
   "CUSTOM_SNIPPETS_TEMPLATE_TEXT_LABEL": "Texto do Modelo:",
   "CUSTOM_SNIPPETS_DESCRIPTION_LABEL": "Descrição:",
   "CUSTOM_SNIPPETS_FILE_EXTENSION_LABEL": "Extensão do arquivo:",
+  "CUSTOM_SNIPPETS_CANCEL": "Cancelar",
+  "CUSTOM_SNIPPETS_SAVE": "Salvar",
+  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Sem descrição",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Nenhum snippet corresponde a \"{0}\"",
   "CUSTOM_SNIPPETS_LEARN_MORE": "Adicione suas próprias dicas de código para acelerar a codificação - <a href=\"https://docs.phcode.dev\" target=\"_blank\">Saiba mais</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Já existe um snippet com a abreviação \"{0}\".",
@@ -105643,7 +105691,9 @@ define("nls/pt-br/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Abreviação",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Texto do Modelo",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Descrição",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensão do Arquivo"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensão do Arquivo",
+  "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Adicionar Snippet",
+  "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "Editar Snippet"
 });
 /*
  * GNU AGPL-3.0 License
@@ -107060,8 +107110,6 @@ define("nls/pt-pt/strings", {
   "ACCOUNT_DETAILS": "Detalhes da Conta",
   "AI_QUOTA_USED": "Quota de IA utilizada",
   "LOGIN_REFRESH": "Verificar estado de início de sessão",
-  "CUSTOM_SNIPPETS_CANCEL": "Cancelar",
-  "CUSTOM_SNIPPETS_SAVE": "Guardar",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Fragmentos Personalizados…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Fragmentos Personalizados",
   "CUSTOM_SNIPPETS_ADD_NEW_TITLE": "Adicionar novo fragmento",
@@ -107074,6 +107122,8 @@ define("nls/pt-pt/strings", {
   "CUSTOM_SNIPPETS_TEMPLATE_TEXT_LABEL": "Texto do Modelo:",
   "CUSTOM_SNIPPETS_DESCRIPTION_LABEL": "Descrição:",
   "CUSTOM_SNIPPETS_FILE_EXTENSION_LABEL": "Extensão do ficheiro:",
+  "CUSTOM_SNIPPETS_CANCEL": "Cancelar",
+  "CUSTOM_SNIPPETS_SAVE": "Guardar",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Sem descrição",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Nenhum snippet corresponde a \"{0}\"",
   "CUSTOM_SNIPPETS_LEARN_MORE": "Adicione as suas próprias sugestões de código para acelerar a codificação - <a href=\"https://docs.phcode.dev\" target=\"_blank\">Saiba mais</a>",
@@ -107097,7 +107147,9 @@ define("nls/pt-pt/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Abreviatura",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Texto do Modelo",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Descrição",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensão de Ficheiro"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensão de Ficheiro",
+  "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Adicionar Snippet",
+  "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "Editar Snippet"
 });
 /*
  * GNU AGPL-3.0 License
@@ -108514,9 +108566,6 @@ define("nls/ro/strings", {
   "ACCOUNT_DETAILS": "Detalii cont",
   "AI_QUOTA_USED": "Cotă AI utilizată",
   "LOGIN_REFRESH": "Verificare stare autentificare",
-  "CUSTOM_SNIPPETS_CANCEL": "Revocare",
-  "CUSTOM_SNIPPETS_SAVE": "Salvează",
-  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Nicio descriere",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Fragmente de cod personalizate…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Fragmente de cod personalizate",
   "CUSTOM_SNIPPETS_ADD_NEW_TITLE": "Adaugă fragment nou",
@@ -108529,6 +108578,9 @@ define("nls/ro/strings", {
   "CUSTOM_SNIPPETS_TEMPLATE_TEXT_LABEL": "Text șablon:",
   "CUSTOM_SNIPPETS_DESCRIPTION_LABEL": "Descriere:",
   "CUSTOM_SNIPPETS_FILE_EXTENSION_LABEL": "Extensie fișier:",
+  "CUSTOM_SNIPPETS_CANCEL": "Revocare",
+  "CUSTOM_SNIPPETS_SAVE": "Salvează",
+  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Nicio descriere",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Niciun fragment de cod nu corespunde cu \"{0}\"",
   "CUSTOM_SNIPPETS_LEARN_MORE": "Adăugați propriile sugestii de cod pentru a scrie mai rapid - <a href=\"https://docs.phcode.dev\" target=\"_blank\">Aflați mai multe</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Există deja un fragment de cod cu abrevierea \"{0}\".",
@@ -108551,7 +108603,9 @@ define("nls/ro/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Abreviere",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Text șablon",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Descriere",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensie fișier"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensie fișier",
+  "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Adaugă fragment de cod",
+  "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "Editează fragment de cod"
 });
 /*
  * GNU AGPL-3.0 License
@@ -111669,9 +111723,6 @@ define("nls/ru/strings", {
   "ACCOUNT_DETAILS": "Сведения об учетной записи",
   "AI_QUOTA_USED": "Использована квота ИИ",
   "LOGIN_REFRESH": "Проверить статус входа",
-  "CUSTOM_SNIPPETS_CANCEL": "Отмена",
-  "CUSTOM_SNIPPETS_SAVE": "Сохранить",
-  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Описание отсутвует",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Пользовательские сниппеты…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Пользовательские сниппеты",
   "CUSTOM_SNIPPETS_ADD_NEW_TITLE": "Добавить новый сниппет",
@@ -111684,6 +111735,9 @@ define("nls/ru/strings", {
   "CUSTOM_SNIPPETS_TEMPLATE_TEXT_LABEL": "Текст шаблона:",
   "CUSTOM_SNIPPETS_DESCRIPTION_LABEL": "Описание:",
   "CUSTOM_SNIPPETS_FILE_EXTENSION_LABEL": "Расширение файла:",
+  "CUSTOM_SNIPPETS_CANCEL": "Отмена",
+  "CUSTOM_SNIPPETS_SAVE": "Сохранить",
+  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Описание отсутвует",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Нет фрагментов, соответствующих \"{0}\"",
   "CUSTOM_SNIPPETS_LEARN_MORE": "Добавьте свои собственные подсказки кода, чтобы ускорить кодирование - <a href=\"https://docs.phcode.dev\" target=\"_blank\">Узнать больше</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Фрагмент с аббревиатурой \"{0}\" уже существует.",
@@ -111706,7 +111760,9 @@ define("nls/ru/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Сокращение",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Текст шаблона",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Описание",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Расширение файла"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Расширение файла",
+  "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Добавить фрагмент",
+  "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "Редактировать фрагмент"
 });
 /*
  * GNU AGPL-3.0 License
@@ -113125,9 +113181,6 @@ define("nls/sk/strings", {
   "ACCOUNT_DETAILS": "Detaily účtu",
   "AI_QUOTA_USED": "Využité AI kvóty",
   "LOGIN_REFRESH": "Skontrolovať stav prihlásenia",
-  "CUSTOM_SNIPPETS_CANCEL": "Zrušiť",
-  "CUSTOM_SNIPPETS_SAVE": "Uložiť",
-  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Bez popisu",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Vlastné úryvky…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Vlastné úryvky",
   "CUSTOM_SNIPPETS_ADD_NEW_TITLE": "Pridať nový úryvok",
@@ -113140,6 +113193,9 @@ define("nls/sk/strings", {
   "CUSTOM_SNIPPETS_TEMPLATE_TEXT_LABEL": "Text šablóny:",
   "CUSTOM_SNIPPETS_DESCRIPTION_LABEL": "Popis:",
   "CUSTOM_SNIPPETS_FILE_EXTENSION_LABEL": "Prípona súboru:",
+  "CUSTOM_SNIPPETS_CANCEL": "Zrušiť",
+  "CUSTOM_SNIPPETS_SAVE": "Uložiť",
+  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Bez popisu",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Žiadne úryvky sa nezhodujú s \"{0}\"",
   "CUSTOM_SNIPPETS_LEARN_MORE": "Pridajte si vlastné tipy na kód pre rýchlejšie kódovanie - <a href=\"https://docs.phcode.dev\" target=\"_blank\">Zistite viac</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Úryvok so skratkou \"{0}\" už existuje.",
@@ -113162,7 +113218,9 @@ define("nls/sk/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Skratka",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Text šablóny",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Popis",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Prípona súboru"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Prípona súboru",
+  "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Pridať úryvok",
+  "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "Upraviť úryvok"
 });
 /*
  * GNU AGPL-3.0 License
@@ -114580,9 +114638,6 @@ define("nls/sr/strings", {
   "ACCOUNT_DETAILS": "Подаци о налогу",
   "AI_QUOTA_USED": "Искоришћена AI квота",
   "LOGIN_REFRESH": "Провери статус пријаве",
-  "CUSTOM_SNIPPETS_CANCEL": "Откажи",
-  "CUSTOM_SNIPPETS_SAVE": "Сачувај",
-  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Не постоји опис",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Кориснички исечци…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Кориснички исечци",
   "CUSTOM_SNIPPETS_ADD_NEW_TITLE": "Додај нови исечак",
@@ -114595,6 +114650,9 @@ define("nls/sr/strings", {
   "CUSTOM_SNIPPETS_TEMPLATE_TEXT_LABEL": "Текст шаблона:",
   "CUSTOM_SNIPPETS_DESCRIPTION_LABEL": "Опис:",
   "CUSTOM_SNIPPETS_FILE_EXTENSION_LABEL": "Екстензија датотеке:",
+  "CUSTOM_SNIPPETS_CANCEL": "Откажи",
+  "CUSTOM_SNIPPETS_SAVE": "Сачувај",
+  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Не постоји опис",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Нема фрагмената кода који одговарају \"{0}\"",
   "CUSTOM_SNIPPETS_LEARN_MORE": "Додајте сопствене фрагменте кода да бисте убрзали кодирање - <a href=\"https://docs.phcode.dev\" target=\"_blank\">Сазнајте више</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Фрагмент кода са скраћеницом \"{0}\" већ постоји.",
@@ -114617,7 +114675,9 @@ define("nls/sr/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Скраћеница",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Текст шаблона",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Опис",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Екстензија датотеке"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Екстензија датотеке",
+  "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Додај исечак",
+  "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "Измени исечак"
 });
 /*
  * GNU AGPL-3.0 License
@@ -116119,9 +116179,6 @@ define("nls/sv/strings", {
   "ACCOUNT_DETAILS": "Kontodetaljer",
   "AI_QUOTA_USED": "Använd AI-kvot",
   "LOGIN_REFRESH": "Kontrollera inloggningsstatus",
-  "CUSTOM_SNIPPETS_CANCEL": "Avbryt",
-  "CUSTOM_SNIPPETS_SAVE": "Spara",
-  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Ingen beskrivning",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Anpassade kodsnuttar…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Anpassade kodsnuttar",
   "CUSTOM_SNIPPETS_ADD_NEW_TITLE": "Lägg till ny kodsnutt",
@@ -116134,6 +116191,9 @@ define("nls/sv/strings", {
   "CUSTOM_SNIPPETS_TEMPLATE_TEXT_LABEL": "Malltext:",
   "CUSTOM_SNIPPETS_DESCRIPTION_LABEL": "Beskrivning:",
   "CUSTOM_SNIPPETS_FILE_EXTENSION_LABEL": "Filändelse:",
+  "CUSTOM_SNIPPETS_CANCEL": "Avbryt",
+  "CUSTOM_SNIPPETS_SAVE": "Spara",
+  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Ingen beskrivning",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Inga snippets matchar \"{0}\"",
   "CUSTOM_SNIPPETS_LEARN_MORE": "Lägg till dina egna kodförslag för att snabba upp kodningen - <a href=\"https://docs.phcode.dev\" target=\"_blank\">Läs mer</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Ett snippet med förkortningen \"{0}\" finns redan.",
@@ -116156,7 +116216,9 @@ define("nls/sv/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Förkortning",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Malltext",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Beskrivning",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Filändelse"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Filändelse",
+  "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Lägg till snippet",
+  "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "Redigera snippet"
 });
 /*
  * GNU AGPL-3.0 License
@@ -117575,8 +117637,6 @@ define("nls/tr/strings", {
   "ACCOUNT_DETAILS": "Hesap Ayrıntıları",
   "AI_QUOTA_USED": "Yapay Zeka kotası kullanıldı",
   "LOGIN_REFRESH": "Oturum Durumunu Kontrol Et",
-  "CUSTOM_SNIPPETS_CANCEL": "İptal",
-  "CUSTOM_SNIPPETS_SAVE": "Kaydet",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Özel Parçacıklar…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Özel Parçacıklar",
   "CUSTOM_SNIPPETS_ADD_NEW_TITLE": "Yeni parçacık ekle",
@@ -117589,6 +117649,8 @@ define("nls/tr/strings", {
   "CUSTOM_SNIPPETS_TEMPLATE_TEXT_LABEL": "Şablon Metni:",
   "CUSTOM_SNIPPETS_DESCRIPTION_LABEL": "Açıklama:",
   "CUSTOM_SNIPPETS_FILE_EXTENSION_LABEL": "Dosya Uzantısı:",
+  "CUSTOM_SNIPPETS_CANCEL": "İptal",
+  "CUSTOM_SNIPPETS_SAVE": "Kaydet",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Açıklama yok",
   "CUSTOM_SNIPPETS_NO_MATCHES": "\"{0}\" ile eşleşen snippet yok",
   "CUSTOM_SNIPPETS_LEARN_MORE": "Kodlamayı hızlandırmak için kendi kod ipuçlarınızı ekleyin - <a href=\"https://docs.phcode.dev\" target=\"_blank\">Daha Fazla Bilgi Edinin</a>",
@@ -117612,7 +117674,9 @@ define("nls/tr/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Kısaltma",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Şablon Metni",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Açıklama",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Dosya Uzantısı"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Dosya Uzantısı",
+  "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Parça Ekle",
+  "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "Parçayı Düzenle"
 });
 /*
  * GNU AGPL-3.0 License
@@ -119031,9 +119095,6 @@ define("nls/uk/strings", {
   "ACCOUNT_DETAILS": "Дані облікового запису",
   "AI_QUOTA_USED": "Використано квоту ШІ",
   "LOGIN_REFRESH": "Перевірити статус входу",
-  "CUSTOM_SNIPPETS_CANCEL": "Скасувати",
-  "CUSTOM_SNIPPETS_SAVE": "Зберегти",
-  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Опис відсутній",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Власні сніпети…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Власні сніпети",
   "CUSTOM_SNIPPETS_ADD_NEW_TITLE": "Додати новий сніпет",
@@ -119046,6 +119107,9 @@ define("nls/uk/strings", {
   "CUSTOM_SNIPPETS_TEMPLATE_TEXT_LABEL": "Текст шаблону:",
   "CUSTOM_SNIPPETS_DESCRIPTION_LABEL": "Опис:",
   "CUSTOM_SNIPPETS_FILE_EXTENSION_LABEL": "Розширення файлу:",
+  "CUSTOM_SNIPPETS_CANCEL": "Скасувати",
+  "CUSTOM_SNIPPETS_SAVE": "Зберегти",
+  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Опис відсутній",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Немає сніпетів, що відповідають \"{0}\"",
   "CUSTOM_SNIPPETS_LEARN_MORE": "Додайте власні підказки коду, щоб пришвидшити кодування - <a href=\"https://docs.phcode.dev\" target=\"_blank\">Дізнатися більше</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Сніпет зі скороченням \"{0}\" вже існує.",
@@ -119068,7 +119132,9 @@ define("nls/uk/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Скорочення",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Текст шаблону",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Опис",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Розширення файлу"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Розширення файлу",
+  "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Додати фрагмент коду",
+  "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "Редагувати фрагмент коду"
 });
 /*
  * GNU AGPL-3.0 License
@@ -120524,7 +120590,9 @@ define("nls/ur/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "مخفف",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "ٹیمپلیٹ متن",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "وضاحت",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "فائل ایکسٹینشن"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "فائل ایکسٹینشن",
+  "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "کوڈ کا ٹکڑا شامل کریں",
+  "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "کوڈ کے ٹکڑے میں ترمیم کریں"
 });
 /*
  * GNU AGPL-3.0 License
@@ -121973,9 +122041,6 @@ define("nls/zh-cn/strings", {
   "ACCOUNT_DETAILS": "帐户详情",
   "AI_QUOTA_USED": "AI 配额已用",
   "LOGIN_REFRESH": "检查登录状态",
-  "CUSTOM_SNIPPETS_CANCEL": "取消",
-  "CUSTOM_SNIPPETS_SAVE": "保存",
-  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "没有描述",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "自定义代码片段…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "自定义代码片段",
   "CUSTOM_SNIPPETS_ADD_NEW_TITLE": "添加新代码片段",
@@ -121988,6 +122053,9 @@ define("nls/zh-cn/strings", {
   "CUSTOM_SNIPPETS_TEMPLATE_TEXT_LABEL": "模板文本：",
   "CUSTOM_SNIPPETS_DESCRIPTION_LABEL": "描述：",
   "CUSTOM_SNIPPETS_FILE_EXTENSION_LABEL": "文件扩展名：",
+  "CUSTOM_SNIPPETS_CANCEL": "取消",
+  "CUSTOM_SNIPPETS_SAVE": "保存",
+  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "没有描述",
   "CUSTOM_SNIPPETS_NO_MATCHES": "没有与“{0}”匹配的代码片段",
   "CUSTOM_SNIPPETS_LEARN_MORE": "添加您自己的代码提示以加快编码速度 - <a href=\"https://docs.phcode.dev\" target=\"_blank\">了解更多</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "缩写为“{0}”的代码片段已存在。",
@@ -122010,7 +122078,9 @@ define("nls/zh-cn/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "缩写",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "模板文本",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "描述",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "文件扩展名"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "文件扩展名",
+  "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "添加代码片段",
+  "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "编辑代码片段"
 });
 /*
  * GNU AGPL-3.0 License
@@ -123429,9 +123499,6 @@ define("nls/zh-tw/strings", {
   "ACCOUNT_DETAILS": "帳號詳細資訊",
   "AI_QUOTA_USED": "AI 配額已使用",
   "LOGIN_REFRESH": "檢查登入狀態",
-  "CUSTOM_SNIPPETS_CANCEL": "取消",
-  "CUSTOM_SNIPPETS_SAVE": "儲存",
-  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "沒有描述資訊",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "自訂程式碼片段…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "自訂程式碼片段",
   "CUSTOM_SNIPPETS_ADD_NEW_TITLE": "新增程式碼片段",
@@ -123444,6 +123511,9 @@ define("nls/zh-tw/strings", {
   "CUSTOM_SNIPPETS_TEMPLATE_TEXT_LABEL": "範本文字：",
   "CUSTOM_SNIPPETS_DESCRIPTION_LABEL": "說明：",
   "CUSTOM_SNIPPETS_FILE_EXTENSION_LABEL": "檔案副檔名：",
+  "CUSTOM_SNIPPETS_CANCEL": "取消",
+  "CUSTOM_SNIPPETS_SAVE": "儲存",
+  "CUSTOM_SNIPPETS_NO_DESCRIPTION": "沒有描述資訊",
   "CUSTOM_SNIPPETS_NO_MATCHES": "沒有符合「{0}」的程式碼片段",
   "CUSTOM_SNIPPETS_LEARN_MORE": "新增您自己的程式碼提示以加快編碼速度 - <a href=\"https://docs.phcode.dev\" target=\"_blank\">了解更多</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "縮寫為「{0}」的程式碼片段已存在。",
@@ -123466,7 +123536,9 @@ define("nls/zh-tw/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "縮寫",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "範本文字",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "描述",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "檔案副檔名"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "檔案副檔名",
+  "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "新增程式碼片段",
+  "CUSTOM_SNIPPETS_EDIT_PANEL_TITLE": "編輯程式碼片段"
 });
 /*
  * GNU AGPL-3.0 License
