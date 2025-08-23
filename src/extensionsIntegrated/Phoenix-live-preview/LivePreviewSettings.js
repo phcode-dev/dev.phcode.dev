@@ -87,7 +87,7 @@ define(function (require, exports, module) {
         description: Strings.LIVE_DEV_SETTINGS_FRAMEWORK_PREFERENCES,
         values: Object.keys(SUPPORTED_FRAMEWORKS)
     });
-    
+
     async function detectFramework($frameworkSelect, $hotReloadChk) {
         for(let framework of Object.keys(SUPPORTED_FRAMEWORKS)){
             const configFile = SUPPORTED_FRAMEWORKS[framework].configFile,
@@ -131,10 +131,11 @@ define(function (require, exports, module) {
                 $hotReloadLabel = $template.find("#hotReloadLabel"),
                 $frameworkLabel = $template.find("#frameworkLabel"),
                 $frameworkSelect = $template.find("#frameworkSelect");
+
+            // Initialize form values from preferences
             $enableCustomServerChk.prop('checked', PreferencesManager.get(PREFERENCE_PROJECT_SERVER_ENABLED));
             $showLivePreviewAtStartup.prop('checked', PreferencesManager.get(PREFERENCE_SHOW_LIVE_PREVIEW_PANEL));
             $hotReloadChk.prop('checked', !!PreferencesManager.get(PREFERENCE_PROJECT_SERVER_HOT_RELOAD_SUPPORTED));
-            // figure out the framework
 
             if(PreferencesManager.get(PREFERENCE_PROJECT_PREVIEW_FRAMEWORK) === null) {
                 detectFramework($frameworkSelect, $hotReloadChk);

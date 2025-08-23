@@ -42,7 +42,13 @@ define(function main(require, exports, module) {
         Strings             = require("strings"),
         ExtensionUtils      = require("utils/ExtensionUtils"),
         StringUtils         = require("utils/StringUtils"),
-        EventDispatcher      = require("utils/EventDispatcher");
+        EventDispatcher      = require("utils/EventDispatcher"),
+        WorkspaceManager    = require("view/WorkspaceManager");
+
+
+    // this is responsible to make the advanced live preview features active or inactive
+    // @abose (make this variable false when not a paid user, everything rest is handled automatically)
+    let isLPEditFeaturesActive = false;
 
     const EVENT_LIVE_HIGHLIGHT_PREF_CHANGED = "liveHighlightPrefChange";
 
@@ -57,6 +63,19 @@ define(function main(require, exports, module) {
             marginColor:  {r: 246, g: 178, b: 107, a: 0.66},
             paddingColor: {r: 147, g: 196, b: 125, a: 0.66},
             showInfo: true
+        },
+        isLPEditFeaturesActive: isLPEditFeaturesActive,
+        elemHighlights: "hover", // default value, this will get updated when the extension loads
+        // this strings are used in RemoteFunctions.js
+        // we need to pass this through config as remoteFunctions runs in browser context and cannot
+        // directly reference Strings file
+        strings: {
+            selectParent: Strings.LIVE_DEV_MORE_OPTIONS_SELECT_PARENT,
+            editText: Strings.LIVE_DEV_MORE_OPTIONS_EDIT_TEXT,
+            duplicate: Strings.LIVE_DEV_MORE_OPTIONS_DUPLICATE,
+            delete: Strings.LIVE_DEV_MORE_OPTIONS_DELETE,
+            ai: Strings.LIVE_DEV_MORE_OPTIONS_AI,
+            aiPromptPlaceholder: Strings.LIVE_DEV_AI_PROMPT_PLACEHOLDER
         }
     };
     // Status labels/styles are ordered: error, not connected, progress1, progress2, connected.
@@ -79,14 +98,12 @@ define(function main(require, exports, module) {
             "opacity": 0.6
         },
         "paddingStyling": {
-            "border-width": "1px",
-            "border-style": "dashed",
-            "border-color": "rgba(0, 162, 255, 0.5)"
+            "background-color": "rgba(200, 249, 197, 0.7)"
         },
         "marginStyling": {
-            "background-color": "rgba(21, 165, 255, 0.58)"
+            "background-color": "rgba(249, 204, 157, 0.7)"
         },
-        "borderColor": "rgba(21, 165, 255, 0.85)",
+        "borderColor": "rgba(200, 249, 197, 0.85)",
         "showPaddingMargin": true
     }, {
         description: Strings.DESCRIPTION_LIVE_DEV_HIGHLIGHT_SETTINGS
@@ -239,6 +256,19 @@ define(function main(require, exports, module) {
         }
     }
 
+    /**
+     * this function handles escape key for live preview to hide boxes if they are visible
+     * @param {Event} event
+     */
+    function _handleLivePreviewEscapeKey(event) {
+        // we only handle the escape keypress for live preview when its active
+        if (MultiBrowserLiveDev.status === MultiBrowserLiveDev.STATUS_ACTIVE) {
+            MultiBrowserLiveDev.dismissLivePreviewBoxes();
+        }
+        // returning false to let the editor also handle the escape key
+        return false;
+    }
+
     /** Initialize LiveDevelopment */
     AppInit.appReady(function () {
         params.parse();
@@ -276,7 +306,7 @@ define(function main(require, exports, module) {
             .on("change", function () {
                 config.remoteHighlight = prefs.get(PREF_REMOTEHIGHLIGHT);
                 if (MultiBrowserLiveDev && MultiBrowserLiveDev.status >= MultiBrowserLiveDev.STATUS_ACTIVE) {
-                    MultiBrowserLiveDev.agents.remote.call("updateConfig",JSON.stringify(config));
+                    MultiBrowserLiveDev.updateConfig(JSON.stringify(config));
                 }
             });
 
@@ -293,6 +323,9 @@ define(function main(require, exports, module) {
             exports.trigger(exports.EVENT_LIVE_PREVIEW_RELOAD, clientDetails);
         });
 
+        // allow live preview to handle escape key event
+        // Escape is mainly to hide boxes if they are visible
+        WorkspaceManager.addEscapeKeyEventHandler("livePreview", _handleLivePreviewEscapeKey);
     });
 
     // init prefs
@@ -300,9 +333,32 @@ define(function main(require, exports, module) {
         .on("change", function () {
             config.highlight = PreferencesManager.getViewState("livedevHighlight");
             _updateHighlightCheckmark();
+            if (MultiBrowserLiveDev && MultiBrowserLiveDev.status >= MultiBrowserLiveDev.STATUS_ACTIVE) {
+                MultiBrowserLiveDev.updateConfig(JSON.stringify(config));
+            }
         });
 
     config.highlight = PreferencesManager.getViewState("livedevHighlight");
+
+    function setLivePreviewEditFeaturesActive(enabled) {
+        isLPEditFeaturesActive = enabled;
+        config.isLPEditFeaturesActive = enabled;
+        if (MultiBrowserLiveDev && MultiBrowserLiveDev.status >= MultiBrowserLiveDev.STATUS_ACTIVE) {
+            MultiBrowserLiveDev.updateConfig(JSON.stringify(config));
+            MultiBrowserLiveDev.registerHandlers();
+        }
+    }
+
+    // this function is responsible to update element highlight config
+    // called from live preview extension when preference changes
+    function updateElementHighlightConfig() {
+        const prefValue = PreferencesManager.get("livePreviewElementHighlights");
+        config.elemHighlights = prefValue || "hover";
+        if (MultiBrowserLiveDev && MultiBrowserLiveDev.status >= MultiBrowserLiveDev.STATUS_ACTIVE) {
+            MultiBrowserLiveDev.updateConfig(JSON.stringify(config));
+            MultiBrowserLiveDev.registerHandlers();
+        }
+    }
 
     // init commands
     CommandManager.register(Strings.CMD_LIVE_HIGHLIGHT, Commands.FILE_LIVE_HIGHLIGHT, togglePreviewHighlight);
@@ -311,6 +367,8 @@ define(function main(require, exports, module) {
     CommandManager.get(Commands.FILE_LIVE_HIGHLIGHT).setEnabled(false);
 
     EventDispatcher.makeEventDispatcher(exports);
+
+    exports.isLPEditFeaturesActive = isLPEditFeaturesActive;
 
     // public events
     exports.EVENT_OPEN_PREVIEW_URL = MultiBrowserLiveDev.EVENT_OPEN_PREVIEW_URL;
@@ -327,6 +385,10 @@ define(function main(require, exports, module) {
     exports.setLivePreviewPinned = setLivePreviewPinned;
     exports.setLivePreviewTransportBridge = setLivePreviewTransportBridge;
     exports.togglePreviewHighlight = togglePreviewHighlight;
+    exports.setLivePreviewEditFeaturesActive = setLivePreviewEditFeaturesActive;
+    exports.updateElementHighlightConfig = updateElementHighlightConfig;
     exports.getConnectionIds = MultiBrowserLiveDev.getConnectionIds;
     exports.getLivePreviewDetails = MultiBrowserLiveDev.getLivePreviewDetails;
+    exports.hideHighlight = MultiBrowserLiveDev.hideHighlight;
+    exports.dismissLivePreviewBoxes = MultiBrowserLiveDev.dismissLivePreviewBoxes;
 });

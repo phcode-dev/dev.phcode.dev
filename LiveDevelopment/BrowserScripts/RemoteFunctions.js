@@ -28,25 +28,21 @@
  * modules should define a single function that returns an object of all
  * exported functions.
  */
-function RemoteFunctions(config) {
+function RemoteFunctions(config = {}) {
+    // this will store the element that was clicked previously (before the new click)
+    // we need this so that we can remove click styling from the previous element when a new element is clicked
+    let previouslyClickedElement = null;
 
-
-    var experimental;
-    if (!config) {
-        experimental = false;    
-    } else {
-        experimental = config.experimental;    
-    }
     var req, timeout;
     var animateHighlight = function (time) {
         if(req) {
-            window.cancelAnimationFrame(req);	
+            window.cancelAnimationFrame(req);
             window.clearTimeout(timeout);
         }
         req = window.requestAnimationFrame(redrawHighlights);
 
         timeout = setTimeout(function () {
-            window.cancelAnimationFrame(req);	
+            window.cancelAnimationFrame(req);
             req = null;
         }, time * 1000);
     };
@@ -58,30 +54,78 @@ function RemoteFunctions(config) {
 
     var HIGHLIGHT_CLASSNAME = "__brackets-ld-highlight";
 
+    // auto-scroll variables to auto scroll the live preview when an element is dragged to the top/bottom
+    let _autoScrollTimer = null;
+    let _isAutoScrolling = false; // to disable highlights when auto scrolling
+    const AUTO_SCROLL_SPEED = 12; // pixels per scroll
+    const AUTO_SCROLL_EDGE_SIZE = 0.05; // 5% of viewport height (either top/bottom)
+
+    /**
+     * this function is responsible to auto scroll the live preview when
+     * dragging an element to the viewport edges
+     * @param {number} clientY - curr mouse Y position
+     */
+    function _handleAutoScroll(clientY) {
+        const viewportHeight = window.innerHeight;
+        const scrollEdgeSize = viewportHeight * AUTO_SCROLL_EDGE_SIZE;
+
+        // Clear existing timer
+        if (_autoScrollTimer) {
+            clearInterval(_autoScrollTimer);
+            _autoScrollTimer = null;
+        }
+
+        let scrollDirection = 0;
+
+        // check if near top edge (scroll up)
+        if (clientY <= scrollEdgeSize) {
+            scrollDirection = -AUTO_SCROLL_SPEED;
+        } else if (clientY >= viewportHeight - scrollEdgeSize) {
+            // check if near bottom edge (scroll down)
+            scrollDirection = AUTO_SCROLL_SPEED;
+        }
+
+        // Start scrolling if needed
+        if (scrollDirection !== 0) {
+            _isAutoScrolling = true;
+            _autoScrollTimer = setInterval(() => {
+                window.scrollBy(0, scrollDirection);
+            }, 16); // 16 is ~60fps
+        }
+    }
+
+    // stop autoscrolling
+    function _stopAutoScroll() {
+        if (_autoScrollTimer) {
+            clearInterval(_autoScrollTimer);
+            _autoScrollTimer = null;
+        }
+        _isAutoScrolling = false;
+    }
+
     // determine whether an event should be processed for Live Development
     function _validEvent(event) {
         if (window.navigator.platform.substr(0, 3) === "Mac") {
             // Mac
             return event.metaKey;
-        } else {
-            // Windows
-            return event.ctrlKey;
         }
+        // Windows
+        return event.ctrlKey;
     }
 
-    // determine the color for a type
-    function _typeColor(type, highlight) {
-        switch (type) {
-        case "html":
-            return highlight ? "#eec" : "#ffe";
-        case "css":
-            return highlight ? "#cee" : "#eff";
-        case "js":
-            return highlight ? "#ccf" : "#eef";
-        default:
-            return highlight ? "#ddd" : "#eee";
+    // helper function to check if an element is inside the HEAD tag
+    // we need this because we don't wanna trigger the element highlights on head tag and its children
+    function _isInsideHeadTag(element) {
+        let parent = element;
+        while (parent && parent !== window.document) {
+            if (parent.tagName === "HEAD") {
+                return true;
+            }
+            parent = parent.parentElement;
         }
+        return false;
     }
+
 
     // compute the screen offset of an element
     function _screenOffset(element) {
@@ -113,7 +157,7 @@ function RemoteFunctions(config) {
             element.removeAttribute(key);
         }
     }
-    
+
     // Checks if the element is in Viewport in the client browser
     function isInViewport(element) {
         var rect = element.getBoundingClientRect();
@@ -125,125 +169,1694 @@ function RemoteFunctions(config) {
             rect.right <= (window.innerWidth || html.clientWidth)
         );
     }
-    
+
+    // Checks if an element is actually visible to the user (not hidden, collapsed, or off-screen)
+    function isElementVisible(element) {
+        // Check if element has zero dimensions (indicates it's hidden or collapsed)
+        const rect = element.getBoundingClientRect();
+        if (rect.width === 0 && rect.height === 0) {
+            return false;
+        }
+
+        // Check computed styles for visibility
+        const computedStyle = window.getComputedStyle(element);
+        if (computedStyle.display === 'none' ||
+            computedStyle.visibility === 'hidden' ||
+            computedStyle.opacity === '0') {
+            return false;
+        }
+
+        // Check if any parent element is hidden
+        let parent = element.parentElement;
+        while (parent && parent !== document.body) {
+            const parentStyle = window.getComputedStyle(parent);
+            if (parentStyle.display === 'none' ||
+                parentStyle.visibility === 'hidden') {
+                return false;
+            }
+            parent = parent.parentElement;
+        }
+
+        return true;
+    }
+
     // returns the distance from the top of the closest relatively positioned parent element
     function getDocumentOffsetTop(element) {
         return element.offsetTop + (element.offsetParent ? getDocumentOffsetTop(element.offsetParent) : 0);
     }
 
-    // construct the info menu
-    function Menu(element) {
-        this.element = element;
-        _trigger(this.element, "showgoto", 1, true);
-        window.setTimeout(window.remoteShowGoto);
-        this.remove = this.remove.bind(this);
+    /**
+     * This function gets called when the AI button is clicked
+     * it shows a AI prompt box to the user
+     * @param {Event} event
+     * @param {DOMElement} element - the HTML DOM element that was clicked
+     */
+    function _handleAIOptionClick(event, element) {
+        // make sure there is no existing AI prompt box, and no other box as well
+        dismissAllUIBoxes();
+        _aiPromptBox = new AIPromptBox(element); // create a new one
     }
 
-    Menu.prototype = {
-        onClick: function (url, event) {
-            event.preventDefault();
-            _trigger(this.element, "goto", url, true);
-            this.remove();
+    /**
+     * This function gets called when the delete button is clicked
+     * it sends a message to the editor using postMessage to delete the element from the source code
+     * @param {Event} event
+     * @param {DOMElement} element - the HTML DOM element that was clicked. it is to get the data-brackets-id attribute
+     */
+    function _handleDeleteOptionClick(event, element) {
+        const tagId = element.getAttribute("data-brackets-id");
+
+        if (tagId && element.tagName !== "BODY" && element.tagName !== "HTML" && !_isInsideHeadTag(element)) {
+            window._Brackets_MessageBroker.send({
+                livePreviewEditEnabled: true,
+                element: element,
+                event: event,
+                tagId: Number(tagId),
+                delete: true
+            });
+        } else {
+            console.error("The TagID might be unavailable or the element tag is directly body or html");
+        }
+    }
+
+    /**
+     * this is for duplicate button. Read '_handleDeleteOptionClick' jsdoc to understand more on how this works
+     * @param {Event} event
+     * @param {DOMElement} element - the HTML DOM element that was clicked. it is to get the data-brackets-id attribute
+     */
+    function _handleDuplicateOptionClick(event, element) {
+        const tagId = element.getAttribute("data-brackets-id");
+
+        if (tagId && element.tagName !== "BODY" && element.tagName !== "HTML" && !_isInsideHeadTag(element)) {
+            window._Brackets_MessageBroker.send({
+                livePreviewEditEnabled: true,
+                element: element,
+                event: event,
+                tagId: Number(tagId),
+                duplicate: true
+            });
+        } else {
+            console.error("The TagID might be unavailable or the element tag is directly body or html");
+        }
+    }
+
+    /**
+     * this is for select-parent button
+     * When user clicks on this option for a particular element, we get its parent element and trigger a click on it
+     * @param {Event} event
+     * @param {DOMElement} element - the HTML DOM element that was clicked. it is to get the data-brackets-id attribute
+     */
+    function _handleSelectParentOptionClick(event, element) {
+        if (!element) {
+            return;
+        }
+
+        const parentElement = element.parentElement;
+        if (!parentElement) {
+            return;
+        }
+
+        // we need to make sure that the parent element is not the body tag or the html.
+        // also we expect it to have the 'data-brackets-id'
+        if (
+            parentElement.tagName !== "BODY" &&
+            parentElement.tagName !== "HTML" &&
+            !_isInsideHeadTag(parentElement) &&
+            parentElement.hasAttribute("data-brackets-id")
+        ) {
+            parentElement.click();
+        } else {
+            console.error("The TagID might be unavailable or the parent element tag is directly body or html");
+        }
+    }
+
+    /**
+     * This function will get triggered when from the multiple advance DOM buttons, one is clicked
+     * this function just checks which exact button was clicked and call the required function
+     * @param {Event} e
+     * @param {String} action - the data-action attribute to differentiate between buttons
+     * @param {DOMElement} element - the selected DOM element
+     */
+    function handleOptionClick(e, action, element) {
+        if (action === "select-parent") {
+            _handleSelectParentOptionClick(e, element);
+        } else if (action === "edit-text") {
+            startEditing(element);
+        } else if (action === "duplicate") {
+            _handleDuplicateOptionClick(e, element);
+        } else if (action === "delete") {
+            _handleDeleteOptionClick(e, element);
+        } else if (action === "ai") {
+            _handleAIOptionClick(e, element);
+        }
+    }
+
+    function _dragStartChores(element) {
+        element._originalDragOpacity = element.style.opacity;
+        element.style.opacity = 0.4;
+    }
+
+
+    function _dragEndChores(element) {
+        if (element._originalDragOpacity) {
+            element.style.opacity = element._originalDragOpacity;
+        } else {
+            element.style.opacity = 1;
+        }
+        delete element._originalDragOpacity;
+    }
+
+    // CSS class names for drop markers
+    let DROP_MARKER_CLASSNAME = "__brackets-drop-marker-horizontal";
+    let DROP_MARKER_VERTICAL_CLASSNAME = "__brackets-drop-marker-vertical";
+    let DROP_MARKER_INSIDE_CLASSNAME = "__brackets-drop-marker-inside";
+
+    /**
+     * This function is responsible to determine whether to show vertical/horizontal indicators
+     *
+     * @param {DOMElement} element - the target element
+     * @returns {String} 'vertical' or 'horizontal'
+     */
+    function _getIndicatorType(element) {
+        // we need to check the parent element's property if its a flex container
+        const parent = element.parentElement;
+        if (!parent) {
+            return 'horizontal';
+        }
+
+        const parentStyle = window.getComputedStyle(parent);
+        const display = parentStyle.display;
+        const flexDirection = parentStyle.flexDirection;
+
+        if ((display === "flex" || display === "inline-flex") && flexDirection.startsWith("row")) {
+            return "vertical";
+        }
+
+        // default is horizontal
+        return 'horizontal';
+    }
+
+    /**
+     * this function is to determine if an element can accept children (inside drops)
+     *
+     * @param {DOMElement} element - The target element
+     * @returns {Boolean} true if element can accept children
+     */
+    function _canAcceptChildren(element) {
+        // self-closing elements, cannot have children
+        const voidElements = [
+            "IMG",
+            "BR",
+            "HR",
+            "INPUT",
+            "META",
+            "LINK",
+            "AREA",
+            "BASE",
+            "COL",
+            "EMBED",
+            "SOURCE",
+            "TRACK",
+            "WBR"
+        ];
+
+        // Elements that shouldn't accept visual children
+        const nonContainerElements = [
+            "SCRIPT", "STYLE", "NOSCRIPT", "CANVAS", "SVG", "VIDEO", "AUDIO", "IFRAME", "OBJECT"
+        ];
+
+        const tagName = element.tagName.toUpperCase();
+
+        if (voidElements.includes(tagName) || nonContainerElements.includes(tagName)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * it is to check if a source element can be placed inside a target element according to HTML rules
+     *
+     * @param {DOMElement} sourceElement - The element being dragged
+     * @param {DOMElement} targetElement - The target container element
+     * @returns {Boolean} true if the nesting is valid
+     */
+    function _isValidNesting(sourceElement, targetElement) {
+        const sourceTag = sourceElement.tagName.toUpperCase();
+        const targetTag = targetElement.tagName.toUpperCase();
+
+        // block elements, cannot come inside inline elements
+        const blockElements = [
+            "DIV",
+            "P",
+            "H1",
+            "H2",
+            "H3",
+            "H4",
+            "H5",
+            "H6",
+            "SECTION",
+            "ARTICLE",
+            "HEADER",
+            "FOOTER",
+            "NAV",
+            "ASIDE",
+            "MAIN",
+            "BLOCKQUOTE",
+            "PRE",
+            "TABLE",
+            "UL",
+            "OL",
+            "LI",
+            "DL",
+            "DT",
+            "DD",
+            "FORM",
+            "FIELDSET",
+            "ADDRESS",
+            "FIGURE",
+            "FIGCAPTION",
+            "DETAILS",
+            "SUMMARY"
+        ];
+
+        // inline elements that can't contain block elements
+        const inlineElements = [
+            "SPAN",
+            "A",
+            "STRONG",
+            "EM",
+            "B",
+            "I",
+            "U",
+            "SMALL",
+            "CODE",
+            "KBD",
+            "SAMP",
+            "VAR",
+            "SUB",
+            "SUP",
+            "MARK",
+            "DEL",
+            "INS",
+            "Q",
+            "CITE",
+            "ABBR",
+            "TIME",
+            "DATA",
+            "OUTPUT"
+        ];
+
+        // interactive elements that can't be nested inside each other
+        const interactiveElements = [
+            "A",
+            "BUTTON",
+            "INPUT",
+            "SELECT",
+            "TEXTAREA",
+            "LABEL",
+            "DETAILS",
+            "SUMMARY",
+            "AUDIO",
+            "VIDEO",
+            "EMBED",
+            "IFRAME",
+            "OBJECT"
+        ];
+
+        // Sectioning content - semantic HTML5 sections
+        const sectioningContent = ["ARTICLE", "ASIDE", "NAV", "SECTION"];
+
+        // Elements that can't contain themselves (prevent nesting)
+        const noSelfNesting = [
+            "P",
+            "A",
+            "BUTTON",
+            "LABEL",
+            "FORM",
+            "HEADER",
+            "FOOTER",
+            "NAV",
+            "MAIN",
+            "ASIDE",
+            "SECTION",
+            "ARTICLE",
+            "ADDRESS",
+            "H1",
+            "H2",
+            "H3",
+            "H4",
+            "H5",
+            "H6",
+            "FIGURE",
+            "FIGCAPTION",
+            "DETAILS",
+            "SUMMARY"
+        ];
+
+        // Special cases - elements that have specific content restrictions
+        const restrictedContainers = {
+            // List elements
+            UL: ["LI"],
+            OL: ["LI"],
+            DL: ["DT", "DD"],
+
+            // Table elements
+            TABLE: ["THEAD", "TBODY", "TFOOT", "TR", "CAPTION", "COLGROUP"],
+            THEAD: ["TR"],
+            TBODY: ["TR"],
+            TFOOT: ["TR"],
+            TR: ["TD", "TH"],
+            COLGROUP: ["COL"],
+
+            // Form elements
+            SELECT: ["OPTION", "OPTGROUP"],
+            OPTGROUP: ["OPTION"],
+            DATALIST: ["OPTION"],
+
+            // Media elements
+            PICTURE: ["SOURCE", "IMG"],
+            AUDIO: ["SOURCE", "TRACK"],
+            VIDEO: ["SOURCE", "TRACK"],
+
+            // Other specific containers
+            FIGURE: ["FIGCAPTION", "DIV", "P", "IMG", "CANVAS", "SVG", "TABLE", "PRE", "CODE"],
+            DETAILS: ["SUMMARY"] // SUMMARY should be the first child
+        };
+
+        // 1. Check self-nesting (elements that can't contain themselves)
+        if (noSelfNesting.includes(sourceTag) && sourceTag === targetTag) {
+            return false;
+        }
+
+        // 2. Check block elements inside inline elements
+        if (blockElements.includes(sourceTag) && inlineElements.includes(targetTag)) {
+            return false;
+        }
+
+        // 3. Check restricted containers (strict parent-child relationships)
+        if (restrictedContainers[targetTag]) {
+            return restrictedContainers[targetTag].includes(sourceTag);
+        }
+
+        // 4. Special case: P tags can't contain block elements (phrasing content only)
+        if (targetTag === "P" && blockElements.includes(sourceTag)) {
+            return false;
+        }
+
+        // 5. Interactive elements can't contain other interactive elements
+        if (interactiveElements.includes(targetTag) && interactiveElements.includes(sourceTag)) {
+            return false;
+        }
+
+        // 6. Semantic HTML5 sectioning rules
+        if (targetTag === "HEADER") {
+            // Header can't contain other headers, footers, or main
+            if (["HEADER", "FOOTER", "MAIN"].includes(sourceTag)) {
+                return false;
+            }
+        }
+
+        if (targetTag === "FOOTER") {
+            // Footer can't contain headers, footers, or main
+            if (["HEADER", "FOOTER", "MAIN"].includes(sourceTag)) {
+                return false;
+            }
+        }
+
+        if (targetTag === "MAIN") {
+            // Main can't contain other mains
+            if (sourceTag === "MAIN") {
+                return false;
+            }
+        }
+
+        if (targetTag === "ADDRESS") {
+            // Address can't contain sectioning content, headers, footers, or address
+            if (sectioningContent.includes(sourceTag) || ["HEADER", "FOOTER", "ADDRESS", "MAIN"].includes(sourceTag)) {
+                return false;
+            }
+        }
+
+        // 7. Form-related validation
+        if (targetTag === "FORM") {
+            // Form can't contain other forms
+            if (sourceTag === "FORM") {
+                return false;
+            }
+        }
+
+        if (targetTag === "FIELDSET") {
+            // Fieldset should have legend as first child (but we'll allow it anywhere for flexibility)
+            // No specific restrictions beyond normal content
+        }
+
+        if (targetTag === "LABEL") {
+            // Label can't contain other labels or form controls (except one input)
+            if (["LABEL", "BUTTON", "SELECT", "TEXTAREA"].includes(sourceTag)) {
+                return false;
+            }
+        }
+
+        // 8. Heading hierarchy validation (optional - can be strict or flexible)
+        if (["H1", "H2", "H3", "H4", "H5", "H6"].includes(targetTag)) {
+            // Headings can't contain block elements (should only contain phrasing content)
+            if (blockElements.includes(sourceTag)) {
+                return false;
+            }
+        }
+
+        // 9. List item specific rules
+        if (sourceTag === "LI") {
+            // LI can only be inside UL, OL, or MENU
+            if (!["UL", "OL", "MENU"].includes(targetTag)) {
+                return false;
+            }
+        }
+
+        if (["DT", "DD"].includes(sourceTag)) {
+            // DT and DD can only be inside DL
+            if (targetTag !== "DL") {
+                return false;
+            }
+        }
+
+        // 10. Table-related validation
+        if (["THEAD", "TBODY", "TFOOT"].includes(sourceTag)) {
+            if (targetTag !== "TABLE") {
+                return false;
+            }
+        }
+
+        if (sourceTag === "TR") {
+            if (!["TABLE", "THEAD", "TBODY", "TFOOT"].includes(targetTag)) {
+                return false;
+            }
+        }
+
+        if (["TD", "TH"].includes(sourceTag)) {
+            if (targetTag !== "TR") {
+                return false;
+            }
+        }
+
+        if (sourceTag === "CAPTION") {
+            if (targetTag !== "TABLE") {
+                return false;
+            }
+        }
+
+        // 11. Media and embedded content
+        if (["SOURCE", "TRACK"].includes(sourceTag)) {
+            if (!["AUDIO", "VIDEO", "PICTURE"].includes(targetTag)) {
+                return false;
+            }
+        }
+
+        // 12. Ruby annotation elements (if supported)
+        if (["RP", "RT"].includes(sourceTag)) {
+            if (targetTag !== "RUBY") {
+                return false;
+            }
+        }
+
+        // 13. Option elements
+        if (sourceTag === "OPTION") {
+            if (!["SELECT", "OPTGROUP", "DATALIST"].includes(targetTag)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * this function determines the drop zone based on cursor position relative to element
+     *
+     * @param {DOMElement} element - The target element
+     * @param {Number} clientX - x pos
+     * @param {Number} clientY - y pos
+     * @param {String} indicatorType - 'vertical' or 'horizontal'
+     * @param {DOMElement} sourceElement - The element being dragged (for validation)
+     * @returns {String} 'before', 'inside', or 'after'
+     */
+    function _getDropZone(element, clientX, clientY, indicatorType, sourceElement) {
+        const rect = element.getBoundingClientRect();
+        const canAcceptChildren = _canAcceptChildren(element);
+        const isValidNesting = sourceElement ? _isValidNesting(sourceElement, element) : true;
+
+        if (indicatorType === "vertical") {
+            const leftThird = rect.left + rect.width * 0.3;
+            const rightThird = rect.right - rect.width * 0.3;
+
+            if (clientX < leftThird) {
+                return "before";
+            } else if (clientX > rightThird) {
+                return "after";
+            } else if (canAcceptChildren && isValidNesting) {
+                return "inside";
+            }
+            // If can't accept children or invalid nesting, use middle as "after"
+            return clientX < rect.left + rect.width / 2 ? "before" : "after";
+        }
+
+        const topThird = rect.top + rect.height * 0.3;
+        const bottomThird = rect.bottom - rect.height * 0.3;
+
+        if (clientY < topThird) {
+            return "before";
+        } else if (clientY > bottomThird) {
+            return "after";
+        } else if (canAcceptChildren && isValidNesting) {
+            return "inside";
+        }
+        // If can't accept children or invalid nesting, use middle as "after"
+        return clientY < rect.top + rect.height / 2 ? "before" : "after";
+    }
+
+    /**
+     * this is to create a marker to indicate a valid drop position
+     *
+     * @param {DOMElement} element - The element where the drop is possible
+     * @param {String} dropZone - 'before', 'inside', or 'after'
+     * @param {String} indicatorType - 'vertical' or 'horizontal'
+     */
+    function _createDropMarker(element, dropZone, indicatorType = "horizontal") {
+        // clean any existing marker from that element
+        _removeDropMarkerFromElement(element);
+
+        // create the marker element
+        let marker = window.document.createElement("div");
+
+        // Set marker class based on drop zone
+        if (dropZone === "inside") {
+            marker.className = DROP_MARKER_INSIDE_CLASSNAME;
+        } else {
+            marker.className = indicatorType === "vertical" ? DROP_MARKER_VERTICAL_CLASSNAME : DROP_MARKER_CLASSNAME;
+        }
+
+        let rect = element.getBoundingClientRect();
+        marker.style.position = "fixed";
+        marker.style.zIndex = "2147483646";
+        marker.style.borderRadius = "2px";
+        marker.style.pointerEvents = "none";
+
+        if (dropZone === "inside") {
+            // inside marker - outline around the element
+            marker.style.border = "1px dashed #4285F4";
+            marker.style.backgroundColor = "rgba(66, 133, 244, 0.05)";
+            marker.style.left = rect.left + "px";
+            marker.style.top = rect.top + "px";
+            marker.style.width = rect.width + "px";
+            marker.style.height = rect.height + "px";
+            marker.style.animation = "insideMarkerPulse 1s ease-in-out infinite alternate";
+        } else {
+            // Before/After markers - lines
+            marker.style.background = "linear-gradient(90deg, #4285F4, #1976D2)";
+            marker.style.boxShadow = "0 0 8px rgba(66, 133, 244, 0.5)";
+            marker.style.animation = "dropMarkerPulse 0.8s ease-in-out infinite alternate";
+
+            if (indicatorType === "vertical") {
+                // Vertical marker (for flex row containers)
+                marker.style.width = "2px";
+                marker.style.height = rect.height + "px";
+                marker.style.top = rect.top + "px";
+
+                if (dropZone === "after") {
+                    marker.style.left = rect.right + 3 + "px";
+                } else {
+                    marker.style.left = rect.left - 5 + "px";
+                }
+            } else {
+                // Horizontal marker (for block/grid containers)
+                marker.style.width = rect.width + "px";
+                marker.style.height = "2px";
+                marker.style.left = rect.left + "px";
+
+                if (dropZone === "after") {
+                    marker.style.top = rect.bottom + 3 + "px";
+                } else {
+                    marker.style.top = rect.top - 5 + "px";
+                }
+            }
+        }
+
+        element._dropMarker = marker; // we need this in the _removeDropMarkerFromElement function
+        window.document.body.appendChild(marker);
+    }
+
+    /**
+     * This function removes a drop marker from a specific element
+     * @param {DOMElement} element - The element to remove the marker from
+     */
+    function _removeDropMarkerFromElement(element) {
+        if (element._dropMarker && element._dropMarker.parentNode) {
+            element._dropMarker.parentNode.removeChild(element._dropMarker);
+            delete element._dropMarker;
+        }
+    }
+
+    /**
+     * this function is to clear all the drop markers from the document
+     */
+    function _clearDropMarkers() {
+        // Clear all types of markers
+        let horizontalMarkers = window.document.querySelectorAll("." + DROP_MARKER_CLASSNAME);
+        let verticalMarkers = window.document.querySelectorAll("." + DROP_MARKER_VERTICAL_CLASSNAME);
+        let insideMarkers = window.document.querySelectorAll("." + DROP_MARKER_INSIDE_CLASSNAME);
+
+        for (let i = 0; i < horizontalMarkers.length; i++) {
+            if (horizontalMarkers[i].parentNode) {
+                horizontalMarkers[i].parentNode.removeChild(horizontalMarkers[i]);
+            }
+        }
+
+        for (let i = 0; i < verticalMarkers.length; i++) {
+            if (verticalMarkers[i].parentNode) {
+                verticalMarkers[i].parentNode.removeChild(verticalMarkers[i]);
+            }
+        }
+
+        for (let i = 0; i < insideMarkers.length; i++) {
+            if (insideMarkers[i].parentNode) {
+                insideMarkers[i].parentNode.removeChild(insideMarkers[i]);
+            }
+        }
+
+        // Also clear any element references
+        let elements = window.document.querySelectorAll("[data-brackets-id]");
+        for (let j = 0; j < elements.length; j++) {
+            delete elements[j]._dropMarker;
+            // only restore the styles that were modified by drag operations
+            if (elements[j]._originalDragBackgroundColor !== undefined) {
+                elements[j].style.backgroundColor = elements[j]._originalDragBackgroundColor;
+                delete elements[j]._originalDragBackgroundColor;
+            }
+            if (elements[j]._originalDragTransform !== undefined) {
+                elements[j].style.transform = elements[j]._originalDragTransform;
+                delete elements[j]._originalDragTransform;
+            }
+            if (elements[j]._originalDragTransition !== undefined) {
+                elements[j].style.transition = elements[j]._originalDragTransition;
+                delete elements[j]._originalDragTransition;
+            }
+        }
+    }
+
+    /**
+     * Handle dragover events on the document (throttled version)
+     * Shows drop markers on valid drop targets
+     * @param {Event} event - The dragover event
+     */
+    function onDragOver(event) {
+        // we set this on dragStart
+        if (!window._currentDraggedElement) {
+            return;
+        }
+
+        event.preventDefault();
+
+        // get the element under the cursor
+        let target = document.elementFromPoint(event.clientX, event.clientY);
+        if (!target || target === window._currentDraggedElement) {
+            return;
+        }
+
+        // get the closest element with a data-brackets-id
+        while (target && !target.hasAttribute("data-brackets-id")) {
+            target = target.parentElement;
+        }
+
+        // skip if no valid target found or if it's the dragged element
+        if (!target || target === window._currentDraggedElement) {
+            return;
+        }
+
+        // Skip BODY, HTML tags and elements inside HEAD
+        if (target.tagName === "BODY" || target.tagName === "HTML" || _isInsideHeadTag(target)) {
+            return;
+        }
+
+        // Store original styles before modifying them
+        if (target._originalDragBackgroundColor === undefined) {
+            target._originalDragBackgroundColor = target.style.backgroundColor;
+        }
+        if (target._originalDragTransition === undefined) {
+            target._originalDragTransition = target.style.transition;
+        }
+
+        // Add subtle hover effect to target element
+        target.style.backgroundColor = "rgba(66, 133, 244, 0.1)";
+        target.style.transition = "background-color 0.2s ease";
+
+        // Determine indicator type and drop zone based on container layout and cursor position
+        const indicatorType = _getIndicatorType(target);
+        const dropZone = _getDropZone(
+            target, event.clientX, event.clientY, indicatorType, window._currentDraggedElement
+        );
+
+        // before creating a drop marker, make sure that we clear all the drop markers
+        _clearDropMarkers();
+        _createDropMarker(target, dropZone, indicatorType);
+        _handleAutoScroll(event.clientY);
+    }
+
+    /**
+     * handles drag leave event. mainly to clear the drop markers
+     * @param {Event} event
+     */
+    function onDragLeave(event) {
+        if (!event.relatedTarget) {
+            _clearDropMarkers();
+            _stopAutoScroll();
+        }
+    }
+
+    /**
+     * Handle drop events on the document
+     * Processes the drop of a dragged element onto a valid target
+     * @param {Event} event - The drop event
+     */
+    function onDrop(event) {
+        if (!window._currentDraggedElement) {
+            return;
+        }
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        // get the element under the cursor
+        let target = document.elementFromPoint(event.clientX, event.clientY);
+
+        // get the closest element with a data-brackets-id
+        while (target && !target.hasAttribute("data-brackets-id")) {
+            target = target.parentElement;
+        }
+
+        // skip if no valid target found or if it's the dragged element
+        if (!target || target === window._currentDraggedElement) {
+            _clearDropMarkers();
+            _stopAutoScroll();
+            _dragEndChores(window._currentDraggedElement);
+            dismissUIAndCleanupState();
+            delete window._currentDraggedElement;
+            return;
+        }
+
+        // Skip BODY, HTML tags and elements inside HEAD
+        if (target.tagName === "BODY" || target.tagName === "HTML" || _isInsideHeadTag(target)) {
+            _clearDropMarkers();
+            _stopAutoScroll();
+            _dragEndChores(window._currentDraggedElement);
+            dismissUIAndCleanupState();
+            delete window._currentDraggedElement;
+            return;
+        }
+
+        // Determine drop position based on container layout and cursor position
+        const indicatorType = _getIndicatorType(target);
+        const dropZone = _getDropZone(
+            target, event.clientX, event.clientY, indicatorType, window._currentDraggedElement
+        );
+
+        // IDs of the source and target elements
+        const sourceId = window._currentDraggedElement.getAttribute("data-brackets-id");
+        const targetId = target.getAttribute("data-brackets-id");
+
+        // Handle different drop zones
+        let messageData = {
+            livePreviewEditEnabled: true,
+            sourceElement: window._currentDraggedElement,
+            targetElement: target,
+            sourceId: Number(sourceId),
+            targetId: Number(targetId),
+            move: true
+        };
+
+        if (dropZone === "inside") {
+            // For inside drops, we want to insert as a child of the target element
+            messageData.insertInside = true;
+            messageData.insertAfter = false; // Will be handled differently in backend
+        } else {
+            // For before/after drops, use the existing logic
+            messageData.insertAfter = dropZone === "after";
+        }
+
+        // send message to the editor
+        window._Brackets_MessageBroker.send(messageData);
+
+        _clearDropMarkers();
+        _stopAutoScroll();
+        _dragEndChores(window._currentDraggedElement);
+        dismissUIAndCleanupState();
+        delete window._currentDraggedElement;
+    }
+
+    /**
+     * this function is to check if an element should show the edit text option
+     * it is needed because edit text option doesn't make sense with many elements like images, videos, hr tag etc
+     * @param {Element} element - DOM element to check
+     * @returns {boolean} - true if we should show the edit text option otherwise false
+     */
+    function _shouldShowEditTextOption(element) {
+        if (!element || !element.tagName) {
+            return false;
+        }
+
+        const tagName = element.tagName.toLowerCase();
+
+        // these are self-closing tags and don't allow any text content
+        const voidElements = [
+            "img",
+            "br",
+            "hr",
+            "input",
+            "meta",
+            "link",
+            "area",
+            "base",
+            "col",
+            "embed",
+            "source",
+            "track",
+            "wbr"
+        ];
+
+        // these elements are non-editable as they have their own mechanisms
+        const nonEditableElements = [
+            "script",
+            "style",
+            "noscript",
+            "canvas",
+            "svg",
+            "video",
+            "audio",
+            "iframe",
+            "object",
+            "select",
+            "textarea"
+        ];
+
+        if (voidElements.includes(tagName) || nonEditableElements.includes(tagName)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * this function is to check if an element should show the 'select-parent' option
+     * because we don't want to show the select parent option when the parent is directly the body/html tag
+     * or the parent doesn't have the 'data-brackets-id'
+     * @param {Element} element - DOM element to check
+     * @returns {boolean} - true if we should show the select parent option otherwise false
+     */
+    function _shouldShowSelectParentOption(element) {
+        if (!element || !element.parentElement) {
+            return false;
+        }
+
+        const parentElement = element.parentElement;
+
+        if (parentElement.tagName === "HTML" || parentElement.tagName === "BODY" || _isInsideHeadTag(parentElement)) {
+            return false;
+        }
+        if (!parentElement.hasAttribute("data-brackets-id")) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * This is for the advanced DOM options that appears when a DOM element is clicked
+     * advanced options like: 'select parent', 'duplicate', 'delete'
+     */
+    function NodeMoreOptionsBox(element) {
+        this.element = element;
+        this.remove = this.remove.bind(this);
+        this.create();
+    }
+
+    NodeMoreOptionsBox.prototype = {
+        _registerDragDrop: function() {
+            this.element.setAttribute("draggable", true);
+
+            this.element.addEventListener("dragstart", (event) => {
+                event.stopPropagation();
+                event.dataTransfer.setData("text/plain", this.element.getAttribute("data-brackets-id"));
+                _dragStartChores(this.element);
+                _clearDropMarkers();
+                window._currentDraggedElement = this.element;
+                dismissUIAndCleanupState();
+                // Add drag image styling
+                event.dataTransfer.effectAllowed = "move";
+            });
+
+            this.element.addEventListener("dragend", (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                _dragEndChores(this.element);
+                _clearDropMarkers();
+                _stopAutoScroll();
+                delete window._currentDraggedElement;
+            });
         },
 
-        createBody: function () {
-            if (this.body) {
+        _getBoxPosition: function(boxWidth, boxHeight) {
+            const elemBounds = this.element.getBoundingClientRect();
+            const offset = _screenOffset(this.element);
+
+            let topPos = offset.top - boxHeight - 6; // 6 for just some little space to breathe
+            let leftPos = offset.left + elemBounds.width - boxWidth;
+
+            // Check if the box would go off the top of the viewport
+            if (elemBounds.top - boxHeight < 6) {
+                topPos = offset.top + elemBounds.height + 6;
+            }
+
+            // Check if the box would go off the left of the viewport
+            if (leftPos < 0) {
+                leftPos = offset.left;
+            }
+
+            return {topPos: topPos, leftPos: leftPos};
+        },
+
+        _style: function() {
+            this.body = window.document.createElement("div");
+
+            // this is shadow DOM.
+            // we need it because if we add the box directly to the DOM then users style might override it.
+            // {mode: "open"} allows us to access the shadow DOM to get actual height/position of the boxes
+            const shadow = this.body.attachShadow({ mode: "open" });
+
+            // check which options should be shown to determine box width
+            const showEditTextOption = _shouldShowEditTextOption(this.element);
+            const showSelectParentOption = _shouldShowSelectParentOption(this.element);
+
+            // the icons that is displayed in the box
+            const ICONS = {
+                ai: `
+                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0,0,256,256">
+                    <g fill="#fffbfb" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(4,4)"><path d="M30.701,41.663l-2.246,5.145c-0.864,1.978 -3.6,1.978 -4.464,0l-2.247,-5.145c-1.999,-4.579 -5.598,-8.224 -10.086,-10.216l-6.183,-2.745c-1.966,-0.873 -1.966,-3.733 0,-4.605l5.99,-2.659c4.604,-2.044 8.267,-5.824 10.232,-10.559l2.276,-5.483c0.844,-2.035 3.656,-2.035 4.5,0l2.276,5.483c1.965,4.735 5.628,8.515 10.232,10.559l5.99,2.659c1.966,0.873 1.966,3.733 0,4.605l-6.183,2.745c-4.489,1.992 -8.088,5.637 -10.087,10.216z"></path><path d="M30.701,41.663l-2.246,5.145c-0.864,1.978 -3.6,1.978 -4.464,0l-2.247,-5.145c-1.999,-4.579 -5.598,-8.224 -10.086,-10.216l-6.183,-2.745c-1.966,-0.873 -1.966,-3.733 0,-4.605l5.99,-2.659c4.604,-2.044 8.267,-5.824 10.232,-10.559l2.276,-5.483c0.844,-2.035 3.656,-2.035 4.5,0l2.276,5.483c1.965,4.735 5.628,8.515 10.232,10.559l5.99,2.659c1.966,0.873 1.966,3.733 0,4.605l-6.183,2.745c-4.489,1.992 -8.088,5.637 -10.087,10.216z"></path><g><path d="M51.578,57.887l-0.632,1.448c-0.462,1.06 -1.93,1.06 -2.393,0l-0.632,-1.448c-1.126,-2.582 -3.155,-4.637 -5.686,-5.762l-1.946,-0.865c-1.052,-0.468 -1.052,-1.998 0,-2.465l1.838,-0.816c2.596,-1.153 4.661,-3.285 5.768,-5.955l0.649,-1.565c0.452,-1.091 1.96,-1.091 2.412,0l0.649,1.565c1.107,2.669 3.172,4.801 5.768,5.955l1.837,0.816c1.053,0.468 1.053,1.998 0,2.465l-1.946,0.865c-2.531,1.125 -4.56,3.18 -5.686,5.762z"></path><path d="M51.578,57.887l-0.632,1.448c-0.462,1.06 -1.93,1.06 -2.393,0l-0.632,-1.448c-1.126,-2.582 -3.155,-4.637 -5.686,-5.762l-1.946,-0.865c-1.052,-0.468 -1.052,-1.998 0,-2.465l1.838,-0.816c2.596,-1.153 4.661,-3.285 5.768,-5.955l0.649,-1.565c0.452,-1.091 1.96,-1.091 2.412,0l0.649,1.565c1.107,2.669 3.172,4.801 5.768,5.955l1.837,0.816c1.053,0.468 1.053,1.998 0,2.465l-1.946,0.865c-2.531,1.125 -4.56,3.18 -5.686,5.762z"></path></g></g></g>
+                </svg>
+                `,
+
+                arrowUp: `
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.59 5.58L20 12l-8-8-8 8z"/>
+                </svg>
+              `,
+
+                edit: `
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                </svg>
+              `,
+
+                duplicate: `
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18 3H4C3.44772 3 3 3.44772 3 4V18C3 18.5523 2.55228 19 2 19C1.44772 19 1 18.5523 1 18V4C1 2.34315 2.34315 1 4 1H18C18.5523 1 19 1.44772 19 2C19 2.55228 18.5523 3 18 3Z"/>
+                  <path d="M13 11C13 10.4477 13.4477 10 14 10C14.5523 10 15 10.4477 15 11V13H17C17.5523 13 18 13.4477 18 14C18 14.5523 17.5523 15 17 15H15V17C15 17.5523 14.5523 18 14 18C13.4477 18 13 17.5523 13 17V15H11C10.4477 15 10 14.5523 10 14C10 13.4477 10.4477 13 11 13H13V11Z"/>
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M20 5C21.6569 5 23 6.34315 23 8V20C23 21.6569 21.6569 23 20 23H8C6.34315 23 5 21.6569 5 20V8C5 6.34315 6.34315 5 8 5H20ZM20 7C20.5523 7 21 7.44772 21 8V20C21 20.5523 20.5523 21 20 21H8C7.44772 21 7 20.5523 7 20V8C7 7.44772 7.44772 7 8 7H20Z"/>
+                </svg>
+              `,
+
+                trash: `
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M6 7V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2h3v2h-2l-1.5 12.5a2 2 0 0
+                  1-2 1.5H8.5a2 2 0 0 1-2-1.5L5 9H3V7h3zm2 0h8V5H8v2z"/>
+                </svg>
+              `
+            };
+
+            let content = `<div class="node-options">`;
+
+            // not sure if we need to hide/show the AI icon, right now showing always
+            content += `<span data-action="ai" title="${config.strings.ai}">
+                    ${ICONS.ai}
+                </span>`;
+
+            // Only include select parent option if element supports it
+            if (showSelectParentOption) {
+                content += `<span data-action="select-parent" title="${config.strings.selectParent}">
+                    ${ICONS.arrowUp}
+                </span>`;
+            }
+
+            // Only include edit text option if element supports it
+            if (showEditTextOption) {
+                content += `<span data-action="edit-text" title="${config.strings.editText}">
+                    ${ICONS.edit}
+                </span>`;
+            }
+
+            // Always include duplicate and delete options
+            content += `<span data-action="duplicate" title="${config.strings.duplicate}">
+                    ${ICONS.duplicate}
+                </span>
+                <span data-action="delete" title="${config.strings.delete}">
+                    ${ICONS.trash}
+                </span>
+            </div>`;
+
+            const styles = `
+                :host {
+                  all: initial;
+                }
+
+                .phoenix-more-options-box {
+                    background-color: #4285F4;
+                    color: white;
+                    border-radius: 3px;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+                    font-size: 12px;
+                    font-family: Arial, sans-serif;
+                    z-index: 2147483647;
+                    position: absolute;
+                    left: -1000px;
+                    top: -1000px;
+                    box-sizing: border-box;
+                }
+
+                .node-options {
+                    display: flex;
+                    align-items: center;
+                }
+
+                .node-options span {
+                    padding: 4px 3.9px;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    border-radius: 0;
+                }
+
+                .node-options span:first-child {
+                    border-radius: 3px 0 0 3px;
+                }
+
+                .node-options span:last-child {
+                    border-radius: 0 3px 3px 0;
+                }
+
+                .node-options span:hover {
+                    background-color: rgba(255, 255, 255, 0.15);
+                }
+
+                .node-options span > svg {
+                    width: 16px;
+                    height: 16px;
+                    display: block;
+                }
+            `;
+
+            // add everything to the shadow box
+            shadow.innerHTML = `<style>${styles}</style><div class="phoenix-more-options-box">${content}</div>`;
+            this._shadow = shadow;
+        },
+
+        create: function() {
+            this.remove(); // remove existing box if already present
+
+            if(!config.isLPEditFeaturesActive) {
                 return;
             }
 
-            // compute the position on screen
-            var offset = _screenOffset(this.element),
-                x = offset.left,
-                y = offset.top + this.element.offsetHeight;
+            // this check because when there is no element visible to the user, we don't want to show the box
+            // for ex: when user clicks on a 'x' button and the button is responsible to hide a panel
+            // then clicking on that button shouldn't show the more options box
+            // also covers cases where elements are inside closed/collapsed menus
+            if(!isElementVisible(this.element)) {
+                return;
+            }
 
-            // create the container
-            this.body = window.document.createElement("div");
-            this.body.style.setProperty("z-index", 2147483647);
-            this.body.style.setProperty("position", "absolute");
-            this.body.style.setProperty("left", x + "px");
-            this.body.style.setProperty("top", y + "px");
-            this.body.style.setProperty("font-size", "11pt");
+            this._style(); // style the box
 
-            // draw the background
-            this.body.style.setProperty("background", "#fff");
-            this.body.style.setProperty("border", "1px solid #888");
-            this.body.style.setProperty("-webkit-box-shadow", "2px 2px 6px 0px #ccc");
-            this.body.style.setProperty("border-radius", "6px");
-            this.body.style.setProperty("padding", "6px");
+            window.document.body.appendChild(this.body);
+
+            // get the actual rendered dimensions of the box and then we reposition it to the actual place
+            const boxElement = this._shadow.querySelector('.phoenix-more-options-box');
+            if (boxElement) {
+                const boxRect = boxElement.getBoundingClientRect();
+                const pos = this._getBoxPosition(boxRect.width, boxRect.height);
+
+                boxElement.style.left = pos.leftPos + 'px';
+                boxElement.style.top = pos.topPos + 'px';
+            }
+
+            // add click handler to all the buttons
+            const spans = this._shadow.querySelectorAll('.node-options span');
+            spans.forEach(span => {
+                span.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    event.preventDefault();
+                    // data-action is to differentiate between the buttons (duplicate, delete or select-parent)
+                    const action = event.currentTarget.getAttribute('data-action');
+                    handleOptionClick(event, action, this.element);
+                    if (action !== 'duplicate') {
+                        this.remove();
+                    }
+                });
+            });
+
+            this._registerDragDrop();
         },
 
-        addItem: function (target) {
-            var item = window.document.createElement("div");
-            item.style.setProperty("padding", "2px 6px");
-            if (this.body.childNodes.length > 0) {
-                item.style.setProperty("border-top", "1px solid #ccc");
-            }
-            item.style.setProperty("cursor", "pointer");
-            item.style.setProperty("background", _typeColor(target.type));
-            item.innerHTML = target.name;
-            item.addEventListener("click", this.onClick.bind(this, target.url));
-
-            if (target.file) {
-                var file = window.document.createElement("i");
-                file.style.setProperty("float", "right");
-                file.style.setProperty("margin-left", "12px");
-                file.innerHTML = " " + target.file;
-                item.appendChild(file);
-            }
-            this.body.appendChild(item);
-        },
-
-        show: function () {
-            if (!this.body) {
-                this.createBody();
-            }
-            if (!this.body.parentNode) {
-                window.document.body.appendChild(this.body);
-            }
-            window.document.addEventListener("click", this.remove);
-        },
-
-        remove: function () {
-            if (this.body && this.body.parentNode) {
+        remove: function() {
+            if (this.body && this.body.parentNode && this.body.parentNode === window.document.body) {
                 window.document.body.removeChild(this.body);
+                this.body = null;
+                _nodeMoreOptionsBox = null;
             }
-            window.document.removeEventListener("click", this.remove);
         }
-
     };
 
-    function Editor(element) {
-        this.onBlur = this.onBlur.bind(this);
-        this.onKeyPress = this.onKeyPress.bind(this);
-
+    // Node info box to display DOM node ID and classes on hover
+    function NodeInfoBox(element) {
         this.element = element;
-        this.element.setAttribute("contenteditable", "true");
-        this.element.focus();
-        this.element.addEventListener("blur", this.onBlur);
-        this.element.addEventListener("keypress", this.onKeyPress);
-
-        this.revertText = this.element.innerHTML;
-
-        _trigger(this.element, "edit", 1);
+        this.remove = this.remove.bind(this);
+        this.create();
     }
 
-    Editor.prototype = {
-        onBlur: function (event) {
-            this.element.removeAttribute("contenteditable");
-            this.element.removeEventListener("blur", this.onBlur);
-            this.element.removeEventListener("keypress", this.onKeyPress);
-            _trigger(this.element, "edit", 0, true);
+    NodeInfoBox.prototype = {
+        _checkOverlap: function(nodeInfoBoxPos, nodeInfoBoxDimensions) {
+            if (_nodeMoreOptionsBox && _nodeMoreOptionsBox._shadow) {
+                const moreOptionsBoxElement = _nodeMoreOptionsBox._shadow.querySelector('.phoenix-more-options-box');
+                if (moreOptionsBoxElement) {
+                    const moreOptionsBoxOffset = _screenOffset(moreOptionsBoxElement);
+                    const moreOptionsBoxRect = moreOptionsBoxElement.getBoundingClientRect();
+
+                    const infoBox = {
+                        left: nodeInfoBoxPos.leftPos,
+                        top: nodeInfoBoxPos.topPos,
+                        right: nodeInfoBoxPos.leftPos + nodeInfoBoxDimensions.width,
+                        bottom: nodeInfoBoxPos.topPos + nodeInfoBoxDimensions.height
+                    };
+
+                    const moreOptionsBox = {
+                        left: moreOptionsBoxOffset.left,
+                        top: moreOptionsBoxOffset.top,
+                        right: moreOptionsBoxOffset.left + moreOptionsBoxRect.width,
+                        bottom: moreOptionsBoxOffset.top + moreOptionsBoxRect.height
+                    };
+
+                    const isOverlapping = !(infoBox.right < moreOptionsBox.left ||
+                             moreOptionsBox.right < infoBox.left ||
+                             infoBox.bottom < moreOptionsBox.top ||
+                             moreOptionsBox.bottom < infoBox.top);
+
+                    return isOverlapping;
+                }
+            }
+            return false;
         },
 
-        onKeyPress: function (event) {
-            switch (event.which) {
-            case 13: // return
-                this.element.blur();
-                break;
-            case 27: // esc
-                this.element.innerHTML = this.revertText;
-                this.element.blur();
-                break;
+        _getBoxPosition: function(boxDimensions, overlap = false) {
+            const elemBounds = this.element.getBoundingClientRect();
+            const offset = _screenOffset(this.element);
+            let topPos = 0;
+            let leftPos = 0;
+
+            if (overlap) {
+                topPos = offset.top + 2;
+                leftPos = offset.left + elemBounds.width + 6; // positioning at the right side
+
+                // Check if overlap position would go off the right of the viewport
+                if (leftPos + boxDimensions.width > window.innerWidth) {
+                    leftPos = offset.left - boxDimensions.width - 6; // positioning at the left side
+
+                    if (leftPos < 0) { // if left positioning not perfect, position at bottom
+                        topPos = offset.top + elemBounds.height + 6;
+                        leftPos = offset.left;
+
+                        // if bottom position not perfect, move at top above the more options box
+                        if (elemBounds.bottom + 6 + boxDimensions.height > window.innerHeight) {
+                            topPos = offset.top - boxDimensions.height - 34; // 34 is for moreOptions box height
+                            leftPos = offset.left;
+                        }
+                    }
+                }
+            } else {
+                topPos = offset.top - boxDimensions.height - 6; // 6 for just some little space to breathe
+                leftPos = offset.left;
+
+                if (elemBounds.top - boxDimensions.height < 6) {
+                    // check if placing the box below would cause viewport height increase
+                    // we need this or else it might cause a flickering issue
+                    // read this to know why flickering occurs:
+                    // when we hover over the bottom part of a tall element, the info box appears below it.
+                    // this increases the live preview height, which makes the cursor position relatively
+                    // higher due to content shift. the cursor then moves out of the element boundary,
+                    // ending the hover state. this makes the info box disappear, decreasing the height
+                    // back, causing the cursor to fall back into the element, restarting the hover cycle.
+                    // this creates a continuous flickering loop.
+                    const bottomPosition = offset.top + elemBounds.height + 6;
+                    const wouldIncreaseViewportHeight = bottomPosition + boxDimensions.height > window.innerHeight;
+
+                    // we only need to use floating position during hover mode (not on click mode)
+                    const isHoverMode = shouldShowHighlightOnHover();
+                    const shouldUseFloatingPosition = wouldIncreaseViewportHeight && isHoverMode;
+
+                    if (shouldUseFloatingPosition) {
+                        // float over element at bottom-right to prevent layout shift during hover
+                        topPos = offset.top + elemBounds.height - boxDimensions.height - 6;
+                        leftPos = offset.left + elemBounds.width - boxDimensions.width;
+
+                        // make sure it doesn't go off-screen
+                        if (leftPos < 0) {
+                            leftPos = offset.left; // align to left edge of element
+                        }
+                        if (topPos < 0) {
+                            topPos = offset.top + 6; // for the top of element
+                        }
+                    } else {
+                        topPos = bottomPosition;
+                    }
+                }
+
+                // Check if the box would go off the right of the viewport
+                if (leftPos + boxDimensions.width > window.innerWidth) {
+                    leftPos = window.innerWidth - boxDimensions.width - 10;
+                }
+            }
+
+            return {topPos: topPos, leftPos: leftPos};
+        },
+
+        _style: function() {
+            this.body = window.document.createElement("div");
+
+            // this is shadow DOM.
+            // we need it because if we add the box directly to the DOM then users style might override it.
+            // {mode: "open"} allows us to access the shadow DOM to get actual height/position of the boxes
+            const shadow = this.body.attachShadow({ mode: "open" });
+
+            // get the ID and classes for that element, as we need to display it in the box
+            const id = this.element.id;
+            const classes = this.element.className ? this.element.className.split(/\s+/).filter(Boolean) : [];
+
+            let content = ""; // this will hold the main content that will be displayed
+            content += "<div class='tag-name'>" + this.element.tagName.toLowerCase() + "</div>"; // add element tag name
+
+            // Add ID if present
+            if (id) {
+                content += "<div class='id-name'>#" + id + "</div>";
+            }
+
+            // Add classes (limit to 3 with dropdown indicator)
+            if (classes.length > 0) {
+                content += "<div class='class-name'>";
+                for (var i = 0; i < Math.min(classes.length, 3); i++) {
+                    content += "." + classes[i] + " ";
+                }
+                if (classes.length > 3) {
+                    content += "<span class='exceeded-classes'>+" + (classes.length - 3) + " more</span>";
+                }
+                content += "</div>";
+            }
+
+            // initially, we place our info box -1000px to the top but at the right left pos. this is done so that
+            // we can take the text-wrapping inside the info box in account when calculating the height
+            // after calculating the height of the box, we place it at the exact position above the element
+            const offset = _screenOffset(this.element);
+            const leftPos = offset.left;
+
+            const styles = `
+                :host {
+                  all: initial;
+                }
+
+                .phoenix-node-info-box {
+                    background-color: #4285F4;
+                    color: white;
+                    border-radius: 3px;
+                    padding: 5px 8px;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+                    font-size: 12px;
+                    font-family: Arial, sans-serif;
+                    z-index: 2147483647;
+                    position: absolute;
+                    left: ${leftPos}px;
+                    top: -1000px;
+                    max-width: 300px;
+                    box-sizing: border-box;
+                    pointer-events: none;
+                }
+
+                .tag-name {
+                    font-weight: bold;
+                }
+
+                .id-name,
+                .class-name {
+                    margin-top: 3px;
+                }
+
+                .exceeded-classes {
+                    opacity: 0.8;
+                }
+            `;
+
+            // add everything to the shadow box
+            shadow.innerHTML = `<style>${styles}</style><div class="phoenix-node-info-box">${content}</div>`;
+            this._shadow = shadow;
+        },
+
+        create: function() {
+            this.remove(); // remove existing box if already present
+
+            if(!config.isLPEditFeaturesActive) {
+                return;
+            }
+
+            // this check because when there is no element visible to the user, we don't want to show the box
+            // for ex: when user clicks on a 'x' button and the button is responsible to hide a panel
+            // then clicking on that button shouldn't show the more options box
+            // also covers cases where elements are inside closed/collapsed menus
+            if(!isElementVisible(this.element)) {
+                return;
+            }
+
+            this._style(); // style the box
+
+            window.document.body.appendChild(this.body);
+
+            // get the actual rendered height of the box and then we reposition it to the actual place
+            const boxElement = this._shadow.querySelector('.phoenix-node-info-box');
+            if (boxElement) {
+                const nodeInfoBoxDimensions = {
+                    height: boxElement.getBoundingClientRect().height,
+                    width: boxElement.getBoundingClientRect().width
+                };
+                const nodeInfoBoxPos = this._getBoxPosition(nodeInfoBoxDimensions, false);
+
+                boxElement.style.left = nodeInfoBoxPos.leftPos + 'px';
+                boxElement.style.top = nodeInfoBoxPos.topPos + 'px';
+
+                const isBoxOverlapping = this._checkOverlap(nodeInfoBoxPos, nodeInfoBoxDimensions);
+                if(isBoxOverlapping) {
+                    const newPos = this._getBoxPosition(nodeInfoBoxDimensions, true);
+                    boxElement.style.left = newPos.leftPos + 'px';
+                    boxElement.style.top = newPos.topPos + 'px';
+                }
+            }
+        },
+
+        remove: function() {
+            if (this.body && this.body.parentNode && this.body.parentNode === window.document.body) {
+                window.document.body.removeChild(this.body);
+                this.body = null;
+            }
+        }
+    };
+
+    // AI prompt box, it is displayed when user clicks on the AI button in the more options box
+    function AIPromptBox(element) {
+        this.element = element;
+        this.selectedModel = 'fast';
+        this.remove = this.remove.bind(this);
+        this.create();
+    }
+
+    AIPromptBox.prototype = {
+        _getBoxPosition: function(boxWidth, boxHeight) {
+            const elemBounds = this.element.getBoundingClientRect();
+            const offset = _screenOffset(this.element);
+
+            let topPos = offset.top - boxHeight - 6; // 6 for just some little space to breathe
+            let leftPos = offset.left + elemBounds.width - boxWidth;
+
+            // Check if the box would go off the top of the viewport
+            if (elemBounds.top - boxHeight < 6) {
+                topPos = offset.top + elemBounds.height + 6;
+            }
+
+            // Check if the box would go off the left of the viewport
+            if (leftPos < 0) {
+                leftPos = offset.left;
+            }
+
+            return {topPos: topPos, leftPos: leftPos};
+        },
+
+        _style: function() {
+            this.body = window.document.createElement("div");
+            // using shadow dom so that user styles doesn't override it
+            const shadow = this.body.attachShadow({ mode: "open" });
+
+            // Calculate responsive dimensions based on viewport width
+            const viewportWidth = window.innerWidth;
+            let boxWidth, boxHeight;
+
+            if (viewportWidth >= 400) {
+                boxWidth = Math.min(310, viewportWidth * 0.85);
+                boxHeight = 60;
+            } else if (viewportWidth >= 350) {
+                boxWidth = Math.min(275, viewportWidth * 0.85);
+                boxHeight = 70;
+            } else if (viewportWidth >= 300) {
+                boxWidth = Math.min(230, viewportWidth * 0.85);
+                boxHeight = 80;
+            } else if (viewportWidth >= 250) {
+                boxWidth = Math.min(180, viewportWidth * 0.85);
+                boxHeight = 100;
+            } else if (viewportWidth >= 200) {
+                boxWidth = Math.min(130, viewportWidth * 0.85);
+                boxHeight = 120;
+            } else {
+                boxWidth = Math.min(100, viewportWidth * 0.85);
+                boxHeight = 140;
+            }
+
+            const styles = `
+                :host {
+                  all: initial;
+                }
+
+                .phoenix-ai-prompt-box {
+                    position: absolute;
+                    background: white;
+                    border: 1px solid #4285F4;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+                    font-family: Arial, sans-serif;
+                    z-index: 2147483647;
+                    width: ${boxWidth}px;
+                    padding: 0;
+                    box-sizing: border-box;
+                }
+
+                .phoenix-ai-prompt-input-container {
+                    position: relative;
+                }
+
+                .phoenix-ai-prompt-textarea {
+                    width: 100%;
+                    height: ${boxHeight}px;
+                    border: none;
+                    border-radius: 8px;
+                    padding: 12px 40px 12px 16px;
+                    font-size: 14px;
+                    font-family: Arial, sans-serif;
+                    resize: none;
+                    outline: none;
+                    box-sizing: border-box;
+                    background: #f9f9f9;
+                }
+
+                .phoenix-ai-prompt-textarea:focus {
+                    background: white;
+                }
+
+                .phoenix-ai-prompt-textarea::placeholder {
+                    color: #999;
+                }
+
+                .phoenix-ai-prompt-send-button {
+                    width: 28px;
+                    height: 28px;
+                    border: none;
+                    border-radius: 50%;
+                    background: #4285F4;
+                    color: white;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 14px;
+                    transition: background-color 0.2s;
+                    line-height: 0.5;
+                }
+
+                .phoenix-ai-prompt-send-button:hover:not(:disabled) {
+                    background: #4285F4;
+                }
+
+                .phoenix-ai-prompt-send-button:disabled {
+                    background: #dadce0;
+                    color: #9aa0a6;
+                    cursor: not-allowed;
+                }
+
+                .phoenix-ai-bottom-controls {
+                    border-top: 1px solid #e0e0e0;
+                    padding: 8px 16px;
+                    background: #f9f9f9;
+                    border-radius: 0 0 8px 8px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                }
+
+                .phoenix-ai-model-select {
+                    padding: 4px 8px;
+                    border: 1px solid #ddd;
+                    border-radius: 4px;
+                    font-size: 12px;
+                    background: white;
+                    outline: none;
+                    cursor: pointer;
+                }
+
+                .phoenix-ai-model-select:focus {
+                    border-color: #4285F4;
+                }
+            `;
+
+            const content = `
+                <div class="phoenix-ai-prompt-box">
+                    <div class="phoenix-ai-prompt-input-container">
+                        <textarea
+                            class="phoenix-ai-prompt-textarea"
+                            placeholder="${config.strings.aiPromptPlaceholder}"
+                        ></textarea>
+                    </div>
+                    <div class="phoenix-ai-bottom-controls">
+                        <select class="phoenix-ai-model-select">
+                            <option value="fast">Fast AI</option>
+                            <option value="moderate">Moderate AI</option>
+                            <option value="slow">Slow AI</option>
+                        </select>
+                        <button class="phoenix-ai-prompt-send-button" disabled>
+                            ➤
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            shadow.innerHTML = `<style>${styles}</style>${content}`;
+            this._shadow = shadow;
+        },
+
+        create: function() {
+            this._style();
+            window.document.body.appendChild(this.body);
+
+            // Get the actual rendered dimensions of the box and position it
+            const boxElement = this._shadow.querySelector('.phoenix-ai-prompt-box');
+            if (boxElement) {
+                const boxRect = boxElement.getBoundingClientRect();
+                const pos = this._getBoxPosition(boxRect.width, boxRect.height);
+
+                boxElement.style.left = pos.leftPos + 'px';
+                boxElement.style.top = pos.topPos + 'px';
+            }
+
+            // Focus on the textarea
+            const textarea = this._shadow.querySelector('.phoenix-ai-prompt-textarea');
+            if (textarea) { // small timer to make sure that the text area element is fetched
+                setTimeout(() => textarea.focus(), 50);
+            }
+
+            this._attachEventHandlers();
+
+            // Prevent clicks inside the AI box from bubbling up and closing it
+            this.body.addEventListener('click', (event) => {
+                event.stopPropagation();
+            });
+        },
+
+        _attachEventHandlers: function() {
+            const textarea = this._shadow.querySelector('.phoenix-ai-prompt-textarea');
+            const sendButton = this._shadow.querySelector('.phoenix-ai-prompt-send-button');
+            const modelSelect = this._shadow.querySelector('.phoenix-ai-model-select');
+
+            // Handle textarea input to enable/disable send button
+            if (textarea && sendButton) {
+                textarea.addEventListener('input', (event) => {
+                    const hasText = event.target.value.trim().length > 0;
+                    sendButton.disabled = !hasText;
+                });
+
+                // enter key
+                textarea.addEventListener('keydown', (event) => {
+                    if (event.key === 'Enter' && !event.shiftKey) {
+                        event.preventDefault();
+                        if (textarea.value.trim()) {
+                            this._handleSend(event, textarea.value.trim());
+                        }
+                    } else if (event.key === 'Escape') {
+                        event.preventDefault();
+                        this.remove();
+                    }
+                });
+            }
+
+            // send button click
+            if (sendButton) {
+                sendButton.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    if (textarea && textarea.value.trim()) {
+                        this._handleSend(event, textarea.value.trim());
+                    }
+                });
+            }
+
+            // model selection change
+            if (modelSelect) {
+                modelSelect.addEventListener('change', (event) => {
+                    this.selectedModel = event.target.value;
+                });
+            }
+        },
+
+        _handleSend: function(event, prompt) {
+            const element = this.element;
+            if(!element) {
+                return;
+            }
+            const tagId = element.getAttribute("data-brackets-id");
+
+            window._Brackets_MessageBroker.send({
+                livePreviewEditEnabled: true,
+                event: event,
+                element: element,
+                prompt: prompt,
+                tagId: Number(tagId),
+                selectedModel: this.selectedModel,
+                AISend: true
+            });
+            this.remove();
+        },
+
+        remove: function() {
+            if (this._handleKeydown) {
+                document.removeEventListener('keydown', this._handleKeydown);
+                this._handleKeydown = null;
+            }
+
+            if (this._handleResize) {
+                window.removeEventListener('resize', this._handleResize);
+                this._handleResize = null;
+            }
+
+            if (this.body && this.body.parentNode && this.body.parentNode === window.document.body) {
+                window.document.body.removeChild(this.body);
+                this.body = null;
+                _aiPromptBox = null;
             }
         }
     };
@@ -273,7 +1886,7 @@ function RemoteFunctions(config) {
                 animationDuration = parseFloat(elementStyling.getPropertyValue('animation-duration'));
 
             highlight.trackingElement = element; // save which node are we highlighting
-            
+
             if (transitionDuration) {
                 animateHighlight(transitionDuration);
             }
@@ -286,21 +1899,21 @@ function RemoteFunctions(config) {
             if (elementBounds.width === 0 && elementBounds.height === 0) {
                 return;
             }
-            
+
             var realElBorder = {
               right: elementStyling.getPropertyValue('border-right-width'),
               left: elementStyling.getPropertyValue('border-left-width'),
               top: elementStyling.getPropertyValue('border-top-width'),
               bottom: elementStyling.getPropertyValue('border-bottom-width')
             };
-            
+
             var borderBox = elementStyling.boxSizing === 'border-box';
-            
+
             var innerWidth = parseFloat(elementStyling.width),
                 innerHeight = parseFloat(elementStyling.height),
                 outerHeight = innerHeight,
                 outerWidth = innerWidth;
-                
+
             if (!borderBox) {
                 innerWidth += parseFloat(elementStyling.paddingLeft) + parseFloat(elementStyling.paddingRight);
                 innerHeight += parseFloat(elementStyling.paddingTop) + parseFloat(elementStyling.paddingBottom);
@@ -309,49 +1922,49 @@ function RemoteFunctions(config) {
                 outerHeight = innerHeight + parseFloat(realElBorder.bottom) + parseFloat(realElBorder.top);
             }
 
-          
+
             var visualisations = {
                 horizontal: "left, right",
                 vertical: "top, bottom"
             };
-          
+
             var drawPaddingRect = function(side) {
               var elStyling = {};
-                
+
               if (visualisations.horizontal.indexOf(side) >= 0) {
                 elStyling['width'] =  elementStyling.getPropertyValue('padding-' + side);
                 elStyling['height'] = innerHeight + "px";
                 elStyling['top'] = 0;
-                  
+
                   if (borderBox) {
                     elStyling['height'] = innerHeight - parseFloat(realElBorder.top) - parseFloat(realElBorder.bottom) + "px";
                   }
-                
+
               } else {
-                elStyling['height'] = elementStyling.getPropertyValue('padding-' + side);  
+                elStyling['height'] = elementStyling.getPropertyValue('padding-' + side);
                 elStyling['width'] = innerWidth + "px";
                 elStyling['left'] = 0;
-                  
+
                   if (borderBox) {
                     elStyling['width'] = innerWidth - parseFloat(realElBorder.left) - parseFloat(realElBorder.right) + "px";
                   }
               }
-                
+
               elStyling[side] = 0;
               elStyling['position'] = 'absolute';
-              
+
               return elStyling;
             };
-          
+
           var drawMarginRect = function(side) {
             var elStyling = {};
-            
+
             var margin = [];
             margin['right'] = parseFloat(elementStyling.getPropertyValue('margin-right'));
             margin['top'] = parseFloat(elementStyling.getPropertyValue('margin-top'));
             margin['bottom'] = parseFloat(elementStyling.getPropertyValue('margin-bottom'));
             margin['left'] = parseFloat(elementStyling.getPropertyValue('margin-left'));
-          
+
             if(visualisations['horizontal'].indexOf(side) >= 0) {
 
               elStyling['width'] = elementStyling.getPropertyValue('margin-' + side);
@@ -371,37 +1984,37 @@ function RemoteFunctions(config) {
 
             var setVisibility = function (el) {
                 if (
-                    !config.remoteHighlight.showPaddingMargin || 
-                    parseInt(el.height, 10) <= 0 || 
-                    parseInt(el.width, 10) <= 0 
+                    !config.remoteHighlight.showPaddingMargin ||
+                    parseInt(el.height, 10) <= 0 ||
+                    parseInt(el.width, 10) <= 0
                 ) {
                     el.display = 'none';
                 } else {
                     el.display = 'block';
                 }
             };
-            
+
             var mainBoxStyles = config.remoteHighlight.stylesToSet;
-            
+
             var paddingVisualisations = [
               drawPaddingRect('top'),
               drawPaddingRect('right'),
               drawPaddingRect('bottom'),
-              drawPaddingRect('left')  
+              drawPaddingRect('left')
             ];
-                
+
             var marginVisualisations = [
               drawMarginRect('top'),
               drawMarginRect('right'),
               drawMarginRect('bottom'),
-              drawMarginRect('left')  
+              drawMarginRect('left')
             ];
-            
+
             var setupVisualisations = function (arr, config) {
                 var i;
                 for (i = 0; i < arr.length; i++) {
                     setVisibility(arr[i]);
-                    
+
                     // Applies to every visualisationElement (padding or margin div)
                     arr[i]["transform"] = "none";
                     var el = window.document.createElement("div"),
@@ -416,7 +2029,7 @@ function RemoteFunctions(config) {
                     highlight.appendChild(el);
                 }
             };
-            
+
             setupVisualisations(
                 marginVisualisations,
                 config.remoteHighlight.marginStyling
@@ -425,11 +2038,11 @@ function RemoteFunctions(config) {
                 paddingVisualisations,
                 config.remoteHighlight.paddingStyling
             );
-            
+
             highlight.className = HIGHLIGHT_CLASSNAME;
 
             var offset = _screenOffset(element);
-            		
+
             // some code to find element left/top was removed here. This seems to be relevant to box model
             // live highlights. firether reading: https://github.com/adobe/brackets/pull/13357/files
             // we removed this in phoenix because it was throwing the rendering of live highlight boxes in phonix
@@ -448,14 +2061,14 @@ function RemoteFunctions(config) {
                 "position": "absolute",
                 "pointer-events": "none",
                 "box-shadow": "0 0 1px #fff",
-                "box-sizing": elementStyling.getPropertyValue('box-sizing'),		
-                "border-right": elementStyling.getPropertyValue('border-right'),		
-                "border-left": elementStyling.getPropertyValue('border-left'),		
-                "border-top": elementStyling.getPropertyValue('border-top'),		
+                "box-sizing": elementStyling.getPropertyValue('box-sizing'),
+                "border-right": elementStyling.getPropertyValue('border-right'),
+                "border-left": elementStyling.getPropertyValue('border-left'),
+                "border-top": elementStyling.getPropertyValue('border-top'),
                 "border-bottom": elementStyling.getPropertyValue('border-bottom'),
                 "border-color": config.remoteHighlight.borderColor
             };
-            
+
             var mergedStyles = Object.assign({}, stylesToSet,  config.remoteHighlight.stylesToSet);
 
             var animateStartValues = config.remoteHighlight.animateStartValue;
@@ -493,15 +2106,17 @@ function RemoteFunctions(config) {
             window.document.body.appendChild(highlight);
         },
 
-        add: function (element, doAnimation) {
+        // shouldAutoScroll is whether to scroll page to element if not in view
+        // true when user clicks on the source code of some element, in that case we want to scroll the live preview
+        add: function (element, doAnimation, shouldAutoScroll) {
             if (this._elementExists(element) || element === window.document) {
                 return;
             }
             if (this.trigger) {
                 _trigger(element, "highlight", 1);
             }
-            
-            if ((!window.event || window.event instanceof MessageEvent) && !isInViewport(element)) {
+
+            if (shouldAutoScroll && (!window.event || window.event instanceof MessageEvent) && !isInViewport(element)) {
                 var top = getDocumentOffsetTop(element);
                 if (top) {
                     top -= (window.innerHeight / 2);
@@ -543,34 +2158,26 @@ function RemoteFunctions(config) {
 
             this.clear();
             for (i = 0; i < highlighted.length; i++) {
-                this.add(highlighted[i], false);
+                this.add(highlighted[i], false, false); // 3rd arg is for auto-scroll
             }
         }
     };
 
-    var _currentEditor;
-    function _toggleEditor(element) {
-        _currentEditor = new Editor(element);
-    }
-
-    var _currentMenu;
-    function _toggleMenu(element) {
-        if (_currentMenu) {
-            _currentMenu.remove();
-        }
-        _currentMenu = new Menu(element);
-    }
-
     var _localHighlight;
-    var _remoteHighlight;
+    var _hoverHighlight;
+    var _clickHighlight;
+    var _nodeInfoBox;
+    var _nodeMoreOptionsBox;
+    var _aiPromptBox;
     var _setup = false;
-
-
-    /** Event Handlers ***********************************************************/
 
     function onMouseOver(event) {
         if (_validEvent(event)) {
-            _localHighlight.add(event.target, true);
+            // Skip highlighting for HTML, BODY tags and elements inside HEAD
+            if (event.target && event.target.nodeType === Node.ELEMENT_NODE &&
+                event.target.tagName !== "HTML" && event.target.tagName !== "BODY" && !_isInsideHeadTag(event.target)) {
+                _localHighlight.add(event.target, true, false); // false means no-auto scroll
+            }
         }
     }
 
@@ -585,14 +2192,182 @@ function RemoteFunctions(config) {
         window.document.removeEventListener("mousemove", onMouseMove);
     }
 
+    // helper function to get the current elements highlight mode
+    // this is as per user settings (either click or hover)
+    function getHighlightMode() {
+        return config.elemHighlights ? config.elemHighlights.toLowerCase() : "hover";
+    }
+
+    // helper function to check if highlights should show on hover
+    function shouldShowHighlightOnHover() {
+        return getHighlightMode() !== "click";
+    }
+
+    // helper function to clear element background highlighting
+    function clearElementBackground(element) {
+        if (element._originalBackgroundColor !== undefined) {
+            element.style.backgroundColor = element._originalBackgroundColor;
+        } else {
+            element.style.backgroundColor = "";
+        }
+        delete element._originalBackgroundColor;
+    }
+
+    function onElementHover(event) {
+        // don't want highlighting and stuff when auto scrolling
+        if (_isAutoScrolling) {
+            return;
+        }
+
+        // if _hoverHighlight is uninitialized, initialize it
+        if (!_hoverHighlight && config.isLPEditFeaturesActive && shouldShowHighlightOnHover()) {
+            _hoverHighlight = new Highlight("#c8f9c5", true);
+        }
+
+        // this is to check the user's settings, if they want to show the elements highlights on hover or click
+        if (_hoverHighlight && config.isLPEditFeaturesActive && shouldShowHighlightOnHover()) {
+            _hoverHighlight.clear();
+
+            // Skip highlighting for HTML, BODY tags and elements inside HEAD
+            // and for DOM elements which doesn't have 'data-brackets-id'
+            // NOTE: Don't remove 'data-brackets-id' check else hover will also target internal live preview elements
+            if (
+                event.target &&
+                event.target.nodeType === Node.ELEMENT_NODE &&
+                event.target.tagName !== "HTML" &&
+                event.target.tagName !== "BODY" &&
+                !_isInsideHeadTag(event.target) &&
+                event.target.hasAttribute("data-brackets-id")
+            ) {
+                // Store original background color to restore on hover out
+                event.target._originalBackgroundColor = event.target.style.backgroundColor;
+                event.target.style.backgroundColor = "rgba(0, 162, 255, 0.2)";
+
+                _hoverHighlight.add(event.target, false, false); // false means no auto-scroll
+
+                // Create info box for the hovered element
+                dismissNodeInfoBox();
+                _nodeInfoBox = new NodeInfoBox(event.target);
+            }
+        }
+    }
+
+    function onElementHoverOut(event) {
+        // don't want highlighting and stuff when auto scrolling
+        if (_isAutoScrolling) {
+            return;
+        }
+
+        // this is to check the user's settings, if they want to show the elements highlights on hover or click
+        if (_hoverHighlight && config.isLPEditFeaturesActive && shouldShowHighlightOnHover()) {
+            _hoverHighlight.clear();
+
+            // Restore original background color
+            if (
+                event &&
+                event.target &&
+                event.target.nodeType === Node.ELEMENT_NODE &&
+                event.target.hasAttribute("data-brackets-id")
+            ) {
+                clearElementBackground(event.target);
+            }
+
+            // Remove info box when mouse leaves the element
+            dismissNodeInfoBox();
+        }
+    }
+
+    /**
+     * this function is responsible to select an element in the live preview
+     * @param {Element} element - The DOM element to select
+     */
+    function _selectElement(element) {
+        // dismiss all UI boxes and cleanup previous element state when selecting a different element
+        dismissUIAndCleanupState();
+
+        // make sure that the feature is enabled and also the element has the attribute 'data-brackets-id'
+        if (
+            !config.isLPEditFeaturesActive ||
+            !element.hasAttribute("data-brackets-id") ||
+            element.tagName === "BODY" ||
+            element.tagName === "HTML" ||
+            _isInsideHeadTag(element)
+        ) {
+            return;
+        }
+
+        // make sure that the element is actually visible to the user
+        if (isElementVisible(element)) {
+            _nodeMoreOptionsBox = new NodeMoreOptionsBox(element);
+            _nodeInfoBox = new NodeInfoBox(element);
+        } else {
+            // Element is hidden, so don't show UI boxes but still apply visual styling
+            _nodeMoreOptionsBox = null;
+        }
+
+        element._originalOutline = element.style.outline;
+        element.style.outline = "1px solid #4285F4";
+
+        // Add highlight for click mode
+        if (getHighlightMode() === "click") {
+            element._originalBackgroundColor = element.style.backgroundColor;
+            element.style.backgroundColor = "rgba(0, 162, 255, 0.2)";
+
+            if (_hoverHighlight) {
+                _hoverHighlight.clear();
+                _hoverHighlight.add(element, true, false); // false means no auto-scroll
+            }
+        }
+
+        previouslyClickedElement = element;
+    }
+
+    /**
+     * This function handles the click event on the live preview DOM element
+     * it is to show the advanced DOM manipulation options in the live preview
+     * @param {Event} event
+     */
     function onClick(event) {
-        if (_validEvent(event)) {
+        dismissAIPromptBox();
+
+        // make sure that the feature is enabled and also the clicked element has the attribute 'data-brackets-id'
+        if (
+            config.isLPEditFeaturesActive &&
+            event.target.hasAttribute("data-brackets-id") &&
+            event.target.tagName !== "BODY" &&
+            event.target.tagName !== "HTML" &&
+            !_isInsideHeadTag(event.target)
+        ) {
             event.preventDefault();
             event.stopPropagation();
-            if (event.altKey) {
-                _toggleEditor(event.target);
-            } else {
-                _toggleMenu(event.target);
+            event.stopImmediatePropagation();
+
+            _selectElement(event.target);
+        } else if ( // when user clicks on the HTML, BODY tags or elements inside HEAD, we want to remove the boxes
+            _nodeMoreOptionsBox &&
+            (event.target.tagName === "HTML" || event.target.tagName === "BODY" || _isInsideHeadTag(event.target))
+        ) {
+            dismissUIAndCleanupState();
+        }
+    }
+
+    /**
+     * this function handles the double click event
+     * @param {Event} event
+     */
+    function onDoubleClick(event) {
+        if (
+            config.isLPEditFeaturesActive &&
+            event.target.hasAttribute("data-brackets-id") &&
+            event.target.tagName !== "BODY" &&
+            event.target.tagName !== "HTML" &&
+            !_isInsideHeadTag(event.target)
+        ) {
+            // because we only want to allow double click text editing where we show the edit option
+            if (_shouldShowEditTextOption(event.target)) {
+                event.preventDefault();
+                event.stopPropagation();
+                startEditing(event.target);
             }
         }
     }
@@ -603,7 +2378,6 @@ function RemoteFunctions(config) {
             window.document.removeEventListener("mouseover", onMouseOver);
             window.document.removeEventListener("mouseout", onMouseOut);
             window.document.removeEventListener("mousemove", onMouseMove);
-            window.document.removeEventListener("click", onClick);
             _localHighlight.clear();
             _localHighlight = undefined;
             _setup = false;
@@ -611,6 +2385,9 @@ function RemoteFunctions(config) {
     }
 
     function onKeyDown(event) {
+        if ((event.key === "Escape" || event.key === "Esc")) {
+            dismissUIAndCleanupState();
+        }
         if (!_setup && _validEvent(event)) {
             window.document.addEventListener("keyup", onKeyUp);
             window.document.addEventListener("mouseover", onMouseOver);
@@ -622,70 +2399,169 @@ function RemoteFunctions(config) {
         }
     }
 
-    /** Public Commands **********************************************************/
-
-    // show goto
-    function showGoto(targets) {
-        if (!_currentMenu) {
-            return;
-        }
-        _currentMenu.createBody();
-        var i;
-        for (i in targets) {
-            _currentMenu.addItem(targets[i]);
-        }
-        _currentMenu.show();
-    }
-
     // remove active highlights
     function hideHighlight() {
-        if (_remoteHighlight) {
-            _remoteHighlight.clear();
-            _remoteHighlight = null;
+        if (_clickHighlight) {
+            _clickHighlight.clear();
+            _clickHighlight = null;
+        }
+        if (_hoverHighlight) {
+            _hoverHighlight.clear();
         }
     }
 
     // highlight a node
     function highlight(node, clear) {
-        if (!_remoteHighlight) {
-            _remoteHighlight = new Highlight("#cfc");
+        if (!_clickHighlight) {
+            _clickHighlight = new Highlight("#cfc");
         }
         if (clear) {
-            _remoteHighlight.clear();
+            _clickHighlight.clear();
         }
-        _remoteHighlight.add(node, true);
+        // Skip highlighting for HTML, BODY tags and elements inside HEAD
+        if (node && node.nodeType === Node.ELEMENT_NODE &&
+            node.tagName !== "HTML" && node.tagName !== "BODY" && !_isInsideHeadTag(node)) {
+            _clickHighlight.add(node, true, true); // 3rd arg is for auto-scroll
+        }
     }
 
     // highlight a rule
     function highlightRule(rule) {
         hideHighlight();
         var i, nodes = window.document.querySelectorAll(rule);
+
         for (i = 0; i < nodes.length; i++) {
             highlight(nodes[i]);
         }
-        _remoteHighlight.selector = rule;
+        if (_clickHighlight) {
+            _clickHighlight.selector = rule;
+        }
+
+        // select the first valid highlighted element
+        var foundValidElement = false;
+        for (i = 0; i < nodes.length; i++) {
+            if (nodes[i].hasAttribute("data-brackets-id") &&
+                nodes[i].tagName !== "HTML" &&
+                nodes[i].tagName !== "BODY" &&
+                !_isInsideHeadTag(nodes[i]) &&
+                nodes[i].tagName !== "BR"
+            ) {
+                _selectElement(nodes[i]);
+                foundValidElement = true;
+                break;
+            }
+        }
+
+        // if no valid element present we dismiss the boxes
+        if (!foundValidElement) {
+            dismissUIAndCleanupState();
+        }
+    }
+
+    // recreate UI boxes (info box and more options box)
+    function redrawUIBoxes() {
+        if (_nodeMoreOptionsBox) {
+            const element = _nodeMoreOptionsBox.element;
+            _nodeMoreOptionsBox.remove();
+            _nodeMoreOptionsBox = new NodeMoreOptionsBox(element);
+
+            if (_nodeInfoBox) {
+                dismissNodeInfoBox();
+                _nodeInfoBox = new NodeInfoBox(element);
+            }
+        }
+
+        if (_aiPromptBox) {
+            const element = _aiPromptBox.element;
+            _aiPromptBox.remove();
+            _aiPromptBox = new AIPromptBox(element);
+        }
     }
 
     // redraw active highlights
     function redrawHighlights() {
-        if (_remoteHighlight) {
-            _remoteHighlight.redraw();
+        if (_clickHighlight) {
+            _clickHighlight.redraw();
+        }
+        if (_hoverHighlight) {
+            _hoverHighlight.redraw();
         }
     }
 
-    window.addEventListener("resize", redrawHighlights);
-    // Add a capture-phase scroll listener to update highlights when
-    // any element scrolls.
+    // just a wrapper function when we need to redraw highlights as well as UI boxes
+    function redrawEverything() {
+        redrawHighlights();
+        redrawUIBoxes();
+    }
+
+    window.addEventListener("resize", redrawEverything);
+
+    // Helper function to dismiss boxes only for elements that don't move with scroll
+    // this is needed for fixed positioned elements because otherwise the boxes will move along with scroll,
+    // but the element stays at position which will lead to drift between the element & boxes
+    function _dismissBoxesForFixedElements() {
+        // first we try more options box, because its position is generally fixed even in overlapping cases
+        if (_nodeMoreOptionsBox && _nodeMoreOptionsBox.element) {
+            const moreOptionsBoxElement = _nodeMoreOptionsBox._shadow.querySelector('.phoenix-more-options-box');
+            if(moreOptionsBoxElement) {
+
+                // get the position of both the moreOptionsBox as well as the element
+                const moreOptionsBoxBounds = moreOptionsBoxElement.getBoundingClientRect();
+                const elementBounds = _nodeMoreOptionsBox.element.getBoundingClientRect();
+
+                // this is to store the prev value, so that we can compare it the second time
+                if(!_nodeMoreOptionsBox._possDifference) {
+                    _nodeMoreOptionsBox._possDifference = moreOptionsBoxBounds.top - elementBounds.top;
+                } else {
+                    const calcNewDifference = moreOptionsBoxBounds.top - elementBounds.top;
+                    const prevDifference = _nodeMoreOptionsBox._possDifference;
+
+                    // 4 is just for pixelated differences
+                    if (Math.abs(calcNewDifference - prevDifference) > 4) {
+                        dismissUIAndCleanupState();
+                    }
+                }
+            }
+        } else if (_nodeInfoBox && _nodeInfoBox.element) {
+            // if more options box didn't exist, we check with info box (logic is same)
+            const infoBoxElement = _nodeInfoBox._shadow.querySelector('.phoenix-node-info-box');
+            if (infoBoxElement) {
+                // here just we make sure that the element is same
+                if(!_nodeInfoBox._prevElement) {
+                    _nodeInfoBox._prevElement = _nodeInfoBox.element;
+                } else if(_nodeInfoBox._prevElement !== _nodeInfoBox.element) {
+                    return;
+                } else {
+                    const infoBoxBounds = infoBoxElement.getBoundingClientRect();
+                    const elementBounds = _nodeInfoBox.element.getBoundingClientRect();
+
+                    if(!_nodeInfoBox._possDifference) {
+                        _nodeInfoBox._possDifference = infoBoxBounds.top - elementBounds.top;
+                    } else {
+                        const calcNewDifference = infoBoxBounds.top - elementBounds.top;
+                        const prevDifference = _nodeInfoBox._possDifference;
+
+                        if (Math.abs(calcNewDifference - prevDifference) > 4) {
+                            dismissUIAndCleanupState();
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     function _scrollHandler(e) {
         // Document scrolls can be updated immediately. Any other scrolls
         // need to be updated on a timer to ensure the layout is correct.
         if (e.target === window.document) {
             redrawHighlights();
+            // need to dismiss the box if the elements are fixed, otherwise they drift at times
+            _dismissBoxesForFixedElements();
         } else {
-            if (_remoteHighlight || _localHighlight) {
+            if (_localHighlight || _clickHighlight || _hoverHighlight) {
                 window.setTimeout(redrawHighlights, 0);
             }
+            _dismissBoxesForFixedElements();
         }
     }
 
@@ -942,71 +2818,316 @@ function RemoteFunctions(config) {
         this.rememberedNodes = {};
 
         // update highlight after applying diffs
-        redrawHighlights();
+        redrawEverything();
     };
 
     function applyDOMEdits(edits) {
         _editHandler.apply(edits);
     }
 
-    /**
-     *
-     * @param {Element} elem
-     */
-    function _domElementToJSON(elem) {
-        var json = { tag: elem.tagName.toLowerCase(), attributes: {}, children: [] },
-            i,
-            len,
-            node,
-            value;
+    function updateConfig(newConfig) {
+        var oldConfig = config;
+        config = JSON.parse(newConfig);
 
-        len = elem.attributes.length;
-        for (i = 0; i < len; i++) {
-            node = elem.attributes.item(i);
-            value = (node.name === "data-brackets-id") ? parseInt(node.value, 10) : node.value;
-            json.attributes[node.name] = value;
+        if (config.highlight || (config.isLPEditFeaturesActive && shouldShowHighlightOnHover())) {
+            // Add hover event listeners if highlight is enabled OR editHighlights is set to hover
+            window.document.removeEventListener("mouseover", onElementHover);
+            window.document.removeEventListener("mouseout", onElementHoverOut);
+            window.document.addEventListener("mouseover", onElementHover);
+            window.document.addEventListener("mouseout", onElementHoverOut);
+        } else {
+            // Remove hover event listeners only if both highlight is disabled AND editHighlights is not set to hover
+            window.document.removeEventListener("mouseover", onElementHover);
+            window.document.removeEventListener("mouseout", onElementHoverOut);
+
+            // Remove info box and more options box if highlight is disabled
+            dismissNodeInfoBox();
+            dismissNodeMoreOptionsBox();
         }
 
-        len = elem.childNodes.length;
-        for (i = 0; i < len; i++) {
-            node = elem.childNodes.item(i);
+        // Handle element highlight mode changes for instant switching
+        const oldHighlightMode = oldConfig.elemHighlights ? oldConfig.elemHighlights.toLowerCase() : "hover";
+        const newHighlightMode = getHighlightMode();
 
-            // ignores comment nodes and visuals generated by live preview
-            if (node.nodeType === Node.ELEMENT_NODE && node.className !== HIGHLIGHT_CLASSNAME) {
-                json.children.push(_domElementToJSON(node));
-            } else if (node.nodeType === Node.TEXT_NODE) {
-                json.children.push({ content: node.nodeValue });
+        if (oldHighlightMode !== newHighlightMode) {
+            // Clear any existing highlights when mode changes
+            if (_hoverHighlight) {
+                _hoverHighlight.clear();
+            }
+
+            // Clean up any previously highlighted elements
+            if (previouslyClickedElement) {
+                clearElementBackground(previouslyClickedElement);
+            }
+
+            // Clear all elements that might have hover background styling applied
+            const allElements = window.document.querySelectorAll("[data-brackets-id]");
+            for (let i = 0; i < allElements.length; i++) {
+                if (allElements[i]._originalBackgroundColor !== undefined) {
+                    clearElementBackground(allElements[i]);
+                }
+            }
+
+            // Remove info box when switching modes to avoid confusion
+            if (_nodeInfoBox && !_nodeMoreOptionsBox) {
+                dismissNodeInfoBox();
+            }
+
+            // Re-setup event listeners based on new mode to ensure proper behavior
+            if (config.highlight && config.isLPEditFeaturesActive) {
+                window.document.removeEventListener("mouseover", onElementHover);
+                window.document.removeEventListener("mouseout", onElementHoverOut);
+                window.document.addEventListener("mouseover", onElementHover);
+                window.document.addEventListener("mouseout", onElementHoverOut);
             }
         }
 
-        return json;
+        return JSON.stringify(config);
     }
 
-    function getSimpleDOM() {
-        return JSON.stringify(_domElementToJSON(window.document.documentElement));
+    /**
+     * This function checks if there are any live preview boxes currently visible
+     * @return {boolean} true if any boxes are visible, false otherwise
+     */
+    function hasVisibleLivePreviewBoxes() {
+        return _nodeMoreOptionsBox !== null || _nodeInfoBox !== null || _aiPromptBox !== null || previouslyClickedElement !== null;
     }
-    
-    function updateConfig(newConfig) {
-        config = JSON.parse(newConfig);
-        return JSON.stringify(config);
+
+    /**
+     * Helper function to dismiss NodeMoreOptionsBox if it exists
+     * @return {boolean} true if box was dismissed, false if it didn't exist
+     */
+    function dismissNodeMoreOptionsBox() {
+        if (_nodeMoreOptionsBox) {
+            _nodeMoreOptionsBox.remove();
+            _nodeMoreOptionsBox = null;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Helper function to dismiss NodeInfoBox if it exists
+     * @return {boolean} true if box was dismissed, false if it didn't exist
+     */
+    function dismissNodeInfoBox() {
+        if (_nodeInfoBox) {
+            _nodeInfoBox.remove();
+            _nodeInfoBox = null;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Helper function to dismiss AIPromptBox if it exists
+     * @return {boolean} true if box was dismissed, false if it didn't exist
+     */
+    function dismissAIPromptBox() {
+        if (_aiPromptBox) {
+            _aiPromptBox.remove();
+            _aiPromptBox = null;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Helper function to dismiss all UI boxes at once
+     * @return {boolean} true if any boxes were dismissed, false otherwise
+     */
+    function dismissAllUIBoxes() {
+        let dismissed = false;
+        dismissed = dismissNodeMoreOptionsBox() || dismissed;
+        dismissed = dismissAIPromptBox() || dismissed;
+        dismissed = dismissNodeInfoBox() || dismissed;
+        return dismissed;
+    }
+
+    /**
+     * Helper function to cleanup previously clicked element highlighting and state
+     * @return {boolean} true if cleanup was performed, false if no element to cleanup
+     */
+    function cleanupPreviousElementState() {
+        if (previouslyClickedElement) {
+            if (previouslyClickedElement._originalOutline !== undefined) {
+                previouslyClickedElement.style.outline = previouslyClickedElement._originalOutline;
+            } else {
+                previouslyClickedElement.style.outline = "";
+            }
+            delete previouslyClickedElement._originalOutline;
+
+            clearElementBackground(previouslyClickedElement);
+            if (_hoverHighlight) {
+                _hoverHighlight.clear();
+            }
+
+            previouslyClickedElement = null;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * This function dismisses all UI elements and cleans up application state
+     * Called when user presses Esc key, clicks on HTML/Body tags, or other dismissal events
+     * @return {boolean} true if any cleanup was performed, false otherwise
+     */
+    function dismissUIAndCleanupState() {
+        let dismissed = false;
+
+        // Dismiss all UI boxes
+        dismissed = dismissAllUIBoxes() || dismissed;
+
+        // Cleanup previously clicked element state and highlighting
+        dismissed = cleanupPreviousElementState() || dismissed;
+
+        return dismissed;
+    }
+
+
+    /**
+     * This function is responsible to move the cursor to the end of the text content when we start editing
+     * @param {DOMElement} element
+     */
+    function moveCursorToEnd(selection, element) {
+        const range = document.createRange();
+        range.selectNodeContents(element);
+        range.collapse(false);
+        selection.removeAllRanges();
+        selection.addRange(range);
+    }
+
+    // Function to handle direct editing of elements in the live preview
+    function startEditing(element) {
+        if (!config.isLPEditFeaturesActive
+            || !element
+            || element.tagName === "BODY"
+            || element.tagName === "HTML"
+            || _isInsideHeadTag(element)
+            || !element.hasAttribute("data-brackets-id")) {
+            return;
+        }
+
+        // Make the element editable
+        element.setAttribute("contenteditable", "true");
+        element.focus();
+
+        // Move cursor to end if no existing selection
+        const selection = window.getSelection();
+        if (selection.rangeCount === 0 || selection.isCollapsed) {
+            moveCursorToEnd(selection, element);
+        }
+
+        dismissUIAndCleanupState();
+
+        function onBlur() {
+            finishEditing(element);
+        }
+
+        function onKeyDown(event) {
+            if (event.key === "Escape") {
+                // Cancel editing
+                event.preventDefault();
+                finishEditing(element, false); // false means that the edit operation was cancelled
+            } else if (event.key === "Enter" && !event.shiftKey) {
+                // Finish editing on Enter (unless Shift is held)
+                event.preventDefault();
+                finishEditing(element);
+            }
+        }
+
+        element.addEventListener("blur", onBlur);
+        element.addEventListener("keydown", onKeyDown);
+
+        // Store the event listeners for later removal
+        element._editListeners = {
+            blur: onBlur,
+            keydown: onKeyDown
+        };
+    }
+
+    // Function to finish editing and apply changes
+    // isEditSuccessful: this is a boolean value, defaults to true. false only when the edit operation is cancelled
+    function finishEditing(element, isEditSuccessful = true) {
+        if (!config.isLPEditFeaturesActive || !element || !element.hasAttribute("contenteditable")) {
+            return;
+        }
+
+        // Remove contenteditable attribute
+        element.removeAttribute("contenteditable");
+        dismissUIAndCleanupState();
+
+        // Remove event listeners
+        if (element._editListeners) {
+            element.removeEventListener("blur", element._editListeners.blur);
+            element.removeEventListener("keydown", element._editListeners.keydown);
+            delete element._editListeners;
+        }
+
+        if (element.hasAttribute("data-brackets-id")) {
+            const tagId = element.getAttribute("data-brackets-id");
+            window._Brackets_MessageBroker.send({
+                livePreviewEditEnabled: true,
+                livePreviewTextEdit: true,
+                element: element,
+                newContent: element.outerHTML,
+                tagId: Number(tagId),
+                isEditSuccessful: isEditSuccessful
+            });
+        }
     }
 
     // init
     _editHandler = new DOMEditHandler(window.document);
 
-    if (experimental) {
-        window.document.addEventListener("keydown", onKeyDown);
+    function registerHandlers() {
+        // Always remove existing listeners first to avoid duplicates
+        window.document.removeEventListener("mouseover", onElementHover);
+        window.document.removeEventListener("mouseout", onElementHoverOut);
+        window.document.removeEventListener("click", onClick);
+        window.document.removeEventListener("dblclick", onDoubleClick);
+        window.document.removeEventListener("dragover", onDragOver);
+        window.document.removeEventListener("drop", onDrop);
+        window.document.removeEventListener("dragleave", onDragLeave);
+        window.document.removeEventListener("keydown", onKeyDown);
+
+        if (config.isLPEditFeaturesActive) {
+            // Initialize hover highlight with Chrome-like colors
+            _hoverHighlight = new Highlight("#c8f9c5", true); // Green similar to Chrome's padding color
+
+            // Initialize click highlight with animation
+            _clickHighlight = new Highlight("#cfc", true); // Light green for click highlight
+
+            window.document.addEventListener("mouseover", onElementHover);
+            window.document.addEventListener("mouseout", onElementHoverOut);
+            window.document.addEventListener("click", onClick);
+            window.document.addEventListener("dblclick", onDoubleClick);
+            window.document.addEventListener("dragover", onDragOver);
+            window.document.addEventListener("drop", onDrop);
+            window.document.addEventListener("dragleave", onDragLeave);
+            window.document.addEventListener("keydown", onKeyDown);
+        } else {
+            // Clean up any existing UI when edit features are disabled
+            dismissUIAndCleanupState();
+        }
     }
+
+    registerHandlers();
 
     return {
         "DOMEditHandler"        : DOMEditHandler,
-        "showGoto"              : showGoto,
         "hideHighlight"         : hideHighlight,
         "highlight"             : highlight,
         "highlightRule"         : highlightRule,
         "redrawHighlights"      : redrawHighlights,
+        "redrawEverything"      : redrawEverything,
         "applyDOMEdits"         : applyDOMEdits,
-        "getSimpleDOM"          : getSimpleDOM,
-        "updateConfig"          : updateConfig
+        "updateConfig"          : updateConfig,
+        "startEditing"          : startEditing,
+        "finishEditing"         : finishEditing,
+        "hasVisibleLivePreviewBoxes" : hasVisibleLivePreviewBoxes,
+        "dismissUIAndCleanupState" : dismissUIAndCleanupState,
+        "registerHandlers" : registerHandlers
     };
 }

@@ -52,7 +52,8 @@ define(function (require, exports, module) {
         HTMLInstrumentation   = require("LiveDevelopment/MultiBrowserImpl/language/HTMLInstrumentation"),
         StringUtils = require("utils/StringUtils"),
         FileViewController    = require("project/FileViewController"),
-        MainViewManager     = require("view/MainViewManager");
+        MainViewManager     = require("view/MainViewManager"),
+        LivePreviewEdit     = require("LiveDevelopment/LivePreviewEdit");
 
     const LIVE_DEV_REMOTE_SCRIPTS_FILE_NAME = `phoenix_live_preview_scripts_instrumented_${StringUtils.randomString(8)}.js`;
     const LIVE_DEV_REMOTE_WORKER_SCRIPTS_FILE_NAME = `pageLoaderWorker_${StringUtils.randomString(8)}.js`;
@@ -165,8 +166,9 @@ define(function (require, exports, module) {
         }
         const allOpenFileCount = MainViewManager.getWorkingSetSize(MainViewManager.ALL_PANES);
         function selectInHTMLEditor(fullHtmlEditor) {
-            const position = HTMLInstrumentation.getPositionFromTagId(fullHtmlEditor, parseInt(tagId, 10));
-            if(position && fullHtmlEditor) {
+            const positionResult = HTMLInstrumentation.getPositionFromTagId(fullHtmlEditor, parseInt(tagId, 10));
+            if(positionResult && positionResult.from && fullHtmlEditor) {
+                const position = positionResult.from;
                 const masterEditor = fullHtmlEditor.document._masterEditor || fullHtmlEditor;
                 masterEditor.setCursorPos(position.line, position.ch, true);
                 _focusEditorIfNeeded(masterEditor, nodeName, contentEditable);
@@ -207,6 +209,10 @@ define(function (require, exports, module) {
         var msg = JSON.parse(msgStr),
             event = msg.method || "event",
             deferred;
+        if (msg.livePreviewEditEnabled) {
+            LivePreviewEdit.handleLivePreviewEditOperation(msg);
+        }
+
         if (msg.id) {
             deferred = _responseDeferreds[msg.id];
             if (deferred) {

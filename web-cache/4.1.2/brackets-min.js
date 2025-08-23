@@ -4060,6 +4060,43 @@ define("LiveDevelopment/LiveDevMultiBrowser", function (require, exports, module
     }
 
     /**
+     * Check if live preview boxes are currently visible
+     */
+    function hasVisibleLivePreviewBoxes() {
+        if (_protocol) {
+            return _protocol.evaluate("_LD.hasVisibleLivePreviewBoxes()");
+        }
+        return false;
+    }
+
+    /**
+     * Dismiss live preview boxes like info box, options box, AI box
+     */
+    function dismissLivePreviewBoxes() {
+        if (_protocol) {
+            _protocol.evaluate("_LD.dismissUIAndCleanupState()");
+        }
+    }
+
+    /**
+     * Register event handlers in the remote browser for live preview functionality
+     */
+    function registerHandlers() {
+        if (_protocol) {
+            _protocol.evaluate("_LD.registerHandlers()");
+        }
+    }
+
+    /**
+     * Update configuration in the remote browser
+     */
+    function updateConfig(configJSON) {
+        if (_protocol) {
+            _protocol.evaluate("_LD.updateConfig('" + configJSON + "')");
+        }
+    }
+
+    /**
      * Originally unload and reload agents. It doesn't apply for this new implementation.
      * @return {jQuery.Promise} Already resolved promise.
      */
@@ -4125,6 +4162,10 @@ define("LiveDevelopment/LiveDevMultiBrowser", function (require, exports, module
     exports.showHighlight       = showHighlight;
     exports.hideHighlight       = hideHighlight;
     exports.redrawHighlight     = redrawHighlight;
+    exports.hasVisibleLivePreviewBoxes = hasVisibleLivePreviewBoxes;
+    exports.dismissLivePreviewBoxes = dismissLivePreviewBoxes;
+    exports.registerHandlers    = registerHandlers;
+    exports.updateConfig        = updateConfig;
     exports.init                = init;
     exports.isActive            = isActive;
     exports.setLivePreviewPinned= setLivePreviewPinned;
@@ -4336,6 +4377,624 @@ define("LiveDevelopment/LiveDevelopmentUtils", function (require, exports, modul
     // Define public API
     exports.isHtmlFileExt       = isHtmlFileExt;
     exports.isStaticHtmlFileExt = isStaticHtmlFileExt;
+});
+
+define("LiveDevelopment/LivePreviewEdit", function (require, exports, module) {
+    const HTMLInstrumentation = require("LiveDevelopment/MultiBrowserImpl/language/HTMLInstrumentation");
+    const LiveDevMultiBrowser = require("LiveDevelopment/LiveDevMultiBrowser");
+    const CodeMirror = require("thirdparty/CodeMirror/lib/codemirror");
+
+    /**
+     * This function syncs text content changes between the original source code
+     * and the live preview DOM after a text edit in the browser
+     *
+     * @private
+     * @param {String} oldContent - the original source code from the editor
+     * @param {String} newContent - the outerHTML after editing in live preview
+     * @returns {String} - the updated content that should replace the original editor code
+     *
+     * NOTE: We don’t touch tag names or attributes —
+     * we only care about text changes or things like newlines, <br>, or formatting like <b>, <i>, etc.
+     *
+     * Here's the basic idea:
+     * - Parse both old and new HTML strings into DOM trees
+     * - Then walk both DOMs side by side and sync changes
+     *
+     * What we handle:
+     * - if both are text nodes → update the text if changed
+     * - if both are elements with same tag → go deeper and sync their children
+     * - if one is text and one is an element → replace (like when user adds/removes <br> or adds bold/italic)
+     * - if a node got added or removed → do that in the old DOM
+     *
+     * We don’t recreate or touch existing elements unless absolutely needed,
+     * so all original user-written attributes and tag structure stay exactly the same.
+     *
+     * This avoids the browser trying to “fix” broken HTML (which we don’t want)
+     */
+    function _syncTextContentChanges(oldContent, newContent) {
+        const parser = new DOMParser();
+        const oldDoc = parser.parseFromString(oldContent, "text/html");
+        const newDoc = parser.parseFromString(newContent, "text/html");
+
+        const oldRoot = oldDoc.body;
+        const newRoot = newDoc.body;
+
+        // this function is to remove the phoenix internal attributes from leaking into the user's source code
+        function cleanClonedElement(clonedElement) {
+            if (clonedElement.nodeType === Node.ELEMENT_NODE) {
+                // this are phoenix's internal attributes
+                const attrs = ["data-brackets-id", "data-ld-highlight"];
+
+                // remove from the cloned element
+                attrs.forEach(attr => clonedElement.removeAttribute(attr));
+
+                // also remove from its childrens
+                clonedElement.querySelectorAll(attrs.map(a => `[${a}]`).join(","))
+                    .forEach(el => attrs.forEach(attr => el.removeAttribute(attr)));
+            }
+            return clonedElement;
+        }
+
+        function syncText(oldNode, newNode) {
+            if (!oldNode || !newNode) {
+                return;
+            }
+
+            // when both are text nodes, we just need to replace the old text with the new one
+            if (oldNode.nodeType === Node.TEXT_NODE && newNode.nodeType === Node.TEXT_NODE) {
+                if (oldNode.nodeValue !== newNode.nodeValue) {
+                    oldNode.nodeValue = newNode.nodeValue;
+                }
+                return;
+            }
+
+            // when both are elements
+            if (oldNode.nodeType === Node.ELEMENT_NODE && newNode.nodeType === Node.ELEMENT_NODE) {
+                const oldChildren = Array.from(oldNode.childNodes);
+                const newChildren = Array.from(newNode.childNodes);
+
+                const maxLen = Math.max(oldChildren.length, newChildren.length);
+
+                for (let i = 0; i < maxLen; i++) {
+                    const oldChild = oldChildren[i];
+                    const newChild = newChildren[i];
+
+                    if (!oldChild && newChild) {
+                        // if new child added → clone and insert
+                        const cloned = newChild.cloneNode(true);
+                        oldNode.appendChild(cleanClonedElement(cloned));
+                    } else if (oldChild && !newChild) {
+                        // if child removed → delete
+                        oldNode.removeChild(oldChild);
+                    } else if (
+                        oldChild.nodeType === newChild.nodeType &&
+                        oldChild.nodeType === Node.ELEMENT_NODE &&
+                        oldChild.tagName === newChild.tagName
+                    ) {
+                        // same element tag → sync recursively
+                        syncText(oldChild, newChild);
+                    } else if (
+                        oldChild.nodeType === Node.TEXT_NODE &&
+                        newChild.nodeType === Node.TEXT_NODE
+                    ) {
+                        if (oldChild.nodeValue !== newChild.nodeValue) {
+                            oldChild.nodeValue = newChild.nodeValue;
+                        }
+                    } else {
+                        // different node types or tags → replace
+                        const cloned = newChild.cloneNode(true);
+                        oldNode.replaceChild(cleanClonedElement(cloned), oldChild);
+                    }
+                }
+            }
+        }
+
+        const oldEls = Array.from(oldRoot.children);
+        const newEls = Array.from(newRoot.children);
+
+        for (let i = 0; i < Math.min(oldEls.length, newEls.length); i++) {
+            syncText(oldEls[i], newEls[i]);
+        }
+
+        return oldRoot.innerHTML;
+    }
+
+    /**
+     * helper function to get editor and validate basic requirements
+     * @param {Number} tagId - the data-brackets-id of the element
+     */
+    function _getEditorAndValidate(tagId) {
+        const currLiveDoc = LiveDevMultiBrowser.getCurrentLiveDoc();
+        if (!currLiveDoc || !currLiveDoc.editor) {
+            return null;
+        }
+        // for undo/redo operations, tagId might not be needed, so we only check it if provided
+        if (tagId !== undefined && !tagId) {
+            return null;
+        }
+        return currLiveDoc.editor;
+    }
+
+    /**
+     * helper function to get element range from tagId
+     *
+     * @param {Object} editor - the editor instance
+     * @param {Number} tagId - the data-brackets-id of the element
+     * @returns {Object|null} - object with startPos and endPos, or null if not found
+     */
+    function _getElementRange(editor, tagId) {
+        // get the start range from the getPositionFromTagId function
+        // and we get the end range from the findMatchingTag function
+        // NOTE: we cannot get the end range from getPositionFromTagId
+        // because on non-beautified code getPositionFromTagId may not provide correct end position
+        const startRange = HTMLInstrumentation.getPositionFromTagId(editor, tagId);
+        if(!startRange) {
+            return null;
+        }
+
+        const endRange = CodeMirror.findMatchingTag(editor._codeMirror, startRange.from);
+        if (!endRange) {
+            return null;
+        }
+
+        const startPos = startRange.from;
+        // for empty tags endRange.close might not exist, for ex: img tag
+        const endPos = endRange.close ? endRange.close.to : endRange.open.to;
+
+        return { startPos, endPos };
+    }
+
+    /**
+     * this function handles the text edit in the source code when user updates the text in the live preview
+     *
+     * @param {Object} message - the message object
+     *   - livePreviewEditEnabled: true
+     *   - livePreviewTextEdit: true
+     *   - element: element
+     *   - newContent: element.outerHTML (the edited content from live preview)
+     *   - tagId: Number (data-brackets-id of the edited element)
+     *   - isEditSuccessful: boolean (false when user pressed Escape to cancel, otherwise true always)
+     */
+    function _editTextInSource(message) {
+        const editor = _getEditorAndValidate(message.tagId);
+        if (!editor) {
+            return;
+        }
+
+        const range = _getElementRange(editor, message.tagId);
+        if (!range) {
+            return;
+        }
+
+        const { startPos, endPos } = range;
+
+        const text = editor.getTextBetween(startPos, endPos);
+
+        // if the edit was cancelled (mainly by pressing Escape key)
+        // we just replace the same text with itself
+        // this is a quick trick because as the code is changed for that element in the file,
+        // the live preview for that element gets refreshed and the changes are discarded in the live preview
+        if(!message.isEditSuccessful) {
+            editor.replaceRange(text, startPos, endPos);
+            editor.document._markClean();
+        } else {
+
+            // if the edit operation was successful, we call a helper function that
+            // is responsible to provide the actual content that needs to be written in the editor
+            //
+            // text: the actual current source code in the editor
+            // message.newContent: the new content in the live preview after the edit operation
+            const finalText = _syncTextContentChanges(text, message.newContent);
+            editor.replaceRange(finalText, startPos, endPos);
+        }
+    }
+
+    /**
+     * This function is responsible to duplicate an element from the source code
+     * @param {Number} tagId - the data-brackets-id of the DOM element
+     */
+    function _duplicateElementInSourceByTagId(tagId) {
+        // this is to get the currently live document that is being served in the live preview
+        const editor = _getEditorAndValidate(tagId);
+        if (!editor) {
+            return;
+        }
+
+        const range = _getElementRange(editor, tagId);
+        if (!range) {
+            return;
+        }
+
+        const { startPos, endPos } = range;
+
+        // this is the actual source code for the element that we need to duplicate
+        const text = editor.getTextBetween(startPos, endPos);
+        // this is the indentation on the line
+        const indent = editor.getTextBetween({ line: startPos.line, ch: 0 }, startPos);
+
+        editor.document.batchOperation(function () {
+            // make sure there is only indentation and no text before it
+            if (indent.trim() === "") {
+                // this is the position where we need to insert
+                // we're giving the char as 0 because since we insert a new line using '\n'
+                // that's why writing any char value will not work, as the line is emptys
+                // and codemirror doesn't allow to insert at a column (ch) greater than the length of the line
+                // So, the logic is to just append the indent before the text at this insertPos
+                const insertPos = {
+                    line: startPos.line + (endPos.line - startPos.line + 1),
+                    ch: 0
+                };
+
+                editor.replaceRange("\n", endPos);
+                editor.replaceRange(indent + text, insertPos);
+            } else {
+                // if there is some text, we just add the duplicated text right next to it
+                editor.replaceRange(text, startPos);
+            }
+        });
+    }
+
+    /**
+     * This function is responsible to delete an element from the source code
+     * @param {Number} tagId - the data-brackets-id of the DOM element
+     */
+    function _deleteElementInSourceByTagId(tagId) {
+        // this is to get the currently live document that is being served in the live preview
+        const editor = _getEditorAndValidate(tagId);
+        if (!editor) {
+            return;
+        }
+
+        const range = _getElementRange(editor, tagId);
+        if (!range) {
+            return;
+        }
+
+        const { startPos, endPos } = range;
+
+        editor.document.batchOperation(function () {
+            editor.replaceRange("", startPos, endPos);
+
+            // since we remove content from the source, we want to clear the extra line
+            if(startPos.line !== 0 && !(editor.getLine(startPos.line).trim())) {
+                const prevLineText = editor.getLine(startPos.line - 1);
+                const chPrevLine = prevLineText ? prevLineText.length : 0;
+                editor.replaceRange("", {line: startPos.line - 1, ch: chPrevLine}, startPos);
+            }
+        });
+    }
+
+    /**
+     * this function is to clean up the empty lines after an element is removed
+     * @param {Object} editor - the editor instance
+     * @param {Object} range - the range where element was removed
+     */
+    function _cleanupAfterRemoval(editor, range) {
+        const lineToCheck = range.from.line;
+
+        // check if the line where element was removed is now empty
+        if (lineToCheck < editor.lineCount()) {
+            const currentLineText = editor.getLine(lineToCheck);
+            if (currentLineText && currentLineText.trim() === "") {
+                // remove the empty line
+                const lineStart = { line: lineToCheck, ch: 0 };
+                const lineEnd = { line: lineToCheck + 1, ch: 0 };
+                editor.replaceRange("", lineStart, lineEnd);
+            }
+        }
+
+        // also we need to check the previous line if it became empty
+        if (lineToCheck > 0) {
+            const prevLineText = editor.getLine(lineToCheck - 1);
+            if (prevLineText && prevLineText.trim() === "") {
+                const lineStart = { line: lineToCheck - 1, ch: 0 };
+                const lineEnd = { line: lineToCheck, ch: 0 };
+                editor.replaceRange("", lineStart, lineEnd);
+            }
+        }
+    }
+
+    /**
+     * this function is to make sure that we insert elements with proper indentation
+     *
+     * @param {Object} editor - the editor instance
+     * @param {Object} insertPos - position where to insert
+     * @param {Boolean} insertAfterMode - whether to insert after the position
+     * @param {String} targetIndent - the indentation to use
+     * @param {String} sourceText - the text to insert
+     */
+    function _insertElementWithIndentation(editor, insertPos, insertAfterMode, targetIndent, sourceText) {
+        if (insertAfterMode) {
+            // Insert after the target element
+            editor.replaceRange("\n" + targetIndent + sourceText, insertPos);
+        } else {
+            // Insert before the target element
+            const insertLine = insertPos.line;
+            const lineStart = { line: insertLine, ch: 0 };
+
+            // Get current line content to preserve any existing indentation structure
+            const currentLine = editor.getLine(insertLine);
+
+            if (currentLine && currentLine.trim() === "") {
+                // the line is empty, replace it entirely
+                editor.replaceRange(targetIndent + sourceText, lineStart, { line: insertLine, ch: currentLine.length });
+            } else {
+                // the line has content, insert before it
+                editor.replaceRange(targetIndent + sourceText + "\n", lineStart);
+            }
+        }
+    }
+
+    /**
+     * This function is to make sure that the target element doesn't lie completely within the source element
+     * because if that is the case then it means that the drag-drop was not performed correctly
+     *
+     * @param {Object} source - start/end pos of the source element
+     * @param {Object} target - start/end pos of the target element
+     * @returns {Boolean} true if target is fully inside source, false otherwise
+     */
+    function _targetInsideSource(source, target) {
+        if (
+            (source.from.line < target.from.line ||
+            (source.from.line === target.from.line && source.from.ch <= target.from.ch)) &&
+            (source.to.line > target.to.line ||
+            (source.to.line === target.to.line && source.to.ch >= target.to.ch))
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * This function is responsible for moving an element from one position to another in the source code
+     * it is called when there is drag-drop in the live preview
+     * @param {Number} sourceId - the data-brackets-id of the element being moved
+     * @param {Number} targetId - the data-brackets-id of the target element where to move
+     * @param {Boolean} insertAfter - whether to insert the source element after the target element
+     * @param {Boolean} insertInside - whether to insert the source element as a child of the target element
+     */
+    function _moveElementInSource(sourceId, targetId, insertAfter, insertInside = false) {
+        // this is to get the currently live document that is being served in the live preview
+        const editor = _getEditorAndValidate(sourceId);
+        if (!editor || !targetId) {
+            return;
+        }
+
+        const sourceRange = _getElementRange(editor, sourceId);
+        if (!sourceRange) {
+            return;
+        }
+
+        const targetRange = _getElementRange(editor, targetId);
+        if (!targetRange) {
+            return;
+        }
+
+        // convert to the format expected by the rest of the function
+        const sourceRangeObj = {
+            from: sourceRange.startPos,
+            to: sourceRange.endPos
+        };
+
+        const targetRangeObj = {
+            from: targetRange.startPos,
+            to: targetRange.endPos
+        };
+
+        // make sure that the target is not within the source
+        // this would otherwise remove both source and target, breaking the document
+        if (_targetInsideSource(sourceRangeObj, targetRangeObj)) {
+            return;
+        }
+
+        const sourceText = editor.getTextBetween(sourceRangeObj.from, sourceRangeObj.to);
+        let targetIndent = editor.getTextBetween({ line: targetRangeObj.from.line, ch: 0 }, targetRangeObj.from);
+        if(targetIndent && targetIndent.trim() !== "") { // because indentation should hold no text
+            let indentLength = targetIndent.search(/\S/);
+            if (indentLength === -1) {
+                indentLength = targetIndent.length;
+            }
+            targetIndent = ' '.repeat(indentLength);
+        }
+
+        // Check if source is before target to determine order of operations
+        // check if the source is before target or after the target
+        // we need this because
+        // If source is before target → we need to insert first, then remove
+        // If target is before source → remove first, then insert
+        const sourceBeforeTarget =
+            sourceRangeObj.from.line < targetRangeObj.from.line ||
+            (sourceRangeObj.from.line === targetRangeObj.from.line && sourceRangeObj.from.ch < targetRangeObj.from.ch);
+
+        // creating a batch operation so that undo in live preview works fine
+        editor.document.batchOperation(function () {
+            if (sourceBeforeTarget) {
+                // this handles the case when source is before target: insert first, then remove
+                if (insertInside) {
+                    const matchingTagInfo = CodeMirror.findMatchingTag(editor._codeMirror, targetRangeObj.from);
+                    if (matchingTagInfo && matchingTagInfo.open) {
+                        const insertPos = {
+                            line: matchingTagInfo.open.to.line,
+                            ch: matchingTagInfo.open.to.ch
+                        };
+
+                        const indentInfo = editor._detectIndent();
+                        const childIndent = targetIndent + indentInfo.indent;
+                        _insertElementWithIndentation(editor, insertPos, true, childIndent, sourceText);
+                    }
+                } else if (insertAfter) {
+                    const insertPos = {
+                        line: targetRangeObj.to.line,
+                        ch: targetRangeObj.to.ch
+                    };
+                    _insertElementWithIndentation(editor, insertPos, true, targetIndent, sourceText);
+                } else {
+                    // insert before target
+                    _insertElementWithIndentation(editor, targetRangeObj.from, false, targetIndent, sourceText);
+                }
+
+                // Now remove the source element (NOTE: the positions have shifted)
+                const updatedSourceRange = _getElementRange(editor, sourceId);
+                if (updatedSourceRange) {
+                    const updatedSourceRangeObj = {
+                        from: updatedSourceRange.startPos,
+                        to: updatedSourceRange.endPos
+                    };
+                    editor.replaceRange("", updatedSourceRangeObj.from, updatedSourceRangeObj.to);
+                    _cleanupAfterRemoval(editor, updatedSourceRangeObj);
+                }
+            } else {
+                // This handles the case when target is before source: remove first, then insert
+                // Store source range before removal
+                const originalSourceRange = { ...sourceRangeObj };
+
+                // Remove the source element first
+                editor.replaceRange("", sourceRangeObj.from, sourceRangeObj.to);
+                _cleanupAfterRemoval(editor, originalSourceRange);
+
+                // Recalculate target range after source removal as the positions have shifted
+                const updatedTargetRange = _getElementRange(editor, targetId);
+                if (!updatedTargetRange) {
+                    return;
+                }
+
+                const updatedTargetRangeObj = {
+                    from: updatedTargetRange.startPos,
+                    to: updatedTargetRange.endPos
+                };
+
+                if (insertInside) {
+                    const matchingTagInfo = CodeMirror.findMatchingTag(editor._codeMirror, updatedTargetRangeObj.from);
+                    if (matchingTagInfo && matchingTagInfo.open) {
+                        const insertPos = {
+                            line: matchingTagInfo.open.to.line,
+                            ch: matchingTagInfo.open.to.ch
+                        };
+
+                        const indentInfo = editor._detectIndent();
+                        const childIndent = targetIndent + indentInfo.indent;
+                        _insertElementWithIndentation(editor, insertPos, true, childIndent, sourceText);
+                    }
+                } else if (insertAfter) {
+                    const insertPos = {
+                        line: updatedTargetRangeObj.to.line,
+                        ch: updatedTargetRangeObj.to.ch
+                    };
+                    _insertElementWithIndentation(editor, insertPos, true, targetIndent, sourceText);
+                } else {
+                    // Insert before target
+                    _insertElementWithIndentation(editor, updatedTargetRangeObj.from, false, targetIndent, sourceText);
+                }
+            }
+        });
+    }
+
+    /**
+     * This function is to handle the undo redo operation in the live preview
+     * @param {String} undoOrRedo - "undo" when to undo, and "redo" for redo
+     */
+    function handleUndoRedoOperation(undoOrRedo) {
+        const editor = _getEditorAndValidate(); // no tagId needed for undo/redo
+        if (!editor) {
+            return;
+        }
+
+        if (undoOrRedo === "undo") {
+            editor.undo();
+        } else if (undoOrRedo === "redo") {
+            editor.redo();
+        }
+    }
+
+    function _getRequiredDataForAI(message) {
+        // this is to get the currently live document that is being served in the live preview
+        const editor = _getEditorAndValidate(message.tagId);
+        if (!editor) {
+            return;
+        }
+
+        const range = _getElementRange(editor, message.tagId);
+        if (!range) {
+            return;
+        }
+
+        const { startPos, endPos } = range;
+        // this is the actual source code for the element that we need to duplicate
+        const text = editor.getTextBetween(startPos, endPos);
+        const fileName = editor.document.file.name;
+        const filePath = editor.document.file.fullPath;
+
+        const AIData = {
+            editor: editor, // the editor instance that is being served in the live preview
+            fileName: fileName,
+            filePath: filePath, // the complete absolute path
+            tagId: message.tagId, // the data-brackets-id of the element which was selected for AI edit
+            range: {startPos, endPos}, // the start and end position text in the source code for that element
+            text: text, // the actual source code in between the start and the end pos
+            prompt: message.prompt, // the prompt that user typed
+            model: message.selectedModel // the selected model (fast, slow or moderate)
+        };
+
+        return AIData;
+    }
+
+    function _editWithAI(message) {
+        const AIData = _getRequiredDataForAI(message);
+        // write the AI implementation here...@abose
+    }
+
+    /**
+     * This is the main function that is exported.
+     * it will be called by LiveDevProtocol when it receives a message from RemoteFunctions.js
+     * or LiveDevProtocolRemote.js (for undo) using MessageBroker
+     * Refer to: `handleOptionClick` function in the RemoteFunctions.js and `_receive` function in LiveDevProtocol.js
+     *
+     * @param {Object} message - this is the object that is passed by RemoteFunctions.js using MessageBroker
+     * this object will be in the format
+     * {
+                livePreviewEditEnabled: true,
+                tagId: tagId,
+                delete || duplicate || livePreviewTextEdit || AISend: true
+                undoLivePreviewOperation: true (this property is available only for undo operation)
+
+                prompt: prompt (only for AI)
+
+                sourceId: sourceId, (these are for move (drag & drop))
+                targetId: targetId,
+                insertAfter: boolean, (whether to insert after the target element)
+                move: true
+        }
+    * these are the main properties that are passed through the message
+     */
+    function handleLivePreviewEditOperation(message) {
+        // handle move(drag & drop)
+        if (message.move && message.sourceId && message.targetId) {
+            _moveElementInSource(message.sourceId, message.targetId, message.insertAfter, message.insertInside);
+            return;
+        }
+
+        if (!message.element || !message.tagId) {
+            // check for undo
+            if (message.undoLivePreviewOperation || message.redoLivePreviewOperation) {
+                message.undoLivePreviewOperation ? handleUndoRedoOperation("undo") : handleUndoRedoOperation("redo");
+            }
+            return;
+        }
+
+        // just call the required functions
+        if (message.delete) {
+            _deleteElementInSourceByTagId(message.tagId);
+        } else if (message.duplicate) {
+            _duplicateElementInSourceByTagId(message.tagId);
+        } else if (message.livePreviewTextEdit) {
+            _editTextInSource(message);
+        } else if (message.AISend) {
+            _editWithAI(message);
+        }
+    }
+
+    exports.handleLivePreviewEditOperation = handleLivePreviewEditOperation;
 });
 
 /*
@@ -6050,10 +6709,12 @@ define("LiveDevelopment/MultiBrowserImpl/language/HTMLInstrumentation", function
             return (mark.tagID === tagId);
         });
         if (markFound) {
-            return markFound.find().from;
+            return {
+                from: markFound.find().from,
+                to: markFound.find().to
+            };
         }
         return null;
-
     }
 
     // private methods
@@ -6679,7 +7340,8 @@ define("LiveDevelopment/MultiBrowserImpl/protocol/LiveDevProtocol", function (re
         HTMLInstrumentation   = require("LiveDevelopment/MultiBrowserImpl/language/HTMLInstrumentation"),
         StringUtils = require("utils/StringUtils"),
         FileViewController    = require("project/FileViewController"),
-        MainViewManager     = require("view/MainViewManager");
+        MainViewManager     = require("view/MainViewManager"),
+        LivePreviewEdit     = require("LiveDevelopment/LivePreviewEdit");
 
     const LIVE_DEV_REMOTE_SCRIPTS_FILE_NAME = `phoenix_live_preview_scripts_instrumented_${StringUtils.randomString(8)}.js`;
     const LIVE_DEV_REMOTE_WORKER_SCRIPTS_FILE_NAME = `pageLoaderWorker_${StringUtils.randomString(8)}.js`;
@@ -6792,8 +7454,9 @@ define("LiveDevelopment/MultiBrowserImpl/protocol/LiveDevProtocol", function (re
         }
         const allOpenFileCount = MainViewManager.getWorkingSetSize(MainViewManager.ALL_PANES);
         function selectInHTMLEditor(fullHtmlEditor) {
-            const position = HTMLInstrumentation.getPositionFromTagId(fullHtmlEditor, parseInt(tagId, 10));
-            if(position && fullHtmlEditor) {
+            const positionResult = HTMLInstrumentation.getPositionFromTagId(fullHtmlEditor, parseInt(tagId, 10));
+            if(positionResult && positionResult.from && fullHtmlEditor) {
+                const position = positionResult.from;
                 const masterEditor = fullHtmlEditor.document._masterEditor || fullHtmlEditor;
                 masterEditor.setCursorPos(position.line, position.ch, true);
                 _focusEditorIfNeeded(masterEditor, nodeName, contentEditable);
@@ -6834,6 +7497,10 @@ define("LiveDevelopment/MultiBrowserImpl/protocol/LiveDevProtocol", function (re
         var msg = JSON.parse(msgStr),
             event = msg.method || "event",
             deferred;
+        if (msg.livePreviewEditEnabled) {
+            LivePreviewEdit.handleLivePreviewEditOperation(msg);
+        }
+
         if (msg.id) {
             deferred = _responseDeferreds[msg.id];
             if (deferred) {
@@ -7500,7 +8167,13 @@ define("LiveDevelopment/main", function main(require, exports, module) {
         Strings             = require("strings"),
         ExtensionUtils      = require("utils/ExtensionUtils"),
         StringUtils         = require("utils/StringUtils"),
-        EventDispatcher      = require("utils/EventDispatcher");
+        EventDispatcher      = require("utils/EventDispatcher"),
+        WorkspaceManager    = require("view/WorkspaceManager");
+
+
+    // this is responsible to make the advanced live preview features active or inactive
+    // @abose (make this variable false when not a paid user, everything rest is handled automatically)
+    let isLPEditFeaturesActive = false;
 
     const EVENT_LIVE_HIGHLIGHT_PREF_CHANGED = "liveHighlightPrefChange";
 
@@ -7515,6 +8188,19 @@ define("LiveDevelopment/main", function main(require, exports, module) {
             marginColor:  {r: 246, g: 178, b: 107, a: 0.66},
             paddingColor: {r: 147, g: 196, b: 125, a: 0.66},
             showInfo: true
+        },
+        isLPEditFeaturesActive: isLPEditFeaturesActive,
+        elemHighlights: "hover", // default value, this will get updated when the extension loads
+        // this strings are used in RemoteFunctions.js
+        // we need to pass this through config as remoteFunctions runs in browser context and cannot
+        // directly reference Strings file
+        strings: {
+            selectParent: Strings.LIVE_DEV_MORE_OPTIONS_SELECT_PARENT,
+            editText: Strings.LIVE_DEV_MORE_OPTIONS_EDIT_TEXT,
+            duplicate: Strings.LIVE_DEV_MORE_OPTIONS_DUPLICATE,
+            delete: Strings.LIVE_DEV_MORE_OPTIONS_DELETE,
+            ai: Strings.LIVE_DEV_MORE_OPTIONS_AI,
+            aiPromptPlaceholder: Strings.LIVE_DEV_AI_PROMPT_PLACEHOLDER
         }
     };
     // Status labels/styles are ordered: error, not connected, progress1, progress2, connected.
@@ -7537,14 +8223,12 @@ define("LiveDevelopment/main", function main(require, exports, module) {
             "opacity": 0.6
         },
         "paddingStyling": {
-            "border-width": "1px",
-            "border-style": "dashed",
-            "border-color": "rgba(0, 162, 255, 0.5)"
+            "background-color": "rgba(200, 249, 197, 0.7)"
         },
         "marginStyling": {
-            "background-color": "rgba(21, 165, 255, 0.58)"
+            "background-color": "rgba(249, 204, 157, 0.7)"
         },
-        "borderColor": "rgba(21, 165, 255, 0.85)",
+        "borderColor": "rgba(200, 249, 197, 0.85)",
         "showPaddingMargin": true
     }, {
         description: Strings.DESCRIPTION_LIVE_DEV_HIGHLIGHT_SETTINGS
@@ -7736,6 +8420,19 @@ define("LiveDevelopment/main", function main(require, exports, module) {
         }
     }
 
+    /**
+     * this function handles escape key for live preview to hide boxes if they are visible
+     * @param {Event} event
+     */
+    function _handleLivePreviewEscapeKey(event) {
+        // we only handle the escape keypress for live preview when its active
+        if (MultiBrowserLiveDev.status === MultiBrowserLiveDev.STATUS_ACTIVE) {
+            MultiBrowserLiveDev.dismissLivePreviewBoxes();
+        }
+        // returning false to let the editor also handle the escape key
+        return false;
+    }
+
     /** Initialize LiveDevelopment */
     AppInit.appReady(function () {
         params.parse();
@@ -7773,7 +8470,7 @@ define("LiveDevelopment/main", function main(require, exports, module) {
             .on("change", function () {
                 config.remoteHighlight = prefs.get(PREF_REMOTEHIGHLIGHT);
                 if (MultiBrowserLiveDev && MultiBrowserLiveDev.status >= MultiBrowserLiveDev.STATUS_ACTIVE) {
-                    MultiBrowserLiveDev.agents.remote.call("updateConfig",JSON.stringify(config));
+                    MultiBrowserLiveDev.updateConfig(JSON.stringify(config));
                 }
             });
 
@@ -7790,6 +8487,9 @@ define("LiveDevelopment/main", function main(require, exports, module) {
             exports.trigger(exports.EVENT_LIVE_PREVIEW_RELOAD, clientDetails);
         });
 
+        // allow live preview to handle escape key event
+        // Escape is mainly to hide boxes if they are visible
+        WorkspaceManager.addEscapeKeyEventHandler("livePreview", _handleLivePreviewEscapeKey);
     });
 
     // init prefs
@@ -7797,9 +8497,32 @@ define("LiveDevelopment/main", function main(require, exports, module) {
         .on("change", function () {
             config.highlight = PreferencesManager.getViewState("livedevHighlight");
             _updateHighlightCheckmark();
+            if (MultiBrowserLiveDev && MultiBrowserLiveDev.status >= MultiBrowserLiveDev.STATUS_ACTIVE) {
+                MultiBrowserLiveDev.updateConfig(JSON.stringify(config));
+            }
         });
 
     config.highlight = PreferencesManager.getViewState("livedevHighlight");
+
+    function setLivePreviewEditFeaturesActive(enabled) {
+        isLPEditFeaturesActive = enabled;
+        config.isLPEditFeaturesActive = enabled;
+        if (MultiBrowserLiveDev && MultiBrowserLiveDev.status >= MultiBrowserLiveDev.STATUS_ACTIVE) {
+            MultiBrowserLiveDev.updateConfig(JSON.stringify(config));
+            MultiBrowserLiveDev.registerHandlers();
+        }
+    }
+
+    // this function is responsible to update element highlight config
+    // called from live preview extension when preference changes
+    function updateElementHighlightConfig() {
+        const prefValue = PreferencesManager.get("livePreviewElementHighlights");
+        config.elemHighlights = prefValue || "hover";
+        if (MultiBrowserLiveDev && MultiBrowserLiveDev.status >= MultiBrowserLiveDev.STATUS_ACTIVE) {
+            MultiBrowserLiveDev.updateConfig(JSON.stringify(config));
+            MultiBrowserLiveDev.registerHandlers();
+        }
+    }
 
     // init commands
     CommandManager.register(Strings.CMD_LIVE_HIGHLIGHT, Commands.FILE_LIVE_HIGHLIGHT, togglePreviewHighlight);
@@ -7808,6 +8531,8 @@ define("LiveDevelopment/main", function main(require, exports, module) {
     CommandManager.get(Commands.FILE_LIVE_HIGHLIGHT).setEnabled(false);
 
     EventDispatcher.makeEventDispatcher(exports);
+
+    exports.isLPEditFeaturesActive = isLPEditFeaturesActive;
 
     // public events
     exports.EVENT_OPEN_PREVIEW_URL = MultiBrowserLiveDev.EVENT_OPEN_PREVIEW_URL;
@@ -7824,8 +8549,12 @@ define("LiveDevelopment/main", function main(require, exports, module) {
     exports.setLivePreviewPinned = setLivePreviewPinned;
     exports.setLivePreviewTransportBridge = setLivePreviewTransportBridge;
     exports.togglePreviewHighlight = togglePreviewHighlight;
+    exports.setLivePreviewEditFeaturesActive = setLivePreviewEditFeaturesActive;
+    exports.updateElementHighlightConfig = updateElementHighlightConfig;
     exports.getConnectionIds = MultiBrowserLiveDev.getConnectionIds;
     exports.getLivePreviewDetails = MultiBrowserLiveDev.getLivePreviewDetails;
+    exports.hideHighlight = MultiBrowserLiveDev.hideHighlight;
+    exports.dismissLivePreviewBoxes = MultiBrowserLiveDev.dismissLivePreviewBoxes;
 });
 
 /*
@@ -43564,7 +44293,7 @@ define("extensionsIntegrated/Phoenix-live-preview/LivePreviewSettings", function
         description: Strings.LIVE_DEV_SETTINGS_FRAMEWORK_PREFERENCES,
         values: Object.keys(SUPPORTED_FRAMEWORKS)
     });
-    
+
     async function detectFramework($frameworkSelect, $hotReloadChk) {
         for(let framework of Object.keys(SUPPORTED_FRAMEWORKS)){
             const configFile = SUPPORTED_FRAMEWORKS[framework].configFile,
@@ -43608,10 +44337,11 @@ define("extensionsIntegrated/Phoenix-live-preview/LivePreviewSettings", function
                 $hotReloadLabel = $template.find("#hotReloadLabel"),
                 $frameworkLabel = $template.find("#frameworkLabel"),
                 $frameworkSelect = $template.find("#frameworkSelect");
+
+            // Initialize form values from preferences
             $enableCustomServerChk.prop('checked', PreferencesManager.get(PREFERENCE_PROJECT_SERVER_ENABLED));
             $showLivePreviewAtStartup.prop('checked', PreferencesManager.get(PREFERENCE_SHOW_LIVE_PREVIEW_PANEL));
             $hotReloadChk.prop('checked', !!PreferencesManager.get(PREFERENCE_PROJECT_SERVER_HOT_RELOAD_SUPPORTED));
-            // figure out the framework
 
             if(PreferencesManager.get(PREFERENCE_PROJECT_PREVIEW_FRAMEWORK) === null) {
                 detectFramework($frameworkSelect, $hotReloadChk);
@@ -44904,6 +45634,7 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
         NativeApp           = require("utils/NativeApp"),
         StringUtils         = require("utils/StringUtils"),
         FileSystem          = require("filesystem/FileSystem"),
+        DropdownButton     = require("widgets/DropdownButton"),
         BrowserStaticServer  = require("./BrowserStaticServer"),
         NodeStaticServer  = require("./NodeStaticServer"),
         LivePreviewSettings  = require("./LivePreviewSettings"),
@@ -45021,7 +45752,7 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
     <div id="live-preview-plugin-toolbar" class="plugin-toolbar" style="display: flex; align-items: center; flex-direction: row;">
         <div style="width: 20%;display: flex;">
             <button id="reloadLivePreviewButton" title="{{clickToReload}}" class="btn-alt-quiet toolbar-button reload-icon"></button>
-            <button id="highlightLPButton" title="{{toggleLiveHighlight}}" class="btn-alt-quiet toolbar-button pointer-fill-icon"></button>
+            <button id="livePreviewModeBtn" title="{{livePreviewConfigureModes}}" class="btn-alt-quiet toolbar-button btn-dropdown btn"><!-- Content will come here dynamically --></button>
         </div>
         <div style="width: fit-content;min-width: 60%;display: flex;justify-content: center; align-items: center;">
 <!--            these are buttons that are always invisible to help central align the panel title-->
@@ -45099,6 +45830,29 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
     const PREVIEW_TRUSTED_PROJECT_KEY = "preview_trusted";
     const PREVIEW_PROJECT_README_KEY = "preview_readme";
 
+    // live preview mode pref
+    const PREFERENCE_LIVE_PREVIEW_MODE = "livePreviewMode";
+
+    /**
+     * Get the appropriate default mode based on whether edit features are active
+     * @returns {string} "highlight" if edit features inactive, "edit" if active
+     */
+    function _getDefaultMode() {
+        return LiveDevelopment.isLPEditFeaturesActive ? "edit" : "highlight";
+    }
+
+    // define the live preview mode preference
+    PreferencesManager.definePreference(PREFERENCE_LIVE_PREVIEW_MODE, "string", _getDefaultMode(), {
+        description: StringUtils.format(Strings.LIVE_PREVIEW_MODE_PREFERENCE, "'preview'", "'highlight'", "'edit'"),
+        values: ["preview", "highlight", "edit"]
+    });
+
+    // live preview element highlights preference (whether on hover or click)
+    const PREFERENCE_PROJECT_ELEMENT_HIGHLIGHT = "livePreviewElementHighlights";
+    PreferencesManager.definePreference(PREFERENCE_PROJECT_ELEMENT_HIGHLIGHT, "string", "hover", {
+        description: Strings.LIVE_DEV_SETTINGS_ELEMENT_HIGHLIGHT_PREFERENCE
+    });
+
     const LIVE_PREVIEW_PANEL_ID = "live-preview-panel";
     const LIVE_PREVIEW_IFRAME_ID = "panel-live-preview-frame";
     const LIVE_PREVIEW_IFRAME_HTML = `
@@ -45123,7 +45877,6 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
         $iframe,
         $panel,
         $pinUrlBtn,
-        $highlightBtn,
         $livePreviewPopBtn,
         $reloadBtn,
         $chromeButton,
@@ -45134,7 +45887,8 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
         $safariButtonBallast,
         $edgeButtonBallast,
         $firefoxButtonBallast,
-        $panelTitle;
+        $panelTitle,
+        $modeBtn;
 
     let customLivePreviewBannerShown = false;
 
@@ -45153,8 +45907,212 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
         editor.focus();
     });
 
+    function _showProFeatureDialog() {
+        const dialog = Dialogs.showModalDialog(
+            DefaultDialogs.DIALOG_ID_INFO,
+            Strings.LIVE_PREVIEW_PRO_FEATURE_TITLE,
+            Strings.LIVE_PREVIEW_PRO_FEATURE_MESSAGE,
+            [
+                {
+                    className: Dialogs.DIALOG_BTN_CLASS_NORMAL,
+                    id: Dialogs.DIALOG_BTN_CANCEL,
+                    text: Strings.CANCEL
+                },
+                {
+                    className: Dialogs.DIALOG_BTN_CLASS_PRIMARY,
+                    id: "subscribe",
+                    text: Strings.LIVE_PREVIEW_PRO_SUBSCRIBE
+                }
+            ]
+        );
+
+        dialog.done(function (buttonId) {
+            if (buttonId === "subscribe") {
+                // TODO: write the implementation here...@abose
+                console.log("the subscribe button got clicked");
+            }
+        });
+
+        return dialog;
+    }
+
+    // this function is to check if the live highlight feature is enabled or not
     function _isLiveHighlightEnabled() {
         return CommandManager.get(Commands.FILE_LIVE_HIGHLIGHT).getChecked();
+    }
+
+    /**
+     * Live Preview 'Preview Mode'. in this mode no live preview highlight or any such features are active
+     * Just the plain website
+     */
+    function _LPPreviewMode() {
+        LiveDevelopment.setLivePreviewEditFeaturesActive(false);
+        if(_isLiveHighlightEnabled()) {
+            LiveDevelopment.togglePreviewHighlight();
+        }
+    }
+
+    /**
+     * Live Preview 'Highlight Mode'. in this mode only the live preview matching with the source code is active
+     * Meaning that if user clicks on some element that element's source code will be highlighted and vice versa
+     */
+    function _LPHighlightMode() {
+        LiveDevelopment.setLivePreviewEditFeaturesActive(false);
+        if(!_isLiveHighlightEnabled()) {
+            LiveDevelopment.togglePreviewHighlight();
+        }
+    }
+
+    /**
+     * Live Preview 'Edit Mode'. this is the most interactive mode, in here the highlight features are available
+     * along with that we also show element's highlighted boxes and such
+     */
+    function _LPEditMode() {
+        LiveDevelopment.setLivePreviewEditFeaturesActive(true);
+        if(!_isLiveHighlightEnabled()) {
+            LiveDevelopment.togglePreviewHighlight();
+        }
+    }
+
+    /**
+     * update the mode button text in the live preview toolbar UI based on the current mode
+     * @param {String} mode - The current mode ("preview", "highlight", or "edit")
+     */
+    function _updateModeButton(mode) {
+        if ($modeBtn) {
+            if (mode === "highlight") {
+                $modeBtn[0].textContent = Strings.LIVE_PREVIEW_MODE_HIGHLIGHT;
+            } else if (mode === "edit") {
+                $modeBtn[0].textContent = Strings.LIVE_PREVIEW_MODE_EDIT;
+            } else {
+                $modeBtn[0].textContent = Strings.LIVE_PREVIEW_MODE_PREVIEW;
+            }
+        }
+    }
+
+    /**
+     * init live preview mode from saved preferences
+     */
+    function _initializeMode() {
+        const savedMode = PreferencesManager.get(PREFERENCE_LIVE_PREVIEW_MODE) || _getDefaultMode();
+        const isEditFeaturesActive = LiveDevelopment.isLPEditFeaturesActive;
+
+        // If user has edit mode saved but edit features are not active, default to highlight
+        let effectiveMode = savedMode;
+        if (savedMode === "edit" && !isEditFeaturesActive) {
+            effectiveMode = "highlight";
+            // Update the preference to reflect the actual mode being used
+            PreferencesManager.set(PREFERENCE_LIVE_PREVIEW_MODE, "highlight");
+        }
+
+        // apply the effective mode
+        if (effectiveMode === "highlight") {
+            _LPHighlightMode();
+        } else if (effectiveMode === "edit" && isEditFeaturesActive) {
+            _LPEditMode();
+        } else {
+            _LPPreviewMode();
+        }
+
+        _updateModeButton(effectiveMode);
+    }
+
+    function _showModeSelectionDropdown(event) {
+        const isEditFeaturesActive = LiveDevelopment.isLPEditFeaturesActive;
+        const items = [
+            Strings.LIVE_PREVIEW_MODE_PREVIEW,
+            Strings.LIVE_PREVIEW_MODE_HIGHLIGHT,
+            Strings.LIVE_PREVIEW_MODE_EDIT
+        ];
+
+        // Only add edit highlight option if edit features are active
+        if (isEditFeaturesActive) {
+            items.push("---");
+            items.push(Strings.LIVE_PREVIEW_EDIT_HIGHLIGHT_ON);
+        }
+
+        const rawMode = PreferencesManager.get(PREFERENCE_LIVE_PREVIEW_MODE) || _getDefaultMode();
+        // this is to take care of invalid values in the pref file
+        const currentMode = ["preview", "highlight", "edit"].includes(rawMode) ? rawMode : _getDefaultMode();
+
+        const dropdown = new DropdownButton.DropdownButton("", items, function(item, index) {
+            if (item === Strings.LIVE_PREVIEW_MODE_PREVIEW) {
+                // using empty spaces to keep content aligned
+                return currentMode === "preview" ? `✓ ${item}` : `${'\u00A0'.repeat(4)}${item}`;
+            } else if (item === Strings.LIVE_PREVIEW_MODE_HIGHLIGHT) {
+                return currentMode === "highlight" ? `✓ ${item}` : `${'\u00A0'.repeat(4)}${item}`;
+            } else if (item === Strings.LIVE_PREVIEW_MODE_EDIT) {
+                const checkmark = currentMode === "edit" ? "✓ " : `${'\u00A0'.repeat(4)}`;
+                const crownIcon = !isEditFeaturesActive ? ' <span style="color: #FBB03B; border: 1px solid #FBB03B; padding: 2px 4px; border-radius: 10px; font-size: 9px; margin-left: 12px;"><i class="fas fa-crown"></i> Pro</span>' : '';
+                return {
+                    html: `${checkmark}${item}${crownIcon}`,
+                    enabled: true
+                };
+            } else if (item === Strings.LIVE_PREVIEW_EDIT_HIGHLIGHT_ON) {
+                const isHoverMode = PreferencesManager.get(PREFERENCE_PROJECT_ELEMENT_HIGHLIGHT) !== "click";
+                if(isHoverMode) {
+                    return `✓ ${Strings.LIVE_PREVIEW_EDIT_HIGHLIGHT_ON}`;
+                }
+                return `${'\u00A0'.repeat(4)}${Strings.LIVE_PREVIEW_EDIT_HIGHLIGHT_ON}`;
+            }
+            return item;
+        });
+
+        // Append to document body for absolute positioning
+        $("body").append(dropdown.$button);
+
+        // Position the dropdown at the mouse coordinates
+        dropdown.$button.css({
+            position: "absolute",
+            left: event.pageX + "px",
+            top: event.pageY + "px",
+            zIndex: 1000
+        });
+
+        // Add a custom class to override the max-height
+        dropdown.dropdownExtraClasses = "mode-context-menu";
+
+        dropdown.showDropdown();
+
+        $(".mode-context-menu").css("max-height", "300px");
+
+        // handle the option selection
+        dropdown.on("select", function (e, item, index) {
+            // here we just set the preference
+            // as the preferences listener will automatically handle the required changes
+            if (index === 0) {
+                PreferencesManager.set(PREFERENCE_LIVE_PREVIEW_MODE, "preview");
+            } else if (index === 1) {
+                PreferencesManager.set(PREFERENCE_LIVE_PREVIEW_MODE, "highlight");
+            } else if (index === 2) {
+                if (!isEditFeaturesActive) {
+                    // when the feature is not active we need to show a dialog to the user asking
+                    // them to subscribe to pro
+                    _showProFeatureDialog();
+                } else {
+                    PreferencesManager.set(PREFERENCE_LIVE_PREVIEW_MODE, "edit");
+                }
+            } else if (item === Strings.LIVE_PREVIEW_EDIT_HIGHLIGHT_ON) {
+                // Don't allow edit highlight toggle if edit features are not active
+                if (!isEditFeaturesActive) {
+                    return;
+                }
+                // Toggle between hover and click
+                const currentMode = PreferencesManager.get(PREFERENCE_PROJECT_ELEMENT_HIGHLIGHT);
+                const newMode = currentMode !== "click" ? "click" : "hover";
+                PreferencesManager.set(PREFERENCE_PROJECT_ELEMENT_HIGHLIGHT, newMode);
+                return; // Don't dismiss highlights for this option
+            }
+
+            // need to dismiss the previous highlighting and stuff
+            LiveDevelopment.hideHighlight();
+            LiveDevelopment.dismissLivePreviewBoxes();
+        });
+
+        // Remove the button after the dropdown is hidden
+        dropdown.$button.css({
+            display: "none"
+        });
     }
 
     function _getTrustProjectPage() {
@@ -45301,20 +46259,6 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
         Metrics.countEvent(Metrics.EVENT_TYPE.LIVE_PREVIEW, "pinURLBtn", "click");
     }
 
-    function _updateLiveHighlightToggleStatus() {
-        let isHighlightEnabled = _isLiveHighlightEnabled();
-        if(isHighlightEnabled){
-            $highlightBtn.removeClass('pointer-icon').addClass('pointer-fill-icon');
-        } else {
-            $highlightBtn.removeClass('pointer-fill-icon').addClass('pointer-icon');
-        }
-    }
-
-    function _toggleLiveHighlights() {
-        LiveDevelopment.togglePreviewHighlight();
-        Metrics.countEvent(Metrics.EVENT_TYPE.LIVE_PREVIEW, "HighlightBtn", "click");
-    }
-
     const ALLOWED_BROWSERS_NAMES = [`chrome`, `firefox`, `safari`, `edge`, `browser`, `browserPrivate`];
     function _popoutLivePreview(browserName) {
         // We cannot use $iframe.src here if panel is hidden
@@ -45386,8 +46330,8 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
             Strings: Strings,
             livePreview: Strings.LIVE_DEV_STATUS_TIP_OUT_OF_SYNC,
             clickToReload: Strings.LIVE_DEV_CLICK_TO_RELOAD_PAGE,
-            toggleLiveHighlight: Strings.LIVE_DEV_TOGGLE_LIVE_HIGHLIGHT,
             livePreviewSettings: Strings.LIVE_DEV_SETTINGS,
+            livePreviewConfigureModes: Strings.LIVE_PREVIEW_CONFIGURE_MODES,
             clickToPopout: Strings.LIVE_DEV_CLICK_POPOUT,
             openInChrome: Strings.LIVE_DEV_OPEN_CHROME,
             openInSafari: Strings.LIVE_DEV_OPEN_SAFARI,
@@ -45402,7 +46346,6 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
         $panel = $(Mustache.render(panelHTML, templateVars));
         $iframe = $panel.find("#panel-live-preview-frame");
         $pinUrlBtn = $panel.find("#pinURLButton");
-        $highlightBtn = $panel.find("#highlightLPButton");
         $reloadBtn = $panel.find("#reloadLivePreviewButton");
         $livePreviewPopBtn = $panel.find("#livePreviewPopoutButton");
         $chromeButton = $panel.find("#chromeButton");
@@ -45416,6 +46359,7 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
         $firefoxButtonBallast = $panel.find("#firefoxButtonBallast");
         $panelTitle = $panel.find("#panel-live-preview-title");
         $settingsIcon = $panel.find("#livePreviewSettingsBtn");
+        $modeBtn = $panel.find("#livePreviewModeBtn");
 
         $panel.find(".live-preview-settings-banner-btn").on("click", ()=>{
             CommandManager.execute(Commands.FILE_LIVE_FILE_PREVIEW_SETTINGS);
@@ -45448,6 +46392,9 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
         $firefoxButton.on("click", ()=>{
             _popoutLivePreview("firefox");
         });
+
+        $modeBtn.on("click", _showModeSelectionDropdown);
+
         _showOpenBrowserIcons();
         $settingsIcon.click(()=>{
             CommandManager.execute(Commands.FILE_LIVE_FILE_PREVIEW_SETTINGS);
@@ -45470,9 +46417,7 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
             PANEL_MIN_SIZE, $icon, INITIAL_PANEL_SIZE);
 
         WorkspaceManager.recomputeLayout(false);
-        _updateLiveHighlightToggleStatus();
         $pinUrlBtn.click(_togglePinUrl);
-        $highlightBtn.click(_toggleLiveHighlights);
         $livePreviewPopBtn.click(_popoutLivePreview);
         $reloadBtn.click(()=>{
             _loadPreview(true, true);
@@ -45842,9 +46787,45 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
         fileMenu.addMenuItem(Commands.FILE_LIVE_FILE_PREVIEW_SETTINGS, "",
             Menus.AFTER, Commands.FILE_LIVE_FILE_PREVIEW);
         fileMenu.addMenuDivider(Menus.BEFORE, Commands.FILE_LIVE_FILE_PREVIEW);
+
+        // init live preview mode from saved preferences
+        _initializeMode();
+        // listen for pref changes
+        PreferencesManager.on("change", PREFERENCE_LIVE_PREVIEW_MODE, function () {
+            // Get the current preference value directly
+            const newMode = PreferencesManager.get(PREFERENCE_LIVE_PREVIEW_MODE);
+            const isEditFeaturesActive = LiveDevelopment.isLPEditFeaturesActive;
+
+            // If user tries to set edit mode but edit features are not active, default to highlight
+            let effectiveMode = newMode;
+            if (newMode === "edit" && !isEditFeaturesActive) {
+                effectiveMode = "highlight";
+                // Update the preference to reflect the actual mode being used
+                PreferencesManager.set(PREFERENCE_LIVE_PREVIEW_MODE, "highlight");
+                return; // Return to avoid infinite loop
+            }
+
+            if (effectiveMode === "highlight") {
+                _LPHighlightMode();
+            } else if (effectiveMode === "edit" && isEditFeaturesActive) {
+                _LPEditMode();
+            } else {
+                _LPPreviewMode();
+            }
+
+            _updateModeButton(effectiveMode);
+        });
+
+        // Handle element highlight preference changes from this extension
+        PreferencesManager.on("change", PREFERENCE_PROJECT_ELEMENT_HIGHLIGHT, function() {
+            LiveDevelopment.updateElementHighlightConfig();
+        });
+
+        // Initialize element highlight config on startup
+        LiveDevelopment.updateElementHighlightConfig();
+
         LiveDevelopment.openLivePreview();
         LiveDevelopment.on(LiveDevelopment.EVENT_OPEN_PREVIEW_URL, _openLivePreviewURL);
-        LiveDevelopment.on(LiveDevelopment.EVENT_LIVE_HIGHLIGHT_PREF_CHANGED, _updateLiveHighlightToggleStatus);
         LiveDevelopment.on(LiveDevelopment.EVENT_LIVE_PREVIEW_RELOAD, ()=>{
             // Usually, this event is listened by live preview iframes/tabs and they initiate a location.reload.
             // But in firefox, the embedded iframe will throw a 404 when we try to reload from within the iframe as
@@ -108895,7 +109876,26 @@ define("nls/root/strings", {
     "LIVE_DEV_SETTINGS_FRAMEWORK": "Server Framework",
     "LIVE_DEV_SETTINGS_FRAMEWORK_CUSTOM": "Custom",
     "LIVE_DEV_SETTINGS_FRAMEWORK_PREFERENCES": "Server Framework, currently supports only docusaurus",
+    "LIVE_DEV_SETTINGS_ELEMENT_HIGHLIGHT": "Show Live Preview Element Highlights on:",
+    "LIVE_DEV_SETTINGS_ELEMENT_HIGHLIGHT_HOVER": "hover",
+    "LIVE_DEV_SETTINGS_ELEMENT_HIGHLIGHT_CLICK": "click",
+    "LIVE_DEV_SETTINGS_ELEMENT_HIGHLIGHT_PREFERENCE": "show live preview element highlights on 'hover' or 'click'. Defaults to 'hover'",
+    "LIVE_DEV_MORE_OPTIONS_SELECT_PARENT": "Select Parent",
+    "LIVE_DEV_MORE_OPTIONS_EDIT_TEXT": "Edit Text",
+    "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "Duplicate",
+    "LIVE_DEV_MORE_OPTIONS_DELETE": "Delete",
+    "LIVE_DEV_MORE_OPTIONS_AI": "Edit with AI",
+    "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Ask Phoenix AI to modify this element...",
     "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Getting preview from your custom server {0}",
+    "LIVE_PREVIEW_MODE_PREVIEW": "Preview Mode",
+    "LIVE_PREVIEW_MODE_HIGHLIGHT": "Highlight Mode",
+    "LIVE_PREVIEW_MODE_EDIT": "Edit Mode",
+    "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Edit Highlights on Hover",
+    "LIVE_PREVIEW_MODE_PREFERENCE": "{0} shows only the webpage, {1} connects the webpage to your code - click on elements to jump to their code and vice versa, {2} provides highlighting along with advanced element manipulation",
+    "LIVE_PREVIEW_CONFIGURE_MODES": "Configure Live Preview Modes",
+    "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Pro Feature",
+    "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "This is a Pro feature. Subscribe to Phoenix Pro to keep using this feature.",
+    "LIVE_PREVIEW_PRO_SUBSCRIBE": "Subscribe",
 
     "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "Live Preview was canceled because the browser's developer tools were opened",
     "LIVE_DEV_DETACHED_TARGET_CLOSED": "Live Preview was canceled because the page was closed in the browser",
@@ -109044,7 +110044,7 @@ define("nls/root/strings", {
     "SPLITVIEW_MENU_TOOLTIP": "Split the editor vertically or horizontally",
     "GEAR_MENU_TOOLTIP": "Configure Working Set",
 
-    "CMD_TOGGLE_SHOW_WORKING_SET": "Show Working Set",
+    "CMD_TOGGLE_SHOW_WORKING_SET": "Show Working Files",
     "CMD_TOGGLE_SHOW_FILE_TABS": "Show File Tab Bar",
 
     "SPLITVIEW_INFO_TITLE": "Already Open",
