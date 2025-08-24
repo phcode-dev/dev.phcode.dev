@@ -399,32 +399,52 @@ define(function (require, exports) {
         }
     }
 
-    let lastExecutionTime = 0;
     let isCommandExecuting = false;
-    const FOCUS_SWITCH_DEDUPE_TIME = 5000;
+    let scheduledRefresh = null;
+    const REFRESH_DEDUPE_TIME = 3000;
+
     function refreshOnFocusChange() {
         // to sync external git changes after switching to app.
         if (gitEnabled) {
-            const now = Date.now();
+            const isGitPanelVisible = Panel.getPanel().is(":visible");
 
             if (isCommandExecuting) {
+                // if we haven't already scheduled a refresh, queue one
+                if (!scheduledRefresh) {
+                    scheduledRefresh = setTimeout(() => {
+                        scheduledRefresh = null;
+                        refreshOnFocusChange();
+                    }, REFRESH_DEDUPE_TIME);
+                }
                 return;
             }
+            isCommandExecuting = true;
 
-            if (now - lastExecutionTime > FOCUS_SWITCH_DEDUPE_TIME) {
-                isCommandExecuting = true;
-                lastExecutionTime = Date.now();
-                Git.hasStatusChanged().then((hasChanged) => {
-                    if(!hasChanged){
-                        return;
-                    }
-
-                    CommandManager.execute(Constants.CMD_GIT_REFRESH).fail((err) => {
-                        console.error("error refreshing on focus switch", err);
-                    });
-                }).finally(()=>{
+            // if the git panel is visible, its very likely user is working with git (maybe external)
+            // so when Phoenix gains focus, we do a complete git refresh to show latest status
+            if(isGitPanelVisible) {
+                CommandManager.execute(Constants.CMD_GIT_REFRESH).fail((err) => {
+                    console.error("error refreshing on focus switch", err);
+                }).always(() => {
                     isCommandExecuting = false;
+                    // if a refresh got queued while we were executing, run it immediately now
+                    if (scheduledRefresh) {
+                        clearTimeout(scheduledRefresh);
+                        scheduledRefresh = null;
+                        refreshOnFocusChange();
+                    }
                 });
+            } else {
+                // if panel not visible, we just refresh the git branch (shown in sidebar)
+                Branch.refresh();
+                isCommandExecuting = false;
+
+                // run if something got queued
+                if (scheduledRefresh) {
+                    clearTimeout(scheduledRefresh);
+                    scheduledRefresh = null;
+                    refreshOnFocusChange();
+                }
             }
         }
     }
