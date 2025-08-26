@@ -13227,6 +13227,11 @@ define("command/Menus", function (require, exports, module) {
                 logger.leaveTrail("UI Menu Click: " + menuItem._command.getID());
                 MainViewManager.focusActivePane();
                 if (menuItem._command._options.eventSource) {
+                    // NOTE: Ideally beforeExecuteCommand should be fired inside Command.execute itself.
+                    // But right now Command.execute() bypasses the event flow
+                    // So we run through CommandManager.execute() to keep things consistent
+                    // (keyboard + menu both go through the same path)
+                    // Read this for more info: https://github.com/phcode-dev/phoenix/pull/2356
                     CommandManager.execute(menuItem._command.getID(), {
                         eventSource: CommandManager.SOURCE_UI_MENU_CLICK,
                         sourceType: self.id
@@ -34862,6 +34867,7 @@ define("extensionsIntegrated/CSSColorPreview/main", function (require, exports, 
 define("extensionsIntegrated/CollapseFolders/main", function (require, exports, module) {
     const AppInit = require("utils/AppInit");
     const ProjectManager = require("project/ProjectManager");
+    const Strings = require("strings");
 
     /**
      * This is the main function that handles the closing of all the directories
@@ -34902,7 +34908,7 @@ define("extensionsIntegrated/CollapseFolders/main", function (require, exports, 
 
         // create the collapse btn
         const $collapseBtn = $(`
-            <div id="collapse-folders" class="btn-alt-quiet" title="Collapse All">
+            <div id="collapse-folders" class="btn-alt-quiet" title="${Strings.COLLAPSE_ALL_FOLDERS}">
                 <i class="fa-solid fa-chevron-down collapse-icon" aria-hidden="true"></i>
                 <i class="fa-solid fa-chevron-up collapse-icon" aria-hidden="true"></i>
             </div>
@@ -49100,10 +49106,22 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
     let $tabBar2 = null;
 
     /**
+     * this function checks if the TabBar is currently enabled or not (no. of tabs is 0 means tab bar is disabled)
+     * @returns {boolean} true if TabBar is enabled and should be active
+     */
+    function isTabBarActive() {
+        return Preference.tabBarEnabled && Preference.tabBarNumberOfTabs !== 0;
+    }
+
+    /**
      * This function is responsible to take all the files from the working set and gets the working sets ready
      * This is placed here instead of helper.js because it modifies the working sets
      */
     function getAllFilesFromWorkingSet() {
+        if (!isTabBarActive()) {
+            return;
+        }
+
         Global.firstPaneWorkingSet = [];
         Global.secondPaneWorkingSet = [];
 
@@ -49251,7 +49269,7 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
      * Creates the tab bar and adds it to the DOM
      */
     function createTabBar() {
-        if (!Preference.tabBarEnabled || Preference.tabBarNumberOfTabs === 0) {
+        if (!isTabBarActive()) {
             cleanupTabBar();
             return;
         }
@@ -49284,6 +49302,10 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
      * It is called when the working set changes. So instead of creating a new tab bar, we just update the existing one
      */
     function updateTabs() {
+        if (!isTabBarActive()) {
+            return;
+        }
+
         // Get all files from the working set. refer to `global.js`
         getAllFilesFromWorkingSet();
 
@@ -49600,6 +49622,10 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
      * @param {String} commandId - the command id, to make sure we check it do the operation only on file save
      */
     function onFileSave(event, commandId) {
+        if (!isTabBarActive()) {
+            return;
+        }
+
         if (commandId === Commands.FILE_SAVE || commandId === Commands.FILE_SAVE_ALL) {
             const activePane = MainViewManager.getActivePaneId();
             const currentFile = MainViewManager.getCurrentlyViewedFile(activePane);
@@ -49679,6 +49705,10 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
 
         // File dirty flag change handling
         DocumentManager.on("dirtyFlagChange", function (event, doc) {
+            if (!isTabBarActive()) {
+                return;
+            }
+
             const filePath = doc.file.fullPath;
 
             // Update UI
@@ -49725,7 +49755,7 @@ define("extensionsIntegrated/TabBar/main", function (require, exports, module) {
         // Update menu checkmark
         CommandManager.get(Commands.TOGGLE_TABBAR).setChecked(prefs.showTabBar);
 
-        if (Preference.tabBarEnabled && Preference.tabBarNumberOfTabs !== 0) {
+        if (isTabBarActive()) {
             createTabBar();
         } else {
             cleanupTabBar();
@@ -111842,6 +111872,9 @@ define("nls/root/strings", {
     "ACCOUNT_DETAILS": "Account Details",
     "AI_QUOTA_USED": "AI quota used",
     "LOGIN_REFRESH": "Check Login Status",
+
+    // Collapse Folders
+    "COLLAPSE_ALL_FOLDERS": "Collapse All Folders",
 
     // Custom Snippets
     "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Custom Snippets\u2026",
