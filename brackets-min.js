@@ -139,7 +139,8 @@ define(function (require, exports, module) {
     require("widgets/InlineMenu");
     require("thirdparty/tinycolor");
     require("utils/LocalizationUtils");
-    require("services/login");
+    require("services/login-desktop");
+    require("services/login-browser");
 
     // DEPRECATED: In future we want to remove the global CodeMirror, but for now we
     // expose our required CodeMirror globally so as to avoid breaking extensions in the
@@ -111886,7 +111887,7 @@ define("nls/root/strings", {
     "SIGNED_IN_FAILED_TITLE": "Cannot Sign In",
     "SIGNED_IN_FAILED_MESSAGE": "Something went wrong while trying to sign in. Please try again.",
     "SIGNED_OUT_FAILED_TITLE": "Failed to Sign Out",
-    "SIGNED_OUT_FAILED_MESSAGE": "Something went wrong while trying to sign out. Please try again.",
+    "SIGNED_OUT_FAILED_MESSAGE": "Something went wrong while logging out. Press OK to open <a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a> where you can logout manually.",
     "VALIDATION_CODE_TITLE": "Sign In Verification Code",
     "VALIDATION_CODE_MESSAGE": "Please use this Verification code to sign in to your {APP_NAME} account:",
     "COPY_VALIDATION_CODE": "Copy Code",
@@ -111899,6 +111900,15 @@ define("nls/root/strings", {
     "ACCOUNT_DETAILS": "Account Details",
     "AI_QUOTA_USED": "AI quota used",
     "LOGIN_REFRESH": "Check Login Status",
+    "SIGN_IN_WAITING_TITLE": "Waiting for Sign In",
+    "SIGN_IN_WAITING_MESSAGE": "Please complete sign-in in the new tab, then return here.",
+    "WAITING_FOR_LOGIN": "Waiting for login\u2026",
+    "CHECK_NOW": "Check Now",
+    "CHECKING": "Checking\u2026",
+    "CHECKING_STATUS": "Checking login status\u2026",
+    "NOT_SIGNED_IN_YET": "Not signed in yet. Please complete sign-in in the other tab.",
+    "WELCOME_BACK": "Welcome back, {0}!",
+    "POPUP_BLOCKED": "Pop-up blocked. Please allow pop-ups and try again, or manually navigate to {0}",
 
     // Collapse Folders
     "COLLAPSE_ALL_FOLDERS": "Collapse All Folders",
@@ -165535,6 +165545,423 @@ define("search/SearchResultsView", function (require, exports, module) {
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Affero General Public License for more details.
  *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
+ *
+ */
+
+/*global logger*/
+
+define("services/login-browser", function (require, exports, module) {
+    const EventDispatcher = require("utils/EventDispatcher"),
+        PreferencesManager  = require("preferences/PreferencesManager"),
+        Metrics = require("utils/Metrics"),
+        Dialogs = require("widgets/Dialogs"),
+        DefaultDialogs = require("widgets/DefaultDialogs"),
+        Strings = require("strings"),
+        StringUtils = require("utils/StringUtils"),
+        ProfileMenu  = require("./profile-menu"),
+        Mustache = require("thirdparty/mustache/mustache"),
+        browserLoginWaitingTemplate = `<div class="browser-login-waiting-dialog modal">
+    <div class="modal-header">
+        <h1 class="dialog-title">{{Strings.SIGN_IN_WAITING_TITLE}}</h1>
+    </div>
+    <div class="modal-body">
+        <div class="waiting-content-container">
+            <p>{{Strings.SIGN_IN_WAITING_MESSAGE}}</p>
+            <div class="login-status-container" style="margin: 20px 0; text-align: center;">
+                <div id="login-status" style="color: #666; font-style: italic; font-size: 14px;">
+                    {{Strings.WAITING_FOR_LOGIN}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-button-id="cancel">{{Strings.CANCEL}}</button>
+        <button class="btn primary" data-button-id="check">{{Strings.CHECK_NOW}}</button>
+    </div>
+</div>
+`;
+
+    const KernalModeTrust = window.KernalModeTrust;
+    if(!KernalModeTrust){
+        // integrated extensions will have access to kernal mode, but not external extensions
+        throw new Error("Browser Login service should have access to KernalModeTrust. Cannot boot without trust ring");
+    }
+    const secureExports = {};
+    // Only set loginService for browser apps to avoid conflict with desktop login
+    if (!Phoenix.isNativeApp) {
+        KernalModeTrust.loginService = secureExports;
+    }
+
+    // user profile structure: "customerID": "uuid...", "firstName":"Aa","lastName":"bb",
+    // "email":"aaaa@sss.com", "loginTime":1750074393853, "isSuccess": true,
+    // "profileIcon":{"color":"#14b8a6","initials":"AB"}
+    let userProfile = null;
+    let isLoggedInUser = false;
+
+    // just used as trigger to notify different windows about user profile changes
+    const PREF_USER_PROFILE_VERSION = "userProfileVersion";
+
+    EventDispatcher.makeEventDispatcher(exports);
+    EventDispatcher.makeEventDispatcher(secureExports);
+
+    const _EVT_PAGE_FOCUSED = "page_focused";
+    $(window).focus(function () {
+        exports.trigger(_EVT_PAGE_FOCUSED);
+    });
+
+    function isLoggedIn() {
+        return isLoggedInUser;
+    }
+
+    function getProfile() {
+        return userProfile;
+    }
+
+    /**
+     * Get the base URL for account API calls
+     * Uses proxy routes for localhost, direct URL otherwise
+     */
+    function _getAccountBaseURL() {
+        if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+            return '/proxy/accounts';
+        }
+        return Phoenix.config.account_url.replace(/\/$/, ''); // Remove trailing slash
+    }
+
+    /**
+     * Get the account website URL for opening browser tabs
+     */
+    function _getAccountWebURL() {
+        return Phoenix.config.account_url;
+    }
+
+    const ERR_RETRY_LATER = "retry_later";
+    const ERR_INVALID = "invalid";
+    const ERR_NOT_LOGGED_IN = "not_logged_in";
+
+    /**
+     * Resolve browser session using cookies
+     * @return {Promise<Object>} A promise resolving to user profile or error object
+     */
+    async function _resolveBrowserSession() {
+        const resolveURL = `${_getAccountBaseURL()}/resolveBrowserSession`;
+        if (!navigator.onLine) {
+            return {err: ERR_RETRY_LATER};
+        }
+        try {
+            const response = await fetch(resolveURL, {
+                method: 'GET',
+                credentials: 'include', // Include cookies
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.status === 401 || response.status === 403 || response.status === 404) {
+                // Not logged in or session expired
+                return {err: ERR_NOT_LOGGED_IN};
+            } else if (response.status === 400) {
+                return {err: ERR_INVALID};
+            } else if (response.ok) {
+                const userDetails = await response.json();
+                if (userDetails.isSuccess) {
+                    return {userDetails};
+                } else {
+                    return {err: ERR_NOT_LOGGED_IN};
+                }
+            }
+            // Other errors like 500 are retriable
+            console.log('Browser session resolve error:', response.status);
+            return {err: ERR_RETRY_LATER};
+        } catch (e) {
+            console.error(e, "Failed to call resolveBrowserSession endpoint", resolveURL);
+            return {err: ERR_RETRY_LATER};
+        }
+    }
+
+    async function _resetBrowserLogin() {
+        isLoggedInUser = false;
+        userProfile = null;
+        ProfileMenu.setNotLoggedIn();
+        // bump the version so that in multi windows, the other window gets notified of the change
+        PreferencesManager.stateManager.set(PREF_USER_PROFILE_VERSION, crypto.randomUUID());
+    }
+
+    async function _verifyBrowserLogin(silentCheck = false) {
+        console.log("Verifying browser login status...");
+
+        const resolveResponse = await _resolveBrowserSession();
+        if(resolveResponse.userDetails) {
+            // User is logged in
+            userProfile = resolveResponse.userDetails;
+            isLoggedInUser = true;
+            ProfileMenu.setLoggedIn(userProfile.profileIcon.initials, userProfile.profileIcon.color);
+            console.log("Browser login verified for:", userProfile.email);
+            return;
+        }
+
+        // User is not logged in or error occurred
+        if(resolveResponse.err === ERR_NOT_LOGGED_IN) {
+            console.log("No browser session found. Not logged in");
+            // Only reset UI state if this is not a silent background check
+            if (!silentCheck) {
+                _resetBrowserLogin();
+            } else {
+                // For silent checks, just update the internal state
+                isLoggedInUser = false;
+                userProfile = null;
+            }
+            return;
+        }
+
+        // Other errors (network, retry later, etc.)
+        console.log("Browser login verification failed:", resolveResponse.err);
+        if (!silentCheck) {
+            _resetBrowserLogin();
+        } else {
+            isLoggedInUser = false;
+            userProfile = null;
+        }
+    }
+
+    let loginWaitingDialog = null;
+    let focusCheckInterval = null;
+
+    /**
+     * Show waiting dialog with auto-detection and manual check options
+     */
+    function _showLoginWaitingDialog() {
+        if (loginWaitingDialog) {
+            return; // Already showing
+        }
+
+        // Prepare dialog data with fallback strings
+        const dialogData = {
+            Strings: {
+                SIGN_IN_WAITING_TITLE: Strings.SIGN_IN_WAITING_TITLE,
+                SIGN_IN_WAITING_MESSAGE: Strings.SIGN_IN_WAITING_MESSAGE,
+                WAITING_FOR_LOGIN: Strings.WAITING_FOR_LOGIN,
+                CHECK_NOW: Strings.CHECK_NOW,
+                CANCEL: Strings.CANCEL
+            }
+        };
+
+        const $template = $(Mustache.render(browserLoginWaitingTemplate, dialogData));
+        loginWaitingDialog = Dialogs.showModalDialogUsingTemplate($template);
+
+        // Handle Check Now button
+        $template.on('click', '[data-button-id="check"]', async function() {
+            const $btn = $(this);
+            const originalText = $btn.text();
+            $btn.prop('disabled', true).text(Strings.CHECKING);
+            $template.find('#login-status').text(Strings.CHECKING_STATUS);
+
+            await _verifyBrowserLogin();
+
+            if (isLoggedInUser) {
+                _onLoginSuccess();
+            } else {
+                $template.find('#login-status').text(Strings.NOT_SIGNED_IN_YET);
+                $btn.prop('disabled', false).text(originalText);
+            }
+        });
+
+        // Handle Cancel button
+        $template.on('click', '[data-button-id="cancel"]', function() {
+            loginWaitingDialog.close();
+        });
+
+        // Auto-check when page gains focus
+        const onFocusCheck = async () => {
+            if (loginWaitingDialog && !isLoggedInUser) {
+                $template.find('#login-status').text(Strings.CHECKING_STATUS);
+                await _verifyBrowserLogin();
+
+                if (isLoggedInUser) {
+                    _onLoginSuccess();
+                }
+            }
+        };
+
+        $(window).off('focus.loginWaiting');
+        $(window).on('focus.loginWaiting', onFocusCheck);
+
+        // Clean up when dialog closes
+        loginWaitingDialog.done(() => {
+            _cancelLoginWaiting();
+        });
+    }
+
+    function _onLoginSuccess() {
+        if (loginWaitingDialog) {
+            const $template = loginWaitingDialog.getElement();
+            $template.find('#login-status')
+                .text(StringUtils.format(Strings.WELCOME_BACK, userProfile.firstName))
+                .css('color', '#10b981');
+            setTimeout(() => {
+                _cancelLoginWaiting();
+                Metrics.countEvent(Metrics.EVENT_TYPE.AUTH, "browserLogin", "browser");
+            }, 1500);
+        }
+    }
+
+    function _cancelLoginWaiting() {
+        if (loginWaitingDialog) {
+            loginWaitingDialog.close();
+            loginWaitingDialog = null;
+        }
+        if (focusCheckInterval) {
+            clearInterval(focusCheckInterval);
+            focusCheckInterval = null;
+        }
+        $(window).off('focus.loginWaiting');
+    }
+
+    /**
+     * Open browser-based sign-in in new tab
+     */
+    async function signInToBrowser() {
+        if (!navigator.onLine) {
+            Dialogs.showModalDialog(
+                DefaultDialogs.DIALOG_ID_ERROR,
+                Strings.SIGNED_IN_OFFLINE_TITLE,
+                Strings.SIGNED_IN_OFFLINE_MESSAGE
+            );
+            return;
+        }
+
+        const accountURL = _getAccountWebURL();
+
+        // Open account URL in new tab
+        const newTab = window.open(accountURL, '_blank');
+
+        if (!newTab) {
+            Dialogs.showModalDialog(
+                DefaultDialogs.DIALOG_ID_ERROR,
+                Strings.SIGNED_IN_FAILED_TITLE,
+                StringUtils.format(Strings.POPUP_BLOCKED, accountURL)
+            );
+            return;
+        }
+
+        // Show dialog with better UX - auto-detect when user returns
+        _showLoginWaitingDialog();
+
+        Metrics.countEvent(Metrics.EVENT_TYPE.AUTH, "browserLoginAttempt", "browser");
+    }
+
+    /**
+     * Sign out from browser session
+     */
+    async function signOutBrowser() {
+        const logoutURL = `${_getAccountBaseURL()}/signOut`;
+        try {
+            const response = await fetch(logoutURL, {
+                method: 'POST',
+                credentials: 'include', // Include cookies
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({})
+            });
+
+            // Always reset local state regardless of server response
+            await _resetBrowserLogin();
+
+            if (response.ok) {
+                const result = await response.json();
+                if (result.isSuccess) {
+                    Dialogs.showModalDialog(
+                        DefaultDialogs.DIALOG_ID_INFO,
+                        Strings.SIGNED_OUT,
+                        Strings.SIGNED_OUT_MESSAGE_FRIENDLY
+                    );
+                    Metrics.countEvent(Metrics.EVENT_TYPE.AUTH, 'browserLogoutOK', 'browser');
+                    return;
+                }
+            }
+
+            // If we get here, there was some issue but we still signed out locally
+            console.warn('Logout may not have completed on server, but signed out locally');
+            const dialog = Dialogs.showModalDialog(
+                DefaultDialogs.DIALOG_ID_ERROR,
+                Strings.SIGNED_OUT_FAILED_TITLE,
+                Strings.SIGNED_OUT_FAILED_MESSAGE
+            );
+            dialog.done(() => {
+                window.open(_getAccountWebURL() + "#advanced", '_blank');
+            });
+            Metrics.countEvent(Metrics.EVENT_TYPE.AUTH, 'browserLogoutPartial', 'browser');
+
+        } catch (error) {
+            // Always reset local state even on network error
+            await _resetBrowserLogin();
+            console.error("Network error during logout:", error);
+            const dialog = Dialogs.showModalDialog(
+                DefaultDialogs.DIALOG_ID_ERROR,
+                Strings.SIGNED_OUT_FAILED_TITLE,
+                Strings.SIGNED_OUT_FAILED_MESSAGE
+            );
+            dialog.done(() => {
+                window.open(_getAccountWebURL() + "#advanced", '_blank');
+            });
+            Metrics.countEvent(Metrics.EVENT_TYPE.AUTH, 'browserLogoutError', 'browser');
+        }
+    }
+
+    function init() {
+        ProfileMenu.init();
+        if(Phoenix.isNativeApp){
+            console.log("Browser login service is not needed for native app");
+            return;
+        }
+
+        // Always verify login on browser app start (silent check to avoid closing popups)
+        _verifyBrowserLogin(true).catch(console.error);
+
+        // Watch for profile changes from other windows/tabs
+        const pref = PreferencesManager.stateManager.definePreference(PREF_USER_PROFILE_VERSION, 'string', '0');
+        pref.watchExternalChanges();
+        pref.on('change', _verifyBrowserLogin);
+
+        // Note: We don't do automatic verification on page focus to avoid server overload.
+        // Automatic checks are only done during the login waiting dialog period.
+    }
+
+    // no sensitive apis or events should be triggered from the public exports of this module as extensions
+    // can read them. Always use KernalModeTrust.loginService for sensitive apis.
+
+    // Only set exports for browser apps to avoid conflict with desktop login
+    if (!Phoenix.isNativeApp) {
+        init();
+        // kernal exports
+        secureExports.isLoggedIn = isLoggedIn;
+        secureExports.signInToAccount = signInToBrowser;
+        secureExports.signOutAccount = signOutBrowser;
+        secureExports.getProfile = getProfile;
+        secureExports.verifyLoginStatus = () => _verifyBrowserLogin(false);
+    }
+
+    // public exports
+    exports.isLoggedIn = isLoggedIn;
+
+});
+
+/*
+ * GNU AGPL-3.0 License
+ *
+ * Copyright (c) 2021 - present core.ai . All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ *
  * You should have received a copy of the GNU Affero General Public License along
  * with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
  *
@@ -165542,7 +165969,7 @@ define("search/SearchResultsView", function (require, exports, module) {
 
 /*global logger*/
 
-define("services/login", function (require, exports, module) {
+define("services/login-desktop", function (require, exports, module) {
     const EventDispatcher = require("utils/EventDispatcher"),
         PreferencesManager  = require("preferences/PreferencesManager"),
         Metrics = require("utils/Metrics"),
@@ -165582,7 +166009,10 @@ define("services/login", function (require, exports, module) {
         throw new Error("Login service should have access to KernalModeTrust. Cannot boot without trust ring");
     }
     const secureExports = {};
-    KernalModeTrust.loginService = secureExports;
+    // Only set loginService for native apps to avoid conflict with browser login
+    if (Phoenix.isNativeApp) {
+        KernalModeTrust.loginService = secureExports;
+    }
     // user profile is something like "apiKey": "uuid...", validationCode: "dfdf", "firstName":"Aa","lastName":"bb",
     // "email":"aaaa@sss.com", "customerID":"uuid...","loginTime":1750074393853,
     // "profileIcon":{"color":"#14b8a6","initials":"AB"}
@@ -165661,11 +166091,13 @@ define("services/login", function (require, exports, module) {
         PreferencesManager.stateManager.set(PREF_USER_PROFILE_VERSION, crypto.randomUUID());
     }
 
-    async function _verifyLogin() {
+    async function _verifyLogin(silentCheck = false) {
         const savedUserProfile = await KernalModeTrust.getCredential(KernalModeTrust.CRED_KEY_API);
         if(!savedUserProfile){
             console.log("No savedUserProfile found. Not logged in");
-            ProfileMenu.setNotLoggedIn();
+            if (!silentCheck) {
+                ProfileMenu.setNotLoggedIn();
+            }
             isLoggedInUser = false;
             return;
         }
@@ -165673,7 +166105,9 @@ define("services/login", function (require, exports, module) {
             userProfile = JSON.parse(savedUserProfile);
         } catch (e) {
             console.error(e, "Failed to parse saved user profile credentials");// this should never happen
-            ProfileMenu.setNotLoggedIn();
+            if (!silentCheck) {
+                ProfileMenu.setNotLoggedIn();
+            }
             return; // not logged in if parse fails
         }
         isLoggedInUser = true;
@@ -165864,7 +166298,7 @@ define("services/login", function (require, exports, module) {
             Metrics.countEvent(Metrics.EVENT_TYPE.AUTH,
                 isAutoSignedIn ? 'autoLogin' : 'manLogin'
                 , Phoenix.platform);
-            Metrics.countEvent(Metrics.EVENT_TYPE.AUTH, "login",
+            Metrics.countEvent(Metrics.EVENT_TYPE.AUTH, "dsktpLogin",
                 isAutoSignedIn ? 'auto' : 'man');
         });
         NativeApp.openURLInDefaultBrowser(appSignInURL);
@@ -165889,11 +166323,14 @@ define("services/login", function (require, exports, module) {
 
             if (!result.isSuccess) {
                 console.error('Error logging out', result);
-                Dialogs.showModalDialog(
+                const dialog = Dialogs.showModalDialog(
                     DefaultDialogs.DIALOG_ID_ERROR,
                     Strings.SIGNED_OUT_FAILED_TITLE,
                     Strings.SIGNED_OUT_FAILED_MESSAGE
                 );
+                dialog.done(() => {
+                    NativeApp.openURLInDefaultBrowser(Phoenix.config.account_url + "#advanced");
+                });
                 Metrics.countEvent(Metrics.EVENT_TYPE.AUTH, 'logoutFail', Phoenix.platform);
                 return;
             }
@@ -165906,38 +166343,44 @@ define("services/login", function (require, exports, module) {
             Metrics.countEvent(Metrics.EVENT_TYPE.AUTH, 'logoutOK', Phoenix.platform);
         } catch (error) {
             console.error("Network error. Could not log out session.", error);
-            Dialogs.showModalDialog(
+            const dialog = Dialogs.showModalDialog(
                 DefaultDialogs.DIALOG_ID_ERROR,
                 Strings.SIGNED_OUT_FAILED_TITLE,
                 Strings.SIGNED_OUT_FAILED_MESSAGE
             );
+            dialog.done(() => {
+                NativeApp.openURLInDefaultBrowser(Phoenix.config.account_url + "#advanced");
+            });
             Metrics.countEvent(Metrics.EVENT_TYPE.AUTH, 'getAppAuth', Phoenix.platform);
             logger.reportError(error, "Failed to call logout calling" + resolveURL);
         }
     }
 
     function init() {
-        ProfileMenu.init();
         if(!Phoenix.isNativeApp){
-            console.warn("Login service is not supported in browser");
+            console.log("Desktop login service not needed for browser");
             return;
         }
-        _verifyLogin().catch(console.error);// todo raise metrics
+        ProfileMenu.init();
+        _verifyLogin(true).catch(console.error);// todo raise metrics - silent check on init
         const pref = PreferencesManager.stateManager.definePreference(PREF_USER_PROFILE_VERSION, 'string', '0');
         pref.watchExternalChanges();
         pref.on('change', _verifyLogin);
     }
 
-    init();
-
     // no sensitive apis or events should be triggered from the public exports of this module as extensions
     // can read them. Always use KernalModeTrust.loginService for sensitive apis.
 
-    // kernal exports
-    secureExports.isLoggedIn = isLoggedIn;
-    secureExports.signInToAccount = signInToAccount;
-    secureExports.signOutAccount = signOutAccount;
-    secureExports.getProfile = getProfile;
+    // Only set exports for native apps to avoid conflict with browser login
+    if (Phoenix.isNativeApp) {
+        init();
+        // kernal exports
+        secureExports.isLoggedIn = isLoggedIn;
+        secureExports.signInToAccount = signInToAccount;
+        secureExports.signOutAccount = signOutAccount;
+        secureExports.getProfile = getProfile;
+        secureExports.verifyLoginStatus = () => _verifyLogin(false);
+    }
 
     // public exports
     exports.isLoggedIn = isLoggedIn;
@@ -166042,6 +166485,9 @@ define("services/profile-menu", function (require, exports, module) {
 
     // this is to track whether the popup is visible or not
     let isPopupVisible = false;
+
+    // Track if we're doing a background refresh to avoid closing user-opened popups
+    let isBackgroundRefresh = false;
 
     // this is to handle document click events to close popup
     let documentClickHandler = null;
@@ -166285,11 +166731,44 @@ define("services/profile-menu", function (require, exports, module) {
             return;
         }
 
+        // Show popup immediately with cached status for instant response
         if (KernalModeTrust.loginService.isLoggedIn()) {
             showProfilePopup();
         } else {
             showLoginPopup();
         }
+
+        // Schedule background verification to update the popup if status changed
+        // Store the current login state before verification
+        const wasLoggedInBefore = KernalModeTrust.loginService.isLoggedIn();
+
+        // Set flag to indicate this is a background refresh
+        isBackgroundRefresh = true;
+
+        KernalModeTrust.loginService.verifyLoginStatus().then(() => {
+            // Clear the background refresh flag
+            isBackgroundRefresh = false;
+
+            // If the login status changed while popup is open, update it
+            if (isPopupVisible) {
+                const isLoggedInNow = KernalModeTrust.loginService.isLoggedIn();
+
+                if (wasLoggedInBefore !== isLoggedInNow) {
+                    // Status changed, close current popup and show correct one
+                    closePopup();
+                    if (isLoggedInNow) {
+                        showProfilePopup();
+                    } else {
+                        showLoginPopup();
+                    }
+                }
+                // If status didn't change, don't do anything to avoid closing popup
+            }
+        }).catch(error => {
+            // Clear the background refresh flag even on error
+            isBackgroundRefresh = false;
+            console.error("Background login status verification failed:", error);
+        });
     }
 
     function init() {
@@ -166304,24 +166783,21 @@ define("services/profile-menu", function (require, exports, module) {
             .appendTo($("#main-toolbar .bottom-buttons"));
         // _updateProfileIcon("CA", "blue");
         $icon.on('click', ()=>{
-            if(!Phoenix.isNativeApp){
-                // in browser app, we don't currently support login
-                Phoenix.app.openURLInDefaultBrowser("https://account.phcode.io");
-                return;
-            }
             togglePopup();
         });
     }
 
     function setNotLoggedIn() {
-        if (isPopupVisible) {
+        // Only close popup if it's not a background refresh
+        if (isPopupVisible && !isBackgroundRefresh) {
             closePopup();
         }
         _removeProfileIcon();
     }
 
     function setLoggedIn(initial, color) {
-        if (isPopupVisible) {
+        // Only close popup if it's not a background refresh
+        if (isPopupVisible && !isBackgroundRefresh) {
             closePopup();
         }
         _updateProfileIcon(initial, color);
