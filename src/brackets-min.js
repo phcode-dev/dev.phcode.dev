@@ -71936,7 +71936,6 @@ define("nls/ar/strings", {
   "SIGNED_IN_FAILED_TITLE": "لا يمكن تسجيل الدخول",
   "SIGNED_IN_FAILED_MESSAGE": "حدث خطأ ما أثناء محاولة تسجيل الدخول. يُرجى المحاولة مرة أخرى.",
   "SIGNED_OUT_FAILED_TITLE": "فشل تسجيل الخروج",
-  "SIGNED_OUT_FAILED_MESSAGE": "حدث خطأ ما أثناء محاولة تسجيل الخروج. يُرجى المحاولة مرة أخرى.",
   "VALIDATION_CODE_TITLE": "رمز التحقق لتسجيل الدخول",
   "VALIDATION_CODE_MESSAGE": "الرجاء استخدام رمز التحقق هذا لتسجيل الدخول إلى حساب {APP_NAME} الخاص بك:",
   "COPY_VALIDATION_CODE": "نسخ الرمز",
@@ -71949,6 +71948,7 @@ define("nls/ar/strings", {
   "ACCOUNT_DETAILS": "تفاصيل الحساب",
   "AI_QUOTA_USED": "حصة الذكاء الاصطناعي المستخدمة",
   "LOGIN_REFRESH": "تحقق من حالة تسجيل الدخول",
+  "COLLAPSE_ALL_FOLDERS": "طي جميع المجلدات",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "مقتطفات مخصصة…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "مقتطفات مخصصة",
   "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "إضافة مقتطف برمجي",
@@ -71989,7 +71989,16 @@ define("nls/ar/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "نص القالب",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "الوصف",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "امتداد الملف",
-  "COLLAPSE_ALL_FOLDERS": "طي جميع المجلدات"
+  "SIGNED_OUT_FAILED_MESSAGE": "حدث خطأ أثناء تسجيل الخروج. اضغط موافق لفتح <a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a> حيث يمكنك تسجيل الخروج يدويًا.",
+  "SIGN_IN_WAITING_TITLE": "جارٍ انتظار تسجيل الدخول",
+  "SIGN_IN_WAITING_MESSAGE": "يُرجى إكمال تسجيل الدخول في علامة التبويب الجديدة، ثم العودة إلى هنا.",
+  "WAITING_FOR_LOGIN": "جارٍ انتظار تسجيل الدخول…",
+  "CHECK_NOW": "تحقق الآن",
+  "CHECKING": "جارٍ التحقق…",
+  "CHECKING_STATUS": "جارٍ التحقق من حالة تسجيل الدخول…",
+  "NOT_SIGNED_IN_YET": "لم يتم تسجيل الدخول بعد. يُرجى إكمال تسجيل الدخول في علامة التبويب الأخرى.",
+  "WELCOME_BACK": "أهلاً بعودتك، {0}!",
+  "POPUP_BLOCKED": "تم حظر النافذة المنبثقة. يُرجى السماح بالنوافذ المنبثقة وإعادة المحاولة، أو الانتقال يدويًا إلى {0}"
 });
 /*
  * GNU AGPL-3.0 License
@@ -73387,7 +73396,6 @@ define("nls/bg/strings", {
   "SIGNED_IN_FAILED_TITLE": "Неуспешно влизане",
   "SIGNED_IN_FAILED_MESSAGE": "Възникна проблем при опит за влизане. Моля, опитайте отново.",
   "SIGNED_OUT_FAILED_TITLE": "Неуспешно излизане от профила",
-  "SIGNED_OUT_FAILED_MESSAGE": "Възникна проблем при опит за излизане от профила. Моля, опитайте отново.",
   "VALIDATION_CODE_TITLE": "Код за потвърждаване на вход",
   "VALIDATION_CODE_MESSAGE": "Моля, използвайте този код за потвърждение, за да влезете в своя {APP_NAME} акаунт:",
   "COPY_VALIDATION_CODE": "Копиране на код",
@@ -73400,6 +73408,7 @@ define("nls/bg/strings", {
   "ACCOUNT_DETAILS": "Данни за акаунта",
   "AI_QUOTA_USED": "Използвана AI квота",
   "LOGIN_REFRESH": "Проверка на състоянието за вход",
+  "COLLAPSE_ALL_FOLDERS": "Свий всички папки",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Персонализирани фрагменти…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Персонализирани фрагменти",
   "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Добавяне на фрагмент",
@@ -73440,7 +73449,16 @@ define("nls/bg/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Текст на шаблон",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Описание",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Разширение на файл",
-  "COLLAPSE_ALL_FOLDERS": "Свий всички папки"
+  "SIGNED_OUT_FAILED_MESSAGE": "Възникна проблем при излизане от профила. Натиснете OK, за да отворите <a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a>, където можете да излезете ръчно.",
+  "SIGN_IN_WAITING_TITLE": "Изчакване за влизане",
+  "SIGN_IN_WAITING_MESSAGE": "Моля, завършете влизането в новия раздел и след това се върнете тук.",
+  "WAITING_FOR_LOGIN": "Изчакване за влизане…",
+  "CHECK_NOW": "Провери сега",
+  "CHECKING": "Проверява се…",
+  "CHECKING_STATUS": "Проверява се състоянието на влизане…",
+  "NOT_SIGNED_IN_YET": "Все още не сте влезли в профила си. Моля, завършете влизането в другия раздел.",
+  "WELCOME_BACK": "Добре дошли отново, {0}!",
+  "POPUP_BLOCKED": "Изскачащият прозорец е блокиран. Моля, разрешете изскачащите прозорци и опитайте отново или отидете ръчно на {0}"
 });
 /*
  * Copyright (c) 2013 Adobe Systems Incorporated. All rights reserved.
@@ -74867,7 +74885,6 @@ define("nls/cs/strings", {
   "SIGNED_IN_FAILED_TITLE": "Nelze se přihlásit",
   "SIGNED_IN_FAILED_MESSAGE": "Při pokusu o přihlášení se něco pokazilo. Zkuste to prosím znovu.",
   "SIGNED_OUT_FAILED_TITLE": "Odhlášení se nezdařilo",
-  "SIGNED_OUT_FAILED_MESSAGE": "Při pokusu o odhlášení se něco pokazilo. Zkuste to prosím znovu.",
   "VALIDATION_CODE_TITLE": "Ověřovací kód pro přihlášení",
   "VALIDATION_CODE_MESSAGE": "Pro přihlášení k účtu {APP_NAME} použijte tento ověřovací kód:",
   "COPY_VALIDATION_CODE": "Kopírovat kód",
@@ -74880,6 +74897,7 @@ define("nls/cs/strings", {
   "ACCOUNT_DETAILS": "Detaily účtu",
   "AI_QUOTA_USED": "Vyčerpána kvóta pro AI",
   "LOGIN_REFRESH": "Zkontrolovat stav přihlášení",
+  "COLLAPSE_ALL_FOLDERS": "Sbalit všechny složky",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Vlastní úryvky…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Vlastní úryvky",
   "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Přidat úryvek",
@@ -74920,7 +74938,16 @@ define("nls/cs/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Text šablony",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Popis",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Přípona souboru",
-  "COLLAPSE_ALL_FOLDERS": "Sbalit všechny složky"
+  "SIGNED_OUT_FAILED_MESSAGE": "Při odhlašování se něco pokazilo. Stiskněte OK pro otevření stránky <a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a>, kde se můžete odhlásit ručně.",
+  "SIGN_IN_WAITING_TITLE": "Čekání na přihlášení",
+  "SIGN_IN_WAITING_MESSAGE": "Dokončete prosím přihlášení v nové kartě a poté se sem vraťte.",
+  "WAITING_FOR_LOGIN": "Probíhá přihlašování…",
+  "CHECK_NOW": "Zkontrolovat",
+  "CHECKING": "Kontroluji…",
+  "CHECKING_STATUS": "Kontroluji stav přihlášení…",
+  "NOT_SIGNED_IN_YET": "Ještě nejste přihlášeni. Dokončete prosím přihlášení v druhé kartě.",
+  "WELCOME_BACK": "Vítejte zpět, {0}!",
+  "POPUP_BLOCKED": "Vyskakovací okno bylo blokováno. Povolte prosím vyskakovací okna a zkuste to znovu, nebo přejděte ručně na {0}"
 });
 /*
  * GNU AGPL-3.0 License
@@ -76345,7 +76372,6 @@ define("nls/da/strings", {
   "SIGNED_IN_FAILED_TITLE": "Kan ikke logge ind",
   "SIGNED_IN_FAILED_MESSAGE": "Der gik noget galt under forsøget på at logge ind. Prøv igen.",
   "SIGNED_OUT_FAILED_TITLE": "Kunne ikke logge ud",
-  "SIGNED_OUT_FAILED_MESSAGE": "Der gik noget galt under forsøget på at logge ud. Prøv igen.",
   "VALIDATION_CODE_TITLE": "Bekræftelseskode",
   "VALIDATION_CODE_MESSAGE": "Brug venligst denne bekræftelseskode til at logge ind på din {APP_NAME}-konto:",
   "COPY_VALIDATION_CODE": "Kopiér kode",
@@ -76358,6 +76384,7 @@ define("nls/da/strings", {
   "ACCOUNT_DETAILS": "Kontooplysninger",
   "AI_QUOTA_USED": "Brugt AI-kvote",
   "LOGIN_REFRESH": "Tjek loginstatus",
+  "COLLAPSE_ALL_FOLDERS": "Skjul alle mapper",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Brugerdefinerede snippets…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Brugerdefinerede snippets",
   "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Tilføj snippet",
@@ -76398,7 +76425,16 @@ define("nls/da/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Skabelontekst",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Beskrivelse",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Filtypenavn",
-  "COLLAPSE_ALL_FOLDERS": "Skjul alle mapper"
+  "SIGNED_OUT_FAILED_MESSAGE": "Der opstod en fejl under udlogning. Tryk OK for at åbne <a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a>, hvor du kan logge ud manuelt.",
+  "SIGN_IN_WAITING_TITLE": "Venter på login",
+  "SIGN_IN_WAITING_MESSAGE": "Fuldfør venligst login i den nye fane, og vend derefter tilbage hertil.",
+  "WAITING_FOR_LOGIN": "Venter på login…",
+  "CHECK_NOW": "Tjek nu",
+  "CHECKING": "Tjekker…",
+  "CHECKING_STATUS": "Tjekker loginstatus…",
+  "NOT_SIGNED_IN_YET": "Du er ikke logget ind endnu. Fuldfør venligst login i den anden fane.",
+  "WELCOME_BACK": "Velkommen tilbage, {0}!",
+  "POPUP_BLOCKED": "Pop-up blokeret. Tillad venligst pop-ups, og prøv igen, eller gå manuelt til {0}"
 });
 /*
  * GNU AGPL-3.0 License
@@ -77821,7 +77857,6 @@ define("nls/de/strings", {
   "SIGNED_IN_FAILED_TITLE": "Anmeldung nicht möglich",
   "SIGNED_IN_FAILED_MESSAGE": "Bei der Anmeldung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
   "SIGNED_OUT_FAILED_TITLE": "Abmeldung fehlgeschlagen",
-  "SIGNED_OUT_FAILED_MESSAGE": "Bei der Abmeldung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
   "VALIDATION_CODE_TITLE": "Bestätigungscode für die Anmeldung",
   "VALIDATION_CODE_MESSAGE": "Bitte verwenden Sie diesen Bestätigungscode, um sich bei Ihrem {APP_NAME}-Konto anzumelden:",
   "COPY_VALIDATION_CODE": "Code kopieren",
@@ -77834,6 +77869,7 @@ define("nls/de/strings", {
   "ACCOUNT_DETAILS": "Kontodetails",
   "AI_QUOTA_USED": "Verbrauchte KI-Quote",
   "LOGIN_REFRESH": "Anmeldestatus überprüfen",
+  "COLLAPSE_ALL_FOLDERS": "Alle Ordner zuklappen",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Benutzerdefinierte Snippets…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Benutzerdefinierte Snippets",
   "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Schnipsel hinzufügen",
@@ -77874,7 +77910,16 @@ define("nls/de/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Vorlagentext",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Beschreibung",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Dateierweiterung",
-  "COLLAPSE_ALL_FOLDERS": "Alle Ordner zuklappen"
+  "SIGNED_OUT_FAILED_MESSAGE": "Beim Abmelden ist ein Fehler aufgetreten. Klicken Sie auf OK, um <a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a> zu öffnen, wo Sie sich manuell abmelden können.",
+  "SIGN_IN_WAITING_TITLE": "Warte auf Anmeldung",
+  "SIGN_IN_WAITING_MESSAGE": "Bitte schließen Sie die Anmeldung im neuen Tab ab und kehren Sie dann hierher zurück.",
+  "WAITING_FOR_LOGIN": "Warte auf Anmeldung…",
+  "CHECK_NOW": "Jetzt prüfen",
+  "CHECKING": "Überprüfung läuft…",
+  "CHECKING_STATUS": "Anmeldestatus wird überprüft…",
+  "NOT_SIGNED_IN_YET": "Sie sind noch nicht angemeldet. Bitte schließen Sie die Anmeldung im anderen Tab ab.",
+  "WELCOME_BACK": "Willkommen zurück, {0}!",
+  "POPUP_BLOCKED": "Popup blockiert. Bitte erlauben Sie Popups und versuchen Sie es erneut, oder navigieren Sie manuell zu {0}"
 });
 /*
  * GNU AGPL-3.0 License
@@ -79299,7 +79344,6 @@ define("nls/el/strings", {
   "SIGNED_IN_FAILED_TITLE": "Δεν είναι δυνατή η σύνδεση",
   "SIGNED_IN_FAILED_MESSAGE": "Κάτι πήγε στραβά κατά την προσπάθεια σύνδεσης. Παρακαλούμε δοκιμάστε ξανά.",
   "SIGNED_OUT_FAILED_TITLE": "Αποτυχία αποσύνδεσης",
-  "SIGNED_OUT_FAILED_MESSAGE": "Κάτι πήγε στραβά κατά την προσπάθεια αποσύνδεσης. Παρακαλούμε δοκιμάστε ξανά.",
   "VALIDATION_CODE_TITLE": "Κωδικός Επαλήθευσης Σύνδεσης",
   "VALIDATION_CODE_MESSAGE": "Χρησιμοποιήστε αυτόν τον κωδικό επαλήθευσης για να συνδεθείτε στον λογαριασμό σας στο {APP_NAME}:",
   "COPY_VALIDATION_CODE": "Αντιγραφή Κωδικού",
@@ -79312,6 +79356,7 @@ define("nls/el/strings", {
   "ACCOUNT_DETAILS": "Στοιχεία Λογαριασμού",
   "AI_QUOTA_USED": "Χρήση ποσοστού AI",
   "LOGIN_REFRESH": "Έλεγχος Κατάστασης Σύνδεσης",
+  "COLLAPSE_ALL_FOLDERS": "Σύμπτυξη Όλων των Φακέλων",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Προσαρμοσμένα αποσπάσματα…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Προσαρμοσμένα αποσπάσματα",
   "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Προσθήκη Αποσπάσματος",
@@ -79352,7 +79397,16 @@ define("nls/el/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Κείμενο Προτύπου",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Περιγραφή",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Επέκταση Αρχείου",
-  "COLLAPSE_ALL_FOLDERS": "Σύμπτυξη Όλων των Φακέλων"
+  "SIGNED_OUT_FAILED_MESSAGE": "Παρουσιάστηκε πρόβλημα κατά την αποσύνδεση. Πατήστε OK για να ανοίξετε <a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a> όπου μπορείτε να αποσυνδεθείτε χειροκίνητα.",
+  "SIGN_IN_WAITING_TITLE": "Αναμονή για Σύνδεση",
+  "SIGN_IN_WAITING_MESSAGE": "Ολοκληρώστε τη σύνδεση στην νέα καρτέλα και μετά επιστρέψτε εδώ.",
+  "WAITING_FOR_LOGIN": "Αναμονή για σύνδεση…",
+  "CHECK_NOW": "Έλεγχος Τώρα",
+  "CHECKING": "Έλεγχος…",
+  "CHECKING_STATUS": "Έλεγχος κατάστασης σύνδεσης…",
+  "NOT_SIGNED_IN_YET": "Δεν έχετε συνδεθεί ακόμα. Παρακαλούμε ολοκληρώστε τη σύνδεση στην άλλη καρτέλα.",
+  "WELCOME_BACK": "Καλώς ήρθατε πίσω, {0}!",
+  "POPUP_BLOCKED": "Το αναδυόμενο παράθυρο μπλοκαρίστηκε. Επιτρέψτε τα αναδυόμενα παράθυρα και προσπαθήστε ξανά ή μεταβείτε χειροκίνητα στο {0}"
 });
 /*
  * GNU AGPL-3.0 License
@@ -80777,7 +80831,6 @@ define("nls/en-gb/strings", {
   "SIGNED_IN_FAILED_TITLE": "Can't Sign In",
   "SIGNED_IN_FAILED_MESSAGE": "Something went wrong while trying to sign in. Please try again.",
   "SIGNED_OUT_FAILED_TITLE": "Failed to Sign Out",
-  "SIGNED_OUT_FAILED_MESSAGE": "Something went wrong while trying to sign out. Please try again.",
   "VALIDATION_CODE_TITLE": "Sign In Verification Code",
   "VALIDATION_CODE_MESSAGE": "Please use this verification code to sign in to your {APP_NAME} account:",
   "COPY_VALIDATION_CODE": "Copy Code",
@@ -80790,6 +80843,7 @@ define("nls/en-gb/strings", {
   "ACCOUNT_DETAILS": "Account Details",
   "AI_QUOTA_USED": "AI quota used",
   "LOGIN_REFRESH": "Check Login Status",
+  "COLLAPSE_ALL_FOLDERS": "Collapse all folders",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Custom Snippets…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Custom Snippets",
   "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Add snippet",
@@ -80830,7 +80884,16 @@ define("nls/en-gb/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Template Text",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Description",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "File Extension",
-  "COLLAPSE_ALL_FOLDERS": "Collapse all folders"
+  "SIGNED_OUT_FAILED_MESSAGE": "Something went wrong while logging out. Press OK to open <a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a> where you can log out manually.",
+  "SIGN_IN_WAITING_TITLE": "Waiting for Sign-in",
+  "SIGN_IN_WAITING_MESSAGE": "Please complete sign-in in the new tab, then return here.",
+  "WAITING_FOR_LOGIN": "Waiting for login…",
+  "CHECK_NOW": "Check now",
+  "CHECKING": "Checking…",
+  "CHECKING_STATUS": "Checking login status…",
+  "NOT_SIGNED_IN_YET": "Not signed in yet. Please complete sign-in in the other tab.",
+  "WELCOME_BACK": "Welcome back, {0}!",
+  "POPUP_BLOCKED": "Pop-up blocked. Please allow pop-ups and try again, or manually navigate to {0}"
 });
 /*
  * GNU AGPL-3.0 License
@@ -82228,7 +82291,6 @@ define("nls/es/strings", {
   "SIGNED_IN_FAILED_TITLE": "No se puede iniciar sesión",
   "SIGNED_IN_FAILED_MESSAGE": "Algo salió mal al intentar iniciar sesión. Inténtalo de nuevo.",
   "SIGNED_OUT_FAILED_TITLE": "Error al cerrar sesión",
-  "SIGNED_OUT_FAILED_MESSAGE": "Algo salió mal al intentar cerrar sesión. Inténtalo de nuevo.",
   "VALIDATION_CODE_TITLE": "Código de verificación de inicio de sesión",
   "VALIDATION_CODE_MESSAGE": "Usa este código de verificación para iniciar sesión en tu cuenta de {APP_NAME}:",
   "COPY_VALIDATION_CODE": "Copiar código",
@@ -82241,6 +82303,7 @@ define("nls/es/strings", {
   "ACCOUNT_DETAILS": "Detalles de la cuenta",
   "AI_QUOTA_USED": "Cuota de IA utilizada",
   "LOGIN_REFRESH": "Verificar estado del inicio de sesión",
+  "COLLAPSE_ALL_FOLDERS": "Contraer todas las carpetas",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Fragmentos de código personalizados…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Fragmentos de código personalizados",
   "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Añadir fragmento de código",
@@ -82281,7 +82344,16 @@ define("nls/es/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Texto de la plantilla",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Descripción",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensión de archivo",
-  "COLLAPSE_ALL_FOLDERS": "Contraer todas las carpetas"
+  "SIGNED_OUT_FAILED_MESSAGE": "Algo salió mal al cerrar sesión. Pulsa Aceptar para abrir <a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a> donde puedes cerrar sesión manualmente.",
+  "SIGN_IN_WAITING_TITLE": "Esperando inicio de sesión",
+  "SIGN_IN_WAITING_MESSAGE": "Completa el inicio de sesión en la nueva pestaña y luego regresa aquí.",
+  "WAITING_FOR_LOGIN": "Esperando el inicio de sesión…",
+  "CHECK_NOW": "Verificar ahora",
+  "CHECKING": "Verificando…",
+  "CHECKING_STATUS": "Comprobando el estado del inicio de sesión…",
+  "NOT_SIGNED_IN_YET": "Aún no has iniciado sesión. Completa el inicio de sesión en la otra pestaña.",
+  "WELCOME_BACK": "¡Bienvenido de nuevo, {0}!",
+  "POPUP_BLOCKED": "Ventana emergente bloqueada. Permite las ventanas emergentes e inténtalo de nuevo, o navega manualmente a {0}"
 });
 /*
  * GNU AGPL-3.0 License
@@ -83707,7 +83779,6 @@ define("nls/fa-ir/strings", {
   "SIGNED_IN_FAILED_TITLE": "امکان ورود وجود ندارد",
   "SIGNED_IN_FAILED_MESSAGE": "هنگام ورود مشکلی پیش آمد. لطفاً دوباره امتحان کنید.",
   "SIGNED_OUT_FAILED_TITLE": "خروج از حساب کاربری ناموفق بود",
-  "SIGNED_OUT_FAILED_MESSAGE": "هنگام خروج از حساب کاربری مشکلی پیش آمد. لطفاً دوباره امتحان کنید.",
   "VALIDATION_CODE_TITLE": "کد تایید ورود",
   "VALIDATION_CODE_MESSAGE": "لطفا از این کد تایید برای ورود به حساب {APP_NAME} خود استفاده کنید:",
   "COPY_VALIDATION_CODE": "کپی کد",
@@ -83720,6 +83791,7 @@ define("nls/fa-ir/strings", {
   "ACCOUNT_DETAILS": "جزئیات حساب کاربری",
   "AI_QUOTA_USED": "سهمیه هوش مصنوعی استفاده شده",
   "LOGIN_REFRESH": "بررسی وضعیت ورود",
+  "COLLAPSE_ALL_FOLDERS": "بستن همهٔ پوشه‌ها",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "قطعه‌کدهای سفارشی…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "قطعه‌کدهای سفارشی",
   "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "افزودن قطعه کد",
@@ -83760,7 +83832,16 @@ define("nls/fa-ir/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "متن الگو",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "توضیحات",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "پسوند فایل",
-  "COLLAPSE_ALL_FOLDERS": "بستن همهٔ پوشه‌ها"
+  "SIGNED_OUT_FAILED_MESSAGE": "در هنگام خروج مشکلی پیش آمد. برای باز کردن <a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a> که می‌توانید به صورت دستی از آنجا خارج شوید، روی تأیید کلیک کنید.",
+  "SIGN_IN_WAITING_TITLE": "در حال انتظار برای ورود",
+  "SIGN_IN_WAITING_MESSAGE": "لطفاً ورود به سیستم را در برگه جدید تکمیل کنید، سپس به اینجا برگردید.",
+  "WAITING_FOR_LOGIN": "در حال انتظار برای ورود…",
+  "CHECK_NOW": "بررسی کن",
+  "CHECKING": "در حال بررسی…",
+  "CHECKING_STATUS": "در حال بررسی وضعیت ورود…",
+  "NOT_SIGNED_IN_YET": "هنوز وارد سیستم نشده‌اید. لطفاً ورود به سیستم را در برگه دیگر تکمیل کنید.",
+  "WELCOME_BACK": "{0} خوش برگشتی!",
+  "POPUP_BLOCKED": "پنجره‌ی پاپ‌آپ مسدود شده است. لطفاً اجازه نمایش پنجره‌های پاپ‌آپ را بدهید و دوباره امتحان کنید، یا به صورت دستی به {0} بروید."
 });
 /*
  * GNU AGPL-3.0 License
@@ -85185,7 +85266,6 @@ define("nls/fi/strings", {
   "SIGNED_IN_FAILED_TITLE": "Kirjautuminen ei onnistu",
   "SIGNED_IN_FAILED_MESSAGE": "Kirjautumisessa tapahtui virhe. Yritä uudelleen.",
   "SIGNED_OUT_FAILED_TITLE": "Uloskirjautuminen epäonnistui",
-  "SIGNED_OUT_FAILED_MESSAGE": "Uloskirjautumisessa tapahtui virhe. Yritä uudelleen.",
   "VALIDATION_CODE_TITLE": "Vahvistuskoodi",
   "VALIDATION_CODE_MESSAGE": "Käytä tätä vahvistuskoodia kirjautuaksesi {APP_NAME}-tilillesi:",
   "COPY_VALIDATION_CODE": "Kopioi koodi",
@@ -85198,6 +85278,7 @@ define("nls/fi/strings", {
   "ACCOUNT_DETAILS": "Tilin tiedot",
   "AI_QUOTA_USED": "Käytetty tekoälykiintiö",
   "LOGIN_REFRESH": "Tarkista kirjautumistila",
+  "COLLAPSE_ALL_FOLDERS": "Sulje kaikki kansiot",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Omat koodinpätkät…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Omat koodinpätkät",
   "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Lisää koodinpätkä",
@@ -85238,7 +85319,16 @@ define("nls/fi/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Malliteksti",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Kuvaus",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Tiedostopääte",
-  "COLLAPSE_ALL_FOLDERS": "Sulje kaikki kansiot"
+  "SIGNED_OUT_FAILED_MESSAGE": "Uloskirjautumisessa tapahtui virhe. Paina OK avataksesi <a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a> -sivuston, josta voit kirjautua ulos manuaalisesti.",
+  "SIGN_IN_WAITING_TITLE": "Kirjaudutaan sisään",
+  "SIGN_IN_WAITING_MESSAGE": "Viimeistele sisäänkirjautuminen uudessa välilehdessä ja palaa sitten tänne.",
+  "WAITING_FOR_LOGIN": "Kirjaudutaan sisään…",
+  "CHECK_NOW": "Tarkista nyt",
+  "CHECKING": "Tarkistetaan…",
+  "CHECKING_STATUS": "Tarkistetaan kirjautumistilaa…",
+  "NOT_SIGNED_IN_YET": "Et ole vielä kirjautunut sisään. Viimeistele sisäänkirjautuminen toisessa välilehdessä.",
+  "WELCOME_BACK": "Tervetuloa takaisin, {0}!",
+  "POPUP_BLOCKED": "Ponnahdusikkuna estetty. Salli ponnahdusikkunat ja yritä uudelleen tai siirry manuaalisesti osoitteeseen {0}"
 });
 /*
  * GNU AGPL-3.0 License
@@ -86663,7 +86753,6 @@ define("nls/fr/strings", {
   "SIGNED_IN_FAILED_TITLE": "Connexion impossible",
   "SIGNED_IN_FAILED_MESSAGE": "Un problème est survenu lors de la connexion. Veuillez réessayer.",
   "SIGNED_OUT_FAILED_TITLE": "Déconnexion impossible",
-  "SIGNED_OUT_FAILED_MESSAGE": "Un problème est survenu lors de la déconnexion. Veuillez réessayer.",
   "VALIDATION_CODE_TITLE": "Code de vérification de connexion",
   "VALIDATION_CODE_MESSAGE": "Veuillez utiliser ce code de vérification pour vous connecter à votre compte {APP_NAME} :",
   "COPY_VALIDATION_CODE": "Copier le code",
@@ -86676,6 +86765,7 @@ define("nls/fr/strings", {
   "ACCOUNT_DETAILS": "Détails du compte",
   "AI_QUOTA_USED": "Quota IA utilisé",
   "LOGIN_REFRESH": "Vérifier l'état de la connexion",
+  "COLLAPSE_ALL_FOLDERS": "Réduire tous les dossiers",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Extraits personnalisés…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Extraits personnalisés",
   "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Ajouter un extrait de code",
@@ -86716,7 +86806,16 @@ define("nls/fr/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Texte du modèle",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Description",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extension de fichier",
-  "COLLAPSE_ALL_FOLDERS": "Réduire tous les dossiers"
+  "SIGNED_OUT_FAILED_MESSAGE": "Une erreur s'est produite lors de la déconnexion. Cliquez sur OK pour ouvrir <a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a> où vous pouvez vous déconnecter manuellement.",
+  "SIGN_IN_WAITING_TITLE": "En attente de connexion",
+  "SIGN_IN_WAITING_MESSAGE": "Veuillez vous connecter dans le nouvel onglet, puis revenez ici.",
+  "WAITING_FOR_LOGIN": "Connexion en cours…",
+  "CHECK_NOW": "Vérifier maintenant",
+  "CHECKING": "Vérification…",
+  "CHECKING_STATUS": "Vérification de l'état de la connexion…",
+  "NOT_SIGNED_IN_YET": "Vous n'êtes pas encore connecté. Veuillez vous connecter dans l'autre onglet.",
+  "WELCOME_BACK": "Bon retour parmi nous, {0} !",
+  "POPUP_BLOCKED": "Fenêtre contextuelle bloquée. Veuillez autoriser les fenêtres contextuelles et réessayer, ou accédez manuellement à {0}"
 });
 /*
  * GNU AGPL-3.0 License
@@ -88141,7 +88240,6 @@ define("nls/gl/strings", {
   "SIGNED_IN_FAILED_TITLE": "Non se pode iniciar sesión",
   "SIGNED_IN_FAILED_MESSAGE": "Algo fallou ao tentar iniciar sesión. Inténteo de novo.",
   "SIGNED_OUT_FAILED_TITLE": "Non se puido pechar a sesión",
-  "SIGNED_OUT_FAILED_MESSAGE": "Algo fallou ao tentar pechar a sesión. Inténteo de novo.",
   "VALIDATION_CODE_TITLE": "Código de verificación de inicio de sesión",
   "VALIDATION_CODE_MESSAGE": "Utiliza este código de verificación para iniciar sesión na túa conta de {APP_NAME}:",
   "COPY_VALIDATION_CODE": "Copiar código",
@@ -88154,6 +88252,7 @@ define("nls/gl/strings", {
   "ACCOUNT_DETAILS": "Detalles da conta",
   "AI_QUOTA_USED": "Cota de IA usada",
   "LOGIN_REFRESH": "Comprobar o estado do inicio de sesión",
+  "COLLAPSE_ALL_FOLDERS": "Contraer todas as carpetas",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Fragmentos personalizados…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Fragmentos personalizados",
   "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Engadir Fragmento",
@@ -88194,7 +88293,16 @@ define("nls/gl/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Texto do modelo",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Descrición",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensión de ficheiro",
-  "COLLAPSE_ALL_FOLDERS": "Contraer todas as carpetas"
+  "SIGNED_OUT_FAILED_MESSAGE": "Houbo un problema ao pechar a sesión. Prema Aceptar para abrir <a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a> onde pode pechar a sesión manualmente.",
+  "SIGN_IN_WAITING_TITLE": "Agardando o inicio de sesión",
+  "SIGN_IN_WAITING_MESSAGE": "Complete o inicio de sesión na nova lapela e logo volva aquí.",
+  "WAITING_FOR_LOGIN": "Agardando o inicio de sesión…",
+  "CHECK_NOW": "Comprobar agora",
+  "CHECKING": "Comprobando…",
+  "CHECKING_STATUS": "Comprobando o estado do inicio de sesión…",
+  "NOT_SIGNED_IN_YET": "Aínda non iniciou sesión. Complete o inicio de sesión na outra lapela.",
+  "WELCOME_BACK": "Benvido de volta, {0}!",
+  "POPUP_BLOCKED": "Ventá emerxente bloqueada. Permite as ventás emerxentes e ténteo de novo ou navega manualmente a {0}"
 });
 /*
  * GNU AGPL-3.0 License
@@ -89592,7 +89700,6 @@ define("nls/hi/strings", {
   "SIGNED_IN_FAILED_TITLE": "साइन इन नहीं कर सकते",
   "SIGNED_IN_FAILED_MESSAGE": "साइन इन करने का प्रयास करते समय कुछ गड़बड़ हो गई। कृपया पुनः प्रयास करें।",
   "SIGNED_OUT_FAILED_TITLE": "साइन आउट करने में विफल",
-  "SIGNED_OUT_FAILED_MESSAGE": "साइन आउट करने का प्रयास करते समय कुछ गड़बड़ हो गई। कृपया पुनः प्रयास करें।",
   "VALIDATION_CODE_TITLE": "सत्यापन कोड शीर्षक",
   "VALIDATION_CODE_MESSAGE": "कृपया अपने {APP_NAME} खाते में साइन इन करने के लिए इस सत्यापन कोड का उपयोग करें:",
   "COPY_VALIDATION_CODE": "कोड कॉपी करें",
@@ -89605,6 +89712,7 @@ define("nls/hi/strings", {
   "ACCOUNT_DETAILS": "खाता विवरण",
   "AI_QUOTA_USED": "एआई कोटा उपयोग किया गया",
   "LOGIN_REFRESH": "लॉगिन स्थिति जांचें",
+  "COLLAPSE_ALL_FOLDERS": "सभी फ़ोल्डर संकुचित करें",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "कस्टम स्निपेट…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "कस्टम स्निपेट",
   "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "स्निपेट जोड़ें",
@@ -89645,7 +89753,16 @@ define("nls/hi/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "टेम्पलेट टेक्स्ट",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "विवरण",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "फ़ाइल एक्सटेंशन",
-  "COLLAPSE_ALL_FOLDERS": "सभी फ़ोल्डर संकुचित करें"
+  "SIGNED_OUT_FAILED_MESSAGE": "लॉग आउट करते समय कुछ गड़बड़ हो गई। <a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a> खोलने के लिए ठीक दबाएँ, जहाँ आप मैन्युअल रूप से लॉग आउट कर सकते हैं।",
+  "SIGN_IN_WAITING_TITLE": "साइन इन की प्रतीक्षा हो रही है",
+  "SIGN_IN_WAITING_MESSAGE": "कृपया नए टैब में साइन-इन पूरा करें, फिर यहां वापस आएं।",
+  "WAITING_FOR_LOGIN": "लॉगिन के लिए प्रतीक्षा हो रही है…",
+  "CHECK_NOW": "अभी जांचें",
+  "CHECKING": "जाँच हो रही है…",
+  "CHECKING_STATUS": "लॉगिन स्थिति की जाँच हो रही है…",
+  "NOT_SIGNED_IN_YET": "अभी तक साइन इन नहीं किया है। कृपया दूसरे टैब में साइन-इन पूरा करें।",
+  "WELCOME_BACK": "{0}, आपका स्वागत है!",
+  "POPUP_BLOCKED": "पॉप-अप ब्लॉक किया गया है। कृपया पॉप-अप की अनुमति दें और पुनः प्रयास करें, या मैन्युअल रूप से {0} पर नेविगेट करें"
 });
 /*
  * GNU AGPL-3.0 License
@@ -91043,7 +91160,6 @@ define("nls/hr/strings", {
   "SIGNED_IN_FAILED_TITLE": "Prijava nije moguća",
   "SIGNED_IN_FAILED_MESSAGE": "Došlo je do pogreške prilikom prijave. Pokušajte ponovno.",
   "SIGNED_OUT_FAILED_TITLE": "Odjava nije uspjela",
-  "SIGNED_OUT_FAILED_MESSAGE": "Došlo je do pogreške prilikom odjave. Pokušajte ponovno.",
   "VALIDATION_CODE_TITLE": "Verifikacijski kôd za prijavu",
   "VALIDATION_CODE_MESSAGE": "Molimo koristite ovaj verifikacijski kôd za prijavu na vaš {APP_NAME} račun:",
   "COPY_VALIDATION_CODE": "Kopiraj kôd",
@@ -91056,6 +91172,7 @@ define("nls/hr/strings", {
   "ACCOUNT_DETAILS": "Podaci o računu",
   "AI_QUOTA_USED": "Iskorištena AI kvota",
   "LOGIN_REFRESH": "Provjeri status prijave",
+  "COLLAPSE_ALL_FOLDERS": "Sažmi sve mape",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Prilagođeni isječci…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Prilagođeni isječci",
   "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Dodaj isječak koda",
@@ -91096,7 +91213,16 @@ define("nls/hr/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Tekst predloška",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Opis",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Ekstenzija datoteke",
-  "COLLAPSE_ALL_FOLDERS": "Sažmi sve mape"
+  "SIGNED_OUT_FAILED_MESSAGE": "Došlo je do pogreške prilikom odjave. Pritisnite U redu za otvaranje <a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a> gdje se možete ručno odjaviti.",
+  "SIGN_IN_WAITING_TITLE": "Prijava u tijeku",
+  "SIGN_IN_WAITING_MESSAGE": "Molimo dovršite prijavu u novoj kartici, a zatim se vratite ovdje.",
+  "WAITING_FOR_LOGIN": "Prijava u tijeku…",
+  "CHECK_NOW": "Provjeri sada",
+  "CHECKING": "Provjeravam…",
+  "CHECKING_STATUS": "Provjera statusa prijave…",
+  "NOT_SIGNED_IN_YET": "Još niste prijavljeni. Molimo dovršite prijavu u drugoj kartici.",
+  "WELCOME_BACK": "Dobrodošli natrag, {0}!",
+  "POPUP_BLOCKED": "Skočni prozor blokiran. Molimo dopustite skočne prozore i pokušajte ponovno ili ručno idite na {0}"
 });
 /*
  * GNU AGPL-3.0 License
@@ -92521,7 +92647,6 @@ define("nls/hu/strings", {
   "SIGNED_IN_FAILED_TITLE": "Nem lehet bejelentkezni",
   "SIGNED_IN_FAILED_MESSAGE": "Hiba történt a bejelentkezés során. Kérjük, próbáld újra.",
   "SIGNED_OUT_FAILED_TITLE": "Nem sikerült kijelentkezni",
-  "SIGNED_OUT_FAILED_MESSAGE": "Hiba történt a kijelentkezés során. Kérjük, próbáld újra.",
   "VALIDATION_CODE_TITLE": "Bejelentkezési ellenőrző kód",
   "VALIDATION_CODE_MESSAGE": "Kérjük, használd ezt az ellenőrző kódot a(z) {APP_NAME} fiókodba való bejelentkezéshez:",
   "COPY_VALIDATION_CODE": "Kód másolása",
@@ -92534,6 +92659,7 @@ define("nls/hu/strings", {
   "ACCOUNT_DETAILS": "Fiókadatok",
   "AI_QUOTA_USED": "Felhasznált MI-kvóta",
   "LOGIN_REFRESH": "Bejelentkezés állapotának ellenőrzése",
+  "COLLAPSE_ALL_FOLDERS": "Összes mappa összecsukása",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Egyéni kódrészletek…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Egyéni kódrészletek",
   "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Kódrészlet hozzáadása",
@@ -92574,7 +92700,16 @@ define("nls/hu/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Sablonszöveg",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Leírás",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Fájlkiterjesztés",
-  "COLLAPSE_ALL_FOLDERS": "Összes mappa összecsukása"
+  "SIGNED_OUT_FAILED_MESSAGE": "Hiba történt a kijelentkezés során. Nyomd meg az OK gombot a(z) <a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a> oldal megnyitásához, ahol manuálisan kijelentkezhetsz.",
+  "SIGN_IN_WAITING_TITLE": "Bejelentkezésre vár",
+  "SIGN_IN_WAITING_MESSAGE": "Kérjük, fejezd be a bejelentkezést az új lapon, majd térj vissza ide.",
+  "WAITING_FOR_LOGIN": "Bejelentkezésre vár…",
+  "CHECK_NOW": "Ellenőrzés most",
+  "CHECKING": "Ellenőrzés…",
+  "CHECKING_STATUS": "Bejelentkezési állapot ellenőrzése…",
+  "NOT_SIGNED_IN_YET": "Még nem jelentkeztél be. Kérjük, fejezd be a bejelentkezést a másik lapon.",
+  "WELCOME_BACK": "Üdvözlünk újra, {0}!",
+  "POPUP_BLOCKED": "Felugró ablak blokkolva. Kérjük, engedélyezd a felugró ablakokat, és próbáld újra, vagy navigálj manuálisan ide: {0}"
 });
 /*
  * GNU AGPL-3.0 License
@@ -93972,7 +94107,6 @@ define("nls/id/strings", {
   "SIGNED_IN_FAILED_TITLE": "Tidak Dapat Masuk",
   "SIGNED_IN_FAILED_MESSAGE": "Terjadi kesalahan saat mencoba masuk. Silakan coba lagi.",
   "SIGNED_OUT_FAILED_TITLE": "Gagal Keluar",
-  "SIGNED_OUT_FAILED_MESSAGE": "Terjadi kesalahan saat mencoba keluar. Silakan coba lagi.",
   "VALIDATION_CODE_TITLE": "Kode Verifikasi Masuk",
   "VALIDATION_CODE_MESSAGE": "Silakan gunakan kode Verifikasi ini untuk masuk ke akun {APP_NAME} Anda:",
   "COPY_VALIDATION_CODE": "Salin Kode",
@@ -93985,6 +94119,7 @@ define("nls/id/strings", {
   "ACCOUNT_DETAILS": "Detail Akun",
   "AI_QUOTA_USED": "Kuota AI terpakai",
   "LOGIN_REFRESH": "Periksa Status Login",
+  "COLLAPSE_ALL_FOLDERS": "Ciutkan Semua Folder",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Cuplikan Kustom…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Cuplikan Kustom",
   "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Tambah Cuplikan",
@@ -94025,7 +94160,16 @@ define("nls/id/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Teks Templat",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Deskripsi",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Ekstensi Berkas",
-  "COLLAPSE_ALL_FOLDERS": "Ciutkan Semua Folder"
+  "SIGNED_OUT_FAILED_MESSAGE": "Terjadi kesalahan saat keluar. Tekan OK untuk membuka <a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a> tempat Anda dapat keluar secara manual.",
+  "SIGN_IN_WAITING_TITLE": "Menunggu Masuk",
+  "SIGN_IN_WAITING_MESSAGE": "Silakan selesaikan proses masuk di tab baru, lalu kembali ke sini.",
+  "WAITING_FOR_LOGIN": "Menunggu proses masuk…",
+  "CHECK_NOW": "Periksa Sekarang",
+  "CHECKING": "Memeriksa…",
+  "CHECKING_STATUS": "Memeriksa status masuk…",
+  "NOT_SIGNED_IN_YET": "Anda belum masuk. Silakan selesaikan proses masuk di tab lain.",
+  "WELCOME_BACK": "Selamat datang kembali, {0}!",
+  "POPUP_BLOCKED": "Pop-up diblokir. Harap izinkan pop-up dan coba lagi, atau buka {0} secara manual"
 });
 /*
  * GNU AGPL-3.0 License
@@ -95449,7 +95593,6 @@ define("nls/it/strings", {
   "SIGNED_IN_FAILED_TITLE": "Impossibile accedere",
   "SIGNED_IN_FAILED_MESSAGE": "Si è verificato un errore durante l'accesso. Riprova.",
   "SIGNED_OUT_FAILED_TITLE": "Impossibile disconnettersi",
-  "SIGNED_OUT_FAILED_MESSAGE": "Si è verificato un errore durante la disconnessione. Riprova.",
   "VALIDATION_CODE_TITLE": "Codice di verifica per l'accesso",
   "VALIDATION_CODE_MESSAGE": "Utilizza questo codice di verifica per accedere al tuo account {APP_NAME}:",
   "COPY_VALIDATION_CODE": "Copia codice",
@@ -95462,6 +95605,7 @@ define("nls/it/strings", {
   "ACCOUNT_DETAILS": "Dettagli account",
   "AI_QUOTA_USED": "Quota IA utilizzata",
   "LOGIN_REFRESH": "Verifica stato accesso",
+  "COLLAPSE_ALL_FOLDERS": "Comprimi tutte le cartelle",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Frammenti personalizzati…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Frammenti personalizzati",
   "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Aggiungi snippet",
@@ -95502,7 +95646,16 @@ define("nls/it/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Testo del Modello",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Descrizione",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Estensione del File",
-  "COLLAPSE_ALL_FOLDERS": "Comprimi tutte le cartelle"
+  "SIGNED_OUT_FAILED_MESSAGE": "Si è verificato un errore durante la disconnessione. Premi OK per aprire <a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a> dove puoi disconnetterti manualmente.",
+  "SIGN_IN_WAITING_TITLE": "Attendere l'accesso",
+  "SIGN_IN_WAITING_MESSAGE": "Completa l'accesso nella nuova scheda, quindi torna qui.",
+  "WAITING_FOR_LOGIN": "Accesso in corso…",
+  "CHECK_NOW": "Verifica ora",
+  "CHECKING": "Verifica in corso…",
+  "CHECKING_STATUS": "Verifica dello stato di accesso in corso…",
+  "NOT_SIGNED_IN_YET": "Accesso non ancora effettuato. Completa l'accesso nell'altra scheda.",
+  "WELCOME_BACK": "Bentornato, {0}!",
+  "POPUP_BLOCKED": "Popup bloccato. Autorizza i popup e riprova oppure vai manualmente a {0}"
 });
 /*
  * GNU AGPL-3.0 License
@@ -96927,7 +97080,6 @@ define("nls/ja/strings", {
   "SIGNED_IN_FAILED_TITLE": "サインインできません",
   "SIGNED_IN_FAILED_MESSAGE": "サインイン中にエラーが発生しました。もう一度お試しください。",
   "SIGNED_OUT_FAILED_TITLE": "サインアウトに失敗しました",
-  "SIGNED_OUT_FAILED_MESSAGE": "サインアウト中にエラーが発生しました。もう一度お試しください。",
   "VALIDATION_CODE_TITLE": "ログイン認証コード",
   "VALIDATION_CODE_MESSAGE": "{APP_NAME}アカウントにログインするには、次の認証コードを使用してください。",
   "COPY_VALIDATION_CODE": "コードをコピー",
@@ -96940,6 +97092,7 @@ define("nls/ja/strings", {
   "ACCOUNT_DETAILS": "アカウントの詳細",
   "AI_QUOTA_USED": "AI利用量",
   "LOGIN_REFRESH": "ログイン状態を確認",
+  "COLLAPSE_ALL_FOLDERS": "全てのフォルダを閉じる",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "カスタムスニペット…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "カスタムスニペット",
   "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "スニペットを追加",
@@ -96980,7 +97133,16 @@ define("nls/ja/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "テンプレートテキスト",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "説明",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "ファイル拡張子",
-  "COLLAPSE_ALL_FOLDERS": "全てのフォルダを閉じる"
+  "SIGNED_OUT_FAILED_MESSAGE": "ログアウト中にエラーが発生しました。「OK」を押して<a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a>を開き、手動でログアウトしてください。",
+  "SIGN_IN_WAITING_TITLE": "サインインを待機中",
+  "SIGN_IN_WAITING_MESSAGE": "新しいタブでサインインを完了してから、ここに戻ってください。",
+  "WAITING_FOR_LOGIN": "ログイン中…",
+  "CHECK_NOW": "今すぐ確認",
+  "CHECKING": "確認中…",
+  "CHECKING_STATUS": "ログイン状態を確認中…",
+  "NOT_SIGNED_IN_YET": "まだサインインしていません。別のタブでサインインを完了してください。",
+  "WELCOME_BACK": "{0} さん、おかえりなさい！",
+  "POPUP_BLOCKED": "ポップアップがブロックされました。ポップアップを許可してもう一度お試しいただくか、{0} に手動でアクセスしてください。"
 });
 /*
  * GNU AGPL-3.0 License
@@ -98405,7 +98567,6 @@ define("nls/ko/strings", {
   "SIGNED_IN_FAILED_TITLE": "로그인할 수 없음",
   "SIGNED_IN_FAILED_MESSAGE": "로그인하는 동안 오류가 발생했습니다. 다시 시도해 주세요.",
   "SIGNED_OUT_FAILED_TITLE": "로그아웃 실패",
-  "SIGNED_OUT_FAILED_MESSAGE": "로그아웃하는 동안 오류가 발생했습니다. 다시 시도해 주세요.",
   "VALIDATION_CODE_TITLE": "로그인 인증 코드",
   "VALIDATION_CODE_MESSAGE": "{APP_NAME} 계정에 로그인하려면 다음 인증 코드를 사용하세요:",
   "COPY_VALIDATION_CODE": "코드 복사",
@@ -98418,6 +98579,7 @@ define("nls/ko/strings", {
   "ACCOUNT_DETAILS": "계정 세부정보",
   "AI_QUOTA_USED": "사용된 AI 할당량",
   "LOGIN_REFRESH": "로그인 상태 확인",
+  "COLLAPSE_ALL_FOLDERS": "모든 폴더 접기",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "사용자 정의 스니펫…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "사용자 정의 스니펫",
   "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "스니펫 추가",
@@ -98458,7 +98620,16 @@ define("nls/ko/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "템플릿 텍스트",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "설명",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "파일 확장자",
-  "COLLAPSE_ALL_FOLDERS": "모든 폴더 접기"
+  "SIGNED_OUT_FAILED_MESSAGE": "로그아웃하는 동안 오류가 발생했습니다. 확인을 눌러 <a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a>에서 직접 로그아웃하세요.",
+  "SIGN_IN_WAITING_TITLE": "로그인 대기 중",
+  "SIGN_IN_WAITING_MESSAGE": "새 탭에서 로그인을 완료한 후 여기로 돌아오세요.",
+  "WAITING_FOR_LOGIN": "로그인 중…",
+  "CHECK_NOW": "지금 확인",
+  "CHECKING": "확인 중…",
+  "CHECKING_STATUS": "로그인 상태 확인 중…",
+  "NOT_SIGNED_IN_YET": "아직 로그인하지 않았습니다. 다른 탭에서 로그인을 완료하세요.",
+  "WELCOME_BACK": "{0}님, 다시 오신 것을 환영합니다!",
+  "POPUP_BLOCKED": "팝업이 차단되었습니다. 팝업을 허용하고 다시 시도하거나, {0}으로 직접 이동하세요."
 });
 /*
  * GNU AGPL-3.0 License
@@ -99883,7 +100054,6 @@ define("nls/lv/strings", {
   "SIGNED_IN_FAILED_TITLE": "Nevar pieslēgties",
   "SIGNED_IN_FAILED_MESSAGE": "Radās kļūme, mēģinot pieslēgties. Lūdzu, mēģiniet vēlreiz.",
   "SIGNED_OUT_FAILED_TITLE": "Neizdevās izrakstīties",
-  "SIGNED_OUT_FAILED_MESSAGE": "Radās kļūme, mēģinot izrakstīties. Lūdzu, mēģiniet vēlreiz.",
   "VALIDATION_CODE_TITLE": "Piekļuves kods",
   "VALIDATION_CODE_MESSAGE": "Lūdzu, izmantojiet šo piekļuves kodu, lai pieteiktos savā {APP_NAME} kontā:",
   "COPY_VALIDATION_CODE": "Kopēt kodu",
@@ -99896,6 +100066,7 @@ define("nls/lv/strings", {
   "ACCOUNT_DETAILS": "Konta informācija",
   "AI_QUOTA_USED": "Izmantotā AI kvota",
   "LOGIN_REFRESH": "Pārbaudīt pieteikšanās statusu",
+  "COLLAPSE_ALL_FOLDERS": "Sakļaut visas mapes",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Pielāgoti fragmenti…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Pielāgoti fragmenti",
   "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Pievienot fragmentu",
@@ -99936,7 +100107,16 @@ define("nls/lv/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Veidnes teksts",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Apraksts",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Faila paplašinājums",
-  "COLLAPSE_ALL_FOLDERS": "Sakļaut visas mapes"
+  "SIGNED_OUT_FAILED_MESSAGE": "Izrakstīšanās laikā radās kļūda. Nospiediet \"Labi\", lai atvērtu <a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a>, kur varat izrakstīties manuāli.",
+  "SIGN_IN_WAITING_TITLE": "Notiek pieteikšanās",
+  "SIGN_IN_WAITING_MESSAGE": "Lūdzu, pabeidziet pieteikšanos jaunajā cilnē un pēc tam atgriezieties šeit.",
+  "WAITING_FOR_LOGIN": "Notiek pieteikšanās…",
+  "CHECK_NOW": "Pārbaudīt tagad",
+  "CHECKING": "Pārbauda…",
+  "CHECKING_STATUS": "Pārbauda pieteikšanās statusu…",
+  "NOT_SIGNED_IN_YET": "Vēl neesat pieteicies. Lūdzu, pabeidziet pieteikšanos otrā cilnē.",
+  "WELCOME_BACK": "Laipni lūdzam atpakaļ, {0}!",
+  "POPUP_BLOCKED": "Uznirstošais logs ir bloķēts. Lūdzu, atļaujiet uznirstošos logus un mēģiniet vēlreiz vai arī manuāli dodieties uz {0}"
 });
 /*
  * GNU AGPL-3.0 License
@@ -101334,7 +101514,6 @@ define("nls/ml/strings", {
   "SIGNED_IN_FAILED_TITLE": "സൈൻ ഇൻ ചെയ്യാൻ കഴിയില്ല",
   "SIGNED_IN_FAILED_MESSAGE": "സൈൻ ഇൻ ചെയ്യാൻ ശ്രമിക്കുമ്പോൾ എന്തോ പിഴച്ചു. വീണ്ടും ശ്രമിക്കുക.",
   "SIGNED_OUT_FAILED_TITLE": "സൈൻ ഔട്ട് ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു",
-  "SIGNED_OUT_FAILED_MESSAGE": "സൈൻ ഔട്ട് ചെയ്യാൻ ശ്രമിക്കുമ്പോൾ എന്തോ പിഴച്ചു. വീണ്ടും ശ്രമിക്കുക.",
   "VALIDATION_CODE_TITLE": "സൈൻ ഇൻ വെരിഫിക്കേഷൻ കോഡ്",
   "VALIDATION_CODE_MESSAGE": "നിങ്ങളുടെ {APP_NAME} അക്കൗണ്ടിൽ സൈൻ ഇൻ ചെയ്യാൻ ഈ വെരിഫിക്കേഷൻ കോഡ് ഉപയോഗിക്കുക:",
   "COPY_VALIDATION_CODE": "കോഡ് പകർത്തുക",
@@ -101347,6 +101526,7 @@ define("nls/ml/strings", {
   "ACCOUNT_DETAILS": "അക്കൗണ്ട് വിശദാംശങ്ങൾ",
   "AI_QUOTA_USED": "എഐ ക്വാട്ട ഉപയോഗിച്ചു",
   "LOGIN_REFRESH": "ലോഗിൻ സ്റ്റാറ്റസ് പരിശോധിക്കുക",
+  "COLLAPSE_ALL_FOLDERS": "എല്ലാ ഫോൾഡറുകളും ചുരുക്കുക",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "കസ്റ്റം സ്നിപ്പെറ്റുകൾ…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "കസ്റ്റം സ്നിപ്പെറ്റുകൾ",
   "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "സ്നിപ്പറ്റ് ചേർക്കുക",
@@ -101387,7 +101567,16 @@ define("nls/ml/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "ടെംപ്ലേറ്റ് ടെക്സ്റ്റ്",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "വിവരണം",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "ഫയൽ എക്സ്റ്റൻഷൻ",
-  "COLLAPSE_ALL_FOLDERS": "എല്ലാ ഫോൾഡറുകളും ചുരുക്കുക"
+  "SIGNED_OUT_FAILED_MESSAGE": "ലോഗ്ഔട്ട് ചെയ്യുന്നതിൽ പിഴവ് സംഭവിച്ചു. ശരി ക്ലിക്ക് ചെയ്ത് <a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a> തുറന്ന് ലോഗ്ഔട്ട് ചെയ്യുക.",
+  "SIGN_IN_WAITING_TITLE": "സൈൻ ഇൻ ചെയ്യുന്നതിനായി കാത്തിരിക്കുന്നു",
+  "SIGN_IN_WAITING_MESSAGE": "പുതിയ ടാബിൽ സൈൻ-ഇൻ പൂർത്തിയാക്കി ഇവിടേക്ക് തിരികെ വരിക.",
+  "WAITING_FOR_LOGIN": "ലോഗിൻ ചെയ്യുന്നതിനായി കാത്തിരിക്കുന്നു…",
+  "CHECK_NOW": "ഇപ്പോൾ പരിശോധിക്കുക",
+  "CHECKING": "പരിശോധിക്കുന്നു…",
+  "CHECKING_STATUS": "ലോഗിൻ സ്റ്റാറ്റസ് പരിശോധിക്കുന്നു…",
+  "NOT_SIGNED_IN_YET": "ഇതുവരെ സൈൻ ഇൻ ചെയ്തിട്ടില്ല. മറ്റൊരു ടാബിൽ സൈൻ-ഇൻ പൂർത്തിയാക്കുക.",
+  "WELCOME_BACK": "{0}, വീണ്ടും സ്വാഗതം!",
+  "POPUP_BLOCKED": "പോപ്പ്-അപ്പ് തടഞ്ഞിരിക്കുന്നു. പോപ്പ്-അപ്പുകൾ അനുവദിച്ചതിനുശേഷം വീണ്ടും ശ്രമിക്കുക, അല്ലെങ്കിൽ {0} ലേക്ക് നേരിട്ട് പോകുക."
 });
 /*
  * GNU AGPL-3.0 License
@@ -102785,7 +102974,6 @@ define("nls/nb/strings", {
   "SIGNED_IN_FAILED_TITLE": "Kan ikke logge inn",
   "SIGNED_IN_FAILED_MESSAGE": "Noe gikk galt under innlogging. Prøv igjen.",
   "SIGNED_OUT_FAILED_TITLE": "Kunne ikke logge ut",
-  "SIGNED_OUT_FAILED_MESSAGE": "Noe gikk galt under utlogging. Prøv igjen.",
   "VALIDATION_CODE_TITLE": "Verifikasjonskode for pålogging",
   "VALIDATION_CODE_MESSAGE": "Bruk denne verifikasjonskoden for å logge inn på {APP_NAME}-kontoen din:",
   "COPY_VALIDATION_CODE": "Kopier kode",
@@ -102798,6 +102986,7 @@ define("nls/nb/strings", {
   "ACCOUNT_DETAILS": "Kontodetaljer",
   "AI_QUOTA_USED": "AI-kvote brukt",
   "LOGIN_REFRESH": "Sjekk innloggingsstatus",
+  "COLLAPSE_ALL_FOLDERS": "Skjul alle mapper",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Egendefinerte kodesnutter…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Egendefinerte kodesnutter",
   "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Legg til snutt",
@@ -102838,7 +103027,16 @@ define("nls/nb/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Maltekst",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Beskrivelse",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Filtype",
-  "COLLAPSE_ALL_FOLDERS": "Skjul alle mapper"
+  "SIGNED_OUT_FAILED_MESSAGE": "Noe gikk galt under utlogging. Trykk OK for å åpne <a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a> hvor du kan logge ut manuelt.",
+  "SIGN_IN_WAITING_TITLE": "Venter på pålogging",
+  "SIGN_IN_WAITING_MESSAGE": "Fullfør påloggingen i den nye fanen, og returner deretter hit.",
+  "WAITING_FOR_LOGIN": "Venter på pålogging…",
+  "CHECK_NOW": "Sjekk nå",
+  "CHECKING": "Sjekker…",
+  "CHECKING_STATUS": "Sjekker påloggingsstatus…",
+  "NOT_SIGNED_IN_YET": "Ikke logget inn ennå. Vennligst fullfør påloggingen i den andre fanen.",
+  "WELCOME_BACK": "Velkommen tilbake, {0}!",
+  "POPUP_BLOCKED": "Popup blokkert. Tillat popup-vinduer og prøv igjen, eller gå manuelt til {0}"
 });
 /*
  * GNU AGPL-3.0 License
@@ -104263,7 +104461,6 @@ define("nls/nl/strings", {
   "SIGNED_IN_FAILED_TITLE": "Aanmelden mislukt",
   "SIGNED_IN_FAILED_MESSAGE": "Er is iets misgegaan tijdens het aanmelden. Probeer het opnieuw.",
   "SIGNED_OUT_FAILED_TITLE": "Afmelden mislukt",
-  "SIGNED_OUT_FAILED_MESSAGE": "Er is iets misgegaan tijdens het afmelden. Probeer het opnieuw.",
   "VALIDATION_CODE_TITLE": "Verificatiecode",
   "VALIDATION_CODE_MESSAGE": "Gebruik deze verificatiecode om in te loggen op uw {APP_NAME}-account:",
   "COPY_VALIDATION_CODE": "Code kopiëren",
@@ -104276,6 +104473,7 @@ define("nls/nl/strings", {
   "ACCOUNT_DETAILS": "Accountgegevens",
   "AI_QUOTA_USED": "Verbruikt AI-quotum",
   "LOGIN_REFRESH": "Aanmeldstatus controleren",
+  "COLLAPSE_ALL_FOLDERS": "Alle mappen samenvouwen",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Aangepaste fragmenten…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Aangepaste fragmenten",
   "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Fragment toevoegen",
@@ -104316,7 +104514,16 @@ define("nls/nl/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Sjabloontekst",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Beschrijving",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Bestandsextensie",
-  "COLLAPSE_ALL_FOLDERS": "Alle mappen samenvouwen"
+  "SIGNED_OUT_FAILED_MESSAGE": "Er is iets misgegaan tijdens het uitloggen. Klik op OK om <a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a> te openen, waar u handmatig kunt uitloggen.",
+  "SIGN_IN_WAITING_TITLE": "Aanmelden wordt verwerkt",
+  "SIGN_IN_WAITING_MESSAGE": "Voltooi de aanmelding in het nieuwe tabblad en keer hier terug.",
+  "WAITING_FOR_LOGIN": "Aanmelden...",
+  "CHECK_NOW": "Nu controleren",
+  "CHECKING": "Controleren...",
+  "CHECKING_STATUS": "Aanmeldstatus controleren...",
+  "NOT_SIGNED_IN_YET": "U bent nog niet aangemeld. Voltooi de aanmelding in het andere tabblad.",
+  "WELCOME_BACK": "Welkom terug, {0}!",
+  "POPUP_BLOCKED": "Pop-up geblokkeerd. Sta pop-ups toe en probeer het opnieuw, of ga handmatig naar {0}"
 });
 /*
  * GNU AGPL-3.0 License
@@ -105741,7 +105948,6 @@ define("nls/pl/strings", {
   "SIGNED_IN_FAILED_TITLE": "Nie można się zalogować",
   "SIGNED_IN_FAILED_MESSAGE": "Coś poszło nie tak podczas logowania. Spróbuj ponownie.",
   "SIGNED_OUT_FAILED_TITLE": "Nie udało się wylogować",
-  "SIGNED_OUT_FAILED_MESSAGE": "Coś poszło nie tak podczas wylogowywania. Spróbuj ponownie.",
   "VALIDATION_CODE_TITLE": "Kod weryfikacyjny logowania",
   "VALIDATION_CODE_MESSAGE": "Użyj tego kodu weryfikacyjnego, aby zalogować się do swojego konta {APP_NAME}:",
   "COPY_VALIDATION_CODE": "Kopiuj kod",
@@ -105754,6 +105960,7 @@ define("nls/pl/strings", {
   "ACCOUNT_DETAILS": "Szczegóły konta",
   "AI_QUOTA_USED": "Wykorzystany limit AI",
   "LOGIN_REFRESH": "Sprawdź status logowania",
+  "COLLAPSE_ALL_FOLDERS": "Zwiń wszystkie foldery",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Własne fragmenty kodu…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Własne fragmenty kodu",
   "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Dodaj fragment kodu",
@@ -105794,7 +106001,16 @@ define("nls/pl/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Treść szablonu",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Opis",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Rozszerzenie pliku",
-  "COLLAPSE_ALL_FOLDERS": "Zwiń wszystkie foldery"
+  "SIGNED_OUT_FAILED_MESSAGE": "Wystąpił błąd podczas wylogowywania. Naciśnij OK, aby otworzyć <a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a>, gdzie możesz wylogować się ręcznie.",
+  "SIGN_IN_WAITING_TITLE": "Oczekiwanie na logowanie",
+  "SIGN_IN_WAITING_MESSAGE": "Dokończ logowanie w nowej karcie, a następnie wróć tutaj.",
+  "WAITING_FOR_LOGIN": "Oczekiwanie na logowanie…",
+  "CHECK_NOW": "Sprawdź teraz",
+  "CHECKING": "Sprawdzanie…",
+  "CHECKING_STATUS": "Sprawdzanie statusu logowania…",
+  "NOT_SIGNED_IN_YET": "Nie zalogowano. Dokończ logowanie w drugiej karcie.",
+  "WELCOME_BACK": "Witaj ponownie, {0}!",
+  "POPUP_BLOCKED": "Okno podręczne zablokowane. Zezwól na okna podręczne i spróbuj ponownie lub przejdź ręcznie do {0}"
 });
 /*
  * GNU AGPL-3.0 License
@@ -107219,7 +107435,6 @@ define("nls/pt-br/strings", {
   "SIGNED_IN_FAILED_TITLE": "Não é possível fazer login",
   "SIGNED_IN_FAILED_MESSAGE": "Algo deu errado ao tentar fazer login. Tente novamente.",
   "SIGNED_OUT_FAILED_TITLE": "Falha ao desconectar",
-  "SIGNED_OUT_FAILED_MESSAGE": "Algo deu errado ao tentar desconectar. Tente novamente.",
   "VALIDATION_CODE_TITLE": "Código de Verificação para Login",
   "VALIDATION_CODE_MESSAGE": "Use este código de verificação para entrar na sua conta do {APP_NAME}:",
   "COPY_VALIDATION_CODE": "Copiar Código",
@@ -107232,6 +107447,7 @@ define("nls/pt-br/strings", {
   "ACCOUNT_DETAILS": "Detalhes da Conta",
   "AI_QUOTA_USED": "Cota de IA usada",
   "LOGIN_REFRESH": "Verificar Status de Login",
+  "COLLAPSE_ALL_FOLDERS": "Recolher Todas as Pastas",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Trechos Personalizados…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Trechos Personalizados",
   "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Adicionar Snippet",
@@ -107272,7 +107488,16 @@ define("nls/pt-br/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Texto do Modelo",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Descrição",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensão do Arquivo",
-  "COLLAPSE_ALL_FOLDERS": "Recolher Todas as Pastas"
+  "SIGNED_OUT_FAILED_MESSAGE": "Ocorreu um erro ao sair. Clique em OK para abrir <a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a> onde você pode sair manualmente.",
+  "SIGN_IN_WAITING_TITLE": "Aguardando login",
+  "SIGN_IN_WAITING_MESSAGE": "Conclua o login na nova guia e retorne aqui.",
+  "WAITING_FOR_LOGIN": "Aguardando login…",
+  "CHECK_NOW": "Verificar agora",
+  "CHECKING": "Verificando…",
+  "CHECKING_STATUS": "Verificando status do login…",
+  "NOT_SIGNED_IN_YET": "Você ainda não está conectado. Conclua o login na outra guia.",
+  "WELCOME_BACK": "Bem-vindo de volta, {0}!",
+  "POPUP_BLOCKED": "Pop-up bloqueado. Permita pop-ups e tente novamente ou navegue manualmente até {0}"
 });
 /*
  * GNU AGPL-3.0 License
@@ -108695,7 +108920,6 @@ define("nls/pt-pt/strings", {
   "SIGNED_IN_FAILED_TITLE": "Não é possível iniciar sessão",
   "SIGNED_IN_FAILED_MESSAGE": "Ocorreu um erro ao tentar iniciar sessão. Tente novamente.",
   "SIGNED_OUT_FAILED_TITLE": "Falha ao terminar sessão",
-  "SIGNED_OUT_FAILED_MESSAGE": "Ocorreu um erro ao tentar terminar sessão. Tente novamente.",
   "VALIDATION_CODE_TITLE": "Código de Verificação de Início de Sessão",
   "VALIDATION_CODE_MESSAGE": "Utilize este código de verificação para iniciar sessão na sua conta {APP_NAME}:",
   "COPY_VALIDATION_CODE": "Copiar Código",
@@ -108708,6 +108932,7 @@ define("nls/pt-pt/strings", {
   "ACCOUNT_DETAILS": "Detalhes da Conta",
   "AI_QUOTA_USED": "Quota de IA utilizada",
   "LOGIN_REFRESH": "Verificar estado de início de sessão",
+  "COLLAPSE_ALL_FOLDERS": "Recolher Todas as Pastas",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Fragmentos Personalizados…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Fragmentos Personalizados",
   "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Adicionar Snippet",
@@ -108748,7 +108973,16 @@ define("nls/pt-pt/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Texto do Modelo",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Descrição",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensão de Ficheiro",
-  "COLLAPSE_ALL_FOLDERS": "Recolher Todas as Pastas"
+  "SIGNED_OUT_FAILED_MESSAGE": "Ocorreu um erro ao terminar a sessão. Prima OK para abrir <a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a> onde pode terminar a sessão manualmente.",
+  "SIGN_IN_WAITING_TITLE": "A aguardar início de sessão",
+  "SIGN_IN_WAITING_MESSAGE": "Conclua o início de sessão no novo separador e volte para aqui.",
+  "WAITING_FOR_LOGIN": "A iniciar sessão…",
+  "CHECK_NOW": "Verificar agora",
+  "CHECKING": "A verificar…",
+  "CHECKING_STATUS": "A verificar o estado do início de sessão…",
+  "NOT_SIGNED_IN_YET": "Ainda não iniciou sessão. Conclua o início de sessão no outro separador.",
+  "WELCOME_BACK": "Bem-vindo de volta, {0}!",
+  "POPUP_BLOCKED": "Janela pop-up bloqueada. Permita janelas pop-up e tente novamente ou navegue manualmente para {0}"
 });
 /*
  * GNU AGPL-3.0 License
@@ -110171,7 +110405,6 @@ define("nls/ro/strings", {
   "SIGNED_IN_FAILED_TITLE": "Autentificarea nu este posibilă",
   "SIGNED_IN_FAILED_MESSAGE": "Ceva nu a mers bine în timpul autentificării. Te rugăm să încerci din nou.",
   "SIGNED_OUT_FAILED_TITLE": "Deconectare eșuată",
-  "SIGNED_OUT_FAILED_MESSAGE": "Ceva nu a mers bine în timpul deconectării. Te rugăm să încerci din nou.",
   "VALIDATION_CODE_TITLE": "Cod de verificare pentru conectare",
   "VALIDATION_CODE_MESSAGE": "Te rugăm să folosești acest cod de verificare pentru a te conecta la contul tău {APP_NAME}:",
   "COPY_VALIDATION_CODE": "Copiază codul",
@@ -110184,6 +110417,7 @@ define("nls/ro/strings", {
   "ACCOUNT_DETAILS": "Detalii cont",
   "AI_QUOTA_USED": "Cotă AI utilizată",
   "LOGIN_REFRESH": "Verificare stare autentificare",
+  "COLLAPSE_ALL_FOLDERS": "Restrânge Toate Folderele",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Fragmente de cod personalizate…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Fragmente de cod personalizate",
   "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Adaugă fragment de cod",
@@ -110224,7 +110458,16 @@ define("nls/ro/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Text șablon",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Descriere",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensie fișier",
-  "COLLAPSE_ALL_FOLDERS": "Restrânge Toate Folderele"
+  "SIGNED_OUT_FAILED_MESSAGE": "A apărut o eroare la deconectare. Apăsați OK pentru a deschide <a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a> unde vă puteți deconecta manual.",
+  "SIGN_IN_WAITING_TITLE": "Se așteaptă autentificarea",
+  "SIGN_IN_WAITING_MESSAGE": "Finalizați autentificarea în noua filă, apoi reveniți aici.",
+  "WAITING_FOR_LOGIN": "Se așteaptă autentificarea…",
+  "CHECK_NOW": "Verifică acum",
+  "CHECKING": "Se verifică…",
+  "CHECKING_STATUS": "Se verifică starea de autentificare…",
+  "NOT_SIGNED_IN_YET": "Nu sunteți încă autentificat. Vă rugăm finalizați autentificarea în cealaltă filă.",
+  "WELCOME_BACK": "Bine ai revenit, {0}!",
+  "POPUP_BLOCKED": "Fereastră pop-up blocată. Vă rugăm permiteți ferestrele pop-up și încercați din nou sau navigați manual la {0}"
 });
 /*
  * GNU AGPL-3.0 License
@@ -113379,7 +113622,6 @@ define("nls/ru/strings", {
   "SIGNED_IN_FAILED_TITLE": "Не удаётся войти",
   "SIGNED_IN_FAILED_MESSAGE": "Что-то пошло не так при попытке входа. Пожалуйста, попробуйте ещё раз.",
   "SIGNED_OUT_FAILED_TITLE": "Не удалось выйти из системы",
-  "SIGNED_OUT_FAILED_MESSAGE": "Что-то пошло не так при попытке выхода из системы. Пожалуйста, попробуйте ещё раз.",
   "VALIDATION_CODE_TITLE": "Код подтверждения входа",
   "VALIDATION_CODE_MESSAGE": "Пожалуйста, используйте этот код подтверждения для входа в вашу учетную запись {APP_NAME}:",
   "COPY_VALIDATION_CODE": "Скопировать код",
@@ -113392,6 +113634,7 @@ define("nls/ru/strings", {
   "ACCOUNT_DETAILS": "Сведения об учетной записи",
   "AI_QUOTA_USED": "Использована квота ИИ",
   "LOGIN_REFRESH": "Проверить статус входа",
+  "COLLAPSE_ALL_FOLDERS": "Свернуть все папки",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Пользовательские сниппеты…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Пользовательские сниппеты",
   "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Добавить фрагмент",
@@ -113432,7 +113675,16 @@ define("nls/ru/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Текст шаблона",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Описание",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Расширение файла",
-  "COLLAPSE_ALL_FOLDERS": "Свернуть все папки"
+  "SIGNED_OUT_FAILED_MESSAGE": "При выходе из системы произошла ошибка. Нажмите «ОК», чтобы открыть <a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a>, где вы можете выйти вручную.",
+  "SIGN_IN_WAITING_TITLE": "Ожидание входа",
+  "SIGN_IN_WAITING_MESSAGE": "Пожалуйста, завершите вход в новой вкладке, затем вернитесь сюда.",
+  "WAITING_FOR_LOGIN": "Ожидание входа…",
+  "CHECK_NOW": "Проверить сейчас",
+  "CHECKING": "Проверка…",
+  "CHECKING_STATUS": "Проверка статуса входа…",
+  "NOT_SIGNED_IN_YET": "Вы ещё не вошли в систему. Пожалуйста, завершите вход в другой вкладке.",
+  "WELCOME_BACK": "С возвращением, {0}!",
+  "POPUP_BLOCKED": "Всплывающее окно заблокировано. Разрешите всплывающие окна и попробуйте снова или перейдите вручную по адресу {0}"
 });
 /*
  * GNU AGPL-3.0 License
@@ -114857,7 +115109,6 @@ define("nls/sk/strings", {
   "SIGNED_IN_FAILED_TITLE": "Nie je možné sa prihlásiť",
   "SIGNED_IN_FAILED_MESSAGE": "Pri pokuse o prihlásenie sa vyskytla chyba. Skúste to znova.",
   "SIGNED_OUT_FAILED_TITLE": "Odhlásenie zlyhalo",
-  "SIGNED_OUT_FAILED_MESSAGE": "Pri pokuse o odhlásenie sa vyskytla chyba. Skúste to znova.",
   "VALIDATION_CODE_TITLE": "Overovací kód pre prihlásenie",
   "VALIDATION_CODE_MESSAGE": "Prosím, použite tento overovací kód na prihlásenie do vášho {APP_NAME} účtu:",
   "COPY_VALIDATION_CODE": "Kopírovať kód",
@@ -114870,6 +115121,7 @@ define("nls/sk/strings", {
   "ACCOUNT_DETAILS": "Detaily účtu",
   "AI_QUOTA_USED": "Využité AI kvóty",
   "LOGIN_REFRESH": "Skontrolovať stav prihlásenia",
+  "COLLAPSE_ALL_FOLDERS": "Zbaliť všetky priečinky",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Vlastné úryvky…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Vlastné úryvky",
   "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Pridať úryvok",
@@ -114910,7 +115162,16 @@ define("nls/sk/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Text šablóny",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Popis",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Prípona súboru",
-  "COLLAPSE_ALL_FOLDERS": "Zbaliť všetky priečinky"
+  "SIGNED_OUT_FAILED_MESSAGE": "Pri odhlásení sa vyskytla chyba. Stlačte OK pre otvorenie <a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a>, kde sa môžete odhlásiť manuálne.",
+  "SIGN_IN_WAITING_TITLE": "Čaká sa na prihlásenie",
+  "SIGN_IN_WAITING_MESSAGE": "Dokončite prihlásenie v novom okne a potom sa sem vráťte.",
+  "WAITING_FOR_LOGIN": "Prihlasovanie…",
+  "CHECK_NOW": "Skontrolovať teraz",
+  "CHECKING": "Kontroluje sa…",
+  "CHECKING_STATUS": "Kontroluje sa stav prihlásenia…",
+  "NOT_SIGNED_IN_YET": "Zatiaľ nie ste prihlásený. Dokončite prihlásenie v druhom okne.",
+  "WELCOME_BACK": "Vitajte späť, {0}!",
+  "POPUP_BLOCKED": "Vyskakovacie okno bolo zablokované. Povoľte vyskakovacie okná a skúste to znova alebo prejdite manuálne na {0}"
 });
 /*
  * GNU AGPL-3.0 License
@@ -116334,7 +116595,6 @@ define("nls/sr/strings", {
   "SIGNED_IN_FAILED_TITLE": "Није могуће пријавити се",
   "SIGNED_IN_FAILED_MESSAGE": "Дошло је до грешке приликом пријављивања. Молимо вас покушајте поново.",
   "SIGNED_OUT_FAILED_TITLE": "Одјављивање није успело",
-  "SIGNED_OUT_FAILED_MESSAGE": "Дошло је до грешке приликом одјављивања. Молимо вас покушајте поново.",
   "VALIDATION_CODE_TITLE": "Код за потврду пријаве",
   "VALIDATION_CODE_MESSAGE": "Молимо Вас да користите овај код за потврду како бисте се пријавили на ваш {APP_NAME} налог:",
   "COPY_VALIDATION_CODE": "Копирај код",
@@ -116347,6 +116607,7 @@ define("nls/sr/strings", {
   "ACCOUNT_DETAILS": "Подаци о налогу",
   "AI_QUOTA_USED": "Искоришћена AI квота",
   "LOGIN_REFRESH": "Провери статус пријаве",
+  "COLLAPSE_ALL_FOLDERS": "Скупи све фасцикле",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Кориснички исечци…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Кориснички исечци",
   "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Додај исечак",
@@ -116387,7 +116648,16 @@ define("nls/sr/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Текст шаблона",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Опис",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Екстензија датотеке",
-  "COLLAPSE_ALL_FOLDERS": "Скупи све фасцикле"
+  "SIGNED_OUT_FAILED_MESSAGE": "Дошло је до грешке приликом одјављивања. Притисните OK да бисте отворили <a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a> где можете ручно да се одјавите.",
+  "SIGN_IN_WAITING_TITLE": "Чека се пријављивање",
+  "SIGN_IN_WAITING_MESSAGE": "Молимо Вас да завршите пријављивање у новом табу, а затим се вратите овде.",
+  "WAITING_FOR_LOGIN": "Пријављивање у току…",
+  "CHECK_NOW": "Провери сада",
+  "CHECKING": "Проверава се…",
+  "CHECKING_STATUS": "Проверава се статус пријаве…",
+  "NOT_SIGNED_IN_YET": "Још увек нисте пријављени. Молимо Вас да завршите пријављивање у другом табу.",
+  "WELCOME_BACK": "Добродошли назад, {0}!",
+  "POPUP_BLOCKED": "Искачући прозор је блокиран. Молимо Вас да дозволите искачуће прозоре и покушате поново или ручно пређите на {0}"
 });
 /*
  * GNU AGPL-3.0 License
@@ -117895,7 +118165,6 @@ define("nls/sv/strings", {
   "SIGNED_IN_FAILED_TITLE": "Kan inte logga in",
   "SIGNED_IN_FAILED_MESSAGE": "Något gick fel när du försökte logga in. Försök igen.",
   "SIGNED_OUT_FAILED_TITLE": "Kunde inte logga ut",
-  "SIGNED_OUT_FAILED_MESSAGE": "Något gick fel när du försökte logga ut. Försök igen.",
   "VALIDATION_CODE_TITLE": "Verifieringskod för inloggning",
   "VALIDATION_CODE_MESSAGE": "Använd denna verifieringskod för att logga in på ditt {APP_NAME}-konto:",
   "COPY_VALIDATION_CODE": "Kopiera kod",
@@ -117908,6 +118177,7 @@ define("nls/sv/strings", {
   "ACCOUNT_DETAILS": "Kontodetaljer",
   "AI_QUOTA_USED": "Använd AI-kvot",
   "LOGIN_REFRESH": "Kontrollera inloggningsstatus",
+  "COLLAPSE_ALL_FOLDERS": "Komprimera alla mappar",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Anpassade kodsnuttar…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Anpassade kodsnuttar",
   "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Lägg till snippet",
@@ -117948,7 +118218,16 @@ define("nls/sv/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Malltext",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Beskrivning",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Filändelse",
-  "COLLAPSE_ALL_FOLDERS": "Komprimera alla mappar"
+  "SIGNED_OUT_FAILED_MESSAGE": "Något gick fel vid utloggningen. Tryck på OK för att öppna <a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a> där du kan logga ut manuellt.",
+  "SIGN_IN_WAITING_TITLE": "Väntar på inloggning",
+  "SIGN_IN_WAITING_MESSAGE": "Slutför inloggningen i den nya fliken och återvänd sedan hit.",
+  "WAITING_FOR_LOGIN": "Väntar på inloggning…",
+  "CHECK_NOW": "Kontrollera nu",
+  "CHECKING": "Kontrollerar…",
+  "CHECKING_STATUS": "Kontrollerar inloggningsstatus…",
+  "NOT_SIGNED_IN_YET": "Inte inloggad än. Slutför inloggningen i den andra fliken.",
+  "WELCOME_BACK": "Välkommen tillbaka, {0}!",
+  "POPUP_BLOCKED": "Popup-fönster blockerades. Tillåt popup-fönster och försök igen, eller gå manuellt till {0}"
 });
 /*
  * GNU AGPL-3.0 License
@@ -119373,7 +119652,6 @@ define("nls/tr/strings", {
   "SIGNED_IN_FAILED_TITLE": "Oturum Açılamıyor",
   "SIGNED_IN_FAILED_MESSAGE": "Oturum açmaya çalışırken bir hata oluştu. Lütfen tekrar deneyin.",
   "SIGNED_OUT_FAILED_TITLE": "Oturum Kapatılamadı",
-  "SIGNED_OUT_FAILED_MESSAGE": "Oturum kapatmaya çalışırken bir hata oluştu. Lütfen tekrar deneyin.",
   "VALIDATION_CODE_TITLE": "Doğrulama Kodu",
   "VALIDATION_CODE_MESSAGE": "Lütfen {APP_NAME} hesabınıza giriş yapmak için bu Doğrulama kodunu kullanın:",
   "COPY_VALIDATION_CODE": "Kodu Kopyala",
@@ -119386,6 +119664,7 @@ define("nls/tr/strings", {
   "ACCOUNT_DETAILS": "Hesap Ayrıntıları",
   "AI_QUOTA_USED": "Yapay Zeka kotası kullanıldı",
   "LOGIN_REFRESH": "Oturum Durumunu Kontrol Et",
+  "COLLAPSE_ALL_FOLDERS": "Tüm Klasörleri Daralt",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Özel Parçacıklar…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Özel Parçacıklar",
   "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Parça Ekle",
@@ -119426,7 +119705,16 @@ define("nls/tr/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Şablon Metni",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Açıklama",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Dosya Uzantısı",
-  "COLLAPSE_ALL_FOLDERS": "Tüm Klasörleri Daralt"
+  "SIGNED_OUT_FAILED_MESSAGE": "Oturum kapatılırken bir hata oluştu. <a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a> adresini açmak ve oturumu manuel olarak kapatmak için Tamam'a basın.",
+  "SIGN_IN_WAITING_TITLE": "Oturum Açma Bekleniyor",
+  "SIGN_IN_WAITING_MESSAGE": "Lütfen yeni sekmede oturum açmayı tamamlayın ve buraya geri dönün.",
+  "WAITING_FOR_LOGIN": "Oturum açılıyor…",
+  "CHECK_NOW": "Şimdi Kontrol Et",
+  "CHECKING": "Kontrol ediliyor…",
+  "CHECKING_STATUS": "Oturum açma durumu kontrol ediliyor…",
+  "NOT_SIGNED_IN_YET": "Henüz oturum açılmadı. Lütfen diğer sekmede oturum açmayı tamamlayın.",
+  "WELCOME_BACK": "Tekrar hoş geldiniz, {0}!",
+  "POPUP_BLOCKED": "Açılır pencere engellendi. Lütfen açılır pencerelere izin verin ve tekrar deneyin veya {0} adresine manuel olarak gidin."
 });
 /*
  * GNU AGPL-3.0 License
@@ -120851,7 +121139,6 @@ define("nls/uk/strings", {
   "SIGNED_IN_FAILED_TITLE": "Не вдається увійти",
   "SIGNED_IN_FAILED_MESSAGE": "Щось пішло не так під час спроби входу. Будь ласка, спробуйте ще раз.",
   "SIGNED_OUT_FAILED_TITLE": "Не вдалося вийти з системи",
-  "SIGNED_OUT_FAILED_MESSAGE": "Щось пішло не так під час спроби виходу. Будь ласка, спробуйте ще раз.",
   "VALIDATION_CODE_TITLE": "Код підтвердження входу",
   "VALIDATION_CODE_MESSAGE": "Будь ласка, скористайтеся цим кодом підтвердження, щоб увійти до свого облікового запису {APP_NAME}:",
   "COPY_VALIDATION_CODE": "Копіювати код",
@@ -120864,6 +121151,7 @@ define("nls/uk/strings", {
   "ACCOUNT_DETAILS": "Дані облікового запису",
   "AI_QUOTA_USED": "Використано квоту ШІ",
   "LOGIN_REFRESH": "Перевірити статус входу",
+  "COLLAPSE_ALL_FOLDERS": "Згорнути всі папки",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Власні сніпети…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "Власні сніпети",
   "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "Додати фрагмент коду",
@@ -120904,7 +121192,16 @@ define("nls/uk/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Текст шаблону",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Опис",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Розширення файлу",
-  "COLLAPSE_ALL_FOLDERS": "Згорнути всі папки"
+  "SIGNED_OUT_FAILED_MESSAGE": "Сталася помилка під час виходу з облікового запису. Натисніть OK, щоб відкрити <a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a>, де ви можете вийти вручну.",
+  "SIGN_IN_WAITING_TITLE": "Очікування на вхід",
+  "SIGN_IN_WAITING_MESSAGE": "Будь ласка, завершіть вхід у новій вкладці, а потім поверніться сюди.",
+  "WAITING_FOR_LOGIN": "Очікування на вхід…",
+  "CHECK_NOW": "Перевірити зараз",
+  "CHECKING": "Перевірка…",
+  "CHECKING_STATUS": "Перевірка статусу входу…",
+  "NOT_SIGNED_IN_YET": "Ви ще не ввійшли. Будь ласка, завершіть вхід в іншій вкладці.",
+  "WELCOME_BACK": "Ласкаво просимо назад, {0}!",
+  "POPUP_BLOCKED": "Спливаюче вікно заблоковано. Будь ласка, дозвольте спливаючі вікна та спробуйте ще раз або перейдіть вручну до {0}"
 });
 /*
  * GNU AGPL-3.0 License
@@ -122329,7 +122626,6 @@ define("nls/ur/strings", {
   "SIGNED_IN_FAILED_TITLE": "سائن ان نہیں ہو سکتا",
   "SIGNED_IN_FAILED_MESSAGE": "سائن ان کرنے کی کوشش میں کچھ غلط ہو گیا۔ براہ کرم دوبارہ کوشش کریں۔",
   "SIGNED_OUT_FAILED_TITLE": "سائن آؤٹ ناکام",
-  "SIGNED_OUT_FAILED_MESSAGE": "سائن آؤٹ کرنے کی کوشش میں کچھ غلط ہو گیا۔ براہ کرم دوبارہ کوشش کریں۔",
   "VALIDATION_CODE_TITLE": "تصدیقی کوڈ",
   "VALIDATION_CODE_MESSAGE": "برائے مہربانی اپنے {APP_NAME} اکاؤنٹ میں سائن ان کرنے کیلئے اس تصدیقی کوڈ کا استعمال کریں:",
   "COPY_VALIDATION_CODE": "کوڈ نقل کریں",
@@ -122342,6 +122638,7 @@ define("nls/ur/strings", {
   "ACCOUNT_DETAILS": "اکاؤنٹ کی تفصیلات",
   "AI_QUOTA_USED": "استعمال شدہ اے آئی کوٹہ",
   "LOGIN_REFRESH": "لاگ ان کی حیثیت چیک کریں",
+  "COLLAPSE_ALL_FOLDERS": "تمام فولڈرز بند کریں",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "حسب ضرورت سنیپٹس…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "حسب ضرورت سنیپٹس",
   "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "کوڈ کا ٹکڑا شامل کریں",
@@ -122382,7 +122679,16 @@ define("nls/ur/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "ٹیمپلیٹ متن",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "وضاحت",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "فائل ایکسٹینشن",
-  "COLLAPSE_ALL_FOLDERS": "تمام فولڈرز بند کریں"
+  "SIGNED_OUT_FAILED_MESSAGE": "لاگ آؤٹ ہوتے وقت کچھ غلط ہو گیا۔ براہ کرم <a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a> کھولنے کے لیے ٹھیک ہے دبائیں جہاں آپ دستی طور پر لاگ آؤٹ کر سکتے ہیں۔",
+  "SIGN_IN_WAITING_TITLE": "سائن ان کا انتظار ہے",
+  "SIGN_IN_WAITING_MESSAGE": "براہ کرم نئے ٹیب میں سائن ان مکمل کریں، پھر یہاں واپس آئیں۔",
+  "WAITING_FOR_LOGIN": "لاگ ان کا انتظار ہے…",
+  "CHECK_NOW": "ابھی چیک کریں",
+  "CHECKING": "جانچ پڑتال ہو رہی ہے…",
+  "CHECKING_STATUS": "لاگ ان کی حیثیت چیک کر رہے ہیں…",
+  "NOT_SIGNED_IN_YET": "ابھی تک سائن ان نہیں ہوا ہے۔ براہ کرم دوسرے ٹیب میں سائن ان مکمل کریں۔",
+  "WELCOME_BACK": "خوش آمدید {0}!",
+  "POPUP_BLOCKED": "پاپ اپ بلاک کر دیا گیا۔ براہ کرم پاپ اپ کی اجازت دیں اور دوبارہ کوشش کریں، یا دستی طور پر {0} پر جائیں۔"
 });
 /*
  * GNU AGPL-3.0 License
@@ -123837,7 +124143,6 @@ define("nls/zh-cn/strings", {
   "SIGNED_IN_FAILED_TITLE": "无法登录",
   "SIGNED_IN_FAILED_MESSAGE": "登录时出现问题。请重试。",
   "SIGNED_OUT_FAILED_TITLE": "退出登录失败",
-  "SIGNED_OUT_FAILED_MESSAGE": "退出登录时出现问题。请重试。",
   "VALIDATION_CODE_TITLE": "登录验证码",
   "VALIDATION_CODE_MESSAGE": "请使用此验证码登录您的{APP_NAME}帐户：",
   "COPY_VALIDATION_CODE": "复制验证码",
@@ -123850,6 +124155,7 @@ define("nls/zh-cn/strings", {
   "ACCOUNT_DETAILS": "帐户详情",
   "AI_QUOTA_USED": "AI 配额已用",
   "LOGIN_REFRESH": "检查登录状态",
+  "COLLAPSE_ALL_FOLDERS": "折叠所有文件夹",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "自定义代码片段…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "自定义代码片段",
   "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "添加代码片段",
@@ -123890,7 +124196,16 @@ define("nls/zh-cn/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "模板文本",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "描述",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "文件扩展名",
-  "COLLAPSE_ALL_FOLDERS": "折叠所有文件夹"
+  "SIGNED_OUT_FAILED_MESSAGE": "登出时出错。请按“确定”打开<a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a>手动登出。",
+  "SIGN_IN_WAITING_TITLE": "等待登录",
+  "SIGN_IN_WAITING_MESSAGE": "请在新标签页中完成登录，然后返回此处。",
+  "WAITING_FOR_LOGIN": "正在登录…",
+  "CHECK_NOW": "立即检查",
+  "CHECKING": "正在检查…",
+  "CHECKING_STATUS": "正在检查登录状态…",
+  "NOT_SIGNED_IN_YET": "尚未登录。请在另一个标签页中完成登录。",
+  "WELCOME_BACK": "欢迎回来，{0}！",
+  "POPUP_BLOCKED": "弹窗被阻止。请允许弹窗并重试，或手动导航至 {0}"
 });
 /*
  * GNU AGPL-3.0 License
@@ -125315,7 +125630,6 @@ define("nls/zh-tw/strings", {
   "SIGNED_IN_FAILED_TITLE": "無法登入",
   "SIGNED_IN_FAILED_MESSAGE": "登入時發生錯誤。請再試一次。",
   "SIGNED_OUT_FAILED_TITLE": "登出失敗",
-  "SIGNED_OUT_FAILED_MESSAGE": "登出時發生錯誤。請再試一次。",
   "VALIDATION_CODE_TITLE": "登入驗證碼",
   "VALIDATION_CODE_MESSAGE": "請使用此驗證碼登入您的 {APP_NAME} 帳號：",
   "COPY_VALIDATION_CODE": "複製驗證碼",
@@ -125328,6 +125642,7 @@ define("nls/zh-tw/strings", {
   "ACCOUNT_DETAILS": "帳號詳細資訊",
   "AI_QUOTA_USED": "AI 配額已使用",
   "LOGIN_REFRESH": "檢查登入狀態",
+  "COLLAPSE_ALL_FOLDERS": "收合所有資料夾",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "自訂程式碼片段…",
   "CUSTOM_SNIPPETS_PANEL_TITLE": "自訂程式碼片段",
   "CUSTOM_SNIPPETS_ADD_PANEL_TITLE": "新增程式碼片段",
@@ -125368,7 +125683,16 @@ define("nls/zh-tw/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "範本文字",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "描述",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "檔案副檔名",
-  "COLLAPSE_ALL_FOLDERS": "收合所有資料夾"
+  "SIGNED_OUT_FAILED_MESSAGE": "登出時發生錯誤。請按一下「確定」開啟 <a href='https://account.phcode.dev/#advanced'>account.phcode.dev</a> 以手動登出。",
+  "SIGN_IN_WAITING_TITLE": "等待登入中",
+  "SIGN_IN_WAITING_MESSAGE": "請在新分頁中完成登入，然後返回此處。",
+  "WAITING_FOR_LOGIN": "正在登入中…",
+  "CHECK_NOW": "立即檢查",
+  "CHECKING": "檢查中…",
+  "CHECKING_STATUS": "正在檢查登入狀態…",
+  "NOT_SIGNED_IN_YET": "您尚未登入。請在另一個分頁中完成登入。",
+  "WELCOME_BACK": "歡迎回來，{0}！",
+  "POPUP_BLOCKED": "彈出視窗遭到封鎖。請允許彈出視窗並重試，或手動前往 {0}"
 });
 /*
  * GNU AGPL-3.0 License
