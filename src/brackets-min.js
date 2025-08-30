@@ -112150,7 +112150,8 @@ define("nls/root/strings", {
     "CHECKING": "Checking\u2026",
     "CHECKING_STATUS": "Checking login status\u2026",
     "NOT_SIGNED_IN_YET": "Not signed in yet. Please complete sign-in in the other tab.",
-    "WELCOME_BACK": "Welcome back, {0}!",
+    "WELCOME_BACK": "Welcome back",
+    "WELCOME_BACK_USER": "Welcome back, {0}!",
     "POPUP_BLOCKED": "Pop-up blocked. Please allow pop-ups and try again, or manually navigate to {0}",
 
     // Collapse Folders
@@ -166145,8 +166146,12 @@ define("services/login-browser", function (require, exports, module) {
     function _onLoginSuccess() {
         if (loginWaitingDialog) {
             const $template = loginWaitingDialog.getElement();
+            const welcomeBackMessage = Phoenix.isNativeApp ?
+                StringUtils.format(Strings.WELCOME_BACK_USER, userProfile.firstName): Strings.WELCOME_BACK;
+            // in desktop app, the apis return full username so we can show `Welcome back, alice`, but in
+            // browser app, we only get name like `a***` due to security posture, so we show `Welcome back` in browser.
             $template.find('#login-status')
-                .text(StringUtils.format(Strings.WELCOME_BACK, userProfile.firstName))
+                .text(welcomeBackMessage)
                 .css('color', '#10b981');
             setTimeout(() => {
                 _cancelLoginWaiting();
