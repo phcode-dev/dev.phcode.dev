@@ -4380,6 +4380,32 @@ define("LiveDevelopment/LiveDevelopmentUtils", function (require, exports, modul
     exports.isStaticHtmlFileExt = isStaticHtmlFileExt;
 });
 
+/*
+ * GNU AGPL-3.0 License
+ *
+ * Copyright (c) 2021 - present core.ai . All rights reserved.
+ * Original work Copyright (c) 2012 - 2021 Adobe Systems Incorporated. All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
+ *
+ */
+
+/*
+ * This file handles all the editor side source code handling after user performed some live preview edit operation
+ * when any operation is performed in the browser context (handled inside remoteFunctions.js) it sends a message through
+ * MessageBroker, now this file then makes the change in the source code
+ */
 define("LiveDevelopment/LivePreviewEdit", function (require, exports, module) {
     const HTMLInstrumentation = require("LiveDevelopment/MultiBrowserImpl/language/HTMLInstrumentation");
     const LiveDevMultiBrowser = require("LiveDevelopment/LiveDevMultiBrowser");
@@ -4576,8 +4602,12 @@ define("LiveDevelopment/LivePreviewEdit", function (require, exports, module) {
         // this is a quick trick because as the code is changed for that element in the file,
         // the live preview for that element gets refreshed and the changes are discarded in the live preview
         if(!message.isEditSuccessful) {
-            editor.replaceRange(text, startPos, endPos);
-            editor.document._markClean();
+            editor.document.batchOperation(function () {
+                editor.replaceRange(text, startPos, endPos);
+                setTimeout(() => {
+                    editor.undo(); // undo the replaceRange so dirty icon won't appear and no net change in undo history
+                }, 0);
+            });
         } else {
 
             // if the edit operation was successful, we call a helper function that
@@ -8169,12 +8199,16 @@ define("LiveDevelopment/main", function main(require, exports, module) {
         ExtensionUtils      = require("utils/ExtensionUtils"),
         StringUtils         = require("utils/StringUtils"),
         EventDispatcher      = require("utils/EventDispatcher"),
-        WorkspaceManager    = require("view/WorkspaceManager");
+        WorkspaceManager    = require("view/WorkspaceManager"),
+        EditorManager      = require("editor/EditorManager");
 
 
     // this is responsible to make the advanced live preview features active or inactive
-    // @abose (make this variable false when not a paid user, everything rest is handled automatically)
-    let isLPEditFeaturesActive = false;
+    // @abose (make the first value true when its a paid user, everything rest is handled automatically)
+    let isProUser = window.KernalModeTrust ? true : false;
+    // when isFreeTrialUser is true isProUser should also be true
+    // when its false, isProUser can be true/false doesn't matter
+    let isFreeTrialUser = true;
 
     const EVENT_LIVE_HIGHLIGHT_PREF_CHANGED = "liveHighlightPrefChange";
 
@@ -8190,7 +8224,7 @@ define("LiveDevelopment/main", function main(require, exports, module) {
             paddingColor: {r: 147, g: 196, b: 125, a: 0.66},
             showInfo: true
         },
-        isLPEditFeaturesActive: isLPEditFeaturesActive,
+        isProUser: isProUser,
         elemHighlights: "hover", // default value, this will get updated when the extension loads
         // this strings are used in RemoteFunctions.js
         // we need to pass this through config as remoteFunctions runs in browser context and cannot
@@ -8434,6 +8468,122 @@ define("LiveDevelopment/main", function main(require, exports, module) {
         return false;
     }
 
+    let $livePreviewPanel = null; // stores the live preview panel, need this as overlay is appended inside this
+    let $overlayContainer = null; // the overlay container
+    let shouldShowSyncErrorOverlay = true; // once user closes the overlay we don't show them again
+    let shouldShowConnectingOverlay = true;
+    let connectingOverlayTimer = null; // this is needed as we show the connecting overlay after 3s
+    let connectingOverlayTimeDuration = 3000;
+
+    /**
+     * this function is responsible to check whether to show the overlay or not and how it should be shown
+     * because if user has closed the overlay manually, we don't show it again
+     * secondly, for connecting overlay we show that after a 3s timer, but sync error overlay is shown immediately
+     * @param {String} textMessage - the text that is written inside the overlay
+     * @param {Number} status - 1 for connect, 4 for sync error but we match it using MultiBrowserLiveDev
+     */
+    function _handleOverlay(textMessage, status) {
+        if (!$livePreviewPanel) {
+            $livePreviewPanel = $("#panel-live-preview");
+        }
+
+        // remove any existing overlay & timer
+        _hideOverlay();
+
+        // to not show the overlays if user has already closed it before
+        if(status === MultiBrowserLiveDev.STATUS_CONNECTING && !shouldShowConnectingOverlay) { return; }
+        if(status === MultiBrowserLiveDev.STATUS_SYNC_ERROR && !shouldShowSyncErrorOverlay) { return; }
+
+        // for connecting status, we delay showing the overlay by 3 seconds
+        if(status === MultiBrowserLiveDev.STATUS_CONNECTING) {
+            connectingOverlayTimer = setTimeout(() => {
+                _createAndShowOverlay(textMessage, status);
+                connectingOverlayTimer = null;
+            }, connectingOverlayTimeDuration);
+            return;
+        }
+
+        // for sync error status, show immediately
+        _createAndShowOverlay(textMessage, status);
+    }
+
+    /**
+     * this function is responsible to create & show the overlay.
+     * so overlay is shown when the live preview is connecting or live preview stopped because of some syntax error
+     * @param {String} textMessage - the text that is written inside the overlay
+     * @param {Number} status - 1 for connect, 4 for sync error but we match it using MultiBrowserLiveDev
+     */
+    function _createAndShowOverlay(textMessage, status) {
+        if (!$livePreviewPanel) {
+            $livePreviewPanel = $("#panel-live-preview");
+        }
+
+        // create the overlay element
+        // styled inside the 'src/extensionsIntegrated/Phoenix-live-preview/live-preview.css'
+        $overlayContainer = $("<div>").addClass("live-preview-status-overlay"); // the wrapper for overlay element
+        const $message = $("<div>").addClass("live-preview-overlay-message").text(textMessage);
+
+        // the close button at the right end of the overlay
+        const $close = $("<div>").addClass("live-preview-overlay-close")
+            .attr("title", Strings.LIVE_PREVIEW_HIDE_OVERLAY)
+            .on('click', () => {
+                if(status === MultiBrowserLiveDev.STATUS_CONNECTING) {
+                    shouldShowConnectingOverlay = false;
+                } else if(status === MultiBrowserLiveDev.STATUS_SYNC_ERROR) {
+                    shouldShowSyncErrorOverlay = false;
+                }
+                _hideOverlay();
+            });
+        const $closeIcon = $("<i>").addClass("fas fa-times");
+
+        $close.append($closeIcon);
+        $overlayContainer.append($message);
+        $overlayContainer.append($close);
+        $livePreviewPanel.append($overlayContainer);
+    }
+
+    /**
+     * responsible to hide the overlay
+     */
+    function _hideOverlay() {
+        _clearConnectingOverlayTimer();
+        if ($overlayContainer) {
+            $overlayContainer.remove();
+            $overlayContainer = null;
+        }
+    }
+
+    /**
+     * This is a helper function that just checks that if connectingOverlayTimer exists, we clear it
+     */
+    function _clearConnectingOverlayTimer() {
+        if (connectingOverlayTimer) {
+            clearTimeout(connectingOverlayTimer);
+            connectingOverlayTimer = null;
+        }
+    }
+
+    /**
+     * this function adds/remove the full-width class from the overlay container
+     * styled inside 'src/extensionsIntegrated/Phoenix-live-preview/live-preview.css'
+     *
+     * we need this because
+     * normally when live preview has a good width (more than 305px) then a 3px divider is shown at the left end
+     * so in that case we give the overlay a width of (100% - 3px),
+     * but when the live preview width is reduced
+     * then that divider line gets cut off, so in that case we make the width 100% for this overlay
+     *
+     * without this handling, a white gap appears on the left side, which is distracting
+     */
+    function _setOverlayWidth() {
+        if(!$overlayContainer || !$livePreviewPanel.length) { return; }
+        if($livePreviewPanel.width() <= 305) {
+            $overlayContainer.addClass("full-width");
+        } else {
+            $overlayContainer.removeClass("full-width");
+        }
+    }
+
     /** Initialize LiveDevelopment */
     AppInit.appReady(function () {
         params.parse();
@@ -8488,6 +8638,19 @@ define("LiveDevelopment/main", function main(require, exports, module) {
             exports.trigger(exports.EVENT_LIVE_PREVIEW_RELOAD, clientDetails);
         });
 
+        MultiBrowserLiveDev.on(MultiBrowserLiveDev.EVENT_STATUS_CHANGE, function(event, status) {
+            if (status === MultiBrowserLiveDev.STATUS_CONNECTING) {
+                _handleOverlay(Strings.LIVE_DEV_STATUS_TIP_PROGRESS1, status);
+            } else if (status === MultiBrowserLiveDev.STATUS_SYNC_ERROR) {
+                _handleOverlay(Strings.LIVE_DEV_STATUS_TIP_SYNC_ERROR, status);
+            } else {
+                _hideOverlay();
+            }
+        });
+        // to understand why we need this, pls read the _setOverlayWidth function
+        new ResizeObserver(_setOverlayWidth).observe($("#main-plugin-panel")[0]);
+        EditorManager.on("activeEditorChange", _hideOverlay);
+
         // allow live preview to handle escape key event
         // Escape is mainly to hide boxes if they are visible
         WorkspaceManager.addEscapeKeyEventHandler("livePreview", _handleLivePreviewEscapeKey);
@@ -8506,8 +8669,9 @@ define("LiveDevelopment/main", function main(require, exports, module) {
     config.highlight = PreferencesManager.getViewState("livedevHighlight");
 
     function setLivePreviewEditFeaturesActive(enabled) {
-        isLPEditFeaturesActive = enabled;
-        config.isLPEditFeaturesActive = enabled;
+        // TODO: @abose here add kernal mode trust check
+        isProUser = enabled;
+        config.isProUser = enabled;
         if (MultiBrowserLiveDev && MultiBrowserLiveDev.status >= MultiBrowserLiveDev.STATUS_ACTIVE) {
             MultiBrowserLiveDev.updateConfig(JSON.stringify(config));
             MultiBrowserLiveDev.registerHandlers();
@@ -8533,7 +8697,8 @@ define("LiveDevelopment/main", function main(require, exports, module) {
 
     EventDispatcher.makeEventDispatcher(exports);
 
-    exports.isLPEditFeaturesActive = isLPEditFeaturesActive;
+    exports.isProUser = isProUser;
+    exports.isFreeTrialUser = isFreeTrialUser;
 
     // public events
     exports.EVENT_OPEN_PREVIEW_URL = MultiBrowserLiveDev.EVENT_OPEN_PREVIEW_URL;
@@ -45784,6 +45949,9 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
     <div id="live-preview-plugin-toolbar" class="plugin-toolbar" style="display: flex; align-items: center; flex-direction: row;">
         <div style="width: 20%;display: flex;">
             <button id="reloadLivePreviewButton" title="{{clickToReload}}" class="btn-alt-quiet toolbar-button reload-icon"></button>
+	        <button id="previewModeLivePreviewButton" title="{{clickToPreview}}" class="btn-alt-quiet toolbar-button">
+	            <i class="fa-solid fa-play"></i>
+	        </button>
             <button id="livePreviewModeBtn" title="{{livePreviewConfigureModes}}" class="btn-alt-quiet toolbar-button btn-dropdown btn"><!-- Content will come here dynamically --></button>
         </div>
         <div style="width: fit-content;min-width: 60%;display: flex;justify-content: center; align-items: center;">
@@ -45870,7 +46038,7 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
      * @returns {string} "highlight" if edit features inactive, "edit" if active
      */
     function _getDefaultMode() {
-        return LiveDevelopment.isLPEditFeaturesActive ? "edit" : "highlight";
+        return LiveDevelopment.isProUser ? "edit" : "highlight";
     }
 
     // define the live preview mode preference
@@ -45920,9 +46088,15 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
         $edgeButtonBallast,
         $firefoxButtonBallast,
         $panelTitle,
-        $modeBtn;
+        $modeBtn,
+        $previewBtn;
 
     let customLivePreviewBannerShown = false;
+
+    // so this variable stores the mode that was previously selected
+    // this is needed when the preview mode (play button icon) is clicked, we store the current mode
+    // so that when user unclicks the button we can revert back to the mode that was originally selected
+    let modeThatWasSelected = null;
 
     StaticServer.on(EVENT_EMBEDDED_IFRAME_WHO_AM_I, function () {
         if($iframe && $iframe[0]) {
@@ -46026,8 +46200,17 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
      * init live preview mode from saved preferences
      */
     function _initializeMode() {
+        // when user is on free trial we just push the edit mode to them every time they open/reload Phoenix
+        if(LiveDevelopment.isFreeTrialUser) {
+            PreferencesManager.set(PREFERENCE_LIVE_PREVIEW_MODE, "edit");
+            _LPEditMode();
+            $previewBtn.removeClass('selected');
+            _updateModeButton("edit");
+            return;
+        }
+
         const savedMode = PreferencesManager.get(PREFERENCE_LIVE_PREVIEW_MODE) || _getDefaultMode();
-        const isEditFeaturesActive = LiveDevelopment.isLPEditFeaturesActive;
+        const isEditFeaturesActive = LiveDevelopment.isProUser;
 
         // If user has edit mode saved but edit features are not active, default to highlight
         let effectiveMode = savedMode;
@@ -46040,17 +46223,20 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
         // apply the effective mode
         if (effectiveMode === "highlight") {
             _LPHighlightMode();
+            $previewBtn.removeClass('selected');
         } else if (effectiveMode === "edit" && isEditFeaturesActive) {
             _LPEditMode();
+            $previewBtn.removeClass('selected');
         } else {
             _LPPreviewMode();
+            $previewBtn.addClass('selected');
         }
 
         _updateModeButton(effectiveMode);
     }
 
     function _showModeSelectionDropdown(event) {
-        const isEditFeaturesActive = LiveDevelopment.isLPEditFeaturesActive;
+        const isEditFeaturesActive = LiveDevelopment.isProUser;
         const items = [
             Strings.LIVE_PREVIEW_MODE_PREVIEW,
             Strings.LIVE_PREVIEW_MODE_HIGHLIGHT,
@@ -46323,7 +46509,7 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
         let message = Strings.LIVE_DEV_SELECT_FILE_TO_PREVIEW,
             tooltip = message;
         if(fileName){
-            message = `${fileName} - ${Strings.LIVE_DEV_STATUS_TIP_OUT_OF_SYNC}`;
+            message = `${fileName}`;
             tooltip = StringUtils.format(Strings.LIVE_DEV_TOOLTIP_SHOW_IN_EDITOR, fileName);
         }
         if(currentLivePreviewURL){
@@ -46357,11 +46543,35 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
         }
     }
 
+    /**
+     * This function is called when user clicks the preview mode button (play button icon)
+     * when this button is clicked we switch the mode button dropdown to preview mode
+     */
+    function _handlePreviewBtnClick() {
+        if($previewBtn.hasClass('selected')) {
+            $previewBtn.removeClass('selected');
+            const isEditFeaturesActive = LiveDevelopment.isProUser;
+            if(modeThatWasSelected) {
+                if(modeThatWasSelected === 'edit' && !isEditFeaturesActive) {
+                    // we just set the preference as preference has change handlers that will update the config
+                    PreferencesManager.set(PREFERENCE_LIVE_PREVIEW_MODE, "highlight");
+                } else {
+                    PreferencesManager.set(PREFERENCE_LIVE_PREVIEW_MODE, modeThatWasSelected);
+                }
+            }
+        } else {
+            $previewBtn.addClass('selected');
+            modeThatWasSelected = PreferencesManager.get(PREFERENCE_LIVE_PREVIEW_MODE);
+            PreferencesManager.set(PREFERENCE_LIVE_PREVIEW_MODE, "preview");
+        }
+    }
+
     async function _createExtensionPanel() {
         let templateVars = {
             Strings: Strings,
             livePreview: Strings.LIVE_DEV_STATUS_TIP_OUT_OF_SYNC,
             clickToReload: Strings.LIVE_DEV_CLICK_TO_RELOAD_PAGE,
+            clickToPreview: Strings.LIVE_PREVIEW_MODE_PREVIEW,
             livePreviewSettings: Strings.LIVE_DEV_SETTINGS,
             livePreviewConfigureModes: Strings.LIVE_PREVIEW_CONFIGURE_MODES,
             clickToPopout: Strings.LIVE_DEV_CLICK_POPOUT,
@@ -46392,6 +46602,7 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
         $panelTitle = $panel.find("#panel-live-preview-title");
         $settingsIcon = $panel.find("#livePreviewSettingsBtn");
         $modeBtn = $panel.find("#livePreviewModeBtn");
+        $previewBtn = $panel.find("#previewModeLivePreviewButton");
 
         $panel.find(".live-preview-settings-banner-btn").on("click", ()=>{
             CommandManager.execute(Commands.FILE_LIVE_FILE_PREVIEW_SETTINGS);
@@ -46426,6 +46637,7 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
         });
 
         $modeBtn.on("click", _showModeSelectionDropdown);
+        $previewBtn.on("click", _handlePreviewBtnClick);
 
         _showOpenBrowserIcons();
         $settingsIcon.click(()=>{
@@ -46826,7 +47038,7 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
         PreferencesManager.on("change", PREFERENCE_LIVE_PREVIEW_MODE, function () {
             // Get the current preference value directly
             const newMode = PreferencesManager.get(PREFERENCE_LIVE_PREVIEW_MODE);
-            const isEditFeaturesActive = LiveDevelopment.isLPEditFeaturesActive;
+            const isEditFeaturesActive = LiveDevelopment.isProUser;
 
             // If user tries to set edit mode but edit features are not active, default to highlight
             let effectiveMode = newMode;
@@ -46839,10 +47051,13 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
 
             if (effectiveMode === "highlight") {
                 _LPHighlightMode();
+                $previewBtn.removeClass('selected');
             } else if (effectiveMode === "edit" && isEditFeaturesActive) {
                 _LPEditMode();
+                $previewBtn.removeClass('selected');
             } else {
                 _LPPreviewMode();
+                $previewBtn.addClass('selected');
             }
 
             _updateModeButton(effectiveMode);
@@ -110706,6 +110921,7 @@ define("nls/root/strings", {
     "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "Error starting up the HTTP server for live preview files. Please try again.",
     "LIVE_DEVELOPMENT_TROUBLESHOOTING": "For more information, see <a href='{0}' title='{0}'>Troubleshooting Live Preview connection errors</a>.",
 
+    "LIVE_PREVIEW_HIDE_OVERLAY": "Hide this message",
     "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "Live Preview",
     "LIVE_DEV_STATUS_TIP_PROGRESS1": "Live Preview: Connecting\u2026",
     "LIVE_DEV_STATUS_TIP_PROGRESS2": "Live Preview: Initializing\u2026",
