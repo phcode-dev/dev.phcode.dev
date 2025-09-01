@@ -112411,7 +112411,6 @@ define("nls/root/strings", {
     "CONTACT_SUPPORT": "Contact support",
     "SIGN_OUT": "Sign out",
     "ACCOUNT_DETAILS": "Account Details",
-    "AI_QUOTA_USED": "AI quota used",
     "LOGIN_REFRESH": "Check Login Status",
     "SIGN_IN_WAITING_TITLE": "Waiting for Sign In",
     "SIGN_IN_WAITING_MESSAGE": "Please complete sign-in in the new tab, then return here.",
@@ -166198,6 +166197,7 @@ define("services/login-browser", function (require, exports, module) {
         Strings = require("strings"),
         StringUtils = require("utils/StringUtils"),
         ProfileMenu  = require("./profile-menu"),
+        LoginService = require("./login-service"),
         Mustache = require("thirdparty/mustache/mustache"),
         browserLoginWaitingTemplate = `<div class="browser-login-waiting-dialog modal">
     <div class="modal-header">
@@ -166584,6 +166584,8 @@ define("services/login-browser", function (require, exports, module) {
         secureExports.getProfile = getProfile;
         secureExports.verifyLoginStatus = () => _verifyBrowserLogin(false);
         secureExports.getAccountBaseURL = _getAccountBaseURL;
+        secureExports.getEntitlements = LoginService.getEntitlements;
+        secureExports.EVENT_ENTITLEMENTS_CHANGED = LoginService.EVENT_ENTITLEMENTS_CHANGED;
     }
 
     // public exports
@@ -166620,6 +166622,7 @@ define("services/login-desktop", function (require, exports, module) {
         Strings = require("strings"),
         NativeApp = require("utils/NativeApp"),
         ProfileMenu  = require("./profile-menu"),
+        LoginService = require("./login-service"),
         Mustache = require("thirdparty/mustache/mustache"),
         NodeConnector = require("NodeConnector"),
         otpDialogTemplate = `<div class="otp-dialog modal">
@@ -167031,6 +167034,8 @@ define("services/login-desktop", function (require, exports, module) {
         secureExports.getProfile = getProfile;
         secureExports.verifyLoginStatus = () => _verifyLogin(false);
         secureExports.getAccountBaseURL = getAccountBaseURL;
+        secureExports.getEntitlements = LoginService.getEntitlements;
+        secureExports.EVENT_ENTITLEMENTS_CHANGED = LoginService.EVENT_ENTITLEMENTS_CHANGED;
     }
 
     // public exports
@@ -167038,11 +167043,138 @@ define("services/login-desktop", function (require, exports, module) {
 
 });
 
+/*
+ * GNU AGPL-3.0 License
+ *
+ * Copyright (c) 2021 - present core.ai . All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
+ *
+ */
+
+/**
+ * Shared Login Service
+ *
+ * This module contains shared login service functionality used by both
+ * browser and desktop login implementations, including entitlements management.
+ */
+
+define("services/login-service", function (require, exports, module) {
+
+    const KernalModeTrust = window.KernalModeTrust;
+    if(!KernalModeTrust){
+        // integrated extensions will have access to kernal mode, but not external extensions
+        throw new Error("Login service should have access to KernalModeTrust. Cannot boot without trust ring");
+    }
+
+    // Event constants
+    const EVENT_ENTITLEMENTS_CHANGED = "entitlements_changed";
+
+    // Cached entitlements data
+    let cachedEntitlements = null;
+
+    /**
+     * Get entitlements from API or cache
+     * Returns null if user is not logged in
+     */
+    async function getEntitlements(forceRefresh = false) {
+        // Return null if not logged in
+        if (!KernalModeTrust.loginService.isLoggedIn()) {
+            return null;
+        }
+
+        // Return cached data if available and not forcing refresh
+        if (cachedEntitlements && !forceRefresh) {
+            return cachedEntitlements;
+        }
+
+        try {
+            const accountBaseURL = KernalModeTrust.loginService.getAccountBaseURL();
+            const language = Phoenix.app && Phoenix.app.language ? Phoenix.app.language : 'en';
+            let url = `${accountBaseURL}/getAppEntitlements?lang=${language}`;
+            let fetchOptions = {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json'
+                }
+            };
+
+            // Handle different authentication methods for browser vs desktop
+            if (Phoenix.isNativeApp) {
+                // Desktop app: use appSessionID and validationCode
+                const profile = KernalModeTrust.loginService.getProfile();
+                if (profile && profile.apiKey && profile.validationCode) {
+                    url += `&appSessionID=${encodeURIComponent(profile.apiKey)}&validationCode=${encodeURIComponent(profile.validationCode)}`;
+                } else {
+                    console.error('Missing appSessionID or validationCode for desktop app entitlements');
+                    return null;
+                }
+            } else {
+                // Browser app: use session cookies
+                fetchOptions.credentials = 'include';
+            }
+
+            const response = await fetch(url, fetchOptions);
+
+            if (response.ok) {
+                const result = await response.json();
+                if (result.isSuccess) {
+                    // Check if entitlements actually changed
+                    const entitlementsChanged = JSON.stringify(cachedEntitlements) !== JSON.stringify(result);
+
+                    cachedEntitlements = result;
+
+                    // Trigger event if entitlements changed
+                    if (entitlementsChanged) {
+                        KernalModeTrust.loginService.trigger(EVENT_ENTITLEMENTS_CHANGED, result);
+                    }
+
+                    return cachedEntitlements;
+                }
+            }
+        } catch (error) {
+            console.error('Failed to fetch entitlements:', error);
+        }
+
+        return null;
+    }
+
+    /**
+     * Clear cached entitlements and trigger change event
+     * Called when user logs out
+     */
+    function clearEntitlements() {
+        if (cachedEntitlements) {
+            cachedEntitlements = null;
+
+            // Trigger event when entitlements are cleared
+            if (KernalModeTrust.loginService.trigger) {
+                KernalModeTrust.loginService.trigger(EVENT_ENTITLEMENTS_CHANGED, null);
+            }
+        }
+    }
+
+    // Exports
+    exports.EVENT_ENTITLEMENTS_CHANGED = EVENT_ENTITLEMENTS_CHANGED;
+    exports.getEntitlements = getEntitlements;
+    exports.clearEntitlements = clearEntitlements;
+});
+
 define("services/profile-menu", function (require, exports, module) {
     const Mustache = require("thirdparty/mustache/mustache"),
         PopUpManager = require("widgets/PopUpManager"),
         ThemeManager = require("view/ThemeManager"),
-        Strings      = require("strings");
+        Strings      = require("strings"),
+        LoginService = require("./login-service");
 
     const KernalModeTrust = window.KernalModeTrust;
     if(!KernalModeTrust){
@@ -167098,18 +167230,20 @@ define("services/profile-menu", function (require, exports, module) {
                 <div class="user-name"><secure-name></secure-name></div>
                 <div class="user-email"><secure-email></secure-email></div>
                 <iframe id="user-details-frame" class="user-details-iframe" style="display: none; padding: 0; border: none; background: transparent; width: 100%; height: auto; overflow: hidden;" scrolling="no"></iframe>
-                <div class="{{planClass}}">{{planName}}</div>
+                <div class="user-plan-name {{planClass}}">{{planName}}</div>
             </div>
         </div>
     </div>
     <div class="popup-body">
-        <div class="quota-section">
+        <div class="profile-section html-message forced-hidden">
+        </div>
+        <div class="profile-section quota-section forced-hidden">
             <div class="quota-header">
-                <span>{{Strings.AI_QUOTA_USED}}</span>
-                <span>{{quotaUsed}} / {{quotaTotal}} {{quotaUnit}}</span>
+                <span class="titleText">{{titleText}}</span>
+                <span class="usageText">{{usageText}}</span>
             </div>
             <div class="progress-bar">
-                <div class="progress-fill" style="width: {{quotaPercent}}%;"></div>
+                <div class="progress-fill" style="width: {{usedPercent}}%;"></div>
             </div>
         </div>
 
@@ -167283,6 +167417,44 @@ define("services/profile-menu", function (require, exports, module) {
         _setupDocumentClickHandler();
     }
 
+    /**
+     * Update main navigation branding based on entitlements
+     */
+    function _updateBranding(entitlements) {
+        const $brandingLink = $("#phcode-io-main-nav");
+        if (!entitlements) {
+            Phoenix.pro.plan = {
+                paidSubscriber: false,
+                name: "Community Edition",
+                isInTrial: false
+            };
+            return;
+        }
+
+        if (entitlements && entitlements.plan){
+            Phoenix.pro.plan = {
+                paidSubscriber: entitlements.plan.paidSubscriber,
+                name: entitlements.plan.name,
+                isInTrial: entitlements.plan.isInTrial,
+                validTill: entitlements.plan.validTill
+            };
+        }
+        if (entitlements && entitlements.plan && entitlements.plan.paidSubscriber) {
+            // Paid subscriber: show plan name with feather icon
+            const planName = entitlements.plan.name || "Phoenix Pro";
+            $brandingLink
+                .attr("href", "https://account.phcode.dev")
+                .addClass("phoenix-pro")
+                .html(`${planName}<i class="fa-solid fa-feather orange-gold" style="margin-left: 3px;"></i>`);
+        } else {
+            // Free user: show phcode.io branding
+            $brandingLink
+                .attr("href", "https://phcode.io")
+                .removeClass("phoenix-pro")
+                .text("phcode.io");
+        }
+    }
+
     let userEmail="";
     class SecureEmail extends HTMLElement {
         constructor() {
@@ -167385,6 +167557,50 @@ define("services/profile-menu", function (require, exports, module) {
     }
 
     /**
+     * Update popup content with entitlements data
+     */
+    function _updatePopupWithEntitlements(entitlements) {
+        if (!$popup || !entitlements) {
+            return;
+        }
+
+        // Update plan information
+        if (entitlements.plan) {
+            const $planName = $popup.find('.user-plan-name');
+            $planName.text(entitlements.plan.name);
+
+            // Update plan class based on paid subscriber status
+            $planName.removeClass('user-plan-free user-plan-paid');
+            const planClass = entitlements.plan.paidSubscriber ? 'user-plan-paid' : 'user-plan-free';
+            $planName.addClass(planClass);
+        }
+
+        // Update quota section if available
+        if (entitlements.profileview && entitlements.profileview.quota) {
+            const $quotaSection = $popup.find('.quota-section');
+            const quota = entitlements.profileview.quota;
+
+            // Remove forced-hidden and show quota section
+            $quotaSection.removeClass('forced-hidden');
+
+            // Update quota content
+            $quotaSection.find('.titleText').text(quota.titleText);
+            $quotaSection.find('.usageText').text(quota.usageText);
+            $quotaSection.find('.progress-fill').css('width', quota.usedPercent + '%');
+        }
+
+        // Update HTML message if available
+        if (entitlements.profileview && entitlements.profileview.htmlMessage) {
+            const $htmlMessageSection = $popup.find('.html-message');
+            $htmlMessageSection.removeClass('forced-hidden');
+            $htmlMessageSection.html(entitlements.profileview.htmlMessage);
+        }
+
+        // Reposition popup after content changes
+        positionPopup();
+    }
+
+    /**
      * Shows the user profile popup when the user is logged in
      */
     function showProfilePopup() {
@@ -167396,25 +167612,39 @@ define("services/profile-menu", function (require, exports, module) {
         const profileData = KernalModeTrust.loginService.getProfile();
         userEmail = profileData.email;
         userName = profileData.firstName + " " + profileData.lastName;
+
+        // Default template data (fallback) - start with cached plan info if available
         const templateData = {
             initials: profileData.profileIcon.initials,
             avatarColor: profileData.profileIcon.color,
-            planClass: "user-plan-free", // "user-plan-paid" for paid plan
+            planClass: "user-plan-free",
             planName: "Free Plan",
-            quotaUsed: "7,000",
-            quotaTotal: "10,000",
-            quotaUnit: "tokens",
-            quotaPercent: 70,
+            titleText: "Ai Quota Used",
+            usageText: "100 / 200 credits",
+            usedPercent: 0,
             Strings: Strings
         };
 
-        // Render template with data
+        // Note: We don't await here to keep popup display instant
+        // Cached entitlements will be applied asynchronously after popup is shown
+
+        // Render template with data immediately
         const renderedTemplate = Mustache.render(profileTemplate, templateData);
         $popup = $(renderedTemplate);
 
         $("body").append($popup);
         isPopupVisible = true;
+
         positionPopup();
+
+        // Apply cached entitlements immediately if available (including quota/messages)
+        KernalModeTrust.loginService.getEntitlements(false).then(cachedEntitlements => {
+            if (cachedEntitlements && isPopupVisible) {
+                _updatePopupWithEntitlements(cachedEntitlements);
+            }
+        }).catch(error => {
+            console.error('Failed to apply cached entitlements to popup:', error);
+        });
 
         PopUpManager.addPopUp($popup, function() {
             $popup.remove();
@@ -167447,6 +167677,26 @@ define("services/profile-menu", function (require, exports, module) {
 
         // Load user details iframe for browser apps (after popup is created)
         _loadUserDetailsIframe();
+
+        // Refresh entitlements in background and update popup if still visible
+        _refreshEntitlementsInBackground();
+    }
+
+    /**
+     * Refresh entitlements in background and update popup if still visible
+     */
+    async function _refreshEntitlementsInBackground() {
+        try {
+            // Fetch fresh entitlements from API
+            const freshEntitlements = await KernalModeTrust.loginService.getEntitlements(true); // Force refresh to get latest data
+
+            // Only update popup if it's still visible
+            if (isPopupVisible && $popup && freshEntitlements) {
+                _updatePopupWithEntitlements(freshEntitlements);
+            }
+        } catch (error) {
+            console.error('Failed to refresh entitlements in background:', error);
+        }
     }
 
     /**
@@ -167521,6 +167771,12 @@ define("services/profile-menu", function (require, exports, module) {
             closePopup();
         }
         _removeProfileIcon();
+
+        // Clear cached entitlements when user logs out
+        LoginService.clearEntitlements();
+
+        // Reset branding to free mode
+        _updateBranding(null);
     }
 
     function setLoggedIn(initial, color) {
@@ -167529,6 +167785,13 @@ define("services/profile-menu", function (require, exports, module) {
             closePopup();
         }
         _updateProfileIcon(initial, color);
+
+        // Preload entitlements when user logs in
+        KernalModeTrust.loginService.getEntitlements()
+            .then(_updateBranding)
+            .catch(error => {
+                console.error('Failed to preload entitlements on login:', error);
+            });
     }
 
     exports.init = init;
