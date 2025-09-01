@@ -72171,6 +72171,8 @@ define("nls/ar/strings", {
   "CHECKING": "جارٍ التحقق…",
   "CHECKING_STATUS": "جارٍ التحقق من حالة تسجيل الدخول…",
   "NOT_SIGNED_IN_YET": "لم يتم تسجيل الدخول بعد. يُرجى إكمال تسجيل الدخول في علامة التبويب الأخرى.",
+  "WELCOME_BACK": "أهلاً بعودتك",
+  "WELCOME_BACK_USER": "أهلاً بعودتك، {0}!",
   "POPUP_BLOCKED": "تم حظر النافذة المنبثقة. يُرجى السماح بالنوافذ المنبثقة وإعادة المحاولة، أو الانتقال يدويًا إلى {0}",
   "COLLAPSE_ALL_FOLDERS": "طي جميع المجلدات",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "مقتطفات مخصصة…",
@@ -72213,8 +72215,7 @@ define("nls/ar/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "نص القالب",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "الوصف",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "امتداد الملف",
-  "WELCOME_BACK": "أهلاً بعودتك",
-  "WELCOME_BACK_USER": "أهلاً بعودتك، {0}!"
+  "LIVE_PREVIEW_HIDE_OVERLAY": "إخفاء هذه الرسالة"
 });
 /*
  * GNU AGPL-3.0 License
@@ -73632,6 +73633,8 @@ define("nls/bg/strings", {
   "CHECKING": "Проверява се…",
   "CHECKING_STATUS": "Проверява се състоянието на влизане…",
   "NOT_SIGNED_IN_YET": "Все още не сте влезли в профила си. Моля, завършете влизането в другия раздел.",
+  "WELCOME_BACK": "Добре дошли отново",
+  "WELCOME_BACK_USER": "Добре дошли отново, {0}!",
   "POPUP_BLOCKED": "Изскачащият прозорец е блокиран. Моля, разрешете изскачащите прозорци и опитайте отново или отидете ръчно на {0}",
   "COLLAPSE_ALL_FOLDERS": "Свий всички папки",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Персонализирани фрагменти…",
@@ -73674,8 +73677,7 @@ define("nls/bg/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Текст на шаблон",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Описание",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Разширение на файл",
-  "WELCOME_BACK": "Добре дошли отново",
-  "WELCOME_BACK_USER": "Добре дошли отново, {0}!"
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Скрий това съобщение"
 });
 /*
  * Copyright (c) 2013 Adobe Systems Incorporated. All rights reserved.
@@ -75122,6 +75124,8 @@ define("nls/cs/strings", {
   "CHECKING": "Kontroluji…",
   "CHECKING_STATUS": "Kontroluji stav přihlášení…",
   "NOT_SIGNED_IN_YET": "Ještě nejste přihlášeni. Dokončete prosím přihlášení v druhé kartě.",
+  "WELCOME_BACK": "Vítejte zpět",
+  "WELCOME_BACK_USER": "Vítejte zpět, {0}!",
   "POPUP_BLOCKED": "Vyskakovací okno bylo blokováno. Povolte prosím vyskakovací okna a zkuste to znovu, nebo přejděte ručně na {0}",
   "COLLAPSE_ALL_FOLDERS": "Sbalit všechny složky",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Vlastní úryvky…",
@@ -75164,8 +75168,7 @@ define("nls/cs/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Text šablony",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Popis",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Přípona souboru",
-  "WELCOME_BACK": "Vítejte zpět",
-  "WELCOME_BACK_USER": "Vítejte zpět, {0}!"
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Skrýt tuto zprávu"
 });
 /*
  * GNU AGPL-3.0 License
@@ -76610,6 +76613,8 @@ define("nls/da/strings", {
   "CHECKING": "Tjekker…",
   "CHECKING_STATUS": "Tjekker loginstatus…",
   "NOT_SIGNED_IN_YET": "Du er ikke logget ind endnu. Fuldfør venligst login i den anden fane.",
+  "WELCOME_BACK": "Velkommen tilbage",
+  "WELCOME_BACK_USER": "Velkommen tilbage, {0}!",
   "POPUP_BLOCKED": "Pop-up blokeret. Tillad venligst pop-ups, og prøv igen, eller gå manuelt til {0}",
   "COLLAPSE_ALL_FOLDERS": "Skjul alle mapper",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Brugerdefinerede snippets…",
@@ -76652,8 +76657,7 @@ define("nls/da/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Skabelontekst",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Beskrivelse",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Filtypenavn",
-  "WELCOME_BACK": "Velkommen tilbage",
-  "WELCOME_BACK_USER": "Velkommen tilbage, {0}!"
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Skjul denne besked"
 });
 /*
  * GNU AGPL-3.0 License
@@ -78096,6 +78100,8 @@ define("nls/de/strings", {
   "CHECKING": "Überprüfung läuft…",
   "CHECKING_STATUS": "Anmeldestatus wird überprüft…",
   "NOT_SIGNED_IN_YET": "Sie sind noch nicht angemeldet. Bitte schließen Sie die Anmeldung im anderen Tab ab.",
+  "WELCOME_BACK": "Willkommen zurück",
+  "WELCOME_BACK_USER": "Willkommen zurück, {0}!",
   "POPUP_BLOCKED": "Popup blockiert. Bitte erlauben Sie Popups und versuchen Sie es erneut, oder navigieren Sie manuell zu {0}",
   "COLLAPSE_ALL_FOLDERS": "Alle Ordner zuklappen",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Benutzerdefinierte Snippets…",
@@ -78138,8 +78144,7 @@ define("nls/de/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Vorlagentext",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Beschreibung",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Dateierweiterung",
-  "WELCOME_BACK": "Willkommen zurück",
-  "WELCOME_BACK_USER": "Willkommen zurück, {0}!"
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Diese Meldung ausblenden"
 });
 /*
  * GNU AGPL-3.0 License
@@ -79584,6 +79589,8 @@ define("nls/el/strings", {
   "CHECKING": "Έλεγχος…",
   "CHECKING_STATUS": "Έλεγχος κατάστασης σύνδεσης…",
   "NOT_SIGNED_IN_YET": "Δεν έχετε συνδεθεί ακόμα. Παρακαλούμε ολοκληρώστε τη σύνδεση στην άλλη καρτέλα.",
+  "WELCOME_BACK": "Καλώς ορίσατε πίσω",
+  "WELCOME_BACK_USER": "Καλώς ορίσατε πίσω, {0}!",
   "POPUP_BLOCKED": "Το αναδυόμενο παράθυρο μπλοκαρίστηκε. Επιτρέψτε τα αναδυόμενα παράθυρα και προσπαθήστε ξανά ή μεταβείτε χειροκίνητα στο {0}",
   "COLLAPSE_ALL_FOLDERS": "Σύμπτυξη Όλων των Φακέλων",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Προσαρμοσμένα αποσπάσματα…",
@@ -79626,8 +79633,7 @@ define("nls/el/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Κείμενο Προτύπου",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Περιγραφή",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Επέκταση Αρχείου",
-  "WELCOME_BACK": "Καλώς ορίσατε πίσω",
-  "WELCOME_BACK_USER": "Καλώς ορίσατε πίσω, {0}!"
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Απόκρυψη αυτού του μηνύματος"
 });
 /*
  * GNU AGPL-3.0 License
@@ -81072,6 +81078,8 @@ define("nls/en-gb/strings", {
   "CHECKING": "Checking…",
   "CHECKING_STATUS": "Checking login status…",
   "NOT_SIGNED_IN_YET": "Not signed in yet. Please complete sign-in in the other tab.",
+  "WELCOME_BACK": "Welcome back",
+  "WELCOME_BACK_USER": "Welcome back, {0}!",
   "POPUP_BLOCKED": "Pop-up blocked. Please allow pop-ups and try again, or manually navigate to {0}",
   "COLLAPSE_ALL_FOLDERS": "Collapse all folders",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Custom Snippets…",
@@ -81114,8 +81122,7 @@ define("nls/en-gb/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Template Text",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Description",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "File Extension",
-  "WELCOME_BACK": "Welcome back",
-  "WELCOME_BACK_USER": "Welcome back, {0}!"
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Dismiss this message"
 });
 /*
  * GNU AGPL-3.0 License
@@ -82533,6 +82540,8 @@ define("nls/es/strings", {
   "CHECKING": "Verificando…",
   "CHECKING_STATUS": "Comprobando el estado del inicio de sesión…",
   "NOT_SIGNED_IN_YET": "Aún no has iniciado sesión. Completa el inicio de sesión en la otra pestaña.",
+  "WELCOME_BACK": "Bienvenido de nuevo",
+  "WELCOME_BACK_USER": "¡Bienvenido de nuevo, {0}!",
   "POPUP_BLOCKED": "Ventana emergente bloqueada. Permite las ventanas emergentes e inténtalo de nuevo, o navega manualmente a {0}",
   "COLLAPSE_ALL_FOLDERS": "Contraer todas las carpetas",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Fragmentos de código personalizados…",
@@ -82575,8 +82584,7 @@ define("nls/es/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Texto de la plantilla",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Descripción",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensión de archivo",
-  "WELCOME_BACK": "Bienvenido de nuevo",
-  "WELCOME_BACK_USER": "¡Bienvenido de nuevo, {0}!"
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Ocultar este mensaje"
 });
 /*
  * GNU AGPL-3.0 License
@@ -84022,6 +84030,8 @@ define("nls/fa-ir/strings", {
   "CHECKING": "در حال بررسی…",
   "CHECKING_STATUS": "در حال بررسی وضعیت ورود…",
   "NOT_SIGNED_IN_YET": "هنوز وارد سیستم نشده‌اید. لطفاً ورود به سیستم را در برگه دیگر تکمیل کنید.",
+  "WELCOME_BACK": "خوش آمدید",
+  "WELCOME_BACK_USER": "{0} عزیز، خوش آمدید!",
   "POPUP_BLOCKED": "پنجره‌ی پاپ‌آپ مسدود شده است. لطفاً اجازه نمایش پنجره‌های پاپ‌آپ را بدهید و دوباره امتحان کنید، یا به صورت دستی به {0} بروید.",
   "COLLAPSE_ALL_FOLDERS": "بستن همهٔ پوشه‌ها",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "قطعه‌کدهای سفارشی…",
@@ -84064,8 +84074,7 @@ define("nls/fa-ir/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "متن الگو",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "توضیحات",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "پسوند فایل",
-  "WELCOME_BACK": "خوش آمدید",
-  "WELCOME_BACK_USER": "{0} عزیز، خوش آمدید!"
+  "LIVE_PREVIEW_HIDE_OVERLAY": "پنهان کردن این پیام"
 });
 /*
  * GNU AGPL-3.0 License
@@ -85510,6 +85519,8 @@ define("nls/fi/strings", {
   "CHECKING": "Tarkistetaan…",
   "CHECKING_STATUS": "Tarkistetaan kirjautumistilaa…",
   "NOT_SIGNED_IN_YET": "Et ole vielä kirjautunut sisään. Viimeistele sisäänkirjautuminen toisessa välilehdessä.",
+  "WELCOME_BACK": "Tervetuloa takaisin",
+  "WELCOME_BACK_USER": "Tervetuloa takaisin, {0}!",
   "POPUP_BLOCKED": "Ponnahdusikkuna estetty. Salli ponnahdusikkunat ja yritä uudelleen tai siirry manuaalisesti osoitteeseen {0}",
   "COLLAPSE_ALL_FOLDERS": "Sulje kaikki kansiot",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Omat koodinpätkät…",
@@ -85552,8 +85563,7 @@ define("nls/fi/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Malliteksti",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Kuvaus",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Tiedostopääte",
-  "WELCOME_BACK": "Tervetuloa takaisin",
-  "WELCOME_BACK_USER": "Tervetuloa takaisin, {0}!"
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Piilota tämä viesti"
 });
 /*
  * GNU AGPL-3.0 License
@@ -86998,6 +87008,8 @@ define("nls/fr/strings", {
   "CHECKING": "Vérification…",
   "CHECKING_STATUS": "Vérification de l'état de la connexion…",
   "NOT_SIGNED_IN_YET": "Vous n'êtes pas encore connecté. Veuillez vous connecter dans l'autre onglet.",
+  "WELCOME_BACK": "Bon retour",
+  "WELCOME_BACK_USER": "Bon retour, {0} !",
   "POPUP_BLOCKED": "Fenêtre contextuelle bloquée. Veuillez autoriser les fenêtres contextuelles et réessayer, ou accédez manuellement à {0}",
   "COLLAPSE_ALL_FOLDERS": "Réduire tous les dossiers",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Extraits personnalisés…",
@@ -87040,8 +87052,7 @@ define("nls/fr/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Texte du modèle",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Description",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extension de fichier",
-  "WELCOME_BACK": "Bon retour",
-  "WELCOME_BACK_USER": "Bon retour, {0} !"
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Masquer ce message"
 });
 /*
  * GNU AGPL-3.0 License
@@ -88486,6 +88497,8 @@ define("nls/gl/strings", {
   "CHECKING": "Comprobando…",
   "CHECKING_STATUS": "Comprobando o estado do inicio de sesión…",
   "NOT_SIGNED_IN_YET": "Aínda non iniciou sesión. Complete o inicio de sesión na outra lapela.",
+  "WELCOME_BACK": "Benvido de volta",
+  "WELCOME_BACK_USER": "Benvido de volta, {0}!",
   "POPUP_BLOCKED": "Ventá emerxente bloqueada. Permite as ventás emerxentes e ténteo de novo ou navega manualmente a {0}",
   "COLLAPSE_ALL_FOLDERS": "Contraer todas as carpetas",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Fragmentos personalizados…",
@@ -88528,8 +88541,7 @@ define("nls/gl/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Texto do modelo",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Descrición",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensión de ficheiro",
-  "WELCOME_BACK": "Benvido de volta",
-  "WELCOME_BACK_USER": "Benvido de volta, {0}!"
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Agochar esta mensaxe"
 });
 /*
  * GNU AGPL-3.0 License
@@ -89947,6 +89959,8 @@ define("nls/hi/strings", {
   "CHECKING": "जाँच हो रही है…",
   "CHECKING_STATUS": "लॉगिन स्थिति की जाँच हो रही है…",
   "NOT_SIGNED_IN_YET": "अभी तक साइन इन नहीं किया है। कृपया दूसरे टैब में साइन-इन पूरा करें।",
+  "WELCOME_BACK": "वापस स्वागत है",
+  "WELCOME_BACK_USER": "{0}, वापस स्वागत है!",
   "POPUP_BLOCKED": "पॉप-अप ब्लॉक किया गया है। कृपया पॉप-अप की अनुमति दें और पुनः प्रयास करें, या मैन्युअल रूप से {0} पर नेविगेट करें",
   "COLLAPSE_ALL_FOLDERS": "सभी फ़ोल्डर संकुचित करें",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "कस्टम स्निपेट…",
@@ -89989,8 +90003,7 @@ define("nls/hi/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "टेम्पलेट टेक्स्ट",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "विवरण",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "फ़ाइल एक्सटेंशन",
-  "WELCOME_BACK": "वापस स्वागत है",
-  "WELCOME_BACK_USER": "{0}, वापस स्वागत है!"
+  "LIVE_PREVIEW_HIDE_OVERLAY": "इस संदेश को छिपाएँ"
 });
 /*
  * GNU AGPL-3.0 License
@@ -91408,6 +91421,8 @@ define("nls/hr/strings", {
   "CHECKING": "Provjeravam…",
   "CHECKING_STATUS": "Provjera statusa prijave…",
   "NOT_SIGNED_IN_YET": "Još niste prijavljeni. Molimo dovršite prijavu u drugoj kartici.",
+  "WELCOME_BACK": "Dobrodošli natrag",
+  "WELCOME_BACK_USER": "Dobrodošli natrag, {0}!",
   "POPUP_BLOCKED": "Skočni prozor blokiran. Molimo dopustite skočne prozore i pokušajte ponovno ili ručno idite na {0}",
   "COLLAPSE_ALL_FOLDERS": "Sažmi sve mape",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Prilagođeni isječci…",
@@ -91450,8 +91465,7 @@ define("nls/hr/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Tekst predloška",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Opis",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Ekstenzija datoteke",
-  "WELCOME_BACK": "Dobrodošli natrag",
-  "WELCOME_BACK_USER": "Dobrodošli natrag, {0}!"
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Sakrij ovu poruku"
 });
 /*
  * GNU AGPL-3.0 License
@@ -92896,6 +92910,8 @@ define("nls/hu/strings", {
   "CHECKING": "Ellenőrzés…",
   "CHECKING_STATUS": "Bejelentkezési állapot ellenőrzése…",
   "NOT_SIGNED_IN_YET": "Még nem jelentkeztél be. Kérjük, fejezd be a bejelentkezést a másik lapon.",
+  "WELCOME_BACK": "Üdvözlünk újra!",
+  "WELCOME_BACK_USER": "Üdvözlünk újra, {0}!",
   "POPUP_BLOCKED": "Felugró ablak blokkolva. Kérjük, engedélyezd a felugró ablakokat, és próbáld újra, vagy navigálj manuálisan ide: {0}",
   "COLLAPSE_ALL_FOLDERS": "Összes mappa összecsukása",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Egyéni kódrészletek…",
@@ -92938,8 +92954,7 @@ define("nls/hu/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Sablonszöveg",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Leírás",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Fájlkiterjesztés",
-  "WELCOME_BACK": "Üdvözlünk újra!",
-  "WELCOME_BACK_USER": "Üdvözlünk újra, {0}!"
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Üzenet elrejtése"
 });
 /*
  * GNU AGPL-3.0 License
@@ -94357,6 +94372,8 @@ define("nls/id/strings", {
   "CHECKING": "Memeriksa…",
   "CHECKING_STATUS": "Memeriksa status masuk…",
   "NOT_SIGNED_IN_YET": "Anda belum masuk. Silakan selesaikan proses masuk di tab lain.",
+  "WELCOME_BACK": "Selamat datang kembali",
+  "WELCOME_BACK_USER": "Selamat datang kembali, {0}!",
   "POPUP_BLOCKED": "Pop-up diblokir. Harap izinkan pop-up dan coba lagi, atau buka {0} secara manual",
   "COLLAPSE_ALL_FOLDERS": "Ciutkan Semua Folder",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Cuplikan Kustom…",
@@ -94399,8 +94416,7 @@ define("nls/id/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Teks Templat",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Deskripsi",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Ekstensi Berkas",
-  "WELCOME_BACK": "Selamat datang kembali",
-  "WELCOME_BACK_USER": "Selamat datang kembali, {0}!"
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Sembunyikan pesan ini"
 });
 /*
  * GNU AGPL-3.0 License
@@ -95844,6 +95860,8 @@ define("nls/it/strings", {
   "CHECKING": "Verifica in corso…",
   "CHECKING_STATUS": "Verifica dello stato di accesso in corso…",
   "NOT_SIGNED_IN_YET": "Accesso non ancora effettuato. Completa l'accesso nell'altra scheda.",
+  "WELCOME_BACK": "Bentornato",
+  "WELCOME_BACK_USER": "Bentornato, {0}!",
   "POPUP_BLOCKED": "Popup bloccato. Autorizza i popup e riprova oppure vai manualmente a {0}",
   "COLLAPSE_ALL_FOLDERS": "Comprimi tutte le cartelle",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Frammenti personalizzati…",
@@ -95886,8 +95904,7 @@ define("nls/it/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Testo del Modello",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Descrizione",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Estensione del File",
-  "WELCOME_BACK": "Bentornato",
-  "WELCOME_BACK_USER": "Bentornato, {0}!"
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Nascondi questo messaggio"
 });
 /*
  * GNU AGPL-3.0 License
@@ -97332,6 +97349,8 @@ define("nls/ja/strings", {
   "CHECKING": "確認中…",
   "CHECKING_STATUS": "ログイン状態を確認中…",
   "NOT_SIGNED_IN_YET": "まだサインインしていません。別のタブでサインインを完了してください。",
+  "WELCOME_BACK": "おかえりなさい",
+  "WELCOME_BACK_USER": "{0}さん、おかえりなさい！",
   "POPUP_BLOCKED": "ポップアップがブロックされました。ポップアップを許可してもう一度お試しいただくか、{0} に手動でアクセスしてください。",
   "COLLAPSE_ALL_FOLDERS": "全てのフォルダを閉じる",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "カスタムスニペット…",
@@ -97374,8 +97393,7 @@ define("nls/ja/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "テンプレートテキスト",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "説明",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "ファイル拡張子",
-  "WELCOME_BACK": "おかえりなさい",
-  "WELCOME_BACK_USER": "{0}さん、おかえりなさい！"
+  "LIVE_PREVIEW_HIDE_OVERLAY": "このメッセージを非表示にする"
 });
 /*
  * GNU AGPL-3.0 License
@@ -98820,6 +98838,8 @@ define("nls/ko/strings", {
   "CHECKING": "확인 중…",
   "CHECKING_STATUS": "로그인 상태 확인 중…",
   "NOT_SIGNED_IN_YET": "아직 로그인하지 않았습니다. 다른 탭에서 로그인을 완료하세요.",
+  "WELCOME_BACK": "다시 오신 것을 환영합니다",
+  "WELCOME_BACK_USER": "{0}님, 다시 오신 것을 환영합니다!",
   "POPUP_BLOCKED": "팝업이 차단되었습니다. 팝업을 허용하고 다시 시도하거나, {0}으로 직접 이동하세요.",
   "COLLAPSE_ALL_FOLDERS": "모든 폴더 접기",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "사용자 정의 스니펫…",
@@ -98862,8 +98882,7 @@ define("nls/ko/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "템플릿 텍스트",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "설명",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "파일 확장자",
-  "WELCOME_BACK": "다시 오신 것을 환영합니다",
-  "WELCOME_BACK_USER": "{0}님, 다시 오신 것을 환영합니다!"
+  "LIVE_PREVIEW_HIDE_OVERLAY": "이 메시지 숨기기"
 });
 /*
  * GNU AGPL-3.0 License
@@ -100308,6 +100327,8 @@ define("nls/lv/strings", {
   "CHECKING": "Pārbauda…",
   "CHECKING_STATUS": "Pārbauda pieteikšanās statusu…",
   "NOT_SIGNED_IN_YET": "Vēl neesat pieteicies. Lūdzu, pabeidziet pieteikšanos otrā cilnē.",
+  "WELCOME_BACK": "Laipni lūdzam atpakaļ!",
+  "WELCOME_BACK_USER": "Laipni lūdzam atpakaļ, {0}!",
   "POPUP_BLOCKED": "Uznirstošais logs ir bloķēts. Lūdzu, atļaujiet uznirstošos logus un mēģiniet vēlreiz vai arī manuāli dodieties uz {0}",
   "COLLAPSE_ALL_FOLDERS": "Sakļaut visas mapes",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Pielāgoti fragmenti…",
@@ -100350,8 +100371,7 @@ define("nls/lv/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Veidnes teksts",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Apraksts",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Faila paplašinājums",
-  "WELCOME_BACK": "Laipni lūdzam atpakaļ!",
-  "WELCOME_BACK_USER": "Laipni lūdzam atpakaļ, {0}!"
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Paslēpt šo ziņojumu"
 });
 /*
  * GNU AGPL-3.0 License
@@ -101769,6 +101789,8 @@ define("nls/ml/strings", {
   "CHECKING": "പരിശോധിക്കുന്നു…",
   "CHECKING_STATUS": "ലോഗിൻ സ്റ്റാറ്റസ് പരിശോധിക്കുന്നു…",
   "NOT_SIGNED_IN_YET": "ഇതുവരെ സൈൻ ഇൻ ചെയ്തിട്ടില്ല. മറ്റൊരു ടാബിൽ സൈൻ-ഇൻ പൂർത്തിയാക്കുക.",
+  "WELCOME_BACK": "സ്വാഗതം",
+  "WELCOME_BACK_USER": "{0}, സ്വാഗതം!",
   "POPUP_BLOCKED": "പോപ്പ്-അപ്പ് തടഞ്ഞിരിക്കുന്നു. പോപ്പ്-അപ്പുകൾ അനുവദിച്ചതിനുശേഷം വീണ്ടും ശ്രമിക്കുക, അല്ലെങ്കിൽ {0} ലേക്ക് നേരിട്ട് പോകുക.",
   "COLLAPSE_ALL_FOLDERS": "എല്ലാ ഫോൾഡറുകളും ചുരുക്കുക",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "കസ്റ്റം സ്നിപ്പെറ്റുകൾ…",
@@ -101811,8 +101833,7 @@ define("nls/ml/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "ടെംപ്ലേറ്റ് ടെക്സ്റ്റ്",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "വിവരണം",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "ഫയൽ എക്സ്റ്റൻഷൻ",
-  "WELCOME_BACK": "സ്വാഗതം",
-  "WELCOME_BACK_USER": "{0}, സ്വാഗതം!"
+  "LIVE_PREVIEW_HIDE_OVERLAY": "ഈ സന്ദേശം മറയ്ക്കുക"
 });
 /*
  * GNU AGPL-3.0 License
@@ -103230,6 +103251,8 @@ define("nls/nb/strings", {
   "CHECKING": "Sjekker…",
   "CHECKING_STATUS": "Sjekker påloggingsstatus…",
   "NOT_SIGNED_IN_YET": "Ikke logget inn ennå. Vennligst fullfør påloggingen i den andre fanen.",
+  "WELCOME_BACK": "Velkommen tilbake",
+  "WELCOME_BACK_USER": "Velkommen tilbake, {0}!",
   "POPUP_BLOCKED": "Popup blokkert. Tillat popup-vinduer og prøv igjen, eller gå manuelt til {0}",
   "COLLAPSE_ALL_FOLDERS": "Skjul alle mapper",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Egendefinerte kodesnutter…",
@@ -103272,8 +103295,7 @@ define("nls/nb/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Maltekst",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Beskrivelse",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Filtype",
-  "WELCOME_BACK": "Velkommen tilbake",
-  "WELCOME_BACK_USER": "Velkommen tilbake, {0}!"
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Skjul denne meldingen"
 });
 /*
  * GNU AGPL-3.0 License
@@ -104718,6 +104740,8 @@ define("nls/nl/strings", {
   "CHECKING": "Controleren...",
   "CHECKING_STATUS": "Aanmeldstatus controleren...",
   "NOT_SIGNED_IN_YET": "U bent nog niet aangemeld. Voltooi de aanmelding in het andere tabblad.",
+  "WELCOME_BACK": "Welkom terug",
+  "WELCOME_BACK_USER": "Welkom terug, {0}!",
   "POPUP_BLOCKED": "Pop-up geblokkeerd. Sta pop-ups toe en probeer het opnieuw, of ga handmatig naar {0}",
   "COLLAPSE_ALL_FOLDERS": "Alle mappen samenvouwen",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Aangepaste fragmenten…",
@@ -104760,8 +104784,7 @@ define("nls/nl/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Sjabloontekst",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Beschrijving",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Bestandsextensie",
-  "WELCOME_BACK": "Welkom terug",
-  "WELCOME_BACK_USER": "Welkom terug, {0}!"
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Dit bericht verbergen"
 });
 /*
  * GNU AGPL-3.0 License
@@ -106206,6 +106229,8 @@ define("nls/pl/strings", {
   "CHECKING": "Sprawdzanie…",
   "CHECKING_STATUS": "Sprawdzanie statusu logowania…",
   "NOT_SIGNED_IN_YET": "Nie zalogowano. Dokończ logowanie w drugiej karcie.",
+  "WELCOME_BACK": "Witaj ponownie",
+  "WELCOME_BACK_USER": "Witaj ponownie, {0}!",
   "POPUP_BLOCKED": "Okno podręczne zablokowane. Zezwól na okna podręczne i spróbuj ponownie lub przejdź ręcznie do {0}",
   "COLLAPSE_ALL_FOLDERS": "Zwiń wszystkie foldery",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Własne fragmenty kodu…",
@@ -106248,8 +106273,7 @@ define("nls/pl/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Treść szablonu",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Opis",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Rozszerzenie pliku",
-  "WELCOME_BACK": "Witaj ponownie",
-  "WELCOME_BACK_USER": "Witaj ponownie, {0}!"
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Ukryj tę wiadomość"
 });
 /*
  * GNU AGPL-3.0 License
@@ -107694,6 +107718,8 @@ define("nls/pt-br/strings", {
   "CHECKING": "Verificando…",
   "CHECKING_STATUS": "Verificando status do login…",
   "NOT_SIGNED_IN_YET": "Você ainda não está conectado. Conclua o login na outra guia.",
+  "WELCOME_BACK": "Bem-vindo de volta",
+  "WELCOME_BACK_USER": "Bem-vindo de volta, {0}!",
   "POPUP_BLOCKED": "Pop-up bloqueado. Permita pop-ups e tente novamente ou navegue manualmente até {0}",
   "COLLAPSE_ALL_FOLDERS": "Recolher Todas as Pastas",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Trechos Personalizados…",
@@ -107736,8 +107762,7 @@ define("nls/pt-br/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Texto do Modelo",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Descrição",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensão do Arquivo",
-  "WELCOME_BACK": "Bem-vindo de volta",
-  "WELCOME_BACK_USER": "Bem-vindo de volta, {0}!"
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Ocultar esta mensagem"
 });
 /*
  * GNU AGPL-3.0 License
@@ -109180,6 +109205,8 @@ define("nls/pt-pt/strings", {
   "CHECKING": "A verificar…",
   "CHECKING_STATUS": "A verificar o estado do início de sessão…",
   "NOT_SIGNED_IN_YET": "Ainda não iniciou sessão. Conclua o início de sessão no outro separador.",
+  "WELCOME_BACK": "Bem-vindo de volta",
+  "WELCOME_BACK_USER": "Bem-vindo de volta, {0}!",
   "POPUP_BLOCKED": "Janela pop-up bloqueada. Permita janelas pop-up e tente novamente ou navegue manualmente para {0}",
   "COLLAPSE_ALL_FOLDERS": "Recolher Todas as Pastas",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Fragmentos Personalizados…",
@@ -109222,8 +109249,7 @@ define("nls/pt-pt/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Texto do Modelo",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Descrição",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensão de Ficheiro",
-  "WELCOME_BACK": "Bem-vindo de volta",
-  "WELCOME_BACK_USER": "Bem-vindo de volta, {0}!"
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Ocultar esta mensagem"
 });
 /*
  * GNU AGPL-3.0 License
@@ -110666,6 +110692,8 @@ define("nls/ro/strings", {
   "CHECKING": "Se verifică…",
   "CHECKING_STATUS": "Se verifică starea de autentificare…",
   "NOT_SIGNED_IN_YET": "Nu sunteți încă autentificat. Vă rugăm finalizați autentificarea în cealaltă filă.",
+  "WELCOME_BACK": "Bine ai revenit",
+  "WELCOME_BACK_USER": "Bine ai revenit, {0}!",
   "POPUP_BLOCKED": "Fereastră pop-up blocată. Vă rugăm permiteți ferestrele pop-up și încercați din nou sau navigați manual la {0}",
   "COLLAPSE_ALL_FOLDERS": "Restrânge Toate Folderele",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Fragmente de cod personalizate…",
@@ -110708,8 +110736,7 @@ define("nls/ro/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Text șablon",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Descriere",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensie fișier",
-  "WELCOME_BACK": "Bine ai revenit",
-  "WELCOME_BACK_USER": "Bine ai revenit, {0}!"
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Ascunde acest mesaj"
 });
 /*
  * GNU AGPL-3.0 License
@@ -113886,6 +113913,8 @@ define("nls/ru/strings", {
   "CHECKING": "Проверка…",
   "CHECKING_STATUS": "Проверка статуса входа…",
   "NOT_SIGNED_IN_YET": "Вы ещё не вошли в систему. Пожалуйста, завершите вход в другой вкладке.",
+  "WELCOME_BACK": "С возвращением",
+  "WELCOME_BACK_USER": "С возвращением, {0}!",
   "POPUP_BLOCKED": "Всплывающее окно заблокировано. Разрешите всплывающие окна и попробуйте снова или перейдите вручную по адресу {0}",
   "COLLAPSE_ALL_FOLDERS": "Свернуть все папки",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Пользовательские сниппеты…",
@@ -113928,8 +113957,7 @@ define("nls/ru/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Текст шаблона",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Описание",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Расширение файла",
-  "WELCOME_BACK": "С возвращением",
-  "WELCOME_BACK_USER": "С возвращением, {0}!"
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Скрыть это сообщение"
 });
 /*
  * GNU AGPL-3.0 License
@@ -115374,6 +115402,8 @@ define("nls/sk/strings", {
   "CHECKING": "Kontroluje sa…",
   "CHECKING_STATUS": "Kontroluje sa stav prihlásenia…",
   "NOT_SIGNED_IN_YET": "Zatiaľ nie ste prihlásený. Dokončite prihlásenie v druhom okne.",
+  "WELCOME_BACK": "Vitajte späť",
+  "WELCOME_BACK_USER": "Vitajte späť, {0}!",
   "POPUP_BLOCKED": "Vyskakovacie okno bolo zablokované. Povoľte vyskakovacie okná a skúste to znova alebo prejdite manuálne na {0}",
   "COLLAPSE_ALL_FOLDERS": "Zbaliť všetky priečinky",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Vlastné úryvky…",
@@ -115416,8 +115446,7 @@ define("nls/sk/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Text šablóny",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Popis",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Prípona súboru",
-  "WELCOME_BACK": "Vitajte späť",
-  "WELCOME_BACK_USER": "Vitajte späť, {0}!"
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Skryť túto správu"
 });
 /*
  * GNU AGPL-3.0 License
@@ -116861,6 +116890,8 @@ define("nls/sr/strings", {
   "CHECKING": "Проверава се…",
   "CHECKING_STATUS": "Проверава се статус пријаве…",
   "NOT_SIGNED_IN_YET": "Још увек нисте пријављени. Молимо Вас да завршите пријављивање у другом табу.",
+  "WELCOME_BACK": "Добродошли назад",
+  "WELCOME_BACK_USER": "Добродошли назад, {0}!",
   "POPUP_BLOCKED": "Искачући прозор је блокиран. Молимо Вас да дозволите искачуће прозоре и покушате поново или ручно пређите на {0}",
   "COLLAPSE_ALL_FOLDERS": "Скупи све фасцикле",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Кориснички исечци…",
@@ -116903,8 +116934,7 @@ define("nls/sr/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Текст шаблона",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Опис",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Екстензија датотеке",
-  "WELCOME_BACK": "Добродошли назад",
-  "WELCOME_BACK_USER": "Добродошли назад, {0}!"
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Сакриј ову поруку"
 });
 /*
  * GNU AGPL-3.0 License
@@ -118432,6 +118462,8 @@ define("nls/sv/strings", {
   "CHECKING": "Kontrollerar…",
   "CHECKING_STATUS": "Kontrollerar inloggningsstatus…",
   "NOT_SIGNED_IN_YET": "Inte inloggad än. Slutför inloggningen i den andra fliken.",
+  "WELCOME_BACK": "Välkommen tillbaka",
+  "WELCOME_BACK_USER": "Välkommen tillbaka, {0}!",
   "POPUP_BLOCKED": "Popup-fönster blockerades. Tillåt popup-fönster och försök igen, eller gå manuellt till {0}",
   "COLLAPSE_ALL_FOLDERS": "Komprimera alla mappar",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Anpassade kodsnuttar…",
@@ -118474,8 +118506,7 @@ define("nls/sv/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Malltext",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Beskrivning",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Filändelse",
-  "WELCOME_BACK": "Välkommen tillbaka",
-  "WELCOME_BACK_USER": "Välkommen tillbaka, {0}!"
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Dölj detta meddelande"
 });
 /*
  * GNU AGPL-3.0 License
@@ -119920,6 +119951,8 @@ define("nls/tr/strings", {
   "CHECKING": "Kontrol ediliyor…",
   "CHECKING_STATUS": "Oturum açma durumu kontrol ediliyor…",
   "NOT_SIGNED_IN_YET": "Henüz oturum açılmadı. Lütfen diğer sekmede oturum açmayı tamamlayın.",
+  "WELCOME_BACK": "Tekrar hoş geldiniz",
+  "WELCOME_BACK_USER": "Hoş geldiniz, {0}!",
   "POPUP_BLOCKED": "Açılır pencere engellendi. Lütfen açılır pencerelere izin verin ve tekrar deneyin veya {0} adresine manuel olarak gidin.",
   "COLLAPSE_ALL_FOLDERS": "Tüm Klasörleri Daralt",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Özel Parçacıklar…",
@@ -119962,8 +119995,7 @@ define("nls/tr/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Şablon Metni",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Açıklama",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Dosya Uzantısı",
-  "WELCOME_BACK": "Tekrar hoş geldiniz",
-  "WELCOME_BACK_USER": "Hoş geldiniz, {0}!"
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Bu mesajı gizle"
 });
 /*
  * GNU AGPL-3.0 License
@@ -121408,6 +121440,8 @@ define("nls/uk/strings", {
   "CHECKING": "Перевірка…",
   "CHECKING_STATUS": "Перевірка статусу входу…",
   "NOT_SIGNED_IN_YET": "Ви ще не ввійшли. Будь ласка, завершіть вхід в іншій вкладці.",
+  "WELCOME_BACK": "Ласкаво просимо назад",
+  "WELCOME_BACK_USER": "Ласкаво просимо назад, {0}!",
   "POPUP_BLOCKED": "Спливаюче вікно заблоковано. Будь ласка, дозвольте спливаючі вікна та спробуйте ще раз або перейдіть вручну до {0}",
   "COLLAPSE_ALL_FOLDERS": "Згорнути всі папки",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "Власні сніпети…",
@@ -121450,8 +121484,7 @@ define("nls/uk/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Текст шаблону",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Опис",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Розширення файлу",
-  "WELCOME_BACK": "Ласкаво просимо назад",
-  "WELCOME_BACK_USER": "Ласкаво просимо назад, {0}!"
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Приховати це повідомлення"
 });
 /*
  * GNU AGPL-3.0 License
@@ -122896,6 +122929,8 @@ define("nls/ur/strings", {
   "CHECKING": "جانچ پڑتال ہو رہی ہے…",
   "CHECKING_STATUS": "لاگ ان کی حیثیت چیک کر رہے ہیں…",
   "NOT_SIGNED_IN_YET": "ابھی تک سائن ان نہیں ہوا ہے۔ براہ کرم دوسرے ٹیب میں سائن ان مکمل کریں۔",
+  "WELCOME_BACK": "خوش آمدید واپس",
+  "WELCOME_BACK_USER": "{0}، خوش آمدید واپس!",
   "POPUP_BLOCKED": "پاپ اپ بلاک کر دیا گیا۔ براہ کرم پاپ اپ کی اجازت دیں اور دوبارہ کوشش کریں، یا دستی طور پر {0} پر جائیں۔",
   "COLLAPSE_ALL_FOLDERS": "تمام فولڈرز بند کریں",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "حسب ضرورت سنیپٹس…",
@@ -122938,8 +122973,7 @@ define("nls/ur/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "ٹیمپلیٹ متن",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "وضاحت",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "فائل ایکسٹینشن",
-  "WELCOME_BACK": "خوش آمدید واپس",
-  "WELCOME_BACK_USER": "{0}، خوش آمدید واپس!"
+  "LIVE_PREVIEW_HIDE_OVERLAY": "یہ پیغام چھپائیں"
 });
 /*
  * GNU AGPL-3.0 License
@@ -124414,6 +124448,8 @@ define("nls/zh-cn/strings", {
   "CHECKING": "正在检查…",
   "CHECKING_STATUS": "正在检查登录状态…",
   "NOT_SIGNED_IN_YET": "尚未登录。请在另一个标签页中完成登录。",
+  "WELCOME_BACK": "欢迎回来",
+  "WELCOME_BACK_USER": "欢迎回来，{0}！",
   "POPUP_BLOCKED": "弹窗被阻止。请允许弹窗并重试，或手动导航至 {0}",
   "COLLAPSE_ALL_FOLDERS": "折叠所有文件夹",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "自定义代码片段…",
@@ -124456,8 +124492,7 @@ define("nls/zh-cn/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "模板文本",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "描述",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "文件扩展名",
-  "WELCOME_BACK": "欢迎回来",
-  "WELCOME_BACK_USER": "欢迎回来，{0}！"
+  "LIVE_PREVIEW_HIDE_OVERLAY": "隐藏此消息"
 });
 /*
  * GNU AGPL-3.0 License
@@ -125902,6 +125937,8 @@ define("nls/zh-tw/strings", {
   "CHECKING": "檢查中…",
   "CHECKING_STATUS": "正在檢查登入狀態…",
   "NOT_SIGNED_IN_YET": "您尚未登入。請在另一個分頁中完成登入。",
+  "WELCOME_BACK": "歡迎回來",
+  "WELCOME_BACK_USER": "歡迎回來，{0}！",
   "POPUP_BLOCKED": "彈出視窗遭到封鎖。請允許彈出視窗並重試，或手動前往 {0}",
   "COLLAPSE_ALL_FOLDERS": "收合所有資料夾",
   "CUSTOM_SNIPPETS_MENU_ITEM_NAME": "自訂程式碼片段…",
@@ -125944,8 +125981,7 @@ define("nls/zh-tw/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "範本文字",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "描述",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "檔案副檔名",
-  "WELCOME_BACK": "歡迎回來",
-  "WELCOME_BACK_USER": "歡迎回來，{0}！"
+  "LIVE_PREVIEW_HIDE_OVERLAY": "隱藏此訊息"
 });
 /*
  * GNU AGPL-3.0 License
