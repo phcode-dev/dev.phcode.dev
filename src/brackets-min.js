@@ -70875,6 +70875,7 @@ define("nls/ar/strings", {
   "LIVE_DEV_NEED_BASEURL_MESSAGE": "لتشغيل المعاينة المباشرة باستخدام ملف من جانب الخادم، يجب تحديد عنوان URL أساسي لهذا المشروع.",
   "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "خطأ في بدء تشغيل خادم HTTP لملفات المعاينة المباشرة. الرجاء المحاولة مرة أخرى.",
   "LIVE_DEVELOPMENT_TROUBLESHOOTING": "لمزيد من المعلومات، راجع <a href='{0}' title='{0}'>استكشاف أخطاء اتصال المعاينة المباشرة وإصلاحها</a>.",
+  "LIVE_PREVIEW_HIDE_OVERLAY": "إخفاء هذه الرسالة",
   "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "المعاينة المباشرة",
   "LIVE_DEV_STATUS_TIP_PROGRESS1": "معاينة مباشرة: جارٍ الاتصال…",
   "LIVE_DEV_STATUS_TIP_PROGRESS2": "معاينة مباشرة: جارٍ التهيئة…",
@@ -72162,7 +72163,6 @@ define("nls/ar/strings", {
   "CONTACT_SUPPORT": "تواصل مع الدعم",
   "SIGN_OUT": "تسجيل الخروج",
   "ACCOUNT_DETAILS": "تفاصيل الحساب",
-  "AI_QUOTA_USED": "حصة الذكاء الاصطناعي المستخدمة",
   "LOGIN_REFRESH": "تحقق من حالة تسجيل الدخول",
   "SIGN_IN_WAITING_TITLE": "جارٍ انتظار تسجيل الدخول",
   "SIGN_IN_WAITING_MESSAGE": "يُرجى إكمال تسجيل الدخول في علامة التبويب الجديدة، ثم العودة إلى هنا.",
@@ -72214,8 +72214,7 @@ define("nls/ar/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "اختصار",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "نص القالب",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "الوصف",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "امتداد الملف",
-  "LIVE_PREVIEW_HIDE_OVERLAY": "إخفاء هذه الرسالة"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "امتداد الملف"
 });
 /*
  * GNU AGPL-3.0 License
@@ -72337,6 +72336,7 @@ define("nls/bg/strings", {
   "LIVE_DEV_NEED_BASEURL_MESSAGE": "За да пуснете прегледа на живо с файл от сървър, трябва да посочите базов адрес за този проект.",
   "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "Грешка при пускането на HTTP сървъра за преглед на файлове на живо. Моля, опитайте отново.",
   "LIVE_DEVELOPMENT_TROUBLESHOOTING": "За повече информация, вижте <a href='{0}' title='{0}'>Отстраняване на проблеми с връзката на прегледа на живо</a>.",
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Скрий това съобщение",
   "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "Преглед на живо",
   "LIVE_DEV_STATUS_TIP_PROGRESS1": "Преглед на живо: свързване…",
   "LIVE_DEV_STATUS_TIP_PROGRESS2": "Преглед на живо: установка…",
@@ -73624,7 +73624,6 @@ define("nls/bg/strings", {
   "CONTACT_SUPPORT": "Свържете се с поддръжката",
   "SIGN_OUT": "Изход",
   "ACCOUNT_DETAILS": "Данни за акаунта",
-  "AI_QUOTA_USED": "Използвана AI квота",
   "LOGIN_REFRESH": "Проверка на състоянието за вход",
   "SIGN_IN_WAITING_TITLE": "Изчакване за влизане",
   "SIGN_IN_WAITING_MESSAGE": "Моля, завършете влизането в новия раздел и след това се върнете тук.",
@@ -73676,8 +73675,7 @@ define("nls/bg/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Съкращение",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Текст на шаблон",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Описание",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Разширение на файл",
-  "LIVE_PREVIEW_HIDE_OVERLAY": "Скрий това съобщение"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Разширение на файл"
 });
 /*
  * Copyright (c) 2013 Adobe Systems Incorporated. All rights reserved.
@@ -73828,6 +73826,7 @@ define("nls/cs/strings", {
   "LIVE_DEV_NEED_BASEURL_MESSAGE": "Pro spuštění živého náhledu se vzdáleným souborem, musíte specifikovat URL pro tento projekt.",
   "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "Chyba při spouštění HTTP serveru pro soubory živého náhledu. Prosím, zkuste to znovu.",
   "LIVE_DEVELOPMENT_TROUBLESHOOTING": "Pro více informací navštivte stránku <a href='{0}' title='{0}'>řešení problémů s připojením v Živém náhledu</a>.",
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Skrýt tuto zprávu",
   "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "Živý náhled",
   "LIVE_DEV_STATUS_TIP_PROGRESS1": "Živý náhled: Připojování…",
   "LIVE_DEV_STATUS_TIP_PROGRESS2": "Živý náhled: Spouštění…",
@@ -75115,7 +75114,6 @@ define("nls/cs/strings", {
   "CONTACT_SUPPORT": "Kontaktovat podporu",
   "SIGN_OUT": "Odhlásit se",
   "ACCOUNT_DETAILS": "Detaily účtu",
-  "AI_QUOTA_USED": "Vyčerpána kvóta pro AI",
   "LOGIN_REFRESH": "Zkontrolovat stav přihlášení",
   "SIGN_IN_WAITING_TITLE": "Čekání na přihlášení",
   "SIGN_IN_WAITING_MESSAGE": "Dokončete prosím přihlášení v nové kartě a poté se sem vraťte.",
@@ -75167,8 +75165,7 @@ define("nls/cs/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Zkratka",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Text šablony",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Popis",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Přípona souboru",
-  "LIVE_PREVIEW_HIDE_OVERLAY": "Skrýt tuto zprávu"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Přípona souboru"
 });
 /*
  * GNU AGPL-3.0 License
@@ -75317,6 +75314,7 @@ define("nls/da/strings", {
   "LIVE_DEV_NEED_BASEURL_MESSAGE": "For at bruge Live-Forhåndsvisning på en server-side fil, bliver du nødt til at angive en basis-URL for dette projekt.",
   "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "Fejl ved opstart af HTTP-serveren for Live-Forhåndsvisning. Prøv igen.",
   "LIVE_DEVELOPMENT_TROUBLESHOOTING": "For yderligere information, se <a href='{0}' title='{0}'>Løsningsforslag til forbindelsesfejl vedrørende Live-Forhåndsvisning</a>.",
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Skjul denne besked",
   "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "Live-Forhåndsvisning",
   "LIVE_DEV_STATUS_TIP_PROGRESS1": "Live-Forhåndsvisning: Forbinder…",
   "LIVE_DEV_STATUS_TIP_PROGRESS2": "Live-Forhåndsvisning: Starter op…",
@@ -76604,7 +76602,6 @@ define("nls/da/strings", {
   "CONTACT_SUPPORT": "Kontakt support",
   "SIGN_OUT": "Log ud",
   "ACCOUNT_DETAILS": "Kontooplysninger",
-  "AI_QUOTA_USED": "Brugt AI-kvote",
   "LOGIN_REFRESH": "Tjek loginstatus",
   "SIGN_IN_WAITING_TITLE": "Venter på login",
   "SIGN_IN_WAITING_MESSAGE": "Fuldfør venligst login i den nye fane, og vend derefter tilbage hertil.",
@@ -76656,8 +76653,7 @@ define("nls/da/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Forkortelse",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Skabelontekst",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Beskrivelse",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Filtypenavn",
-  "LIVE_PREVIEW_HIDE_OVERLAY": "Skjul denne besked"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Filtypenavn"
 });
 /*
  * GNU AGPL-3.0 License
@@ -76804,6 +76800,7 @@ define("nls/de/strings", {
   "LIVE_DEV_NEED_BASEURL_MESSAGE": "Zum Starten der Live-Vorschau mit einer serverseitigen Datei müssen Sie eine Basis-URL für dieses Projekt angeben.",
   "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "Ein Fehler ist beim Starten des HTTP-Servers oder der Live-Vorschau-Dateien aufgetreten. Bitte versuchen Sie es später erneut.",
   "LIVE_DEVELOPMENT_TROUBLESHOOTING": "Weitere Informationen finden Sie unter dem Thema <a href='{0}' title='{0}'>Fehlerbehebung bei Verbindungs-Fehlern der Live-Entwicklung</a>.",
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Diese Meldung ausblenden",
   "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "Live-Vorschau",
   "LIVE_DEV_STATUS_TIP_PROGRESS1": "Live-Vorschau: Verbinden…",
   "LIVE_DEV_STATUS_TIP_PROGRESS2": "Live-Vorschau: Initialisieren…",
@@ -78091,7 +78088,6 @@ define("nls/de/strings", {
   "CONTACT_SUPPORT": "Support kontaktieren",
   "SIGN_OUT": "Abmelden",
   "ACCOUNT_DETAILS": "Kontodetails",
-  "AI_QUOTA_USED": "Verbrauchte KI-Quote",
   "LOGIN_REFRESH": "Anmeldestatus überprüfen",
   "SIGN_IN_WAITING_TITLE": "Warte auf Anmeldung",
   "SIGN_IN_WAITING_MESSAGE": "Bitte schließen Sie die Anmeldung im neuen Tab ab und kehren Sie dann hierher zurück.",
@@ -78143,8 +78139,7 @@ define("nls/de/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Kürzel",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Vorlagentext",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Beschreibung",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Dateierweiterung",
-  "LIVE_PREVIEW_HIDE_OVERLAY": "Diese Meldung ausblenden"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Dateierweiterung"
 });
 /*
  * GNU AGPL-3.0 License
@@ -78293,6 +78288,7 @@ define("nls/el/strings", {
   "LIVE_DEV_NEED_BASEURL_MESSAGE": "Για να ανοίξετε το Live Preview με ένα αρχείο από κάποιον server, πρέπει να προσδιορίσετε μια διεύθυνση (Base URL) για αυτό το project.",
   "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "Σφάλμα κατά τη διαδικασία εκκίνησης του HTTP server για την άμεση επεξεργασία αρχείων. Παρακαλούμε προσπαθήστε ξανά.",
   "LIVE_DEVELOPMENT_TROUBLESHOOTING": "Για περισσότερες πληροφορίες δείτε εδώ: <a href='{0}' title='{0}'>Troubleshooting Live Development connection errors</a>.",
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Απόκρυψη αυτού του μηνύματος",
   "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "Live Preview",
   "LIVE_DEV_STATUS_TIP_PROGRESS1": "Live Preview: Σύνδεση…",
   "LIVE_DEV_STATUS_TIP_PROGRESS2": "Live Preview: Εκκίνηση…",
@@ -79580,7 +79576,6 @@ define("nls/el/strings", {
   "CONTACT_SUPPORT": "Επικοινωνία με την υποστήριξη",
   "SIGN_OUT": "Αποσύνδεση",
   "ACCOUNT_DETAILS": "Στοιχεία Λογαριασμού",
-  "AI_QUOTA_USED": "Χρήση ποσοστού AI",
   "LOGIN_REFRESH": "Έλεγχος Κατάστασης Σύνδεσης",
   "SIGN_IN_WAITING_TITLE": "Αναμονή για Σύνδεση",
   "SIGN_IN_WAITING_MESSAGE": "Ολοκληρώστε τη σύνδεση στην νέα καρτέλα και μετά επιστρέψτε εδώ.",
@@ -79632,8 +79627,7 @@ define("nls/el/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Συντομογραφία",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Κείμενο Προτύπου",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Περιγραφή",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Επέκταση Αρχείου",
-  "LIVE_PREVIEW_HIDE_OVERLAY": "Απόκρυψη αυτού του μηνύματος"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Επέκταση Αρχείου"
 });
 /*
  * GNU AGPL-3.0 License
@@ -79782,6 +79776,7 @@ define("nls/en-gb/strings", {
   "LIVE_DEV_NEED_BASEURL_MESSAGE": "To launch live preview with a server-side file, you need to specify a Base URL for this project.",
   "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "Error starting up the HTTP server for live preview files. Please try again.",
   "LIVE_DEVELOPMENT_TROUBLESHOOTING": "For more information, see <a href='{0}' title='{0}'>Troubleshooting Live Preview connection errors</a>.",
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Dismiss this message",
   "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "Live Preview",
   "LIVE_DEV_STATUS_TIP_PROGRESS1": "Live Preview: Connecting…",
   "LIVE_DEV_STATUS_TIP_PROGRESS2": "Live Preview: Initialising…",
@@ -81069,7 +81064,6 @@ define("nls/en-gb/strings", {
   "CONTACT_SUPPORT": "Contact support",
   "SIGN_OUT": "Sign out",
   "ACCOUNT_DETAILS": "Account Details",
-  "AI_QUOTA_USED": "AI quota used",
   "LOGIN_REFRESH": "Check Login Status",
   "SIGN_IN_WAITING_TITLE": "Waiting for Sign-in",
   "SIGN_IN_WAITING_MESSAGE": "Please complete sign-in in the new tab, then return here.",
@@ -81121,8 +81115,7 @@ define("nls/en-gb/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Abbreviation",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Template Text",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Description",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "File Extension",
-  "LIVE_PREVIEW_HIDE_OVERLAY": "Dismiss this message"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "File Extension"
 });
 /*
  * GNU AGPL-3.0 License
@@ -81244,6 +81237,7 @@ define("nls/es/strings", {
   "LIVE_DEV_NEED_BASEURL_MESSAGE": "Necesitas especificar una URL base en este proyecto para poder iniciar la Vista previa dinámica con archivos de servidor.",
   "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "Error iniciando el servidor HTTP para la Vista previa dinámica. Vuelve a intentarlo, por favor.",
   "LIVE_DEVELOPMENT_TROUBLESHOOTING": "Para más información, consulta <a href='{0}' title='{0}'>Resolución de Problemas de conexión en Vista previa dinámica</a>.",
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Ocultar este mensaje",
   "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "Vista previa dinámica",
   "LIVE_DEV_STATUS_TIP_PROGRESS1": "Vista previa dinámica: Conectando…",
   "LIVE_DEV_STATUS_TIP_PROGRESS2": "Vista previa dinámica: Inicializando…",
@@ -82531,7 +82525,6 @@ define("nls/es/strings", {
   "CONTACT_SUPPORT": "Contactar con soporte técnico",
   "SIGN_OUT": "Cerrar sesión",
   "ACCOUNT_DETAILS": "Detalles de la cuenta",
-  "AI_QUOTA_USED": "Cuota de IA utilizada",
   "LOGIN_REFRESH": "Verificar estado del inicio de sesión",
   "SIGN_IN_WAITING_TITLE": "Esperando inicio de sesión",
   "SIGN_IN_WAITING_MESSAGE": "Completa el inicio de sesión en la nueva pestaña y luego regresa aquí.",
@@ -82583,8 +82576,7 @@ define("nls/es/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Abreviatura",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Texto de la plantilla",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Descripción",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensión de archivo",
-  "LIVE_PREVIEW_HIDE_OVERLAY": "Ocultar este mensaje"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensión de archivo"
 });
 /*
  * GNU AGPL-3.0 License
@@ -82734,6 +82726,7 @@ define("nls/fa-ir/strings", {
   "LIVE_DEV_NEED_BASEURL_MESSAGE": "جهت اجرای پیش نمایش زنده بصورت پرونده در سمت سرور(server-side), می بایست یک URL پایه برای پروژه تعریف نمایید.",
   "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "خطا در اجرای سرویس دهنده HTTP برای توسعه زنده پرونده ها. لطفا دوباره تلاش کنید",
   "LIVE_DEVELOPMENT_TROUBLESHOOTING": "برای اطلاعات بیشتر, ببینید <a href='{0}' title='{0}'>عیب یابی خطاهای اتصال پیش نمایش زنده</a>.",
+  "LIVE_PREVIEW_HIDE_OVERLAY": "پنهان کردن این پیام",
   "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "پیش نمایش زنده",
   "LIVE_DEV_STATUS_TIP_PROGRESS1": "پیش نمایش زنده: درحال اتصال…",
   "LIVE_DEV_STATUS_TIP_PROGRESS2": "پیش نمایش زنده: درحال مقداردهی اولیه…",
@@ -84021,7 +84014,6 @@ define("nls/fa-ir/strings", {
   "CONTACT_SUPPORT": "تماس با پشتیبانی",
   "SIGN_OUT": "خروج",
   "ACCOUNT_DETAILS": "جزئیات حساب کاربری",
-  "AI_QUOTA_USED": "سهمیه هوش مصنوعی استفاده شده",
   "LOGIN_REFRESH": "بررسی وضعیت ورود",
   "SIGN_IN_WAITING_TITLE": "در حال انتظار برای ورود",
   "SIGN_IN_WAITING_MESSAGE": "لطفاً ورود به سیستم را در برگه جدید تکمیل کنید، سپس به اینجا برگردید.",
@@ -84073,8 +84065,7 @@ define("nls/fa-ir/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "مخفف",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "متن الگو",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "توضیحات",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "پسوند فایل",
-  "LIVE_PREVIEW_HIDE_OVERLAY": "پنهان کردن این پیام"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "پسوند فایل"
 });
 /*
  * GNU AGPL-3.0 License
@@ -84223,6 +84214,7 @@ define("nls/fi/strings", {
   "LIVE_DEV_NEED_BASEURL_MESSAGE": "Jotta voit käynnistää esikatselun palvelimen tiedostolla, täytyy tämän projektin URL-osoite määrittää.",
   "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "Virhe käynnistettäessä HTTP-palvelinta esikatselun tiedostoille. Yritä uudelleen.",
   "LIVE_DEVELOPMENT_TROUBLESHOOTING": "Saat lisätietoja tutustumalla ohjeeseen <a href='{0}' title='{0}'>Troubleshooting Live Preview connection errors</a>.",
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Piilota tämä viesti",
   "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "Esikatselu",
   "LIVE_DEV_STATUS_TIP_PROGRESS1": "Esikatselu: yhdistetään…",
   "LIVE_DEV_STATUS_TIP_PROGRESS2": "Esikatselu: alustetaan…",
@@ -85510,7 +85502,6 @@ define("nls/fi/strings", {
   "CONTACT_SUPPORT": "Ota yhteyttä tukeen",
   "SIGN_OUT": "Kirjaudu ulos",
   "ACCOUNT_DETAILS": "Tilin tiedot",
-  "AI_QUOTA_USED": "Käytetty tekoälykiintiö",
   "LOGIN_REFRESH": "Tarkista kirjautumistila",
   "SIGN_IN_WAITING_TITLE": "Kirjaudutaan sisään",
   "SIGN_IN_WAITING_MESSAGE": "Viimeistele sisäänkirjautuminen uudessa välilehdessä ja palaa sitten tänne.",
@@ -85562,8 +85553,7 @@ define("nls/fi/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Lyhenne",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Malliteksti",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Kuvaus",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Tiedostopääte",
-  "LIVE_PREVIEW_HIDE_OVERLAY": "Piilota tämä viesti"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Tiedostopääte"
 });
 /*
  * GNU AGPL-3.0 License
@@ -85712,6 +85702,7 @@ define("nls/fr/strings", {
   "LIVE_DEV_NEED_BASEURL_MESSAGE": "Pour lancer l’Aperçu en direct avec un fichier de serveur, vous devez indiquer une URL de base pour ce projet.",
   "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "Une erreur s’est produite au démarrage du serveur HTTP pour les fichiers d’aperçu en direct. Veuillez réessayer.",
   "LIVE_DEVELOPMENT_TROUBLESHOOTING": "Pour plus d’informations, consultez la page <a href='{0}' title='{0}'>Résolution des erreurs de connexion à l’Aperçu en direct</a>.",
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Masquer ce message",
   "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "Aperçu en direct",
   "LIVE_DEV_STATUS_TIP_PROGRESS1": "Aperçu en direct : Connexion…",
   "LIVE_DEV_STATUS_TIP_PROGRESS2": "Aperçu en direct : Initialisation…",
@@ -86999,7 +86990,6 @@ define("nls/fr/strings", {
   "CONTACT_SUPPORT": "Contacter le support",
   "SIGN_OUT": "Se déconnecter",
   "ACCOUNT_DETAILS": "Détails du compte",
-  "AI_QUOTA_USED": "Quota IA utilisé",
   "LOGIN_REFRESH": "Vérifier l'état de la connexion",
   "SIGN_IN_WAITING_TITLE": "En attente de connexion",
   "SIGN_IN_WAITING_MESSAGE": "Veuillez vous connecter dans le nouvel onglet, puis revenez ici.",
@@ -87051,8 +87041,7 @@ define("nls/fr/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Abréviation",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Texte du modèle",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Description",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extension de fichier",
-  "LIVE_PREVIEW_HIDE_OVERLAY": "Masquer ce message"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extension de fichier"
 });
 /*
  * GNU AGPL-3.0 License
@@ -87201,6 +87190,7 @@ define("nls/gl/strings", {
   "LIVE_DEV_NEED_BASEURL_MESSAGE": "Necesitas especificar unha URL base neste proxecto para poder iniciar Vista Previa en Vivo con arquivos de servidor.",
   "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "Erro iniciando o servidor HTTP para Vista Previa en Vivo. Volve a intentalo, por favor.",
   "LIVE_DEVELOPMENT_TROUBLESHOOTING": "Para máis información, consulta <a href='{0}' title='{0}'>Resolución de Problemas de conexión en Vista Previa en Vivo</a>.",
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Agochar esta mensaxe",
   "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "Vista Previa en Vivo",
   "LIVE_DEV_STATUS_TIP_PROGRESS1": "Vista Previa en Vivo: Conectando…",
   "LIVE_DEV_STATUS_TIP_PROGRESS2": "Vista Previa en Vivo: Inicializando…",
@@ -88488,7 +88478,6 @@ define("nls/gl/strings", {
   "CONTACT_SUPPORT": "Contactar co soporte",
   "SIGN_OUT": "Pechar sesión",
   "ACCOUNT_DETAILS": "Detalles da conta",
-  "AI_QUOTA_USED": "Cota de IA usada",
   "LOGIN_REFRESH": "Comprobar o estado do inicio de sesión",
   "SIGN_IN_WAITING_TITLE": "Agardando o inicio de sesión",
   "SIGN_IN_WAITING_MESSAGE": "Complete o inicio de sesión na nova lapela e logo volva aquí.",
@@ -88540,8 +88529,7 @@ define("nls/gl/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Abreviatura",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Texto do modelo",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Descrición",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensión de ficheiro",
-  "LIVE_PREVIEW_HIDE_OVERLAY": "Agochar esta mensaxe"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensión de ficheiro"
 });
 /*
  * GNU AGPL-3.0 License
@@ -88663,6 +88651,7 @@ define("nls/hi/strings", {
   "LIVE_DEV_NEED_BASEURL_MESSAGE": "सर्वर-साइड फ़ाइल के साथ लाइव पूर्वावलोकन लॉन्च करने के लिए, आपको इस प्रोजेक्ट के लिए एक बेस URL निर्दिष्ट करना होगा।",
   "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "लाइव पूर्वावलोकन फ़ाइलों के लिए HTTP सर्वर शुरू करने में त्रुटि। कृपया पुन: प्रयास करें।",
   "LIVE_DEVELOPMENT_TROUBLESHOOTING": "अधिक जानकारी के लिए, <a href='{0}' title='{0}'>लाइव पूर्वावलोकन कनेक्शन त्रुटियों का निवारण</a> देखें।",
+  "LIVE_PREVIEW_HIDE_OVERLAY": "इस संदेश को छिपाएँ",
   "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "लाइव पूर्वावलोकन",
   "LIVE_DEV_STATUS_TIP_PROGRESS1": "लाइव पूर्वावलोकन: कनेक्ट हो रहा है…",
   "LIVE_DEV_STATUS_TIP_PROGRESS2": "लाइव पूर्वावलोकन: आरंभ हो रहा है…",
@@ -89950,7 +89939,6 @@ define("nls/hi/strings", {
   "CONTACT_SUPPORT": "सहायता से संपर्क करें",
   "SIGN_OUT": "साइन आउट करें",
   "ACCOUNT_DETAILS": "खाता विवरण",
-  "AI_QUOTA_USED": "एआई कोटा उपयोग किया गया",
   "LOGIN_REFRESH": "लॉगिन स्थिति जांचें",
   "SIGN_IN_WAITING_TITLE": "साइन इन की प्रतीक्षा हो रही है",
   "SIGN_IN_WAITING_MESSAGE": "कृपया नए टैब में साइन-इन पूरा करें, फिर यहां वापस आएं।",
@@ -90002,8 +89990,7 @@ define("nls/hi/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "संक्षिप्त नाम",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "टेम्पलेट टेक्स्ट",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "विवरण",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "फ़ाइल एक्सटेंशन",
-  "LIVE_PREVIEW_HIDE_OVERLAY": "इस संदेश को छिपाएँ"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "फ़ाइल एक्सटेंशन"
 });
 /*
  * GNU AGPL-3.0 License
@@ -90125,6 +90112,7 @@ define("nls/hr/strings", {
   "LIVE_DEV_NEED_BASEURL_MESSAGE": "Za pokretanje prikaza uživo sa datotekom koja je na serveru, morate navesti osnovnu URL adresu za ovaj projekt.",
   "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "Greška prilikom pokretanja HTTP servera za prikaz datoteka uživo. Pokušajte ponovo.",
   "LIVE_DEVELOPMENT_TROUBLESHOOTING": "Za više informacija, pogledajte <a href='{0}' title='{0}'>Rješavanje grešaka u povezivanju prilikom Prikaza uživo.</a>.",
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Sakrij ovu poruku",
   "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "Prikaz uživo",
   "LIVE_DEV_STATUS_TIP_PROGRESS1": "Prikaz uživo: Povezivanje…",
   "LIVE_DEV_STATUS_TIP_PROGRESS2": "Prikaz uživo: Inicijalizacija…",
@@ -91412,7 +91400,6 @@ define("nls/hr/strings", {
   "CONTACT_SUPPORT": "Kontaktirajte podršku",
   "SIGN_OUT": "Odjava",
   "ACCOUNT_DETAILS": "Podaci o računu",
-  "AI_QUOTA_USED": "Iskorištena AI kvota",
   "LOGIN_REFRESH": "Provjeri status prijave",
   "SIGN_IN_WAITING_TITLE": "Prijava u tijeku",
   "SIGN_IN_WAITING_MESSAGE": "Molimo dovršite prijavu u novoj kartici, a zatim se vratite ovdje.",
@@ -91464,8 +91451,7 @@ define("nls/hr/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Kratica",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Tekst predloška",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Opis",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Ekstenzija datoteke",
-  "LIVE_PREVIEW_HIDE_OVERLAY": "Sakrij ovu poruku"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Ekstenzija datoteke"
 });
 /*
  * GNU AGPL-3.0 License
@@ -91614,6 +91600,7 @@ define("nls/hu/strings", {
   "LIVE_DEV_NEED_BASEURL_MESSAGE": "Az Élő Előnézet használatához szerver-oldali fájlokkal meg kell adni az alap URL-t a projekthez.",
   "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "Hiba a HTTP szerver indításakor az Élő Fejlesztéshez. Kérlek próbáld újra később.",
   "LIVE_DEVELOPMENT_TROUBLESHOOTING": "További információért lásd: <a href='{0}' title='{0}'>Élő Előnézet csatlakozási hibák kiküszöbölése</a>.",
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Üzenet elrejtése",
   "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "Élő Előnézet",
   "LIVE_DEV_STATUS_TIP_PROGRESS1": "Élő Előnézet: Csatlakozás…",
   "LIVE_DEV_STATUS_TIP_PROGRESS2": "Élő Előnézet: Inicializálás…",
@@ -92901,7 +92888,6 @@ define("nls/hu/strings", {
   "CONTACT_SUPPORT": "Ügyfélszolgálattal való kapcsolatfelvétel",
   "SIGN_OUT": "Kijelentkezés",
   "ACCOUNT_DETAILS": "Fiókadatok",
-  "AI_QUOTA_USED": "Felhasznált MI-kvóta",
   "LOGIN_REFRESH": "Bejelentkezés állapotának ellenőrzése",
   "SIGN_IN_WAITING_TITLE": "Bejelentkezésre vár",
   "SIGN_IN_WAITING_MESSAGE": "Kérjük, fejezd be a bejelentkezést az új lapon, majd térj vissza ide.",
@@ -92953,8 +92939,7 @@ define("nls/hu/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Rövidítés",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Sablonszöveg",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Leírás",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Fájlkiterjesztés",
-  "LIVE_PREVIEW_HIDE_OVERLAY": "Üzenet elrejtése"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Fájlkiterjesztés"
 });
 /*
  * GNU AGPL-3.0 License
@@ -93076,6 +93061,7 @@ define("nls/id/strings", {
   "LIVE_DEV_NEED_BASEURL_MESSAGE": "Untuk menjalankan tinjauan langsung dengan file sisi-server, Anda perlu mengatur URL Dasar untuk proyek ini.",
   "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "Gagal menjalankan server HTTP untuk meninjau langsung file. Coba lagi.",
   "LIVE_DEVELOPMENT_TROUBLESHOOTING": "Untuk informasi selengkapnya, lihat <a href='{0}' title='{0}'>Mengatasi masalah sambungan Tinjauan Langsung</a>.",
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Sembunyikan pesan ini",
   "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "Tinjauan Langsung",
   "LIVE_DEV_STATUS_TIP_PROGRESS1": "Tinjauan Langsung: Menyambung…",
   "LIVE_DEV_STATUS_TIP_PROGRESS2": "Tinjauan Langsung: Menginisialisasi…",
@@ -94363,7 +94349,6 @@ define("nls/id/strings", {
   "CONTACT_SUPPORT": "Hubungi dukungan",
   "SIGN_OUT": "Keluar",
   "ACCOUNT_DETAILS": "Detail Akun",
-  "AI_QUOTA_USED": "Kuota AI terpakai",
   "LOGIN_REFRESH": "Periksa Status Login",
   "SIGN_IN_WAITING_TITLE": "Menunggu Masuk",
   "SIGN_IN_WAITING_MESSAGE": "Silakan selesaikan proses masuk di tab baru, lalu kembali ke sini.",
@@ -94415,8 +94400,7 @@ define("nls/id/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Singkatan",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Teks Templat",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Deskripsi",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Ekstensi Berkas",
-  "LIVE_PREVIEW_HIDE_OVERLAY": "Sembunyikan pesan ini"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Ekstensi Berkas"
 });
 /*
  * GNU AGPL-3.0 License
@@ -94564,6 +94548,7 @@ define("nls/it/strings", {
   "LIVE_DEV_NEED_BASEURL_MESSAGE": "Per avviare l'Anteprima Live con un file server-side, è necessario specificare un URL di base per questo progetto.",
   "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "Errore durante l’avvio del server HTTP server per i file di sviluppo in tempo reale. Riprova ancora.",
   "LIVE_DEVELOPMENT_TROUBLESHOOTING": "Per maggiori informazioni leggi <a href='{0}' title='{0}'>Risoluzione dei problemi di connessione a Anteprima Live</a>.",
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Nascondi questo messaggio",
   "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "Anteprima Live",
   "LIVE_DEV_STATUS_TIP_PROGRESS1": "Anteprima Live: Connessione…",
   "LIVE_DEV_STATUS_TIP_PROGRESS2": "Anteprima Live: Inizializzazione…",
@@ -95851,7 +95836,6 @@ define("nls/it/strings", {
   "CONTACT_SUPPORT": "Contatta l'assistenza",
   "SIGN_OUT": "Esci",
   "ACCOUNT_DETAILS": "Dettagli account",
-  "AI_QUOTA_USED": "Quota IA utilizzata",
   "LOGIN_REFRESH": "Verifica stato accesso",
   "SIGN_IN_WAITING_TITLE": "Attendere l'accesso",
   "SIGN_IN_WAITING_MESSAGE": "Completa l'accesso nella nuova scheda, quindi torna qui.",
@@ -95903,8 +95887,7 @@ define("nls/it/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Abbreviazione",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Testo del Modello",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Descrizione",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Estensione del File",
-  "LIVE_PREVIEW_HIDE_OVERLAY": "Nascondi questo messaggio"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Estensione del File"
 });
 /*
  * GNU AGPL-3.0 License
@@ -96053,6 +96036,7 @@ define("nls/ja/strings", {
   "LIVE_DEV_NEED_BASEURL_MESSAGE": "サーバー側ファイルでライブプレビューを起動するには、このプロジェクトのベース URL を指定する必要があります。",
   "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "ファイルのライブプレビューで使用する HTTP サーバーの起動時にエラーが発生しました。もう一度実行してください。",
   "LIVE_DEVELOPMENT_TROUBLESHOOTING": "詳しくは、<a href='{0}' title='{0}'>ライブプレビューの接続エラーに関するトラブルシューティング</a>を参照してください。",
+  "LIVE_PREVIEW_HIDE_OVERLAY": "このメッセージを非表示にする",
   "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "ライブプレビュー",
   "LIVE_DEV_STATUS_TIP_PROGRESS1": "ライブプレビュー : 接続中…",
   "LIVE_DEV_STATUS_TIP_PROGRESS2": "ライブプレビュー : 初期化中…",
@@ -97340,7 +97324,6 @@ define("nls/ja/strings", {
   "CONTACT_SUPPORT": "サポートに問い合わせる",
   "SIGN_OUT": "サインアウト",
   "ACCOUNT_DETAILS": "アカウントの詳細",
-  "AI_QUOTA_USED": "AI利用量",
   "LOGIN_REFRESH": "ログイン状態を確認",
   "SIGN_IN_WAITING_TITLE": "サインインを待機中",
   "SIGN_IN_WAITING_MESSAGE": "新しいタブでサインインを完了してから、ここに戻ってください。",
@@ -97392,8 +97375,7 @@ define("nls/ja/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "略語",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "テンプレートテキスト",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "説明",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "ファイル拡張子",
-  "LIVE_PREVIEW_HIDE_OVERLAY": "このメッセージを非表示にする"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "ファイル拡張子"
 });
 /*
  * GNU AGPL-3.0 License
@@ -97542,6 +97524,7 @@ define("nls/ko/strings", {
   "LIVE_DEV_NEED_BASEURL_MESSAGE": "서버 측 파일 실시간 미리보기를 시작하려면 이 프로젝트의 기본 URL을 지정해야 합니다.",
   "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "실시간 미리보기에 사용되는 HTTP 서버를 시작할 때 에러가 발생했습니다. 잠시 후에 다시 시도하세요.",
   "LIVE_DEVELOPMENT_TROUBLESHOOTING": "자세한 내용은 <a href='{0}' title='{0}'> Live Development 연결 오류 문제 해결 </a>를 참조하세요.",
+  "LIVE_PREVIEW_HIDE_OVERLAY": "이 메시지 숨기기",
   "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "실시간 미리보기",
   "LIVE_DEV_STATUS_TIP_PROGRESS1": "실시간 미리보기: 연결 중 …",
   "LIVE_DEV_STATUS_TIP_PROGRESS2": "실시간 미리보기: 초기화 중…",
@@ -98829,7 +98812,6 @@ define("nls/ko/strings", {
   "CONTACT_SUPPORT": "지원팀에 문의",
   "SIGN_OUT": "로그아웃",
   "ACCOUNT_DETAILS": "계정 세부정보",
-  "AI_QUOTA_USED": "사용된 AI 할당량",
   "LOGIN_REFRESH": "로그인 상태 확인",
   "SIGN_IN_WAITING_TITLE": "로그인 대기 중",
   "SIGN_IN_WAITING_MESSAGE": "새 탭에서 로그인을 완료한 후 여기로 돌아오세요.",
@@ -98881,8 +98863,7 @@ define("nls/ko/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "약어",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "템플릿 텍스트",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "설명",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "파일 확장자",
-  "LIVE_PREVIEW_HIDE_OVERLAY": "이 메시지 숨기기"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "파일 확장자"
 });
 /*
  * GNU AGPL-3.0 License
@@ -99031,6 +99012,7 @@ define("nls/lv/strings", {
   "LIVE_DEV_NEED_BASEURL_MESSAGE": "Lai palaistu tiešo priekšskatījumu ar serverī importētu datni, nepieciešams norādīt šī projekta bāzes URL.",
   "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "Kļūda, startējot HTTP serveri tiešā priekšskatījuma datnēm. Lūdzu, mēģiniet vēlreiz. ",
   "LIVE_DEVELOPMENT_TROUBLESHOOTING": "Sīkākai informācijai skatiet <a href='{0}' title='{0}'>Tiešā priekšskatījuma savienojuma kļūdu novēršana</a>.",
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Paslēpt šo ziņojumu",
   "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "Tiešais priekšskatījums",
   "LIVE_DEV_STATUS_TIP_PROGRESS1": "Tiešais priekšskatījums: savienojas…",
   "LIVE_DEV_STATUS_TIP_PROGRESS2": "Tiešais priekšskatījums: inicializē…",
@@ -100318,7 +100300,6 @@ define("nls/lv/strings", {
   "CONTACT_SUPPORT": "Sazināties ar atbalsta dienestu",
   "SIGN_OUT": "Izrakstīties",
   "ACCOUNT_DETAILS": "Konta informācija",
-  "AI_QUOTA_USED": "Izmantotā AI kvota",
   "LOGIN_REFRESH": "Pārbaudīt pieteikšanās statusu",
   "SIGN_IN_WAITING_TITLE": "Notiek pieteikšanās",
   "SIGN_IN_WAITING_MESSAGE": "Lūdzu, pabeidziet pieteikšanos jaunajā cilnē un pēc tam atgriezieties šeit.",
@@ -100370,8 +100351,7 @@ define("nls/lv/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Saīsinājums",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Veidnes teksts",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Apraksts",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Faila paplašinājums",
-  "LIVE_PREVIEW_HIDE_OVERLAY": "Paslēpt šo ziņojumu"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Faila paplašinājums"
 });
 /*
  * GNU AGPL-3.0 License
@@ -100493,6 +100473,7 @@ define("nls/ml/strings", {
   "LIVE_DEV_NEED_BASEURL_MESSAGE": "ഒരു സെർവർ-സൈഡ് ഫയലുമായി ലൈവ് പ്രിവ്യൂ ആരംഭിക്കുന്നതിന്, ഈ പ്രോജക്റ്റിനായി ഒരു ബേസ് യുആർഎൽ നിർവചിക്കേണ്ടതുണ്ട്.",
   "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "ലൈവ് പ്രിവ്യൂ ഫയലുകൾക്കായുള്ള HTTP സെർവർ ആരംഭിക്കുന്നതിൽ പിശക്. ദയവായി വീണ്ടും ശ്രമിക്കുക.",
   "LIVE_DEVELOPMENT_TROUBLESHOOTING": "കൂടുതൽ വിവരങ്ങൾക്ക്, <a href='{0}' title='{0}'>ലൈവ് പ്രിവ്യൂ കണക്ഷൻ പിശകുകൾ പരിഹരിക്കൽ</a> കാണുക.",
+  "LIVE_PREVIEW_HIDE_OVERLAY": "ഈ സന്ദേശം മറയ്ക്കുക",
   "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "ലൈവ് പ്രിവ്യൂ",
   "LIVE_DEV_STATUS_TIP_PROGRESS1": "ലൈവ് പ്രിവ്യൂ: കണക്റ്റ് ചെയ്യുന്നു…",
   "LIVE_DEV_STATUS_TIP_PROGRESS2": "ലൈവ് പ്രിവ്യൂ: ഇനിഷ്യലൈസ് ചെയ്യുന്നു…",
@@ -101780,7 +101761,6 @@ define("nls/ml/strings", {
   "CONTACT_SUPPORT": "പിന്തുണയുമായി ബന്ധപ്പെടുക",
   "SIGN_OUT": "സൈൻ ഔട്ട് ചെയ്യുക",
   "ACCOUNT_DETAILS": "അക്കൗണ്ട് വിശദാംശങ്ങൾ",
-  "AI_QUOTA_USED": "എഐ ക്വാട്ട ഉപയോഗിച്ചു",
   "LOGIN_REFRESH": "ലോഗിൻ സ്റ്റാറ്റസ് പരിശോധിക്കുക",
   "SIGN_IN_WAITING_TITLE": "സൈൻ ഇൻ ചെയ്യുന്നതിനായി കാത്തിരിക്കുന്നു",
   "SIGN_IN_WAITING_MESSAGE": "പുതിയ ടാബിൽ സൈൻ-ഇൻ പൂർത്തിയാക്കി ഇവിടേക്ക് തിരികെ വരിക.",
@@ -101832,8 +101812,7 @@ define("nls/ml/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "ചുരുക്കെഴുത്ത്",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "ടെംപ്ലേറ്റ് ടെക്സ്റ്റ്",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "വിവരണം",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "ഫയൽ എക്സ്റ്റൻഷൻ",
-  "LIVE_PREVIEW_HIDE_OVERLAY": "ഈ സന്ദേശം മറയ്ക്കുക"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "ഫയൽ എക്സ്റ്റൻഷൻ"
 });
 /*
  * GNU AGPL-3.0 License
@@ -101955,6 +101934,7 @@ define("nls/nb/strings", {
   "LIVE_DEV_NEED_BASEURL_MESSAGE": "For å starte Live Preview med en server-side fil må du spesifisere en base-url for dette prosjektet.",
   "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "Feil ved starting av HTTP serveren for Live Preview filer. Vennligst prøv igjen.",
   "LIVE_DEVELOPMENT_TROUBLESHOOTING": "For mer informasjon, se <a href='{0}' title='{0}'>Troubleshooting Live Preview connection errors</a>.",
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Skjul denne meldingen",
   "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "Live Preview",
   "LIVE_DEV_STATUS_TIP_PROGRESS1": "Live Preview: Kobler til…",
   "LIVE_DEV_STATUS_TIP_PROGRESS2": "Live Preview: Initaliserer…",
@@ -103242,7 +103222,6 @@ define("nls/nb/strings", {
   "CONTACT_SUPPORT": "Kontakt kundestøtte",
   "SIGN_OUT": "Logg ut",
   "ACCOUNT_DETAILS": "Kontodetaljer",
-  "AI_QUOTA_USED": "AI-kvote brukt",
   "LOGIN_REFRESH": "Sjekk innloggingsstatus",
   "SIGN_IN_WAITING_TITLE": "Venter på pålogging",
   "SIGN_IN_WAITING_MESSAGE": "Fullfør påloggingen i den nye fanen, og returner deretter hit.",
@@ -103294,8 +103273,7 @@ define("nls/nb/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Forkortelse",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Maltekst",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Beskrivelse",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Filtype",
-  "LIVE_PREVIEW_HIDE_OVERLAY": "Skjul denne meldingen"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Filtype"
 });
 /*
  * GNU AGPL-3.0 License
@@ -103444,6 +103422,7 @@ define("nls/nl/strings", {
   "LIVE_DEV_NEED_BASEURL_MESSAGE": "Om live voorbeeld te starten met een server-side bestand, moet je een Start URL voor dit project definiëren.",
   "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "Er is een fout opgetreden bij het opstarten van de HTTP server voor live ontwikkeling bestanden. Probeer alsjeblieft opnieuw.",
   "LIVE_DEVELOPMENT_TROUBLESHOOTING": "Voor meer informatie, zie <a href='{0}' title='{0}'>oplossen van Live Voorbeeld verbindingsproblemen</a>.",
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Dit bericht verbergen",
   "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "Live Voorbeeld",
   "LIVE_DEV_STATUS_TIP_PROGRESS1": "Live Voorbeeld: Bezig met verbinden…",
   "LIVE_DEV_STATUS_TIP_PROGRESS2": "Live Voorbeeld: Initialiseren…",
@@ -104731,7 +104710,6 @@ define("nls/nl/strings", {
   "CONTACT_SUPPORT": "Contact opnemen met support",
   "SIGN_OUT": "Uitloggen",
   "ACCOUNT_DETAILS": "Accountgegevens",
-  "AI_QUOTA_USED": "Verbruikt AI-quotum",
   "LOGIN_REFRESH": "Aanmeldstatus controleren",
   "SIGN_IN_WAITING_TITLE": "Aanmelden wordt verwerkt",
   "SIGN_IN_WAITING_MESSAGE": "Voltooi de aanmelding in het nieuwe tabblad en keer hier terug.",
@@ -104783,8 +104761,7 @@ define("nls/nl/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Afkorting",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Sjabloontekst",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Beschrijving",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Bestandsextensie",
-  "LIVE_PREVIEW_HIDE_OVERLAY": "Dit bericht verbergen"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Bestandsextensie"
 });
 /*
  * GNU AGPL-3.0 License
@@ -104933,6 +104910,7 @@ define("nls/pl/strings", {
   "LIVE_DEV_NEED_BASEURL_MESSAGE": "Aby uruchomić podgląd na żywo na plikach serwerowych, musisz podać główny adres dla tego projektu (Base URL).",
   "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "Błąd przy próbie uruchomienia serwera HTTP dla podglądu na żywo. Spróbuj ponownie.",
   "LIVE_DEVELOPMENT_TROUBLESHOOTING": "Więcej informacji znajdziesz na stronie <a href='{0}' title='{0}'>Troubleshooting Live Preview connection errors</a>.",
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Ukryj tę wiadomość",
   "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "Podgląd na żywo",
   "LIVE_DEV_STATUS_TIP_PROGRESS1": "Podgląd na żywo: łączenie…",
   "LIVE_DEV_STATUS_TIP_PROGRESS2": "Podgląd na żywo: inicjalizacja…",
@@ -106220,7 +106198,6 @@ define("nls/pl/strings", {
   "CONTACT_SUPPORT": "Skontaktuj się z pomocą techniczną",
   "SIGN_OUT": "Wyloguj się",
   "ACCOUNT_DETAILS": "Szczegóły konta",
-  "AI_QUOTA_USED": "Wykorzystany limit AI",
   "LOGIN_REFRESH": "Sprawdź status logowania",
   "SIGN_IN_WAITING_TITLE": "Oczekiwanie na logowanie",
   "SIGN_IN_WAITING_MESSAGE": "Dokończ logowanie w nowej karcie, a następnie wróć tutaj.",
@@ -106272,8 +106249,7 @@ define("nls/pl/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Skrót",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Treść szablonu",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Opis",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Rozszerzenie pliku",
-  "LIVE_PREVIEW_HIDE_OVERLAY": "Ukryj tę wiadomość"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Rozszerzenie pliku"
 });
 /*
  * GNU AGPL-3.0 License
@@ -106422,6 +106398,7 @@ define("nls/pt-br/strings", {
   "LIVE_DEV_NEED_BASEURL_MESSAGE": "Para iniciar um live preview com um arquivo server-side, é preciso especificar uma URL Base para este projeto.",
   "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "Erro ao iniciar o servidor HTTP para os arquivos do desenvolvimento em tempo real. Por favor, tente novamente.",
   "LIVE_DEVELOPMENT_TROUBLESHOOTING": "Para mais informações, veja <a href='{0}' title='{0}'>Solucionando erros de conexão com Live Development</a>.",
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Ocultar esta mensagem",
   "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "Live Preview",
   "LIVE_DEV_STATUS_TIP_PROGRESS1": "Live Preview: Conectando…",
   "LIVE_DEV_STATUS_TIP_PROGRESS2": "Live Preview: Inicializando…",
@@ -107709,7 +107686,6 @@ define("nls/pt-br/strings", {
   "CONTACT_SUPPORT": "Contatar o suporte",
   "SIGN_OUT": "Sair",
   "ACCOUNT_DETAILS": "Detalhes da Conta",
-  "AI_QUOTA_USED": "Cota de IA usada",
   "LOGIN_REFRESH": "Verificar Status de Login",
   "SIGN_IN_WAITING_TITLE": "Aguardando login",
   "SIGN_IN_WAITING_MESSAGE": "Conclua o login na nova guia e retorne aqui.",
@@ -107761,8 +107737,7 @@ define("nls/pt-br/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Abreviação",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Texto do Modelo",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Descrição",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensão do Arquivo",
-  "LIVE_PREVIEW_HIDE_OVERLAY": "Ocultar esta mensagem"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensão do Arquivo"
 });
 /*
  * GNU AGPL-3.0 License
@@ -107909,6 +107884,7 @@ define("nls/pt-pt/strings", {
   "LIVE_DEV_NEED_BASEURL_MESSAGE": "Para iniciar a pré-visualização em tempo real com um ficheiro do lado do servidor, precisa de especificar um URL Base para este projeto.",
   "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "Erro ao iniciar o servidor HTTP para ficheiros de pré-visualização em tempo real. Por favor, tente novamente.",
   "LIVE_DEVELOPMENT_TROUBLESHOOTING": "Para mais informações, consulte <a href='{0}' title='{0}'>Resolução de problemas de ligação da Pré-visualização em Tempo Real</a>.",
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Ocultar esta mensagem",
   "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "Live Preview",
   "LIVE_DEV_STATUS_TIP_PROGRESS1": "Live Preview: A ligar…",
   "LIVE_DEV_STATUS_TIP_PROGRESS2": "Live Preview: A iniciar…",
@@ -109196,7 +109172,6 @@ define("nls/pt-pt/strings", {
   "CONTACT_SUPPORT": "Contactar o suporte",
   "SIGN_OUT": "Terminar Sessão",
   "ACCOUNT_DETAILS": "Detalhes da Conta",
-  "AI_QUOTA_USED": "Quota de IA utilizada",
   "LOGIN_REFRESH": "Verificar estado de início de sessão",
   "SIGN_IN_WAITING_TITLE": "A aguardar início de sessão",
   "SIGN_IN_WAITING_MESSAGE": "Conclua o início de sessão no novo separador e volte para aqui.",
@@ -109248,8 +109223,7 @@ define("nls/pt-pt/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Abreviatura",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Texto do Modelo",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Descrição",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensão de Ficheiro",
-  "LIVE_PREVIEW_HIDE_OVERLAY": "Ocultar esta mensagem"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensão de Ficheiro"
 });
 /*
  * GNU AGPL-3.0 License
@@ -109396,6 +109370,7 @@ define("nls/ro/strings", {
   "LIVE_DEV_NEED_BASEURL_MESSAGE": "Pentru a lansa Live Preview cu un fișier server-side, e necesar de a specifica un URL de bază pentru acest proiect.",
   "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "Eroare la lansarea serverului HTTP pentru editarea în direct a fișierelor. Mai încercați o dată.",
   "LIVE_DEVELOPMENT_TROUBLESHOOTING": "Pentru mai multe informații, vezi <a href='{0}' title='{0}'>Depanarea erorilor de conexiune în Live Development</a>.",
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Ascunde acest mesaj",
   "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "Previzualizare interactivă",
   "LIVE_DEV_STATUS_TIP_PROGRESS1": "Live Preview: Conectare…",
   "LIVE_DEV_STATUS_TIP_PROGRESS2": "Live Preview: Inițializare…",
@@ -110683,7 +110658,6 @@ define("nls/ro/strings", {
   "CONTACT_SUPPORT": "Contactează asistența",
   "SIGN_OUT": "Deconectare",
   "ACCOUNT_DETAILS": "Detalii cont",
-  "AI_QUOTA_USED": "Cotă AI utilizată",
   "LOGIN_REFRESH": "Verificare stare autentificare",
   "SIGN_IN_WAITING_TITLE": "Se așteaptă autentificarea",
   "SIGN_IN_WAITING_MESSAGE": "Finalizați autentificarea în noua filă, apoi reveniți aici.",
@@ -110735,8 +110709,7 @@ define("nls/ro/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Abreviere",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Text șablon",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Descriere",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensie fișier",
-  "LIVE_PREVIEW_HIDE_OVERLAY": "Ascunde acest mesaj"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensie fișier"
 });
 /*
  * GNU AGPL-3.0 License
@@ -112616,6 +112589,7 @@ define("nls/ru/strings", {
   "LIVE_DEV_NEED_BASEURL_MESSAGE": "Для запуска Live Preview с серверным файлом, вы должны указать базовый URL проекта.",
   "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "Ошибка запуска HTTP сервера для Live Preview. Попытайтесь снова.",
   "LIVE_DEVELOPMENT_TROUBLESHOOTING": "Для дополнительной информации, смотрите <a href='{0}' title='{0}'>Поиск и устранение неисправностей ошибок подключения Live Preview</a>.",
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Скрыть это сообщение",
   "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "Live Preview",
   "LIVE_DEV_STATUS_TIP_PROGRESS1": "Live Preview: Подключение…",
   "LIVE_DEV_STATUS_TIP_PROGRESS2": "Live Preview: Инициализация…",
@@ -113903,7 +113877,6 @@ define("nls/ru/strings", {
   "CONTACT_SUPPORT": "Связаться с поддержкой",
   "SIGN_OUT": "Выйти",
   "ACCOUNT_DETAILS": "Сведения об учетной записи",
-  "AI_QUOTA_USED": "Использована квота ИИ",
   "LOGIN_REFRESH": "Проверить статус входа",
   "SIGN_IN_WAITING_TITLE": "Ожидание входа",
   "SIGN_IN_WAITING_MESSAGE": "Пожалуйста, завершите вход в новой вкладке, затем вернитесь сюда.",
@@ -113955,8 +113928,7 @@ define("nls/ru/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Сокращение",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Текст шаблона",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Описание",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Расширение файла",
-  "LIVE_PREVIEW_HIDE_OVERLAY": "Скрыть это сообщение"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Расширение файла"
 });
 /*
  * GNU AGPL-3.0 License
@@ -114105,6 +114077,7 @@ define("nls/sk/strings", {
   "LIVE_DEV_NEED_BASEURL_MESSAGE": "Pre spustenie živého náhľadu zo súborom na serveri, musíte špecifikovať URL pre tento projekt.",
   "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "Chyba pri spúšťaní HTTP severa pre súbory živého náhľadu. Prosím, skúste to znovu.",
   "LIVE_DEVELOPMENT_TROUBLESHOOTING": "Pre viac informácií pozrite <a class=\"clickable-link\" data-href=\"{0}\">Riešenie chýb pri pripojení do živého náhľadu</a>.",
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Skryť túto správu",
   "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "Živý náhľad",
   "LIVE_DEV_STATUS_TIP_PROGRESS1": "Živý náhľad: Pripájanie…",
   "LIVE_DEV_STATUS_TIP_PROGRESS2": "Živý náhľad: Inicializácia…",
@@ -115392,7 +115365,6 @@ define("nls/sk/strings", {
   "CONTACT_SUPPORT": "Kontaktovať podporu",
   "SIGN_OUT": "Odhlásiť sa",
   "ACCOUNT_DETAILS": "Detaily účtu",
-  "AI_QUOTA_USED": "Využité AI kvóty",
   "LOGIN_REFRESH": "Skontrolovať stav prihlásenia",
   "SIGN_IN_WAITING_TITLE": "Čaká sa na prihlásenie",
   "SIGN_IN_WAITING_MESSAGE": "Dokončite prihlásenie v novom okne a potom sa sem vráťte.",
@@ -115444,8 +115416,7 @@ define("nls/sk/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Skratka",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Text šablóny",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Popis",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Prípona súboru",
-  "LIVE_PREVIEW_HIDE_OVERLAY": "Skryť túto správu"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Prípona súboru"
 });
 /*
  * GNU AGPL-3.0 License
@@ -115593,6 +115564,7 @@ define("nls/sr/strings", {
   "LIVE_DEV_NEED_BASEURL_MESSAGE": "За покретање живог приказа са датотеком која је \"server-side\", морате навести основну URL адресу за овај пројекат.",
   "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "Грешка приликом покретања HTTP сервера за \"живе\" развојне датотеке. Молимо покушајте поново.",
   "LIVE_DEVELOPMENT_TROUBLESHOOTING": "За више информација, погледајте <a href='{0}' title='{0}'>Отклањање грешака у конекцији приликом развоја уживо</a>.",
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Сакриј ову поруку",
   "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "Живи приказ",
   "LIVE_DEV_STATUS_TIP_PROGRESS1": "Живи приказ: Успостављање конекције…",
   "LIVE_DEV_STATUS_TIP_PROGRESS2": "Живи приказ: Иницијализација…",
@@ -116880,7 +116852,6 @@ define("nls/sr/strings", {
   "CONTACT_SUPPORT": "Контактирајте подршку",
   "SIGN_OUT": "Одјавите се",
   "ACCOUNT_DETAILS": "Подаци о налогу",
-  "AI_QUOTA_USED": "Искоришћена AI квота",
   "LOGIN_REFRESH": "Провери статус пријаве",
   "SIGN_IN_WAITING_TITLE": "Чека се пријављивање",
   "SIGN_IN_WAITING_MESSAGE": "Молимо Вас да завршите пријављивање у новом табу, а затим се вратите овде.",
@@ -116932,8 +116903,7 @@ define("nls/sr/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Скраћеница",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Текст шаблона",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Опис",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Екстензија датотеке",
-  "LIVE_PREVIEW_HIDE_OVERLAY": "Сакриј ову поруку"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Екстензија датотеке"
 });
 /*
  * GNU AGPL-3.0 License
@@ -117165,6 +117135,7 @@ define("nls/sv/strings", {
   "LIVE_DEV_NEED_BASEURL_MESSAGE": "För att starta förhandsvisningen med en fil innehållande serverkod måste du ange en bas-URL för detta projekt.",
   "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "Ett fel uppstod när webbsevern för förhandsvisningen skulle startas. Vänligen försök igen.",
   "LIVE_DEVELOPMENT_TROUBLESHOOTING": "För mer information se <a href='{0}' title='{0}'>Troubleshooting Live Development connection errors</a>.",
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Dölj detta meddelande",
   "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "Förhandsvisning",
   "LIVE_DEV_STATUS_TIP_PROGRESS1": "Förhandsvisning: Ansluter…",
   "LIVE_DEV_STATUS_TIP_PROGRESS2": "Förhandsvisning: Initierar…",
@@ -118452,7 +118423,6 @@ define("nls/sv/strings", {
   "CONTACT_SUPPORT": "Kontakta supporten",
   "SIGN_OUT": "Logga ut",
   "ACCOUNT_DETAILS": "Kontodetaljer",
-  "AI_QUOTA_USED": "Använd AI-kvot",
   "LOGIN_REFRESH": "Kontrollera inloggningsstatus",
   "SIGN_IN_WAITING_TITLE": "Väntar på inloggning",
   "SIGN_IN_WAITING_MESSAGE": "Slutför inloggningen i den nya fliken och återvänd sedan hit.",
@@ -118504,8 +118474,7 @@ define("nls/sv/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Förkortning",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Malltext",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Beskrivning",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Filändelse",
-  "LIVE_PREVIEW_HIDE_OVERLAY": "Dölj detta meddelande"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Filändelse"
 });
 /*
  * GNU AGPL-3.0 License
@@ -118654,6 +118623,7 @@ define("nls/tr/strings", {
   "LIVE_DEV_NEED_BASEURL_MESSAGE": "Canlı Önizlemeyi server-side dosyalarınız ile açmak istiyorsanız, lütfen bu proje için kullanılabilir bir link belirtiniz.",
   "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "Canlı önizleme dosyaları için HTTP sunucusu başlatılırken hata oluştu. Lütfen tekrar deneyin.",
   "LIVE_DEVELOPMENT_TROUBLESHOOTING": "Detaylı bilgi için lütfen <a href='{0}' title='{0}'>Troubleshooting Live Development connection errors</a> sayfasına bakınız.",
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Bu mesajı gizle",
   "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "Canlı Önizleme",
   "LIVE_DEV_STATUS_TIP_PROGRESS1": "Canlı Önizleme: Bağlanılıyor…",
   "LIVE_DEV_STATUS_TIP_PROGRESS2": "Canlı Önizleme: Başlıyor…",
@@ -119941,7 +119911,6 @@ define("nls/tr/strings", {
   "CONTACT_SUPPORT": "Destek ekibiyle iletişime geçin",
   "SIGN_OUT": "Oturumu kapat",
   "ACCOUNT_DETAILS": "Hesap Ayrıntıları",
-  "AI_QUOTA_USED": "Yapay Zeka kotası kullanıldı",
   "LOGIN_REFRESH": "Oturum Durumunu Kontrol Et",
   "SIGN_IN_WAITING_TITLE": "Oturum Açma Bekleniyor",
   "SIGN_IN_WAITING_MESSAGE": "Lütfen yeni sekmede oturum açmayı tamamlayın ve buraya geri dönün.",
@@ -119993,8 +119962,7 @@ define("nls/tr/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Kısaltma",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Şablon Metni",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Açıklama",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Dosya Uzantısı",
-  "LIVE_PREVIEW_HIDE_OVERLAY": "Bu mesajı gizle"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Dosya Uzantısı"
 });
 /*
  * GNU AGPL-3.0 License
@@ -120143,6 +120111,7 @@ define("nls/uk/strings", {
   "LIVE_DEV_NEED_BASEURL_MESSAGE": "Аби запустити live preview з серверним файлом, вам варто вказати базову адресу для цього проекту.",
   "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "Помилка запуску HTTP-сервера для live preview. Будь ласка, спробуйте пізніше.",
   "LIVE_DEVELOPMENT_TROUBLESHOOTING": "Для докладнішої інформації погляньте на <a href='{0}' title='{0}'>пошук та усунення помилок підключення Live Preview</a>.",
+  "LIVE_PREVIEW_HIDE_OVERLAY": "Приховати це повідомлення",
   "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "Live Preview",
   "LIVE_DEV_STATUS_TIP_PROGRESS1": "Live Preview: Підключення…",
   "LIVE_DEV_STATUS_TIP_PROGRESS2": "Live Preview: Ініціалізація…",
@@ -121430,7 +121399,6 @@ define("nls/uk/strings", {
   "CONTACT_SUPPORT": "Звернутися до служби підтримки",
   "SIGN_OUT": "Вийти",
   "ACCOUNT_DETAILS": "Дані облікового запису",
-  "AI_QUOTA_USED": "Використано квоту ШІ",
   "LOGIN_REFRESH": "Перевірити статус входу",
   "SIGN_IN_WAITING_TITLE": "Очікування на вхід",
   "SIGN_IN_WAITING_MESSAGE": "Будь ласка, завершіть вхід у новій вкладці, а потім поверніться сюди.",
@@ -121482,8 +121450,7 @@ define("nls/uk/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Скорочення",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Текст шаблону",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Опис",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Розширення файлу",
-  "LIVE_PREVIEW_HIDE_OVERLAY": "Приховати це повідомлення"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Розширення файлу"
 });
 /*
  * GNU AGPL-3.0 License
@@ -121632,6 +121599,7 @@ define("nls/ur/strings", {
   "LIVE_DEV_NEED_BASEURL_MESSAGE": "سرور سائیڈ فائل کے ساتھ لائیو پریویو لانچ کرنے کے لیے، آپ کو اس پراجیکٹ کے لیے ایک بیس یو آر ایل بتانا ہوگا۔",
   "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "لائیو پریویو فائلوں کے لیے HTTP سرور شروع کرنے میں خرابی۔ براہ کرم دوبارہ کوشش کریں۔",
   "LIVE_DEVELOPMENT_TROUBLESHOOTING": "مزید معلومات کے لیے، <a href='{0}' title='{0}'>لائیو پریویو کنکشن کی خرابیوں کا ازالہ</a> دیکھیں۔",
+  "LIVE_PREVIEW_HIDE_OVERLAY": "یہ پیغام چھپائیں",
   "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "لائیو پریویو",
   "LIVE_DEV_STATUS_TIP_PROGRESS1": "براہ راست پیش منظر: مربوط ہو رہا ہے…",
   "LIVE_DEV_STATUS_TIP_PROGRESS2": "براہ راست پیش منظر: شروع ہو رہا ہے…",
@@ -122919,7 +122887,6 @@ define("nls/ur/strings", {
   "CONTACT_SUPPORT": "سپورٹ سے رابطہ کریں",
   "SIGN_OUT": "سائن آؤٹ کریں",
   "ACCOUNT_DETAILS": "اکاؤنٹ کی تفصیلات",
-  "AI_QUOTA_USED": "استعمال شدہ اے آئی کوٹہ",
   "LOGIN_REFRESH": "لاگ ان کی حیثیت چیک کریں",
   "SIGN_IN_WAITING_TITLE": "سائن ان کا انتظار ہے",
   "SIGN_IN_WAITING_MESSAGE": "براہ کرم نئے ٹیب میں سائن ان مکمل کریں، پھر یہاں واپس آئیں۔",
@@ -122971,8 +122938,7 @@ define("nls/ur/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "مخفف",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "ٹیمپلیٹ متن",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "وضاحت",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "فائل ایکسٹینشن",
-  "LIVE_PREVIEW_HIDE_OVERLAY": "یہ پیغام چھپائیں"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "فائل ایکسٹینشن"
 });
 /*
  * GNU AGPL-3.0 License
@@ -123151,6 +123117,7 @@ define("nls/zh-cn/strings", {
   "LIVE_DEV_NEED_BASEURL_MESSAGE": "实时预览需要一个服务端, 您需要为这个项目指定一个基本 URL 地址。 (如http://127.0.0.1/)",
   "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "试图启动实时预览 HTTP 服务器时出现错误, 请再试一次。",
   "LIVE_DEVELOPMENT_TROUBLESHOOTING": "更多信息, 请参考<a href='{0}' title='{0}'>实时预览连接错误信息</a>。",
+  "LIVE_PREVIEW_HIDE_OVERLAY": "隐藏此消息",
   "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "实时预览",
   "LIVE_DEV_STATUS_TIP_PROGRESS1": "实时预览: 连接中…",
   "LIVE_DEV_STATUS_TIP_PROGRESS2": "实时预览: 初始化…",
@@ -124438,7 +124405,6 @@ define("nls/zh-cn/strings", {
   "CONTACT_SUPPORT": "联系客服",
   "SIGN_OUT": "退出登录",
   "ACCOUNT_DETAILS": "帐户详情",
-  "AI_QUOTA_USED": "AI 配额已用",
   "LOGIN_REFRESH": "检查登录状态",
   "SIGN_IN_WAITING_TITLE": "等待登录",
   "SIGN_IN_WAITING_MESSAGE": "请在新标签页中完成登录，然后返回此处。",
@@ -124490,8 +124456,7 @@ define("nls/zh-cn/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "缩写",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "模板文本",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "描述",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "文件扩展名",
-  "LIVE_PREVIEW_HIDE_OVERLAY": "隐藏此消息"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "文件扩展名"
 });
 /*
  * GNU AGPL-3.0 License
@@ -124640,6 +124605,7 @@ define("nls/zh-tw/strings", {
   "LIVE_DEV_NEED_BASEURL_MESSAGE": "您需要指定專案的 URL 根位址，才能啟動包含伺服器端資源的即時預覽功能。",
   "LIVE_DEV_SERVER_NOT_READY_MESSAGE": "無法啟動即時預覽用的 HTTP 伺服器。請再試一次。",
   "LIVE_DEVELOPMENT_TROUBLESHOOTING": "想了解更多，請參考<a href='{0}' title='{0}'>即時預覽連結錯誤排解</a>。",
+  "LIVE_PREVIEW_HIDE_OVERLAY": "隱藏此訊息",
   "LIVE_DEV_STATUS_TIP_NOT_CONNECTED": "即時預覽",
   "LIVE_DEV_STATUS_TIP_PROGRESS1": "即時預覽: 連線中…",
   "LIVE_DEV_STATUS_TIP_PROGRESS2": "即時預覽: 初始化中…",
@@ -125927,7 +125893,6 @@ define("nls/zh-tw/strings", {
   "CONTACT_SUPPORT": "聯絡客服支援",
   "SIGN_OUT": "登出",
   "ACCOUNT_DETAILS": "帳號詳細資訊",
-  "AI_QUOTA_USED": "AI 配額已使用",
   "LOGIN_REFRESH": "檢查登入狀態",
   "SIGN_IN_WAITING_TITLE": "等待登入中",
   "SIGN_IN_WAITING_MESSAGE": "請在新分頁中完成登入，然後返回此處。",
@@ -125979,8 +125944,7 @@ define("nls/zh-tw/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "縮寫",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "範本文字",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "描述",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "檔案副檔名",
-  "LIVE_PREVIEW_HIDE_OVERLAY": "隱藏此訊息"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "檔案副檔名"
 });
 /*
  * GNU AGPL-3.0 License
