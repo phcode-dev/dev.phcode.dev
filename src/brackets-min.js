@@ -71502,6 +71502,7 @@ define("nls/ar/strings", {
   "DESCRIPTION_TABBAR": "ضبط إعدادات شريط علامات التبويب.",
   "DESCRIPTION_SHOW_TABBAR": "صحيح لإظهار شريط علامات التبويب، وإلا خطأ.",
   "DESCRIPTION_NUMBER_OF_TABS": "عدد علامات التبويب التي سيتم عرضها في شريط علامات التبويب.  اضبط على -1 لعرض جميع علامات التبويب",
+  "TABBAR_SHOW_HIDDEN_TABS": "إظهار علامات التبويب المخفية",
   "ENABLE_GIT": "تفعيل Git",
   "ACTION": "إجراء",
   "STATUSBAR_SHOW_GIT": "لوحة Git",
@@ -71845,7 +71846,17 @@ define("nls/ar/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "نص القالب",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "الوصف",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "امتداد الملف",
-  "TABBAR_SHOW_HIDDEN_TABS": "إظهار علامات التبويب المخفية"
+  "PROMO_UPGRADE_TITLE": "تم ترقيتك إلى {0}",
+  "PROMO_UPGRADE_MESSAGE": "استمتع بوصول كامل إلى جميع الميزات المميزة للأيام {0} القادمة:",
+  "PROMO_CARD_1": "سحب وإفلات العناصر",
+  "PROMO_CARD_1_MESSAGE": "أعد ترتيب الأقسام بصريًا — يقوم Phoenix بتحديث HTML و CSS نيابةً عنك.",
+  "PROMO_CARD_2": "استبدال الصور",
+  "PROMO_CARD_2_MESSAGE": "انقر فوق أي صورة لاستبدالها على الفور ومعاينة التغييرات في الوقت الفعلي.",
+  "PROMO_CARD_3": "تكرار العناصر وحذفها",
+  "PROMO_CARD_3_MESSAGE": "كرر العناصر واحذفها بنقرة واحدة.",
+  "PROMO_CARD_4": "تحرير النص في المعاينة",
+  "PROMO_CARD_4_MESSAGE": "حرر العناوين والأزرار وانقلها مباشرةً في المعاينة.",
+  "PROMO_LEARN_MORE": "تعرّف على المزيد…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -72964,6 +72975,7 @@ define("nls/bg/strings", {
   "DESCRIPTION_TABBAR": "Задай настройките на лентата с раздели.",
   "DESCRIPTION_SHOW_TABBAR": "`true` за да се показва лентата с раздели, иначе `false`.",
   "DESCRIPTION_NUMBER_OF_TABS": "Броят на разделите, които да се показват в лентата с раздели. Задайте на -1, за да се показват всички раздели.",
+  "TABBAR_SHOW_HIDDEN_TABS": "Показване на скритите раздели",
   "ENABLE_GIT": "Активиране на Git",
   "ACTION": "Действие",
   "STATUSBAR_SHOW_GIT": "Гит панел",
@@ -73307,7 +73319,17 @@ define("nls/bg/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Текст на шаблон",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Описание",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Разширение на файл",
-  "TABBAR_SHOW_HIDDEN_TABS": "Показване на скритите раздели"
+  "PROMO_UPGRADE_TITLE": "Надградихте до {0}",
+  "PROMO_UPGRADE_MESSAGE": "Възползвайте се от пълен достъп до всички премиум функции през следващите {0} дни:",
+  "PROMO_CARD_1": "Плъзгане и пускане на елементи",
+  "PROMO_CARD_1_MESSAGE": "Пренареждайте секции визуално — Phoenix актуализира HTML и CSS вместо вас.",
+  "PROMO_CARD_2": "Замяна на изображение",
+  "PROMO_CARD_2_MESSAGE": "Кликнете върху всяко изображение, за да го замените незабавно и да видите промените в реално време.",
+  "PROMO_CARD_3": "Дублиране и изтриване на елементи",
+  "PROMO_CARD_3_MESSAGE": "Дублирайте и изтривайте елементи с едно кликване.",
+  "PROMO_CARD_4": "Редактиране на текст в преглед",
+  "PROMO_CARD_4_MESSAGE": "Редактирайте заглавия, бутони и копирайте директно в прегледа.",
+  "PROMO_LEARN_MORE": "Научете повече…"
 });
 /*
  * Copyright (c) 2013 Adobe Systems Incorporated. All rights reserved.
@@ -74455,6 +74477,7 @@ define("nls/cs/strings", {
   "DESCRIPTION_TABBAR": "Nastavení panelu karet.",
   "DESCRIPTION_SHOW_TABBAR": "`true` pro zobrazení panelu karet, jinak `false`.",
   "DESCRIPTION_NUMBER_OF_TABS": "Počet karet zobrazených v panelu karet. Hodnota -1 zobrazí všechny karty.",
+  "TABBAR_SHOW_HIDDEN_TABS": "Zobrazit skryté karty",
   "ENABLE_GIT": "Povolit Git",
   "ACTION": "Akce",
   "STATUSBAR_SHOW_GIT": "Panel Git",
@@ -74798,7 +74821,17 @@ define("nls/cs/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Text šablony",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Popis",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Přípona souboru",
-  "TABBAR_SHOW_HIDDEN_TABS": "Zobrazit skryté karty"
+  "PROMO_UPGRADE_TITLE": "Byli jste upgradováni na {0}",
+  "PROMO_UPGRADE_MESSAGE": "Využívejte plný přístup ke všem prémiovým funkcím po dobu následujících {0} dnů:",
+  "PROMO_CARD_1": "Přetahování prvků",
+  "PROMO_CARD_1_MESSAGE": "Vizuálně uspořádejte sekce – Phoenix aktualizuje HTML a CSS za vás.",
+  "PROMO_CARD_2": "Výměna obrázků",
+  "PROMO_CARD_2_MESSAGE": "Kliknutím na libovolný obrázek jej okamžitě nahradíte a zobrazíte náhled změn v reálném čase.",
+  "PROMO_CARD_3": "Duplikování a mazání prvků",
+  "PROMO_CARD_3_MESSAGE": "Duplikujte a mažte prvky jediným kliknutím.",
+  "PROMO_CARD_4": "Úprava textu v náhledu",
+  "PROMO_CARD_4_MESSAGE": "Upravujte nadpisy, tlačítka a kopírujte přímo v náhledu.",
+  "PROMO_LEARN_MORE": "Další informace…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -75944,6 +75977,7 @@ define("nls/da/strings", {
   "DESCRIPTION_TABBAR": "Indstil fanebjælkens indstillinger.",
   "DESCRIPTION_SHOW_TABBAR": "Sandt for at vise fanebjælken, ellers falsk.",
   "DESCRIPTION_NUMBER_OF_TABS": "Antallet af faner, der skal vises i fanebjælken. Indstil til -1 for at vise alle faner",
+  "TABBAR_SHOW_HIDDEN_TABS": "Vis skjulte faner",
   "ENABLE_GIT": "Aktivér Git",
   "ACTION": "Handling",
   "STATUSBAR_SHOW_GIT": "Git-panel",
@@ -76287,7 +76321,17 @@ define("nls/da/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Skabelontekst",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Beskrivelse",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Filtypenavn",
-  "TABBAR_SHOW_HIDDEN_TABS": "Vis skjulte faner"
+  "PROMO_UPGRADE_TITLE": "Du er blevet opgraderet til {0}",
+  "PROMO_UPGRADE_MESSAGE": "Få fuld adgang til alle premium-funktioner de næste {0} dage:",
+  "PROMO_CARD_1": "Træk og slip elementer",
+  "PROMO_CARD_1_MESSAGE": "Omarranger sektioner visuelt – Phoenix opdaterer HTML og CSS for dig.",
+  "PROMO_CARD_2": "Billedudskiftning",
+  "PROMO_CARD_2_MESSAGE": "Klik på et hvilket som helst billede for at erstatte det øjeblikkeligt og se ændringer i realtid.",
+  "PROMO_CARD_3": "Dublering og sletning af elementer",
+  "PROMO_CARD_3_MESSAGE": "Dubler og slet elementer med et enkelt klik.",
+  "PROMO_CARD_4": "Redigering af tekst i forhåndsvisning",
+  "PROMO_CARD_4_MESSAGE": "Rediger overskrifter, knapper og kopiér direkte i forhåndsvisningen.",
+  "PROMO_LEARN_MORE": "Læs mere…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -77431,6 +77475,7 @@ define("nls/de/strings", {
   "DESCRIPTION_TABBAR": "Tab-Leisten-Einstellungen festlegen.",
   "DESCRIPTION_SHOW_TABBAR": "`true`, um die Tab-Leiste anzuzeigen, sonst `false`.",
   "DESCRIPTION_NUMBER_OF_TABS": "Die Anzahl der in der Tab-Leiste anzuzeigenden Tabs. Auf -1 setzen, um alle Tabs anzuzeigen.",
+  "TABBAR_SHOW_HIDDEN_TABS": "Versteckte Tabs anzeigen",
   "ENABLE_GIT": "Git aktivieren",
   "ACTION": "Aktion",
   "STATUSBAR_SHOW_GIT": "Git-Bereich",
@@ -77774,7 +77819,17 @@ define("nls/de/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Vorlagentext",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Beschreibung",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Dateierweiterung",
-  "TABBAR_SHOW_HIDDEN_TABS": "Versteckte Tabs anzeigen"
+  "PROMO_UPGRADE_TITLE": "Sie wurden auf {0} hochgestuft",
+  "PROMO_UPGRADE_MESSAGE": "Genießen Sie die nächsten {0} Tage vollen Zugriff auf alle Premium-Funktionen:",
+  "PROMO_CARD_1": "Elemente per Drag & Drop verschieben",
+  "PROMO_CARD_1_MESSAGE": "Ordnen Sie Abschnitte visuell neu an – Phoenix aktualisiert HTML und CSS für Sie.",
+  "PROMO_CARD_2": "Bilder ersetzen",
+  "PROMO_CARD_2_MESSAGE": "Klicken Sie auf ein Bild, um es sofort zu ersetzen und Änderungen in Echtzeit anzuzeigen.",
+  "PROMO_CARD_3": "Elemente duplizieren und löschen",
+  "PROMO_CARD_3_MESSAGE": "Duplizieren und löschen Sie Elemente mit einem einzigen Klick.",
+  "PROMO_CARD_4": "Text in der Vorschau bearbeiten",
+  "PROMO_CARD_4_MESSAGE": "Bearbeiten Sie Überschriften, Schaltflächen und kopieren Sie direkt in der Vorschau.",
+  "PROMO_LEARN_MORE": "Mehr erfahren…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -78920,6 +78975,7 @@ define("nls/el/strings", {
   "DESCRIPTION_TABBAR": "Ρύθμιση των ρυθμίσεων της γραμμής καρτελών.",
   "DESCRIPTION_SHOW_TABBAR": "true για εμφάνιση της γραμμής καρτελών, αλλιώς false.",
   "DESCRIPTION_NUMBER_OF_TABS": "Ο αριθμός των καρτελών που θα εμφανίζονται στη γραμμή καρτελών. Ορίστε -1 για εμφάνιση όλων των καρτελών",
+  "TABBAR_SHOW_HIDDEN_TABS": "Εμφάνιση κρυφών καρτελών",
   "ENABLE_GIT": "Ενεργοποίηση Git",
   "ACTION": "Ενέργεια",
   "STATUSBAR_SHOW_GIT": "Πίνακας Git",
@@ -79263,7 +79319,17 @@ define("nls/el/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Κείμενο Προτύπου",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Περιγραφή",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Επέκταση Αρχείου",
-  "TABBAR_SHOW_HIDDEN_TABS": "Εμφάνιση κρυφών καρτελών"
+  "PROMO_UPGRADE_TITLE": "Έχετε αναβαθμιστεί σε {0}",
+  "PROMO_UPGRADE_MESSAGE": "Απολαύστε πλήρη πρόσβαση σε όλες τις premium λειτουργίες για τις επόμενες {0} ημέρες:",
+  "PROMO_CARD_1": "Σύρσιμο & Απόθεση Στοιχείων",
+  "PROMO_CARD_1_MESSAGE": "Αναδιατάξτε τα τμήματα οπτικά — το Phoenix ενημερώνει το HTML & CSS για εσάς.",
+  "PROMO_CARD_2": "Αντικατάσταση Εικόνας",
+  "PROMO_CARD_2_MESSAGE": "Κάντε κλικ σε οποιαδήποτε εικόνα για να την αντικαταστήσετε άμεσα και να δείτε τις αλλαγές σε πραγματικό χρόνο.",
+  "PROMO_CARD_3": "Διπλασιασμός και Διαγραφή Στοιχείων",
+  "PROMO_CARD_3_MESSAGE": "Διπλασιάστε και διαγράψτε στοιχεία με ένα μόνο κλικ.",
+  "PROMO_CARD_4": "Επεξεργασία Κειμένου στην Προεπισκόπηση",
+  "PROMO_CARD_4_MESSAGE": "Επεξεργαστείτε επικεφαλίδες, κουμπιά και αντιγράψτε απευθείας στην προεπισκόπηση.",
+  "PROMO_LEARN_MORE": "Μάθετε περισσότερα…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -80409,6 +80475,7 @@ define("nls/en-gb/strings", {
   "DESCRIPTION_TABBAR": "Set the tab bar settings.",
   "DESCRIPTION_SHOW_TABBAR": "`true` to show the tab bar, otherwise `false`.",
   "DESCRIPTION_NUMBER_OF_TABS": "The number of tabs to show in the tab bar. Set to `-1` to show all tabs.",
+  "TABBAR_SHOW_HIDDEN_TABS": "Show hidden tabs",
   "ENABLE_GIT": "Enable Git",
   "ACTION": "Action",
   "STATUSBAR_SHOW_GIT": "Git Panel",
@@ -80752,7 +80819,17 @@ define("nls/en-gb/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Template Text",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Description",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "File Extension",
-  "TABBAR_SHOW_HIDDEN_TABS": "Show hidden tabs"
+  "PROMO_UPGRADE_TITLE": "You’ve been upgraded to {0}",
+  "PROMO_UPGRADE_MESSAGE": "Enjoy full access to all premium features for the next {0} days:",
+  "PROMO_CARD_1": "Drag and drop elements",
+  "PROMO_CARD_1_MESSAGE": "Rearrange sections visually — Phoenix updates the HTML and CSS for you.",
+  "PROMO_CARD_2": "Image replacement",
+  "PROMO_CARD_2_MESSAGE": "Click any image to replace it instantly and preview changes in real time.",
+  "PROMO_CARD_3": "Element duplication and deletion",
+  "PROMO_CARD_3_MESSAGE": "Duplicate and delete elements with a single click.",
+  "PROMO_CARD_4": "Editing text in preview",
+  "PROMO_CARD_4_MESSAGE": "Edit headings, buttons, and copy directly in the preview.",
+  "PROMO_LEARN_MORE": "Learn more…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -81871,6 +81948,7 @@ define("nls/es/strings", {
   "DESCRIPTION_TABBAR": "Configurar los ajustes de la barra de pestañas.",
   "DESCRIPTION_SHOW_TABBAR": "`true` para mostrar la barra de pestañas, `false` para ocultarla.",
   "DESCRIPTION_NUMBER_OF_TABS": "El número de pestañas a mostrar en la barra de pestañas.  Establecer en -1 para mostrar todas las pestañas.",
+  "TABBAR_SHOW_HIDDEN_TABS": "Mostrar pestañas ocultas",
   "ENABLE_GIT": "Habilitar Git",
   "ACTION": "Acción",
   "STATUSBAR_SHOW_GIT": "Panel de Git",
@@ -82214,7 +82292,17 @@ define("nls/es/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Texto de la plantilla",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Descripción",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensión de archivo",
-  "TABBAR_SHOW_HIDDEN_TABS": "Mostrar pestañas ocultas"
+  "PROMO_UPGRADE_TITLE": "Te hemos actualizado a {0}",
+  "PROMO_UPGRADE_MESSAGE": "Disfruta de acceso completo a todas las funciones premium durante los próximos {0} días:",
+  "PROMO_CARD_1": "Arrastrar y soltar elementos",
+  "PROMO_CARD_1_MESSAGE": "Reorganiza las secciones visualmente: Phoenix actualiza el HTML y CSS por ti.",
+  "PROMO_CARD_2": "Reemplazo de imágenes",
+  "PROMO_CARD_2_MESSAGE": "Haz clic en cualquier imagen para reemplazarla instantáneamente y previsualizar los cambios en tiempo real.",
+  "PROMO_CARD_3": "Duplicación y eliminación de elementos",
+  "PROMO_CARD_3_MESSAGE": "Duplica y elimina elementos con un solo clic.",
+  "PROMO_CARD_4": "Editar texto en la vista previa",
+  "PROMO_CARD_4_MESSAGE": "Edita encabezados, botones y copia directamente en la vista previa.",
+  "PROMO_LEARN_MORE": "Más información…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -83361,6 +83449,7 @@ define("nls/fa-ir/strings", {
   "DESCRIPTION_TABBAR": "تنظیمات نوار برگه‌ها را تعیین کنید.",
   "DESCRIPTION_SHOW_TABBAR": "مقدار «درست» برای نمایش نوار برگه‌ها و مقدار «نادرست» برای عدم نمایش.",
   "DESCRIPTION_NUMBER_OF_TABS": "تعداد برگه‌هایی که در نوار برگه‌ها نمایش داده می‌شوند. مقدار ۱- برای نمایش همه برگه‌ها.",
+  "TABBAR_SHOW_HIDDEN_TABS": "نمایش برگه‌های پنهان",
   "ENABLE_GIT": "فعال کردن گیت",
   "ACTION": "اقدام",
   "STATUSBAR_SHOW_GIT": "پنل گیت",
@@ -83704,7 +83793,17 @@ define("nls/fa-ir/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "متن الگو",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "توضیحات",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "پسوند فایل",
-  "TABBAR_SHOW_HIDDEN_TABS": "نمایش برگه‌های پنهان"
+  "PROMO_UPGRADE_TITLE": "حساب شما به {0} ارتقا یافت.",
+  "PROMO_UPGRADE_MESSAGE": "از دسترسی کامل به تمام امکانات ویژه برای {0} روز آینده لذت ببرید:",
+  "PROMO_CARD_1": "کشیدن و رها کردن عناصر",
+  "PROMO_CARD_1_MESSAGE": "بخش‌ها را به‌صورت بصری مرتب کنید — فینیکس HTML و CSS را برای شما به‌روزرسانی می‌کند.",
+  "PROMO_CARD_2": "جایگزینی تصویر",
+  "PROMO_CARD_2_MESSAGE": "برای جایگزینی فوری روی هر تصویری کلیک کنید و تغییرات را به‌صورت آنی مشاهده کنید.",
+  "PROMO_CARD_3": "تکثیر و حذف عنصر",
+  "PROMO_CARD_3_MESSAGE": "عناصر را با یک کلیک تکثیر و حذف کنید.",
+  "PROMO_CARD_4": "ویرایش متن در پیش‌نمایش",
+  "PROMO_CARD_4_MESSAGE": "سرفصل‌ها، دکمه‌ها و متن را مستقیماً در پیش‌نمایش ویرایش کنید.",
+  "PROMO_LEARN_MORE": "اطلاعات بیشتر…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -84850,6 +84949,7 @@ define("nls/fi/strings", {
   "DESCRIPTION_TABBAR": "Määritä välilehtipalkin asetukset.",
   "DESCRIPTION_SHOW_TABBAR": "Aseta arvoksi `true` näyttääksesi välilehtipalkin, muuten `false`.",
   "DESCRIPTION_NUMBER_OF_TABS": "Näytettävien välilehtien määrä välilehtipalkissa. Aseta arvoksi -1 näyttääksesi kaikki välilehdet.",
+  "TABBAR_SHOW_HIDDEN_TABS": "Näytä piilotetut välilehdet",
   "ENABLE_GIT": "Ota Git käyttöön",
   "ACTION": "Toiminto",
   "STATUSBAR_SHOW_GIT": "Git-paneeli",
@@ -85193,7 +85293,17 @@ define("nls/fi/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Malliteksti",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Kuvaus",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Tiedostopääte",
-  "TABBAR_SHOW_HIDDEN_TABS": "Näytä piilotetut välilehdet"
+  "PROMO_UPGRADE_TITLE": "Sinut on päivitetty {0}-tilaukseen",
+  "PROMO_UPGRADE_MESSAGE": "Nauti täydestä pääsystä kaikkiin premium-ominaisuuksiin seuraavien {0} päivän ajan:",
+  "PROMO_CARD_1": "Elementtien raahaaminen ja pudottaminen",
+  "PROMO_CARD_1_MESSAGE": "Järjestele osioita visuaalisesti – Phoenix päivittää HTML:n ja CSS:n puolestasi.",
+  "PROMO_CARD_2": "Kuvan vaihtaminen",
+  "PROMO_CARD_2_MESSAGE": "Napsauta mitä tahansa kuvaa vaihtaaksesi sen välittömästi ja esikatsellaksesi muutoksia reaaliajassa.",
+  "PROMO_CARD_3": "Elementtien kopiointi ja poistaminen",
+  "PROMO_CARD_3_MESSAGE": "Kopioi ja poista elementtejä yhdellä napsautuksella.",
+  "PROMO_CARD_4": "Tekstin muokkaaminen esikatselussa",
+  "PROMO_CARD_4_MESSAGE": "Muokkaa otsikoita, painikkeita ja kopioi suoraan esikatselussa.",
+  "PROMO_LEARN_MORE": "Lisätietoja…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -86339,6 +86449,7 @@ define("nls/fr/strings", {
   "DESCRIPTION_TABBAR": "Définir les paramètres de la barre d'onglets.",
   "DESCRIPTION_SHOW_TABBAR": "`true` pour afficher la barre d'onglets, sinon `false`.",
   "DESCRIPTION_NUMBER_OF_TABS": "Le nombre d'onglets à afficher dans la barre d'onglets. Définissez sur -1 pour afficher tous les onglets.",
+  "TABBAR_SHOW_HIDDEN_TABS": "Afficher les onglets masqués",
   "ENABLE_GIT": "Activer Git",
   "ACTION": "Action",
   "STATUSBAR_SHOW_GIT": "Panneau Git",
@@ -86682,7 +86793,17 @@ define("nls/fr/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Texte du modèle",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Description",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extension de fichier",
-  "TABBAR_SHOW_HIDDEN_TABS": "Afficher les onglets masqués"
+  "PROMO_UPGRADE_TITLE": "Vous avez été surclassé(e) vers {0}",
+  "PROMO_UPGRADE_MESSAGE": "Profitez d'un accès complet à toutes les fonctionnalités premium pendant les {0} prochains jours :",
+  "PROMO_CARD_1": "Glisser-déposer des éléments",
+  "PROMO_CARD_1_MESSAGE": "Réorganisez les sections visuellement — Phoenix met à jour le HTML et le CSS pour vous.",
+  "PROMO_CARD_2": "Remplacement d'image",
+  "PROMO_CARD_2_MESSAGE": "Cliquez sur une image pour la remplacer instantanément et prévisualiser les modifications en temps réel.",
+  "PROMO_CARD_3": "Duplication et suppression d'éléments",
+  "PROMO_CARD_3_MESSAGE": "Dupliquez et supprimez des éléments en un seul clic.",
+  "PROMO_CARD_4": "Modification du texte dans l'aperçu",
+  "PROMO_CARD_4_MESSAGE": "Modifiez les titres, les boutons et copiez directement dans l'aperçu.",
+  "PROMO_LEARN_MORE": "En savoir plus…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -87828,6 +87949,7 @@ define("nls/gl/strings", {
   "DESCRIPTION_TABBAR": "Configurar os axustes da barra de lapelas.",
   "DESCRIPTION_SHOW_TABBAR": "\"true\" para mostrar a barra de lapelas, se non \"false\".",
   "DESCRIPTION_NUMBER_OF_TABS": "O número de lapelas a mostrar na barra de lapelas. Establécese en -1 para mostrar todas as lapelas",
+  "TABBAR_SHOW_HIDDEN_TABS": "Mostrar pestanas ocultas",
   "ENABLE_GIT": "Activar Git",
   "ACTION": "Acción",
   "STATUSBAR_SHOW_GIT": "Panel de Git",
@@ -88171,7 +88293,17 @@ define("nls/gl/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Texto do modelo",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Descrición",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensión de ficheiro",
-  "TABBAR_SHOW_HIDDEN_TABS": "Mostrar pestanas ocultas"
+  "PROMO_UPGRADE_TITLE": "Actualizaches a {0}",
+  "PROMO_UPGRADE_MESSAGE": "Goza de acceso completo a todas as funcións premium durante os próximos {0} días:",
+  "PROMO_CARD_1": "Arrastrar e soltar elementos",
+  "PROMO_CARD_1_MESSAGE": "Reordena as seccións visualmente: Phoenix actualiza o HTML e o CSS por ti.",
+  "PROMO_CARD_2": "Substitución de imaxes",
+  "PROMO_CARD_2_MESSAGE": "Fai clic en calquera imaxe para substituíla ao instante e previsualizar os cambios en tempo real.",
+  "PROMO_CARD_3": "Duplicación e eliminación de elementos",
+  "PROMO_CARD_3_MESSAGE": "Duplica e elimina elementos cun só clic.",
+  "PROMO_CARD_4": "Edición de texto na previsualización",
+  "PROMO_CARD_4_MESSAGE": "Edita títulos, botóns e copia directamente na previsualización.",
+  "PROMO_LEARN_MORE": "Máis información…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -89290,6 +89422,7 @@ define("nls/hi/strings", {
   "DESCRIPTION_TABBAR": "टैब बार सेटिंग सेट करें।",
   "DESCRIPTION_SHOW_TABBAR": "टैब बार दिखाने के लिए true, अन्यथा false।",
   "DESCRIPTION_NUMBER_OF_TABS": "टैब बार में दिखाने के लिए टैब की संख्या। सभी टैब दिखाने के लिए -1 पर सेट करें।",
+  "TABBAR_SHOW_HIDDEN_TABS": "छिपे हुए टैब दिखाएँ",
   "ENABLE_GIT": "गिट सक्षम करें",
   "ACTION": "क्रिया",
   "STATUSBAR_SHOW_GIT": "गिट पैनल",
@@ -89633,7 +89766,17 @@ define("nls/hi/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "टेम्पलेट टेक्स्ट",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "विवरण",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "फ़ाइल एक्सटेंशन",
-  "TABBAR_SHOW_HIDDEN_TABS": "छिपे हुए टैब दिखाएँ"
+  "PROMO_UPGRADE_TITLE": "आपको {0} में अपग्रेड कर दिया गया है",
+  "PROMO_UPGRADE_MESSAGE": "अगले {0} दिनों के लिए सभी प्रीमियम सुविधाओं का पूरा आनंद लें:",
+  "PROMO_CARD_1": "एलिमेंट्स को ड्रैग और ड्रॉप करें",
+  "PROMO_CARD_1_MESSAGE": "सेक्शंस को विज़ुअली रूप से पुनर्व्यवस्थित करें — Phoenix आपके लिए HTML और CSS अपडेट करता है।",
+  "PROMO_CARD_2": "इमेज रिप्लेसमेंट",
+  "PROMO_CARD_2_MESSAGE": "किसी भी इमेज को तुरंत बदलने के लिए उस पर क्लिक करें और रीयल टाइम में बदलावों का प्रीव्यू देखें।",
+  "PROMO_CARD_3": "एलिमेंट डुप्लीकेशन और डिलीशन",
+  "PROMO_CARD_3_MESSAGE": "एक ही क्लिक से एलिमेंट्स को डुप्लिकेट और डिलीट करें।",
+  "PROMO_CARD_4": "प्रीव्यू में टेक्स्ट एडिटिंग",
+  "PROMO_CARD_4_MESSAGE": "हेडिंग, बटन एडिट करें, और सीधे प्रीव्यू में कॉपी करें।",
+  "PROMO_LEARN_MORE": "और जानें…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -90752,6 +90895,7 @@ define("nls/hr/strings", {
   "DESCRIPTION_TABBAR": "Postavi postavke trake kartica.",
   "DESCRIPTION_SHOW_TABBAR": "Vrijednost \"true\" za prikaz trake kartica, inače \"false\".",
   "DESCRIPTION_NUMBER_OF_TABS": "Broj kartica za prikaz u traci kartica. Postavite na -1 za prikaz svih kartica",
+  "TABBAR_SHOW_HIDDEN_TABS": "Prikaži skrivene kartice",
   "ENABLE_GIT": "Omogući Git",
   "ACTION": "Radnja",
   "STATUSBAR_SHOW_GIT": "Git panel",
@@ -91095,7 +91239,17 @@ define("nls/hr/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Tekst predloška",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Opis",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Ekstenzija datoteke",
-  "TABBAR_SHOW_HIDDEN_TABS": "Prikaži skrivene kartice"
+  "PROMO_UPGRADE_TITLE": "Nadograđeni ste na {0}",
+  "PROMO_UPGRADE_MESSAGE": "Uživajte u punom pristupu svim premium značajkama sljedećih {0} dana:",
+  "PROMO_CARD_1": "Povuci i ispusti elemente",
+  "PROMO_CARD_1_MESSAGE": "Vizualno preuredite odjeljke — Phoenix ažurira HTML i CSS za vas.",
+  "PROMO_CARD_2": "Zamjena slike",
+  "PROMO_CARD_2_MESSAGE": "Kliknite na bilo koju sliku da biste je odmah zamijenili i pregledali promjene u stvarnom vremenu.",
+  "PROMO_CARD_3": "Dupliciranje i brisanje elemenata",
+  "PROMO_CARD_3_MESSAGE": "Duplicirajte i brišite elemente jednim klikom.",
+  "PROMO_CARD_4": "Uređivanje teksta u pregledu",
+  "PROMO_CARD_4_MESSAGE": "Uredite naslove, gumbe i kopirajte izravno u pregledu.",
+  "PROMO_LEARN_MORE": "Saznajte više…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -92241,6 +92395,7 @@ define("nls/hu/strings", {
   "DESCRIPTION_TABBAR": "A fülsáv beállításainak megadása.",
   "DESCRIPTION_SHOW_TABBAR": "`true` a fülsáv megjelenítéséhez, egyébként `false`.",
   "DESCRIPTION_NUMBER_OF_TABS": "A fülsávon megjelenítendő fülek száma. Állítsa -1-re az összes fül megjelenítéséhez.",
+  "TABBAR_SHOW_HIDDEN_TABS": "Rejtett fülek megjelenítése",
   "ENABLE_GIT": "Git engedélyezése",
   "ACTION": "Művelet",
   "STATUSBAR_SHOW_GIT": "Git panel",
@@ -92584,7 +92739,17 @@ define("nls/hu/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Sablonszöveg",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Leírás",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Fájlkiterjesztés",
-  "TABBAR_SHOW_HIDDEN_TABS": "Rejtett fülek megjelenítése"
+  "PROMO_UPGRADE_TITLE": "Átálltunk a(z) {0} verzióra",
+  "PROMO_UPGRADE_MESSAGE": "Élvezze a prémium funkciók teljes körű elérését a következő {0} napban:",
+  "PROMO_CARD_1": "Elemek húzása és elengedése",
+  "PROMO_CARD_1_MESSAGE": "Rendezd át vizuálisan a szekciókat – a Phoenix frissíti a HTML-t és a CSS-t helyetted.",
+  "PROMO_CARD_2": "Képcsere",
+  "PROMO_CARD_2_MESSAGE": "Kattintson bármelyik képre a cseréjéhez, és tekintse meg a változtatásokat valós időben.",
+  "PROMO_CARD_3": "Elem duplikálása és törlése",
+  "PROMO_CARD_3_MESSAGE": "Duplikálja és törölje az elemeket egyetlen kattintással.",
+  "PROMO_CARD_4": "Szöveg szerkesztése az előnézetben",
+  "PROMO_CARD_4_MESSAGE": "Szerkesszen címsorokat, gombokat és másoljon közvetlenül az előnézetben.",
+  "PROMO_LEARN_MORE": "Tudj meg többet…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -93703,6 +93868,7 @@ define("nls/id/strings", {
   "DESCRIPTION_TABBAR": "Atur pengaturan bilah tab.",
   "DESCRIPTION_SHOW_TABBAR": "`true` untuk menampilkan bilah tab, selain itu `false`.",
   "DESCRIPTION_NUMBER_OF_TABS": "Jumlah tab yang akan ditampilkan di bilah tab. Atur ke -1 untuk menampilkan semua tab.",
+  "TABBAR_SHOW_HIDDEN_TABS": "Tampilkan tab tersembunyi",
   "ENABLE_GIT": "Aktifkan Git",
   "ACTION": "Tindakan",
   "STATUSBAR_SHOW_GIT": "Panel Git",
@@ -94046,7 +94212,17 @@ define("nls/id/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Teks Templat",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Deskripsi",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Ekstensi Berkas",
-  "TABBAR_SHOW_HIDDEN_TABS": "Tampilkan tab tersembunyi"
+  "PROMO_UPGRADE_TITLE": "Anda telah diupgrade ke {0}",
+  "PROMO_UPGRADE_MESSAGE": "Nikmati akses penuh ke semua fitur premium selama {0} hari ke depan:",
+  "PROMO_CARD_1": "Seret & Lepas Elemen",
+  "PROMO_CARD_1_MESSAGE": "Susun ulang bagian secara visual — Phoenix memperbarui HTML & CSS untuk Anda.",
+  "PROMO_CARD_2": "Penggantian Gambar",
+  "PROMO_CARD_2_MESSAGE": "Klik gambar apa pun untuk menggantinya secara instan dan melihat pratinjau perubahan secara real-time.",
+  "PROMO_CARD_3": "Duplikasi dan Penghapusan Elemen",
+  "PROMO_CARD_3_MESSAGE": "Gandakan dan hapus elemen dengan sekali klik.",
+  "PROMO_CARD_4": "Mengedit Teks Dalam Pratinjau",
+  "PROMO_CARD_4_MESSAGE": "Edit judul, tombol, dan salin langsung di pratinjau.",
+  "PROMO_LEARN_MORE": "Pelajari Lebih Lanjut…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -95191,6 +95367,7 @@ define("nls/it/strings", {
   "DESCRIPTION_TABBAR": "Imposta le impostazioni della barra delle schede.",
   "DESCRIPTION_SHOW_TABBAR": "`true` per mostrare la barra delle schede, altrimenti `false`.",
   "DESCRIPTION_NUMBER_OF_TABS": "Il numero di schede da mostrare nella barra delle schede. Impostare a -1 per mostrare tutte le schede",
+  "TABBAR_SHOW_HIDDEN_TABS": "Mostra le schede nascoste",
   "ENABLE_GIT": "Abilita Git",
   "ACTION": "Azione",
   "STATUSBAR_SHOW_GIT": "Pannello Git",
@@ -95534,7 +95711,17 @@ define("nls/it/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Testo del Modello",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Descrizione",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Estensione del File",
-  "TABBAR_SHOW_HIDDEN_TABS": "Mostra le schede nascoste"
+  "PROMO_UPGRADE_TITLE": "Sei passato a {0}",
+  "PROMO_UPGRADE_MESSAGE": "Approfitta dell'accesso completo a tutte le funzionalità premium per i prossimi {0} giorni:",
+  "PROMO_CARD_1": "Trascina e rilascia elementi",
+  "PROMO_CARD_1_MESSAGE": "Riorganizza le sezioni visivamente: Phoenix aggiorna HTML e CSS per te.",
+  "PROMO_CARD_2": "Sostituzione immagini",
+  "PROMO_CARD_2_MESSAGE": "Fai clic su un'immagine per sostituirla all'istante e visualizzare l'anteprima delle modifiche in tempo reale.",
+  "PROMO_CARD_3": "Duplicazione ed eliminazione di elementi",
+  "PROMO_CARD_3_MESSAGE": "Duplica ed elimina elementi con un singolo clic.",
+  "PROMO_CARD_4": "Modifica del testo in anteprima",
+  "PROMO_CARD_4_MESSAGE": "Modifica titoli, pulsanti e copia direttamente nell'anteprima.",
+  "PROMO_LEARN_MORE": "Scopri di più…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -96680,6 +96867,7 @@ define("nls/ja/strings", {
   "DESCRIPTION_TABBAR": "タブバーの設定を行います。",
   "DESCRIPTION_SHOW_TABBAR": "タブバーを表示する場合はtrue、それ以外の場合はfalse。",
   "DESCRIPTION_NUMBER_OF_TABS": "タブバーに表示するタブの数。すべてのタブを表示する場合は-1を設定します。",
+  "TABBAR_SHOW_HIDDEN_TABS": "非表示のタブを表示",
   "ENABLE_GIT": "Gitを有効化",
   "ACTION": "アクション",
   "STATUSBAR_SHOW_GIT": "Git パネル",
@@ -97023,7 +97211,17 @@ define("nls/ja/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "テンプレートテキスト",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "説明",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "ファイル拡張子",
-  "TABBAR_SHOW_HIDDEN_TABS": "非表示のタブを表示"
+  "PROMO_UPGRADE_TITLE": "{0} にアップグレードされました",
+  "PROMO_UPGRADE_MESSAGE": "今後 {0} 日間、すべてのプレミアム機能をご利用いただけます：",
+  "PROMO_CARD_1": "要素のドラッグ＆ドロップ",
+  "PROMO_CARD_1_MESSAGE": "セクションを視覚的に再配置 — Phoenix が HTML と CSS を自動的に更新します。",
+  "PROMO_CARD_2": "画像の置換",
+  "PROMO_CARD_2_MESSAGE": "画像をクリックして即座に置き換え、変更をリアルタイムでプレビューします。",
+  "PROMO_CARD_3": "要素の複製と削除",
+  "PROMO_CARD_3_MESSAGE": "ワンクリックで要素を複製および削除します。",
+  "PROMO_CARD_4": "プレビューでのテキスト編集",
+  "PROMO_CARD_4_MESSAGE": "見出し、ボタン、コピーをプレビューで直接編集します。",
+  "PROMO_LEARN_MORE": "詳細はこちら…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -98169,6 +98367,7 @@ define("nls/ko/strings", {
   "DESCRIPTION_TABBAR": "탭 표시줄 설정을 지정합니다.",
   "DESCRIPTION_SHOW_TABBAR": "탭 표시줄을 표시하려면 true, 그렇지 않으면 false입니다.",
   "DESCRIPTION_NUMBER_OF_TABS": "탭 표시줄에 표시할 탭 수입니다. 모든 탭을 표시하려면 -1로 설정합니다.",
+  "TABBAR_SHOW_HIDDEN_TABS": "숨겨진 탭 표시",
   "ENABLE_GIT": "깃 활성화",
   "ACTION": "동작",
   "STATUSBAR_SHOW_GIT": "Git 패널",
@@ -98512,7 +98711,17 @@ define("nls/ko/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "템플릿 텍스트",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "설명",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "파일 확장자",
-  "TABBAR_SHOW_HIDDEN_TABS": "숨겨진 탭 표시"
+  "PROMO_UPGRADE_TITLE": "{0}(으)로 업그레이드되었습니다.",
+  "PROMO_UPGRADE_MESSAGE": "향후 {0}일 동안 모든 프리미엄 기능을 완전히 이용할 수 있습니다.",
+  "PROMO_CARD_1": "요소 끌어서 놓기",
+  "PROMO_CARD_1_MESSAGE": "섹션을 시각적으로 재정렬하세요. Phoenix가 HTML과 CSS를 자동으로 업데이트합니다.",
+  "PROMO_CARD_2": "이미지 교체",
+  "PROMO_CARD_2_MESSAGE": "이미지를 클릭하여 즉시 교체하고 변경 사항을 실시간으로 미리 볼 수 있습니다.",
+  "PROMO_CARD_3": "요소 복제 및 삭제",
+  "PROMO_CARD_3_MESSAGE": "클릭 한 번으로 요소를 복제하고 삭제할 수 있습니다.",
+  "PROMO_CARD_4": "미리보기에서 텍스트 편집",
+  "PROMO_CARD_4_MESSAGE": "미리보기에서 바로 제목, 버튼 및 복사를 편집할 수 있습니다.",
+  "PROMO_LEARN_MORE": "자세히 알아보기…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -99658,6 +99867,7 @@ define("nls/lv/strings", {
   "DESCRIPTION_TABBAR": "Iestatīt cilņu joslas iestatījumus.",
   "DESCRIPTION_SHOW_TABBAR": "“true”, lai rādītu cilņu joslu, citādi “false”.",
   "DESCRIPTION_NUMBER_OF_TABS": "Cilņu skaits, kas jāparāda cilņu joslā. Iestatiet uz -1, lai rādītu visas cilnes.",
+  "TABBAR_SHOW_HIDDEN_TABS": "Rādīt paslēptās cilnes",
   "ENABLE_GIT": "Iespējot Git",
   "ACTION": "Darbība",
   "STATUSBAR_SHOW_GIT": "Git panelis",
@@ -100001,7 +100211,17 @@ define("nls/lv/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Veidnes teksts",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Apraksts",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Faila paplašinājums",
-  "TABBAR_SHOW_HIDDEN_TABS": "Rādīt paslēptās cilnes"
+  "PROMO_UPGRADE_TITLE": "Jūs esat jaunināts uz {0}",
+  "PROMO_UPGRADE_MESSAGE": "Izbaudiet pilnu piekļuvi visām Premium funkcijām nākamās {0} dienas:",
+  "PROMO_CARD_1": "Elementu vilkšana un nomešana",
+  "PROMO_CARD_1_MESSAGE": "Pārkārtojiet sadaļas vizuāli — Phoenix atjaunina HTML un CSS jūsu vietā.",
+  "PROMO_CARD_2": "Attēlu aizstāšana",
+  "PROMO_CARD_2_MESSAGE": "Noklikšķiniet uz jebkura attēla, lai to nekavējoties aizstātu un priekšskatītu izmaiņas reāllaikā.",
+  "PROMO_CARD_3": "Elementu dublēšana un dzēšana",
+  "PROMO_CARD_3_MESSAGE": "Dublējiet un dzēsiet elementus ar vienu klikšķi.",
+  "PROMO_CARD_4": "Teksta rediģēšana priekšskatījumā",
+  "PROMO_CARD_4_MESSAGE": "Rediģējiet virsrakstus, pogas un kopējiet tieši priekšskatījumā.",
+  "PROMO_LEARN_MORE": "Uzzināt vairāk…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -101120,6 +101340,7 @@ define("nls/ml/strings", {
   "DESCRIPTION_TABBAR": "ടാബ് ബാർ ക്രമീകരണങ്ങൾ സജ്ജമാക്കുക.",
   "DESCRIPTION_SHOW_TABBAR": "ടാബ് ബാർ കാണിക്കാൻ true, അല്ലെങ്കിൽ false.",
   "DESCRIPTION_NUMBER_OF_TABS": "ടാബ് ബാറിൽ കാണിക്കേണ്ട ടാബുകളുടെ എണ്ണം. എല്ലാ ടാബുകളും കാണിക്കാൻ -1 ആയി സജ്ജമാക്കുക.",
+  "TABBAR_SHOW_HIDDEN_TABS": "മറഞ്ഞിരിക്കുന്ന ടാബുകൾ കാണിക്കുക",
   "ENABLE_GIT": "ഗിറ്റ് പ്രവർത്തനക്ഷമമാക്കുക",
   "ACTION": "പ്രവർത്തനം",
   "STATUSBAR_SHOW_GIT": "ഗിറ്റ് പാനൽ",
@@ -101463,7 +101684,17 @@ define("nls/ml/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "ടെംപ്ലേറ്റ് ടെക്സ്റ്റ്",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "വിവരണം",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "ഫയൽ എക്സ്റ്റൻഷൻ",
-  "TABBAR_SHOW_HIDDEN_TABS": "മറഞ്ഞിരിക്കുന്ന ടാബുകൾ കാണിക്കുക"
+  "PROMO_UPGRADE_TITLE": "നിങ്ങൾ {0} ലേക്ക് അപ്‌ഗ്രേഡ് ചെയ്യപ്പെട്ടിരിക്കുന്നു",
+  "PROMO_UPGRADE_MESSAGE": "അടുത്ത {0} ദിവസത്തേക്ക് എല്ലാ പ്രീമിയം സവിശേഷതകളും പൂർണ്ണമായി ആസ്വദിക്കൂ:",
+  "PROMO_CARD_1": "ഘടകങ്ങൾ വലിച്ചിടുക",
+  "PROMO_CARD_1_MESSAGE": "വിഭാഗങ്ങൾ ദൃശ്യപരമായി പുനഃക്രമീകരിക്കുക — ഫീനിക്സ് നിങ്ങൾക്കായി HTML ഉം CSS ഉം അപ്ഡേറ്റ് ചെയ്യും.",
+  "PROMO_CARD_2": "ചിത്രം മാറ്റിസ്ഥാപിക്കൽ",
+  "PROMO_CARD_2_MESSAGE": "ഏതൊരു ചിത്രത്തിലും ക്ലിക്ക് ചെയ്‌ത് തൽക്ഷണം മാറ്റിസ്ഥാപിക്കുക, തത്സമയം മാറ്റങ്ങൾ പ്രിവ്യൂ ചെയ്യുക.",
+  "PROMO_CARD_3": "ഘടകം ഡ്യൂപ്ലിക്കേറ്റ് ചെയ്യലും ഇല്ലാതാക്കലും",
+  "PROMO_CARD_3_MESSAGE": "ഒറ്റ ക്ലിക്കിലൂടെ ഘടകങ്ങൾ ഡ്യൂപ്ലിക്കേറ്റ് ചെയ്യുകയും ഇല്ലാതാക്കുകയും ചെയ്യുക.",
+  "PROMO_CARD_4": "പ്രിവ്യൂവിൽ വാചകം എഡിറ്റ് ചെയ്യുന്നു",
+  "PROMO_CARD_4_MESSAGE": "തലക്കെട്ടുകൾ, ബട്ടണുകൾ എന്നിവ എഡിറ്റ് ചെയ്യുക, പ്രിവ്യൂവിൽ നേരിട്ട് പകർത്തുക.",
+  "PROMO_LEARN_MORE": "കൂടുതലറിയാൻ…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -102582,6 +102813,7 @@ define("nls/nb/strings", {
   "DESCRIPTION_TABBAR": "Angi innstillinger for fanelinjen.",
   "DESCRIPTION_SHOW_TABBAR": "`true` for å vise fanelinjen, ellers `false`.",
   "DESCRIPTION_NUMBER_OF_TABS": "Antall faner som skal vises i fanelinjen. Sett til -1 for å vise alle faner.",
+  "TABBAR_SHOW_HIDDEN_TABS": "Vis skjulte faner",
   "ENABLE_GIT": "Aktiver Git",
   "ACTION": "Handling",
   "STATUSBAR_SHOW_GIT": "Git-panel",
@@ -102925,7 +103157,17 @@ define("nls/nb/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Maltekst",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Beskrivelse",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Filtype",
-  "TABBAR_SHOW_HIDDEN_TABS": "Vis skjulte faner"
+  "PROMO_UPGRADE_TITLE": "Du har blitt oppgradert til {0}",
+  "PROMO_UPGRADE_MESSAGE": "Nyt full tilgang til alle premiumfunksjoner de neste {0} dagene:",
+  "PROMO_CARD_1": "Dra og slipp elementer",
+  "PROMO_CARD_1_MESSAGE": "Omorganiser seksjoner visuelt – Phoenix oppdaterer HTML og CSS for deg.",
+  "PROMO_CARD_2": "Bildeerstatning",
+  "PROMO_CARD_2_MESSAGE": "Klikk på et bilde for å erstatte det umiddelbart og forhåndsvise endringer i sanntid.",
+  "PROMO_CARD_3": "Duplisering og sletting av elementer",
+  "PROMO_CARD_3_MESSAGE": "Dupliser og slett elementer med ett enkelt klikk.",
+  "PROMO_CARD_4": "Redigering av tekst i forhåndsvisning",
+  "PROMO_CARD_4_MESSAGE": "Rediger overskrifter, knapper og kopier direkte i forhåndsvisningen.",
+  "PROMO_LEARN_MORE": "Lær mer…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -104071,6 +104313,7 @@ define("nls/nl/strings", {
   "DESCRIPTION_TABBAR": "Stel de instellingen van de tabbalk in.",
   "DESCRIPTION_SHOW_TABBAR": "`true` om de tabbalk weer te geven, anders `false`.",
   "DESCRIPTION_NUMBER_OF_TABS": "Het aantal tabbladen dat in de tabbalk wordt weergegeven. Stel in op -1 om alle tabbladen weer te geven.",
+  "TABBAR_SHOW_HIDDEN_TABS": "Verborgen tabbladen tonen",
   "ENABLE_GIT": "Git inschakelen",
   "ACTION": "Actie",
   "STATUSBAR_SHOW_GIT": "Git-paneel",
@@ -104414,7 +104657,17 @@ define("nls/nl/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Sjabloontekst",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Beschrijving",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Bestandsextensie",
-  "TABBAR_SHOW_HIDDEN_TABS": "Verborgen tabbladen tonen"
+  "PROMO_UPGRADE_TITLE": "Je bent geüpgraded naar {0}",
+  "PROMO_UPGRADE_MESSAGE": "Profiteer de komende {0} dagen van volledige toegang tot alle premiumfuncties:",
+  "PROMO_CARD_1": "Elementen slepen en neerzetten",
+  "PROMO_CARD_1_MESSAGE": "Herschik secties visueel — Phoenix werkt de HTML & CSS voor je bij.",
+  "PROMO_CARD_2": "Afbeelding vervangen",
+  "PROMO_CARD_2_MESSAGE": "Klik op een afbeelding om deze direct te vervangen en bekijk de wijzigingen in realtime.",
+  "PROMO_CARD_3": "Elementen dupliceren en verwijderen",
+  "PROMO_CARD_3_MESSAGE": "Dupliceer en verwijder elementen met één klik.",
+  "PROMO_CARD_4": "Tekst bewerken in voorbeeldweergave",
+  "PROMO_CARD_4_MESSAGE": "Bewerk koppen, knoppen en kopieer direct in de voorbeeldweergave.",
+  "PROMO_LEARN_MORE": "Meer informatie…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -105560,6 +105813,7 @@ define("nls/pl/strings", {
   "DESCRIPTION_TABBAR": "Ustawienia paska kart.",
   "DESCRIPTION_SHOW_TABBAR": "`true`, aby pokazać pasek kart, w przeciwnym razie `false`.",
   "DESCRIPTION_NUMBER_OF_TABS": "Liczba kart do wyświetlenia na pasku kart. Ustaw na -1, aby wyświetlić wszystkie karty.",
+  "TABBAR_SHOW_HIDDEN_TABS": "Pokaż ukryte karty",
   "ENABLE_GIT": "Włącz Gita",
   "ACTION": "Akcja",
   "STATUSBAR_SHOW_GIT": "Panel Gita",
@@ -105903,7 +106157,17 @@ define("nls/pl/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Treść szablonu",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Opis",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Rozszerzenie pliku",
-  "TABBAR_SHOW_HIDDEN_TABS": "Pokaż ukryte karty"
+  "PROMO_UPGRADE_TITLE": "Zostałeś(-aś) ulepszony(-a) do {0}",
+  "PROMO_UPGRADE_MESSAGE": "Korzystaj z pełnego dostępu do wszystkich funkcji premium przez następne {0} dni:",
+  "PROMO_CARD_1": "Przeciągnij i upuść elementy",
+  "PROMO_CARD_1_MESSAGE": "Zmieniaj układ sekcji wizualnie — Phoenix zaktualizuje kod HTML i CSS za Ciebie.",
+  "PROMO_CARD_2": "Zamiana obrazów",
+  "PROMO_CARD_2_MESSAGE": "Kliknij dowolny obraz, aby go natychmiast zamienić i podejrzeć zmiany w czasie rzeczywistym.",
+  "PROMO_CARD_3": "Duplikowanie i usuwanie elementów",
+  "PROMO_CARD_3_MESSAGE": "Duplikuj i usuwaj elementy jednym kliknięciem.",
+  "PROMO_CARD_4": "Edycja tekstu w podglądzie",
+  "PROMO_CARD_4_MESSAGE": "Edytuj nagłówki, przyciski i kopiuj bezpośrednio w podglądzie.",
+  "PROMO_LEARN_MORE": "Dowiedz się więcej…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -107049,6 +107313,7 @@ define("nls/pt-br/strings", {
   "DESCRIPTION_TABBAR": "Definir as configurações da barra de guias.",
   "DESCRIPTION_SHOW_TABBAR": "`true` para mostrar a barra de guias, senão `false`.",
   "DESCRIPTION_NUMBER_OF_TABS": "O número de guias a serem exibidas na barra de guias. Defina como -1 para mostrar todas as guias",
+  "TABBAR_SHOW_HIDDEN_TABS": "Mostrar abas ocultas",
   "ENABLE_GIT": "Ativar o Git",
   "ACTION": "Ação",
   "STATUSBAR_SHOW_GIT": "Painel Git",
@@ -107392,7 +107657,17 @@ define("nls/pt-br/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Texto do Modelo",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Descrição",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensão do Arquivo",
-  "TABBAR_SHOW_HIDDEN_TABS": "Mostrar abas ocultas"
+  "PROMO_UPGRADE_TITLE": "Você foi atualizado(a) para {0}",
+  "PROMO_UPGRADE_MESSAGE": "Aproveite acesso completo a todos os recursos premium pelos próximos {0} dias:",
+  "PROMO_CARD_1": "Arraste e solte elementos",
+  "PROMO_CARD_1_MESSAGE": "Reorganize seções visualmente — Phoenix atualiza o HTML e CSS para você.",
+  "PROMO_CARD_2": "Substituição de imagem",
+  "PROMO_CARD_2_MESSAGE": "Clique em qualquer imagem para substituí-la instantaneamente e visualizar as alterações em tempo real.",
+  "PROMO_CARD_3": "Duplicação e exclusão de elementos",
+  "PROMO_CARD_3_MESSAGE": "Duplique e exclua elementos com um único clique.",
+  "PROMO_CARD_4": "Editando texto na pré-visualização",
+  "PROMO_CARD_4_MESSAGE": "Edite títulos, botões e copie diretamente na pré-visualização.",
+  "PROMO_LEARN_MORE": "Saiba mais…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -108536,6 +108811,7 @@ define("nls/pt-pt/strings", {
   "DESCRIPTION_TABBAR": "Definir as definições da barra de separadores.",
   "DESCRIPTION_SHOW_TABBAR": "`true` para mostrar a barra de separadores, caso contrário `false`.",
   "DESCRIPTION_NUMBER_OF_TABS": "O número de separadores a mostrar na barra de separadores. Defina como -1 para mostrar todos os separadores",
+  "TABBAR_SHOW_HIDDEN_TABS": "Mostrar separadores ocultos",
   "ENABLE_GIT": "Ativar o Git",
   "ACTION": "Ação",
   "STATUSBAR_SHOW_GIT": "Painel Git",
@@ -108879,7 +109155,17 @@ define("nls/pt-pt/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Texto do Modelo",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Descrição",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensão de Ficheiro",
-  "TABBAR_SHOW_HIDDEN_TABS": "Mostrar separadores ocultos"
+  "PROMO_UPGRADE_TITLE": "Foi atualizado(a) para {0}",
+  "PROMO_UPGRADE_MESSAGE": "Desfrute de acesso total a todas as funcionalidades premium durante os próximos {0} dias:",
+  "PROMO_CARD_1": "Arrastar e Soltar Elementos",
+  "PROMO_CARD_1_MESSAGE": "Reorganize as secções visualmente — o Phoenix atualiza o HTML e o CSS por si.",
+  "PROMO_CARD_2": "Substituição de Imagem",
+  "PROMO_CARD_2_MESSAGE": "Clique em qualquer imagem para a substituir instantaneamente e pré-visualize as alterações em tempo real.",
+  "PROMO_CARD_3": "Duplicação e Eliminação de Elementos",
+  "PROMO_CARD_3_MESSAGE": "Duplique e elimine elementos com um único clique.",
+  "PROMO_CARD_4": "Editar Texto na Pré-visualização",
+  "PROMO_CARD_4_MESSAGE": "Edite títulos, botões e copie diretamente na pré-visualização.",
+  "PROMO_LEARN_MORE": "Saiba mais…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -110023,6 +110309,7 @@ define("nls/ro/strings", {
   "DESCRIPTION_TABBAR": "Setează setările barei de file.",
   "DESCRIPTION_SHOW_TABBAR": "`true` pentru a afișa bara de file, altfel `false`.",
   "DESCRIPTION_NUMBER_OF_TABS": "Numărul de file de afișat în bara de file. Setează la -1 pentru a afișa toate filele.",
+  "TABBAR_SHOW_HIDDEN_TABS": "Afișează filele ascunse",
   "ENABLE_GIT": "Activează Git",
   "ACTION": "Acțiune",
   "STATUSBAR_SHOW_GIT": "Panou Git",
@@ -110366,7 +110653,17 @@ define("nls/ro/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Text șablon",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Descriere",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensie fișier",
-  "TABBAR_SHOW_HIDDEN_TABS": "Afișează filele ascunse"
+  "PROMO_UPGRADE_TITLE": "Ai fost upgradat la {0}",
+  "PROMO_UPGRADE_MESSAGE": "Bucură-te de acces complet la toate funcțiile premium pentru următoarele {0} zile:",
+  "PROMO_CARD_1": "Trage și plasează elemente",
+  "PROMO_CARD_1_MESSAGE": "Reordonează secțiunile vizual — Phoenix actualizează HTML-ul și CSS-ul pentru tine.",
+  "PROMO_CARD_2": "Înlocuire imagine",
+  "PROMO_CARD_2_MESSAGE": "Fă clic pe orice imagine pentru a o înlocui instantaneu și a previzualiza modificările în timp real.",
+  "PROMO_CARD_3": "Duplicare și ștergere element",
+  "PROMO_CARD_3_MESSAGE": "Duplică și șterge elemente cu un singur clic.",
+  "PROMO_CARD_4": "Editare text în previzualizare",
+  "PROMO_CARD_4_MESSAGE": "Editează titluri, butoane și copiază direct în previzualizare.",
+  "PROMO_LEARN_MORE": "Află mai multe…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -113257,6 +113554,7 @@ define("nls/ru/strings", {
   "DESCRIPTION_TABBAR": "Настроить параметры панели вкладок.",
   "DESCRIPTION_SHOW_TABBAR": "`true` для отображения панели вкладок, иначе `false`.",
   "DESCRIPTION_NUMBER_OF_TABS": "Количество вкладок, отображаемых на панели вкладок. Значение -1 отображает все вкладки.",
+  "TABBAR_SHOW_HIDDEN_TABS": "Показать скрытые вкладки",
   "ENABLE_GIT": "Включить Git",
   "ACTION": "Действие",
   "STATUSBAR_SHOW_GIT": "Панель Git",
@@ -113600,7 +113898,17 @@ define("nls/ru/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Текст шаблона",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Описание",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Расширение файла",
-  "TABBAR_SHOW_HIDDEN_TABS": "Показать скрытые вкладки"
+  "PROMO_UPGRADE_TITLE": "Вы перешли на тариф {0}",
+  "PROMO_UPGRADE_MESSAGE": "Наслаждайтесь полным доступом ко всем премиум-функциям в течение следующих {0} дней:",
+  "PROMO_CARD_1": "Перетаскивание элементов",
+  "PROMO_CARD_1_MESSAGE": "Меняйте расположение секций визуально — Phoenix обновит HTML и CSS за вас.",
+  "PROMO_CARD_2": "Замена изображений",
+  "PROMO_CARD_2_MESSAGE": "Нажмите на любое изображение, чтобы мгновенно заменить его и увидеть изменения в режиме реального времени.",
+  "PROMO_CARD_3": "Дублирование и удаление элементов",
+  "PROMO_CARD_3_MESSAGE": "Дублируйте и удаляйте элементы одним щелчком мыши.",
+  "PROMO_CARD_4": "Редактирование текста в режиме предпросмотра",
+  "PROMO_CARD_4_MESSAGE": "Редактируйте заголовки, кнопки и копируйте текст прямо в режиме предпросмотра.",
+  "PROMO_LEARN_MORE": "Узнать больше…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -114746,6 +115054,7 @@ define("nls/sk/strings", {
   "DESCRIPTION_TABBAR": "Nastaviť nastavenia panela kariet.",
   "DESCRIPTION_SHOW_TABBAR": "Pravda pre zobrazenie panela kariet, inak nepravda.",
   "DESCRIPTION_NUMBER_OF_TABS": "Počet kariet, ktoré sa majú zobraziť na paneli kariet. Nastavte na -1 pre zobrazenie všetkých kariet",
+  "TABBAR_SHOW_HIDDEN_TABS": "Zobraziť skryté karty",
   "ENABLE_GIT": "Povoliť Git",
   "ACTION": "Akcia",
   "STATUSBAR_SHOW_GIT": "Panel Git",
@@ -115089,7 +115398,17 @@ define("nls/sk/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Text šablóny",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Popis",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Prípona súboru",
-  "TABBAR_SHOW_HIDDEN_TABS": "Zobraziť skryté karty"
+  "PROMO_UPGRADE_TITLE": "Boli ste prejdení na {0}",
+  "PROMO_UPGRADE_MESSAGE": "Využívajte plný prístup ku všetkým prémiovým funkciám počas nasledujúcich {0} dní:",
+  "PROMO_CARD_1": "Presúvanie prvkov myšou",
+  "PROMO_CARD_1_MESSAGE": "Vizuálne usporiadajte sekcie – Phoenix aktualizuje HTML a CSS za vás.",
+  "PROMO_CARD_2": "Nahradenie obrázka",
+  "PROMO_CARD_2_MESSAGE": "Kliknite na ľubovoľný obrázok a okamžite ho nahraďte a zobrazte si zmeny v reálnom čase.",
+  "PROMO_CARD_3": "Duplikovanie a odstránenie prvkov",
+  "PROMO_CARD_3_MESSAGE": "Duplikujte a odstráňte prvky jediným kliknutím.",
+  "PROMO_CARD_4": "Úprava textu v náhľade",
+  "PROMO_CARD_4_MESSAGE": "Upravujte nadpisy, tlačidlá a kopírujte priamo v náhľade.",
+  "PROMO_LEARN_MORE": "Zistiť viac…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -116234,6 +116553,7 @@ define("nls/sr/strings", {
   "DESCRIPTION_TABBAR": "Подешавање траке са картицама.",
   "DESCRIPTION_SHOW_TABBAR": "`true` за приказивање траке са картицама, иначе `false`.",
   "DESCRIPTION_NUMBER_OF_TABS": "Број картица које се приказују у траци. Поставите на -1 да бисте приказали све картице.",
+  "TABBAR_SHOW_HIDDEN_TABS": "Прикажи скривене картице",
   "ENABLE_GIT": "Омогући Гит",
   "ACTION": "Акција",
   "STATUSBAR_SHOW_GIT": "Гит Панел",
@@ -116577,7 +116897,17 @@ define("nls/sr/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Текст шаблона",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Опис",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Екстензија датотеке",
-  "TABBAR_SHOW_HIDDEN_TABS": "Прикажи скривене картице"
+  "PROMO_UPGRADE_TITLE": "Унапредили сте на {0}",
+  "PROMO_UPGRADE_MESSAGE": "Уживајте у пуном приступу свим премијум функцијама у наредних {0} дана:",
+  "PROMO_CARD_1": "Превлачење и испуштање елемената",
+  "PROMO_CARD_1_MESSAGE": "Визуелно преуређујте секције — Phoenix ажурира HTML и CSS за вас.",
+  "PROMO_CARD_2": "Замена слике",
+  "PROMO_CARD_2_MESSAGE": "Кликните на било коју слику да бисте је одмах заменили и прегледали измене у реалном времену.",
+  "PROMO_CARD_3": "Дуплирање и брисање елемената",
+  "PROMO_CARD_3_MESSAGE": "Дуплирајте и бришите елементе једним кликом.",
+  "PROMO_CARD_4": "Уређивање текста у прегледу",
+  "PROMO_CARD_4_MESSAGE": "Уредите наслове, дугмад и копирајте директно у прегледу.",
+  "PROMO_LEARN_MORE": "Сазнајте више…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -117806,6 +118136,7 @@ define("nls/sv/strings", {
   "DESCRIPTION_TABBAR": "Ange inställningar för flikraden.",
   "DESCRIPTION_SHOW_TABBAR": "Sant för att visa flikraden, annars falskt.",
   "DESCRIPTION_NUMBER_OF_TABS": "Antalet flikar som ska visas i flikraden. Ange -1 för att visa alla flikar.",
+  "TABBAR_SHOW_HIDDEN_TABS": "Visa dolda flikar",
   "ENABLE_GIT": "Aktivera Git",
   "ACTION": "Åtgärd",
   "STATUSBAR_SHOW_GIT": "Git-panel",
@@ -118149,7 +118480,17 @@ define("nls/sv/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Malltext",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Beskrivning",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Filändelse",
-  "TABBAR_SHOW_HIDDEN_TABS": "Visa dolda flikar"
+  "PROMO_UPGRADE_TITLE": "Du har uppgraderats till {0}",
+  "PROMO_UPGRADE_MESSAGE": "Få full tillgång till alla premiumfunktioner under de kommande {0} dagarna:",
+  "PROMO_CARD_1": "Dra och släpp element",
+  "PROMO_CARD_1_MESSAGE": "Ordna om sektioner visuellt – Phoenix uppdaterar HTML och CSS åt dig.",
+  "PROMO_CARD_2": "Bildersättning",
+  "PROMO_CARD_2_MESSAGE": "Klicka på valfri bild för att ersätta den direkt och förhandsgranska ändringar i realtid.",
+  "PROMO_CARD_3": "Duplicering och borttagning av element",
+  "PROMO_CARD_3_MESSAGE": "Duplicera och ta bort element med ett enda klick.",
+  "PROMO_CARD_4": "Redigera text i förhandsgranskning",
+  "PROMO_CARD_4_MESSAGE": "Redigera rubriker, knappar och kopiera direkt i förhandsgranskningen.",
+  "PROMO_LEARN_MORE": "Läs mer…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -119295,6 +119636,7 @@ define("nls/tr/strings", {
   "DESCRIPTION_TABBAR": "Sekme çubuğu ayarlarını belirleyin.",
   "DESCRIPTION_SHOW_TABBAR": "Sekme çubuğunu göstermek için \"true\", gizlemek için \"false\".",
   "DESCRIPTION_NUMBER_OF_TABS": "Sekme çubuğunda gösterilecek sekme sayısı. Tüm sekmeleri göstermek için -1 olarak ayarlayın.",
+  "TABBAR_SHOW_HIDDEN_TABS": "Gizli sekmeleri göster",
   "ENABLE_GIT": "Git'i Etkinleştir",
   "ACTION": "Eylem",
   "STATUSBAR_SHOW_GIT": "Git Paneli",
@@ -119638,7 +119980,17 @@ define("nls/tr/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Şablon Metni",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Açıklama",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Dosya Uzantısı",
-  "TABBAR_SHOW_HIDDEN_TABS": "Gizli sekmeleri göster"
+  "PROMO_UPGRADE_TITLE": "{0} sürümüne yükseltildiniz",
+  "PROMO_UPGRADE_MESSAGE": "Önümüzdeki {0} gün boyunca tüm premium özelliklere tam erişimin keyfini çıkarın:",
+  "PROMO_CARD_1": "Öğeleri Sürükle ve Bırak",
+  "PROMO_CARD_1_MESSAGE": "Bölümleri görsel olarak yeniden düzenleyin — Phoenix HTML ve CSS'yi sizin için günceller.",
+  "PROMO_CARD_2": "Görsel Değiştirme",
+  "PROMO_CARD_2_MESSAGE": "Anında değiştirmek ve değişiklikleri gerçek zamanlı olarak önizlemek için herhangi bir resme tıklayın.",
+  "PROMO_CARD_3": "Öğe Çoğaltma ve Silme",
+  "PROMO_CARD_3_MESSAGE": "Tek bir tıklamayla öğeleri çoğaltın ve silin.",
+  "PROMO_CARD_4": "Önizlemede Metin Düzenleme",
+  "PROMO_CARD_4_MESSAGE": "Başlıkları, düğmeleri düzenleyin ve doğrudan önizlemede kopyalayın.",
+  "PROMO_LEARN_MORE": "Daha Fazla Bilgi Edinin…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -120784,6 +121136,7 @@ define("nls/uk/strings", {
   "DESCRIPTION_TABBAR": "Налаштувати параметри панелі вкладок.",
   "DESCRIPTION_SHOW_TABBAR": "`true` для відображення панелі вкладок, інакше `false`.",
   "DESCRIPTION_NUMBER_OF_TABS": "Кількість вкладок для відображення на панелі вкладок. Встановіть значення -1, щоб відобразити всі вкладки.",
+  "TABBAR_SHOW_HIDDEN_TABS": "Показати приховані вкладки",
   "ENABLE_GIT": "Увімкнути Git",
   "ACTION": "Дія",
   "STATUSBAR_SHOW_GIT": "Панель Git",
@@ -121127,7 +121480,17 @@ define("nls/uk/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Текст шаблону",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Опис",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Розширення файлу",
-  "TABBAR_SHOW_HIDDEN_TABS": "Показати приховані вкладки"
+  "PROMO_UPGRADE_TITLE": "Вас оновлено до {0}",
+  "PROMO_UPGRADE_MESSAGE": "Насолоджуйтесь повним доступом до всіх преміум-функцій протягом наступних {0} днів:",
+  "PROMO_CARD_1": "Перетягування елементів",
+  "PROMO_CARD_1_MESSAGE": "Змінюйте розташування розділів візуально — Phoenix оновить HTML та CSS за вас.",
+  "PROMO_CARD_2": "Заміна зображень",
+  "PROMO_CARD_2_MESSAGE": "Клацніть на будь-яке зображення, щоб миттєво замінити його та переглянути зміни в режимі реального часу.",
+  "PROMO_CARD_3": "Дублювання та видалення елементів",
+  "PROMO_CARD_3_MESSAGE": "Дублюйте та видаляйте елементи одним кліком.",
+  "PROMO_CARD_4": "Редагування тексту в режимі попереднього перегляду",
+  "PROMO_CARD_4_MESSAGE": "Редагуйте заголовки, кнопки та копіюйте безпосередньо в режимі попереднього перегляду.",
+  "PROMO_LEARN_MORE": "Дізнатися більше…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -122273,6 +122636,7 @@ define("nls/ur/strings", {
   "DESCRIPTION_TABBAR": "ٹیب بار کی ترتیبات مقرر کریں۔",
   "DESCRIPTION_SHOW_TABBAR": "ٹیب بار دکھانے کے لیے true، ورنہ false۔",
   "DESCRIPTION_NUMBER_OF_TABS": "ٹیب بار میں دکھانے کے لیے ٹیبز کی تعداد۔ تمام ٹیبز دکھانے کے لیے -1 پر سیٹ کریں۔",
+  "TABBAR_SHOW_HIDDEN_TABS": "پوشیدہ ٹیبز دکھائیں",
   "ENABLE_GIT": "گٹ فعال کریں",
   "ACTION": "عمل",
   "STATUSBAR_SHOW_GIT": "گٹ پینل",
@@ -122616,7 +122980,17 @@ define("nls/ur/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "ٹیمپلیٹ متن",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "وضاحت",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "فائل ایکسٹینشن",
-  "TABBAR_SHOW_HIDDEN_TABS": "پوشیدہ ٹیبز دکھائیں"
+  "PROMO_UPGRADE_TITLE": "آپ کو {0} میں اپ گریڈ کر دیا گیا ہے۔",
+  "PROMO_UPGRADE_MESSAGE": "اگلے {0} دنوں کے لیے تمام پریمیم خصوصیات تک مکمل رسائی سے لطف اندوز ہوں:",
+  "PROMO_CARD_1": "عناصر کو گھسیٹیں اور چھوڑیں",
+  "PROMO_CARD_1_MESSAGE": "حصوں کو بصری طور پر دوبارہ ترتیب دیں — فینکس آپ کے لیے HTML اور CSS کو اپ ڈیٹ کرتا ہے۔",
+  "PROMO_CARD_2": "تصویر کی تبدیلی",
+  "PROMO_CARD_2_MESSAGE": "کسی بھی تصویر پر کلک کر کے اسے فوری طور پر تبدیل کریں اور تبدیلیوں کا حقیقی وقت میں پیش نظارہ کریں۔",
+  "PROMO_CARD_3": "عنصر کی نقل اور حذف",
+  "PROMO_CARD_3_MESSAGE": "ایک ہی کلک سے عناصر کی نقل اور حذف کریں۔",
+  "PROMO_CARD_4": "پیش نظارہ میں متن کی تدوین",
+  "PROMO_CARD_4_MESSAGE": "پیش نظارہ میں براہ راست ہیڈنگ، بٹنوں اور کاپی میں ترمیم کریں۔",
+  "PROMO_LEARN_MORE": "مزید جانیے…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -123792,6 +124166,7 @@ define("nls/zh-cn/strings", {
   "DESCRIPTION_TABBAR": "设置标签栏设置。",
   "DESCRIPTION_SHOW_TABBAR": "显示标签栏则为 true，否则为 false。",
   "DESCRIPTION_NUMBER_OF_TABS": "标签栏中显示的标签页数量。设置为 -1 以显示所有标签页",
+  "TABBAR_SHOW_HIDDEN_TABS": "显示隐藏的标签页",
   "ENABLE_GIT": "启用 Git",
   "ACTION": "操作",
   "STATUSBAR_SHOW_GIT": "Git 面板",
@@ -124135,7 +124510,17 @@ define("nls/zh-cn/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "模板文本",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "描述",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "文件扩展名",
-  "TABBAR_SHOW_HIDDEN_TABS": "显示隐藏的标签页"
+  "PROMO_UPGRADE_TITLE": "您已升级到 {0}",
+  "PROMO_UPGRADE_MESSAGE": "在接下来的 {0} 天内，您可以尽情享用所有高级功能：",
+  "PROMO_CARD_1": "拖放元素",
+  "PROMO_CARD_1_MESSAGE": "直观地重新排列版块 — Phoenix 会为您更新 HTML 和 CSS。",
+  "PROMO_CARD_2": "图片替换",
+  "PROMO_CARD_2_MESSAGE": "点击任何图片即可立即替换，并实时预览更改。",
+  "PROMO_CARD_3": "元素复制和删除",
+  "PROMO_CARD_3_MESSAGE": "一键复制和删除元素。",
+  "PROMO_CARD_4": "在预览中编辑文本",
+  "PROMO_CARD_4_MESSAGE": "直接在预览中编辑标题、按钮和复制内容。",
+  "PROMO_LEARN_MORE": "了解更多…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -125281,6 +125666,7 @@ define("nls/zh-tw/strings", {
   "DESCRIPTION_TABBAR": "設定分頁列設定。",
   "DESCRIPTION_SHOW_TABBAR": "顯示分頁列設為 true，隱藏則設為 false。",
   "DESCRIPTION_NUMBER_OF_TABS": "分頁列中顯示的分頁數量。設為 -1 則顯示所有分頁。",
+  "TABBAR_SHOW_HIDDEN_TABS": "顯示隱藏的索引標籤",
   "ENABLE_GIT": "啟用 Git",
   "ACTION": "動作",
   "STATUSBAR_SHOW_GIT": "Git 面板",
@@ -125624,7 +126010,17 @@ define("nls/zh-tw/strings", {
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "範本文字",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "描述",
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "檔案副檔名",
-  "TABBAR_SHOW_HIDDEN_TABS": "顯示隱藏的索引標籤"
+  "PROMO_UPGRADE_TITLE": "您已升級至 {0}",
+  "PROMO_UPGRADE_MESSAGE": "在接下來的 {0} 天內，盡情享用所有進階功能：",
+  "PROMO_CARD_1": "拖放元素",
+  "PROMO_CARD_1_MESSAGE": "以視覺化方式重新排列區塊 — Phoenix 會為您更新 HTML 和 CSS。",
+  "PROMO_CARD_2": "圖片替換",
+  "PROMO_CARD_2_MESSAGE": "按一下任何圖片即可立即替換，並即時預覽變更。",
+  "PROMO_CARD_3": "元素複製和刪除",
+  "PROMO_CARD_3_MESSAGE": "只需按一下即可複製和刪除元素。",
+  "PROMO_CARD_4": "在預覽中編輯文字",
+  "PROMO_CARD_4_MESSAGE": "直接在預覽中編輯標題、按鈕和複製內容。",
+  "PROMO_LEARN_MORE": "深入瞭解…"
 });
 /*
  * GNU AGPL-3.0 License
