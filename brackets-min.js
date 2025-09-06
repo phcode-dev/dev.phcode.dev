@@ -71844,7 +71844,8 @@ define("nls/ar/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "اختصار",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "نص القالب",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "الوصف",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "امتداد الملف"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "امتداد الملف",
+  "TABBAR_SHOW_HIDDEN_TABS": "إظهار علامات التبويب المخفية"
 });
 /*
  * GNU AGPL-3.0 License
@@ -73305,7 +73306,8 @@ define("nls/bg/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Съкращение",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Текст на шаблон",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Описание",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Разширение на файл"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Разширение на файл",
+  "TABBAR_SHOW_HIDDEN_TABS": "Показване на скритите раздели"
 });
 /*
  * Copyright (c) 2013 Adobe Systems Incorporated. All rights reserved.
@@ -74795,7 +74797,8 @@ define("nls/cs/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Zkratka",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Text šablony",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Popis",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Přípona souboru"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Přípona souboru",
+  "TABBAR_SHOW_HIDDEN_TABS": "Zobrazit skryté karty"
 });
 /*
  * GNU AGPL-3.0 License
@@ -76283,7 +76286,8 @@ define("nls/da/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Forkortelse",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Skabelontekst",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Beskrivelse",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Filtypenavn"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Filtypenavn",
+  "TABBAR_SHOW_HIDDEN_TABS": "Vis skjulte faner"
 });
 /*
  * GNU AGPL-3.0 License
@@ -77769,7 +77773,8 @@ define("nls/de/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Kürzel",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Vorlagentext",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Beschreibung",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Dateierweiterung"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Dateierweiterung",
+  "TABBAR_SHOW_HIDDEN_TABS": "Versteckte Tabs anzeigen"
 });
 /*
  * GNU AGPL-3.0 License
@@ -79257,7 +79262,8 @@ define("nls/el/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Συντομογραφία",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Κείμενο Προτύπου",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Περιγραφή",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Επέκταση Αρχείου"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Επέκταση Αρχείου",
+  "TABBAR_SHOW_HIDDEN_TABS": "Εμφάνιση κρυφών καρτελών"
 });
 /*
  * GNU AGPL-3.0 License
@@ -80745,7 +80751,8 @@ define("nls/en-gb/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Abbreviation",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Template Text",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Description",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "File Extension"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "File Extension",
+  "TABBAR_SHOW_HIDDEN_TABS": "Show hidden tabs"
 });
 /*
  * GNU AGPL-3.0 License
@@ -82206,7 +82213,8 @@ define("nls/es/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Abreviatura",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Texto de la plantilla",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Descripción",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensión de archivo"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensión de archivo",
+  "TABBAR_SHOW_HIDDEN_TABS": "Mostrar pestañas ocultas"
 });
 /*
  * GNU AGPL-3.0 License
@@ -83695,7 +83703,8 @@ define("nls/fa-ir/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "مخفف",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "متن الگو",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "توضیحات",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "پسوند فایل"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "پسوند فایل",
+  "TABBAR_SHOW_HIDDEN_TABS": "نمایش برگه‌های پنهان"
 });
 /*
  * GNU AGPL-3.0 License
@@ -85183,7 +85192,8 @@ define("nls/fi/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Lyhenne",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Malliteksti",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Kuvaus",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Tiedostopääte"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Tiedostopääte",
+  "TABBAR_SHOW_HIDDEN_TABS": "Näytä piilotetut välilehdet"
 });
 /*
  * GNU AGPL-3.0 License
@@ -86671,7 +86681,8 @@ define("nls/fr/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Abréviation",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Texte du modèle",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Description",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extension de fichier"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extension de fichier",
+  "TABBAR_SHOW_HIDDEN_TABS": "Afficher les onglets masqués"
 });
 /*
  * GNU AGPL-3.0 License
@@ -88159,7 +88170,8 @@ define("nls/gl/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Abreviatura",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Texto do modelo",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Descrición",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensión de ficheiro"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensión de ficheiro",
+  "TABBAR_SHOW_HIDDEN_TABS": "Mostrar pestanas ocultas"
 });
 /*
  * GNU AGPL-3.0 License
@@ -89620,7 +89632,8 @@ define("nls/hi/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "संक्षिप्त नाम",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "टेम्पलेट टेक्स्ट",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "विवरण",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "फ़ाइल एक्सटेंशन"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "फ़ाइल एक्सटेंशन",
+  "TABBAR_SHOW_HIDDEN_TABS": "छिपे हुए टैब दिखाएँ"
 });
 /*
  * GNU AGPL-3.0 License
@@ -91081,7 +91094,8 @@ define("nls/hr/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Kratica",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Tekst predloška",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Opis",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Ekstenzija datoteke"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Ekstenzija datoteke",
+  "TABBAR_SHOW_HIDDEN_TABS": "Prikaži skrivene kartice"
 });
 /*
  * GNU AGPL-3.0 License
@@ -92569,7 +92583,8 @@ define("nls/hu/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Rövidítés",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Sablonszöveg",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Leírás",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Fájlkiterjesztés"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Fájlkiterjesztés",
+  "TABBAR_SHOW_HIDDEN_TABS": "Rejtett fülek megjelenítése"
 });
 /*
  * GNU AGPL-3.0 License
@@ -94030,7 +94045,8 @@ define("nls/id/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Singkatan",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Teks Templat",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Deskripsi",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Ekstensi Berkas"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Ekstensi Berkas",
+  "TABBAR_SHOW_HIDDEN_TABS": "Tampilkan tab tersembunyi"
 });
 /*
  * GNU AGPL-3.0 License
@@ -95517,7 +95533,8 @@ define("nls/it/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Abbreviazione",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Testo del Modello",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Descrizione",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Estensione del File"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Estensione del File",
+  "TABBAR_SHOW_HIDDEN_TABS": "Mostra le schede nascoste"
 });
 /*
  * GNU AGPL-3.0 License
@@ -97005,7 +97022,8 @@ define("nls/ja/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "略語",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "テンプレートテキスト",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "説明",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "ファイル拡張子"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "ファイル拡張子",
+  "TABBAR_SHOW_HIDDEN_TABS": "非表示のタブを表示"
 });
 /*
  * GNU AGPL-3.0 License
@@ -98493,7 +98511,8 @@ define("nls/ko/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "약어",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "템플릿 텍스트",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "설명",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "파일 확장자"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "파일 확장자",
+  "TABBAR_SHOW_HIDDEN_TABS": "숨겨진 탭 표시"
 });
 /*
  * GNU AGPL-3.0 License
@@ -99981,7 +100000,8 @@ define("nls/lv/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Saīsinājums",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Veidnes teksts",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Apraksts",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Faila paplašinājums"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Faila paplašinājums",
+  "TABBAR_SHOW_HIDDEN_TABS": "Rādīt paslēptās cilnes"
 });
 /*
  * GNU AGPL-3.0 License
@@ -101442,7 +101462,8 @@ define("nls/ml/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "ചുരുക്കെഴുത്ത്",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "ടെംപ്ലേറ്റ് ടെക്സ്റ്റ്",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "വിവരണം",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "ഫയൽ എക്സ്റ്റൻഷൻ"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "ഫയൽ എക്സ്റ്റൻഷൻ",
+  "TABBAR_SHOW_HIDDEN_TABS": "മറഞ്ഞിരിക്കുന്ന ടാബുകൾ കാണിക്കുക"
 });
 /*
  * GNU AGPL-3.0 License
@@ -102903,7 +102924,8 @@ define("nls/nb/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Forkortelse",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Maltekst",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Beskrivelse",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Filtype"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Filtype",
+  "TABBAR_SHOW_HIDDEN_TABS": "Vis skjulte faner"
 });
 /*
  * GNU AGPL-3.0 License
@@ -104391,7 +104413,8 @@ define("nls/nl/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Afkorting",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Sjabloontekst",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Beschrijving",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Bestandsextensie"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Bestandsextensie",
+  "TABBAR_SHOW_HIDDEN_TABS": "Verborgen tabbladen tonen"
 });
 /*
  * GNU AGPL-3.0 License
@@ -105879,7 +105902,8 @@ define("nls/pl/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Skrót",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Treść szablonu",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Opis",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Rozszerzenie pliku"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Rozszerzenie pliku",
+  "TABBAR_SHOW_HIDDEN_TABS": "Pokaż ukryte karty"
 });
 /*
  * GNU AGPL-3.0 License
@@ -107367,7 +107391,8 @@ define("nls/pt-br/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Abreviação",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Texto do Modelo",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Descrição",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensão do Arquivo"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensão do Arquivo",
+  "TABBAR_SHOW_HIDDEN_TABS": "Mostrar abas ocultas"
 });
 /*
  * GNU AGPL-3.0 License
@@ -108853,7 +108878,8 @@ define("nls/pt-pt/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Abreviatura",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Texto do Modelo",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Descrição",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensão de Ficheiro"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensão de Ficheiro",
+  "TABBAR_SHOW_HIDDEN_TABS": "Mostrar separadores ocultos"
 });
 /*
  * GNU AGPL-3.0 License
@@ -110339,7 +110365,8 @@ define("nls/ro/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Abreviere",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Text șablon",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Descriere",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensie fișier"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensie fișier",
+  "TABBAR_SHOW_HIDDEN_TABS": "Afișează filele ascunse"
 });
 /*
  * GNU AGPL-3.0 License
@@ -113559,7 +113586,8 @@ define("nls/ru/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Сокращение",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Текст шаблона",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Описание",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Расширение файла"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Расширение файла",
+  "TABBAR_SHOW_HIDDEN_TABS": "Показать скрытые вкладки"
 });
 /*
  * GNU AGPL-3.0 License
@@ -115047,7 +115075,8 @@ define("nls/sk/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Skratka",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Text šablóny",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Popis",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Prípona súboru"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Prípona súboru",
+  "TABBAR_SHOW_HIDDEN_TABS": "Zobraziť skryté karty"
 });
 /*
  * GNU AGPL-3.0 License
@@ -116534,7 +116563,8 @@ define("nls/sr/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Скраћеница",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Текст шаблона",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Опис",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Екстензија датотеке"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Екстензија датотеке",
+  "TABBAR_SHOW_HIDDEN_TABS": "Прикажи скривене картице"
 });
 /*
  * GNU AGPL-3.0 License
@@ -118105,7 +118135,8 @@ define("nls/sv/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Förkortning",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Malltext",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Beskrivning",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Filändelse"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Filändelse",
+  "TABBAR_SHOW_HIDDEN_TABS": "Visa dolda flikar"
 });
 /*
  * GNU AGPL-3.0 License
@@ -119593,7 +119624,8 @@ define("nls/tr/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Kısaltma",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Şablon Metni",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Açıklama",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Dosya Uzantısı"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Dosya Uzantısı",
+  "TABBAR_SHOW_HIDDEN_TABS": "Gizli sekmeleri göster"
 });
 /*
  * GNU AGPL-3.0 License
@@ -121081,7 +121113,8 @@ define("nls/uk/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Скорочення",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Текст шаблону",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Опис",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Розширення файлу"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Розширення файлу",
+  "TABBAR_SHOW_HIDDEN_TABS": "Показати приховані вкладки"
 });
 /*
  * GNU AGPL-3.0 License
@@ -122569,7 +122602,8 @@ define("nls/ur/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "مخفف",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "ٹیمپلیٹ متن",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "وضاحت",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "فائل ایکسٹینشن"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "فائل ایکسٹینشن",
+  "TABBAR_SHOW_HIDDEN_TABS": "پوشیدہ ٹیبز دکھائیں"
 });
 /*
  * GNU AGPL-3.0 License
@@ -124087,7 +124121,8 @@ define("nls/zh-cn/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "缩写",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "模板文本",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "描述",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "文件扩展名"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "文件扩展名",
+  "TABBAR_SHOW_HIDDEN_TABS": "显示隐藏的标签页"
 });
 /*
  * GNU AGPL-3.0 License
@@ -125575,7 +125610,8 @@ define("nls/zh-tw/strings", {
   "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "縮寫",
   "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "範本文字",
   "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "描述",
-  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "檔案副檔名"
+  "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "檔案副檔名",
+  "TABBAR_SHOW_HIDDEN_TABS": "顯示隱藏的索引標籤"
 });
 /*
  * GNU AGPL-3.0 License
