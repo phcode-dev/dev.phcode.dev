@@ -190,19 +190,18 @@ define(function (require, exports, module) {
     function _updateBranding(entitlements) {
         const $brandingLink = $("#phcode-io-main-nav");
         if (!entitlements) {
+            // Phoenix.pro is only for display purposes and should not be used to gate features.
+            // Use kernal mode apis for trusted check of pro features.
             Phoenix.pro.plan = {
                 paidSubscriber: false,
-                name: "Community Edition",
-                isInTrial: false
+                name: "Community Edition"
             };
-            return;
         }
 
         if (entitlements && entitlements.plan){
             Phoenix.pro.plan = {
                 paidSubscriber: entitlements.plan.paidSubscriber,
                 name: entitlements.plan.name,
-                isInTrial: entitlements.plan.isInTrial,
                 validTill: entitlements.plan.validTill
             };
         }
@@ -540,7 +539,7 @@ define(function (require, exports, module) {
         _removeProfileIcon();
 
         // Clear cached entitlements when user logs out
-        LoginService.clearEntitlements();
+        KernalModeTrust.loginService.clearEntitlements();
 
         // Reset branding to free mode
         _updateBranding(null);
@@ -564,4 +563,6 @@ define(function (require, exports, module) {
     exports.init = init;
     exports.setNotLoggedIn = setNotLoggedIn;
     exports.setLoggedIn = setLoggedIn;
+
+    // dont public exports things that extensions can use to get/put credentials and entitlements, display mods is fine
 });

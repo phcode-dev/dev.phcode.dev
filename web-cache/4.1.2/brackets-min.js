@@ -112097,7 +112097,20 @@ define("nls/root/strings", {
     "CUSTOM_SNIPPETS_HEADER_ABBREVIATION": "Abbreviation",
     "CUSTOM_SNIPPETS_HEADER_TEMPLATE": "Template Text",
     "CUSTOM_SNIPPETS_HEADER_DESCRIPTION": "Description",
-    "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "File Extension"
+    "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "File Extension",
+
+    // promos
+    "PROMO_UPGRADE_TITLE": "You’ve been upgraded to {0}",
+    "PROMO_UPGRADE_MESSAGE": "Enjoy full access to all premium features for the next {0} days:",
+    "PROMO_CARD_1": "Drag & Drop Elements",
+    "PROMO_CARD_1_MESSAGE": "Rearrange sections visually — Phoenix updates the HTML & CSS for you.",
+    "PROMO_CARD_2": "Image Replacement",
+    "PROMO_CARD_2_MESSAGE": "Click any image to replace it instantly and preview changes in real time.",
+    "PROMO_CARD_3": "Element Duplication and Deletion",
+    "PROMO_CARD_3_MESSAGE": "Duplicate and delete elements with a single click.",
+    "PROMO_CARD_4": "Editing Text In Preview",
+    "PROMO_CARD_4_MESSAGE": "Edit headings, buttons, and copy directly in the preview.",
+    "PROMO_LEARN_MORE": "Learn More\u2026"
 });
 
 /*
@@ -165820,15 +165833,14 @@ define("search/SearchResultsView", function (require, exports, module) {
  */
 
 define("services/login-browser", function (require, exports, module) {
-    const EventDispatcher = require("utils/EventDispatcher"),
-        PreferencesManager  = require("preferences/PreferencesManager"),
+    require("./login-service"); // after this, loginService will be in KernalModeTrust
+    const PreferencesManager  = require("preferences/PreferencesManager"),
         Metrics = require("utils/Metrics"),
         Dialogs = require("widgets/Dialogs"),
         DefaultDialogs = require("widgets/DefaultDialogs"),
         Strings = require("strings"),
         StringUtils = require("utils/StringUtils"),
         ProfileMenu  = require("./profile-menu"),
-        LoginService = require("./login-service"),
         Mustache = require("thirdparty/mustache/mustache"),
         browserLoginWaitingTemplate = `<div class="browser-login-waiting-dialog modal">
     <div class="modal-header">
@@ -165856,11 +165868,7 @@ define("services/login-browser", function (require, exports, module) {
         // integrated extensions will have access to kernal mode, but not external extensions
         throw new Error("Browser Login service should have access to KernalModeTrust. Cannot boot without trust ring");
     }
-    const secureExports = {};
-    // Only set loginService for browser apps to avoid conflict with desktop login
-    if (!Phoenix.isNativeApp) {
-        KernalModeTrust.loginService = secureExports;
-    }
+    const LoginService = KernalModeTrust.loginService;
 
     // user profile structure: "customerID": "uuid...", "firstName":"Aa","lastName":"bb",
     // "email":"aaaa@sss.com", "loginTime":1750074393853, "isSuccess": true,
@@ -165870,14 +165878,6 @@ define("services/login-browser", function (require, exports, module) {
 
     // just used as trigger to notify different windows about user profile changes
     const PREF_USER_PROFILE_VERSION = "userProfileVersion";
-
-    EventDispatcher.makeEventDispatcher(exports);
-    EventDispatcher.makeEventDispatcher(secureExports);
-
-    const _EVT_PAGE_FOCUSED = "page_focused";
-    $(window).focus(function () {
-        exports.trigger(_EVT_PAGE_FOCUSED);
-    });
 
     function isLoggedIn() {
         return isLoggedInUser;
@@ -165995,7 +165995,6 @@ define("services/login-browser", function (require, exports, module) {
     }
 
     let loginWaitingDialog = null;
-    let focusCheckInterval = null;
 
     /**
      * Show waiting dialog with auto-detection and manual check options
@@ -166083,10 +166082,6 @@ define("services/login-browser", function (require, exports, module) {
         if (loginWaitingDialog) {
             loginWaitingDialog.close();
             loginWaitingDialog = null;
-        }
-        if (focusCheckInterval) {
-            clearInterval(focusCheckInterval);
-            focusCheckInterval = null;
         }
         $(window).off('focus.loginWaiting');
     }
@@ -166209,14 +166204,13 @@ define("services/login-browser", function (require, exports, module) {
     if (!Phoenix.isNativeApp) {
         init();
         // kernal exports
-        secureExports.isLoggedIn = isLoggedIn;
-        secureExports.signInToAccount = signInToBrowser;
-        secureExports.signOutAccount = signOutBrowser;
-        secureExports.getProfile = getProfile;
-        secureExports.verifyLoginStatus = () => _verifyBrowserLogin(false);
-        secureExports.getAccountBaseURL = _getAccountBaseURL;
-        secureExports.getEntitlements = LoginService.getEntitlements;
-        secureExports.EVENT_ENTITLEMENTS_CHANGED = LoginService.EVENT_ENTITLEMENTS_CHANGED;
+        // Add to existing KernalModeTrust.loginService from login-service.js
+        LoginService.isLoggedIn = isLoggedIn;
+        LoginService.signInToAccount = signInToBrowser;
+        LoginService.signOutAccount = signOutBrowser;
+        LoginService.getProfile = getProfile;
+        LoginService.verifyLoginStatus = () => _verifyBrowserLogin(false);
+        LoginService.getAccountBaseURL = _getAccountBaseURL;
     }
 
     // public exports
@@ -166245,6 +166239,8 @@ define("services/login-browser", function (require, exports, module) {
 /*global logger*/
 
 define("services/login-desktop", function (require, exports, module) {
+    require("./login-service"); // after this, loginService will be in KernalModeTrust
+
     const EventDispatcher = require("utils/EventDispatcher"),
         PreferencesManager  = require("preferences/PreferencesManager"),
         Metrics = require("utils/Metrics"),
@@ -166253,7 +166249,6 @@ define("services/login-desktop", function (require, exports, module) {
         Strings = require("strings"),
         NativeApp = require("utils/NativeApp"),
         ProfileMenu  = require("./profile-menu"),
-        LoginService = require("./login-service"),
         Mustache = require("thirdparty/mustache/mustache"),
         NodeConnector = require("NodeConnector"),
         otpDialogTemplate = `<div class="otp-dialog modal">
@@ -166284,11 +166279,8 @@ define("services/login-desktop", function (require, exports, module) {
         // integrated extensions will have access to kernal mode, but not external extensions
         throw new Error("Login service should have access to KernalModeTrust. Cannot boot without trust ring");
     }
-    const secureExports = {};
-    // Only set loginService for native apps to avoid conflict with browser login
-    if (Phoenix.isNativeApp) {
-        KernalModeTrust.loginService = secureExports;
-    }
+    const LoginService = KernalModeTrust.loginService;
+
     // user profile is something like "apiKey": "uuid...", validationCode: "dfdf", "firstName":"Aa","lastName":"bb",
     // "email":"aaaa@sss.com", "customerID":"uuid...","loginTime":1750074393853,
     // "profileIcon":{"color":"#14b8a6","initials":"AB"}
@@ -166298,12 +166290,11 @@ define("services/login-desktop", function (require, exports, module) {
     // just used as trigger to notify different windows about user profile changes
     const PREF_USER_PROFILE_VERSION = "userProfileVersion";
 
-    EventDispatcher.makeEventDispatcher(exports);
-    EventDispatcher.makeEventDispatcher(secureExports);
-
     const _EVT_PAGE_FOCUSED = "page_focused";
+    const focusWatcher = {};
+    EventDispatcher.makeEventDispatcher(focusWatcher);
     $(window).focus(function () {
-        exports.trigger(_EVT_PAGE_FOCUSED);
+        focusWatcher.trigger(_EVT_PAGE_FOCUSED);
     });
 
     const AUTH_CONNECTOR_ID = "ph_auth";
@@ -166567,7 +166558,7 @@ define("services/login-desktop", function (require, exports, module) {
             }
         }
         let isAutoSignedIn = false;
-        exports.on(_EVT_PAGE_FOCUSED, checkLoginStatus);
+        focusWatcher.on(_EVT_PAGE_FOCUSED, checkLoginStatus);
         async function _AutoSignedIn() {
             isAutoSignedIn = true;
             await checkLoginStatus();
@@ -166576,7 +166567,7 @@ define("services/login-desktop", function (require, exports, module) {
 
         // Clean up when dialog is closed
         dialog.done(function() {
-            exports.off(_EVT_PAGE_FOCUSED, checkLoginStatus);
+            focusWatcher.off(_EVT_PAGE_FOCUSED, checkLoginStatus);
             authNodeConnector.off(EVENT_CONNECTED, _AutoSignedIn);
             clearTimeout(closeTimeout);
             Metrics.countEvent(Metrics.EVENT_TYPE.AUTH,
@@ -166658,15 +166649,13 @@ define("services/login-desktop", function (require, exports, module) {
     // Only set exports for native apps to avoid conflict with browser login
     if (Phoenix.isNativeApp) {
         init();
-        // kernal exports
-        secureExports.isLoggedIn = isLoggedIn;
-        secureExports.signInToAccount = signInToAccount;
-        secureExports.signOutAccount = signOutAccount;
-        secureExports.getProfile = getProfile;
-        secureExports.verifyLoginStatus = () => _verifyLogin(false);
-        secureExports.getAccountBaseURL = getAccountBaseURL;
-        secureExports.getEntitlements = LoginService.getEntitlements;
-        secureExports.EVENT_ENTITLEMENTS_CHANGED = LoginService.EVENT_ENTITLEMENTS_CHANGED;
+        // kernal exports - add to existing KernalModeTrust.loginService from login-service.js
+        LoginService.isLoggedIn = isLoggedIn;
+        LoginService.signInToAccount = signInToAccount;
+        LoginService.signOutAccount = signOutAccount;
+        LoginService.getProfile = getProfile;
+        LoginService.verifyLoginStatus = () => _verifyLogin(false);
+        LoginService.getAccountBaseURL = getAccountBaseURL;
     }
 
     // public exports
@@ -166700,12 +166689,16 @@ define("services/login-desktop", function (require, exports, module) {
  */
 
 define("services/login-service", function (require, exports, module) {
+    require("./setup-login-service"); // this adds loginService to KernalModeTrust
+    require("./promotions");
 
     const KernalModeTrust = window.KernalModeTrust;
     if(!KernalModeTrust){
         // integrated extensions will have access to kernal mode, but not external extensions
         throw new Error("Login service should have access to KernalModeTrust. Cannot boot without trust ring");
     }
+
+    const LoginService = KernalModeTrust.loginService;
 
     // Event constants
     const EVENT_ENTITLEMENTS_CHANGED = "entitlements_changed";
@@ -166719,7 +166712,7 @@ define("services/login-service", function (require, exports, module) {
      */
     async function getEntitlements(forceRefresh = false) {
         // Return null if not logged in
-        if (!KernalModeTrust.loginService.isLoggedIn()) {
+        if (!LoginService.isLoggedIn()) {
             return null;
         }
 
@@ -166729,7 +166722,7 @@ define("services/login-service", function (require, exports, module) {
         }
 
         try {
-            const accountBaseURL = KernalModeTrust.loginService.getAccountBaseURL();
+            const accountBaseURL = LoginService.getAccountBaseURL();
             const language = Phoenix.app && Phoenix.app.language ? Phoenix.app.language : 'en';
             let url = `${accountBaseURL}/getAppEntitlements?lang=${language}`;
             let fetchOptions = {
@@ -166742,7 +166735,7 @@ define("services/login-service", function (require, exports, module) {
             // Handle different authentication methods for browser vs desktop
             if (Phoenix.isNativeApp) {
                 // Desktop app: use appSessionID and validationCode
-                const profile = KernalModeTrust.loginService.getProfile();
+                const profile = LoginService.getProfile();
                 if (profile && profile.apiKey && profile.validationCode) {
                     url += `&appSessionID=${encodeURIComponent(profile.apiKey)}&validationCode=${encodeURIComponent(profile.validationCode)}`;
                 } else {
@@ -166766,7 +166759,7 @@ define("services/login-service", function (require, exports, module) {
 
                     // Trigger event if entitlements changed
                     if (entitlementsChanged) {
-                        KernalModeTrust.loginService.trigger(EVENT_ENTITLEMENTS_CHANGED, result);
+                        LoginService.trigger(EVENT_ENTITLEMENTS_CHANGED, result);
                     }
 
                     return cachedEntitlements;
@@ -166788,16 +166781,126 @@ define("services/login-service", function (require, exports, module) {
             cachedEntitlements = null;
 
             // Trigger event when entitlements are cleared
-            if (KernalModeTrust.loginService.trigger) {
-                KernalModeTrust.loginService.trigger(EVENT_ENTITLEMENTS_CHANGED, null);
+            if (LoginService.trigger) {
+                LoginService.trigger(EVENT_ENTITLEMENTS_CHANGED, null);
             }
         }
     }
 
-    // Exports
-    exports.EVENT_ENTITLEMENTS_CHANGED = EVENT_ENTITLEMENTS_CHANGED;
-    exports.getEntitlements = getEntitlements;
-    exports.clearEntitlements = clearEntitlements;
+    // Add functions to secure exports
+    LoginService.getEntitlements = getEntitlements;
+    LoginService.clearEntitlements = clearEntitlements;
+    LoginService.EVENT_ENTITLEMENTS_CHANGED = EVENT_ENTITLEMENTS_CHANGED;
+});
+
+/*
+ * GNU AGPL-3.0 License
+ *
+ * Copyright (c) 2021 - present core.ai . All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
+ *
+ */
+
+/*global logger*/
+
+/**
+ * Phoenix pro pre and post promo dialogs
+ * shows dialog where we give Phoenix pro to all users on app install
+ * and dialogs on pro trial ends.
+ *
+ */
+
+define("services/pro-dialogs", function (require, exports, module) {
+    const proTitle = `<span class="phoenix-pro-title">
+                    <span class="pro-plan-name">Phoenix Pro</span>
+                    <i class="fa-solid fa-feather orange-gold" style="margin-left: 3px;"></i>
+                </span>`;
+    require("./setup-login-service"); // this adds loginService to KernalModeTrust
+    const Dialogs = require("widgets/Dialogs"),
+        Mustache = require("thirdparty/mustache/mustache"),
+        Strings = require("strings"),
+        StringUtils = require("utils/StringUtils"),
+        proUpgradeHTML = `<div class="browser-login-waiting-dialog modal">
+    <div class="modal-header">
+        <h1 class="dialog-title">{{{title}}}</h1>
+    </div>
+
+    <div class="modal-body" style="max-height: 550px;">
+        <div class="waiting-content-container">
+            <p style="margin-bottom: 20px; font-size: 14px;">
+                {{message}}
+            </p>
+
+            <div class="features-grid">
+                <!-- Card 1 -->
+                <div class="feature-card">
+                    <img src="https://docs-images.phcode.dev/phcode-sdk/quick-view-image.png" alt="{{Strings.PROMO_CARD_1}}" class="feature-thumb">
+                    <div class="feature-body">
+                        <h2>{{Strings.PROMO_CARD_1}}</h2>
+                        <p>{{Strings.PROMO_CARD_1_MESSAGE}}</p>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="feature-card">
+                    <img src="https://docs-images.phcode.dev/phcode-sdk/quick-view-image.png" alt="{{Strings.PROMO_CARD_2}}" class="feature-thumb">
+                    <div class="feature-body">
+                        <h2>{{Strings.PROMO_CARD_2}}</h2>
+                        <p>{{Strings.PROMO_CARD_2_MESSAGE}}</p>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="feature-card">
+                    <img src="https://docs-images.phcode.dev/phcode-sdk/quick-view-image.png" alt="{{Strings.PROMO_CARD_3}}" class="feature-thumb">
+                    <div class="feature-body">
+                        <h2>{{Strings.PROMO_CARD_3}}</h2>
+                        <p>{{Strings.PROMO_CARD_3_MESSAGE}}</p>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="feature-card">
+                    <img src="https://docs-images.phcode.dev/phcode-sdk/quick-view-image.png" alt="{{Strings.PROMO_CARD_4}}" class="feature-thumb">
+                    <div class="feature-body">
+                        <h2>{{Strings.PROMO_CARD_4}}</h2>
+                        <p>{{Strings.PROMO_CARD_4_MESSAGE}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="dialog-button btn" data-button-id="learn_more">{{Strings.PROMO_LEARN_MORE}}</button>
+        <button class="dialog-button btn primary" data-button-id="ok">{{Strings.OK}}</button>
+    </div>
+</div>
+`;
+
+    function showProUpgradeDialog(trialDays) {
+        const title = StringUtils.format(Strings.PROMO_UPGRADE_TITLE, proTitle);
+        const message = StringUtils.format(Strings.PROMO_UPGRADE_MESSAGE, trialDays);
+        const $template = $(Mustache.render(proUpgradeHTML, {title, message, Strings}));
+        Dialogs.showModalDialogUsingTemplate($template).done(function (id) {
+            console.log("Dialog closed with id: " + id);
+            if(id === 'learn_more') {
+                Phoenix.app.openURLInDefaultBrowser(brackets.config.homepage_url);
+            }
+        });
+    }
+
+    exports.showProUpgradeDialog = showProUpgradeDialog;
 });
 
 define("services/profile-menu", function (require, exports, module) {
@@ -167054,19 +167157,18 @@ define("services/profile-menu", function (require, exports, module) {
     function _updateBranding(entitlements) {
         const $brandingLink = $("#phcode-io-main-nav");
         if (!entitlements) {
+            // Phoenix.pro is only for display purposes and should not be used to gate features.
+            // Use kernal mode apis for trusted check of pro features.
             Phoenix.pro.plan = {
                 paidSubscriber: false,
-                name: "Community Edition",
-                isInTrial: false
+                name: "Community Edition"
             };
-            return;
         }
 
         if (entitlements && entitlements.plan){
             Phoenix.pro.plan = {
                 paidSubscriber: entitlements.plan.paidSubscriber,
                 name: entitlements.plan.name,
-                isInTrial: entitlements.plan.isInTrial,
                 validTill: entitlements.plan.validTill
             };
         }
@@ -167404,7 +167506,7 @@ define("services/profile-menu", function (require, exports, module) {
         _removeProfileIcon();
 
         // Clear cached entitlements when user logs out
-        LoginService.clearEntitlements();
+        KernalModeTrust.loginService.clearEntitlements();
 
         // Reset branding to free mode
         _updateBranding(null);
@@ -167428,6 +167530,335 @@ define("services/profile-menu", function (require, exports, module) {
     exports.init = init;
     exports.setNotLoggedIn = setNotLoggedIn;
     exports.setLoggedIn = setLoggedIn;
+
+    // dont public exports things that extensions can use to get/put credentials and entitlements, display mods is fine
+});
+
+/*
+ * GNU AGPL-3.0 License
+ *
+ * Copyright (c) 2021 - present core.ai . All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
+ *
+ */
+
+/*global logger*/
+
+/**
+ * Promotions Service
+ *
+ * Manages pro trial promotions for both native and browser applications.
+ * Provides loginless pro trials
+ *
+ * - First install: 30-day trial on first usage
+ * - Subsequent versions: 3-day trial (or remaining from 30-day if still valid)
+ * - Older versions: No new trial, but existing 30-day trial remains valid
+ */
+
+define("services/promotions", function (require, exports, module) {
+
+    require("./setup-login-service"); // this adds loginService to KernalModeTrust
+    const Metrics = require("utils/Metrics"),
+        semver = require("thirdparty/semver.browser"),
+        ProDialogs = require("./pro-dialogs");
+
+    const KernalModeTrust = window.KernalModeTrust;
+    if (!KernalModeTrust) {
+        throw new Error("Promotions service requires access to KernalModeTrust. Cannot boot without trust ring");
+    }
+
+    const LoginService = KernalModeTrust.loginService;
+
+    // Constants
+    const EVENT_PRO_UPGRADE_ON_INSTALL = "pro_upgrade_on_install";
+    const TRIAL_POLL_MS = 10 * 1000; // 10 seconds after start, we assign a free trial if possible
+    const FIRST_INSTALL_TRIAL_DAYS = 30;
+    const SUBSEQUENT_TRIAL_DAYS = 3;
+    const MS_PER_DAY = 24 * 60 * 60 * 1000;
+
+    /**
+     * Generate SHA-256 signature for trial data integrity
+     */
+    async function _generateSignature(proVersion, endDate) {
+        const salt = window.AppConfig ? window.AppConfig.version : "default-salt";
+        const data = proVersion + "|" + endDate + "|" + salt;
+
+        // Use browser crypto API for SHA-256 hashing
+        const encoder = new TextEncoder();
+        const dataBuffer = encoder.encode(data);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', dataBuffer);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        return hashArray.map(b => b.toString(16).padStart(2, '0')).join(''); // hash hex string
+    }
+
+    /**
+     * Validate trial data signature
+     */
+    async function _isValidSignature(trialData) {
+        if (!trialData.signature || !trialData.proVersion || !trialData.endDate) {
+            return false;
+        }
+
+        const expectedSignature = await _generateSignature(trialData.proVersion, trialData.endDate);
+        return trialData.signature === expectedSignature;
+    }
+
+    /**
+     * Get stored trial data with validation
+     */
+    async function _getTrialData() {
+        try {
+            if (Phoenix.isNativeApp) {
+                // Native app: use KernalModeTrust credential store
+                const data = await KernalModeTrust.getCredential(KernalModeTrust.CRED_KEY_ENTITLEMENTS);
+                if (!data) {
+                    return null;
+                }
+                const parsed = JSON.parse(data);
+                return (await _isValidSignature(parsed)) ? parsed : null;
+            } else {
+                // Browser app: use virtual filesystem
+                return new Promise((resolve) => {
+                    // app support dir in browser is /fs/app/
+                    const filePath = Phoenix.app.getApplicationSupportDirectory() + "entitlements_granted.json";
+                    window.fs.readFile(filePath, 'utf8', function (err, data) {
+                        if (err || !data) {
+                            resolve(null);
+                            return;
+                        }
+                        try {
+                            const parsed = JSON.parse(data);
+                            _isValidSignature(parsed).then(isValid => {
+                                resolve(isValid ? parsed : null);
+                            }).catch(() => resolve(null));
+                        } catch (e) {
+                            resolve(null);
+                        }
+                    });
+                });
+            }
+        } catch (error) {
+            console.error("Error getting trial data:", error);
+            return null;
+        }
+    }
+
+    /**
+     * Store trial data with signature
+     */
+    async function _setTrialData(trialData) {
+        trialData.signature = await _generateSignature(trialData.proVersion, trialData.endDate);
+
+        try {
+            if (Phoenix.isNativeApp) {
+                // Native app: use KernalModeTrust credential store
+                await KernalModeTrust.setCredential(KernalModeTrust.CRED_KEY_ENTITLEMENTS, JSON.stringify(trialData));
+            } else {
+                // Browser app: use virtual filesystem
+                return new Promise((resolve, reject) => {
+                    const filePath = Phoenix.app.getApplicationSupportDirectory() + "entitlements_granted.json";
+                    window.fs.writeFile(filePath, JSON.stringify(trialData), 'utf8', (writeErr) => {
+                        if (writeErr) {
+                            console.error("Error storing trial data:", writeErr);
+                            reject(writeErr);
+                        } else {
+                            resolve();
+                        }
+                    });
+                });
+            }
+        } catch (error) {
+            console.error("Error setting trial data:", error);
+            throw error;
+        }
+    }
+
+    /**
+     * Calculate remaining trial days from end date
+     */
+    function _calculateRemainingTrialDays(existingTrialData) {
+        const now = Date.now();
+        const trialEndDate = existingTrialData.endDate;
+
+        // Calculate days remaining until trial ends
+        const msRemaining = trialEndDate - now;
+        return Math.max(0, Math.ceil(msRemaining / MS_PER_DAY)); // days remaining
+    }
+
+    /**
+     * Check if version1 is newer than version2 using semver
+     */
+    function _isNewerVersion(version1, version2) {
+        try {
+            return semver.gt(version1, version2);
+        } catch (error) {
+            console.error("Error comparing versions:", error, version1, version2);
+            // Assume not newer if comparison fails
+            return false;
+        }
+    }
+
+    /**
+     * Check if pro trial is currently activated
+     */
+    async function isProTrialActivated() {
+        const trialData = await _getTrialData();
+        if (!trialData) {
+            return false;
+        }
+
+        const remainingDays = _calculateRemainingTrialDays(trialData);
+
+        return remainingDays > 0;
+    }
+
+    async function activateProTrial() {
+        const currentVersion = window.AppConfig ? window.AppConfig.apiVersion : "1.0.0";
+        const existingTrialData = await _getTrialData();
+
+        let trialDays = FIRST_INSTALL_TRIAL_DAYS;
+        let endDate;
+        const now = Date.now();
+        let metricString = `${currentVersion.replaceAll(".", "_")}`; // 3.1.0 -> 3_1_0
+
+        if (existingTrialData) {
+            // Existing trial found
+            const remainingDays = _calculateRemainingTrialDays(existingTrialData);
+            const trialVersion = existingTrialData.proVersion;
+            const isNewerVersion = _isNewerVersion(currentVersion, trialVersion);
+
+            // Check if we should grant any trial
+            if (remainingDays <= 0 && !isNewerVersion) {
+                console.log("Existing trial expired, same/older version - no new trial");
+                return;
+            }
+
+            // Determine trial days and end date
+            if (isNewerVersion) {
+                if (remainingDays >= SUBSEQUENT_TRIAL_DAYS) {
+                    // Newer version but existing trial is longer - keep existing
+                    console.log(`Newer version, keeping existing trial (${remainingDays} days)`);
+                    trialDays = remainingDays;
+                    endDate = existingTrialData.endDate;
+                    metricString = `nD_${metricString}_upgrade`;
+                } else {
+                    // Newer version with shorter existing trial - give 3 days
+                    console.log(`Newer version - granting ${SUBSEQUENT_TRIAL_DAYS} days trial`);
+                    trialDays = SUBSEQUENT_TRIAL_DAYS;
+                    endDate = now + (trialDays * MS_PER_DAY);
+                    metricString = `3D_${metricString}`;
+                }
+            } else {
+                // Same/older version: keep existing trial - no changes needed
+                console.log(`Same/older version - keeping existing ${remainingDays} day trial.`);
+                return;
+            }
+        } else {
+            // First install - 30 days from now
+            endDate = now + (FIRST_INSTALL_TRIAL_DAYS * MS_PER_DAY);
+            metricString = `1Mo_${metricString}`;
+        }
+
+        const trialData = {
+            proVersion: currentVersion,
+            endDate: endDate
+        };
+
+        await _setTrialData(trialData);
+        Metrics.countEvent(Metrics.EVENT_TYPE.PRO, "trialAct", metricString);
+        Metrics.countEvent(Metrics.EVENT_TYPE.PRO, "trial", "activated");
+        console.log(`Pro trial activated for ${trialDays} days`);
+
+        ProDialogs.showProUpgradeDialog(trialDays);
+        // Trigger the event for UI to handle
+        LoginService.trigger(EVENT_PRO_UPGRADE_ON_INSTALL, {
+            trialDays: trialDays,
+            isFirstInstall: !existingTrialData
+        });
+    }
+
+    function _isAnyDialogsVisible() {
+        const $modal = $(`.modal.instance`);
+        return $modal.length > 0 && $modal.is(':visible');
+    }
+
+    /**
+     * Start the pro trial activation process
+     * Waits 2 minutes, then triggers the upgrade event
+     */
+    console.log(`Checking pro trial activation in ${TRIAL_POLL_MS / 1000} seconds...`);
+
+    const trialActivatePoller = setInterval(()=> {
+        if(_isAnyDialogsVisible()){
+            // maybe the user hasn't dismissed the new project dialog
+            return;
+        }
+        clearInterval(trialActivatePoller);
+        activateProTrial().catch(error => {
+            Metrics.countEvent(Metrics.EVENT_TYPE.PRO, "trial", `errActivate`);
+            logger.reportError(error, "Error activating pro trial:");
+        });
+    }, TRIAL_POLL_MS);
+
+    // Add to secure exports
+    LoginService.isProTrialActivated = isProTrialActivated;
+    LoginService.EVENT_PRO_UPGRADE_ON_INSTALL = EVENT_PRO_UPGRADE_ON_INSTALL;
+
+    // no public exports to prevent extension tampering
+});
+
+/*
+ * GNU AGPL-3.0 License
+ *
+ * Copyright (c) 2021 - present core.ai . All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
+ *
+ */
+
+/**
+ * Shared Login Service kernal mode trust setup
+ *
+ * This module contains shared login service functionality used by both
+ * browser and desktop login implementations, including entitlements management.
+ */
+
+define("services/setup-login-service", function (require, exports, module) {
+    const EventDispatcher = require("utils/EventDispatcher");
+
+    const KernalModeTrust = window.KernalModeTrust;
+    if(!KernalModeTrust){
+        // integrated extensions will have access to kernal mode, but not external extensions
+        throw new Error("Login service should have access to KernalModeTrust. Cannot boot without trust ring");
+    }
+
+    // Create secure exports and set up KernalModeTrust.loginService
+    const secureExports = {};
+    EventDispatcher.makeEventDispatcher(secureExports);
+
+    // Set up loginService for both native and browser apps
+    KernalModeTrust.loginService = secureExports;
+
+    // no public exports to prevent extension tampering
 });
 
 /*
@@ -172288,7 +172719,8 @@ define("utils/Metrics", function (require, exports, module) {
         NODEJS: "node",
         LINT: "lint",
         GIT: "git",
-        AUTH: "auth"
+        AUTH: "auth",
+        PRO: "pro"
     };
 
     /**
