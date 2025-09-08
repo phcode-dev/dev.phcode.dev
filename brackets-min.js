@@ -71856,7 +71856,10 @@ define("nls/ar/strings", {
   "PROMO_CARD_3_MESSAGE": "كرر العناصر واحذفها بنقرة واحدة.",
   "PROMO_CARD_4": "تحرير النص في المعاينة",
   "PROMO_CARD_4_MESSAGE": "حرر العناوين والأزرار وانقلها مباشرةً في المعاينة.",
-  "PROMO_LEARN_MORE": "تعرّف على المزيد…"
+  "PROMO_LEARN_MORE": "تعرّف على المزيد…",
+  "PROMO_ENDED_MESSAGE": "اشترك الآن للاستمرار في استخدام هذه الميزات المتقدمة:",
+  "PROMO_GET_APP_UPSELL_BUTTON": "احصل على {0}",
+  "PROMO_PRO_ENDED_TITLE": "انتهت ترقية {0} الخاصة بك"
 });
 /*
  * GNU AGPL-3.0 License
@@ -73329,7 +73332,10 @@ define("nls/bg/strings", {
   "PROMO_CARD_3_MESSAGE": "Дублирайте и изтривайте елементи с едно кликване.",
   "PROMO_CARD_4": "Редактиране на текст в преглед",
   "PROMO_CARD_4_MESSAGE": "Редактирайте заглавия, бутони и копирайте директно в прегледа.",
-  "PROMO_LEARN_MORE": "Научете повече…"
+  "PROMO_LEARN_MORE": "Научете повече…",
+  "PROMO_ENDED_MESSAGE": "Абонирайте се сега, за да продължите да използвате тези разширени функции:",
+  "PROMO_GET_APP_UPSELL_BUTTON": "Вземете {0}",
+  "PROMO_PRO_ENDED_TITLE": "Вашият {0} ъпгрейд е изтекъл"
 });
 /*
  * Copyright (c) 2013 Adobe Systems Incorporated. All rights reserved.
@@ -74831,7 +74837,10 @@ define("nls/cs/strings", {
   "PROMO_CARD_3_MESSAGE": "Duplikujte a mažte prvky jediným kliknutím.",
   "PROMO_CARD_4": "Úprava textu v náhledu",
   "PROMO_CARD_4_MESSAGE": "Upravujte nadpisy, tlačítka a kopírujte přímo v náhledu.",
-  "PROMO_LEARN_MORE": "Další informace…"
+  "PROMO_LEARN_MORE": "Další informace…",
+  "PROMO_ENDED_MESSAGE": "Chcete-li pokračovat v používání těchto pokročilých funkcí, přihlaste se k odběru:",
+  "PROMO_GET_APP_UPSELL_BUTTON": "Získat {0}",
+  "PROMO_PRO_ENDED_TITLE": "Vaše zkušební verze {0} vypršela"
 });
 /*
  * GNU AGPL-3.0 License
@@ -76331,7 +76340,10 @@ define("nls/da/strings", {
   "PROMO_CARD_3_MESSAGE": "Dubler og slet elementer med et enkelt klik.",
   "PROMO_CARD_4": "Redigering af tekst i forhåndsvisning",
   "PROMO_CARD_4_MESSAGE": "Rediger overskrifter, knapper og kopiér direkte i forhåndsvisningen.",
-  "PROMO_LEARN_MORE": "Læs mere…"
+  "PROMO_LEARN_MORE": "Læs mere…",
+  "PROMO_ENDED_MESSAGE": "Abonner nu for at fortsætte med at bruge disse avancerede funktioner:",
+  "PROMO_GET_APP_UPSELL_BUTTON": "Få {0}",
+  "PROMO_PRO_ENDED_TITLE": "Din {0}-opgradering er udløbet"
 });
 /*
  * GNU AGPL-3.0 License
@@ -77829,7 +77841,10 @@ define("nls/de/strings", {
   "PROMO_CARD_3_MESSAGE": "Duplizieren und löschen Sie Elemente mit einem einzigen Klick.",
   "PROMO_CARD_4": "Text in der Vorschau bearbeiten",
   "PROMO_CARD_4_MESSAGE": "Bearbeiten Sie Überschriften, Schaltflächen und kopieren Sie direkt in der Vorschau.",
-  "PROMO_LEARN_MORE": "Mehr erfahren…"
+  "PROMO_LEARN_MORE": "Mehr erfahren…",
+  "PROMO_ENDED_MESSAGE": "Jetzt abonnieren, um diese erweiterten Funktionen weiterhin zu nutzen:",
+  "PROMO_GET_APP_UPSELL_BUTTON": "{0} herunterladen",
+  "PROMO_PRO_ENDED_TITLE": "Ihr {0}-Upgrade ist abgelaufen"
 });
 /*
  * GNU AGPL-3.0 License
@@ -79329,7 +79344,10 @@ define("nls/el/strings", {
   "PROMO_CARD_3_MESSAGE": "Διπλασιάστε και διαγράψτε στοιχεία με ένα μόνο κλικ.",
   "PROMO_CARD_4": "Επεξεργασία Κειμένου στην Προεπισκόπηση",
   "PROMO_CARD_4_MESSAGE": "Επεξεργαστείτε επικεφαλίδες, κουμπιά και αντιγράψτε απευθείας στην προεπισκόπηση.",
-  "PROMO_LEARN_MORE": "Μάθετε περισσότερα…"
+  "PROMO_LEARN_MORE": "Μάθετε περισσότερα…",
+  "PROMO_ENDED_MESSAGE": "Εγγραφείτε τώρα για να συνεχίσετε να χρησιμοποιείτε αυτές τις προηγμένες λειτουργίες:",
+  "PROMO_GET_APP_UPSELL_BUTTON": "Αποκτήστε {0}",
+  "PROMO_PRO_ENDED_TITLE": "Η αναβάθμιση {0} σας έχει λήξει"
 });
 /*
  * GNU AGPL-3.0 License
@@ -80829,7 +80847,10 @@ define("nls/en-gb/strings", {
   "PROMO_CARD_3_MESSAGE": "Duplicate and delete elements with a single click.",
   "PROMO_CARD_4": "Editing text in preview",
   "PROMO_CARD_4_MESSAGE": "Edit headings, buttons, and copy directly in the preview.",
-  "PROMO_LEARN_MORE": "Learn more…"
+  "PROMO_LEARN_MORE": "Learn more…",
+  "PROMO_ENDED_MESSAGE": "Subscribe now to continue using these advanced features:",
+  "PROMO_GET_APP_UPSELL_BUTTON": "Get {0}",
+  "PROMO_PRO_ENDED_TITLE": "Your {0} upgrade has expired"
 });
 /*
  * GNU AGPL-3.0 License
@@ -82302,7 +82323,10 @@ define("nls/es/strings", {
   "PROMO_CARD_3_MESSAGE": "Duplica y elimina elementos con un solo clic.",
   "PROMO_CARD_4": "Editar texto en la vista previa",
   "PROMO_CARD_4_MESSAGE": "Edita encabezados, botones y copia directamente en la vista previa.",
-  "PROMO_LEARN_MORE": "Más información…"
+  "PROMO_LEARN_MORE": "Más información…",
+  "PROMO_ENDED_MESSAGE": "Suscríbete ahora para seguir usando estas funciones avanzadas:",
+  "PROMO_GET_APP_UPSELL_BUTTON": "Obtener {0}",
+  "PROMO_PRO_ENDED_TITLE": "Tu actualización a {0} ha finalizado"
 });
 /*
  * GNU AGPL-3.0 License
@@ -83803,7 +83827,10 @@ define("nls/fa-ir/strings", {
   "PROMO_CARD_3_MESSAGE": "عناصر را با یک کلیک تکثیر و حذف کنید.",
   "PROMO_CARD_4": "ویرایش متن در پیش‌نمایش",
   "PROMO_CARD_4_MESSAGE": "سرفصل‌ها، دکمه‌ها و متن را مستقیماً در پیش‌نمایش ویرایش کنید.",
-  "PROMO_LEARN_MORE": "اطلاعات بیشتر…"
+  "PROMO_LEARN_MORE": "اطلاعات بیشتر…",
+  "PROMO_ENDED_MESSAGE": "برای ادامه استفاده از این قابلیت‌های پیشرفته، همین حالا مشترک شوید:",
+  "PROMO_GET_APP_UPSELL_BUTTON": "دریافت {0}",
+  "PROMO_PRO_ENDED_TITLE": "ارتقای {0} شما به پایان رسیده است"
 });
 /*
  * GNU AGPL-3.0 License
@@ -85303,7 +85330,10 @@ define("nls/fi/strings", {
   "PROMO_CARD_3_MESSAGE": "Kopioi ja poista elementtejä yhdellä napsautuksella.",
   "PROMO_CARD_4": "Tekstin muokkaaminen esikatselussa",
   "PROMO_CARD_4_MESSAGE": "Muokkaa otsikoita, painikkeita ja kopioi suoraan esikatselussa.",
-  "PROMO_LEARN_MORE": "Lisätietoja…"
+  "PROMO_LEARN_MORE": "Lisätietoja…",
+  "PROMO_ENDED_MESSAGE": "Tilaa nyt jatkaaksesi näiden lisäominaisuuksien käyttöä:",
+  "PROMO_GET_APP_UPSELL_BUTTON": "Hanki {0}",
+  "PROMO_PRO_ENDED_TITLE": "{0}-päivityksesi on päättynyt"
 });
 /*
  * GNU AGPL-3.0 License
@@ -86803,7 +86833,10 @@ define("nls/fr/strings", {
   "PROMO_CARD_3_MESSAGE": "Dupliquez et supprimez des éléments en un seul clic.",
   "PROMO_CARD_4": "Modification du texte dans l'aperçu",
   "PROMO_CARD_4_MESSAGE": "Modifiez les titres, les boutons et copiez directement dans l'aperçu.",
-  "PROMO_LEARN_MORE": "En savoir plus…"
+  "PROMO_LEARN_MORE": "En savoir plus…",
+  "PROMO_ENDED_MESSAGE": "Abonnez-vous maintenant pour continuer à utiliser ces fonctionnalités avancées :",
+  "PROMO_GET_APP_UPSELL_BUTTON": "Obtenir {0}",
+  "PROMO_PRO_ENDED_TITLE": "Votre mise à niveau {0} a expiré"
 });
 /*
  * GNU AGPL-3.0 License
@@ -88303,7 +88336,10 @@ define("nls/gl/strings", {
   "PROMO_CARD_3_MESSAGE": "Duplica e elimina elementos cun só clic.",
   "PROMO_CARD_4": "Edición de texto na previsualización",
   "PROMO_CARD_4_MESSAGE": "Edita títulos, botóns e copia directamente na previsualización.",
-  "PROMO_LEARN_MORE": "Máis información…"
+  "PROMO_LEARN_MORE": "Máis información…",
+  "PROMO_ENDED_MESSAGE": "Subscríbete agora para continuar a usar estas funcionalidades avanzadas:",
+  "PROMO_GET_APP_UPSELL_BUTTON": "Obtén {0}",
+  "PROMO_PRO_ENDED_TITLE": "A túa actualización a {0} rematou"
 });
 /*
  * GNU AGPL-3.0 License
@@ -89776,7 +89812,10 @@ define("nls/hi/strings", {
   "PROMO_CARD_3_MESSAGE": "एक ही क्लिक से एलिमेंट्स को डुप्लिकेट और डिलीट करें।",
   "PROMO_CARD_4": "प्रीव्यू में टेक्स्ट एडिटिंग",
   "PROMO_CARD_4_MESSAGE": "हेडिंग, बटन एडिट करें, और सीधे प्रीव्यू में कॉपी करें।",
-  "PROMO_LEARN_MORE": "और जानें…"
+  "PROMO_LEARN_MORE": "और जानें…",
+  "PROMO_ENDED_MESSAGE": "इन उन्नत सुविधाओं का उपयोग जारी रखने के लिए अभी सदस्यता लें:",
+  "PROMO_GET_APP_UPSELL_BUTTON": "{0} प्राप्त करें",
+  "PROMO_PRO_ENDED_TITLE": "आपका {0} अपग्रेड समाप्त हो गया है"
 });
 /*
  * GNU AGPL-3.0 License
@@ -91249,7 +91288,10 @@ define("nls/hr/strings", {
   "PROMO_CARD_3_MESSAGE": "Duplicirajte i brišite elemente jednim klikom.",
   "PROMO_CARD_4": "Uređivanje teksta u pregledu",
   "PROMO_CARD_4_MESSAGE": "Uredite naslove, gumbe i kopirajte izravno u pregledu.",
-  "PROMO_LEARN_MORE": "Saznajte više…"
+  "PROMO_LEARN_MORE": "Saznajte više…",
+  "PROMO_ENDED_MESSAGE": "Pretplatite se sada kako biste nastavili koristiti ove napredne značajke:",
+  "PROMO_GET_APP_UPSELL_BUTTON": "Nabavite {0}",
+  "PROMO_PRO_ENDED_TITLE": "Vaša nadogradnja na {0} je istekla"
 });
 /*
  * GNU AGPL-3.0 License
@@ -92749,7 +92791,10 @@ define("nls/hu/strings", {
   "PROMO_CARD_3_MESSAGE": "Duplikálja és törölje az elemeket egyetlen kattintással.",
   "PROMO_CARD_4": "Szöveg szerkesztése az előnézetben",
   "PROMO_CARD_4_MESSAGE": "Szerkesszen címsorokat, gombokat és másoljon közvetlenül az előnézetben.",
-  "PROMO_LEARN_MORE": "Tudj meg többet…"
+  "PROMO_LEARN_MORE": "Tudj meg többet…",
+  "PROMO_ENDED_MESSAGE": "Iratkozzon fel most a következő prémium funkciók további használatához:",
+  "PROMO_GET_APP_UPSELL_BUTTON": "Szerezd meg a(z) {0}-t/et",
+  "PROMO_PRO_ENDED_TITLE": "Lejárt a(z) {0} előfizetésed"
 });
 /*
  * GNU AGPL-3.0 License
@@ -94222,7 +94267,10 @@ define("nls/id/strings", {
   "PROMO_CARD_3_MESSAGE": "Gandakan dan hapus elemen dengan sekali klik.",
   "PROMO_CARD_4": "Mengedit Teks Dalam Pratinjau",
   "PROMO_CARD_4_MESSAGE": "Edit judul, tombol, dan salin langsung di pratinjau.",
-  "PROMO_LEARN_MORE": "Pelajari Lebih Lanjut…"
+  "PROMO_LEARN_MORE": "Pelajari Lebih Lanjut…",
+  "PROMO_ENDED_MESSAGE": "Berlangganan sekarang untuk melanjutkan penggunaan fitur-fitur canggih ini:",
+  "PROMO_GET_APP_UPSELL_BUTTON": "Dapatkan {0}",
+  "PROMO_PRO_ENDED_TITLE": "Upgrade {0} Anda telah berakhir"
 });
 /*
  * GNU AGPL-3.0 License
@@ -95721,7 +95769,10 @@ define("nls/it/strings", {
   "PROMO_CARD_3_MESSAGE": "Duplica ed elimina elementi con un singolo clic.",
   "PROMO_CARD_4": "Modifica del testo in anteprima",
   "PROMO_CARD_4_MESSAGE": "Modifica titoli, pulsanti e copia direttamente nell'anteprima.",
-  "PROMO_LEARN_MORE": "Scopri di più…"
+  "PROMO_LEARN_MORE": "Scopri di più…",
+  "PROMO_ENDED_MESSAGE": "Iscriviti ora per continuare a utilizzare queste funzionalità avanzate:",
+  "PROMO_GET_APP_UPSELL_BUTTON": "Ottieni {0}",
+  "PROMO_PRO_ENDED_TITLE": "Il tuo aggiornamento a {0} è terminato"
 });
 /*
  * GNU AGPL-3.0 License
@@ -97221,7 +97272,10 @@ define("nls/ja/strings", {
   "PROMO_CARD_3_MESSAGE": "ワンクリックで要素を複製および削除します。",
   "PROMO_CARD_4": "プレビューでのテキスト編集",
   "PROMO_CARD_4_MESSAGE": "見出し、ボタン、コピーをプレビューで直接編集します。",
-  "PROMO_LEARN_MORE": "詳細はこちら…"
+  "PROMO_LEARN_MORE": "詳細はこちら…",
+  "PROMO_ENDED_MESSAGE": "これらの高度な機能を引き続き使用するには、今すぐ登録してください。",
+  "PROMO_GET_APP_UPSELL_BUTTON": "{0} を入手",
+  "PROMO_PRO_ENDED_TITLE": "{0} のアップグレード期間が終了しました"
 });
 /*
  * GNU AGPL-3.0 License
@@ -98721,7 +98775,10 @@ define("nls/ko/strings", {
   "PROMO_CARD_3_MESSAGE": "클릭 한 번으로 요소를 복제하고 삭제할 수 있습니다.",
   "PROMO_CARD_4": "미리보기에서 텍스트 편집",
   "PROMO_CARD_4_MESSAGE": "미리보기에서 바로 제목, 버튼 및 복사를 편집할 수 있습니다.",
-  "PROMO_LEARN_MORE": "자세히 알아보기…"
+  "PROMO_LEARN_MORE": "자세히 알아보기…",
+  "PROMO_ENDED_MESSAGE": "고급 기능을 계속 사용하려면 지금 구독하세요.",
+  "PROMO_GET_APP_UPSELL_BUTTON": "{0} 받기",
+  "PROMO_PRO_ENDED_TITLE": "{0} 업그레이드가 만료되었습니다."
 });
 /*
  * GNU AGPL-3.0 License
@@ -100221,7 +100278,10 @@ define("nls/lv/strings", {
   "PROMO_CARD_3_MESSAGE": "Dublējiet un dzēsiet elementus ar vienu klikšķi.",
   "PROMO_CARD_4": "Teksta rediģēšana priekšskatījumā",
   "PROMO_CARD_4_MESSAGE": "Rediģējiet virsrakstus, pogas un kopējiet tieši priekšskatījumā.",
-  "PROMO_LEARN_MORE": "Uzzināt vairāk…"
+  "PROMO_LEARN_MORE": "Uzzināt vairāk…",
+  "PROMO_ENDED_MESSAGE": "Abonējiet tagad, lai turpinātu izmantot šīs papildu funkcijas:",
+  "PROMO_GET_APP_UPSELL_BUTTON": "Iegūt {0}",
+  "PROMO_PRO_ENDED_TITLE": "Jūsu {0} jauninājums ir beidzies"
 });
 /*
  * GNU AGPL-3.0 License
@@ -101694,7 +101754,10 @@ define("nls/ml/strings", {
   "PROMO_CARD_3_MESSAGE": "ഒറ്റ ക്ലിക്കിലൂടെ ഘടകങ്ങൾ ഡ്യൂപ്ലിക്കേറ്റ് ചെയ്യുകയും ഇല്ലാതാക്കുകയും ചെയ്യുക.",
   "PROMO_CARD_4": "പ്രിവ്യൂവിൽ വാചകം എഡിറ്റ് ചെയ്യുന്നു",
   "PROMO_CARD_4_MESSAGE": "തലക്കെട്ടുകൾ, ബട്ടണുകൾ എന്നിവ എഡിറ്റ് ചെയ്യുക, പ്രിവ്യൂവിൽ നേരിട്ട് പകർത്തുക.",
-  "PROMO_LEARN_MORE": "കൂടുതലറിയാൻ…"
+  "PROMO_LEARN_MORE": "കൂടുതലറിയാൻ…",
+  "PROMO_ENDED_MESSAGE": "ഈ വിപുലമായ സവിശേഷതകൾ തുടർന്നും ഉപയോഗിക്കുന്നതിന് ഇപ്പോൾ സബ്‌സ്‌ക്രൈബുചെയ്യുക:",
+  "PROMO_GET_APP_UPSELL_BUTTON": "{0} നേടുക",
+  "PROMO_PRO_ENDED_TITLE": "നിങ്ങളുടെ {0} അപ്‌ഗ്രേഡ് അവസാനിച്ചു"
 });
 /*
  * GNU AGPL-3.0 License
@@ -103167,7 +103230,10 @@ define("nls/nb/strings", {
   "PROMO_CARD_3_MESSAGE": "Dupliser og slett elementer med ett enkelt klikk.",
   "PROMO_CARD_4": "Redigering av tekst i forhåndsvisning",
   "PROMO_CARD_4_MESSAGE": "Rediger overskrifter, knapper og kopier direkte i forhåndsvisningen.",
-  "PROMO_LEARN_MORE": "Lær mer…"
+  "PROMO_LEARN_MORE": "Lær mer…",
+  "PROMO_ENDED_MESSAGE": "Abonner nå for å fortsette å bruke disse avanserte funksjonene:",
+  "PROMO_GET_APP_UPSELL_BUTTON": "Skaff deg {0}",
+  "PROMO_PRO_ENDED_TITLE": "{0}-oppgraderingen din er utløpt"
 });
 /*
  * GNU AGPL-3.0 License
@@ -104667,7 +104733,10 @@ define("nls/nl/strings", {
   "PROMO_CARD_3_MESSAGE": "Dupliceer en verwijder elementen met één klik.",
   "PROMO_CARD_4": "Tekst bewerken in voorbeeldweergave",
   "PROMO_CARD_4_MESSAGE": "Bewerk koppen, knoppen en kopieer direct in de voorbeeldweergave.",
-  "PROMO_LEARN_MORE": "Meer informatie…"
+  "PROMO_LEARN_MORE": "Meer informatie…",
+  "PROMO_ENDED_MESSAGE": "Abonneer nu om deze geavanceerde functies te blijven gebruiken:",
+  "PROMO_GET_APP_UPSELL_BUTTON": "Download {0}",
+  "PROMO_PRO_ENDED_TITLE": "Je {0}-upgrade is verlopen"
 });
 /*
  * GNU AGPL-3.0 License
@@ -106167,7 +106236,10 @@ define("nls/pl/strings", {
   "PROMO_CARD_3_MESSAGE": "Duplikuj i usuwaj elementy jednym kliknięciem.",
   "PROMO_CARD_4": "Edycja tekstu w podglądzie",
   "PROMO_CARD_4_MESSAGE": "Edytuj nagłówki, przyciski i kopiuj bezpośrednio w podglądzie.",
-  "PROMO_LEARN_MORE": "Dowiedz się więcej…"
+  "PROMO_LEARN_MORE": "Dowiedz się więcej…",
+  "PROMO_ENDED_MESSAGE": "Subskrybuj teraz, aby kontynuować korzystanie z tych zaawansowanych funkcji:",
+  "PROMO_GET_APP_UPSELL_BUTTON": "Pobierz {0}",
+  "PROMO_PRO_ENDED_TITLE": "Twój okres próbny wersji {0} dobiegł końca"
 });
 /*
  * GNU AGPL-3.0 License
@@ -107667,7 +107739,10 @@ define("nls/pt-br/strings", {
   "PROMO_CARD_3_MESSAGE": "Duplique e exclua elementos com um único clique.",
   "PROMO_CARD_4": "Editando texto na pré-visualização",
   "PROMO_CARD_4_MESSAGE": "Edite títulos, botões e copie diretamente na pré-visualização.",
-  "PROMO_LEARN_MORE": "Saiba mais…"
+  "PROMO_LEARN_MORE": "Saiba mais…",
+  "PROMO_ENDED_MESSAGE": "Assine agora para continuar usando estes recursos avançados:",
+  "PROMO_GET_APP_UPSELL_BUTTON": "Obtenha o {0}",
+  "PROMO_PRO_ENDED_TITLE": "Sua atualização para {0} expirou"
 });
 /*
  * GNU AGPL-3.0 License
@@ -109165,7 +109240,10 @@ define("nls/pt-pt/strings", {
   "PROMO_CARD_3_MESSAGE": "Duplique e elimine elementos com um único clique.",
   "PROMO_CARD_4": "Editar Texto na Pré-visualização",
   "PROMO_CARD_4_MESSAGE": "Edite títulos, botões e copie diretamente na pré-visualização.",
-  "PROMO_LEARN_MORE": "Saiba mais…"
+  "PROMO_LEARN_MORE": "Saiba mais…",
+  "PROMO_ENDED_MESSAGE": "Assine agora para continuar a utilizar estas funcionalidades avançadas:",
+  "PROMO_GET_APP_UPSELL_BUTTON": "Obtenha {0}",
+  "PROMO_PRO_ENDED_TITLE": "A sua atualização para {0} terminou"
 });
 /*
  * GNU AGPL-3.0 License
@@ -110663,7 +110741,10 @@ define("nls/ro/strings", {
   "PROMO_CARD_3_MESSAGE": "Duplică și șterge elemente cu un singur clic.",
   "PROMO_CARD_4": "Editare text în previzualizare",
   "PROMO_CARD_4_MESSAGE": "Editează titluri, butoane și copiază direct în previzualizare.",
-  "PROMO_LEARN_MORE": "Află mai multe…"
+  "PROMO_LEARN_MORE": "Află mai multe…",
+  "PROMO_ENDED_MESSAGE": "Abonează-te acum pentru a continua să utilizezi aceste funcții avansate:",
+  "PROMO_GET_APP_UPSELL_BUTTON": "Obține {0}",
+  "PROMO_PRO_ENDED_TITLE": "Abonamentul tău {0} a expirat"
 });
 /*
  * GNU AGPL-3.0 License
@@ -113911,7 +113992,10 @@ define("nls/ru/strings", {
   "PROMO_CARD_3_MESSAGE": "Дублируйте и удаляйте элементы одним щелчком мыши.",
   "PROMO_CARD_4": "Редактирование текста в режиме предпросмотра",
   "PROMO_CARD_4_MESSAGE": "Редактируйте заголовки, кнопки и копируйте текст прямо в режиме предпросмотра.",
-  "PROMO_LEARN_MORE": "Узнать больше…"
+  "PROMO_LEARN_MORE": "Узнать больше…",
+  "PROMO_ENDED_MESSAGE": "Подпишитесь сейчас, чтобы продолжить использовать эти расширенные функции:",
+  "PROMO_GET_APP_UPSELL_BUTTON": "Получить {0}",
+  "PROMO_PRO_ENDED_TITLE": "Срок действия вашего обновления до {0} истёк"
 });
 /*
  * GNU AGPL-3.0 License
@@ -115411,7 +115495,10 @@ define("nls/sk/strings", {
   "PROMO_CARD_3_MESSAGE": "Duplikujte a odstráňte prvky jediným kliknutím.",
   "PROMO_CARD_4": "Úprava textu v náhľade",
   "PROMO_CARD_4_MESSAGE": "Upravujte nadpisy, tlačidlá a kopírujte priamo v náhľade.",
-  "PROMO_LEARN_MORE": "Zistiť viac…"
+  "PROMO_LEARN_MORE": "Zistiť viac…",
+  "PROMO_ENDED_MESSAGE": "Prihláste sa na odber, aby ste mohli pokračovať v používaní týchto pokročilých funkcií:",
+  "PROMO_GET_APP_UPSELL_BUTTON": "Získajte {0}",
+  "PROMO_PRO_ENDED_TITLE": "Vaše vylepšenie {0} skončilo"
 });
 /*
  * GNU AGPL-3.0 License
@@ -116910,7 +116997,10 @@ define("nls/sr/strings", {
   "PROMO_CARD_3_MESSAGE": "Дуплирајте и бришите елементе једним кликом.",
   "PROMO_CARD_4": "Уређивање текста у прегледу",
   "PROMO_CARD_4_MESSAGE": "Уредите наслове, дугмад и копирајте директно у прегледу.",
-  "PROMO_LEARN_MORE": "Сазнајте више…"
+  "PROMO_LEARN_MORE": "Сазнајте више…",
+  "PROMO_ENDED_MESSAGE": "Претплатите се сада да бисте наставили да користите ове напредне функције:",
+  "PROMO_GET_APP_UPSELL_BUTTON": "Преузмите {0}",
+  "PROMO_PRO_ENDED_TITLE": "Ваша {0} надоградња је истекла"
 });
 /*
  * GNU AGPL-3.0 License
@@ -118493,7 +118583,10 @@ define("nls/sv/strings", {
   "PROMO_CARD_3_MESSAGE": "Duplicera och ta bort element med ett enda klick.",
   "PROMO_CARD_4": "Redigera text i förhandsgranskning",
   "PROMO_CARD_4_MESSAGE": "Redigera rubriker, knappar och kopiera direkt i förhandsgranskningen.",
-  "PROMO_LEARN_MORE": "Läs mer…"
+  "PROMO_LEARN_MORE": "Läs mer…",
+  "PROMO_ENDED_MESSAGE": "Prenumerera nu för att fortsätta använda dessa avancerade funktioner:",
+  "PROMO_GET_APP_UPSELL_BUTTON": "Skaffa {0}",
+  "PROMO_PRO_ENDED_TITLE": "Din {0}-uppgradering har upphört"
 });
 /*
  * GNU AGPL-3.0 License
@@ -119993,7 +120086,10 @@ define("nls/tr/strings", {
   "PROMO_CARD_3_MESSAGE": "Tek bir tıklamayla öğeleri çoğaltın ve silin.",
   "PROMO_CARD_4": "Önizlemede Metin Düzenleme",
   "PROMO_CARD_4_MESSAGE": "Başlıkları, düğmeleri düzenleyin ve doğrudan önizlemede kopyalayın.",
-  "PROMO_LEARN_MORE": "Daha Fazla Bilgi Edinin…"
+  "PROMO_LEARN_MORE": "Daha Fazla Bilgi Edinin…",
+  "PROMO_ENDED_MESSAGE": "Bu gelişmiş özellikleri kullanmaya devam etmek için hemen abone olun:",
+  "PROMO_GET_APP_UPSELL_BUTTON": "{0} edinin",
+  "PROMO_PRO_ENDED_TITLE": "{0} yükseltmeniz sona erdi"
 });
 /*
  * GNU AGPL-3.0 License
@@ -121493,7 +121589,10 @@ define("nls/uk/strings", {
   "PROMO_CARD_3_MESSAGE": "Дублюйте та видаляйте елементи одним кліком.",
   "PROMO_CARD_4": "Редагування тексту в режимі попереднього перегляду",
   "PROMO_CARD_4_MESSAGE": "Редагуйте заголовки, кнопки та копіюйте безпосередньо в режимі попереднього перегляду.",
-  "PROMO_LEARN_MORE": "Дізнатися більше…"
+  "PROMO_LEARN_MORE": "Дізнатися більше…",
+  "PROMO_ENDED_MESSAGE": "Підпишіться зараз, щоб продовжити користуватися цими розширеними функціями:",
+  "PROMO_GET_APP_UPSELL_BUTTON": "Отримати {0}",
+  "PROMO_PRO_ENDED_TITLE": "Термін дії вашого оновлення до {0} закінчився"
 });
 /*
  * GNU AGPL-3.0 License
@@ -122993,7 +123092,10 @@ define("nls/ur/strings", {
   "PROMO_CARD_3_MESSAGE": "ایک ہی کلک سے عناصر کی نقل اور حذف کریں۔",
   "PROMO_CARD_4": "پیش نظارہ میں متن کی تدوین",
   "PROMO_CARD_4_MESSAGE": "پیش نظارہ میں براہ راست ہیڈنگ، بٹنوں اور کاپی میں ترمیم کریں۔",
-  "PROMO_LEARN_MORE": "مزید جانیے…"
+  "PROMO_LEARN_MORE": "مزید جانیے…",
+  "PROMO_ENDED_MESSAGE": "ان جدید خصوصیات کو استعمال جاری رکھنے کیلئے ابھی سبسکرائب کریں:",
+  "PROMO_GET_APP_UPSELL_BUTTON": "{0} حاصل کریں",
+  "PROMO_PRO_ENDED_TITLE": "آپ کا {0} اپ گریڈ ختم ہو گیا ہے"
 });
 /*
  * GNU AGPL-3.0 License
@@ -124523,7 +124625,10 @@ define("nls/zh-cn/strings", {
   "PROMO_CARD_3_MESSAGE": "一键复制和删除元素。",
   "PROMO_CARD_4": "在预览中编辑文本",
   "PROMO_CARD_4_MESSAGE": "直接在预览中编辑标题、按钮和复制内容。",
-  "PROMO_LEARN_MORE": "了解更多…"
+  "PROMO_LEARN_MORE": "了解更多…",
+  "PROMO_ENDED_MESSAGE": "继续使用以下高级功能，立即订阅：",
+  "PROMO_GET_APP_UPSELL_BUTTON": "获取 {0}",
+  "PROMO_PRO_ENDED_TITLE": "您的 {0} 升级已结束"
 });
 /*
  * GNU AGPL-3.0 License
@@ -126023,7 +126128,10 @@ define("nls/zh-tw/strings", {
   "PROMO_CARD_3_MESSAGE": "只需按一下即可複製和刪除元素。",
   "PROMO_CARD_4": "在預覽中編輯文字",
   "PROMO_CARD_4_MESSAGE": "直接在預覽中編輯標題、按鈕和複製內容。",
-  "PROMO_LEARN_MORE": "深入瞭解…"
+  "PROMO_LEARN_MORE": "深入瞭解…",
+  "PROMO_ENDED_MESSAGE": "立即訂閱以繼續使用這些進階功能：",
+  "PROMO_GET_APP_UPSELL_BUTTON": "取得 {0}",
+  "PROMO_PRO_ENDED_TITLE": "您的 {0} 升級已到期"
 });
 /*
  * GNU AGPL-3.0 License
