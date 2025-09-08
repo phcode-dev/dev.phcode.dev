@@ -112399,6 +112399,7 @@ define("nls/root/strings", {
     // promos
     "PROMO_UPGRADE_TITLE": "You’ve been upgraded to {0}",
     "PROMO_UPGRADE_MESSAGE": "Enjoy full access to all premium features for the next {0} days:",
+    "PROMO_ENDED_MESSAGE": "Subscribe now to continue using these advanced features:",
     "PROMO_CARD_1": "Drag & Drop Elements",
     "PROMO_CARD_1_MESSAGE": "Rearrange sections visually — Phoenix updates the HTML & CSS for you.",
     "PROMO_CARD_2": "Image Replacement",
@@ -112407,7 +112408,9 @@ define("nls/root/strings", {
     "PROMO_CARD_3_MESSAGE": "Duplicate and delete elements with a single click.",
     "PROMO_CARD_4": "Editing Text In Preview",
     "PROMO_CARD_4_MESSAGE": "Edit headings, buttons, and copy directly in the preview.",
-    "PROMO_LEARN_MORE": "Learn More\u2026"
+    "PROMO_LEARN_MORE": "Learn More\u2026",
+    "PROMO_GET_APP_UPSELL_BUTTON": "Get {0}",
+    "PROMO_PRO_ENDED_TITLE": "Your {0} upgrade has ended"
 });
 
 /*
@@ -167119,7 +167122,7 @@ define("services/login-service", function (require, exports, module) {
 
         try {
             const accountBaseURL = LoginService.getAccountBaseURL();
-            const language = Phoenix.app && Phoenix.app.language ? Phoenix.app.language : 'en';
+            const language = brackets.getLocale();
             let url = `${accountBaseURL}/getAppEntitlements?lang=${language}`;
             let fetchOptions = {
                 method: 'GET',
@@ -167220,13 +167223,17 @@ define("services/pro-dialogs", function (require, exports, module) {
     const proTitle = `<span class="phoenix-pro-title">
                     <span class="pro-plan-name">Phoenix Pro</span>
                     <i class="fa-solid fa-feather orange-gold" style="margin-left: 3px;"></i>
-                </span>`;
+                </span>`,
+        proTitlePlain = `<span class="pro-plan-name">Phoenix Pro</span>
+                    <i class="fa-solid fa-feather" style="margin-left: 2px;"></i>`;
     require("./setup-login-service"); // this adds loginService to KernalModeTrust
     const Dialogs = require("widgets/Dialogs"),
         Mustache = require("thirdparty/mustache/mustache"),
         Strings = require("strings"),
         StringUtils = require("utils/StringUtils"),
-        proUpgradeHTML = `<div class="browser-login-waiting-dialog modal">
+        ThemeManager = require("view/ThemeManager"),
+        Metrics = require("utils/Metrics"),
+        proUpgradeHTML = `<div class="pro-upgrade-dialog modal">
     <div class="modal-header">
         <h1 class="dialog-title">{{{title}}}</h1>
     </div>
@@ -167278,8 +167285,31 @@ define("services/pro-dialogs", function (require, exports, module) {
     </div>
 
     <div class="modal-footer">
-        <button class="dialog-button btn" data-button-id="learn_more">{{Strings.PROMO_LEARN_MORE}}</button>
-        <button class="dialog-button btn primary" data-button-id="ok">{{Strings.OK}}</button>
+        <button class="dialog-button btn" data-button-id="secondaryButton">{{secondaryButton}}</button>
+        <button class="dialog-button btn primary" data-button-id="ok">{{{primaryButton}}}</button>
+    </div>
+</div>
+`,
+        proEndedHTML = `<div class="pro-ended-dialog modal">
+    <div class="modal-header">
+        <h1 class="dialog-title">{{{title}}}</h1>
+    </div>
+
+    <div class="modal-body">
+        <div class="promo-iframe-wrap">
+            <iframe
+                    class="promo-iframe"
+                    src="{{promoURL}}"
+                    title="{{title}}"
+                    loading="lazy"
+                    referrerpolicy="no-referrer">
+            </iframe>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="dialog-button btn" data-button-id="cancel">{{Strings.CANCEL}}</button>
+        <button class="dialog-button btn primary" data-button-id="get_pro">{{{buttonGetPro}}}</button>
     </div>
 </div>
 `;
@@ -167287,16 +167317,93 @@ define("services/pro-dialogs", function (require, exports, module) {
     function showProUpgradeDialog(trialDays) {
         const title = StringUtils.format(Strings.PROMO_UPGRADE_TITLE, proTitle);
         const message = StringUtils.format(Strings.PROMO_UPGRADE_MESSAGE, trialDays);
-        const $template = $(Mustache.render(proUpgradeHTML, {title, message, Strings}));
+        const $template = $(Mustache.render(proUpgradeHTML, {
+            title, message, Strings,
+            secondaryButton: Strings.PROMO_LEARN_MORE,
+            primaryButton: Strings.OK
+        }));
         Dialogs.showModalDialogUsingTemplate($template).done(function (id) {
             console.log("Dialog closed with id: " + id);
-            if(id === 'learn_more') {
-                Phoenix.app.openURLInDefaultBrowser(brackets.config.homepage_url);
+            Metrics.countEvent(Metrics.EVENT_TYPE.PRO, "dlgShow", "promo");
+            if(id === 'secondaryButton') {
+                Metrics.countEvent(Metrics.EVENT_TYPE.PRO, "dlgAct", "promoLearn");
+                Phoenix.app.openURLInDefaultBrowser(brackets.config.purchase_url);
+            } else {
+                Metrics.countEvent(Metrics.EVENT_TYPE.PRO, "dlgAct", "promoCancel");
             }
         });
     }
 
+    function _showLocalProEndedDialog() {
+        const title = StringUtils.format(Strings.PROMO_PRO_ENDED_TITLE, proTitle);
+        const buttonGetPro = StringUtils.format(Strings.PROMO_GET_APP_UPSELL_BUTTON, proTitlePlain);
+        const $template = $(Mustache.render(proUpgradeHTML, {
+            title, Strings,
+            message: Strings.PROMO_ENDED_MESSAGE,
+            secondaryButton: Strings.CANCEL,
+            primaryButton: buttonGetPro
+        }));
+        Dialogs.showModalDialogUsingTemplate($template).done(function (id) {
+            console.log("Dialog closed with id: " + id);
+            Metrics.countEvent(Metrics.EVENT_TYPE.PRO, "dlgShow", "localUpgrade");
+            if(id === 'ok') {
+                Metrics.countEvent(Metrics.EVENT_TYPE.PRO, "dlgAct", "localGetPro");
+                Phoenix.app.openURLInDefaultBrowser(brackets.config.purchase_url);
+            } else {
+                Metrics.countEvent(Metrics.EVENT_TYPE.PRO, "dlgAct", "localCancel");
+            }
+        });
+    }
+
+    function _showRemoteProEndedDialog(currentVersion, promoHtmlURL, upsellPurchaseURL) {
+        const buttonGetPro = StringUtils.format(Strings.PROMO_GET_APP_UPSELL_BUTTON, proTitlePlain);
+        const title = StringUtils.format(Strings.PROMO_PRO_ENDED_TITLE, proTitle);
+        const currentTheme = ThemeManager.getCurrentTheme();
+        const theme = currentTheme && currentTheme.dark ? "dark" : "light";
+        const promoURL = `${promoHtmlURL}?lang=${
+            brackets.getLocale()}&theme=${theme}&version=${currentVersion}`;
+        const $template = $(Mustache.render(proEndedHTML, {Strings, title, buttonGetPro, promoURL}));
+        Dialogs.showModalDialogUsingTemplate($template).done(function (id) {
+            console.log("Dialog closed with id: " + id);
+            Metrics.countEvent(Metrics.EVENT_TYPE.PRO, "dlgShow", "remoteUpgrade");
+            if(id === 'get_pro') {
+                Metrics.countEvent(Metrics.EVENT_TYPE.PRO, "dlgAct", "remoteGetPro");
+                Phoenix.app.openURLInDefaultBrowser(upsellPurchaseURL || brackets.config.purchase_url);
+            } else {
+                Metrics.countEvent(Metrics.EVENT_TYPE.PRO, "dlgAct", "remoteCancel");
+            }
+        });
+    }
+
+    async function showProEndedDialog() {
+        const currentVersion = window.AppConfig.apiVersion;
+
+        if (!navigator.onLine) {
+            _showLocalProEndedDialog();
+            return;
+        }
+
+        try {
+            const configURL = `${brackets.config.promotions_url}app/config.json`;
+            const response = await fetch(configURL);
+            if (!response.ok) {
+                _showLocalProEndedDialog();
+                return;
+            }
+
+            const config = await response.json();
+            if (config.upsell_after_trial_url) {
+                _showRemoteProEndedDialog(currentVersion, config.upsell_after_trial_url, config.upsell_purchase_url);
+            } else {
+                _showLocalProEndedDialog();
+            }
+        } catch (error) {
+            _showLocalProEndedDialog();
+        }
+    }
+
     exports.showProUpgradeDialog = showProUpgradeDialog;
+    exports.showProEndedDialog = showProEndedDialog;
 });
 
 define("services/profile-menu", function (require, exports, module) {
@@ -167888,7 +167995,6 @@ define("services/profile-menu", function (require, exports, module) {
                 title: Strings.CMD_USER_PROFILE
             })
             .appendTo($("#main-toolbar .bottom-buttons"));
-        // _updateProfileIcon("CA", "blue");
         $icon.on('click', ()=>{
             togglePopup();
         });
@@ -168135,7 +168241,20 @@ define("services/promotions", function (require, exports, module) {
 
             // Check if we should grant any trial
             if (remainingDays <= 0 && !isNewerVersion) {
-                console.log("Existing trial expired, same/older version - no new trial");
+                // Check if promo ended dialog was already shown for this version
+                if (existingTrialData.upgradeDialogShownVersion !== currentVersion) {
+                    // todo we should not show this to logged in pro subscribers, but at startup time,
+                    // we do not know if login is done yet.
+                    console.log("Existing trial expired, showing promo ended dialog");
+                    ProDialogs.showProEndedDialog();
+                    // Store that dialog was shown for this version
+                    await _setTrialData({
+                        ...existingTrialData,
+                        upgradeDialogShownVersion: currentVersion
+                    });
+                } else {
+                    console.log("Existing trial expired, upgrade dialog already shown for this version");
+                }
                 return;
             }
 
@@ -168185,7 +168304,9 @@ define("services/promotions", function (require, exports, module) {
 
     function _isAnyDialogsVisible() {
         const $modal = $(`.modal.instance`);
-        return $modal.length > 0 && $modal.is(':visible');
+        const $notifications = $(`.notification-ui-tooltip`);
+        return ($modal.length > 0 && $modal.is(':visible')) ||
+            ($notifications.length > 0 && $notifications.is(':visible'));
     }
 
     /**

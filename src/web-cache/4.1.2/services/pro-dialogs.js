@@ -29,25 +29,107 @@ define(function (require, exports, module) {
     const proTitle = `<span class="phoenix-pro-title">
                     <span class="pro-plan-name">Phoenix Pro</span>
                     <i class="fa-solid fa-feather orange-gold" style="margin-left: 3px;"></i>
-                </span>`;
+                </span>`,
+        proTitlePlain = `<span class="pro-plan-name">Phoenix Pro</span>
+                    <i class="fa-solid fa-feather" style="margin-left: 2px;"></i>`;
     require("./setup-login-service"); // this adds loginService to KernalModeTrust
     const Dialogs = require("widgets/Dialogs"),
         Mustache = require("thirdparty/mustache/mustache"),
         Strings = require("strings"),
         StringUtils = require("utils/StringUtils"),
-        proUpgradeHTML = require("text!./html/pro-upgrade.html");
+        ThemeManager = require("view/ThemeManager"),
+        Metrics = require("utils/Metrics"),
+        proUpgradeHTML = require("text!./html/pro-upgrade.html"),
+        proEndedHTML = require("text!./html/promo-ended.html");
 
     function showProUpgradeDialog(trialDays) {
         const title = StringUtils.format(Strings.PROMO_UPGRADE_TITLE, proTitle);
         const message = StringUtils.format(Strings.PROMO_UPGRADE_MESSAGE, trialDays);
-        const $template = $(Mustache.render(proUpgradeHTML, {title, message, Strings}));
+        const $template = $(Mustache.render(proUpgradeHTML, {
+            title, message, Strings,
+            secondaryButton: Strings.PROMO_LEARN_MORE,
+            primaryButton: Strings.OK
+        }));
         Dialogs.showModalDialogUsingTemplate($template).done(function (id) {
             console.log("Dialog closed with id: " + id);
-            if(id === 'learn_more') {
-                Phoenix.app.openURLInDefaultBrowser(brackets.config.homepage_url);
+            Metrics.countEvent(Metrics.EVENT_TYPE.PRO, "dlgShow", "promo");
+            if(id === 'secondaryButton') {
+                Metrics.countEvent(Metrics.EVENT_TYPE.PRO, "dlgAct", "promoLearn");
+                Phoenix.app.openURLInDefaultBrowser(brackets.config.purchase_url);
+            } else {
+                Metrics.countEvent(Metrics.EVENT_TYPE.PRO, "dlgAct", "promoCancel");
             }
         });
     }
 
+    function _showLocalProEndedDialog() {
+        const title = StringUtils.format(Strings.PROMO_PRO_ENDED_TITLE, proTitle);
+        const buttonGetPro = StringUtils.format(Strings.PROMO_GET_APP_UPSELL_BUTTON, proTitlePlain);
+        const $template = $(Mustache.render(proUpgradeHTML, {
+            title, Strings,
+            message: Strings.PROMO_ENDED_MESSAGE,
+            secondaryButton: Strings.CANCEL,
+            primaryButton: buttonGetPro
+        }));
+        Dialogs.showModalDialogUsingTemplate($template).done(function (id) {
+            console.log("Dialog closed with id: " + id);
+            Metrics.countEvent(Metrics.EVENT_TYPE.PRO, "dlgShow", "localUpgrade");
+            if(id === 'ok') {
+                Metrics.countEvent(Metrics.EVENT_TYPE.PRO, "dlgAct", "localGetPro");
+                Phoenix.app.openURLInDefaultBrowser(brackets.config.purchase_url);
+            } else {
+                Metrics.countEvent(Metrics.EVENT_TYPE.PRO, "dlgAct", "localCancel");
+            }
+        });
+    }
+
+    function _showRemoteProEndedDialog(currentVersion, promoHtmlURL, upsellPurchaseURL) {
+        const buttonGetPro = StringUtils.format(Strings.PROMO_GET_APP_UPSELL_BUTTON, proTitlePlain);
+        const title = StringUtils.format(Strings.PROMO_PRO_ENDED_TITLE, proTitle);
+        const currentTheme = ThemeManager.getCurrentTheme();
+        const theme = currentTheme && currentTheme.dark ? "dark" : "light";
+        const promoURL = `${promoHtmlURL}?lang=${
+            brackets.getLocale()}&theme=${theme}&version=${currentVersion}`;
+        const $template = $(Mustache.render(proEndedHTML, {Strings, title, buttonGetPro, promoURL}));
+        Dialogs.showModalDialogUsingTemplate($template).done(function (id) {
+            console.log("Dialog closed with id: " + id);
+            Metrics.countEvent(Metrics.EVENT_TYPE.PRO, "dlgShow", "remoteUpgrade");
+            if(id === 'get_pro') {
+                Metrics.countEvent(Metrics.EVENT_TYPE.PRO, "dlgAct", "remoteGetPro");
+                Phoenix.app.openURLInDefaultBrowser(upsellPurchaseURL || brackets.config.purchase_url);
+            } else {
+                Metrics.countEvent(Metrics.EVENT_TYPE.PRO, "dlgAct", "remoteCancel");
+            }
+        });
+    }
+
+    async function showProEndedDialog() {
+        const currentVersion = window.AppConfig.apiVersion;
+
+        if (!navigator.onLine) {
+            _showLocalProEndedDialog();
+            return;
+        }
+
+        try {
+            const configURL = `${brackets.config.promotions_url}app/config.json`;
+            const response = await fetch(configURL);
+            if (!response.ok) {
+                _showLocalProEndedDialog();
+                return;
+            }
+
+            const config = await response.json();
+            if (config.upsell_after_trial_url) {
+                _showRemoteProEndedDialog(currentVersion, config.upsell_after_trial_url, config.upsell_purchase_url);
+            } else {
+                _showLocalProEndedDialog();
+            }
+        } catch (error) {
+            _showLocalProEndedDialog();
+        }
+    }
+
     exports.showProUpgradeDialog = showProUpgradeDialog;
+    exports.showProEndedDialog = showProEndedDialog;
 });

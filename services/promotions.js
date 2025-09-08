@@ -203,7 +203,20 @@ define(function (require, exports, module) {
 
             // Check if we should grant any trial
             if (remainingDays <= 0 && !isNewerVersion) {
-                console.log("Existing trial expired, same/older version - no new trial");
+                // Check if promo ended dialog was already shown for this version
+                if (existingTrialData.upgradeDialogShownVersion !== currentVersion) {
+                    // todo we should not show this to logged in pro subscribers, but at startup time,
+                    // we do not know if login is done yet.
+                    console.log("Existing trial expired, showing promo ended dialog");
+                    ProDialogs.showProEndedDialog();
+                    // Store that dialog was shown for this version
+                    await _setTrialData({
+                        ...existingTrialData,
+                        upgradeDialogShownVersion: currentVersion
+                    });
+                } else {
+                    console.log("Existing trial expired, upgrade dialog already shown for this version");
+                }
                 return;
             }
 
@@ -253,7 +266,9 @@ define(function (require, exports, module) {
 
     function _isAnyDialogsVisible() {
         const $modal = $(`.modal.instance`);
-        return $modal.length > 0 && $modal.is(':visible');
+        const $notifications = $(`.notification-ui-tooltip`);
+        return ($modal.length > 0 && $modal.is(':visible')) ||
+            ($notifications.length > 0 && $notifications.is(':visible'));
     }
 
     /**
