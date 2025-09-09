@@ -8874,6 +8874,15 @@ define("command/CommandManager", function (require, exports, module) {
     };
 
     /**
+     * get the command options
+     *
+     * @return {object}
+     */
+    Command.prototype.getOptions = function () {
+        return this._options || {};
+    };
+
+    /**
      * Sets enabled state of Command and dispatches "enabledStateChange"
      * when the enabled state changes.
      *
@@ -8921,11 +8930,17 @@ define("command/CommandManager", function (require, exports, module) {
      * use \uXXXX instead of an HTML entity.
      *
      * @param {string} name
+     * @param {string} htmlName If set, this will be displayed in ui menus instead of the name given.
+     *     Eg. "Phoenix menu<i class='fa fa-car' style='margin-left: 4px;'></i>"
      */
-    Command.prototype.setName = function (name) {
-        var changed = this._name !== name;
+    Command.prototype.setName = function (name, htmlName) {
+        let changed = this._name !== name;
         this._name = name;
 
+        if (this._options.htmlName !== htmlName) {
+            changed = true;
+            this._options.htmlName = htmlName;
+        }
         if (changed) {
             this.trigger("nameChange");
         }
@@ -8958,6 +8973,8 @@ define("command/CommandManager", function (require, exports, module) {
      * @param {boolean} options.eventSource If set to true, the commandFn will be called with the first argument `event`
      * with details about the source(invoker) as event.eventSource(one of the `CommandManager.SOURCE_*`) and
      * event.sourceType(Eg. Ctrl-K) parameter.
+     * @param {string} options.htmlName If set, this will be displayed in ui menus instead of the name given.
+     *     Eg. "Phoenix menu<i class='fa fa-car' style='margin-left: 4px;'></i>"
      * @return {?Command}
      */
     function register(name, id, commandFn, options={}) {
@@ -9500,6 +9517,9 @@ define("command/Commands", function (require, exports, module) {
     /** Opens support resources */
     exports.HELP_SUPPORT                = "help.support";               // HelpCommandHandlers.js       _handleLinkMenuItem()
 
+    /** Opens Phoenix Pro page */
+    exports.HELP_GET_PRO                = "help.getPro";                // HelpCommandHandlers.js       _handleLinkMenuItem()
+
     /** Opens feature suggestion page */
     exports.HELP_SUGGEST                = "help.suggest";               // HelpCommandHandlers.js       _handleLinkMenuItem()
 
@@ -9957,6 +9977,8 @@ define("command/DefaultMenus", function (require, exports, module) {
         menu = Menus.addMenu(Strings.HELP_MENU, Menus.AppMenuBar.HELP_MENU);
         menu.addMenuItem(Commands.HELP_DOCS);
         menu.addMenuItem(Commands.HELP_SUPPORT);
+        menu.addMenuDivider();
+        menu.addMenuItem(Commands.HELP_GET_PRO);
         menu.addMenuDivider();
         if (brackets.config.suggest_feature_url) {
             menu.addMenuItem(Commands.HELP_SUGGEST);
@@ -13769,6 +13791,11 @@ define("command/Menus", function (require, exports, module) {
                 }
             });
         } else {
+            const htmlName = this._command.getOptions().htmlName;
+            if(htmlName) {
+                $(_getHTMLMenuItem(this.id)).find(".menu-name").html(htmlName);
+                return;
+            }
             $(_getHTMLMenuItem(this.id)).find(".menu-name").text(this._command.getName());
         }
     };
@@ -59844,9 +59871,14 @@ define("help/HelpCommandHandlers", function (require, exports, module) {
         });
     });
 
+    const getProString = `${Strings.CMD_GET_PRO}<i class='fa fa-feather' style='margin-left: 4px;'></i>`;
+
     CommandManager.register(Strings.CMD_HOW_TO_USE_BRACKETS,    Commands.HELP_HOW_TO_USE_BRACKETS,  _handleLinkMenuItem(brackets.config.how_to_use_url));
     CommandManager.register(Strings.CMD_DOCS,                   Commands.HELP_DOCS,                 _handleLinkMenuItem(brackets.config.docs_url));
     CommandManager.register(Strings.CMD_SUPPORT,                Commands.HELP_SUPPORT,              _handleLinkMenuItem(brackets.config.support_url));
+    CommandManager.register(Strings.CMD_GET_PRO,                Commands.HELP_GET_PRO,              _handleLinkMenuItem(brackets.config.purchase_url), {
+        htmlName: getProString
+    });
     CommandManager.register(Strings.CMD_SUGGEST,                Commands.HELP_SUGGEST,              _handleLinkMenuItem(brackets.config.suggest_feature_url));
     CommandManager.register(Strings.CMD_REPORT_ISSUE,           Commands.HELP_REPORT_ISSUE,         _handleLinkMenuItem(brackets.config.report_issue_url));
     CommandManager.register(Strings.CMD_RELEASE_NOTES,          Commands.HELP_RELEASE_NOTES,        _handleLinkMenuItem(brackets.config.release_notes_url));
@@ -111479,6 +111511,7 @@ define("nls/root/strings", {
     "CMD_AUTO_UPDATE": "Auto Update",
     "CMD_HOW_TO_USE_BRACKETS": "How to Use {APP_NAME}",
     "CMD_SUPPORT": "{APP_NAME} Support",
+    "CMD_GET_PRO": "Get Phoenix Pro",
     "CMD_USER_PROFILE": "{APP_NAME} Account",
     "CMD_DOCS": "Help, Getting Started",
     "CMD_SUGGEST": "Suggest a Feature",
@@ -112508,7 +112541,9 @@ define("nls/root/strings", {
     "PROMO_CARD_4_MESSAGE": "Edit headings, buttons, and copy directly in the preview.",
     "PROMO_LEARN_MORE": "Learn More\u2026",
     "PROMO_GET_APP_UPSELL_BUTTON": "Get {0}",
-    "PROMO_PRO_ENDED_TITLE": "Your {0} upgrade has ended"
+    "PROMO_PRO_ENDED_TITLE": "Your {0} Trial has ended",
+    "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro Trial ({0} days left)",
+    "GET_PHOENIX_PRO": "Get Phoenix Pro"
 });
 
 /*
@@ -166726,7 +166761,6 @@ define("services/login-browser", function (require, exports, module) {
 
     // Only set exports for browser apps to avoid conflict with desktop login
     if (!Phoenix.isNativeApp) {
-        init();
         // kernal exports
         // Add to existing KernalModeTrust.loginService from login-service.js
         LoginService.isLoggedIn = isLoggedIn;
@@ -166735,6 +166769,7 @@ define("services/login-browser", function (require, exports, module) {
         LoginService.getProfile = getProfile;
         LoginService.verifyLoginStatus = () => _verifyBrowserLogin(false);
         LoginService.getAccountBaseURL = _getAccountBaseURL;
+        init();
     }
 
     // public exports
@@ -167172,7 +167207,6 @@ define("services/login-desktop", function (require, exports, module) {
 
     // Only set exports for native apps to avoid conflict with browser login
     if (Phoenix.isNativeApp) {
-        init();
         // kernal exports - add to existing KernalModeTrust.loginService from login-service.js
         LoginService.isLoggedIn = isLoggedIn;
         LoginService.signInToAccount = signInToAccount;
@@ -167180,6 +167214,7 @@ define("services/login-desktop", function (require, exports, module) {
         LoginService.getProfile = getProfile;
         LoginService.verifyLoginStatus = () => _verifyLogin(false);
         LoginService.getAccountBaseURL = getAccountBaseURL;
+        init();
     }
 
     // public exports
@@ -167215,6 +167250,8 @@ define("services/login-desktop", function (require, exports, module) {
 define("services/login-service", function (require, exports, module) {
     require("./setup-login-service"); // this adds loginService to KernalModeTrust
     require("./promotions");
+
+    const MS_IN_DAY = 10 * 24 * 60 * 60 * 1000;
 
     const KernalModeTrust = window.KernalModeTrust;
     if(!KernalModeTrust){
@@ -167311,8 +167348,157 @@ define("services/login-service", function (require, exports, module) {
         }
     }
 
+    /**
+     * Get effective entitlements for determining feature availability throughout the app.
+     * This is the primary API that should be used across Phoenix to check entitlements and enable/disable features.
+     *
+     * @returns {Promise<Object|null>} Entitlements object or null if not logged in and no trial active
+     *
+     * @description Response shapes vary based on user state:
+     *
+     * **For non-logged-in users:**
+     * - Returns `null` if no trial is active
+     * - Returns synthetic entitlements if trial is active:
+     * ```javascript
+     * {
+     *   plan: {
+     *     paidSubscriber: true,    // Always true for trial users
+     *     name: "Phoenix Pro"
+     *   },
+     *   isInProTrial: true,        // Indicates this is a trial user
+     *   trialDaysRemaining: number, // Days left in trial
+     *   entitlements: {
+     *     liveEdit: {
+     *       activated: true        // Trial users get liveEdit access
+     *     }
+     *   }
+     * }
+     * ```
+     *
+     * **For logged-in trial users:**
+     * - If remote response has `plan.paidSubscriber: false`, injects `paidSubscriber: true`
+     * - Adds `isInProTrial: true` and `trialDaysRemaining`
+     * - Injects `entitlements.liveEdit.activated: true`
+     * - Note: Trial users may not be actual paid subscribers, but `paidSubscriber: true` is set
+     *   so all Phoenix code treats them as paid subscribers
+     *
+     * **For logged-in users (full remote response):**
+     * ```javascript
+     * {
+     *   isSuccess: boolean,
+     *   lang: string,
+     *   plan: {
+     *     name: "Phoenix Pro",
+     *     paidSubscriber: boolean,
+     *     validTill: number        // Timestamp
+     *   },
+     *   profileview: {
+     *     quota: {
+     *       titleText: "Ai Quota Used",
+     *       usageText: "100 / 200 credits",
+     *       usedPercent: number
+     *     },
+     *     htmlMessage: string      // HTML alert message
+     *   },
+     *   entitlements: {
+     *     liveEdit: {
+     *       activated: boolean,
+     *       subscribeURL: string,  // URL to subscribe if not activated
+     *       upgradeToPlan: string, // Plan name that includes this entitlement
+     *       validTill: number      // Timestamp when entitlement expires
+     *     },
+     *     liveEditAI: {
+     *       activated: boolean,
+     *       subscribeURL: string,
+     *       purchaseCreditsURL: string, // URL to purchase AI credits
+     *       upgradeToPlan: string,
+     *       validTill: number
+     *     }
+     *   }
+     * }
+     * ```
+     *
+     * @example
+     * // Listen for entitlements changes
+     * const LoginService = window.KernelModeTrust.loginService;
+     * LoginService.on(LoginService.EVENT_ENTITLEMENTS_CHANGED, (entitlements) => {
+     *   console.log('Entitlements changed:', entitlements);
+     *   // Update UI based on new entitlements
+     * });
+     *
+     * // Get current entitlements
+     * const entitlements = await LoginService.getEffectiveEntitlements();
+     * if (entitlements?.plan?.paidSubscriber) {
+     *   // Enable pro features
+     * }
+     * if (entitlements?.entitlements?.liveEdit?.activated) {
+     *   // Enable live edit feature
+     * }
+     */
+    async function getEffectiveEntitlements(forceRefresh = false) {
+        // Get raw server entitlements
+        const serverEntitlements = await getEntitlements(forceRefresh);
+
+        // Get trial days remaining
+        const trialDaysRemaining = await LoginService.getProTrialDaysRemaining();
+
+        // If no trial is active, return server entitlements as-is
+        if (trialDaysRemaining <= 0) {
+            return serverEntitlements;
+        }
+
+        // User has active trial
+        if (serverEntitlements && serverEntitlements.plan) {
+            // Logged-in user with trial
+            if (serverEntitlements.plan.paidSubscriber) {
+                // Already a paid subscriber, return as-is
+                return serverEntitlements;
+            } else {
+                // Enhance entitlements for trial user
+                return {
+                    ...serverEntitlements,
+                    plan: {
+                        ...serverEntitlements.plan,
+                        paidSubscriber: true,
+                        name: brackets.config.main_pro_plan
+                    },
+                    isInProTrial: true,
+                    trialDaysRemaining: trialDaysRemaining,
+                    entitlements: {
+                        ...serverEntitlements.entitlements,
+                        liveEdit: {
+                            activated: true,
+                            subscribeURL: brackets.config.purchase_url,
+                            upgradeToPlan: brackets.config.main_pro_plan,
+                            validTill: Date.now() + trialDaysRemaining * MS_IN_DAY
+                        }
+                    }
+                };
+            }
+        } else {
+            // Non-logged-in user with trial - return synthetic entitlements
+            return {
+                plan: {
+                    paidSubscriber: true,
+                    name: brackets.config.main_pro_plan
+                },
+                isInProTrial: true,
+                trialDaysRemaining: trialDaysRemaining,
+                entitlements: {
+                    liveEdit: {
+                        activated: true,
+                        subscribeURL: brackets.config.purchase_url,
+                        upgradeToPlan: brackets.config.main_pro_plan,
+                        validTill: Date.now() + trialDaysRemaining * MS_IN_DAY
+                    }
+                }
+            };
+        }
+    }
+
     // Add functions to secure exports
     LoginService.getEntitlements = getEntitlements;
+    LoginService.getEffectiveEntitlements = getEffectiveEntitlements;
     LoginService.clearEntitlements = clearEntitlements;
     LoginService.EVENT_ENTITLEMENTS_CHANGED = EVENT_ENTITLEMENTS_CHANGED;
 });
@@ -167346,10 +167532,10 @@ define("services/login-service", function (require, exports, module) {
 
 define("services/pro-dialogs", function (require, exports, module) {
     const proTitle = `<span class="phoenix-pro-title">
-                    <span class="pro-plan-name">Phoenix Pro</span>
+                    <span class="pro-plan-name">${brackets.config.main_pro_plan}</span>
                     <i class="fa-solid fa-feather orange-gold" style="margin-left: 3px;"></i>
                 </span>`,
-        proTitlePlain = `<span class="pro-plan-name">Phoenix Pro</span>
+        proTitlePlain = `<span class="pro-plan-name">${brackets.config.main_pro_plan}</span>
                     <i class="fa-solid fa-feather" style="margin-left: 2px;"></i>`;
     require("./setup-login-service"); // this adds loginService to KernalModeTrust
     const Dialogs = require("widgets/Dialogs"),
@@ -167536,6 +167722,7 @@ define("services/profile-menu", function (require, exports, module) {
         PopUpManager = require("widgets/PopUpManager"),
         ThemeManager = require("view/ThemeManager"),
         Strings      = require("strings"),
+        StringUtils = require("utils/StringUtils"),
         LoginService = require("./login-service");
 
     const KernalModeTrust = window.KernalModeTrust;
@@ -167567,6 +167754,18 @@ define("services/profile-menu", function (require, exports, module) {
     const loginTemplate = `<div class="profile-popup">
     <div class="popup-header">
         <h1 class="popup-title">{{Strings.PROFILE_POP_TITLE}}</h1>
+        {{#trialInfo}}
+        <div class="trial-plan-info">
+            <span class="phoenix-pro-title-plain">
+                <span class="pro-plan-name">{{planName}}</span>
+                <i class="fa-solid fa-feather" style="margin-left: 3px;"></i>
+            </span>
+        </div>
+        {{/trialInfo}}
+        <a href="{{getProLink}}" style="font-size: 13px;">
+            {{Strings.GET_PHOENIX_PRO}}
+            <i class="fa fa-arrow-right" style="font-size: 10px;margin-left: 4px;"></i>
+        </a>
     </div>
     <div class="popup-body">
         <button id="phoenix-signin-btn" class="btn dialog-button primary">
@@ -167593,6 +167792,10 @@ define("services/profile-menu", function (require, exports, module) {
                 <div class="user-email"><secure-email></secure-email></div>
                 <iframe id="user-details-frame" class="user-details-iframe" style="display: none; padding: 0; border: none; background: transparent; width: 100%; height: auto; overflow: hidden;" scrolling="no"></iframe>
                 <div class="user-plan-name {{planClass}}">{{planName}}</div>
+                <a class="get-phoenix-pro-profile" href="{{getProLink}}" style="font-size: 13px;">
+                    {{Strings.GET_PHOENIX_PRO}}
+                    <i class="fa fa-arrow-right" style="font-size: 10px;margin-left: 4px;"></i>
+                </a>
             </div>
         </div>
     </div>
@@ -167744,14 +167947,36 @@ define("services/profile-menu", function (require, exports, module) {
         // create the popup element
         closePopup(); // close any existing popup first
 
-        // Render template with data
-        const renderedTemplate = Mustache.render(loginTemplate, {Strings});
+        // Render template with basic data first for instant response
+        const renderedTemplate = Mustache.render(loginTemplate, {
+            Strings,
+            getProLink: brackets.config.purchase_url
+        });
         $popup = $(renderedTemplate);
 
         $("body").append($popup);
         isPopupVisible = true;
 
         positionPopup();
+
+        // Check for trial info asynchronously and update popup
+        KernalModeTrust.loginService.getEffectiveEntitlements().then(effectiveEntitlements => {
+            if (effectiveEntitlements && effectiveEntitlements.isInProTrial && isPopupVisible && $popup) {
+                // Add trial info to the existing popup
+                const planName = StringUtils.format(Strings.PROMO_PRO_TRIAL_DAYS_LEFT,
+                    effectiveEntitlements.trialDaysRemaining);
+                const trialInfoHtml = `<div class="trial-plan-info">
+                    <span class="phoenix-pro-title-plain">
+                        <span class="pro-plan-name">${planName}</span>
+                        <i class="fa-solid fa-feather" style="margin-left: 3px;"></i>
+                    </span>
+                </div>`;
+                $popup.find('.popup-title').after(trialInfoHtml);
+                positionPopup(); // Reposition after adding content
+            }
+        }).catch(error => {
+            console.error('Failed to check trial info for login popup:', error);
+        });
 
         PopUpManager.addPopUp($popup, function() {
             $popup.remove();
@@ -167801,12 +168026,15 @@ define("services/profile-menu", function (require, exports, module) {
             };
         }
         if (entitlements && entitlements.plan && entitlements.plan.paidSubscriber) {
-            // Paid subscriber: show plan name with feather icon
-            const planName = entitlements.plan.name || "Phoenix Pro";
+            // Pro user (paid subscriber or trial): show plan name with feather icon
+            let displayName = entitlements.plan.name || brackets.config.main_pro_plan;
+            if (entitlements.isInProTrial) {
+                displayName = brackets.config.main_pro_plan; // Just "Phoenix Pro" for branding, not "Phoenix Pro Trial"
+            }
             $brandingLink
                 .attr("href", "https://account.phcode.dev")
                 .addClass("phoenix-pro")
-                .html(`${planName}<i class="fa-solid fa-feather orange-gold" style="margin-left: 3px;"></i>`);
+                .html(`${displayName}<i class="fa-solid fa-feather orange-gold" style="margin-left: 3px;"></i>`);
         } else {
             // Free user: show phcode.io branding
             $brandingLink
@@ -167924,16 +168152,42 @@ define("services/profile-menu", function (require, exports, module) {
         if (!$popup || !entitlements) {
             return;
         }
-
+        // entitlements will always be present for login popup.
         // Update plan information
+        const $getProLink = $popup.find('.get-phoenix-pro-profile');
         if (entitlements.plan) {
             const $planName = $popup.find('.user-plan-name');
-            $planName.text(entitlements.plan.name);
 
-            // Update plan class based on paid subscriber status
+            // Update plan class and content based on paid subscriber status
             $planName.removeClass('user-plan-free user-plan-paid');
-            const planClass = entitlements.plan.paidSubscriber ? 'user-plan-paid' : 'user-plan-free';
-            $planName.addClass(planClass);
+
+            if (entitlements.plan.paidSubscriber) {
+                // Use pro styling with feather icon for pro users (paid or trial)
+                if (entitlements.isInProTrial) {
+                    // For trial users: separate "Phoenix Pro" with icon from "(X days left)" text
+                    const planName = StringUtils.format(Strings.PROMO_PRO_TRIAL_DAYS_LEFT,
+                        entitlements.trialDaysRemaining);
+                    const proTitle = `<span class="phoenix-pro-title-plain">
+                        <span class="pro-plan-name">${planName}</span>
+                        <i class="fa-solid fa-feather" style="margin-left: 3px;"></i>
+                    </span>`;
+                    $planName.addClass('user-plan-paid').html(proTitle);
+                    $getProLink.removeClass('forced-hidden');
+                } else {
+                    // For paid users: regular plan name with icon
+                    const proTitle = `<span class="phoenix-pro-title">
+                        <span class="pro-plan-name">${entitlements.plan.name}</span>
+                        <i class="fa-solid fa-feather" style="margin-left: 3px;"></i>
+                    </span>`;
+                    $planName.addClass('user-plan-paid').html(proTitle);
+                    $getProLink.addClass('forced-hidden');
+                }
+            } else {
+                // Use simple text for free users
+                $planName.addClass('user-plan-free').text(entitlements.plan.name);
+            }
+        } else {
+            $getProLink.removeClass('forced-hidden');
         }
 
         // Update quota section if available
@@ -167983,7 +168237,8 @@ define("services/profile-menu", function (require, exports, module) {
             titleText: "Ai Quota Used",
             usageText: "100 / 200 credits",
             usedPercent: 0,
-            Strings: Strings
+            Strings: Strings,
+            getProLink: brackets.config.purchase_url
         };
 
         // Note: We don't await here to keep popup display instant
@@ -167998,8 +168253,8 @@ define("services/profile-menu", function (require, exports, module) {
 
         positionPopup();
 
-        // Apply cached entitlements immediately if available (including quota/messages)
-        KernalModeTrust.loginService.getEntitlements(false).then(cachedEntitlements => {
+        // Apply cached effective entitlements immediately if available (including quota/messages)
+        KernalModeTrust.loginService.getEffectiveEntitlements(false).then(cachedEntitlements => {
             if (cachedEntitlements && isPopupVisible) {
                 _updatePopupWithEntitlements(cachedEntitlements);
             }
@@ -168048,8 +168303,7 @@ define("services/profile-menu", function (require, exports, module) {
      */
     async function _refreshEntitlementsInBackground() {
         try {
-            // Fetch fresh entitlements from API
-            const freshEntitlements = await KernalModeTrust.loginService.getEntitlements(true); // Force refresh to get latest data
+            const freshEntitlements = await KernalModeTrust.loginService.getEffectiveEntitlements(true);
 
             // Only update popup if it's still visible
             if (isPopupVisible && $popup && freshEntitlements) {
@@ -168110,6 +168364,36 @@ define("services/profile-menu", function (require, exports, module) {
         });
     }
 
+    /**
+     * Check if user has an active trial (works for both logged-in and non-logged-in users)
+     */
+    async function _hasActiveTrial() {
+        try {
+            const effectiveEntitlements = await KernalModeTrust.loginService.getEffectiveEntitlements();
+            return effectiveEntitlements && effectiveEntitlements.isInProTrial;
+        } catch (error) {
+            console.error('Failed to check trial status:', error);
+            return false;
+        }
+    }
+
+    /**
+     * Initialize branding for non-logged-in trial users on startup
+     */
+    async function _initializeBrandingForTrialUsers() {
+        try {
+            const effectiveEntitlements = await KernalModeTrust.loginService.getEffectiveEntitlements();
+            if (effectiveEntitlements && effectiveEntitlements.isInProTrial) {
+                console.log('Profile Menu: Found active trial, updating branding...');
+                _updateBranding(effectiveEntitlements);
+            } else {
+                console.log('Profile Menu: No active trial found');
+            }
+        } catch (error) {
+            console.error('Failed to initialize branding for trial users:', error);
+        }
+    }
+
     function init() {
         const helpButtonID = "user-profile-button";
         $icon = $("<a>")
@@ -168123,6 +168407,17 @@ define("services/profile-menu", function (require, exports, module) {
         $icon.on('click', ()=>{
             togglePopup();
         });
+
+        // Initialize branding for non-logged-in trial users
+        _initializeBrandingForTrialUsers();
+
+        // Listen for entitlements changes to update branding for non-logged-in trial users
+        KernalModeTrust.loginService.on(KernalModeTrust.loginService.EVENT_ENTITLEMENTS_CHANGED, () => {
+            // When entitlements change (including trial activation) for non-logged-in users, update branding
+            if (!KernalModeTrust.loginService.isLoggedIn()) {
+                _initializeBrandingForTrialUsers();
+            }
+        });
     }
 
     function setNotLoggedIn() {
@@ -168132,11 +168427,24 @@ define("services/profile-menu", function (require, exports, module) {
         }
         _removeProfileIcon();
 
+        // Reset branding, but preserve trial branding if user has active trial
+        _hasActiveTrial().then(hasActiveTrial => {
+            if (!hasActiveTrial) {
+                // Only reset branding if no trial exists
+                console.log('Profile Menu: No trial, resetting branding to free');
+                _updateBranding(null);
+            } else {
+                // User has trial, maintain pro branding
+                console.log('Profile Menu: Trial exists, maintaining pro branding');
+                _initializeBrandingForTrialUsers();
+            }
+        }).catch(error => {
+            console.error('Failed to check trial status during logout:', error);
+            // Fallback to resetting branding
+            _updateBranding(null);
+        });
         // Clear cached entitlements when user logs out
         KernalModeTrust.loginService.clearEntitlements();
-
-        // Reset branding to free mode
-        _updateBranding(null);
     }
 
     function setLoggedIn(initial, color) {
@@ -168146,11 +168454,11 @@ define("services/profile-menu", function (require, exports, module) {
         }
         _updateProfileIcon(initial, color);
 
-        // Preload entitlements when user logs in
-        KernalModeTrust.loginService.getEntitlements()
+        // Preload effective entitlements when user logs in
+        KernalModeTrust.loginService.getEffectiveEntitlements()
             .then(_updateBranding)
             .catch(error => {
-                console.error('Failed to preload entitlements on login:', error);
+                console.error('Failed to preload effective entitlements on login:', error);
             });
     }
 
@@ -168354,17 +168662,16 @@ define("services/promotions", function (require, exports, module) {
     }
 
     /**
-     * Check if pro trial is currently activated
+     * Get remaining pro trial days
+     * Returns 0 if no trial or trial expired
      */
-    async function isProTrialActivated() {
+    async function getProTrialDaysRemaining() {
         const trialData = await _getTrialData();
         if (!trialData) {
-            return false;
+            return 0;
         }
 
-        const remainingDays = _calculateRemainingTrialDays(trialData);
-
-        return remainingDays > 0;
+        return _calculateRemainingTrialDays(trialData);
     }
 
     async function activateProTrial() {
@@ -168453,6 +168760,11 @@ define("services/promotions", function (require, exports, module) {
             trialDays: trialDays,
             isFirstInstall: !existingTrialData
         });
+
+        // Also trigger entitlements changed event since effective entitlements have changed
+        // This allows UI components to update based on the new trial status
+        const effectiveEntitlements = await LoginService.getEffectiveEntitlements();
+        LoginService.trigger(LoginService.EVENT_ENTITLEMENTS_CHANGED, effectiveEntitlements);
     }
 
     function _isAnyDialogsVisible() {
@@ -168484,7 +168796,7 @@ define("services/promotions", function (require, exports, module) {
     }, TRIAL_POLL_MS);
 
     // Add to secure exports
-    LoginService.isProTrialActivated = isProTrialActivated;
+    LoginService.getProTrialDaysRemaining = getProTrialDaysRemaining;
     LoginService.EVENT_PRO_UPGRADE_ON_INSTALL = EVENT_PRO_UPGRADE_ON_INSTALL;
 
     // no public exports to prevent extension tampering

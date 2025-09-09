@@ -191,17 +191,16 @@ define(function (require, exports, module) {
     }
 
     /**
-     * Check if pro trial is currently activated
+     * Get remaining pro trial days
+     * Returns 0 if no trial or trial expired
      */
-    async function isProTrialActivated() {
+    async function getProTrialDaysRemaining() {
         const trialData = await _getTrialData();
         if (!trialData) {
-            return false;
+            return 0;
         }
 
-        const remainingDays = _calculateRemainingTrialDays(trialData);
-
-        return remainingDays > 0;
+        return _calculateRemainingTrialDays(trialData);
     }
 
     async function activateProTrial() {
@@ -290,6 +289,11 @@ define(function (require, exports, module) {
             trialDays: trialDays,
             isFirstInstall: !existingTrialData
         });
+
+        // Also trigger entitlements changed event since effective entitlements have changed
+        // This allows UI components to update based on the new trial status
+        const effectiveEntitlements = await LoginService.getEffectiveEntitlements();
+        LoginService.trigger(LoginService.EVENT_ENTITLEMENTS_CHANGED, effectiveEntitlements);
     }
 
     function _isAnyDialogsVisible() {
@@ -321,7 +325,7 @@ define(function (require, exports, module) {
     }, TRIAL_POLL_MS);
 
     // Add to secure exports
-    LoginService.isProTrialActivated = isProTrialActivated;
+    LoginService.getProTrialDaysRemaining = getProTrialDaysRemaining;
     LoginService.EVENT_PRO_UPGRADE_ON_INSTALL = EVENT_PRO_UPGRADE_ON_INSTALL;
 
     // no public exports to prevent extension tampering
