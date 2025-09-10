@@ -27,7 +27,11 @@ define(function (require, exports, module) {
     require("./setup-login-service"); // this adds loginService to KernalModeTrust
     require("./promotions");
 
+    const Metrics = require("utils/Metrics");
+    const LoginUtils = require("./login-utils");
+
     const MS_IN_DAY = 10 * 24 * 60 * 60 * 1000;
+    const TEN_MINUTES = 10 * 60 * 1000;
 
     const KernalModeTrust = window.KernalModeTrust;
     if(!KernalModeTrust){
@@ -42,6 +46,25 @@ define(function (require, exports, module) {
 
     // Cached entitlements data
     let cachedEntitlements = null;
+
+    // Last recorded state for entitlements monitoring
+    let lastRecordedState = null;
+
+    // Debounced trigger for entitlements changed
+    let entitlementsChangedTimer = null;
+
+    function _debounceEntitlementsChanged() {
+        if (entitlementsChangedTimer) {
+            // already scheduled, skip
+            return;
+        }
+
+        entitlementsChangedTimer = setTimeout(() => {
+            LoginService.trigger(EVENT_ENTITLEMENTS_CHANGED);
+            entitlementsChangedTimer = null;
+        }, 1000); // atmost 1 entitlement changed event will be triggered in a second
+    }
+
 
     /**
      * Get entitlements from API or cache
@@ -96,7 +119,7 @@ define(function (require, exports, module) {
 
                     // Trigger event if entitlements changed
                     if (entitlementsChanged) {
-                        LoginService.trigger(EVENT_ENTITLEMENTS_CHANGED, result);
+                        _debounceEntitlementsChanged();
                     }
 
                     return cachedEntitlements;
@@ -116,12 +139,43 @@ define(function (require, exports, module) {
     function clearEntitlements() {
         if (cachedEntitlements) {
             cachedEntitlements = null;
-
-            // Trigger event when entitlements are cleared
-            if (LoginService.trigger) {
-                LoginService.trigger(EVENT_ENTITLEMENTS_CHANGED, null);
-            }
+            _debounceEntitlementsChanged();
         }
+    }
+
+
+    /**
+     * Start the 10-minute interval timer for monitoring entitlements
+     */
+    function startEntitlementsMonitor() {
+        setInterval(async () => {
+            try {
+                const current = await getEffectiveEntitlements(false); // Get effective entitlements
+
+                // Check if we need to refresh
+                const expiredPlanName = LoginUtils.validTillExpired(current, lastRecordedState);
+                const hasChanged = LoginUtils.haveEntitlementsChanged(current, lastRecordedState);
+
+                if (expiredPlanName || hasChanged) {
+                    console.log(`Entitlements monitor detected changes, Expired: ${expiredPlanName},` +
+                        `changed: ${hasChanged} refreshing...`);
+                    Metrics.countEvent(Metrics.EVENT_TYPE.PRO, "entRefresh",
+                        expiredPlanName ? "exp_"+expiredPlanName : "changed");
+                    await getEffectiveEntitlements(true); // Force refresh
+                    // if not logged in, the getEffectiveEntitlements will not trigger change even if some trial
+                    // entitlements changed. so we trigger a change anyway here. The debounce will take care of
+                    // multi fire and we are ok with multi fire 1 second apart.
+                    _debounceEntitlementsChanged();
+                }
+
+                // Update last recorded state
+                lastRecordedState = current;
+            } catch (error) {
+                console.error('Entitlements monitor error:', error);
+            }
+        }, TEN_MINUTES);
+
+        console.log('Entitlements monitor started (10-minute interval)');
     }
 
     /**
@@ -197,7 +251,8 @@ define(function (require, exports, module) {
      * @example
      * // Listen for entitlements changes
      * const LoginService = window.KernelModeTrust.loginService;
-     * LoginService.on(LoginService.EVENT_ENTITLEMENTS_CHANGED, (entitlements) => {
+     * LoginService.on(LoginService.EVENT_ENTITLEMENTS_CHANGED, async() => {
+     *   const entitlements = await LoginService.getEffectiveEntitlements();
      *   console.log('Entitlements changed:', entitlements);
      *   // Update UI based on new entitlements
      * });
@@ -229,38 +284,20 @@ define(function (require, exports, module) {
             if (serverEntitlements.plan.paidSubscriber) {
                 // Already a paid subscriber, return as-is
                 return serverEntitlements;
-            } else {
-                // Enhance entitlements for trial user
-                return {
-                    ...serverEntitlements,
-                    plan: {
-                        ...serverEntitlements.plan,
-                        paidSubscriber: true,
-                        name: brackets.config.main_pro_plan
-                    },
-                    isInProTrial: true,
-                    trialDaysRemaining: trialDaysRemaining,
-                    entitlements: {
-                        ...serverEntitlements.entitlements,
-                        liveEdit: {
-                            activated: true,
-                            subscribeURL: brackets.config.purchase_url,
-                            upgradeToPlan: brackets.config.main_pro_plan,
-                            validTill: Date.now() + trialDaysRemaining * MS_IN_DAY
-                        }
-                    }
-                };
             }
-        } else {
-            // Non-logged-in user with trial - return synthetic entitlements
+            // Enhance entitlements for trial user
             return {
+                ...serverEntitlements,
                 plan: {
+                    ...serverEntitlements.plan,
                     paidSubscriber: true,
-                    name: brackets.config.main_pro_plan
+                    name: brackets.config.main_pro_plan,
+                    validTill: Date.now() + trialDaysRemaining * MS_IN_DAY
                 },
                 isInProTrial: true,
                 trialDaysRemaining: trialDaysRemaining,
                 entitlements: {
+                    ...serverEntitlements.entitlements,
                     liveEdit: {
                         activated: true,
                         subscribeURL: brackets.config.purchase_url,
@@ -270,6 +307,25 @@ define(function (require, exports, module) {
                 }
             };
         }
+
+        // Non-logged-in user with trial - return synthetic entitlements
+        return {
+            plan: {
+                paidSubscriber: true,
+                name: brackets.config.main_pro_plan,
+                validTill: Date.now() + trialDaysRemaining * MS_IN_DAY
+            },
+            isInProTrial: true,
+            trialDaysRemaining: trialDaysRemaining,
+            entitlements: {
+                liveEdit: {
+                    activated: true,
+                    subscribeURL: brackets.config.purchase_url,
+                    upgradeToPlan: brackets.config.main_pro_plan,
+                    validTill: Date.now() + trialDaysRemaining * MS_IN_DAY
+                }
+            }
+        };
     }
 
     // Add functions to secure exports
@@ -277,4 +333,7 @@ define(function (require, exports, module) {
     LoginService.getEffectiveEntitlements = getEffectiveEntitlements;
     LoginService.clearEntitlements = clearEntitlements;
     LoginService.EVENT_ENTITLEMENTS_CHANGED = EVENT_ENTITLEMENTS_CHANGED;
+
+    // Start the entitlements monitor timer
+    startEntitlementsMonitor();
 });

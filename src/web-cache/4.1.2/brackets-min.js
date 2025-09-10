@@ -167359,7 +167359,11 @@ define("services/login-service", function (require, exports, module) {
     require("./setup-login-service"); // this adds loginService to KernalModeTrust
     require("./promotions");
 
+    const Metrics = require("utils/Metrics");
+    const LoginUtils = require("./login-utils");
+
     const MS_IN_DAY = 10 * 24 * 60 * 60 * 1000;
+    const TEN_MINUTES = 10 * 60 * 1000;
 
     const KernalModeTrust = window.KernalModeTrust;
     if(!KernalModeTrust){
@@ -167374,6 +167378,25 @@ define("services/login-service", function (require, exports, module) {
 
     // Cached entitlements data
     let cachedEntitlements = null;
+
+    // Last recorded state for entitlements monitoring
+    let lastRecordedState = null;
+
+    // Debounced trigger for entitlements changed
+    let entitlementsChangedTimer = null;
+
+    function _debounceEntitlementsChanged() {
+        if (entitlementsChangedTimer) {
+            // already scheduled, skip
+            return;
+        }
+
+        entitlementsChangedTimer = setTimeout(() => {
+            LoginService.trigger(EVENT_ENTITLEMENTS_CHANGED);
+            entitlementsChangedTimer = null;
+        }, 1000); // atmost 1 entitlement changed event will be triggered in a second
+    }
+
 
     /**
      * Get entitlements from API or cache
@@ -167428,7 +167451,7 @@ define("services/login-service", function (require, exports, module) {
 
                     // Trigger event if entitlements changed
                     if (entitlementsChanged) {
-                        LoginService.trigger(EVENT_ENTITLEMENTS_CHANGED, result);
+                        _debounceEntitlementsChanged();
                     }
 
                     return cachedEntitlements;
@@ -167448,12 +167471,43 @@ define("services/login-service", function (require, exports, module) {
     function clearEntitlements() {
         if (cachedEntitlements) {
             cachedEntitlements = null;
-
-            // Trigger event when entitlements are cleared
-            if (LoginService.trigger) {
-                LoginService.trigger(EVENT_ENTITLEMENTS_CHANGED, null);
-            }
+            _debounceEntitlementsChanged();
         }
+    }
+
+
+    /**
+     * Start the 10-minute interval timer for monitoring entitlements
+     */
+    function startEntitlementsMonitor() {
+        setInterval(async () => {
+            try {
+                const current = await getEffectiveEntitlements(false); // Get effective entitlements
+
+                // Check if we need to refresh
+                const expiredPlanName = LoginUtils.validTillExpired(current, lastRecordedState);
+                const hasChanged = LoginUtils.haveEntitlementsChanged(current, lastRecordedState);
+
+                if (expiredPlanName || hasChanged) {
+                    console.log(`Entitlements monitor detected changes, Expired: ${expiredPlanName},` +
+                        `changed: ${hasChanged} refreshing...`);
+                    Metrics.countEvent(Metrics.EVENT_TYPE.PRO, "entRefresh",
+                        expiredPlanName ? "exp_"+expiredPlanName : "changed");
+                    await getEffectiveEntitlements(true); // Force refresh
+                    // if not logged in, the getEffectiveEntitlements will not trigger change even if some trial
+                    // entitlements changed. so we trigger a change anyway here. The debounce will take care of
+                    // multi fire and we are ok with multi fire 1 second apart.
+                    _debounceEntitlementsChanged();
+                }
+
+                // Update last recorded state
+                lastRecordedState = current;
+            } catch (error) {
+                console.error('Entitlements monitor error:', error);
+            }
+        }, TEN_MINUTES);
+
+        console.log('Entitlements monitor started (10-minute interval)');
     }
 
     /**
@@ -167529,7 +167583,8 @@ define("services/login-service", function (require, exports, module) {
      * @example
      * // Listen for entitlements changes
      * const LoginService = window.KernelModeTrust.loginService;
-     * LoginService.on(LoginService.EVENT_ENTITLEMENTS_CHANGED, (entitlements) => {
+     * LoginService.on(LoginService.EVENT_ENTITLEMENTS_CHANGED, async() => {
+     *   const entitlements = await LoginService.getEffectiveEntitlements();
      *   console.log('Entitlements changed:', entitlements);
      *   // Update UI based on new entitlements
      * });
@@ -167561,38 +167616,20 @@ define("services/login-service", function (require, exports, module) {
             if (serverEntitlements.plan.paidSubscriber) {
                 // Already a paid subscriber, return as-is
                 return serverEntitlements;
-            } else {
-                // Enhance entitlements for trial user
-                return {
-                    ...serverEntitlements,
-                    plan: {
-                        ...serverEntitlements.plan,
-                        paidSubscriber: true,
-                        name: brackets.config.main_pro_plan
-                    },
-                    isInProTrial: true,
-                    trialDaysRemaining: trialDaysRemaining,
-                    entitlements: {
-                        ...serverEntitlements.entitlements,
-                        liveEdit: {
-                            activated: true,
-                            subscribeURL: brackets.config.purchase_url,
-                            upgradeToPlan: brackets.config.main_pro_plan,
-                            validTill: Date.now() + trialDaysRemaining * MS_IN_DAY
-                        }
-                    }
-                };
             }
-        } else {
-            // Non-logged-in user with trial - return synthetic entitlements
+            // Enhance entitlements for trial user
             return {
+                ...serverEntitlements,
                 plan: {
+                    ...serverEntitlements.plan,
                     paidSubscriber: true,
-                    name: brackets.config.main_pro_plan
+                    name: brackets.config.main_pro_plan,
+                    validTill: Date.now() + trialDaysRemaining * MS_IN_DAY
                 },
                 isInProTrial: true,
                 trialDaysRemaining: trialDaysRemaining,
                 entitlements: {
+                    ...serverEntitlements.entitlements,
                     liveEdit: {
                         activated: true,
                         subscribeURL: brackets.config.purchase_url,
@@ -167602,6 +167639,25 @@ define("services/login-service", function (require, exports, module) {
                 }
             };
         }
+
+        // Non-logged-in user with trial - return synthetic entitlements
+        return {
+            plan: {
+                paidSubscriber: true,
+                name: brackets.config.main_pro_plan,
+                validTill: Date.now() + trialDaysRemaining * MS_IN_DAY
+            },
+            isInProTrial: true,
+            trialDaysRemaining: trialDaysRemaining,
+            entitlements: {
+                liveEdit: {
+                    activated: true,
+                    subscribeURL: brackets.config.purchase_url,
+                    upgradeToPlan: brackets.config.main_pro_plan,
+                    validTill: Date.now() + trialDaysRemaining * MS_IN_DAY
+                }
+            }
+        };
     }
 
     // Add functions to secure exports
@@ -167609,8 +167665,146 @@ define("services/login-service", function (require, exports, module) {
     LoginService.getEffectiveEntitlements = getEffectiveEntitlements;
     LoginService.clearEntitlements = clearEntitlements;
     LoginService.EVENT_ENTITLEMENTS_CHANGED = EVENT_ENTITLEMENTS_CHANGED;
+
+    // Start the entitlements monitor timer
+    startEntitlementsMonitor();
 });
 
+/*
+ * GNU AGPL-3.0 License
+ *
+ * Copyright (c) 2021 - present core.ai . All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
+ *
+ */
+
+/**
+ * Login Service Utilities
+ *
+ * This module contains utility functions for login service operations,
+ * including entitlements expiration checking and change detection.
+ */
+
+define("services/login-utils", function (require, exports, module) {
+
+    /**
+     * Check if any validTill time has expired
+     * 
+     * @param {Object|null} entitlements - Current entitlements object
+     * @param {Object|null} lastRecordedEntitlement - Previously recorded entitlements
+     * @returns {string|null} - Name of expired plan/entitlement or null if none expired
+     */
+    function validTillExpired(entitlements, lastRecordedEntitlement) {
+        if (!entitlements) {
+            return null;
+        }
+
+        const now = Date.now();
+
+        function isNewlyExpired(validTill, lastValidTill) {
+            return (
+                validTill &&
+                validTill < now &&                      // expired now
+                (!lastValidTill || lastValidTill >= now) // but wasn't expired before
+            );
+        }
+
+        // Check plan validTill
+        if (entitlements.plan) {
+            const validTill = entitlements.plan.validTill;
+            const lastValidTill = (lastRecordedEntitlement && lastRecordedEntitlement.plan)
+                ? lastRecordedEntitlement.plan.validTill
+                : null;
+
+            if (isNewlyExpired(validTill, lastValidTill)) {
+                return entitlements.plan.name || brackets.config.main_pro_plan;
+            }
+        }
+
+        // Check entitlements validTill
+        if (entitlements.entitlements) {
+            for (const key in entitlements.entitlements) {
+                const entitlement = entitlements.entitlements[key];
+                if (!entitlement) {
+                    continue;
+                }
+
+                const validTill = entitlement.validTill;
+                const lastValidTill = (lastRecordedEntitlement &&
+                    lastRecordedEntitlement.entitlements &&
+                    lastRecordedEntitlement.entitlements[key])
+                    ? lastRecordedEntitlement.entitlements[key].validTill
+                    : null;
+
+                if (isNewlyExpired(validTill, lastValidTill)) {
+                    return key;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Check if entitlements have changed from last recorded state
+     * 
+     * @param {Object|null} current - Current entitlements object
+     * @param {Object|null} last - Last recorded entitlements object
+     * @returns {boolean} - True if entitlements have changed, false otherwise
+     */
+    function haveEntitlementsChanged(current, last) {
+        if (!last && !current) {
+            return false;
+        }
+        if ((!last && current) || (!current && last)) {
+            return true;
+        }
+        if ((!last.entitlements && current.entitlements) || (!current.entitlements && last.entitlements)) {
+            return true;
+        }
+
+        // Check paidSubscriber changes
+        const currentPaidSub = current.plan && current.plan.paidSubscriber;
+        const lastPaidSub = last.plan && last.plan.paidSubscriber;
+        if (currentPaidSub !== lastPaidSub) {
+            return true;
+        }
+
+        // Check plan name changes
+        const currentPlanName = current.plan && current.plan.name;
+        const lastPlanName = last.plan && last.plan.name;
+        if (currentPlanName !== lastPlanName) {
+            return true;
+        }
+
+        // Check entitlement activations
+        if (current.entitlements && last.entitlements) {
+            for (const key of Object.keys(current.entitlements)) {
+                const currentActivated = current.entitlements[key] && current.entitlements[key].activated;
+                const lastActivated = last.entitlements[key] && last.entitlements[key].activated;
+                if (currentActivated !== lastActivated) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    // Export functions
+    exports.validTillExpired = validTillExpired;
+    exports.haveEntitlementsChanged = haveEntitlementsChanged;
+});
 /*
  * GNU AGPL-3.0 License
  *
@@ -168871,8 +169065,8 @@ define("services/promotions", function (require, exports, module) {
 
         // Also trigger entitlements changed event since effective entitlements have changed
         // This allows UI components to update based on the new trial status
-        const effectiveEntitlements = await LoginService.getEffectiveEntitlements();
-        LoginService.trigger(LoginService.EVENT_ENTITLEMENTS_CHANGED, effectiveEntitlements);
+        await LoginService.getEffectiveEntitlements();
+        LoginService.trigger(LoginService.EVENT_ENTITLEMENTS_CHANGED);
     }
 
     function _isAnyDialogsVisible() {
