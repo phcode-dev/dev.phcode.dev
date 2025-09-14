@@ -8468,122 +8468,6 @@ define("LiveDevelopment/main", function main(require, exports, module) {
         return false;
     }
 
-    let $livePreviewPanel = null; // stores the live preview panel, need this as overlay is appended inside this
-    let $overlayContainer = null; // the overlay container
-    let shouldShowSyncErrorOverlay = true; // once user closes the overlay we don't show them again
-    let shouldShowConnectingOverlay = true;
-    let connectingOverlayTimer = null; // this is needed as we show the connecting overlay after 3s
-    let connectingOverlayTimeDuration = 3000;
-
-    /**
-     * this function is responsible to check whether to show the overlay or not and how it should be shown
-     * because if user has closed the overlay manually, we don't show it again
-     * secondly, for connecting overlay we show that after a 3s timer, but sync error overlay is shown immediately
-     * @param {String} textMessage - the text that is written inside the overlay
-     * @param {Number} status - 1 for connect, 4 for sync error but we match it using MultiBrowserLiveDev
-     */
-    function _handleOverlay(textMessage, status) {
-        if (!$livePreviewPanel) {
-            $livePreviewPanel = $("#panel-live-preview");
-        }
-
-        // remove any existing overlay & timer
-        _hideOverlay();
-
-        // to not show the overlays if user has already closed it before
-        if(status === MultiBrowserLiveDev.STATUS_CONNECTING && !shouldShowConnectingOverlay) { return; }
-        if(status === MultiBrowserLiveDev.STATUS_SYNC_ERROR && !shouldShowSyncErrorOverlay) { return; }
-
-        // for connecting status, we delay showing the overlay by 3 seconds
-        if(status === MultiBrowserLiveDev.STATUS_CONNECTING) {
-            connectingOverlayTimer = setTimeout(() => {
-                _createAndShowOverlay(textMessage, status);
-                connectingOverlayTimer = null;
-            }, connectingOverlayTimeDuration);
-            return;
-        }
-
-        // for sync error status, show immediately
-        _createAndShowOverlay(textMessage, status);
-    }
-
-    /**
-     * this function is responsible to create & show the overlay.
-     * so overlay is shown when the live preview is connecting or live preview stopped because of some syntax error
-     * @param {String} textMessage - the text that is written inside the overlay
-     * @param {Number} status - 1 for connect, 4 for sync error but we match it using MultiBrowserLiveDev
-     */
-    function _createAndShowOverlay(textMessage, status) {
-        if (!$livePreviewPanel) {
-            $livePreviewPanel = $("#panel-live-preview");
-        }
-
-        // create the overlay element
-        // styled inside the 'src/extensionsIntegrated/Phoenix-live-preview/live-preview.css'
-        $overlayContainer = $("<div>").addClass("live-preview-status-overlay"); // the wrapper for overlay element
-        const $message = $("<div>").addClass("live-preview-overlay-message").text(textMessage);
-
-        // the close button at the right end of the overlay
-        const $close = $("<div>").addClass("live-preview-overlay-close")
-            .attr("title", Strings.LIVE_PREVIEW_HIDE_OVERLAY)
-            .on('click', () => {
-                if(status === MultiBrowserLiveDev.STATUS_CONNECTING) {
-                    shouldShowConnectingOverlay = false;
-                } else if(status === MultiBrowserLiveDev.STATUS_SYNC_ERROR) {
-                    shouldShowSyncErrorOverlay = false;
-                }
-                _hideOverlay();
-            });
-        const $closeIcon = $("<i>").addClass("fas fa-times");
-
-        $close.append($closeIcon);
-        $overlayContainer.append($message);
-        $overlayContainer.append($close);
-        $livePreviewPanel.append($overlayContainer);
-    }
-
-    /**
-     * responsible to hide the overlay
-     */
-    function _hideOverlay() {
-        _clearConnectingOverlayTimer();
-        if ($overlayContainer) {
-            $overlayContainer.remove();
-            $overlayContainer = null;
-        }
-    }
-
-    /**
-     * This is a helper function that just checks that if connectingOverlayTimer exists, we clear it
-     */
-    function _clearConnectingOverlayTimer() {
-        if (connectingOverlayTimer) {
-            clearTimeout(connectingOverlayTimer);
-            connectingOverlayTimer = null;
-        }
-    }
-
-    /**
-     * this function adds/remove the full-width class from the overlay container
-     * styled inside 'src/extensionsIntegrated/Phoenix-live-preview/live-preview.css'
-     *
-     * we need this because
-     * normally when live preview has a good width (more than 305px) then a 3px divider is shown at the left end
-     * so in that case we give the overlay a width of (100% - 3px),
-     * but when the live preview width is reduced
-     * then that divider line gets cut off, so in that case we make the width 100% for this overlay
-     *
-     * without this handling, a white gap appears on the left side, which is distracting
-     */
-    function _setOverlayWidth() {
-        if(!$overlayContainer || !$livePreviewPanel.length) { return; }
-        if($livePreviewPanel.width() <= 305) {
-            $overlayContainer.addClass("full-width");
-        } else {
-            $overlayContainer.removeClass("full-width");
-        }
-    }
-
     /** Initialize LiveDevelopment */
     AppInit.appReady(function () {
         params.parse();
@@ -8637,19 +8521,6 @@ define("LiveDevelopment/main", function main(require, exports, module) {
         MultiBrowserLiveDev.on(MultiBrowserLiveDev.EVENT_LIVE_PREVIEW_RELOAD, function (_event, clientDetails) {
             exports.trigger(exports.EVENT_LIVE_PREVIEW_RELOAD, clientDetails);
         });
-
-        MultiBrowserLiveDev.on(MultiBrowserLiveDev.EVENT_STATUS_CHANGE, function(event, status) {
-            if (status === MultiBrowserLiveDev.STATUS_CONNECTING) {
-                _handleOverlay(Strings.LIVE_DEV_STATUS_TIP_PROGRESS1, status);
-            } else if (status === MultiBrowserLiveDev.STATUS_SYNC_ERROR) {
-                _handleOverlay(Strings.LIVE_DEV_STATUS_TIP_SYNC_ERROR, status);
-            } else {
-                _hideOverlay();
-            }
-        });
-        // to understand why we need this, pls read the _setOverlayWidth function
-        new ResizeObserver(_setOverlayWidth).observe($("#main-plugin-panel")[0]);
-        EditorManager.on("activeEditorChange", _hideOverlay);
 
         // allow live preview to handle escape key event
         // Escape is mainly to hide boxes if they are visible
@@ -45860,6 +45731,7 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
         Metrics            = require("utils/Metrics"),
         LiveDevelopment    = require("LiveDevelopment/main"),
         LiveDevServerManager = require("LiveDevelopment/LiveDevServerManager"),
+        MultiBrowserLiveDev = require("LiveDevelopment/LiveDevMultiBrowser"),
         NativeApp           = require("utils/NativeApp"),
         StringUtils         = require("utils/StringUtils"),
         FileSystem          = require("filesystem/FileSystem"),
@@ -46065,6 +45937,9 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
     // live preview mode pref
     const PREFERENCE_LIVE_PREVIEW_MODE = "livePreviewMode";
 
+    // holds the dropdown instance
+    let $dropdown = null;
+
     /**
      * Get the appropriate default mode based on whether edit features are active
      * @returns {string} "highlight" if edit features inactive, "edit" if active
@@ -46130,6 +46005,13 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
     // so that when user unclicks the button we can revert back to the mode that was originally selected
     let modeThatWasSelected = null;
 
+    // live Preview overlay variables (overlays are shown when live preview is connecting or there's a syntax error)
+    let $overlayContainer = null; // the overlay container
+    let shouldShowSyncErrorOverlay = true; // once user closes the overlay we don't show them again
+    let shouldShowConnectingOverlay = true;
+    let connectingOverlayTimer = null; // this is needed as we show the connecting overlay after 3s
+    let connectingOverlayTimeDuration = 3000;
+
     StaticServer.on(EVENT_EMBEDDED_IFRAME_WHO_AM_I, function () {
         if($iframe && $iframe[0]) {
             const iframeDom = $iframe[0];
@@ -46144,6 +46026,111 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
         const editor  = EditorManager.getActiveEditor();
         editor.focus();
     });
+
+    /**
+     * this function is responsible to check whether to show the overlay or not and how it should be shown
+     * because if user has closed the overlay manually, we don't show it again
+     * secondly, for connecting overlay we show that after a 3s timer, but sync error overlay is shown immediately
+     * @param {String} textMessage - the text that is written inside the overlay
+     * @param {Number} status - 1 for connect, 4 for sync error but we match it using MultiBrowserLiveDev
+     */
+    function _handleOverlay(textMessage, status) {
+        if (!$panel) { return; }
+
+        // remove any existing overlay & timer
+        _hideOverlay();
+
+        // to not show the overlays if user has already closed it before
+        if(status === MultiBrowserLiveDev.STATUS_CONNECTING && !shouldShowConnectingOverlay) { return; }
+        if(status === MultiBrowserLiveDev.STATUS_SYNC_ERROR && !shouldShowSyncErrorOverlay) { return; }
+
+        // for connecting status, we delay showing the overlay by 3 seconds
+        if(status === MultiBrowserLiveDev.STATUS_CONNECTING) {
+            connectingOverlayTimer = setTimeout(() => {
+                _createAndShowOverlay(textMessage, status);
+                connectingOverlayTimer = null;
+            }, connectingOverlayTimeDuration);
+            return;
+        }
+
+        // for sync error status, show immediately
+        _createAndShowOverlay(textMessage, status);
+    }
+
+    /**
+     * this function is responsible to create & show the overlay.
+     * so overlay is shown when the live preview is connecting or live preview stopped because of some syntax error
+     * @param {String} textMessage - the text that is written inside the overlay
+     * @param {Number} status - 1 for connect, 4 for sync error but we match it using MultiBrowserLiveDev
+     */
+    function _createAndShowOverlay(textMessage, status) {
+        if (!$panel) { return; }
+
+        // create the overlay element
+        // styled inside the 'live-preview.css'
+        $overlayContainer = $("<div>").addClass("live-preview-status-overlay"); // the wrapper for overlay element
+        const $message = $("<div>").addClass("live-preview-overlay-message").text(textMessage);
+
+        // the close button at the right end of the overlay
+        const $close = $("<div>").addClass("live-preview-overlay-close")
+            .attr("title", Strings.LIVE_PREVIEW_HIDE_OVERLAY)
+            .on('click', () => {
+                if(status === MultiBrowserLiveDev.STATUS_CONNECTING) {
+                    shouldShowConnectingOverlay = false;
+                } else if(status === MultiBrowserLiveDev.STATUS_SYNC_ERROR) {
+                    shouldShowSyncErrorOverlay = false;
+                }
+                _hideOverlay();
+            });
+        const $closeIcon = $("<i>").addClass("fas fa-times");
+
+        $close.append($closeIcon);
+        $overlayContainer.append($message);
+        $overlayContainer.append($close);
+        $panel.append($overlayContainer);
+    }
+
+    /**
+     * responsible to hide the overlay
+     */
+    function _hideOverlay() {
+        _clearConnectingOverlayTimer();
+        if ($overlayContainer) {
+            $overlayContainer.remove();
+            $overlayContainer = null;
+        }
+    }
+
+    /**
+     * This is a helper function that just checks that if connectingOverlayTimer exists, we clear it
+     */
+    function _clearConnectingOverlayTimer() {
+        if (connectingOverlayTimer) {
+            clearTimeout(connectingOverlayTimer);
+            connectingOverlayTimer = null;
+        }
+    }
+
+    /**
+     * this function adds/remove the full-width class from the overlay container
+     * styled inside 'live-preview.css'
+     *
+     * we need this because
+     * normally when live preview has a good width (more than 305px) then a 3px divider is shown at the left end
+     * so in that case we give the overlay a width of (100% - 3px),
+     * but when the live preview width is reduced
+     * then that divider line gets cut off, so in that case we make the width 100% for this overlay
+     *
+     * without this handling, a white gap appears on the left side, which is distracting
+     */
+    function _setOverlayWidth() {
+        if(!$overlayContainer || !$panel || !$panel.length) { return; }
+        if($panel.width() <= 305) {
+            $overlayContainer.addClass("full-width");
+        } else {
+            $overlayContainer.removeClass("full-width");
+        }
+    }
 
     function _showProFeatureDialog() {
         const dialog = Dialogs.showModalDialog(
@@ -46285,7 +46272,7 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
         // this is to take care of invalid values in the pref file
         const currentMode = ["preview", "highlight", "edit"].includes(rawMode) ? rawMode : _getDefaultMode();
 
-        const dropdown = new DropdownButton.DropdownButton("", items, function(item, index) {
+        $dropdown = new DropdownButton.DropdownButton("", items, function(item, index) {
             if (item === Strings.LIVE_PREVIEW_MODE_PREVIEW) {
                 // using empty spaces to keep content aligned
                 return currentMode === "preview" ? `✓ ${item}` : `${'\u00A0'.repeat(4)}${item}`;
@@ -46309,10 +46296,10 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
         });
 
         // Append to document body for absolute positioning
-        $("body").append(dropdown.$button);
+        $("body").append($dropdown.$button);
 
         // Position the dropdown at the mouse coordinates
-        dropdown.$button.css({
+        $dropdown.$button.css({
             position: "absolute",
             left: event.pageX + "px",
             top: event.pageY + "px",
@@ -46320,14 +46307,14 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
         });
 
         // Add a custom class to override the max-height
-        dropdown.dropdownExtraClasses = "mode-context-menu";
+        $dropdown.dropdownExtraClasses = "mode-context-menu";
 
-        dropdown.showDropdown();
+        $dropdown.showDropdown();
 
         $(".mode-context-menu").css("max-height", "300px");
 
         // handle the option selection
-        dropdown.on("select", function (e, item, index) {
+        $dropdown.on("select", function (e, item, index) {
             // here we just set the preference
             // as the preferences listener will automatically handle the required changes
             if (index === 0) {
@@ -46360,9 +46347,26 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
         });
 
         // Remove the button after the dropdown is hidden
-        dropdown.$button.css({
+        $dropdown.$button.css({
             display: "none"
         });
+    }
+
+    /**
+     * to close the overflow button's dropdown
+     */
+    function _closeDropdown() {
+        if ($dropdown) {
+            if ($dropdown.$button) {
+                $dropdown.$button.remove();
+            }
+            $dropdown = null;
+        }
+    }
+
+    function _handleLPModeBtnClick(e) {
+        e.stopPropagation();
+        $dropdown ? _closeDropdown() : _showModeSelectionDropdown(e);
     }
 
     function _getTrustProjectPage() {
@@ -46668,7 +46672,7 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
             _popoutLivePreview("firefox");
         });
 
-        $modeBtn.on("click", _showModeSelectionDropdown);
+        $modeBtn.on("click", _handleLPModeBtnClick);
         $previewBtn.on("click", _handlePreviewBtnClick);
 
         _showOpenBrowserIcons();
@@ -46699,6 +46703,10 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
             _loadPreview(true, true);
             Metrics.countEvent(Metrics.EVENT_TYPE.LIVE_PREVIEW, "reloadBtn", "click");
         });
+
+        // Set up ResizeObserver for overlay width adjustments
+        // to understand why we're doing this read _setOverlayWidth function
+        new ResizeObserver(_setOverlayWidth).observe($panel[0]);
     }
 
     async function _loadPreview(force, isReload) {
@@ -46876,11 +46884,26 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
         }
     }
 
-    function _activeDocChanged() {
+    function _activeDocChanged(event, focusedEditor, lostEditor) {
         if(!LivePreviewSettings.isUsingCustomServer() && !LiveDevelopment.isActive()
             && (panel.isVisible() || StaticServer.hasActiveLivePreviews())) {
             // we do this only once after project switch if live preview for a doc is not active.
             LiveDevelopment.openLivePreview();
+        }
+
+        // we hide the overlay when there's no editor or its a non-previewable file
+        if (!focusedEditor || !focusedEditor.document) {
+            _hideOverlay();
+            return;
+        }
+
+        const filePath = focusedEditor.document.file.fullPath;
+        const isPreviewable = utils.isPreviewableFile(filePath) || utils.isServerRenderedFile(filePath);
+        const customServeURL = LivePreviewSettings.isUsingCustomServer() &&
+            LivePreviewSettings.getCustomServerConfig(filePath);
+
+        if (!isPreviewable && !customServeURL) {
+            _hideOverlay();
         }
     }
 
@@ -46903,6 +46926,13 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
         if(currentPreviewDetails.isHTMLFile && currentPreviewDetails.fullPath !== previewDetails.fullPath){
             console.error("Live preview URLs differ between phoenix live preview extension and core live preview",
                 currentPreviewDetails, previewDetails);
+        }
+
+        const status = MultiBrowserLiveDev.status;
+        if (status === MultiBrowserLiveDev.STATUS_CONNECTING) {
+            _handleOverlay(Strings.LIVE_DEV_STATUS_TIP_PROGRESS1, status);
+        } else if (status === MultiBrowserLiveDev.STATUS_SYNC_ERROR) {
+            _handleOverlay(Strings.LIVE_DEV_STATUS_TIP_SYNC_ERROR, status);
         }
     }
 
@@ -47022,6 +47052,18 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
         });
     }
 
+    function _registerHandlers() {
+        // when clicked anywhere on the page we want to close the dropdown
+        $("html").on("click", function (e) {
+            if ($(e.target).closest("#livePreviewModeBtn").length) { return; }
+            _closeDropdown();
+        });
+
+        $(document).on("click", "#livePreviewModeBtn", function (e) {
+            _handleLPModeBtnClick(e);
+        });
+    }
+
     AppInit.appReady(function () {
         if(Phoenix.isSpecRunnerWindow){
             return;
@@ -47064,6 +47106,7 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
             Menus.AFTER, Commands.FILE_LIVE_FILE_PREVIEW);
         fileMenu.addMenuDivider(Menus.BEFORE, Commands.FILE_LIVE_FILE_PREVIEW);
 
+        _registerHandlers();
         // init live preview mode from saved preferences
         _initializeMode();
         // listen for pref changes
@@ -47112,6 +47155,16 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
             // the service worker. So we have to reload the iframe from its parent- ie. phcode.dev. This is not
             // required in chrome, but we just keep it just for all platforms behaving the same.
             _loadPreview(true);
+        });
+
+        MultiBrowserLiveDev.on(MultiBrowserLiveDev.EVENT_STATUS_CHANGE, function(event, status) {
+            if (status === MultiBrowserLiveDev.STATUS_CONNECTING) {
+                _handleOverlay(Strings.LIVE_DEV_STATUS_TIP_PROGRESS1, status);
+            } else if (status === MultiBrowserLiveDev.STATUS_SYNC_ERROR) {
+                _handleOverlay(Strings.LIVE_DEV_STATUS_TIP_SYNC_ERROR, status);
+            } else {
+                _hideOverlay();
+            }
         });
 
         function refreshPreview() {
