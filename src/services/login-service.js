@@ -33,6 +33,9 @@ define(function (require, exports, module) {
     const MS_IN_DAY = 10 * 24 * 60 * 60 * 1000;
     const TEN_MINUTES = 10 * 60 * 1000;
 
+    // save a copy of window.fetch so that extensions wont tamper with it.
+    let fetchFn = window.fetch;
+
     const KernalModeTrust = window.KernalModeTrust;
     if(!KernalModeTrust){
         // integrated extensions will have access to kernal mode, but not external extensions
@@ -107,7 +110,7 @@ define(function (require, exports, module) {
                 fetchOptions.credentials = 'include';
             }
 
-            const response = await fetch(url, fetchOptions);
+            const response = await fetchFn(url, fetchOptions);
 
             if (response.ok) {
                 const result = await response.json();
@@ -333,6 +336,16 @@ define(function (require, exports, module) {
     LoginService.getEffectiveEntitlements = getEffectiveEntitlements;
     LoginService.clearEntitlements = clearEntitlements;
     LoginService.EVENT_ENTITLEMENTS_CHANGED = EVENT_ENTITLEMENTS_CHANGED;
+
+    // Test-only exports for integration testing
+    if (Phoenix.isTestWindow) {
+        window._test_login_service_exports = {
+            LoginService,
+            setFetchFn: function _setFetchFn(fn) {
+                fetchFn = fn;
+            }
+        };
+    }
 
     // Start the entitlements monitor timer
     startEntitlementsMonitor();

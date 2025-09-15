@@ -16,7 +16,7 @@
  *
  */
 
-/*global logger*/
+/*global logger, path*/
 
 /**
  * Promotions Service
@@ -25,7 +25,7 @@
  * Provides loginless pro trials
  *
  * - First install: 30-day trial on first usage
- * - Subsequent versions: 3-day trial (or remaining from 30-day if still valid)
+ * - Subsequent versions: 7-day trial (or remaining from 30-day if still valid)
  * - Older versions: No new trial, but existing 30-day trial remains valid
  */
 
@@ -36,6 +36,7 @@ define(function (require, exports, module) {
         semver = require("thirdparty/semver.browser"),
         ProDialogs = require("./pro-dialogs");
 
+    let dateNowFn = Date.now;
     const KernalModeTrust = window.KernalModeTrust;
     if (!KernalModeTrust) {
         throw new Error("Promotions service requires access to KernalModeTrust. Cannot boot without trust ring");
@@ -45,16 +46,96 @@ define(function (require, exports, module) {
 
     // Constants
     const EVENT_PRO_UPGRADE_ON_INSTALL = "pro_upgrade_on_install";
+    const PROMO_LOCAL_FILE = path.join(Phoenix.app.getApplicationSupportDirectory(),
+        Phoenix.isTestWindow ? "entitlements_promo_test.json" : "entitlements_promo.json");
     const TRIAL_POLL_MS = 10 * 1000; // 10 seconds after start, we assign a free trial if possible
     const FIRST_INSTALL_TRIAL_DAYS = 30;
-    const SUBSEQUENT_TRIAL_DAYS = 3;
+    const SUBSEQUENT_TRIAL_DAYS = 7;
     const MS_PER_DAY = 24 * 60 * 60 * 1000;
+    // the fallback salt is always a constant as this will only fail in rare circumstatnces and it needs to
+    // be exactly same across versions of the app. Changing this will not breal the large majority of users and
+    // for the ones who are  affected, the app will reset the signed data with new salt but will not grant ant trial
+    // when tampering is detected.
+    const FALLBACK_SALT = 'fallback-salt-2f309322-b32d-4d59-85b4-2baef666a9f4';
+
+    // Error constants for _getTrialData
+    const ERR_CORRUPTED = "corrupted";
+
+    /**
+     * Async wrapper for fs.readFile in browser
+     */
+    function _readFileAsync(filePath) {
+        return new Promise((resolve) => {
+            window.fs.readFile(filePath, 'utf8', function (err, data) {
+                resolve(err ? null : data);
+            });
+        });
+    }
+
+    /**
+     * Async wrapper for fs.writeFile in browser
+     */
+    function _writeFileAsync(filePath, data) {
+        return new Promise((resolve, reject) => {
+            window.fs.writeFile(filePath, data, 'utf8', (err) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve();
+                }
+            });
+        });
+    }
+
+    /**
+     * Clear trial data from storage (reusable function)
+     */
+    async function _clearTrialData() {
+        try {
+            if (Phoenix.isNativeApp) {
+                await KernalModeTrust.removeCredential(KernalModeTrust.CRED_KEY_PROMO);
+            } else {
+                await new Promise((resolve) => {
+                    window.fs.unlink(PROMO_LOCAL_FILE, () => resolve()); // Always resolve, ignore errors
+                });
+            }
+        } catch (error) {
+            console.log("Error clearing trial data:", error);
+        }
+    }
+
+    /**
+     * Get per-user salt for signature generation, creating and persisting one if it doesn't exist
+     */
+    async function _getSalt() {
+        try {
+            if (Phoenix.isNativeApp) {
+                // Native app: use KernalModeTrust credential store
+                let salt = await KernalModeTrust.getCredential(KernalModeTrust.SIGNATURE_SALT_KEY);
+                if (!salt) {
+                    // Generate and store new salt
+                    salt = crypto.randomUUID();
+                    await KernalModeTrust.setCredential(KernalModeTrust.SIGNATURE_SALT_KEY, salt);
+                }
+                return salt;
+            }
+            // in browser app, there is no way to securely store salt without the extensions also being able to
+            // read it. So we will just return a static salt. In future, we will need to vend trials strongly tied
+            // to user logins for the browser app, and for desktop app, the current cred storage would work as is.
+            return FALLBACK_SALT;
+        } catch (error) {
+            console.error("Error getting signature salt:", error);
+            Metrics.countEvent(Metrics.EVENT_TYPE.PRO, "corrupt", "saltErr");
+            // Return a fallback salt to prevent crashes
+            return FALLBACK_SALT;
+        }
+    }
 
     /**
      * Generate SHA-256 signature for trial data integrity
      */
     async function _generateSignature(proVersion, endDate) {
-        const salt = window.AppConfig ? window.AppConfig.version : "default-salt";
+        const salt = await _getSalt();
         const data = proVersion + "|" + endDate + "|" + salt;
 
         // Use browser crypto API for SHA-256 hashing
@@ -78,42 +159,50 @@ define(function (require, exports, module) {
     }
 
     /**
-     * Get stored trial data with validation
+     * Get stored trial data with validation and corruption detection
+     * Returns: {data: {...}} for valid data, {error: ERR_CORRUPTED} for errors, or null for no data
      */
     async function _getTrialData() {
         try {
             if (Phoenix.isNativeApp) {
                 // Native app: use KernalModeTrust credential store
-                const data = await KernalModeTrust.getCredential(KernalModeTrust.CRED_KEY_ENTITLEMENTS);
+                const data = await KernalModeTrust.getCredential(KernalModeTrust.CRED_KEY_PROMO);
                 if (!data) {
-                    return null;
+                    return null; // No data exists - genuine first install
                 }
-                const parsed = JSON.parse(data);
-                return (await _isValidSignature(parsed)) ? parsed : null;
+                try {
+                    const trialData = JSON.parse(data);
+                    const isValid = await _isValidSignature(trialData);
+                    if (isValid) {
+                        return { data: trialData }; // Valid trial data
+                    }
+                    return { error: ERR_CORRUPTED }; // Data exists but signature invalid
+                } catch (e) {
+                    return { error: ERR_CORRUPTED }; // JSON parse error
+                }
             } else {
-                // Browser app: use virtual filesystem
-                return new Promise((resolve) => {
-                    // app support dir in browser is /fs/app/
-                    const filePath = Phoenix.app.getApplicationSupportDirectory() + "entitlements_granted.json";
-                    window.fs.readFile(filePath, 'utf8', function (err, data) {
-                        if (err || !data) {
-                            resolve(null);
-                            return;
-                        }
-                        try {
-                            const parsed = JSON.parse(data);
-                            _isValidSignature(parsed).then(isValid => {
-                                resolve(isValid ? parsed : null);
-                            }).catch(() => resolve(null));
-                        } catch (e) {
-                            resolve(null);
-                        }
-                    });
-                });
+                // Browser app: use virtual filesystem. in future we need to always fetch from remote about trial
+                // entitlements for browser app.
+                const fileData = await _readFileAsync(PROMO_LOCAL_FILE);
+
+                if (!fileData) {
+                    return null; // No data exists - genuine first install
+                }
+
+                try {
+                    const trialData = JSON.parse(fileData);
+                    const isValid = await _isValidSignature(trialData);
+                    if (isValid) {
+                        return { data: trialData }; // Valid trial data
+                    }
+                    return { error: ERR_CORRUPTED }; // Data exists but signature invalid
+                } catch (e) {
+                    return { error: ERR_CORRUPTED }; // JSON parse error
+                }
             }
         } catch (error) {
             console.error("Error getting trial data:", error);
-            return null;
+            return { error: ERR_CORRUPTED }; // Treat error as corrupted/tampered data
         }
     }
 
@@ -126,20 +215,10 @@ define(function (require, exports, module) {
         try {
             if (Phoenix.isNativeApp) {
                 // Native app: use KernalModeTrust credential store
-                await KernalModeTrust.setCredential(KernalModeTrust.CRED_KEY_ENTITLEMENTS, JSON.stringify(trialData));
+                await KernalModeTrust.setCredential(KernalModeTrust.CRED_KEY_PROMO, JSON.stringify(trialData));
             } else {
                 // Browser app: use virtual filesystem
-                return new Promise((resolve, reject) => {
-                    const filePath = Phoenix.app.getApplicationSupportDirectory() + "entitlements_granted.json";
-                    window.fs.writeFile(filePath, JSON.stringify(trialData), 'utf8', (writeErr) => {
-                        if (writeErr) {
-                            console.error("Error storing trial data:", writeErr);
-                            reject(writeErr);
-                        } else {
-                            resolve();
-                        }
-                    });
-                });
+                await _writeFileAsync(PROMO_LOCAL_FILE, JSON.stringify(trialData));
             }
         } catch (error) {
             console.error("Error setting trial data:", error);
@@ -151,7 +230,7 @@ define(function (require, exports, module) {
      * Calculate remaining trial days from end date
      */
     function _calculateRemainingTrialDays(existingTrialData) {
-        const now = Date.now();
+        const now = dateNowFn();
         const trialEndDate = existingTrialData.endDate;
 
         // Calculate days remaining until trial ends
@@ -173,13 +252,13 @@ define(function (require, exports, module) {
     }
 
     /**
-     * Check if user has active pro subscription
+     * Check if user has active pro subscription. this calls actual login endpoint and is not to be used frequently!.
      * Returns true if user is logged in and has a paid subscription
      */
     async function _hasProSubscription() {
         try {
             // First verify login status to ensure login state is properly resolved
-            await LoginService.verifyLoginStatus();
+            await LoginService._verifyLoginStatus();
 
             // getEntitlements() returns null if not logged in
             const entitlements = await LoginService.getEntitlements();
@@ -190,28 +269,72 @@ define(function (require, exports, module) {
         }
     }
 
+    function _isTrialClosedForCurrentVersion(currentTrialData) {
+        if(!currentTrialData) {
+            return false;
+        }
+        const currentVersion = window.AppConfig ? window.AppConfig.apiVersion : "1.0.0";
+        const remainingDays = _calculateRemainingTrialDays(currentTrialData);
+        const trialVersion = currentTrialData.proVersion;
+        const isNewerVersion = _isNewerVersion(currentVersion, trialVersion);
+        const trialClosedDialogShown = currentTrialData.upgradeDialogShownVersion === currentVersion;
+        // if isCurrentVersionTrialClosed and if remainingDays > 0, it means that user put back system time to
+        // before trial end. in this case we should not grant any trial.
+        return trialClosedDialogShown || (remainingDays <= 0 && !isNewerVersion);
+    }
+
     /**
      * Get remaining pro trial days
      * Returns 0 if no trial or trial expired
      */
     async function getProTrialDaysRemaining() {
-        const trialData = await _getTrialData();
-        if (!trialData) {
+        const result = await _getTrialData();
+        if (!result || result.error || _isTrialClosedForCurrentVersion(result.data)) {
             return 0;
         }
 
-        return _calculateRemainingTrialDays(trialData);
+        return _calculateRemainingTrialDays(result.data);
     }
 
     async function activateProTrial() {
         const currentVersion = window.AppConfig ? window.AppConfig.apiVersion : "1.0.0";
-        const existingTrialData = await _getTrialData();
+        const result = await _getTrialData();
 
         let trialDays = FIRST_INSTALL_TRIAL_DAYS;
         let endDate;
-        const now = Date.now();
+        const now = dateNowFn();
         let metricString = `${currentVersion.replaceAll(".", "_")}`; // 3.1.0 -> 3_1_0
 
+        // Handle corrupted or parse failed data - reset trial state and deny any trial grants
+        if (result && result.error) {
+            console.warn(`Trial data error detected (${result.error}) - resetting trial state without granting trial`);
+            Metrics.countEvent(Metrics.EVENT_TYPE.PRO, "trial", "corrupt");
+
+            // Check if user has pro subscription
+            const hasProSubscription = await _hasProSubscription();
+            if (hasProSubscription) {
+                console.log("User has pro subscription - resetting corrupted trial marker");
+                await _setTrialData({
+                    proVersion: currentVersion,
+                    endDate: now // Expires immediately
+                });
+                return;
+            }
+
+            // For corruption, show trial ended dialog and create expired marker
+            // Do not grant any new trial as possible tampering.
+            console.warn("trial data corrupted");
+            ProDialogs.showProEndedDialog(); // Show ended dialog for security
+
+            // Create expired trial marker to prevent future trial grants
+            await _setTrialData({
+                proVersion: currentVersion,
+                endDate: now // Expires immediately
+            });
+            return;
+        }
+
+        const existingTrialData = result ? result.data : null;
         if (existingTrialData) {
             // Existing trial found
             const remainingDays = _calculateRemainingTrialDays(existingTrialData);
@@ -219,7 +342,7 @@ define(function (require, exports, module) {
             const isNewerVersion = _isNewerVersion(currentVersion, trialVersion);
 
             // Check if we should grant any trial
-            if (remainingDays <= 0 && !isNewerVersion) {
+            if (_isTrialClosedForCurrentVersion(existingTrialData)) {
                 // Check if promo ended dialog was already shown for this version
                 if (existingTrialData.upgradeDialogShownVersion !== currentVersion) {
                     // Check if user has pro subscription before showing promo dialog
@@ -250,7 +373,7 @@ define(function (require, exports, module) {
                     endDate = existingTrialData.endDate;
                     metricString = `nD_${metricString}_upgrade`;
                 } else {
-                    // Newer version with shorter existing trial - give 3 days
+                    // Newer version with shorter existing trial - give 7 days
                     console.log(`Newer version - granting ${SUBSEQUENT_TRIAL_DAYS} days trial`);
                     trialDays = SUBSEQUENT_TRIAL_DAYS;
                     endDate = now + (trialDays * MS_PER_DAY);
@@ -327,6 +450,53 @@ define(function (require, exports, module) {
     // Add to secure exports
     LoginService.getProTrialDaysRemaining = getProTrialDaysRemaining;
     LoginService.EVENT_PRO_UPGRADE_ON_INSTALL = EVENT_PRO_UPGRADE_ON_INSTALL;
+
+    // Test-only exports for integration testing
+    if (Phoenix.isTestWindow) {
+        window._test_promo_login_exports = {
+            LoginService: LoginService,
+            ProDialogs: ProDialogs,
+            _getTrialData: _getTrialData,
+            _setTrialData: _setTrialData,
+            _getSalt: _getSalt,
+            _isTrialClosedForCurrentVersion: _isTrialClosedForCurrentVersion,
+            _cleanTrialData: _clearTrialData,
+            _cleanSaltData: async function() {
+                try {
+                    if (Phoenix.isNativeApp) {
+                        await KernalModeTrust.removeCredential(KernalModeTrust.SIGNATURE_SALT_KEY);
+                        console.log("Salt data cleanup completed");
+                    }
+                    // in browser app we always return a static salt, so no need to clear it
+                } catch (error) {
+                    // Ignore cleanup errors
+                    console.log("Salt data cleanup completed (ignoring errors)");
+                }
+            },
+            // Test-only functions for manipulating credentials directly (bypassing validation)
+            _testSetPromoJSON: async function(data) {
+                if (Phoenix.isNativeApp) {
+                    await KernalModeTrust.setCredential(KernalModeTrust.CRED_KEY_PROMO, JSON.stringify(data));
+                } else {
+                    await _writeFileAsync(PROMO_LOCAL_FILE, JSON.stringify(data));
+                }
+            },
+            activateProTrial: activateProTrial,
+            getProTrialDaysRemaining: getProTrialDaysRemaining,
+            setDateNowFn: function _setDdateNowFn(fn) {
+                dateNowFn = fn;
+            },
+            EVENT_PRO_UPGRADE_ON_INSTALL: EVENT_PRO_UPGRADE_ON_INSTALL,
+            TRIAL_CONSTANTS: {
+                FIRST_INSTALL_TRIAL_DAYS,
+                SUBSEQUENT_TRIAL_DAYS,
+                MS_PER_DAY
+            },
+            ERROR_CONSTANTS: {
+                ERR_CORRUPTED
+            }
+        };
+    }
 
     // no public exports to prevent extension tampering
 });
