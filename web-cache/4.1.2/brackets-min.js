@@ -112601,8 +112601,8 @@ define("nls/root/strings", {
     "OPEN_SIGN_IN_URL": "Open Sign In Page",
     "PROFILE_POP_TITLE": "{APP_NAME} Account",
     "PROFILE_SIGN_IN": "Sign in to your account",
-    "CONTACT_SUPPORT": "Contact support",
-    "SIGN_OUT": "Sign out",
+    "CONTACT_SUPPORT": "Contact Support",
+    "SIGN_OUT": "Sign Out",
     "ACCOUNT_DETAILS": "Account Details",
     "LOGIN_REFRESH": "Check Login Status",
     "SIGN_IN_WAITING_TITLE": "Waiting for Sign In",
@@ -166954,6 +166954,15 @@ define("services/login-browser", function (require, exports, module) {
         init();
     }
 
+    // Test-only exports for integration testing
+    if (Phoenix.isTestWindow) {
+        window._test_login_browser_exports = {
+            setFetchFn: function _setFetchFn(fn) {
+                fetchFn = fn;
+            }
+        };
+    }
+
     // public exports
     exports.isLoggedIn = isLoggedIn;
 
@@ -167400,6 +167409,15 @@ define("services/login-desktop", function (require, exports, module) {
         LoginService._verifyLoginStatus = () => _verifyLogin(false);
         LoginService.getAccountBaseURL = getAccountBaseURL;
         init();
+    }
+
+    // Test-only exports for integration testing
+    if (Phoenix.isTestWindow) {
+        window._test_login_desktop_exports = {
+            setFetchFn: function _setFetchFn(fn) {
+                fetchFn = fn;
+            }
+        };
     }
 
     // public exports
