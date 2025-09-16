@@ -78528,6 +78528,7 @@ define("nls/el/strings", {
   "CMD_AUTO_UPDATE": "Αυτόματη Ενημέρωση",
   "CMD_HOW_TO_USE_BRACKETS": "Πώς να Χρησιμοποιήσετε το {APP_NAME}",
   "CMD_SUPPORT": "Υποστήριξη {APP_NAME}",
+  "CMD_GET_PRO": "Αποκτήστε το Phoenix Pro",
   "CMD_USER_PROFILE": "Λογαριασμός {APP_NAME}",
   "CMD_DOCS": "Βοήθεια, Ξεκινώντας",
   "CMD_SUGGEST": "Πρότεινε Feature",
@@ -79396,8 +79397,6 @@ define("nls/el/strings", {
   "OPEN_SIGN_IN_URL": "Άνοιγμα Σελίδας Σύνδεσης",
   "PROFILE_POP_TITLE": "Λογαριασμός {APP_NAME}",
   "PROFILE_SIGN_IN": "Συνδεθείτε στον λογαριασμό σας",
-  "CONTACT_SUPPORT": "Επικοινωνία με την υποστήριξη",
-  "SIGN_OUT": "Αποσύνδεση",
   "ACCOUNT_DETAILS": "Στοιχεία Λογαριασμού",
   "LOGIN_REFRESH": "Έλεγχος Κατάστασης Σύνδεσης",
   "SIGN_IN_WAITING_TITLE": "Αναμονή για Σύνδεση",
@@ -79464,10 +79463,11 @@ define("nls/el/strings", {
   "PROMO_CARD_4_MESSAGE": "Επεξεργαστείτε επικεφαλίδες, κουμπιά και αντιγράψτε απευθείας στην προεπισκόπηση.",
   "PROMO_LEARN_MORE": "Μάθετε περισσότερα…",
   "PROMO_GET_APP_UPSELL_BUTTON": "Αποκτήστε {0}",
-  "CMD_GET_PRO": "Αποκτήστε το Phoenix Pro",
   "PROMO_PRO_ENDED_TITLE": "Η δοκιμαστική σας έκδοση {0} έληξε",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Δοκιμαστική έκδοση Phoenix Pro ({0} ημέρες απομένουν)",
-  "GET_PHOENIX_PRO": "Αποκτήστε το Phoenix Pro"
+  "GET_PHOENIX_PRO": "Αποκτήστε το Phoenix Pro",
+  "CONTACT_SUPPORT": "Επικοινωνία με την Υποστήριξη",
+  "SIGN_OUT": "Αποσύνδεση"
 });
 /*
  * GNU AGPL-3.0 License
@@ -87538,6 +87538,7 @@ define("nls/gl/strings", {
   "CMD_AUTO_UPDATE": "Actualización automática",
   "CMD_HOW_TO_USE_BRACKETS": "Cómo utilizar {APP_NAME}",
   "CMD_SUPPORT": "Soporte de {APP_NAME}",
+  "CMD_GET_PRO": "Obtén Phoenix Pro",
   "CMD_USER_PROFILE": "Conta de {APP_NAME}",
   "CMD_DOCS": "Axuda, comezando",
   "CMD_SUGGEST": "Suxerir unha mellora",
@@ -88406,8 +88407,6 @@ define("nls/gl/strings", {
   "OPEN_SIGN_IN_URL": "Abrir páxina de inicio de sesión",
   "PROFILE_POP_TITLE": "Conta de {APP_NAME}",
   "PROFILE_SIGN_IN": "Iniciar sesión na túa conta",
-  "CONTACT_SUPPORT": "Contactar co soporte",
-  "SIGN_OUT": "Pechar sesión",
   "ACCOUNT_DETAILS": "Detalles da conta",
   "LOGIN_REFRESH": "Comprobar o estado do inicio de sesión",
   "SIGN_IN_WAITING_TITLE": "Agardando o inicio de sesión",
@@ -88474,10 +88473,11 @@ define("nls/gl/strings", {
   "PROMO_CARD_4_MESSAGE": "Edita títulos, botóns e copia directamente na previsualización.",
   "PROMO_LEARN_MORE": "Máis información…",
   "PROMO_GET_APP_UPSELL_BUTTON": "Obtén {0}",
-  "CMD_GET_PRO": "Obtén Phoenix Pro",
   "PROMO_PRO_ENDED_TITLE": "Rematou a túa proba de {0}",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Proba de Phoenix Pro ({0} días restantes)",
-  "GET_PHOENIX_PRO": "Obtén Phoenix Pro"
+  "GET_PHOENIX_PRO": "Obtén Phoenix Pro",
+  "CONTACT_SUPPORT": "Contactar co soporte técnico",
+  "SIGN_OUT": "Pechar sesión"
 });
 /*
  * GNU AGPL-3.0 License
@@ -92002,6 +92002,7 @@ define("nls/hu/strings", {
   "CMD_AUTO_UPDATE": "Automatikus frissítés",
   "CMD_HOW_TO_USE_BRACKETS": "{APP_NAME} használata",
   "CMD_SUPPORT": "{APP_NAME} támogatás",
+  "CMD_GET_PRO": "Szerezd meg a Phoenix Pro-t",
   "CMD_USER_PROFILE": "{APP_NAME} fiók",
   "CMD_DOCS": "Súgó, Első lépések",
   "CMD_SUGGEST": "Javaslat új funkcióra",
@@ -92870,8 +92871,6 @@ define("nls/hu/strings", {
   "OPEN_SIGN_IN_URL": "Bejelentkezési oldal megnyitása",
   "PROFILE_POP_TITLE": "{APP_NAME} fiók",
   "PROFILE_SIGN_IN": "Bejelentkezés a fiókodba",
-  "CONTACT_SUPPORT": "Ügyfélszolgálattal való kapcsolatfelvétel",
-  "SIGN_OUT": "Kijelentkezés",
   "ACCOUNT_DETAILS": "Fiókadatok",
   "LOGIN_REFRESH": "Bejelentkezés állapotának ellenőrzése",
   "SIGN_IN_WAITING_TITLE": "Bejelentkezésre vár",
@@ -92938,10 +92937,11 @@ define("nls/hu/strings", {
   "PROMO_CARD_4_MESSAGE": "Szerkesszen címsorokat, gombokat és másoljon közvetlenül az előnézetben.",
   "PROMO_LEARN_MORE": "Tudj meg többet…",
   "PROMO_GET_APP_UPSELL_BUTTON": "Szerezd meg a(z) {0}-t/et",
-  "CMD_GET_PRO": "Szerezd meg a Phoenix Pro-t",
   "PROMO_PRO_ENDED_TITLE": "Lejárt a(z) {0} próbaidőszakod",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro próbaverzió ({0} nap van hátra)",
-  "GET_PHOENIX_PRO": "Szerezd meg a Phoenix Pro-t"
+  "GET_PHOENIX_PRO": "Szerezd meg a Phoenix Pro-t",
+  "CONTACT_SUPPORT": "Támogatás kérése",
+  "SIGN_OUT": "Kijelentkezés"
 });
 /*
  * GNU AGPL-3.0 License
@@ -93481,6 +93481,7 @@ define("nls/id/strings", {
   "CMD_AUTO_UPDATE": "Pembaruan Otomatis",
   "CMD_HOW_TO_USE_BRACKETS": "Bagaimana Menggunakan {APP_NAME}",
   "CMD_SUPPORT": "Bantuan {APP_NAME}",
+  "CMD_GET_PRO": "Dapatkan Phoenix Pro",
   "CMD_USER_PROFILE": "Akun {APP_NAME}",
   "CMD_DOCS": "Bantuan, Memulai",
   "CMD_SUGGEST": "Sarankan Fitur",
@@ -94349,8 +94350,6 @@ define("nls/id/strings", {
   "OPEN_SIGN_IN_URL": "Buka Halaman Masuk",
   "PROFILE_POP_TITLE": "Akun {APP_NAME}",
   "PROFILE_SIGN_IN": "Masuk ke akun Anda",
-  "CONTACT_SUPPORT": "Hubungi dukungan",
-  "SIGN_OUT": "Keluar",
   "ACCOUNT_DETAILS": "Detail Akun",
   "LOGIN_REFRESH": "Periksa Status Login",
   "SIGN_IN_WAITING_TITLE": "Menunggu Masuk",
@@ -94417,10 +94416,11 @@ define("nls/id/strings", {
   "PROMO_CARD_4_MESSAGE": "Edit judul, tombol, dan salin langsung di pratinjau.",
   "PROMO_LEARN_MORE": "Pelajari Lebih Lanjut…",
   "PROMO_GET_APP_UPSELL_BUTTON": "Dapatkan {0}",
-  "CMD_GET_PRO": "Dapatkan Phoenix Pro",
   "PROMO_PRO_ENDED_TITLE": "Masa Percobaan {0} Anda telah berakhir",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Percobaan Phoenix Pro ({0} hari tersisa)",
-  "GET_PHOENIX_PRO": "Dapatkan Phoenix Pro"
+  "GET_PHOENIX_PRO": "Dapatkan Phoenix Pro",
+  "CONTACT_SUPPORT": "Hubungi Dukungan",
+  "SIGN_OUT": "Keluar"
 });
 /*
  * GNU AGPL-3.0 License
@@ -97998,6 +97998,7 @@ define("nls/ko/strings", {
   "CMD_AUTO_UPDATE": "자동 업데이트",
   "CMD_HOW_TO_USE_BRACKETS": "{APP_NAME} 사용법",
   "CMD_SUPPORT": "{APP_NAME} 지원",
+  "CMD_GET_PRO": "Phoenix Pro 받기",
   "CMD_USER_PROFILE": "{APP_NAME} 계정",
   "CMD_DOCS": "도움말, 시작하기",
   "CMD_SUGGEST": "기능 제안",
@@ -98866,8 +98867,6 @@ define("nls/ko/strings", {
   "OPEN_SIGN_IN_URL": "로그인 페이지 열기",
   "PROFILE_POP_TITLE": "{APP_NAME} 계정",
   "PROFILE_SIGN_IN": "계정에 로그인",
-  "CONTACT_SUPPORT": "지원팀에 문의",
-  "SIGN_OUT": "로그아웃",
   "ACCOUNT_DETAILS": "계정 세부정보",
   "LOGIN_REFRESH": "로그인 상태 확인",
   "SIGN_IN_WAITING_TITLE": "로그인 대기 중",
@@ -98934,10 +98933,11 @@ define("nls/ko/strings", {
   "PROMO_CARD_4_MESSAGE": "미리보기에서 바로 제목, 버튼 및 복사를 편집할 수 있습니다.",
   "PROMO_LEARN_MORE": "자세히 알아보기…",
   "PROMO_GET_APP_UPSELL_BUTTON": "{0} 받기",
-  "CMD_GET_PRO": "Phoenix Pro 받기",
   "PROMO_PRO_ENDED_TITLE": "{0} 평가판 사용 기간이 만료되었습니다",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro 평가판({0}일 남음)",
-  "GET_PHOENIX_PRO": "Phoenix Pro 받기"
+  "GET_PHOENIX_PRO": "Phoenix Pro 받기",
+  "CONTACT_SUPPORT": "고객 지원 문의",
+  "SIGN_OUT": "로그아웃"
 });
 /*
  * GNU AGPL-3.0 License
@@ -103968,6 +103968,7 @@ define("nls/nl/strings", {
   "CMD_AUTO_UPDATE": "Automatisch bijwerken",
   "CMD_HOW_TO_USE_BRACKETS": "Hoe gebruik je {APP_NAME}",
   "CMD_SUPPORT": "{APP_NAME} ondersteuning",
+  "CMD_GET_PRO": "Download Phoenix Pro",
   "CMD_USER_PROFILE": "{APP_NAME}-account",
   "CMD_DOCS": "Help, aan de slag",
   "CMD_SUGGEST": "Stel een nieuwe functie voor",
@@ -104836,8 +104837,6 @@ define("nls/nl/strings", {
   "OPEN_SIGN_IN_URL": "Inlogpagina openen",
   "PROFILE_POP_TITLE": "{APP_NAME}-account",
   "PROFILE_SIGN_IN": "Inloggen op uw account",
-  "CONTACT_SUPPORT": "Contact opnemen met support",
-  "SIGN_OUT": "Uitloggen",
   "ACCOUNT_DETAILS": "Accountgegevens",
   "LOGIN_REFRESH": "Aanmeldstatus controleren",
   "SIGN_IN_WAITING_TITLE": "Aanmelden wordt verwerkt",
@@ -104904,10 +104903,11 @@ define("nls/nl/strings", {
   "PROMO_CARD_4_MESSAGE": "Bewerk koppen, knoppen en kopieer direct in de voorbeeldweergave.",
   "PROMO_LEARN_MORE": "Meer informatie…",
   "PROMO_GET_APP_UPSELL_BUTTON": "Download {0}",
-  "CMD_GET_PRO": "Download Phoenix Pro",
   "PROMO_PRO_ENDED_TITLE": "Je {0} proefperiode is afgelopen",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro proefversie ({0} dagen resterend)",
-  "GET_PHOENIX_PRO": "Koop Phoenix Pro"
+  "GET_PHOENIX_PRO": "Koop Phoenix Pro",
+  "CONTACT_SUPPORT": "Neem contact op met support",
+  "SIGN_OUT": "Afmelden"
 });
 /*
  * GNU AGPL-3.0 License
@@ -106980,6 +106980,7 @@ define("nls/pt-br/strings", {
   "CMD_AUTO_UPDATE": "Atualização automática",
   "CMD_HOW_TO_USE_BRACKETS": "Como usar o {APP_NAME}",
   "CMD_SUPPORT": "Ajuda do {APP_NAME}",
+  "CMD_GET_PRO": "Adquira o Phoenix Pro",
   "CMD_USER_PROFILE": "Conta do {APP_NAME}",
   "CMD_DOCS": "Ajuda, Primeiros Passos",
   "CMD_SUGGEST": "Sugira um recurso",
@@ -107848,8 +107849,6 @@ define("nls/pt-br/strings", {
   "OPEN_SIGN_IN_URL": "Abrir Página de Login",
   "PROFILE_POP_TITLE": "Conta {APP_NAME}",
   "PROFILE_SIGN_IN": "Entrar na sua conta",
-  "CONTACT_SUPPORT": "Contatar o suporte",
-  "SIGN_OUT": "Sair",
   "ACCOUNT_DETAILS": "Detalhes da Conta",
   "LOGIN_REFRESH": "Verificar Status de Login",
   "SIGN_IN_WAITING_TITLE": "Aguardando login",
@@ -107916,10 +107915,11 @@ define("nls/pt-br/strings", {
   "PROMO_CARD_4_MESSAGE": "Edite títulos, botões e copie diretamente na pré-visualização.",
   "PROMO_LEARN_MORE": "Saiba mais…",
   "PROMO_GET_APP_UPSELL_BUTTON": "Obtenha o {0}",
-  "CMD_GET_PRO": "Adquira o Phoenix Pro",
   "PROMO_PRO_ENDED_TITLE": "Seu período de teste de {0} terminou",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Teste do Phoenix Pro ({0} dias restantes)",
-  "GET_PHOENIX_PRO": "Adquira o Phoenix Pro"
+  "GET_PHOENIX_PRO": "Adquira o Phoenix Pro",
+  "CONTACT_SUPPORT": "Contatar o Suporte",
+  "SIGN_OUT": "Sair"
 });
 /*
  * GNU AGPL-3.0 License
@@ -108484,6 +108484,7 @@ define("nls/pt-pt/strings", {
   "CMD_AUTO_UPDATE": "Atualização automática",
   "CMD_HOW_TO_USE_BRACKETS": "Como usar o {APP_NAME}",
   "CMD_SUPPORT": "Suporte do {APP_NAME}",
+  "CMD_GET_PRO": "Obter Phoenix Pro",
   "CMD_USER_PROFILE": "Conta {APP_NAME}",
   "CMD_DOCS": "Ajuda, Introdução",
   "CMD_SUGGEST": "Sugerir uma funcionalidade",
@@ -109352,8 +109353,6 @@ define("nls/pt-pt/strings", {
   "OPEN_SIGN_IN_URL": "Abrir Página de Início de Sessão",
   "PROFILE_POP_TITLE": "Conta {APP_NAME}",
   "PROFILE_SIGN_IN": "Iniciar sessão na sua conta",
-  "CONTACT_SUPPORT": "Contactar o suporte",
-  "SIGN_OUT": "Terminar Sessão",
   "ACCOUNT_DETAILS": "Detalhes da Conta",
   "LOGIN_REFRESH": "Verificar estado de início de sessão",
   "SIGN_IN_WAITING_TITLE": "A aguardar início de sessão",
@@ -109420,10 +109419,11 @@ define("nls/pt-pt/strings", {
   "PROMO_CARD_4_MESSAGE": "Edite títulos, botões e copie diretamente na pré-visualização.",
   "PROMO_LEARN_MORE": "Saiba mais…",
   "PROMO_GET_APP_UPSELL_BUTTON": "Obtenha {0}",
-  "CMD_GET_PRO": "Obter Phoenix Pro",
   "PROMO_PRO_ENDED_TITLE": "O seu período experimental de {0} terminou",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Período experimental do Phoenix Pro ({0} dias restantes)",
-  "GET_PHOENIX_PRO": "Obter Phoenix Pro"
+  "GET_PHOENIX_PRO": "Obter Phoenix Pro",
+  "CONTACT_SUPPORT": "Contactar o Suporte",
+  "SIGN_OUT": "Terminar Sessão"
 });
 /*
  * GNU AGPL-3.0 License
@@ -109988,6 +109988,7 @@ define("nls/ro/strings", {
   "CMD_AUTO_UPDATE": "Actualizare automată",
   "CMD_HOW_TO_USE_BRACKETS": "Cum să folosești {APP_NAME}",
   "CMD_SUPPORT": "Suport {APP_NAME}",
+  "CMD_GET_PRO": "Obține Phoenix Pro",
   "CMD_USER_PROFILE": "Cont {APP_NAME}",
   "CMD_DOCS": "Ajutor, Noțiuni introductive",
   "CMD_SUGGEST": "Sugerează o funcționalitate",
@@ -110856,8 +110857,6 @@ define("nls/ro/strings", {
   "OPEN_SIGN_IN_URL": "Deschide pagina de conectare",
   "PROFILE_POP_TITLE": "Cont {APP_NAME}",
   "PROFILE_SIGN_IN": "Conectează-te la contul tău",
-  "CONTACT_SUPPORT": "Contactează asistența",
-  "SIGN_OUT": "Deconectare",
   "ACCOUNT_DETAILS": "Detalii cont",
   "LOGIN_REFRESH": "Verificare stare autentificare",
   "SIGN_IN_WAITING_TITLE": "Se așteaptă autentificarea",
@@ -110924,10 +110923,11 @@ define("nls/ro/strings", {
   "PROMO_CARD_4_MESSAGE": "Editează titluri, butoane și copiază direct în previzualizare.",
   "PROMO_LEARN_MORE": "Află mai multe…",
   "PROMO_GET_APP_UPSELL_BUTTON": "Obține {0}",
-  "CMD_GET_PRO": "Obține Phoenix Pro",
   "PROMO_PRO_ENDED_TITLE": "Perioada de probă {0} a expirat",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Probă Phoenix Pro ({0} zile rămase)",
-  "GET_PHOENIX_PRO": "Obține Phoenix Pro"
+  "GET_PHOENIX_PRO": "Obține Phoenix Pro",
+  "CONTACT_SUPPORT": "Contactează Asistența",
+  "SIGN_OUT": "Deconectare"
 });
 /*
  * GNU AGPL-3.0 License
@@ -119351,6 +119351,7 @@ define("nls/tr/strings", {
   "CMD_AUTO_UPDATE": "Otomatik Güncelleme",
   "CMD_HOW_TO_USE_BRACKETS": "{APP_NAME} Nasıl Kullanılır",
   "CMD_SUPPORT": "{APP_NAME} Desteği",
+  "CMD_GET_PRO": "Phoenix Pro'yu Edinin",
   "CMD_USER_PROFILE": "{APP_NAME} Hesabı",
   "CMD_DOCS": "Yardım, Başlarken",
   "CMD_SUGGEST": "Yeni Özellik Öner",
@@ -120219,8 +120220,6 @@ define("nls/tr/strings", {
   "OPEN_SIGN_IN_URL": "Giriş Sayfasını Aç",
   "PROFILE_POP_TITLE": "{APP_NAME} Hesabı",
   "PROFILE_SIGN_IN": "Hesabınıza giriş yapın",
-  "CONTACT_SUPPORT": "Destek ekibiyle iletişime geçin",
-  "SIGN_OUT": "Oturumu kapat",
   "ACCOUNT_DETAILS": "Hesap Ayrıntıları",
   "LOGIN_REFRESH": "Oturum Durumunu Kontrol Et",
   "SIGN_IN_WAITING_TITLE": "Oturum Açma Bekleniyor",
@@ -120287,10 +120286,11 @@ define("nls/tr/strings", {
   "PROMO_CARD_4_MESSAGE": "Başlıkları, düğmeleri düzenleyin ve doğrudan önizlemede kopyalayın.",
   "PROMO_LEARN_MORE": "Daha Fazla Bilgi Edinin…",
   "PROMO_GET_APP_UPSELL_BUTTON": "{0} edinin",
-  "CMD_GET_PRO": "Phoenix Pro'yu Edinin",
   "PROMO_PRO_ENDED_TITLE": "{0} Denemeniz Sona Erdi",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro Deneme Sürümü ({0} gün kaldı)",
-  "GET_PHOENIX_PRO": "Phoenix Pro'yu Edinin"
+  "GET_PHOENIX_PRO": "Phoenix Pro'yu Edinin",
+  "CONTACT_SUPPORT": "Desteğe Başvur",
+  "SIGN_OUT": "Oturumu Kapat"
 });
 /*
  * GNU AGPL-3.0 License
@@ -122363,6 +122363,7 @@ define("nls/ur/strings", {
   "CMD_AUTO_UPDATE": "خودکار اپ ڈیٹ",
   "CMD_HOW_TO_USE_BRACKETS": "{APP_NAME} استعمال کرنے کا طریقہ",
   "CMD_SUPPORT": "{APP_NAME} سپورٹ",
+  "CMD_GET_PRO": "Phoenix Pro حاصل کریں",
   "CMD_USER_PROFILE": "{APP_NAME} اکاؤنٹ",
   "CMD_DOCS": "مدد، شروع کرنا",
   "CMD_SUGGEST": "خصوصیت تجویز کریں",
@@ -123231,8 +123232,6 @@ define("nls/ur/strings", {
   "OPEN_SIGN_IN_URL": "سائن ان صفحہ کھولیں",
   "PROFILE_POP_TITLE": "{APP_NAME} اکاؤنٹ",
   "PROFILE_SIGN_IN": "اپنے اکاؤنٹ میں سائن ان کریں",
-  "CONTACT_SUPPORT": "سپورٹ سے رابطہ کریں",
-  "SIGN_OUT": "سائن آؤٹ کریں",
   "ACCOUNT_DETAILS": "اکاؤنٹ کی تفصیلات",
   "LOGIN_REFRESH": "لاگ ان کی حیثیت چیک کریں",
   "SIGN_IN_WAITING_TITLE": "سائن ان کا انتظار ہے",
@@ -123299,10 +123298,11 @@ define("nls/ur/strings", {
   "PROMO_CARD_4_MESSAGE": "پیش نظارہ میں براہ راست ہیڈنگ، بٹنوں اور کاپی میں ترمیم کریں۔",
   "PROMO_LEARN_MORE": "مزید جانیے…",
   "PROMO_GET_APP_UPSELL_BUTTON": "{0} حاصل کریں",
-  "CMD_GET_PRO": "Phoenix Pro حاصل کریں",
   "PROMO_PRO_ENDED_TITLE": "آپ کا {0} آزمائشی ورژن ختم ہو گیا ہے۔",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro آزمائشی ورژن ({0} دن باقی)",
-  "GET_PHOENIX_PRO": "Phoenix Pro حاصل کریں"
+  "GET_PHOENIX_PRO": "Phoenix Pro حاصل کریں",
+  "CONTACT_SUPPORT": "مدد حاصل کریں",
+  "SIGN_OUT": "سائن آؤٹ کریں"
 });
 /*
  * GNU AGPL-3.0 License
@@ -123899,6 +123899,7 @@ define("nls/zh-cn/strings", {
   "CMD_AUTO_UPDATE": "自动更新",
   "CMD_HOW_TO_USE_BRACKETS": "如何使用 {APP_NAME}",
   "CMD_SUPPORT": "{APP_NAME} 支持",
+  "CMD_GET_PRO": "获取 Phoenix Pro",
   "CMD_USER_PROFILE": "{APP_NAME} 帐户",
   "CMD_DOCS": "帮助，入门指南",
   "CMD_SUGGEST": "推荐功能",
@@ -124767,8 +124768,6 @@ define("nls/zh-cn/strings", {
   "OPEN_SIGN_IN_URL": "打开登录页面",
   "PROFILE_POP_TITLE": "{APP_NAME} 帐户",
   "PROFILE_SIGN_IN": "登录您的帐户",
-  "CONTACT_SUPPORT": "联系客服",
-  "SIGN_OUT": "退出登录",
   "ACCOUNT_DETAILS": "帐户详情",
   "LOGIN_REFRESH": "检查登录状态",
   "SIGN_IN_WAITING_TITLE": "等待登录",
@@ -124835,10 +124834,11 @@ define("nls/zh-cn/strings", {
   "PROMO_CARD_4_MESSAGE": "直接在预览中编辑标题、按钮和复制内容。",
   "PROMO_LEARN_MORE": "了解更多…",
   "PROMO_GET_APP_UPSELL_BUTTON": "获取 {0}",
-  "CMD_GET_PRO": "获取 Phoenix Pro",
   "PROMO_PRO_ENDED_TITLE": "您的 {0} 试用已结束",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro 试用版（剩余 {0} 天）",
-  "GET_PHOENIX_PRO": "获取 Phoenix Pro"
+  "GET_PHOENIX_PRO": "获取 Phoenix Pro",
+  "CONTACT_SUPPORT": "联系支持",
+  "SIGN_OUT": "退出登录"
 });
 /*
  * GNU AGPL-3.0 License
@@ -125405,6 +125405,7 @@ define("nls/zh-tw/strings", {
   "CMD_AUTO_UPDATE": "自動更新",
   "CMD_HOW_TO_USE_BRACKETS": "如何使用 {APP_NAME}",
   "CMD_SUPPORT": "{APP_NAME} 支援",
+  "CMD_GET_PRO": "取得 Phoenix Pro",
   "CMD_USER_PROFILE": "{APP_NAME} 帳號",
   "CMD_DOCS": "說明、入門指南",
   "CMD_SUGGEST": "功能建議",
@@ -126273,8 +126274,6 @@ define("nls/zh-tw/strings", {
   "OPEN_SIGN_IN_URL": "開啟登入頁面",
   "PROFILE_POP_TITLE": "{APP_NAME} 帳號",
   "PROFILE_SIGN_IN": "登入您的帳號",
-  "CONTACT_SUPPORT": "聯絡客服支援",
-  "SIGN_OUT": "登出",
   "ACCOUNT_DETAILS": "帳號詳細資訊",
   "LOGIN_REFRESH": "檢查登入狀態",
   "SIGN_IN_WAITING_TITLE": "等待登入中",
@@ -126341,10 +126340,11 @@ define("nls/zh-tw/strings", {
   "PROMO_CARD_4_MESSAGE": "直接在預覽中編輯標題、按鈕和複製內容。",
   "PROMO_LEARN_MORE": "深入瞭解…",
   "PROMO_GET_APP_UPSELL_BUTTON": "取得 {0}",
-  "CMD_GET_PRO": "取得 Phoenix Pro",
   "PROMO_PRO_ENDED_TITLE": "您的 {0} 試用已結束",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro 試用版（剩餘 {0} 天）",
-  "GET_PHOENIX_PRO": "取得 Phoenix Pro"
+  "GET_PHOENIX_PRO": "取得 Phoenix Pro",
+  "CONTACT_SUPPORT": "聯絡客服",
+  "SIGN_OUT": "登出"
 });
 /*
  * GNU AGPL-3.0 License
