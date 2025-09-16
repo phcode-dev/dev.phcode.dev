@@ -167443,6 +167443,8 @@ define("services/login-desktop", function (require, exports, module) {
  *
  */
 
+/*global path*/
+
 /**
  * Shared Login Service
  *
@@ -167459,6 +167461,17 @@ define("services/login-service", function (require, exports, module) {
 
     const MS_IN_DAY = 10 * 24 * 60 * 60 * 1000;
     const TEN_MINUTES = 10 * 60 * 1000;
+
+    // the fallback salt is always a constant as this will only fail in rare circumstatnces and it needs to
+    // be exactly same across versions of the app. Changing this will not affect the large majority of users and
+    // for the ones who are affected, the app will reset the signed data with new salt but will not grant ant trial
+    // when tampering is detected.
+    const FALLBACK_SALT = 'fallback-salt-2f309322-b32d-4d59-85b4-2baef666a9f4';
+    let currentSalt;
+
+    // Cache file path for desktop app entitlements
+    const CACHED_ENTITLEMENTS_FILE = path.join(Phoenix.app.getApplicationSupportDirectory(),
+        "cached_entitlements.json");
 
     // save a copy of window.fetch so that extensions wont tamper with it.
     let fetchFn = window.fetch;
@@ -167497,6 +167510,132 @@ define("services/login-service", function (require, exports, module) {
 
 
     /**
+     * Get per-user salt for signature generation, creating and persisting one if it doesn't exist
+     * Used for signing cached data to prevent tampering
+     */
+    async function getSalt() {
+        // Fallback salt constant for rare circumstances where salt generation fails
+        if(currentSalt) {
+            return currentSalt;
+        }
+
+        try {
+            if (Phoenix.isNativeApp) {
+                // Native app: use KernalModeTrust credential store
+                let salt = await KernalModeTrust.getCredential(KernalModeTrust.SIGNATURE_SALT_KEY);
+                if (!salt) {
+                    // Generate and store new salt
+                    salt = crypto.randomUUID();
+                    await KernalModeTrust.setCredential(KernalModeTrust.SIGNATURE_SALT_KEY, salt);
+                }
+                currentSalt = salt;
+                return salt;
+            }
+            // In browser app, there is no way to securely store salt without extensions being able to
+            // read it. Return a static salt for basic integrity checking.
+            currentSalt = FALLBACK_SALT;
+            return FALLBACK_SALT;
+        } catch (error) {
+            console.error("Error getting signature salt:", error);
+            // Return a fallback salt to prevent crashes
+            Metrics.countEvent(Metrics.EVENT_TYPE.AUTH, "saltGet", "Err");
+            currentSalt = FALLBACK_SALT;
+            return FALLBACK_SALT;
+        }
+    }
+
+    /**
+     * Load cached entitlements from disk with signature validation
+     * Returns null if no cache, invalid signature, or error
+     */
+    async function _loadCachedEntitlements() {
+        if (!Phoenix.isNativeApp) {
+            return null; // No caching for browser app
+        }
+
+        try {
+            const fileData = await Phoenix.VFS.readFileResolves(CACHED_ENTITLEMENTS_FILE, 'utf8');
+
+            if (fileData.error || !fileData.data) {
+                return null; // No cached file exists
+            }
+
+            const cachedData = JSON.parse(fileData.data);
+            if (!cachedData.jsonData || !cachedData.sign) {
+                console.warn("Invalid cached entitlements format - missing jsonData or sign");
+                await _clearCachedEntitlements();
+                return null;
+            }
+
+            // Validate signature
+            const salt = await getSalt();
+            const isValidSignature = await KernalModeTrust.validateDataSignature(
+                cachedData.jsonData,
+                cachedData.sign,
+                salt
+            );
+
+            if (!isValidSignature) {
+                console.warn("Cached entitlements signature validation failed - possible tampering detected");
+                Metrics.countEvent(Metrics.EVENT_TYPE.PRO, "entCacheLD", "signInvalid");
+                await _clearCachedEntitlements();
+                return null;
+            }
+
+            // Parse and return the entitlements
+            return JSON.parse(cachedData.jsonData);
+        } catch (error) {
+            console.error("Error loading cached entitlements:", error);
+            Metrics.countEvent(Metrics.EVENT_TYPE.PRO, "entCacheLD", "error");
+            await _clearCachedEntitlements(); // Clear corrupted cache
+            return null;
+        }
+    }
+
+    /**
+     * Save entitlements to cache with signature
+     */
+    async function _saveCachedEntitlements(entitlements) {
+        if (!Phoenix.isNativeApp || !entitlements) {
+            return; // No caching for browser app
+        }
+
+        try {
+            const jsonData = JSON.stringify(entitlements);
+            const salt = await getSalt();
+            const signature = await KernalModeTrust.generateDataSignature(jsonData, salt);
+
+            const cacheData = {
+                jsonData: jsonData,
+                sign: signature
+            };
+
+            await Phoenix.VFS.writeFileAsync(CACHED_ENTITLEMENTS_FILE, JSON.stringify(cacheData), 'utf8');
+            console.log("Entitlements cached successfully");
+        } catch (error) {
+            Metrics.countEvent(Metrics.EVENT_TYPE.PRO, "entCacheSave", "err");
+            console.error("Error saving cached entitlements:", error);
+        }
+    }
+
+    /**
+     * Clear cached entitlements file
+     */
+    async function _clearCachedEntitlements() {
+        if (!Phoenix.isNativeApp) {
+            return; // No caching for browser app
+        }
+
+        try {
+            await Phoenix.VFS.unlinkResolves(CACHED_ENTITLEMENTS_FILE);
+            console.log("Cached entitlements cleared");
+        } catch (error) {
+            console.log("Error clearing cached entitlements:", error);
+        }
+    }
+
+
+    /**
      * Get entitlements from API or cache
      * Returns null if user is not logged in
      */
@@ -167509,6 +167648,26 @@ define("services/login-service", function (require, exports, module) {
         // Return cached data if available and not forcing refresh
         if (cachedEntitlements && !forceRefresh) {
             return cachedEntitlements;
+        }
+
+        if (cachedEntitlements && !navigator.onLine) {
+            return cachedEntitlements;
+        }
+
+        async function _processDiscCachedEntitlement() {
+            const diskCachedEntitlements = await _loadCachedEntitlements();
+            if (diskCachedEntitlements) {
+                console.log("offline/network/server error: Using cached entitlements from disk");
+                const entitlementsChanged =
+                    JSON.stringify(cachedEntitlements) !== JSON.stringify(diskCachedEntitlements);
+                cachedEntitlements = diskCachedEntitlements;
+                // Trigger event if entitlements changed
+                if (entitlementsChanged) {
+                    _debounceEntitlementsChanged();
+                }
+                return cachedEntitlements;
+            }
+            return null;
         }
 
         try {
@@ -167537,6 +167696,14 @@ define("services/login-service", function (require, exports, module) {
                 fetchOptions.credentials = 'include';
             }
 
+            // For desktop app, if offline, try to return disc cached entitlements
+            if (Phoenix.isNativeApp && !navigator.onLine) {
+                const processedEntitlement = await _processDiscCachedEntitlement();
+                if (processedEntitlement) {
+                    return processedEntitlement;
+                }
+            }
+
             const response = await fetchFn(url, fetchOptions);
 
             if (response.ok) {
@@ -167547,6 +167714,11 @@ define("services/login-service", function (require, exports, module) {
 
                     cachedEntitlements = result;
 
+                    // Save to disk cache for desktop app
+                    if (Phoenix.isNativeApp) {
+                        await _saveCachedEntitlements(result);
+                    }
+
                     // Trigger event if entitlements changed
                     if (entitlementsChanged) {
                         _debounceEntitlementsChanged();
@@ -167554,9 +167726,32 @@ define("services/login-service", function (require, exports, module) {
 
                     return cachedEntitlements;
                 }
+            } else if (response.status >= 500 && response.status < 600) {
+                // Handle 5xx errors by loading from cache.
+                if (Phoenix.isNativeApp) {
+                    console.warn('Fetch entitlements server error:', response.status);
+                    const processedEntitlement = await _processDiscCachedEntitlement();
+                    if (processedEntitlement) {
+                        return processedEntitlement;
+                    }
+                }
+            } else if (Phoenix.isNativeApp) {
+                // 4xx errors are genuine auth fail errors, so our cache is not good then
+                console.warn('Cearing entitlements, entitlements server error:', response.status);
+                await _clearCachedEntitlements();
             }
         } catch (error) {
             console.error('Failed to fetch entitlements:', error);
+
+            // errors that happen during the fetch operation itself, which are typically not HTTP errors
+            // returned by the server, but rather issues at the network or browser level.
+            // For desktop app, fall back to cached entitlements if available
+            if (Phoenix.isNativeApp) {
+                const processedEntitlement = await _processDiscCachedEntitlement();
+                if (processedEntitlement) {
+                    return processedEntitlement;
+                }
+            }
         }
 
         return null;
@@ -167566,7 +167761,7 @@ define("services/login-service", function (require, exports, module) {
      * Clear cached entitlements and trigger change event
      * Called when user logs out
      */
-    function clearEntitlements() {
+    async function clearEntitlements() {
         if (cachedEntitlements) {
             cachedEntitlements = null;
             _debounceEntitlementsChanged();
@@ -167713,9 +167908,12 @@ define("services/login-service", function (require, exports, module) {
             // Logged-in user with trial
             if (serverEntitlements.plan.paidSubscriber) {
                 // Already a paid subscriber, return as-is
+                // todo we need to check and filter valid till for each fields that we are interested in.
                 return serverEntitlements;
             }
             // Enhance entitlements for trial user
+            // todo we need to prune and filter serverEntitlements valid till for each fields that we are interested in.
+            // ie if any entitlement has valid till expired, we need to deactivate that entitlement
             return {
                 ...serverEntitlements,
                 plan: {
@@ -167762,6 +167960,7 @@ define("services/login-service", function (require, exports, module) {
     LoginService.getEntitlements = getEntitlements;
     LoginService.getEffectiveEntitlements = getEffectiveEntitlements;
     LoginService.clearEntitlements = clearEntitlements;
+    LoginService.getSalt = getSalt;
     LoginService.EVENT_ENTITLEMENTS_CHANGED = EVENT_ENTITLEMENTS_CHANGED;
 
     // Test-only exports for integration testing
@@ -168944,25 +169143,9 @@ define("services/promotions", function (require, exports, module) {
     const FIRST_INSTALL_TRIAL_DAYS = 30;
     const SUBSEQUENT_TRIAL_DAYS = 7;
     const MS_PER_DAY = 24 * 60 * 60 * 1000;
-    // the fallback salt is always a constant as this will only fail in rare circumstatnces and it needs to
-    // be exactly same across versions of the app. Changing this will not breal the large majority of users and
-    // for the ones who are  affected, the app will reset the signed data with new salt but will not grant ant trial
-    // when tampering is detected.
-    const FALLBACK_SALT = 'fallback-salt-2f309322-b32d-4d59-85b4-2baef666a9f4';
 
     // Error constants for _getTrialData
     const ERR_CORRUPTED = "corrupted";
-
-    /**
-     * Async wrapper for fs.readFile in browser
-     */
-    function _readFileAsync(filePath) {
-        return new Promise((resolve) => {
-            window.fs.readFile(filePath, 'utf8', function (err, data) {
-                resolve(err ? null : data);
-            });
-        });
-    }
 
     /**
      * Async wrapper for fs.writeFile in browser
@@ -168997,45 +169180,12 @@ define("services/promotions", function (require, exports, module) {
     }
 
     /**
-     * Get per-user salt for signature generation, creating and persisting one if it doesn't exist
-     */
-    async function _getSalt() {
-        try {
-            if (Phoenix.isNativeApp) {
-                // Native app: use KernalModeTrust credential store
-                let salt = await KernalModeTrust.getCredential(KernalModeTrust.SIGNATURE_SALT_KEY);
-                if (!salt) {
-                    // Generate and store new salt
-                    salt = crypto.randomUUID();
-                    await KernalModeTrust.setCredential(KernalModeTrust.SIGNATURE_SALT_KEY, salt);
-                }
-                return salt;
-            }
-            // in browser app, there is no way to securely store salt without the extensions also being able to
-            // read it. So we will just return a static salt. In future, we will need to vend trials strongly tied
-            // to user logins for the browser app, and for desktop app, the current cred storage would work as is.
-            return FALLBACK_SALT;
-        } catch (error) {
-            console.error("Error getting signature salt:", error);
-            Metrics.countEvent(Metrics.EVENT_TYPE.PRO, "corrupt", "saltErr");
-            // Return a fallback salt to prevent crashes
-            return FALLBACK_SALT;
-        }
-    }
-
-    /**
      * Generate SHA-256 signature for trial data integrity
      */
     async function _generateSignature(proVersion, endDate) {
-        const salt = await _getSalt();
-        const data = proVersion + "|" + endDate + "|" + salt;
-
-        // Use browser crypto API for SHA-256 hashing
-        const encoder = new TextEncoder();
-        const dataBuffer = encoder.encode(data);
-        const hashBuffer = await crypto.subtle.digest('SHA-256', dataBuffer);
-        const hashArray = Array.from(new Uint8Array(hashBuffer));
-        return hashArray.map(b => b.toString(16).padStart(2, '0')).join(''); // hash hex string
+        const salt = await LoginService.getSalt();
+        const data = proVersion + "|" + endDate;
+        return KernalModeTrust.generateDataSignature(data, salt);
     }
 
     /**
@@ -169075,14 +169225,14 @@ define("services/promotions", function (require, exports, module) {
             } else {
                 // Browser app: use virtual filesystem. in future we need to always fetch from remote about trial
                 // entitlements for browser app.
-                const fileData = await _readFileAsync(PROMO_LOCAL_FILE);
+                const fileData = await Phoenix.VFS.readFileResolves(PROMO_LOCAL_FILE, 'utf8');
 
-                if (!fileData) {
+                if (fileData.error) {
                     return null; // No data exists - genuine first install
                 }
 
                 try {
-                    const trialData = JSON.parse(fileData);
+                    const trialData = JSON.parse(fileData.data);
                     const isValid = await _isValidSignature(trialData);
                     if (isValid) {
                         return { data: trialData }; // Valid trial data
@@ -169350,7 +169500,6 @@ define("services/promotions", function (require, exports, module) {
             ProDialogs: ProDialogs,
             _getTrialData: _getTrialData,
             _setTrialData: _setTrialData,
-            _getSalt: _getSalt,
             _isTrialClosedForCurrentVersion: _isTrialClosedForCurrentVersion,
             _cleanTrialData: _clearTrialData,
             _cleanSaltData: async function() {
