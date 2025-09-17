@@ -166873,6 +166873,7 @@ define("services/login-browser", function (require, exports, module) {
 
             // Always reset local state regardless of server response
             await _resetBrowserLogin();
+            await _verifyBrowserLogin();
 
             if (response.ok) {
                 const result = await response.json();
@@ -166902,6 +166903,7 @@ define("services/login-browser", function (require, exports, module) {
         } catch (error) {
             // Always reset local state even on network error
             await _resetBrowserLogin();
+            await _verifyBrowserLogin();
             console.error("Network error during logout:", error);
             const dialog = Dialogs.showModalDialog(
                 DefaultDialogs.DIALOG_ID_ERROR,
@@ -167363,6 +167365,7 @@ define("services/login-desktop", function (require, exports, module) {
                 return;
             }
             await _resetAccountLogin();
+            await _verifyLogin();
             Dialogs.showModalDialog(
                 DefaultDialogs.DIALOG_ID_INFO,
                 Strings.SIGNED_OUT,
@@ -168371,13 +168374,13 @@ define("services/profile-menu", function (require, exports, module) {
     }
 
     // HTML templates
-    const loginTemplate = `<div class="profile-popup">
+    const loginTemplate = `<div class="profile-popup login-profile-popup">
     <div class="popup-header">
         <h1 class="popup-title">{{Strings.PROFILE_POP_TITLE}}</h1>
         {{#trialInfo}}
         <div class="trial-plan-info">
             <span class="phoenix-pro-title-plain">
-                <span class="pro-plan-name">{{planName}}</span>
+                <span class="pro-plan-name user-plan-name">{{planName}}</span>
                 <i class="fa-solid fa-feather" style="margin-left: 3px;"></i>
             </span>
         </div>
@@ -168401,7 +168404,7 @@ define("services/profile-menu", function (require, exports, module) {
     </div>
 </div>
 `;
-    const profileTemplate = `<div class="profile-popup">
+    const profileTemplate = `<div class="profile-popup user-profile-popup">
     <div class="popup-header">
         <div class="user-profile-header">
             <div class="user-avatar" style="background-color: {{avatarColor}};">
@@ -168587,7 +168590,7 @@ define("services/profile-menu", function (require, exports, module) {
                     effectiveEntitlements.trialDaysRemaining);
                 const trialInfoHtml = `<div class="trial-plan-info">
                     <span class="phoenix-pro-title-plain">
-                        <span class="pro-plan-name">${planName}</span>
+                        <span class="pro-plan-name user-plan-name">${planName}</span>
                         <i class="fa-solid fa-feather" style="margin-left: 3px;"></i>
                     </span>
                 </div>`;
@@ -168788,7 +168791,7 @@ define("services/profile-menu", function (require, exports, module) {
                     const planName = StringUtils.format(Strings.PROMO_PRO_TRIAL_DAYS_LEFT,
                         entitlements.trialDaysRemaining);
                     const proTitle = `<span class="phoenix-pro-title-plain">
-                        <span class="pro-plan-name">${planName}</span>
+                        <span class="pro-plan-name user-plan-name">${planName}</span>
                         <i class="fa-solid fa-feather" style="margin-left: 3px;"></i>
                     </span>`;
                     $planName.addClass('user-plan-paid').html(proTitle);
@@ -168796,7 +168799,7 @@ define("services/profile-menu", function (require, exports, module) {
                 } else {
                     // For paid users: regular plan name with icon
                     const proTitle = `<span class="phoenix-pro-title">
-                        <span class="pro-plan-name">${entitlements.plan.name}</span>
+                        <span class="pro-plan-name user-plan-name">${entitlements.plan.name}</span>
                         <i class="fa-solid fa-feather" style="margin-left: 3px;"></i>
                     </span>`;
                     $planName.addClass('user-plan-paid').html(proTitle);
@@ -169008,6 +169011,7 @@ define("services/profile-menu", function (require, exports, module) {
                 _updateBranding(effectiveEntitlements);
             } else {
                 console.log('Profile Menu: No active trial found');
+                _updateBranding(null);
             }
         } catch (error) {
             console.error('Failed to initialize branding for trial users:', error);
