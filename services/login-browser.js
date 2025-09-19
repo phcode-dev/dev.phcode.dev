@@ -43,7 +43,7 @@
  */
 
 define(function (require, exports, module) {
-    require("./login-service"); // after this, loginService will be in KernalModeTrust
+    const LoginServiceDirectImport = require("./login-service"); // after this, loginService will be in KernalModeTrust
     const PreferencesManager  = require("preferences/PreferencesManager"),
         Metrics = require("utils/Metrics"),
         Dialogs = require("widgets/Dialogs"),
@@ -389,11 +389,12 @@ define(function (require, exports, module) {
     }
 
     function init() {
-        ProfileMenu.init();
         if(Phoenix.isNativeApp){
             console.log("Browser login service is not needed for native app");
             return;
         }
+        ProfileMenu.init();
+        LoginServiceDirectImport.init();
 
         // Always verify login on browser app start
         _verifyBrowserLogin().catch(console.error);
@@ -416,7 +417,9 @@ define(function (require, exports, module) {
     if (!Phoenix.isNativeApp) {
         // kernal exports
         // Add to existing KernalModeTrust.loginService from login-service.js
+        // isLoggedIn API shouldn't be used outside loginService, please use Entitlements.isLoggedIn API.
         LoginService.isLoggedIn = isLoggedIn;
+        // signInToAccount API shouldn't be used outside loginService, please use Entitlements.loginToAccount API.
         LoginService.signInToAccount = signInToBrowser;
         LoginService.signOutAccount = signOutBrowser;
         LoginService.getProfile = getProfile;

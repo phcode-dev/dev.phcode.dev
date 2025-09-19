@@ -112684,7 +112684,6 @@ define("nls/root/strings", {
     // promos
     "PROMO_UPGRADE_TITLE": "You’ve been upgraded to {0}",
     "PROMO_UPGRADE_MESSAGE": "Enjoy full access to all premium features for the next {0} days:",
-    "PROMO_ENDED_MESSAGE": "Subscribe now to continue using these advanced features:",
     "PROMO_CARD_1": "Drag & Drop Elements",
     "PROMO_CARD_1_MESSAGE": "Rearrange sections visually — Phoenix updates the HTML & CSS for you.",
     "PROMO_CARD_2": "Image Replacement",
@@ -112696,6 +112695,10 @@ define("nls/root/strings", {
     "PROMO_LEARN_MORE": "Learn More\u2026",
     "PROMO_GET_APP_UPSELL_BUTTON": "Get {0}",
     "PROMO_PRO_ENDED_TITLE": "Your {0} Trial has ended",
+    "PROMO_ENDED_MESSAGE": "Subscribe now to continue using these advanced features:",
+    "PROMO_PRO_UNLOCK_PRO_TITLE": "Unlock the power of {0}",
+    "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Unlock Live Edit with {0}",
+    "PROMO_PRO_UNLOCK_MESSAGE": "Subscribe now to unlock these advanced features:",
     "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro Trial ({0} days left)",
     "GET_PHOENIX_PRO": "Get Phoenix Pro",
     "USER_FREE_PLAN_NAME": "Free Plan"
@@ -166556,6 +166559,208 @@ define("search/SearchResultsView", function (require, exports, module) {
  *
  */
 
+/**
+ * Entitlements Service
+ *
+ * This module provides a dedicated API for managing user entitlements,
+ * including plan details, trial status, and feature entitlements.
+ */
+
+define("services/entitlements", function (require, exports, module) {
+    const KernalModeTrust = window.KernalModeTrust;
+    if(!KernalModeTrust){
+        // integrated extensions will have access to kernal mode, but not external extensions
+        throw new Error("Login service should have access to KernalModeTrust. Cannot boot without trust ring");
+    }
+
+    const EventDispatcher = require("utils/EventDispatcher"),
+        Strings = require("strings");
+
+    const MS_IN_DAY = 24 * 60 * 60 * 1000;
+    const FREE_PLAN_VALIDITY_DAYS = 10000;
+
+    let LoginService;
+
+    // Create secure exports and set up event dispatcher
+    const Entitlements = {};
+    EventDispatcher.makeEventDispatcher(Entitlements);
+
+    // Event constants
+    const EVENT_ENTITLEMENTS_CHANGED = "entitlements_changed";
+
+    /**
+     * Check if user is logged in. Best to check after `EVENT_ENTITLEMENTS_CHANGED`.
+     * @returns {*}
+     */
+    function isLoggedIn() {
+        return LoginService.isLoggedIn();
+    }
+
+    /**
+     * Attempts to sign in to the user's account if the user is not already logged in.
+     * You should listen to `EVENT_ENTITLEMENTS_CHANGED` to know when the login status changes. This function
+     * returns immediately and does not wait for the login process to complete.
+     *
+     * @return {void} Does not return a value.
+     */
+    function loginToAccount() {
+        if(isLoggedIn()){
+            return;
+        }
+        KernalModeTrust.loginService.signInToAccount()
+            .catch(function(err){
+                console.error("Error signing in to account", err);
+            });
+    }
+
+    /**
+     * Get the plan details from entitlements with fallback to free plan defaults. If the user is
+     * in pro trial(isInProTrial API), then paidSubscriber will always be true as we need to treat user as paid.
+     * you should use isInProTrial API to check if user is in pro trial if some trial-related logic needs to be done.
+     * @returns {Promise<Object>} Plan details object
+     */
+    async function getPlanDetails() {
+        const entitlements = await LoginService.getEffectiveEntitlements();
+
+        if (entitlements && entitlements.plan) {
+            return entitlements.plan;
+        }
+
+        // Fallback to free plan defaults
+        const currentDate = Date.now();
+        return {
+            paidSubscriber: false,
+            name: Strings.USER_FREE_PLAN_NAME,
+            validTill: currentDate + (FREE_PLAN_VALIDITY_DAYS * MS_IN_DAY)
+        };
+    }
+
+    /**
+     * Check if user is in a pro trial. IF the user is in pro trail, then `plan.paidSubscriber` will always be true.
+     * @returns {Promise<boolean>} True if user is in pro trial, false otherwise
+     */
+    async function isInProTrial() {
+        const entitlements = await LoginService.getEffectiveEntitlements();
+        return !!(entitlements && entitlements.isInProTrial);
+    }
+
+    /**
+     * Get remaining trial days
+     * @returns {Promise<number>} Number of remaining trial days
+     */
+    async function getTrialRemainingDays() {
+        const entitlements = await LoginService.getEffectiveEntitlements();
+        return entitlements && entitlements.trialDaysRemaining ? entitlements.trialDaysRemaining : 0;
+    }
+
+    /**
+     * Get current raw entitlements. Should not be used directly, use individual feature entitlement instead
+     * like getLiveEditEntitlement.
+     * @returns {Promise<Object|null>} Raw entitlements object or null
+     */
+    async function getRawEntitlements() {
+        return await LoginService.getEntitlements();
+    }
+
+    /**
+     * Get live edit is enabled for user, based on his logged in pro-user/trial status.
+     *
+     * @returns {Promise<Object>} Live edit entitlement object with the following shape:
+     * @returns {Promise<Object>} entitlement
+     * @returns {Promise<boolean>} entitlement.activated - If true, enable live edit feature.
+     *                                                   If false, use promotions.showProUpsellDialog
+     *                                                   with UPSELL_TYPE_LIVE_EDIT to show an upgrade dialog if needed.
+     * @returns {Promise<string>} entitlement.subscribeURL - URL to subscribe/purchase if not activated
+     * @returns {Promise<string>} entitlement.upgradeToPlan - Plan name that includes live edit entitlement
+     * @returns {Promise<number>} [entitlement.validTill] - Timestamp when entitlement expires (if from server)
+     *
+     * @example
+     * const liveEditEntitlement = await Entitlements.getLiveEditEntitlement();
+     * if (liveEditEntitlement.activated) {
+     *     // Enable live edit feature
+     *     enableLiveEditFeature();
+     * } else {
+     *     // Show upgrade dialog when user tries to use live edit
+     *     promotions.showProUpsellDialog(promotions.UPSELL_TYPE_LIVE_EDIT);
+     * }
+     */
+    async function getLiveEditEntitlement() {
+        const entitlements = await LoginService.getEffectiveEntitlements();
+
+        if (entitlements && entitlements.entitlements && entitlements.entitlements.liveEdit) {
+            return entitlements.entitlements.liveEdit;
+        }
+
+        // Fallback defaults when live edit entitlement is not available from API
+        return {
+            activated: false,
+            subscribeURL: brackets.config.purchase_url,
+            upgradeToPlan: brackets.config.main_pro_plan
+        };
+    }
+
+    // Set up KernalModeTrust.Entitlements
+    KernalModeTrust.Entitlements = Entitlements;
+
+    let inited = false;
+    function init() {
+        if(inited){
+            return;
+        }
+        inited = true;
+        LoginService = KernalModeTrust.loginService;
+        // Set up event forwarding from LoginService
+        LoginService.on(LoginService.EVENT_ENTITLEMENTS_CHANGED, function() {
+            Entitlements.trigger(EVENT_ENTITLEMENTS_CHANGED);
+        });
+    }
+
+    // Test-only exports for integration testing
+    if (Phoenix.isTestWindow) {
+        window._test_entitlements_exports = {
+            EntitlementsService: Entitlements,
+            isLoggedIn,
+            getPlanDetails,
+            isInProTrial,
+            getTrialRemainingDays,
+            getRawEntitlements,
+            getLiveEditEntitlement,
+            loginToAccount
+        };
+    }
+
+    exports.init = init;
+    // no public exports to prevent extension tampering
+
+    // Add functions to secure exports. These can be accessed via `KernalModeTrust.Entitlements.*`
+    Entitlements.isLoggedIn = isLoggedIn;
+    Entitlements.loginToAccount = loginToAccount;
+    Entitlements.getPlanDetails = getPlanDetails;
+    Entitlements.isInProTrial = isInProTrial;
+    Entitlements.getTrialRemainingDays = getTrialRemainingDays;
+    Entitlements.getRawEntitlements = getRawEntitlements;
+    Entitlements.getLiveEditEntitlement = getLiveEditEntitlement;
+    Entitlements.EVENT_ENTITLEMENTS_CHANGED = EVENT_ENTITLEMENTS_CHANGED;
+});
+
+/*
+ * GNU AGPL-3.0 License
+ *
+ * Copyright (c) 2021 - present core.ai . All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
+ *
+ */
+
 /*global logger*/
 
 /**
@@ -166583,7 +166788,7 @@ define("search/SearchResultsView", function (require, exports, module) {
  */
 
 define("services/login-browser", function (require, exports, module) {
-    require("./login-service"); // after this, loginService will be in KernalModeTrust
+    const LoginServiceDirectImport = require("./login-service"); // after this, loginService will be in KernalModeTrust
     const PreferencesManager  = require("preferences/PreferencesManager"),
         Metrics = require("utils/Metrics"),
         Dialogs = require("widgets/Dialogs"),
@@ -166948,11 +167153,12 @@ define("services/login-browser", function (require, exports, module) {
     }
 
     function init() {
-        ProfileMenu.init();
         if(Phoenix.isNativeApp){
             console.log("Browser login service is not needed for native app");
             return;
         }
+        ProfileMenu.init();
+        LoginServiceDirectImport.init();
 
         // Always verify login on browser app start
         _verifyBrowserLogin().catch(console.error);
@@ -166975,7 +167181,9 @@ define("services/login-browser", function (require, exports, module) {
     if (!Phoenix.isNativeApp) {
         // kernal exports
         // Add to existing KernalModeTrust.loginService from login-service.js
+        // isLoggedIn API shouldn't be used outside loginService, please use Entitlements.isLoggedIn API.
         LoginService.isLoggedIn = isLoggedIn;
+        // signInToAccount API shouldn't be used outside loginService, please use Entitlements.loginToAccount API.
         LoginService.signInToAccount = signInToBrowser;
         LoginService.signOutAccount = signOutBrowser;
         LoginService.getProfile = getProfile;
@@ -167021,7 +167229,7 @@ define("services/login-browser", function (require, exports, module) {
 /*global logger*/
 
 define("services/login-desktop", function (require, exports, module) {
-    require("./login-service"); // after this, loginService will be in KernalModeTrust
+    const LoginServiceDirectImport = require("./login-service"); // after this, loginService will be in KernalModeTrust
 
     const EventDispatcher = require("utils/EventDispatcher"),
         PreferencesManager  = require("preferences/PreferencesManager"),
@@ -167423,6 +167631,7 @@ define("services/login-desktop", function (require, exports, module) {
             return;
         }
         ProfileMenu.init();
+        LoginServiceDirectImport.init();
         _verifyLogin(true).catch(console.error);// todo raise metrics - silent check on init
         const pref = PreferencesManager.stateManager.definePreference(PREF_USER_PROFILE_VERSION, 'string', '0');
         pref.watchExternalChanges();
@@ -167435,7 +167644,9 @@ define("services/login-desktop", function (require, exports, module) {
     // Only set exports for native apps to avoid conflict with browser login
     if (Phoenix.isNativeApp) {
         // kernal exports - add to existing KernalModeTrust.loginService from login-service.js
+        // isLoggedIn API shouldn't be used outside loginService, please use Entitlements.isLoggedIn API.
         LoginService.isLoggedIn = isLoggedIn;
+        // signInToAccount API shouldn't be used outside loginService, please use Entitlements.loginToAccount API.
         LoginService.signInToAccount = signInToAccount;
         LoginService.signOutAccount = signOutAccount;
         LoginService.getProfile = getProfile;
@@ -167489,6 +167700,7 @@ define("services/login-service", function (require, exports, module) {
     require("./setup-login-service"); // this adds loginService to KernalModeTrust
     require("./promotions");
     require("./login-utils");
+    const EntitlementsDirectImport = require("./entitlements"); // this adds Entitlements to KernalModeTrust
 
     const Metrics = require("utils/Metrics"),
         Strings = require("strings");
@@ -168030,6 +168242,14 @@ define("services/login-service", function (require, exports, module) {
     LoginService.getSalt = getSalt;
     LoginService.EVENT_ENTITLEMENTS_CHANGED = EVENT_ENTITLEMENTS_CHANGED;
 
+    let inited = false;
+    function init() {
+        if(inited){
+            return;
+        }
+        inited = true;
+        EntitlementsDirectImport.init();
+    }
     // Test-only exports for integration testing
     if (Phoenix.isTestWindow) {
         window._test_login_service_exports = {
@@ -168046,6 +168266,9 @@ define("services/login-service", function (require, exports, module) {
 
     // Start the entitlements monitor timer
     startEntitlementsMonitor();
+
+    exports.init = init;
+    // no public exports to prevent extension tampering
 });
 
 /*
@@ -168321,7 +168544,11 @@ define("services/pro-dialogs", function (require, exports, module) {
     // save a copy of window.fetch so that extensions wont tamper with it.
     let fetchFn = window.fetch;
 
-    function showProUpgradeDialog(trialDays) {
+    const UPSELL_TYPE_LIVE_EDIT = "live_edit";
+    const UPSELL_TYPE_PRO_TRIAL_ENDED = "pro_trial_ended";
+    const UPSELL_TYPE_GET_PRO = "get_pro";
+
+    function showProTrialStartDialog(trialDays) {
         const title = StringUtils.format(Strings.PROMO_UPGRADE_TITLE, proTitle);
         const message = StringUtils.format(Strings.PROMO_UPGRADE_MESSAGE, trialDays);
         const $template = $(Mustache.render(proUpgradeHTML, {
@@ -168341,12 +168568,38 @@ define("services/pro-dialogs", function (require, exports, module) {
         });
     }
 
-    function _showLocalProEndedDialog() {
-        const title = StringUtils.format(Strings.PROMO_PRO_ENDED_TITLE, proTitle);
-        const buttonGetPro = StringUtils.format(Strings.PROMO_GET_APP_UPSELL_BUTTON, proTitlePlain);
+    function _getUpsellDialogText(upsellType) {
+        // our pro dialog has 2 flavors. Local which is shipped with the release for showing if user is offline
+        // and remote which is fetched from the server if we have a remote offer to show. This fn will be called
+        // by both of these flavors and we need to return the appropriate text for each.
+        const buttonGetProText = StringUtils.format(Strings.PROMO_GET_APP_UPSELL_BUTTON, proTitlePlain);
+        switch (upsellType) {
+        case UPSELL_TYPE_PRO_TRIAL_ENDED: return {
+            title: StringUtils.format(Strings.PROMO_PRO_ENDED_TITLE, proTitle),
+            localDialogMessage: Strings.PROMO_ENDED_MESSAGE, // this will be shown in the local dialog
+            buttonGetProText
+        };
+        case UPSELL_TYPE_LIVE_EDIT: return {
+            title: StringUtils.format(Strings.PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE, proTitle),
+            localDialogMessage: Strings.PROMO_PRO_UNLOCK_MESSAGE,
+            buttonGetProText
+        };
+        case UPSELL_TYPE_GET_PRO:
+        default: return {
+            title: StringUtils.format(Strings.PROMO_PRO_UNLOCK_PRO_TITLE, proTitle),
+            localDialogMessage: Strings.PROMO_PRO_UNLOCK_MESSAGE,
+            buttonGetProText
+        };
+        }
+    }
+
+    function _showLocalProEndedDialog(upsellType) {
+        const dlgText = _getUpsellDialogText(upsellType);
+        const title = dlgText.title;
+        const buttonGetPro = dlgText.buttonGetProText;
         const $template = $(Mustache.render(proUpgradeHTML, {
             title, Strings,
-            message: Strings.PROMO_ENDED_MESSAGE,
+            message: dlgText.localDialogMessage,
             secondaryButton: Strings.CANCEL,
             primaryButton: buttonGetPro
         }));
@@ -168362,13 +168615,14 @@ define("services/pro-dialogs", function (require, exports, module) {
         });
     }
 
-    function _showRemoteProEndedDialog(currentVersion, promoHtmlURL, upsellPurchaseURL) {
-        const buttonGetPro = StringUtils.format(Strings.PROMO_GET_APP_UPSELL_BUTTON, proTitlePlain);
-        const title = StringUtils.format(Strings.PROMO_PRO_ENDED_TITLE, proTitle);
+    function _showRemoteProEndedDialog(upsellType, currentVersion, promoHtmlURL, upsellPurchaseURL) {
+        const dlgText = _getUpsellDialogText(upsellType);
+        const title = dlgText.title;
+        const buttonGetPro = dlgText.buttonGetProText;
         const currentTheme = ThemeManager.getCurrentTheme();
         const theme = currentTheme && currentTheme.dark ? "dark" : "light";
         const promoURL = `${promoHtmlURL}?lang=${
-            brackets.getLocale()}&theme=${theme}&version=${currentVersion}`;
+            brackets.getLocale()}&theme=${theme}&version=${currentVersion}&upsellType=${upsellType}`;
         const $template = $(Mustache.render(proEndedHTML, {Strings, title, buttonGetPro, promoURL}));
         Dialogs.showModalDialogUsingTemplate($template).done(function (id) {
             console.log("Dialog closed with id: " + id);
@@ -168382,11 +168636,11 @@ define("services/pro-dialogs", function (require, exports, module) {
         });
     }
 
-    async function showProEndedDialog() {
+    async function showProUpsellDialog(upsellType) {
         const currentVersion = window.AppConfig.apiVersion;
 
         if (!navigator.onLine) {
-            _showLocalProEndedDialog();
+            _showLocalProEndedDialog(upsellType);
             return;
         }
 
@@ -168394,18 +168648,19 @@ define("services/pro-dialogs", function (require, exports, module) {
             const configURL = `${brackets.config.promotions_url}app/config.json`;
             const response = await fetchFn(configURL);
             if (!response.ok) {
-                _showLocalProEndedDialog();
+                _showLocalProEndedDialog(upsellType);
                 return;
             }
 
             const config = await response.json();
             if (config.upsell_after_trial_url) {
-                _showRemoteProEndedDialog(currentVersion, config.upsell_after_trial_url, config.upsell_purchase_url);
+                _showRemoteProEndedDialog(upsellType, currentVersion,
+                    config.upsell_after_trial_url, config.upsell_purchase_url);
             } else {
-                _showLocalProEndedDialog();
+                _showLocalProEndedDialog(upsellType);
             }
         } catch (error) {
-            _showLocalProEndedDialog();
+            _showLocalProEndedDialog(upsellType);
         }
     }
 
@@ -168417,8 +168672,11 @@ define("services/pro-dialogs", function (require, exports, module) {
         };
     }
 
-    exports.showProUpgradeDialog = showProUpgradeDialog;
-    exports.showProEndedDialog = showProEndedDialog;
+    exports.showProTrialStartDialog = showProTrialStartDialog;
+    exports.showProUpsellDialog = showProUpsellDialog;
+    exports.UPSELL_TYPE_PRO_TRIAL_ENDED = UPSELL_TYPE_PRO_TRIAL_ENDED;
+    exports.UPSELL_TYPE_GET_PRO = UPSELL_TYPE_GET_PRO;
+    exports.UPSELL_TYPE_LIVE_EDIT = UPSELL_TYPE_LIVE_EDIT;
 });
 
 define("services/profile-menu", function (require, exports, module) {
@@ -169099,7 +169357,12 @@ define("services/profile-menu", function (require, exports, module) {
         }
     }
 
+    let inited = false;
     function init() {
+        if (inited) {
+            return;
+        }
+        inited = true;
         const helpButtonID = "user-profile-button";
         $icon = $("<a>")
             .attr({
@@ -169451,7 +169714,7 @@ define("services/promotions", function (require, exports, module) {
             // For corruption, show trial ended dialog and create expired marker
             // Do not grant any new trial as possible tampering.
             console.warn("trial data corrupted");
-            ProDialogs.showProEndedDialog(); // Show ended dialog for security
+            ProDialogs.showProUpsellDialog(ProDialogs.UPSELL_TYPE_PRO_TRIAL_ENDED); // Show ended dialog for security
 
             // Create expired trial marker to prevent future trial grants
             await _setTrialData({
@@ -169476,7 +169739,7 @@ define("services/promotions", function (require, exports, module) {
                     const hasProSubscription = await _hasProSubscription();
                     if (!hasProSubscription) {
                         console.log("Existing trial expired, showing promo ended dialog");
-                        ProDialogs.showProEndedDialog();
+                        ProDialogs.showProUpsellDialog(ProDialogs.UPSELL_TYPE_PRO_TRIAL_ENDED);
                     } else {
                         console.log("Existing trial expired, but user has pro subscription - skipping promo dialog");
                     }
@@ -169530,7 +169793,7 @@ define("services/promotions", function (require, exports, module) {
         // Check if user has pro subscription before showing upgrade dialog
         const hasProSubscription = await _hasProSubscription();
         if (!hasProSubscription) {
-            ProDialogs.showProUpgradeDialog(trialDays);
+            ProDialogs.showProTrialStartDialog(trialDays);
         } else {
             console.log("Pro trial activated, but user has pro subscription - skipping upgrade dialog");
         }

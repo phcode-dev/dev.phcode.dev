@@ -2,7 +2,7 @@
 /*global expect, it, awaitsFor*/
 
 define(function (require, exports, module) {
-    let testWindow, LoginServiceExports, setupProUserMock, performFullLoginFlow;
+    let testWindow, LoginServiceExports, setupProUserMock, performFullLoginFlow, EntitlementsExports;
 
     async function setupTrialState(daysRemaining) {
         const PromotionExports = testWindow._test_promo_login_exports;
@@ -169,11 +169,76 @@ define(function (require, exports, module) {
         verifyProfileIconBlanked();
     }
 
-    function setup(_testWindow, _LoginServiceExports, _setupProUserMock, _performFullLoginFlow) {
+    // Entitlements test utility functions
+    async function verifyPlanEntitlements(expectedPlan, _testDescription) {
+        const planDetails = await EntitlementsExports.getPlanDetails();
+
+        if (expectedPlan) {
+            expect(planDetails).toBeDefined();
+            if (expectedPlan.paidSubscriber !== undefined) {
+                expect(planDetails.paidSubscriber).toBe(expectedPlan.paidSubscriber);
+            }
+            if (expectedPlan.name) {
+                expect(planDetails.name).toBe(expectedPlan.name);
+            }
+            if (expectedPlan.validTill !== undefined) {
+                expect(planDetails.validTill).toBeDefined();
+            }
+        } else {
+            expect(planDetails).toBeDefined(); // Should always return something (fallback)
+        }
+    }
+
+    async function verifyIsInProTrialEntitlement(expected, _testDescription) {
+        const isInTrial = await EntitlementsExports.isInProTrial();
+        expect(isInTrial).toBe(expected);
+    }
+
+    async function verifyTrialRemainingDaysEntitlement(expected, _testDescription) {
+        const remainingDays = await EntitlementsExports.getTrialRemainingDays();
+        if (typeof expected === 'number') {
+            expect(remainingDays).toBe(expected);
+        } else {
+            expect(remainingDays).toBeGreaterThanOrEqual(0);
+        }
+    }
+
+    async function verifyRawEntitlements(expected, _testDescription) {
+        const rawEntitlements = await EntitlementsExports.getRawEntitlements();
+
+        if (expected === null) {
+            expect(rawEntitlements).toBeNull();
+        } else if (expected) {
+            expect(rawEntitlements).toBeDefined();
+            if (expected.plan) {
+                expect(rawEntitlements.plan).toBeDefined();
+            }
+            if (expected.entitlements) {
+                expect(rawEntitlements.entitlements).toBeDefined();
+            }
+        }
+    }
+
+    async function verifyLiveEditEntitlement(expected, _testDescription) {
+        const liveEditEntitlement = await EntitlementsExports.getLiveEditEntitlement();
+
+        expect(liveEditEntitlement).toBeDefined();
+        expect(liveEditEntitlement.activated).toBe(expected.activated);
+
+        if (expected.subscribeURL) {
+            expect(liveEditEntitlement.subscribeURL).toBe(expected.subscribeURL);
+        }
+        if (expected.upgradeToPlan) {
+            expect(liveEditEntitlement.upgradeToPlan).toBe(expected.upgradeToPlan);
+        }
+    }
+
+    function setup(_testWindow, _LoginServiceExports, _setupProUserMock, _performFullLoginFlow, _EntitlementsExports) {
         testWindow = _testWindow;
         LoginServiceExports = _LoginServiceExports;
         setupProUserMock = _setupProUserMock;
         performFullLoginFlow = _performFullLoginFlow;
+        EntitlementsExports = _EntitlementsExports;
     }
 
     function setupSharedTests() {
@@ -286,9 +351,17 @@ define(function (require, exports, module) {
             // Verify initial state (no pro branding)
             await verifyProBranding(false, "no pro branding to start with");
 
+            // Verify entitlements API consistency for logged out state
+            await verifyIsInProTrialEntitlement(false, "no trial for logged out user with expired trial");
+            await verifyTrialRemainingDaysEntitlement(0, "no trial days remaining");
+
             // Perform login
             await performFullLoginFlow();
             await verifyProBranding(true, "pro branding to appear after pro user login");
+
+            // Verify entitlements API consistency for logged in pro user
+            await verifyIsInProTrialEntitlement(false, "pro user should not be in trial");
+            await verifyPlanEntitlements({ paidSubscriber: true }, "pro user should have paid subscriber plan");
 
             // Check profile popup shows pro status (not trial)
             const $profileButton = testWindow.$("#user-profile-button");
@@ -308,6 +381,10 @@ define(function (require, exports, module) {
             // 1. No server entitlements (logged out)
             // 2. Trial is expired (0 days remaining)
             await verifyProBranding(false, "Pro branding to disappear after logout");
+
+            // Verify entitlements API consistency after logout
+            await verifyRawEntitlements(null, "no raw entitlements when logged out");
+            await verifyIsInProTrialEntitlement(false, "no trial after logout");
         });
 
         it("should show trial branding for user without pro subscription (active trial)", async function () {
@@ -320,11 +397,20 @@ define(function (require, exports, module) {
             // Verify initial state shows pro branding due to trial
             await verifyProBranding(true, "Trial branding to appear initially");
 
+            // Verify entitlements API consistency for trial user before login
+            await verifyIsInProTrialEntitlement(true, "user should be in trial initially");
+            await verifyTrialRemainingDaysEntitlement(15, "should have 15 trial days remaining");
+            await verifyLiveEditEntitlement({ activated: true }, "live edit should be active during trial");
+
             // Perform login
             await performFullLoginFlow();
 
             // Verify pro branding remains after login
             await verifyProBranding(true, "after trial user login");
+
+            // Verify entitlements API consistency for logged in trial user
+            await verifyIsInProTrialEntitlement(true, "user should still be in trial after login");
+            await verifyPlanEntitlements({ paidSubscriber: true }, "trial user should have paidSubscriber true");
 
             // Check profile popup shows trial status
             const $profileButton = testWindow.$("#user-profile-button");
@@ -341,6 +427,10 @@ define(function (require, exports, module) {
 
             // Verify pro branding remains after logout (trial continues)
             await verifyProBranding(true, "Trial branding to remain after logout");
+
+            // Verify entitlements API consistency after logout (trial still active)
+            await verifyIsInProTrialEntitlement(true, "trial should persist after logout");
+            await verifyRawEntitlements(null, "no raw entitlements when logged out");
 
             // Check profile popup still shows trial status
             $profileButton.trigger('click');
@@ -394,18 +484,31 @@ define(function (require, exports, module) {
         it("should show free branding for user without pro subscription (expired trial)", async function () {
             console.log("llgT: Starting desktop trial user test");
 
-            // Setup: No pro subscription + active trial (15 days)
+            // Setup: No pro subscription + expired trial
             setupProUserMock(false);
             await setupExpiredTrial();
 
             // Verify initial state (no pro branding)
             await verifyProBranding(false, "no pro branding to start with");
 
+            // Verify entitlements API consistency for logged out user with expired trial
+            await verifyPlanEntitlements({ paidSubscriber: false, name: testWindow.Strings.USER_FREE_PLAN_NAME },
+                "free plan for logged out user with expired trial");
+            await verifyIsInProTrialEntitlement(false, "no trial for user with expired trial");
+            await verifyTrialRemainingDaysEntitlement(0, "no trial days remaining for expired trial");
+            await verifyLiveEditEntitlement({ activated: false }, "live edit deactivated for expired trial");
+
             // Perform login
             await performFullLoginFlow();
 
             // Verify pro branding remains after login
             await verifyProBranding(false, "after trial free user login");
+
+            // Verify entitlements API consistency for logged in free user
+            await verifyPlanEntitlements({ paidSubscriber: false, name: testWindow.Strings.USER_FREE_PLAN_NAME },
+                "free plan for logged in user with expired trial");
+            await verifyIsInProTrialEntitlement(false, "still no trial after login");
+            await verifyLiveEditEntitlement({ activated: false }, "live edit still deactivated after login");
 
             // Check profile popup shows free plan status
             const $profileButton = testWindow.$("#user-profile-button");
@@ -422,6 +525,10 @@ define(function (require, exports, module) {
 
             // Verify pro branding remains after logout (trial continues)
             await verifyProBranding(false, "Trial branding to remain after logout");
+
+            // Verify entitlements API consistency after logout
+            await verifyRawEntitlements(null, "no raw entitlements when logged out");
+            await verifyIsInProTrialEntitlement(false, "no trial after logout");
 
             // Check profile popup still shows free plan status as trial expired
             $profileButton.trigger('click');
@@ -443,11 +550,30 @@ define(function (require, exports, module) {
             // Verify initial state (no pro branding due to expired entitlements)
             await verifyProBranding(false, "no pro branding initially due to expired entitlements");
 
+            // Verify entitlements API consistency for logged out user with no trial
+            await verifyPlanEntitlements({ paidSubscriber: false, name: testWindow.Strings.USER_FREE_PLAN_NAME },
+                "free plan for logged out user with no trial");
+            await verifyIsInProTrialEntitlement(false, "no trial for logged out user");
+            await verifyTrialRemainingDaysEntitlement(0, "no trial days remaining");
+            await verifyRawEntitlements(null, "no raw entitlements when logged out");
+            await verifyLiveEditEntitlement({ activated: false }, "live edit deactivated with no trial");
+
             // Perform login
             await performFullLoginFlow();
 
             // Verify pro branding remains false after login (expired entitlements filtered to free)
             await verifyProBranding(false, "no pro branding after login with expired entitlements");
+
+            // Verify entitlements API consistency for logged in user with expired entitlements
+            await verifyPlanEntitlements({ paidSubscriber: false },
+                "expired entitlements filtered to free plan after login");
+            await verifyIsInProTrialEntitlement(false, "no trial for user with expired entitlements");
+            await verifyTrialRemainingDaysEntitlement(0, "no trial days for expired entitlements user");
+            await verifyLiveEditEntitlement({
+                activated: false,
+                subscribeURL: testWindow.brackets.config.purchase_url,
+                upgradeToPlan: testWindow.brackets.config.main_pro_plan
+            }, "live edit deactivated with fallback URLs for expired entitlements");
 
             // Check profile popup shows free plan status
             const $profileButton = testWindow.$("#user-profile-button");
@@ -464,6 +590,10 @@ define(function (require, exports, module) {
 
             // Verify pro branding remains false after logout
             await verifyProBranding(false, "no pro branding after logout with expired entitlements");
+
+            // Verify entitlements API consistency after logout
+            await verifyRawEntitlements(null, "no raw entitlements when logged out");
+            await verifyIsInProTrialEntitlement(false, "no trial after logout");
 
             // Check profile popup (signed out state)
             $profileButton.trigger('click');
@@ -485,11 +615,26 @@ define(function (require, exports, module) {
             // Verify initial state shows pro branding due to trial (overrides expired entitlements)
             await verifyProBranding(true, "pro branding initially due to active trial");
 
+            // Verify entitlements API consistency for logged out user with active trial
+            await verifyPlanEntitlements({ paidSubscriber: true, name: testWindow.brackets.config.main_pro_plan },
+                "trial plan for logged out user overrides expired entitlements");
+            await verifyIsInProTrialEntitlement(true, "user should be in trial initially");
+            await verifyTrialRemainingDaysEntitlement(10, "should have 10 trial days remaining");
+            await verifyRawEntitlements(null, "no raw entitlements when logged out");
+            await verifyLiveEditEntitlement({ activated: true }, "live edit activated via trial");
+
             // Perform login
             await performFullLoginFlow();
 
             // Verify pro branding remains after login (trial overrides expired server entitlements)
             await verifyProBranding(true, "pro branding after login - trial overrides expired entitlements");
+
+            // Verify entitlements API consistency for logged in user (trial overrides expired server entitlements)
+            await verifyPlanEntitlements({ paidSubscriber: true },
+                "trial overrides expired server entitlements to show paid subscriber");
+            await verifyIsInProTrialEntitlement(true, "user should still be in trial after login");
+            await verifyTrialRemainingDaysEntitlement(10, "trial days should remain 10 after login");
+            await verifyLiveEditEntitlement({ activated: true }, "live edit should be activated via trial override");
 
             // Check profile popup shows trial status (not expired server entitlements)
             const $profileButton = testWindow.$("#user-profile-button");
@@ -507,6 +652,12 @@ define(function (require, exports, module) {
             // Verify pro branding remains after logout (trial continues)
             await verifyProBranding(true, "pro branding after logout - trial still active");
 
+            // Verify entitlements API consistency after logout (trial persists)
+            await verifyIsInProTrialEntitlement(true, "trial should persist after logout");
+            await verifyTrialRemainingDaysEntitlement(10, "trial days should persist after logout");
+            await verifyRawEntitlements(null, "no raw entitlements when logged out");
+            await verifyLiveEditEntitlement({ activated: true }, "live edit still activated via trial after logout");
+
             // Check profile popup still shows trial status
             $profileButton.trigger('click');
             await popupToAppear(SIGNIN_POPUP);
@@ -515,6 +666,49 @@ define(function (require, exports, module) {
 
             // Close popup
             $profileButton.trigger('click');
+        });
+
+        it("should test entitlements event forwarding", async function () {
+            console.log("Entitlements: Testing event forwarding");
+
+            let entitlementsEventFired = false;
+
+            // Set up event listeners
+            const entitlementsService = EntitlementsExports.EntitlementsService;
+
+            const entitlementsHandler = () => {
+                entitlementsEventFired = true;
+            };
+
+            entitlementsService.on(entitlementsService.EVENT_ENTITLEMENTS_CHANGED, entitlementsHandler);
+
+            try {
+                // Setup basic user mock
+                setupProUserMock(false);
+
+                // Perform full login flow
+                await performFullLoginFlow();
+                expect(LoginServiceExports.LoginService.isLoggedIn()).toBe(true);
+
+                // Wait for events to fire
+                await awaitsFor(()=> entitlementsEventFired, "Entitlements events to fire");
+
+                expect(entitlementsEventFired).toBe(true);
+
+                // Perform a full logout flow and see if entitlement changes are detected
+                entitlementsEventFired = false;
+                await performFullLogoutFlow();
+                expect(LoginServiceExports.LoginService.isLoggedIn()).toBe(false);
+                verifyProfileIconBlanked();
+
+                // Wait for events to fire
+                await awaitsFor(()=> entitlementsEventFired, "Entitlements events to fire");
+
+            } finally {
+                // Cleanup event listeners
+                entitlementsService.off(entitlementsService.EVENT_ENTITLEMENTS_CHANGED, entitlementsHandler);
+                await cleanupTrialState();
+            }
         });
     }
 
