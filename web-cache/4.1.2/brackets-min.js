@@ -71944,7 +71944,6 @@ define("nls/ar/strings", {
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "امتداد الملف",
   "PROMO_UPGRADE_TITLE": "تم ترقيتك إلى {0}",
   "PROMO_UPGRADE_MESSAGE": "استمتع بوصول كامل إلى جميع الميزات المميزة للأيام {0} القادمة:",
-  "PROMO_ENDED_MESSAGE": "اشترك الآن للاستمرار في استخدام هذه الميزات المتقدمة:",
   "PROMO_CARD_1": "سحب وإفلات العناصر",
   "PROMO_CARD_1_MESSAGE": "أعد ترتيب الأقسام بصريًا — يقوم Phoenix بتحديث HTML و CSS نيابةً عنك.",
   "PROMO_CARD_2": "استبدال الصور",
@@ -71956,9 +71955,13 @@ define("nls/ar/strings", {
   "PROMO_LEARN_MORE": "تعرّف على المزيد…",
   "PROMO_GET_APP_UPSELL_BUTTON": "احصل على {0}",
   "PROMO_PRO_ENDED_TITLE": "انتهت الفترة التجريبية لـ {0}",
+  "PROMO_ENDED_MESSAGE": "اشترك الآن للاستمرار في استخدام هذه الميزات المتقدمة:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "النسخة التجريبية من Phoenix Pro ({0} أيام متبقية)",
   "GET_PHOENIX_PRO": "احصل على Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "باقة مجانية"
+  "USER_FREE_PLAN_NAME": "باقة مجانية",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "أطلق العنان لقوة {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "افتح ميزة التحرير المباشر مع {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "اشترك الآن لإلغاء قفل هذه الميزات المتقدمة:"
 });
 /*
  * GNU AGPL-3.0 License
@@ -73424,7 +73427,6 @@ define("nls/bg/strings", {
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Разширение на файл",
   "PROMO_UPGRADE_TITLE": "Надградихте до {0}",
   "PROMO_UPGRADE_MESSAGE": "Възползвайте се от пълен достъп до всички премиум функции през следващите {0} дни:",
-  "PROMO_ENDED_MESSAGE": "Абонирайте се сега, за да продължите да използвате тези разширени функции:",
   "PROMO_CARD_1": "Плъзгане и пускане на елементи",
   "PROMO_CARD_1_MESSAGE": "Пренареждайте секции визуално — Phoenix актуализира HTML и CSS вместо вас.",
   "PROMO_CARD_2": "Замяна на изображение",
@@ -73436,9 +73438,13 @@ define("nls/bg/strings", {
   "PROMO_LEARN_MORE": "Научете повече…",
   "PROMO_GET_APP_UPSELL_BUTTON": "Вземете {0}",
   "PROMO_PRO_ENDED_TITLE": "Вашият {0} пробен период е изтекъл",
+  "PROMO_ENDED_MESSAGE": "Абонирайте се сега, за да продължите да използвате тези разширени функции:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Пробен период на Phoenix Pro ({0} дни остават)",
   "GET_PHOENIX_PRO": "Вземете Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Безплатен план"
+  "USER_FREE_PLAN_NAME": "Безплатен план",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Отключете силата на {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Отключете редактиране на живо с {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Абонирайте се сега, за да отключите тези разширени функции:"
 });
 /*
  * Copyright (c) 2013 Adobe Systems Incorporated. All rights reserved.
@@ -74933,7 +74939,6 @@ define("nls/cs/strings", {
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Přípona souboru",
   "PROMO_UPGRADE_TITLE": "Byli jste upgradováni na {0}",
   "PROMO_UPGRADE_MESSAGE": "Využívejte plný přístup ke všem prémiovým funkcím po dobu následujících {0} dnů:",
-  "PROMO_ENDED_MESSAGE": "Chcete-li pokračovat v používání těchto pokročilých funkcí, přihlaste se k odběru:",
   "PROMO_CARD_1": "Přetahování prvků",
   "PROMO_CARD_1_MESSAGE": "Vizuálně uspořádejte sekce – Phoenix aktualizuje HTML a CSS za vás.",
   "PROMO_CARD_2": "Výměna obrázků",
@@ -74945,9 +74950,13 @@ define("nls/cs/strings", {
   "PROMO_LEARN_MORE": "Další informace…",
   "PROMO_GET_APP_UPSELL_BUTTON": "Získat {0}",
   "PROMO_PRO_ENDED_TITLE": "Zkušební doba {0} skončila",
+  "PROMO_ENDED_MESSAGE": "Chcete-li pokračovat v používání těchto pokročilých funkcí, přihlaste se k odběru:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Zkušební verze Phoenix Pro ({0} dní zbývá)",
   "GET_PHOENIX_PRO": "Získejte Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Bezplatný tarif"
+  "USER_FREE_PLAN_NAME": "Bezplatný tarif",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Odemkněte sílu {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Odemkněte Živou úpravu s {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Přihlaste se k odběru a odemkněte si tyto pokročilé funkce:"
 });
 /*
  * GNU AGPL-3.0 License
@@ -76440,7 +76449,6 @@ define("nls/da/strings", {
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Filtypenavn",
   "PROMO_UPGRADE_TITLE": "Du er blevet opgraderet til {0}",
   "PROMO_UPGRADE_MESSAGE": "Få fuld adgang til alle premium-funktioner de næste {0} dage:",
-  "PROMO_ENDED_MESSAGE": "Abonner nu for at fortsætte med at bruge disse avancerede funktioner:",
   "PROMO_CARD_1": "Træk og slip elementer",
   "PROMO_CARD_1_MESSAGE": "Omarranger sektioner visuelt – Phoenix opdaterer HTML og CSS for dig.",
   "PROMO_CARD_2": "Billedudskiftning",
@@ -76452,9 +76460,13 @@ define("nls/da/strings", {
   "PROMO_LEARN_MORE": "Læs mere…",
   "PROMO_GET_APP_UPSELL_BUTTON": "Få {0}",
   "PROMO_PRO_ENDED_TITLE": "Din {0}-prøveperiode er udløbet",
+  "PROMO_ENDED_MESSAGE": "Abonner nu for at fortsætte med at bruge disse avancerede funktioner:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro prøveperiode ({0} dage tilbage)",
   "GET_PHOENIX_PRO": "Få Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Gratisabonnement"
+  "USER_FREE_PLAN_NAME": "Gratisabonnement",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Frigør kraften i {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Få Live Edit med {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Abonner nu for at låse op for disse avancerede funktioner:"
 });
 /*
  * GNU AGPL-3.0 License
@@ -77945,7 +77957,6 @@ define("nls/de/strings", {
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Dateierweiterung",
   "PROMO_UPGRADE_TITLE": "Sie wurden auf {0} hochgestuft",
   "PROMO_UPGRADE_MESSAGE": "Genießen Sie die nächsten {0} Tage vollen Zugriff auf alle Premium-Funktionen:",
-  "PROMO_ENDED_MESSAGE": "Jetzt abonnieren, um diese erweiterten Funktionen weiterhin zu nutzen:",
   "PROMO_CARD_1": "Elemente per Drag & Drop verschieben",
   "PROMO_CARD_1_MESSAGE": "Ordnen Sie Abschnitte visuell neu an – Phoenix aktualisiert HTML und CSS für Sie.",
   "PROMO_CARD_2": "Bilder ersetzen",
@@ -77957,9 +77968,13 @@ define("nls/de/strings", {
   "PROMO_LEARN_MORE": "Mehr erfahren…",
   "PROMO_GET_APP_UPSELL_BUTTON": "{0} herunterladen",
   "PROMO_PRO_ENDED_TITLE": "Ihre {0}-Testversion ist abgelaufen",
+  "PROMO_ENDED_MESSAGE": "Jetzt abonnieren, um diese erweiterten Funktionen weiterhin zu nutzen:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro-Testversion ({0} Tage verbleibend)",
   "GET_PHOENIX_PRO": "Phoenix Pro herunterladen",
-  "USER_FREE_PLAN_NAME": "Kostenloser Plan"
+  "USER_FREE_PLAN_NAME": "Kostenloser Plan",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Schalte die volle Leistung von {0} frei",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Schalte Live Edit mit {0} frei",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Abonniere jetzt, um die folgenden erweiterten Funktionen freizuschalten:"
 });
 /*
  * GNU AGPL-3.0 License
@@ -79452,7 +79467,6 @@ define("nls/el/strings", {
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Επέκταση Αρχείου",
   "PROMO_UPGRADE_TITLE": "Έχετε αναβαθμιστεί σε {0}",
   "PROMO_UPGRADE_MESSAGE": "Απολαύστε πλήρη πρόσβαση σε όλες τις premium λειτουργίες για τις επόμενες {0} ημέρες:",
-  "PROMO_ENDED_MESSAGE": "Εγγραφείτε τώρα για να συνεχίσετε να χρησιμοποιείτε αυτές τις προηγμένες λειτουργίες:",
   "PROMO_CARD_1": "Σύρσιμο & Απόθεση Στοιχείων",
   "PROMO_CARD_1_MESSAGE": "Αναδιατάξτε τα τμήματα οπτικά — το Phoenix ενημερώνει το HTML & CSS για εσάς.",
   "PROMO_CARD_2": "Αντικατάσταση Εικόνας",
@@ -79464,9 +79478,13 @@ define("nls/el/strings", {
   "PROMO_LEARN_MORE": "Μάθετε περισσότερα…",
   "PROMO_GET_APP_UPSELL_BUTTON": "Αποκτήστε {0}",
   "PROMO_PRO_ENDED_TITLE": "Η δοκιμαστική σας έκδοση {0} έληξε",
+  "PROMO_ENDED_MESSAGE": "Εγγραφείτε τώρα για να συνεχίσετε να χρησιμοποιείτε αυτές τις προηγμένες λειτουργίες:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Δοκιμαστική έκδοση Phoenix Pro ({0} ημέρες απομένουν)",
   "GET_PHOENIX_PRO": "Αποκτήστε το Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Δωρεάν Σχέδιο"
+  "USER_FREE_PLAN_NAME": "Δωρεάν Σχέδιο",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Ξεκλειδώστε τη δύναμη του {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Ξεκλειδώστε το Live Edit με το {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Εγγραφείτε τώρα για να ξεκλειδώσετε αυτές τις προηγμένες λειτουργίες:"
 });
 /*
  * GNU AGPL-3.0 License
@@ -80959,7 +80977,6 @@ define("nls/en-gb/strings", {
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "File Extension",
   "PROMO_UPGRADE_TITLE": "You’ve been upgraded to {0}",
   "PROMO_UPGRADE_MESSAGE": "Enjoy full access to all premium features for the next {0} days:",
-  "PROMO_ENDED_MESSAGE": "Subscribe now to continue using these advanced features:",
   "PROMO_CARD_1": "Drag and drop elements",
   "PROMO_CARD_1_MESSAGE": "Rearrange sections visually — Phoenix updates the HTML and CSS for you.",
   "PROMO_CARD_2": "Image replacement",
@@ -80971,9 +80988,13 @@ define("nls/en-gb/strings", {
   "PROMO_LEARN_MORE": "Learn more…",
   "PROMO_GET_APP_UPSELL_BUTTON": "Get {0}",
   "PROMO_PRO_ENDED_TITLE": "Your {0} trial has ended",
+  "PROMO_ENDED_MESSAGE": "Subscribe now to continue using these advanced features:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro Trial ({0} days remaining)",
   "GET_PHOENIX_PRO": "Get Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Free Plan"
+  "USER_FREE_PLAN_NAME": "Free Plan",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Unleash the power of {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Unlock Live Edit with {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Subscribe now to unlock these advanced features:"
 });
 /*
  * GNU AGPL-3.0 License
@@ -82439,7 +82460,6 @@ define("nls/es/strings", {
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensión de archivo",
   "PROMO_UPGRADE_TITLE": "Te hemos actualizado a {0}",
   "PROMO_UPGRADE_MESSAGE": "Disfruta de acceso completo a todas las funciones premium durante los próximos {0} días:",
-  "PROMO_ENDED_MESSAGE": "Suscríbete ahora para seguir usando estas funciones avanzadas:",
   "PROMO_CARD_1": "Arrastrar y soltar elementos",
   "PROMO_CARD_1_MESSAGE": "Reorganiza las secciones visualmente: Phoenix actualiza el HTML y CSS por ti.",
   "PROMO_CARD_2": "Reemplazo de imágenes",
@@ -82451,9 +82471,13 @@ define("nls/es/strings", {
   "PROMO_LEARN_MORE": "Más información…",
   "PROMO_GET_APP_UPSELL_BUTTON": "Obtener {0}",
   "PROMO_PRO_ENDED_TITLE": "Tu prueba de {0} ha finalizado",
+  "PROMO_ENDED_MESSAGE": "Suscríbete ahora para seguir usando estas funciones avanzadas:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Prueba de Phoenix Pro ({0} días restantes)",
   "GET_PHOENIX_PRO": "Obtener Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Plan gratuito"
+  "USER_FREE_PLAN_NAME": "Plan gratuito",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Desata el poder de {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Desbloquea la edición en vivo con {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Suscríbete ahora para desbloquear estas funciones avanzadas:"
 });
 /*
  * GNU AGPL-3.0 License
@@ -83947,7 +83971,6 @@ define("nls/fa-ir/strings", {
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "پسوند فایل",
   "PROMO_UPGRADE_TITLE": "حساب شما به {0} ارتقا یافت.",
   "PROMO_UPGRADE_MESSAGE": "از دسترسی کامل به تمام امکانات ویژه برای {0} روز آینده لذت ببرید:",
-  "PROMO_ENDED_MESSAGE": "برای ادامه استفاده از این قابلیت‌های پیشرفته، همین حالا مشترک شوید:",
   "PROMO_CARD_1": "کشیدن و رها کردن عناصر",
   "PROMO_CARD_1_MESSAGE": "بخش‌ها را به‌صورت بصری مرتب کنید — فینیکس HTML و CSS را برای شما به‌روزرسانی می‌کند.",
   "PROMO_CARD_2": "جایگزینی تصویر",
@@ -83959,9 +83982,13 @@ define("nls/fa-ir/strings", {
   "PROMO_LEARN_MORE": "اطلاعات بیشتر…",
   "PROMO_GET_APP_UPSELL_BUTTON": "دریافت {0}",
   "PROMO_PRO_ENDED_TITLE": "مهلت {0} شما به پایان رسیده است",
+  "PROMO_ENDED_MESSAGE": "برای ادامه استفاده از این قابلیت‌های پیشرفته، همین حالا مشترک شوید:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "نسخه آزمایشی Phoenix Pro ({0} روز باقی مانده)",
   "GET_PHOENIX_PRO": "دریافت Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "طرح رایگان"
+  "USER_FREE_PLAN_NAME": "طرح رایگان",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "قدرت {0} را آزاد کنید",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "ویرایش زنده را با {0} فعال کنید",
+  "PROMO_PRO_UNLOCK_MESSAGE": "هم‌اکنون مشترک شوید تا این قابلیت‌های پیشرفته را فعال کنید:"
 });
 /*
  * GNU AGPL-3.0 License
@@ -85454,7 +85481,6 @@ define("nls/fi/strings", {
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Tiedostopääte",
   "PROMO_UPGRADE_TITLE": "Sinut on päivitetty {0}-tilaukseen",
   "PROMO_UPGRADE_MESSAGE": "Nauti täydestä pääsystä kaikkiin premium-ominaisuuksiin seuraavien {0} päivän ajan:",
-  "PROMO_ENDED_MESSAGE": "Tilaa nyt jatkaaksesi näiden lisäominaisuuksien käyttöä:",
   "PROMO_CARD_1": "Elementtien raahaaminen ja pudottaminen",
   "PROMO_CARD_1_MESSAGE": "Järjestele osioita visuaalisesti – Phoenix päivittää HTML:n ja CSS:n puolestasi.",
   "PROMO_CARD_2": "Kuvan vaihtaminen",
@@ -85466,9 +85492,13 @@ define("nls/fi/strings", {
   "PROMO_LEARN_MORE": "Lisätietoja…",
   "PROMO_GET_APP_UPSELL_BUTTON": "Hanki {0}",
   "PROMO_PRO_ENDED_TITLE": "{0}-kokeilusi on päättynyt",
+  "PROMO_ENDED_MESSAGE": "Tilaa nyt jatkaaksesi näiden lisäominaisuuksien käyttöä:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro -kokeiluversio ({0} päivää jäljellä)",
   "GET_PHOENIX_PRO": "Hanki Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Ilmainen sopimus"
+  "USER_FREE_PLAN_NAME": "Ilmainen sopimus",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Avaa Phoenix Pron koko potentiaali {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Avaa Live Edit Phoenix Prolla {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Tilaa nyt avataksesi nämä edistyneet ominaisuudet:"
 });
 /*
  * GNU AGPL-3.0 License
@@ -86961,7 +86991,6 @@ define("nls/fr/strings", {
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extension de fichier",
   "PROMO_UPGRADE_TITLE": "Vous avez été surclassé(e) vers {0}",
   "PROMO_UPGRADE_MESSAGE": "Profitez d'un accès complet à toutes les fonctionnalités premium pendant les {0} prochains jours :",
-  "PROMO_ENDED_MESSAGE": "Abonnez-vous maintenant pour continuer à utiliser ces fonctionnalités avancées :",
   "PROMO_CARD_1": "Glisser-déposer des éléments",
   "PROMO_CARD_1_MESSAGE": "Réorganisez les sections visuellement — Phoenix met à jour le HTML et le CSS pour vous.",
   "PROMO_CARD_2": "Remplacement d'image",
@@ -86973,9 +87002,13 @@ define("nls/fr/strings", {
   "PROMO_LEARN_MORE": "En savoir plus…",
   "PROMO_GET_APP_UPSELL_BUTTON": "Obtenir {0}",
   "PROMO_PRO_ENDED_TITLE": "Votre essai {0} a expiré",
+  "PROMO_ENDED_MESSAGE": "Abonnez-vous maintenant pour continuer à utiliser ces fonctionnalités avancées :",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Essai Phoenix Pro ({0} jours restants)",
   "GET_PHOENIX_PRO": "Obtenir Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Formule gratuite"
+  "USER_FREE_PLAN_NAME": "Formule gratuite",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Libérez toute la puissance de {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Débloquez la modification en direct avec {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Abonnez-vous maintenant pour débloquer ces fonctionnalités avancées :"
 });
 /*
  * GNU AGPL-3.0 License
@@ -88468,7 +88501,6 @@ define("nls/gl/strings", {
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensión de ficheiro",
   "PROMO_UPGRADE_TITLE": "Actualizaches a {0}",
   "PROMO_UPGRADE_MESSAGE": "Goza de acceso completo a todas as funcións premium durante os próximos {0} días:",
-  "PROMO_ENDED_MESSAGE": "Subscríbete agora para continuar a usar estas funcionalidades avanzadas:",
   "PROMO_CARD_1": "Arrastrar e soltar elementos",
   "PROMO_CARD_1_MESSAGE": "Reordena as seccións visualmente: Phoenix actualiza o HTML e o CSS por ti.",
   "PROMO_CARD_2": "Substitución de imaxes",
@@ -88480,9 +88512,13 @@ define("nls/gl/strings", {
   "PROMO_LEARN_MORE": "Máis información…",
   "PROMO_GET_APP_UPSELL_BUTTON": "Obtén {0}",
   "PROMO_PRO_ENDED_TITLE": "Rematou a túa proba de {0}",
+  "PROMO_ENDED_MESSAGE": "Subscríbete agora para continuar a usar estas funcionalidades avanzadas:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Proba de Phoenix Pro ({0} días restantes)",
   "GET_PHOENIX_PRO": "Obtén Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Plan gratuíto"
+  "USER_FREE_PLAN_NAME": "Plan gratuíto",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Libera o poder de {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Desbloquea a Edición en Directo con {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Subscríbete agora para desbloquear estas funcións avanzadas:"
 });
 /*
  * GNU AGPL-3.0 License
@@ -89948,7 +89984,6 @@ define("nls/hi/strings", {
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "फ़ाइल एक्सटेंशन",
   "PROMO_UPGRADE_TITLE": "आपको {0} में अपग्रेड कर दिया गया है",
   "PROMO_UPGRADE_MESSAGE": "अगले {0} दिनों के लिए सभी प्रीमियम सुविधाओं का पूरा आनंद लें:",
-  "PROMO_ENDED_MESSAGE": "इन उन्नत सुविधाओं का उपयोग जारी रखने के लिए अभी सदस्यता लें:",
   "PROMO_CARD_1": "एलिमेंट्स को ड्रैग और ड्रॉप करें",
   "PROMO_CARD_1_MESSAGE": "सेक्शंस को विज़ुअली रूप से पुनर्व्यवस्थित करें — Phoenix आपके लिए HTML और CSS अपडेट करता है।",
   "PROMO_CARD_2": "इमेज रिप्लेसमेंट",
@@ -89960,9 +89995,13 @@ define("nls/hi/strings", {
   "PROMO_LEARN_MORE": "और जानें…",
   "PROMO_GET_APP_UPSELL_BUTTON": "{0} प्राप्त करें",
   "PROMO_PRO_ENDED_TITLE": "आपका {0} परीक्षण समाप्त हो गया है",
+  "PROMO_ENDED_MESSAGE": "इन उन्नत सुविधाओं का उपयोग जारी रखने के लिए अभी सदस्यता लें:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro परीक्षण ({0} दिन शेष)",
   "GET_PHOENIX_PRO": "Phoenix Pro प्राप्त करें",
-  "USER_FREE_PLAN_NAME": "निःशुल्क योजना"
+  "USER_FREE_PLAN_NAME": "निःशुल्क योजना",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "{0} की शक्ति को अनलॉक करें",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "{0} के साथ लाइव एडिट अनलॉक करें",
+  "PROMO_PRO_UNLOCK_MESSAGE": "इन उन्नत सुविधाओं को अनलॉक करने के लिए अभी सब्सक्राइब करें:"
 });
 /*
  * GNU AGPL-3.0 License
@@ -91428,7 +91467,6 @@ define("nls/hr/strings", {
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Ekstenzija datoteke",
   "PROMO_UPGRADE_TITLE": "Nadograđeni ste na {0}",
   "PROMO_UPGRADE_MESSAGE": "Uživajte u punom pristupu svim premium značajkama sljedećih {0} dana:",
-  "PROMO_ENDED_MESSAGE": "Pretplatite se sada kako biste nastavili koristiti ove napredne značajke:",
   "PROMO_CARD_1": "Povuci i ispusti elemente",
   "PROMO_CARD_1_MESSAGE": "Vizualno preuredite odjeljke — Phoenix ažurira HTML i CSS za vas.",
   "PROMO_CARD_2": "Zamjena slike",
@@ -91440,9 +91478,13 @@ define("nls/hr/strings", {
   "PROMO_LEARN_MORE": "Saznajte više…",
   "PROMO_GET_APP_UPSELL_BUTTON": "Nabavite {0}",
   "PROMO_PRO_ENDED_TITLE": "Vaša probna verzija {0} je istekla",
+  "PROMO_ENDED_MESSAGE": "Pretplatite se sada kako biste nastavili koristiti ove napredne značajke:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Probna verzija Phoenix Pro ({0} dana preostalo)",
   "GET_PHOENIX_PRO": "Nabavite Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Besplatni plan"
+  "USER_FREE_PLAN_NAME": "Besplatni plan",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Otključajte moć {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Otključajte Live Edit uz {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Pretplatite se sada kako biste otključali ove napredne značajke:"
 });
 /*
  * GNU AGPL-3.0 License
@@ -92935,7 +92977,6 @@ define("nls/hu/strings", {
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Fájlkiterjesztés",
   "PROMO_UPGRADE_TITLE": "Átálltunk a(z) {0} verzióra",
   "PROMO_UPGRADE_MESSAGE": "Élvezze a prémium funkciók teljes körű elérését a következő {0} napban:",
-  "PROMO_ENDED_MESSAGE": "Iratkozzon fel most a következő prémium funkciók további használatához:",
   "PROMO_CARD_1": "Elemek húzása és elengedése",
   "PROMO_CARD_1_MESSAGE": "Rendezd át vizuálisan a szekciókat – a Phoenix frissíti a HTML-t és a CSS-t helyetted.",
   "PROMO_CARD_2": "Képcsere",
@@ -92947,9 +92988,13 @@ define("nls/hu/strings", {
   "PROMO_LEARN_MORE": "Tudj meg többet…",
   "PROMO_GET_APP_UPSELL_BUTTON": "Szerezd meg a(z) {0}-t/et",
   "PROMO_PRO_ENDED_TITLE": "Lejárt a(z) {0} próbaidőszakod",
+  "PROMO_ENDED_MESSAGE": "Iratkozzon fel most a következő prémium funkciók további használatához:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro próbaverzió ({0} nap van hátra)",
   "GET_PHOENIX_PRO": "Szerezd meg a Phoenix Pro-t",
-  "USER_FREE_PLAN_NAME": "Ingyenes csomag"
+  "USER_FREE_PLAN_NAME": "Ingyenes csomag",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Használd ki a {0} erejét",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Oldd fel az Élő Szerkesztést a {0} segítségével",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Iratkozz fel most a következő fejlett funkciók eléréséhez:"
 });
 /*
  * GNU AGPL-3.0 License
@@ -94415,7 +94460,6 @@ define("nls/id/strings", {
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Ekstensi Berkas",
   "PROMO_UPGRADE_TITLE": "Anda telah diupgrade ke {0}",
   "PROMO_UPGRADE_MESSAGE": "Nikmati akses penuh ke semua fitur premium selama {0} hari ke depan:",
-  "PROMO_ENDED_MESSAGE": "Berlangganan sekarang untuk melanjutkan penggunaan fitur-fitur canggih ini:",
   "PROMO_CARD_1": "Seret & Lepas Elemen",
   "PROMO_CARD_1_MESSAGE": "Susun ulang bagian secara visual — Phoenix memperbarui HTML & CSS untuk Anda.",
   "PROMO_CARD_2": "Penggantian Gambar",
@@ -94427,9 +94471,13 @@ define("nls/id/strings", {
   "PROMO_LEARN_MORE": "Pelajari Lebih Lanjut…",
   "PROMO_GET_APP_UPSELL_BUTTON": "Dapatkan {0}",
   "PROMO_PRO_ENDED_TITLE": "Masa Percobaan {0} Anda telah berakhir",
+  "PROMO_ENDED_MESSAGE": "Berlangganan sekarang untuk melanjutkan penggunaan fitur-fitur canggih ini:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Percobaan Phoenix Pro ({0} hari tersisa)",
   "GET_PHOENIX_PRO": "Dapatkan Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Paket Gratis"
+  "USER_FREE_PLAN_NAME": "Paket Gratis",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Buka potensi {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Buka Live Edit dengan {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Berlangganan sekarang untuk membuka fitur-fitur canggih ini:"
 });
 /*
  * GNU AGPL-3.0 License
@@ -95921,7 +95969,6 @@ define("nls/it/strings", {
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Estensione del File",
   "PROMO_UPGRADE_TITLE": "Sei passato a {0}",
   "PROMO_UPGRADE_MESSAGE": "Approfitta dell'accesso completo a tutte le funzionalità premium per i prossimi {0} giorni:",
-  "PROMO_ENDED_MESSAGE": "Iscriviti ora per continuare a utilizzare queste funzionalità avanzate:",
   "PROMO_CARD_1": "Trascina e rilascia elementi",
   "PROMO_CARD_1_MESSAGE": "Riorganizza le sezioni visivamente: Phoenix aggiorna HTML e CSS per te.",
   "PROMO_CARD_2": "Sostituzione immagini",
@@ -95933,9 +95980,13 @@ define("nls/it/strings", {
   "PROMO_LEARN_MORE": "Scopri di più…",
   "PROMO_GET_APP_UPSELL_BUTTON": "Ottieni {0}",
   "PROMO_PRO_ENDED_TITLE": "Il tuo periodo di prova di {0} è terminato",
+  "PROMO_ENDED_MESSAGE": "Iscriviti ora per continuare a utilizzare queste funzionalità avanzate:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Prova di Phoenix Pro ({0} giorni rimanenti)",
   "GET_PHOENIX_PRO": "Ottieni Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Piano gratuito"
+  "USER_FREE_PLAN_NAME": "Piano gratuito",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Sblocca la potenza di {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Sblocca Live Edit con {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Abbonati ora per sbloccare queste funzionalità avanzate:"
 });
 /*
  * GNU AGPL-3.0 License
@@ -97428,7 +97479,6 @@ define("nls/ja/strings", {
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "ファイル拡張子",
   "PROMO_UPGRADE_TITLE": "{0} にアップグレードされました",
   "PROMO_UPGRADE_MESSAGE": "今後 {0} 日間、すべてのプレミアム機能をご利用いただけます：",
-  "PROMO_ENDED_MESSAGE": "これらの高度な機能を引き続き使用するには、今すぐ登録してください。",
   "PROMO_CARD_1": "要素のドラッグ＆ドロップ",
   "PROMO_CARD_1_MESSAGE": "セクションを視覚的に再配置 — Phoenix が HTML と CSS を自動的に更新します。",
   "PROMO_CARD_2": "画像の置換",
@@ -97440,9 +97490,13 @@ define("nls/ja/strings", {
   "PROMO_LEARN_MORE": "詳細はこちら…",
   "PROMO_GET_APP_UPSELL_BUTTON": "{0} を入手",
   "PROMO_PRO_ENDED_TITLE": "{0}トライアルが終了しました",
+  "PROMO_ENDED_MESSAGE": "これらの高度な機能を引き続き使用するには、今すぐ登録してください。",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Proトライアル（残り{0}日）",
   "GET_PHOENIX_PRO": "Phoenix Proを入手",
-  "USER_FREE_PLAN_NAME": "フリープラン"
+  "USER_FREE_PLAN_NAME": "フリープラン",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "{0}の真価を発揮",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "{0}でライブ編集をアンロック",
+  "PROMO_PRO_UNLOCK_MESSAGE": "今すぐ登録して、以下の高度な機能をアンロック："
 });
 /*
  * GNU AGPL-3.0 License
@@ -98935,7 +98989,6 @@ define("nls/ko/strings", {
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "파일 확장자",
   "PROMO_UPGRADE_TITLE": "{0}(으)로 업그레이드되었습니다.",
   "PROMO_UPGRADE_MESSAGE": "향후 {0}일 동안 모든 프리미엄 기능을 완전히 이용할 수 있습니다.",
-  "PROMO_ENDED_MESSAGE": "고급 기능을 계속 사용하려면 지금 구독하세요.",
   "PROMO_CARD_1": "요소 끌어서 놓기",
   "PROMO_CARD_1_MESSAGE": "섹션을 시각적으로 재정렬하세요. Phoenix가 HTML과 CSS를 자동으로 업데이트합니다.",
   "PROMO_CARD_2": "이미지 교체",
@@ -98947,9 +99000,13 @@ define("nls/ko/strings", {
   "PROMO_LEARN_MORE": "자세히 알아보기…",
   "PROMO_GET_APP_UPSELL_BUTTON": "{0} 받기",
   "PROMO_PRO_ENDED_TITLE": "{0} 평가판 사용 기간이 만료되었습니다",
+  "PROMO_ENDED_MESSAGE": "고급 기능을 계속 사용하려면 지금 구독하세요.",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro 평가판({0}일 남음)",
   "GET_PHOENIX_PRO": "Phoenix Pro 받기",
-  "USER_FREE_PLAN_NAME": "무료 플랜"
+  "USER_FREE_PLAN_NAME": "무료 플랜",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "{0}의 강력한 기능을 사용해 보세요",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "{0}로 라이브 편집 기능을 사용해 보세요",
+  "PROMO_PRO_UNLOCK_MESSAGE": "다음과 같은 고급 기능을 사용하려면 지금 구독하세요:"
 });
 /*
  * GNU AGPL-3.0 License
@@ -100442,7 +100499,6 @@ define("nls/lv/strings", {
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Faila paplašinājums",
   "PROMO_UPGRADE_TITLE": "Jūs esat jaunināts uz {0}",
   "PROMO_UPGRADE_MESSAGE": "Izbaudiet pilnu piekļuvi visām Premium funkcijām nākamās {0} dienas:",
-  "PROMO_ENDED_MESSAGE": "Abonējiet tagad, lai turpinātu izmantot šīs papildu funkcijas:",
   "PROMO_CARD_1": "Elementu vilkšana un nomešana",
   "PROMO_CARD_1_MESSAGE": "Pārkārtojiet sadaļas vizuāli — Phoenix atjaunina HTML un CSS jūsu vietā.",
   "PROMO_CARD_2": "Attēlu aizstāšana",
@@ -100454,9 +100510,13 @@ define("nls/lv/strings", {
   "PROMO_LEARN_MORE": "Uzzināt vairāk…",
   "PROMO_GET_APP_UPSELL_BUTTON": "Iegūt {0}",
   "PROMO_PRO_ENDED_TITLE": "Jūsu {0} izmēģinājuma periods ir beidzies",
+  "PROMO_ENDED_MESSAGE": "Abonējiet tagad, lai turpinātu izmantot šīs papildu funkcijas:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro izmēģinājuma versija ({0} dienas atlikušas)",
   "GET_PHOENIX_PRO": "Iegūt Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Bezmaksas plāns"
+  "USER_FREE_PLAN_NAME": "Bezmaksas plāns",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Atklāj {0} jaudu",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Atklāj tiešraides rediģēšanu ar {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Abonē tagad, lai atbloķētu šīs papildu funkcijas:"
 });
 /*
  * GNU AGPL-3.0 License
@@ -101922,7 +101982,6 @@ define("nls/ml/strings", {
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "ഫയൽ എക്സ്റ്റൻഷൻ",
   "PROMO_UPGRADE_TITLE": "നിങ്ങൾ {0} ലേക്ക് അപ്‌ഗ്രേഡ് ചെയ്യപ്പെട്ടിരിക്കുന്നു",
   "PROMO_UPGRADE_MESSAGE": "അടുത്ത {0} ദിവസത്തേക്ക് എല്ലാ പ്രീമിയം സവിശേഷതകളും പൂർണ്ണമായി ആസ്വദിക്കൂ:",
-  "PROMO_ENDED_MESSAGE": "ഈ വിപുലമായ സവിശേഷതകൾ തുടർന്നും ഉപയോഗിക്കുന്നതിന് ഇപ്പോൾ സബ്‌സ്‌ക്രൈബുചെയ്യുക:",
   "PROMO_CARD_1": "ഘടകങ്ങൾ വലിച്ചിടുക",
   "PROMO_CARD_1_MESSAGE": "വിഭാഗങ്ങൾ ദൃശ്യപരമായി പുനഃക്രമീകരിക്കുക — ഫീനിക്സ് നിങ്ങൾക്കായി HTML ഉം CSS ഉം അപ്ഡേറ്റ് ചെയ്യും.",
   "PROMO_CARD_2": "ചിത്രം മാറ്റിസ്ഥാപിക്കൽ",
@@ -101934,9 +101993,13 @@ define("nls/ml/strings", {
   "PROMO_LEARN_MORE": "കൂടുതലറിയാൻ…",
   "PROMO_GET_APP_UPSELL_BUTTON": "{0} നേടുക",
   "PROMO_PRO_ENDED_TITLE": "നിങ്ങളുടെ {0} പരീക്ഷണ കാലയളവ് അവസാനിച്ചു",
+  "PROMO_ENDED_MESSAGE": "ഈ വിപുലമായ സവിശേഷതകൾ തുടർന്നും ഉപയോഗിക്കുന്നതിന് ഇപ്പോൾ സബ്‌സ്‌ക്രൈബുചെയ്യുക:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "ഫീനിക്സ് പ്രോ പരീക്ഷണം ({0} ദിവസം ബാക്കി)",
   "GET_PHOENIX_PRO": "ഫീനിക്സ് പ്രോ നേടുക",
-  "USER_FREE_PLAN_NAME": "സൗജന്യ പ്ലാൻ"
+  "USER_FREE_PLAN_NAME": "സൗജന്യ പ്ലാൻ",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "{0} യുടെ ശക്തി അനാവരണം ചെയ്യൂ",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "{0} ഉപയോഗിച്ച് ലൈവ് എഡിറ്റ് അൺലോക്ക് ചെയ്യുക",
+  "PROMO_PRO_UNLOCK_MESSAGE": "ഈ വിപുലമായ സവിശേഷതകൾ അൺലോക്ക് ചെയ്യാൻ ഇപ്പോൾ സബ്‌സ്‌ക്രൈബുചെയ്യുക:"
 });
 /*
  * GNU AGPL-3.0 License
@@ -103402,7 +103465,6 @@ define("nls/nb/strings", {
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Filtype",
   "PROMO_UPGRADE_TITLE": "Du har blitt oppgradert til {0}",
   "PROMO_UPGRADE_MESSAGE": "Nyt full tilgang til alle premiumfunksjoner de neste {0} dagene:",
-  "PROMO_ENDED_MESSAGE": "Abonner nå for å fortsette å bruke disse avanserte funksjonene:",
   "PROMO_CARD_1": "Dra og slipp elementer",
   "PROMO_CARD_1_MESSAGE": "Omorganiser seksjoner visuelt – Phoenix oppdaterer HTML og CSS for deg.",
   "PROMO_CARD_2": "Bildeerstatning",
@@ -103414,9 +103476,13 @@ define("nls/nb/strings", {
   "PROMO_LEARN_MORE": "Lær mer…",
   "PROMO_GET_APP_UPSELL_BUTTON": "Skaff deg {0}",
   "PROMO_PRO_ENDED_TITLE": "Din {0}-prøveperiode er over",
+  "PROMO_ENDED_MESSAGE": "Abonner nå for å fortsette å bruke disse avanserte funksjonene:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro prøveperiode ({0} dager igjen)",
   "GET_PHOENIX_PRO": "Skaff deg Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Gratisabonnement"
+  "USER_FREE_PLAN_NAME": "Gratisabonnement",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Slipp løs kraften i {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Lås opp Live Edit med {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Abonner nå for å låse opp disse avanserte funksjonene:"
 });
 /*
  * GNU AGPL-3.0 License
@@ -104909,7 +104975,6 @@ define("nls/nl/strings", {
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Bestandsextensie",
   "PROMO_UPGRADE_TITLE": "Je bent geüpgraded naar {0}",
   "PROMO_UPGRADE_MESSAGE": "Profiteer de komende {0} dagen van volledige toegang tot alle premiumfuncties:",
-  "PROMO_ENDED_MESSAGE": "Abonneer nu om deze geavanceerde functies te blijven gebruiken:",
   "PROMO_CARD_1": "Elementen slepen en neerzetten",
   "PROMO_CARD_1_MESSAGE": "Herschik secties visueel — Phoenix werkt de HTML & CSS voor je bij.",
   "PROMO_CARD_2": "Afbeelding vervangen",
@@ -104921,9 +104986,13 @@ define("nls/nl/strings", {
   "PROMO_LEARN_MORE": "Meer informatie…",
   "PROMO_GET_APP_UPSELL_BUTTON": "Download {0}",
   "PROMO_PRO_ENDED_TITLE": "Je {0} proefperiode is afgelopen",
+  "PROMO_ENDED_MESSAGE": "Abonneer nu om deze geavanceerde functies te blijven gebruiken:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro proefversie ({0} dagen resterend)",
   "GET_PHOENIX_PRO": "Koop Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Gratis abonnement"
+  "USER_FREE_PLAN_NAME": "Gratis abonnement",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Ontketen de kracht van {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Ontgrendel Live Bewerken met {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Abonneer nu om deze geavanceerde functies te ontgrendelen:"
 });
 /*
  * GNU AGPL-3.0 License
@@ -106416,7 +106485,6 @@ define("nls/pl/strings", {
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Rozszerzenie pliku",
   "PROMO_UPGRADE_TITLE": "Zostałeś(-aś) ulepszony(-a) do {0}",
   "PROMO_UPGRADE_MESSAGE": "Korzystaj z pełnego dostępu do wszystkich funkcji premium przez następne {0} dni:",
-  "PROMO_ENDED_MESSAGE": "Subskrybuj teraz, aby kontynuować korzystanie z tych zaawansowanych funkcji:",
   "PROMO_CARD_1": "Przeciągnij i upuść elementy",
   "PROMO_CARD_1_MESSAGE": "Zmieniaj układ sekcji wizualnie — Phoenix zaktualizuje kod HTML i CSS za Ciebie.",
   "PROMO_CARD_2": "Zamiana obrazów",
@@ -106428,9 +106496,13 @@ define("nls/pl/strings", {
   "PROMO_LEARN_MORE": "Dowiedz się więcej…",
   "PROMO_GET_APP_UPSELL_BUTTON": "Pobierz {0}",
   "PROMO_PRO_ENDED_TITLE": "Twój okres próbny {0} dobiegł końca",
+  "PROMO_ENDED_MESSAGE": "Subskrybuj teraz, aby kontynuować korzystanie z tych zaawansowanych funkcji:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Okres próbny Phoenix Pro ({0} dni pozostało)",
   "GET_PHOENIX_PRO": "Pobierz Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Plan darmowy"
+  "USER_FREE_PLAN_NAME": "Plan darmowy",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Uwolnij moc {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Uwolnij Edycję na Żywo z {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Subskrybuj teraz, aby odblokować te zaawansowane funkcje:"
 });
 /*
  * GNU AGPL-3.0 License
@@ -107923,7 +107995,6 @@ define("nls/pt-br/strings", {
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensão do Arquivo",
   "PROMO_UPGRADE_TITLE": "Você foi atualizado(a) para {0}",
   "PROMO_UPGRADE_MESSAGE": "Aproveite acesso completo a todos os recursos premium pelos próximos {0} dias:",
-  "PROMO_ENDED_MESSAGE": "Assine agora para continuar usando estes recursos avançados:",
   "PROMO_CARD_1": "Arraste e solte elementos",
   "PROMO_CARD_1_MESSAGE": "Reorganize seções visualmente — Phoenix atualiza o HTML e CSS para você.",
   "PROMO_CARD_2": "Substituição de imagem",
@@ -107935,9 +108006,13 @@ define("nls/pt-br/strings", {
   "PROMO_LEARN_MORE": "Saiba mais…",
   "PROMO_GET_APP_UPSELL_BUTTON": "Obtenha o {0}",
   "PROMO_PRO_ENDED_TITLE": "Seu período de teste de {0} terminou",
+  "PROMO_ENDED_MESSAGE": "Assine agora para continuar usando estes recursos avançados:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Teste do Phoenix Pro ({0} dias restantes)",
   "GET_PHOENIX_PRO": "Adquira o Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Plano Gratuito"
+  "USER_FREE_PLAN_NAME": "Plano Gratuito",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Libere o poder do {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Libere a Edição em Tempo Real com o {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Assine agora para liberar estes recursos avançados:"
 });
 /*
  * GNU AGPL-3.0 License
@@ -109428,7 +109503,6 @@ define("nls/pt-pt/strings", {
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensão de Ficheiro",
   "PROMO_UPGRADE_TITLE": "Foi atualizado(a) para {0}",
   "PROMO_UPGRADE_MESSAGE": "Desfrute de acesso total a todas as funcionalidades premium durante os próximos {0} dias:",
-  "PROMO_ENDED_MESSAGE": "Assine agora para continuar a utilizar estas funcionalidades avançadas:",
   "PROMO_CARD_1": "Arrastar e Soltar Elementos",
   "PROMO_CARD_1_MESSAGE": "Reorganize as secções visualmente — o Phoenix atualiza o HTML e o CSS por si.",
   "PROMO_CARD_2": "Substituição de Imagem",
@@ -109440,9 +109514,13 @@ define("nls/pt-pt/strings", {
   "PROMO_LEARN_MORE": "Saiba mais…",
   "PROMO_GET_APP_UPSELL_BUTTON": "Obtenha {0}",
   "PROMO_PRO_ENDED_TITLE": "O seu período experimental de {0} terminou",
+  "PROMO_ENDED_MESSAGE": "Assine agora para continuar a utilizar estas funcionalidades avançadas:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Período experimental do Phoenix Pro ({0} dias restantes)",
   "GET_PHOENIX_PRO": "Obter Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Plano Gratuito"
+  "USER_FREE_PLAN_NAME": "Plano Gratuito",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Liberte o poder do {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Desbloqueie a Edição em Tempo Real com o {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Assine agora para desbloquear estas funcionalidades avançadas:"
 });
 /*
  * GNU AGPL-3.0 License
@@ -110933,7 +111011,6 @@ define("nls/ro/strings", {
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Extensie fișier",
   "PROMO_UPGRADE_TITLE": "Ai fost upgradat la {0}",
   "PROMO_UPGRADE_MESSAGE": "Bucură-te de acces complet la toate funcțiile premium pentru următoarele {0} zile:",
-  "PROMO_ENDED_MESSAGE": "Abonează-te acum pentru a continua să utilizezi aceste funcții avansate:",
   "PROMO_CARD_1": "Trage și plasează elemente",
   "PROMO_CARD_1_MESSAGE": "Reordonează secțiunile vizual — Phoenix actualizează HTML-ul și CSS-ul pentru tine.",
   "PROMO_CARD_2": "Înlocuire imagine",
@@ -110945,9 +111022,13 @@ define("nls/ro/strings", {
   "PROMO_LEARN_MORE": "Află mai multe…",
   "PROMO_GET_APP_UPSELL_BUTTON": "Obține {0}",
   "PROMO_PRO_ENDED_TITLE": "Perioada de probă {0} a expirat",
+  "PROMO_ENDED_MESSAGE": "Abonează-te acum pentru a continua să utilizezi aceste funcții avansate:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Probă Phoenix Pro ({0} zile rămase)",
   "GET_PHOENIX_PRO": "Obține Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Abonament gratuit"
+  "USER_FREE_PLAN_NAME": "Abonament gratuit",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Deblochează puterea {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Deblochează Editarea Live cu {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Abonează-te acum pentru a debloca aceste funcții avansate:"
 });
 /*
  * GNU AGPL-3.0 License
@@ -114195,7 +114276,6 @@ define("nls/ru/strings", {
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Расширение файла",
   "PROMO_UPGRADE_TITLE": "Вы перешли на тариф {0}",
   "PROMO_UPGRADE_MESSAGE": "Наслаждайтесь полным доступом ко всем премиум-функциям в течение следующих {0} дней:",
-  "PROMO_ENDED_MESSAGE": "Подпишитесь сейчас, чтобы продолжить использовать эти расширенные функции:",
   "PROMO_CARD_1": "Перетаскивание элементов",
   "PROMO_CARD_1_MESSAGE": "Меняйте расположение секций визуально — Phoenix обновит HTML и CSS за вас.",
   "PROMO_CARD_2": "Замена изображений",
@@ -114207,9 +114287,13 @@ define("nls/ru/strings", {
   "PROMO_LEARN_MORE": "Узнать больше…",
   "PROMO_GET_APP_UPSELL_BUTTON": "Получить {0}",
   "PROMO_PRO_ENDED_TITLE": "Ваш пробный период {0} истек",
+  "PROMO_ENDED_MESSAGE": "Подпишитесь сейчас, чтобы продолжить использовать эти расширенные функции:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Пробный период Phoenix Pro ({0} дней осталось)",
   "GET_PHOENIX_PRO": "Получить Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Бесплатный тариф"
+  "USER_FREE_PLAN_NAME": "Бесплатный тариф",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Раскройте весь потенциал {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Откройте доступ к функции Live Edit с {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Подпишитесь сейчас, чтобы получить доступ к следующим расширенным функциям:"
 });
 /*
  * GNU AGPL-3.0 License
@@ -115702,7 +115786,6 @@ define("nls/sk/strings", {
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Prípona súboru",
   "PROMO_UPGRADE_TITLE": "Boli ste prejdení na {0}",
   "PROMO_UPGRADE_MESSAGE": "Využívajte plný prístup ku všetkým prémiovým funkciám počas nasledujúcich {0} dní:",
-  "PROMO_ENDED_MESSAGE": "Prihláste sa na odber, aby ste mohli pokračovať v používaní týchto pokročilých funkcií:",
   "PROMO_CARD_1": "Presúvanie prvkov myšou",
   "PROMO_CARD_1_MESSAGE": "Vizuálne usporiadajte sekcie – Phoenix aktualizuje HTML a CSS za vás.",
   "PROMO_CARD_2": "Nahradenie obrázka",
@@ -115714,9 +115797,13 @@ define("nls/sk/strings", {
   "PROMO_LEARN_MORE": "Zistiť viac…",
   "PROMO_GET_APP_UPSELL_BUTTON": "Získajte {0}",
   "PROMO_PRO_ENDED_TITLE": "Vaša skúšobná verzia {0} skončila",
+  "PROMO_ENDED_MESSAGE": "Prihláste sa na odber, aby ste mohli pokračovať v používaní týchto pokročilých funkcií:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Skúšobná verzia Phoenix Pro ({0} dní zostáva)",
   "GET_PHOENIX_PRO": "Získajte Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Bezplatný program"
+  "USER_FREE_PLAN_NAME": "Bezplatný program",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Odomknite si výkon {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Odomknite si Živú úpravu s {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Prihláste sa na odber a odomknite si tieto pokročilé funkcie:"
 });
 /*
  * GNU AGPL-3.0 License
@@ -117208,7 +117295,6 @@ define("nls/sr/strings", {
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Екстензија датотеке",
   "PROMO_UPGRADE_TITLE": "Унапредили сте на {0}",
   "PROMO_UPGRADE_MESSAGE": "Уживајте у пуном приступу свим премијум функцијама у наредних {0} дана:",
-  "PROMO_ENDED_MESSAGE": "Претплатите се сада да бисте наставили да користите ове напредне функције:",
   "PROMO_CARD_1": "Превлачење и испуштање елемената",
   "PROMO_CARD_1_MESSAGE": "Визуелно преуређујте секције — Phoenix ажурира HTML и CSS за вас.",
   "PROMO_CARD_2": "Замена слике",
@@ -117220,9 +117306,13 @@ define("nls/sr/strings", {
   "PROMO_LEARN_MORE": "Сазнајте више…",
   "PROMO_GET_APP_UPSELL_BUTTON": "Преузмите {0}",
   "PROMO_PRO_ENDED_TITLE": "Ваша пробна верзија {0} је истекла",
+  "PROMO_ENDED_MESSAGE": "Претплатите се сада да бисте наставили да користите ове напредне функције:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro пробна верзија ({0} дана преостало)",
   "GET_PHOENIX_PRO": "Преузмите Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Бесплатан план"
+  "USER_FREE_PLAN_NAME": "Бесплатан план",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Откључајте моћ апликације {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Откључајте Уживо Измене са {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Претплатите се сада да бисте откључали ове напредне функције:"
 });
 /*
  * GNU AGPL-3.0 License
@@ -118798,7 +118888,6 @@ define("nls/sv/strings", {
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Filändelse",
   "PROMO_UPGRADE_TITLE": "Du har uppgraderats till {0}",
   "PROMO_UPGRADE_MESSAGE": "Få full tillgång till alla premiumfunktioner under de kommande {0} dagarna:",
-  "PROMO_ENDED_MESSAGE": "Prenumerera nu för att fortsätta använda dessa avancerade funktioner:",
   "PROMO_CARD_1": "Dra och släpp element",
   "PROMO_CARD_1_MESSAGE": "Ordna om sektioner visuellt – Phoenix uppdaterar HTML och CSS åt dig.",
   "PROMO_CARD_2": "Bildersättning",
@@ -118810,9 +118899,13 @@ define("nls/sv/strings", {
   "PROMO_LEARN_MORE": "Läs mer…",
   "PROMO_GET_APP_UPSELL_BUTTON": "Skaffa {0}",
   "PROMO_PRO_ENDED_TITLE": "Din {0}-provperiod har löpt ut",
+  "PROMO_ENDED_MESSAGE": "Prenumerera nu för att fortsätta använda dessa avancerade funktioner:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro-provperiod ({0} dagar kvar)",
   "GET_PHOENIX_PRO": "Skaffa Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Gratisplan"
+  "USER_FREE_PLAN_NAME": "Gratisplan",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Frigör kraften i {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Lås upp Live Edit med {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Prenumerera nu för att låsa upp dessa avancerade funktioner:"
 });
 /*
  * GNU AGPL-3.0 License
@@ -120305,7 +120398,6 @@ define("nls/tr/strings", {
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Dosya Uzantısı",
   "PROMO_UPGRADE_TITLE": "{0} sürümüne yükseltildiniz",
   "PROMO_UPGRADE_MESSAGE": "Önümüzdeki {0} gün boyunca tüm premium özelliklere tam erişimin keyfini çıkarın:",
-  "PROMO_ENDED_MESSAGE": "Bu gelişmiş özellikleri kullanmaya devam etmek için hemen abone olun:",
   "PROMO_CARD_1": "Öğeleri Sürükle ve Bırak",
   "PROMO_CARD_1_MESSAGE": "Bölümleri görsel olarak yeniden düzenleyin — Phoenix HTML ve CSS'yi sizin için günceller.",
   "PROMO_CARD_2": "Görsel Değiştirme",
@@ -120317,9 +120409,13 @@ define("nls/tr/strings", {
   "PROMO_LEARN_MORE": "Daha Fazla Bilgi Edinin…",
   "PROMO_GET_APP_UPSELL_BUTTON": "{0} edinin",
   "PROMO_PRO_ENDED_TITLE": "{0} Denemeniz Sona Erdi",
+  "PROMO_ENDED_MESSAGE": "Bu gelişmiş özellikleri kullanmaya devam etmek için hemen abone olun:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro Deneme Sürümü ({0} gün kaldı)",
   "GET_PHOENIX_PRO": "Phoenix Pro'yu Edinin",
-  "USER_FREE_PLAN_NAME": "Ücretsiz Plan"
+  "USER_FREE_PLAN_NAME": "Ücretsiz Plan",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "{0} ile gücün kilidini açın",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "{0} ile Canlı Düzenleme'nin kilidini açın",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Bu gelişmiş özelliklerin kilidini açmak için hemen abone olun:"
 });
 /*
  * GNU AGPL-3.0 License
@@ -121812,7 +121908,6 @@ define("nls/uk/strings", {
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "Розширення файлу",
   "PROMO_UPGRADE_TITLE": "Вас оновлено до {0}",
   "PROMO_UPGRADE_MESSAGE": "Насолоджуйтесь повним доступом до всіх преміум-функцій протягом наступних {0} днів:",
-  "PROMO_ENDED_MESSAGE": "Підпишіться зараз, щоб продовжити користуватися цими розширеними функціями:",
   "PROMO_CARD_1": "Перетягування елементів",
   "PROMO_CARD_1_MESSAGE": "Змінюйте розташування розділів візуально — Phoenix оновить HTML та CSS за вас.",
   "PROMO_CARD_2": "Заміна зображень",
@@ -121824,9 +121919,13 @@ define("nls/uk/strings", {
   "PROMO_LEARN_MORE": "Дізнатися більше…",
   "PROMO_GET_APP_UPSELL_BUTTON": "Отримати {0}",
   "PROMO_PRO_ENDED_TITLE": "Ваш пробний період {0} завершився",
+  "PROMO_ENDED_MESSAGE": "Підпишіться зараз, щоб продовжити користуватися цими розширеними функціями:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Пробний період Phoenix Pro ({0} днів залишилось)",
   "GET_PHOENIX_PRO": "Отримати Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Безкоштовний план"
+  "USER_FREE_PLAN_NAME": "Безкоштовний план",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Розкрийте можливості {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Розблокуйте Live Edit з {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Підпишіться зараз, щоб розблокувати такі розширені функції:"
 });
 /*
  * GNU AGPL-3.0 License
@@ -123319,7 +123418,6 @@ define("nls/ur/strings", {
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "فائل ایکسٹینشن",
   "PROMO_UPGRADE_TITLE": "آپ کو {0} میں اپ گریڈ کر دیا گیا ہے۔",
   "PROMO_UPGRADE_MESSAGE": "اگلے {0} دنوں کے لیے تمام پریمیم خصوصیات تک مکمل رسائی سے لطف اندوز ہوں:",
-  "PROMO_ENDED_MESSAGE": "ان جدید خصوصیات کو استعمال جاری رکھنے کیلئے ابھی سبسکرائب کریں:",
   "PROMO_CARD_1": "عناصر کو گھسیٹیں اور چھوڑیں",
   "PROMO_CARD_1_MESSAGE": "حصوں کو بصری طور پر دوبارہ ترتیب دیں — فینکس آپ کے لیے HTML اور CSS کو اپ ڈیٹ کرتا ہے۔",
   "PROMO_CARD_2": "تصویر کی تبدیلی",
@@ -123331,9 +123429,13 @@ define("nls/ur/strings", {
   "PROMO_LEARN_MORE": "مزید جانیے…",
   "PROMO_GET_APP_UPSELL_BUTTON": "{0} حاصل کریں",
   "PROMO_PRO_ENDED_TITLE": "آپ کا {0} آزمائشی ورژن ختم ہو گیا ہے۔",
+  "PROMO_ENDED_MESSAGE": "ان جدید خصوصیات کو استعمال جاری رکھنے کیلئے ابھی سبسکرائب کریں:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro آزمائشی ورژن ({0} دن باقی)",
   "GET_PHOENIX_PRO": "Phoenix Pro حاصل کریں",
-  "USER_FREE_PLAN_NAME": "مفت پلان"
+  "USER_FREE_PLAN_NAME": "مفت پلان",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "{0} کی طاقت کو کھولیں",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "{0} کے ساتھ لائیو ایڈٹ کو کھولیں",
+  "PROMO_PRO_UNLOCK_MESSAGE": "ان جدید خصوصیات کو کھولنے کے لیے ابھی سبسکرائب کریں:"
 });
 /*
  * GNU AGPL-3.0 License
@@ -124856,7 +124958,6 @@ define("nls/zh-cn/strings", {
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "文件扩展名",
   "PROMO_UPGRADE_TITLE": "您已升级到 {0}",
   "PROMO_UPGRADE_MESSAGE": "在接下来的 {0} 天内，您可以尽情享用所有高级功能：",
-  "PROMO_ENDED_MESSAGE": "继续使用以下高级功能，立即订阅：",
   "PROMO_CARD_1": "拖放元素",
   "PROMO_CARD_1_MESSAGE": "直观地重新排列版块 — Phoenix 会为您更新 HTML 和 CSS。",
   "PROMO_CARD_2": "图片替换",
@@ -124868,9 +124969,13 @@ define("nls/zh-cn/strings", {
   "PROMO_LEARN_MORE": "了解更多…",
   "PROMO_GET_APP_UPSELL_BUTTON": "获取 {0}",
   "PROMO_PRO_ENDED_TITLE": "您的 {0} 试用已结束",
+  "PROMO_ENDED_MESSAGE": "继续使用以下高级功能，立即订阅：",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro 试用版（剩余 {0} 天）",
   "GET_PHOENIX_PRO": "获取 Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "免费版"
+  "USER_FREE_PLAN_NAME": "免费版",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "释放 {0} 的强大功能",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "使用 {0} 解锁实时编辑功能",
+  "PROMO_PRO_UNLOCK_MESSAGE": "立即订阅以解锁以下高级功能："
 });
 /*
  * GNU AGPL-3.0 License
@@ -126363,7 +126468,6 @@ define("nls/zh-tw/strings", {
   "CUSTOM_SNIPPETS_HEADER_FILE_EXTENSION": "檔案副檔名",
   "PROMO_UPGRADE_TITLE": "您已升級至 {0}",
   "PROMO_UPGRADE_MESSAGE": "在接下來的 {0} 天內，盡情享用所有進階功能：",
-  "PROMO_ENDED_MESSAGE": "立即訂閱以繼續使用這些進階功能：",
   "PROMO_CARD_1": "拖放元素",
   "PROMO_CARD_1_MESSAGE": "以視覺化方式重新排列區塊 — Phoenix 會為您更新 HTML 和 CSS。",
   "PROMO_CARD_2": "圖片替換",
@@ -126375,9 +126479,13 @@ define("nls/zh-tw/strings", {
   "PROMO_LEARN_MORE": "深入瞭解…",
   "PROMO_GET_APP_UPSELL_BUTTON": "取得 {0}",
   "PROMO_PRO_ENDED_TITLE": "您的 {0} 試用已結束",
+  "PROMO_ENDED_MESSAGE": "立即訂閱以繼續使用這些進階功能：",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro 試用版（剩餘 {0} 天）",
   "GET_PHOENIX_PRO": "取得 Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "免費方案"
+  "USER_FREE_PLAN_NAME": "免費方案",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "釋放 {0} 的強大功能",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "使用 {0} 解鎖即時編輯功能",
+  "PROMO_PRO_UNLOCK_MESSAGE": "立即訂閱以解鎖以下進階功能："
 });
 /*
  * GNU AGPL-3.0 License
