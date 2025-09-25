@@ -72230,12 +72230,17 @@ define("nls/ar/strings", {
   "PROMO_GET_APP_UPSELL_BUTTON": "احصل على {0}",
   "PROMO_PRO_ENDED_TITLE": "انتهت الفترة التجريبية لـ {0}",
   "PROMO_ENDED_MESSAGE": "اشترك الآن للاستمرار في استخدام هذه الميزات المتقدمة:",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "أطلق العنان لقوة {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "افتح ميزة التحرير المباشر مع {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "اشترك الآن لإلغاء قفل هذه الميزات المتقدمة:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "النسخة التجريبية من Phoenix Pro ({0} أيام متبقية)",
   "GET_PHOENIX_PRO": "احصل على Phoenix Pro",
   "USER_FREE_PLAN_NAME": "باقة مجانية",
-  "PROMO_PRO_UNLOCK_PRO_TITLE": "أطلق العنان لقوة {0}",
-  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "افتح ميزة التحرير المباشر مع {0}",
-  "PROMO_PRO_UNLOCK_MESSAGE": "اشترك الآن لإلغاء قفل هذه الميزات المتقدمة:"
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "استخدام هذه الصورة",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "تحديد صورة من الكمبيوتر",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "اختيار مجلد التنزيل",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "ابحث عن الصور...",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "إظهار منتقي الصور عند النقر على الصورة"
 });
 /*
  * GNU AGPL-3.0 License
@@ -73713,12 +73718,17 @@ define("nls/bg/strings", {
   "PROMO_GET_APP_UPSELL_BUTTON": "Вземете {0}",
   "PROMO_PRO_ENDED_TITLE": "Вашият {0} пробен период е изтекъл",
   "PROMO_ENDED_MESSAGE": "Абонирайте се сега, за да продължите да използвате тези разширени функции:",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Отключете силата на {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Отключете редактиране на живо с {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Абонирайте се сега, за да отключите тези разширени функции:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Пробен период на Phoenix Pro ({0} дни остават)",
   "GET_PHOENIX_PRO": "Вземете Phoenix Pro",
   "USER_FREE_PLAN_NAME": "Безплатен план",
-  "PROMO_PRO_UNLOCK_PRO_TITLE": "Отключете силата на {0}",
-  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Отключете редактиране на живо с {0}",
-  "PROMO_PRO_UNLOCK_MESSAGE": "Абонирайте се сега, за да отключите тези разширени функции:"
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Използвай това изображение",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Избери изображение от компютъра",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Избери папка за изтегляне",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Търсене на изображения...",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Покажи селектор на изображения при кликване върху изображение"
 });
 /*
  * Copyright (c) 2013 Adobe Systems Incorporated. All rights reserved.
@@ -75225,12 +75235,17 @@ define("nls/cs/strings", {
   "PROMO_GET_APP_UPSELL_BUTTON": "Získat {0}",
   "PROMO_PRO_ENDED_TITLE": "Zkušební doba {0} skončila",
   "PROMO_ENDED_MESSAGE": "Chcete-li pokračovat v používání těchto pokročilých funkcí, přihlaste se k odběru:",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Odemkněte sílu {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Odemkněte Živou úpravu s {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Přihlaste se k odběru a odemkněte si tyto pokročilé funkce:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Zkušební verze Phoenix Pro ({0} dní zbývá)",
   "GET_PHOENIX_PRO": "Získejte Phoenix Pro",
   "USER_FREE_PLAN_NAME": "Bezplatný tarif",
-  "PROMO_PRO_UNLOCK_PRO_TITLE": "Odemkněte sílu {0}",
-  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Odemkněte Živou úpravu s {0}",
-  "PROMO_PRO_UNLOCK_MESSAGE": "Přihlaste se k odběru a odemkněte si tyto pokročilé funkce:"
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Použít tento obrázek",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Vybrat obrázek z počítače",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Vybrat složku pro stažení",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Hledat obrázky…",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Zobrazit výběr obrázků po kliknutí na obrázek"
 });
 /*
  * GNU AGPL-3.0 License
@@ -76735,12 +76750,17 @@ define("nls/da/strings", {
   "PROMO_GET_APP_UPSELL_BUTTON": "Få {0}",
   "PROMO_PRO_ENDED_TITLE": "Din {0}-prøveperiode er udløbet",
   "PROMO_ENDED_MESSAGE": "Abonner nu for at fortsætte med at bruge disse avancerede funktioner:",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Frigør kraften i {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Få Live Edit med {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Abonner nu for at låse op for disse avancerede funktioner:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro prøveperiode ({0} dage tilbage)",
   "GET_PHOENIX_PRO": "Få Phoenix Pro",
   "USER_FREE_PLAN_NAME": "Gratisabonnement",
-  "PROMO_PRO_UNLOCK_PRO_TITLE": "Frigør kraften i {0}",
-  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Få Live Edit med {0}",
-  "PROMO_PRO_UNLOCK_MESSAGE": "Abonner nu for at låse op for disse avancerede funktioner:"
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Brug dette billede",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Vælg billede fra computeren",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Vælg downloadmappe",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Søg efter billeder...",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Vis billedvælger ved klik på billede"
 });
 /*
  * GNU AGPL-3.0 License
@@ -78243,12 +78263,17 @@ define("nls/de/strings", {
   "PROMO_GET_APP_UPSELL_BUTTON": "{0} herunterladen",
   "PROMO_PRO_ENDED_TITLE": "Ihre {0}-Testversion ist abgelaufen",
   "PROMO_ENDED_MESSAGE": "Jetzt abonnieren, um diese erweiterten Funktionen weiterhin zu nutzen:",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Schalte die volle Leistung von {0} frei",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Schalte Live Edit mit {0} frei",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Abonniere jetzt, um die folgenden erweiterten Funktionen freizuschalten:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro-Testversion ({0} Tage verbleibend)",
   "GET_PHOENIX_PRO": "Phoenix Pro herunterladen",
   "USER_FREE_PLAN_NAME": "Kostenloser Plan",
-  "PROMO_PRO_UNLOCK_PRO_TITLE": "Schalte die volle Leistung von {0} frei",
-  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Schalte Live Edit mit {0} frei",
-  "PROMO_PRO_UNLOCK_MESSAGE": "Abonniere jetzt, um die folgenden erweiterten Funktionen freizuschalten:"
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Dieses Bild verwenden",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Bild vom Computer auswählen",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Download-Ordner auswählen",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Bilder suchen…",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Bildauswahl bei Klick auf Bild anzeigen"
 });
 /*
  * GNU AGPL-3.0 License
@@ -79753,12 +79778,17 @@ define("nls/el/strings", {
   "PROMO_GET_APP_UPSELL_BUTTON": "Αποκτήστε {0}",
   "PROMO_PRO_ENDED_TITLE": "Η δοκιμαστική σας έκδοση {0} έληξε",
   "PROMO_ENDED_MESSAGE": "Εγγραφείτε τώρα για να συνεχίσετε να χρησιμοποιείτε αυτές τις προηγμένες λειτουργίες:",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Ξεκλειδώστε τη δύναμη του {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Ξεκλειδώστε το Live Edit με το {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Εγγραφείτε τώρα για να ξεκλειδώσετε αυτές τις προηγμένες λειτουργίες:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Δοκιμαστική έκδοση Phoenix Pro ({0} ημέρες απομένουν)",
   "GET_PHOENIX_PRO": "Αποκτήστε το Phoenix Pro",
   "USER_FREE_PLAN_NAME": "Δωρεάν Σχέδιο",
-  "PROMO_PRO_UNLOCK_PRO_TITLE": "Ξεκλειδώστε τη δύναμη του {0}",
-  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Ξεκλειδώστε το Live Edit με το {0}",
-  "PROMO_PRO_UNLOCK_MESSAGE": "Εγγραφείτε τώρα για να ξεκλειδώσετε αυτές τις προηγμένες λειτουργίες:"
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Χρήση αυτής της εικόνας",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Επιλογή εικόνας από τον υπολογιστή",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Επιλογή φακέλου λήψης",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Αναζήτηση εικόνων...",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Εμφάνιση Επιλογέα Εικόνας με κλικ στην εικόνα"
 });
 /*
  * GNU AGPL-3.0 License
@@ -81263,12 +81293,17 @@ define("nls/en-gb/strings", {
   "PROMO_GET_APP_UPSELL_BUTTON": "Get {0}",
   "PROMO_PRO_ENDED_TITLE": "Your {0} trial has ended",
   "PROMO_ENDED_MESSAGE": "Subscribe now to continue using these advanced features:",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Unleash the power of {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Unlock Live Edit with {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Subscribe now to unlock these advanced features:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro Trial ({0} days remaining)",
   "GET_PHOENIX_PRO": "Get Phoenix Pro",
   "USER_FREE_PLAN_NAME": "Free Plan",
-  "PROMO_PRO_UNLOCK_PRO_TITLE": "Unleash the power of {0}",
-  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Unlock Live Edit with {0}",
-  "PROMO_PRO_UNLOCK_MESSAGE": "Subscribe now to unlock these advanced features:"
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Use this image",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Select image from computer",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Choose download folder",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Search images…",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Show Image Picker on Image click"
 });
 /*
  * GNU AGPL-3.0 License
@@ -82746,12 +82781,17 @@ define("nls/es/strings", {
   "PROMO_GET_APP_UPSELL_BUTTON": "Obtener {0}",
   "PROMO_PRO_ENDED_TITLE": "Tu prueba de {0} ha finalizado",
   "PROMO_ENDED_MESSAGE": "Suscríbete ahora para seguir usando estas funciones avanzadas:",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Desata el poder de {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Desbloquea la edición en vivo con {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Suscríbete ahora para desbloquear estas funciones avanzadas:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Prueba de Phoenix Pro ({0} días restantes)",
   "GET_PHOENIX_PRO": "Obtener Phoenix Pro",
   "USER_FREE_PLAN_NAME": "Plan gratuito",
-  "PROMO_PRO_UNLOCK_PRO_TITLE": "Desata el poder de {0}",
-  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Desbloquea la edición en vivo con {0}",
-  "PROMO_PRO_UNLOCK_MESSAGE": "Suscríbete ahora para desbloquear estas funciones avanzadas:"
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Usar esta imagen",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Seleccionar imagen del ordenador",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Seleccionar carpeta de descarga",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Buscar imágenes...",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Mostrar el selector de imágenes al hacer clic en una imagen"
 });
 /*
  * GNU AGPL-3.0 License
@@ -84257,12 +84297,17 @@ define("nls/fa-ir/strings", {
   "PROMO_GET_APP_UPSELL_BUTTON": "دریافت {0}",
   "PROMO_PRO_ENDED_TITLE": "مهلت {0} شما به پایان رسیده است",
   "PROMO_ENDED_MESSAGE": "برای ادامه استفاده از این قابلیت‌های پیشرفته، همین حالا مشترک شوید:",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "قدرت {0} را آزاد کنید",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "ویرایش زنده را با {0} فعال کنید",
+  "PROMO_PRO_UNLOCK_MESSAGE": "هم‌اکنون مشترک شوید تا این قابلیت‌های پیشرفته را فعال کنید:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "نسخه آزمایشی Phoenix Pro ({0} روز باقی مانده)",
   "GET_PHOENIX_PRO": "دریافت Phoenix Pro",
   "USER_FREE_PLAN_NAME": "طرح رایگان",
-  "PROMO_PRO_UNLOCK_PRO_TITLE": "قدرت {0} را آزاد کنید",
-  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "ویرایش زنده را با {0} فعال کنید",
-  "PROMO_PRO_UNLOCK_MESSAGE": "هم‌اکنون مشترک شوید تا این قابلیت‌های پیشرفته را فعال کنید:"
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "از این تصویر استفاده کنید",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "انتخاب تصویر از رایانه",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "انتخاب پوشه دانلود",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "جستجوی تصاویر…",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "نمایش انتخابگر تصویر با کلیک روی تصویر"
 });
 /*
  * GNU AGPL-3.0 License
@@ -85767,12 +85812,17 @@ define("nls/fi/strings", {
   "PROMO_GET_APP_UPSELL_BUTTON": "Hanki {0}",
   "PROMO_PRO_ENDED_TITLE": "{0}-kokeilusi on päättynyt",
   "PROMO_ENDED_MESSAGE": "Tilaa nyt jatkaaksesi näiden lisäominaisuuksien käyttöä:",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Avaa Phoenix Pron koko potentiaali {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Avaa Live Edit Phoenix Prolla {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Tilaa nyt avataksesi nämä edistyneet ominaisuudet:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro -kokeiluversio ({0} päivää jäljellä)",
   "GET_PHOENIX_PRO": "Hanki Phoenix Pro",
   "USER_FREE_PLAN_NAME": "Ilmainen sopimus",
-  "PROMO_PRO_UNLOCK_PRO_TITLE": "Avaa Phoenix Pron koko potentiaali {0}",
-  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Avaa Live Edit Phoenix Prolla {0}",
-  "PROMO_PRO_UNLOCK_MESSAGE": "Tilaa nyt avataksesi nämä edistyneet ominaisuudet:"
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Käytä tätä kuvaa",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Valitse kuva tietokoneelta",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Valitse latauskansio",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Hae kuvia...",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Näytä kuvanvalitsin kuvaa klikatessa"
 });
 /*
  * GNU AGPL-3.0 License
@@ -87277,12 +87327,17 @@ define("nls/fr/strings", {
   "PROMO_GET_APP_UPSELL_BUTTON": "Obtenir {0}",
   "PROMO_PRO_ENDED_TITLE": "Votre essai {0} a expiré",
   "PROMO_ENDED_MESSAGE": "Abonnez-vous maintenant pour continuer à utiliser ces fonctionnalités avancées :",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Libérez toute la puissance de {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Débloquez la modification en direct avec {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Abonnez-vous maintenant pour débloquer ces fonctionnalités avancées :",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Essai Phoenix Pro ({0} jours restants)",
   "GET_PHOENIX_PRO": "Obtenir Phoenix Pro",
   "USER_FREE_PLAN_NAME": "Formule gratuite",
-  "PROMO_PRO_UNLOCK_PRO_TITLE": "Libérez toute la puissance de {0}",
-  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Débloquez la modification en direct avec {0}",
-  "PROMO_PRO_UNLOCK_MESSAGE": "Abonnez-vous maintenant pour débloquer ces fonctionnalités avancées :"
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Utiliser cette image",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Sélectionner une image depuis l'ordinateur",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Choisir un dossier de téléchargement",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Rechercher des images…",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Afficher le sélecteur d'images au clic sur l'image"
 });
 /*
  * GNU AGPL-3.0 License
@@ -88787,12 +88842,17 @@ define("nls/gl/strings", {
   "PROMO_GET_APP_UPSELL_BUTTON": "Obtén {0}",
   "PROMO_PRO_ENDED_TITLE": "Rematou a túa proba de {0}",
   "PROMO_ENDED_MESSAGE": "Subscríbete agora para continuar a usar estas funcionalidades avanzadas:",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Libera o poder de {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Desbloquea a Edición en Directo con {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Subscríbete agora para desbloquear estas funcións avanzadas:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Proba de Phoenix Pro ({0} días restantes)",
   "GET_PHOENIX_PRO": "Obtén Phoenix Pro",
   "USER_FREE_PLAN_NAME": "Plan gratuíto",
-  "PROMO_PRO_UNLOCK_PRO_TITLE": "Libera o poder de {0}",
-  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Desbloquea a Edición en Directo con {0}",
-  "PROMO_PRO_UNLOCK_MESSAGE": "Subscríbete agora para desbloquear estas funcións avanzadas:"
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Usar esta imaxe",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Seleccionar imaxe do computador",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Escoller cartafol de descarga",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Buscar imaxes...",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Mostrar o selector de imaxes ao premer na imaxe"
 });
 /*
  * GNU AGPL-3.0 License
@@ -90270,12 +90330,17 @@ define("nls/hi/strings", {
   "PROMO_GET_APP_UPSELL_BUTTON": "{0} प्राप्त करें",
   "PROMO_PRO_ENDED_TITLE": "आपका {0} परीक्षण समाप्त हो गया है",
   "PROMO_ENDED_MESSAGE": "इन उन्नत सुविधाओं का उपयोग जारी रखने के लिए अभी सदस्यता लें:",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "{0} की शक्ति को अनलॉक करें",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "{0} के साथ लाइव एडिट अनलॉक करें",
+  "PROMO_PRO_UNLOCK_MESSAGE": "इन उन्नत सुविधाओं को अनलॉक करने के लिए अभी सब्सक्राइब करें:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro परीक्षण ({0} दिन शेष)",
   "GET_PHOENIX_PRO": "Phoenix Pro प्राप्त करें",
   "USER_FREE_PLAN_NAME": "निःशुल्क योजना",
-  "PROMO_PRO_UNLOCK_PRO_TITLE": "{0} की शक्ति को अनलॉक करें",
-  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "{0} के साथ लाइव एडिट अनलॉक करें",
-  "PROMO_PRO_UNLOCK_MESSAGE": "इन उन्नत सुविधाओं को अनलॉक करने के लिए अभी सब्सक्राइब करें:"
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "इस इमेज का इस्तेमाल करें",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "कंप्यूटर से इमेज चुनें",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "डाउनलोड फ़ोल्डर चुनें",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "इमेज खोजें...",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "इमेज पर क्लिक करने पर इमेज पिकर दिखाएँ"
 });
 /*
  * GNU AGPL-3.0 License
@@ -91753,12 +91818,17 @@ define("nls/hr/strings", {
   "PROMO_GET_APP_UPSELL_BUTTON": "Nabavite {0}",
   "PROMO_PRO_ENDED_TITLE": "Vaša probna verzija {0} je istekla",
   "PROMO_ENDED_MESSAGE": "Pretplatite se sada kako biste nastavili koristiti ove napredne značajke:",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Otključajte moć {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Otključajte Live Edit uz {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Pretplatite se sada kako biste otključali ove napredne značajke:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Probna verzija Phoenix Pro ({0} dana preostalo)",
   "GET_PHOENIX_PRO": "Nabavite Phoenix Pro",
   "USER_FREE_PLAN_NAME": "Besplatni plan",
-  "PROMO_PRO_UNLOCK_PRO_TITLE": "Otključajte moć {0}",
-  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Otključajte Live Edit uz {0}",
-  "PROMO_PRO_UNLOCK_MESSAGE": "Pretplatite se sada kako biste otključali ove napredne značajke:"
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Koristi ovu sliku",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Odaberi sliku s računala",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Odaberi mapu za preuzimanje",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Traži slike...",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Prikaži birač slika prilikom klika na sliku"
 });
 /*
  * GNU AGPL-3.0 License
@@ -93263,12 +93333,17 @@ define("nls/hu/strings", {
   "PROMO_GET_APP_UPSELL_BUTTON": "Szerezd meg a(z) {0}-t/et",
   "PROMO_PRO_ENDED_TITLE": "Lejárt a(z) {0} próbaidőszakod",
   "PROMO_ENDED_MESSAGE": "Iratkozzon fel most a következő prémium funkciók további használatához:",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Használd ki a {0} erejét",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Oldd fel az Élő Szerkesztést a {0} segítségével",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Iratkozz fel most a következő fejlett funkciók eléréséhez:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro próbaverzió ({0} nap van hátra)",
   "GET_PHOENIX_PRO": "Szerezd meg a Phoenix Pro-t",
   "USER_FREE_PLAN_NAME": "Ingyenes csomag",
-  "PROMO_PRO_UNLOCK_PRO_TITLE": "Használd ki a {0} erejét",
-  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Oldd fel az Élő Szerkesztést a {0} segítségével",
-  "PROMO_PRO_UNLOCK_MESSAGE": "Iratkozz fel most a következő fejlett funkciók eléréséhez:"
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Kép használata",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Kép kiválasztása a számítógépről",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Letöltési mappa kiválasztása",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Képek keresése...",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Képszerkesztő megjelenítése képkattintásra"
 });
 /*
  * GNU AGPL-3.0 License
@@ -94746,12 +94821,17 @@ define("nls/id/strings", {
   "PROMO_GET_APP_UPSELL_BUTTON": "Dapatkan {0}",
   "PROMO_PRO_ENDED_TITLE": "Masa Percobaan {0} Anda telah berakhir",
   "PROMO_ENDED_MESSAGE": "Berlangganan sekarang untuk melanjutkan penggunaan fitur-fitur canggih ini:",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Buka potensi {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Buka Live Edit dengan {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Berlangganan sekarang untuk membuka fitur-fitur canggih ini:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Percobaan Phoenix Pro ({0} hari tersisa)",
   "GET_PHOENIX_PRO": "Dapatkan Phoenix Pro",
   "USER_FREE_PLAN_NAME": "Paket Gratis",
-  "PROMO_PRO_UNLOCK_PRO_TITLE": "Buka potensi {0}",
-  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Buka Live Edit dengan {0}",
-  "PROMO_PRO_UNLOCK_MESSAGE": "Berlangganan sekarang untuk membuka fitur-fitur canggih ini:"
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Gunakan gambar ini",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Pilih gambar dari komputer",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Pilih folder unduhan",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Cari gambar...",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Tampilkan Pemilih Gambar saat gambar diklik"
 });
 /*
  * GNU AGPL-3.0 License
@@ -96255,12 +96335,17 @@ define("nls/it/strings", {
   "PROMO_GET_APP_UPSELL_BUTTON": "Ottieni {0}",
   "PROMO_PRO_ENDED_TITLE": "Il tuo periodo di prova di {0} è terminato",
   "PROMO_ENDED_MESSAGE": "Iscriviti ora per continuare a utilizzare queste funzionalità avanzate:",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Sblocca la potenza di {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Sblocca Live Edit con {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Abbonati ora per sbloccare queste funzionalità avanzate:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Prova di Phoenix Pro ({0} giorni rimanenti)",
   "GET_PHOENIX_PRO": "Ottieni Phoenix Pro",
   "USER_FREE_PLAN_NAME": "Piano gratuito",
-  "PROMO_PRO_UNLOCK_PRO_TITLE": "Sblocca la potenza di {0}",
-  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Sblocca Live Edit con {0}",
-  "PROMO_PRO_UNLOCK_MESSAGE": "Abbonati ora per sbloccare queste funzionalità avanzate:"
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Usa questa immagine",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Seleziona immagine dal computer",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Scegli la cartella di download",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Cerca immagini...",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Mostra Selettore Immagini al clic sull'immagine"
 });
 /*
  * GNU AGPL-3.0 License
@@ -97765,12 +97850,17 @@ define("nls/ja/strings", {
   "PROMO_GET_APP_UPSELL_BUTTON": "{0} を入手",
   "PROMO_PRO_ENDED_TITLE": "{0}トライアルが終了しました",
   "PROMO_ENDED_MESSAGE": "これらの高度な機能を引き続き使用するには、今すぐ登録してください。",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "{0}の真価を発揮",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "{0}でライブ編集をアンロック",
+  "PROMO_PRO_UNLOCK_MESSAGE": "今すぐ登録して、以下の高度な機能をアンロック：",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Proトライアル（残り{0}日）",
   "GET_PHOENIX_PRO": "Phoenix Proを入手",
   "USER_FREE_PLAN_NAME": "フリープラン",
-  "PROMO_PRO_UNLOCK_PRO_TITLE": "{0}の真価を発揮",
-  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "{0}でライブ編集をアンロック",
-  "PROMO_PRO_UNLOCK_MESSAGE": "今すぐ登録して、以下の高度な機能をアンロック："
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "この画像を使用",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "コンピューターから画像を選択",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "ダウンロードフォルダーを選択",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "画像を検索...",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "画像クリックでイメージピッカーを表示"
 });
 /*
  * GNU AGPL-3.0 License
@@ -99275,12 +99365,17 @@ define("nls/ko/strings", {
   "PROMO_GET_APP_UPSELL_BUTTON": "{0} 받기",
   "PROMO_PRO_ENDED_TITLE": "{0} 평가판 사용 기간이 만료되었습니다",
   "PROMO_ENDED_MESSAGE": "고급 기능을 계속 사용하려면 지금 구독하세요.",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "{0}의 강력한 기능을 사용해 보세요",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "{0}로 라이브 편집 기능을 사용해 보세요",
+  "PROMO_PRO_UNLOCK_MESSAGE": "다음과 같은 고급 기능을 사용하려면 지금 구독하세요:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro 평가판({0}일 남음)",
   "GET_PHOENIX_PRO": "Phoenix Pro 받기",
   "USER_FREE_PLAN_NAME": "무료 플랜",
-  "PROMO_PRO_UNLOCK_PRO_TITLE": "{0}의 강력한 기능을 사용해 보세요",
-  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "{0}로 라이브 편집 기능을 사용해 보세요",
-  "PROMO_PRO_UNLOCK_MESSAGE": "다음과 같은 고급 기능을 사용하려면 지금 구독하세요:"
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "이 이미지 사용",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "컴퓨터에서 이미지 선택",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "다운로드 폴더 선택",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "이미지 검색...",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "이미지 클릭 시 이미지 선택 도구 표시"
 });
 /*
  * GNU AGPL-3.0 License
@@ -100785,12 +100880,17 @@ define("nls/lv/strings", {
   "PROMO_GET_APP_UPSELL_BUTTON": "Iegūt {0}",
   "PROMO_PRO_ENDED_TITLE": "Jūsu {0} izmēģinājuma periods ir beidzies",
   "PROMO_ENDED_MESSAGE": "Abonējiet tagad, lai turpinātu izmantot šīs papildu funkcijas:",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Atklāj {0} jaudu",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Atklāj tiešraides rediģēšanu ar {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Abonē tagad, lai atbloķētu šīs papildu funkcijas:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro izmēģinājuma versija ({0} dienas atlikušas)",
   "GET_PHOENIX_PRO": "Iegūt Phoenix Pro",
   "USER_FREE_PLAN_NAME": "Bezmaksas plāns",
-  "PROMO_PRO_UNLOCK_PRO_TITLE": "Atklāj {0} jaudu",
-  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Atklāj tiešraides rediģēšanu ar {0}",
-  "PROMO_PRO_UNLOCK_MESSAGE": "Abonē tagad, lai atbloķētu šīs papildu funkcijas:"
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Izmantot šo attēlu",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Atlasīt attēlu no datora",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Izvēlēties lejupielādes mapi",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Meklēt attēlus...",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Rādīt attēlu atlasītāju, klikšķinot uz attēla"
 });
 /*
  * GNU AGPL-3.0 License
@@ -102268,12 +102368,17 @@ define("nls/ml/strings", {
   "PROMO_GET_APP_UPSELL_BUTTON": "{0} നേടുക",
   "PROMO_PRO_ENDED_TITLE": "നിങ്ങളുടെ {0} പരീക്ഷണ കാലയളവ് അവസാനിച്ചു",
   "PROMO_ENDED_MESSAGE": "ഈ വിപുലമായ സവിശേഷതകൾ തുടർന്നും ഉപയോഗിക്കുന്നതിന് ഇപ്പോൾ സബ്‌സ്‌ക്രൈബുചെയ്യുക:",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "{0} യുടെ ശക്തി അനാവരണം ചെയ്യൂ",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "{0} ഉപയോഗിച്ച് ലൈവ് എഡിറ്റ് അൺലോക്ക് ചെയ്യുക",
+  "PROMO_PRO_UNLOCK_MESSAGE": "ഈ വിപുലമായ സവിശേഷതകൾ അൺലോക്ക് ചെയ്യാൻ ഇപ്പോൾ സബ്‌സ്‌ക്രൈബുചെയ്യുക:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "ഫീനിക്സ് പ്രോ പരീക്ഷണം ({0} ദിവസം ബാക്കി)",
   "GET_PHOENIX_PRO": "ഫീനിക്സ് പ്രോ നേടുക",
   "USER_FREE_PLAN_NAME": "സൗജന്യ പ്ലാൻ",
-  "PROMO_PRO_UNLOCK_PRO_TITLE": "{0} യുടെ ശക്തി അനാവരണം ചെയ്യൂ",
-  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "{0} ഉപയോഗിച്ച് ലൈവ് എഡിറ്റ് അൺലോക്ക് ചെയ്യുക",
-  "PROMO_PRO_UNLOCK_MESSAGE": "ഈ വിപുലമായ സവിശേഷതകൾ അൺലോക്ക് ചെയ്യാൻ ഇപ്പോൾ സബ്‌സ്‌ക്രൈബുചെയ്യുക:"
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "ഈ ചിത്രം ഉപയോഗിക്കുക",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "കമ്പ്യൂട്ടറിൽ നിന്ന് ചിത്രം തിരഞ്ഞെടുക്കുക",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "ഡൗൺലോഡ് ഫോൾഡർ തിരഞ്ഞെടുക്കുക",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "ചിത്രങ്ങൾക്കായി തിരയുക...",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "ചിത്രത്തിൽ ക്ലിക്ക് ചെയ്യുമ്പോൾ ഇമേജ് പിക്കർ കാണിക്കുക"
 });
 /*
  * GNU AGPL-3.0 License
@@ -103751,12 +103856,17 @@ define("nls/nb/strings", {
   "PROMO_GET_APP_UPSELL_BUTTON": "Skaff deg {0}",
   "PROMO_PRO_ENDED_TITLE": "Din {0}-prøveperiode er over",
   "PROMO_ENDED_MESSAGE": "Abonner nå for å fortsette å bruke disse avanserte funksjonene:",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Slipp løs kraften i {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Lås opp Live Edit med {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Abonner nå for å låse opp disse avanserte funksjonene:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro prøveperiode ({0} dager igjen)",
   "GET_PHOENIX_PRO": "Skaff deg Phoenix Pro",
   "USER_FREE_PLAN_NAME": "Gratisabonnement",
-  "PROMO_PRO_UNLOCK_PRO_TITLE": "Slipp løs kraften i {0}",
-  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Lås opp Live Edit med {0}",
-  "PROMO_PRO_UNLOCK_MESSAGE": "Abonner nå for å låse opp disse avanserte funksjonene:"
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Bruk dette bildet",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Velg bilde fra datamaskinen",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Velg nedlastingsmappe",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Søk etter bilder...",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Vis bildevelger ved klikk på bilde"
 });
 /*
  * GNU AGPL-3.0 License
@@ -105261,12 +105371,17 @@ define("nls/nl/strings", {
   "PROMO_GET_APP_UPSELL_BUTTON": "Download {0}",
   "PROMO_PRO_ENDED_TITLE": "Je {0} proefperiode is afgelopen",
   "PROMO_ENDED_MESSAGE": "Abonneer nu om deze geavanceerde functies te blijven gebruiken:",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Ontketen de kracht van {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Ontgrendel Live Bewerken met {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Abonneer nu om deze geavanceerde functies te ontgrendelen:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro proefversie ({0} dagen resterend)",
   "GET_PHOENIX_PRO": "Koop Phoenix Pro",
   "USER_FREE_PLAN_NAME": "Gratis abonnement",
-  "PROMO_PRO_UNLOCK_PRO_TITLE": "Ontketen de kracht van {0}",
-  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Ontgrendel Live Bewerken met {0}",
-  "PROMO_PRO_UNLOCK_MESSAGE": "Abonneer nu om deze geavanceerde functies te ontgrendelen:"
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Afbeelding gebruiken",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Afbeelding van computer selecteren",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Downloadmap kiezen",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Zoek afbeeldingen...",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Afbeeldingkiezer weergeven bij klik op afbeelding"
 });
 /*
  * GNU AGPL-3.0 License
@@ -106771,12 +106886,17 @@ define("nls/pl/strings", {
   "PROMO_GET_APP_UPSELL_BUTTON": "Pobierz {0}",
   "PROMO_PRO_ENDED_TITLE": "Twój okres próbny {0} dobiegł końca",
   "PROMO_ENDED_MESSAGE": "Subskrybuj teraz, aby kontynuować korzystanie z tych zaawansowanych funkcji:",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Uwolnij moc {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Uwolnij Edycję na Żywo z {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Subskrybuj teraz, aby odblokować te zaawansowane funkcje:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Okres próbny Phoenix Pro ({0} dni pozostało)",
   "GET_PHOENIX_PRO": "Pobierz Phoenix Pro",
   "USER_FREE_PLAN_NAME": "Plan darmowy",
-  "PROMO_PRO_UNLOCK_PRO_TITLE": "Uwolnij moc {0}",
-  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Uwolnij Edycję na Żywo z {0}",
-  "PROMO_PRO_UNLOCK_MESSAGE": "Subskrybuj teraz, aby odblokować te zaawansowane funkcje:"
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Użyj tego obrazu",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Wybierz obraz z komputera",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Wybierz folder pobierania",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Wyszukaj obrazy…",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Pokaż selektor obrazów po kliknięciu obrazu"
 });
 /*
  * GNU AGPL-3.0 License
@@ -108281,12 +108401,17 @@ define("nls/pt-br/strings", {
   "PROMO_GET_APP_UPSELL_BUTTON": "Obtenha o {0}",
   "PROMO_PRO_ENDED_TITLE": "Seu período de teste de {0} terminou",
   "PROMO_ENDED_MESSAGE": "Assine agora para continuar usando estes recursos avançados:",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Libere o poder do {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Libere a Edição em Tempo Real com o {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Assine agora para liberar estes recursos avançados:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Teste do Phoenix Pro ({0} dias restantes)",
   "GET_PHOENIX_PRO": "Adquira o Phoenix Pro",
   "USER_FREE_PLAN_NAME": "Plano Gratuito",
-  "PROMO_PRO_UNLOCK_PRO_TITLE": "Libere o poder do {0}",
-  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Libere a Edição em Tempo Real com o {0}",
-  "PROMO_PRO_UNLOCK_MESSAGE": "Assine agora para liberar estes recursos avançados:"
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Usar esta imagem",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Selecionar imagem do computador",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Escolher pasta de download",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Buscar imagens...",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Mostrar Seletor de Imagens ao clicar na imagem"
 });
 /*
  * GNU AGPL-3.0 License
@@ -109789,12 +109914,17 @@ define("nls/pt-pt/strings", {
   "PROMO_GET_APP_UPSELL_BUTTON": "Obtenha {0}",
   "PROMO_PRO_ENDED_TITLE": "O seu período experimental de {0} terminou",
   "PROMO_ENDED_MESSAGE": "Assine agora para continuar a utilizar estas funcionalidades avançadas:",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Liberte o poder do {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Desbloqueie a Edição em Tempo Real com o {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Assine agora para desbloquear estas funcionalidades avançadas:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Período experimental do Phoenix Pro ({0} dias restantes)",
   "GET_PHOENIX_PRO": "Obter Phoenix Pro",
   "USER_FREE_PLAN_NAME": "Plano Gratuito",
-  "PROMO_PRO_UNLOCK_PRO_TITLE": "Liberte o poder do {0}",
-  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Desbloqueie a Edição em Tempo Real com o {0}",
-  "PROMO_PRO_UNLOCK_MESSAGE": "Assine agora para desbloquear estas funcionalidades avançadas:"
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Usar esta imagem",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Selecionar imagem do computador",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Escolher pasta de transferência",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Pesquisar imagens...",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Mostrar Seletor de Imagens ao clicar numa imagem"
 });
 /*
  * GNU AGPL-3.0 License
@@ -111297,12 +111427,17 @@ define("nls/ro/strings", {
   "PROMO_GET_APP_UPSELL_BUTTON": "Obține {0}",
   "PROMO_PRO_ENDED_TITLE": "Perioada de probă {0} a expirat",
   "PROMO_ENDED_MESSAGE": "Abonează-te acum pentru a continua să utilizezi aceste funcții avansate:",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Deblochează puterea {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Deblochează Editarea Live cu {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Abonează-te acum pentru a debloca aceste funcții avansate:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Probă Phoenix Pro ({0} zile rămase)",
   "GET_PHOENIX_PRO": "Obține Phoenix Pro",
   "USER_FREE_PLAN_NAME": "Abonament gratuit",
-  "PROMO_PRO_UNLOCK_PRO_TITLE": "Deblochează puterea {0}",
-  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Deblochează Editarea Live cu {0}",
-  "PROMO_PRO_UNLOCK_MESSAGE": "Abonează-te acum pentru a debloca aceste funcții avansate:"
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Folosește această imagine",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Selectează imaginea de pe calculator",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Alege dosarul de descărcare",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Caută imagini...",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Arată selectorul de imagini la clic pe imagine"
 });
 /*
  * GNU AGPL-3.0 License
@@ -114567,12 +114702,17 @@ define("nls/ru/strings", {
   "PROMO_GET_APP_UPSELL_BUTTON": "Получить {0}",
   "PROMO_PRO_ENDED_TITLE": "Ваш пробный период {0} истек",
   "PROMO_ENDED_MESSAGE": "Подпишитесь сейчас, чтобы продолжить использовать эти расширенные функции:",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Раскройте весь потенциал {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Откройте доступ к функции Live Edit с {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Подпишитесь сейчас, чтобы получить доступ к следующим расширенным функциям:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Пробный период Phoenix Pro ({0} дней осталось)",
   "GET_PHOENIX_PRO": "Получить Phoenix Pro",
   "USER_FREE_PLAN_NAME": "Бесплатный тариф",
-  "PROMO_PRO_UNLOCK_PRO_TITLE": "Раскройте весь потенциал {0}",
-  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Откройте доступ к функции Live Edit с {0}",
-  "PROMO_PRO_UNLOCK_MESSAGE": "Подпишитесь сейчас, чтобы получить доступ к следующим расширенным функциям:"
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Использовать это изображение",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Выбрать изображение с компьютера",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Выбрать папку для загрузки",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Поиск изображений…",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Показать выбор изображений при клике на изображение"
 });
 /*
  * GNU AGPL-3.0 License
@@ -116077,12 +116217,17 @@ define("nls/sk/strings", {
   "PROMO_GET_APP_UPSELL_BUTTON": "Získajte {0}",
   "PROMO_PRO_ENDED_TITLE": "Vaša skúšobná verzia {0} skončila",
   "PROMO_ENDED_MESSAGE": "Prihláste sa na odber, aby ste mohli pokračovať v používaní týchto pokročilých funkcií:",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Odomknite si výkon {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Odomknite si Živú úpravu s {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Prihláste sa na odber a odomknite si tieto pokročilé funkcie:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Skúšobná verzia Phoenix Pro ({0} dní zostáva)",
   "GET_PHOENIX_PRO": "Získajte Phoenix Pro",
   "USER_FREE_PLAN_NAME": "Bezplatný program",
-  "PROMO_PRO_UNLOCK_PRO_TITLE": "Odomknite si výkon {0}",
-  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Odomknite si Živú úpravu s {0}",
-  "PROMO_PRO_UNLOCK_MESSAGE": "Prihláste sa na odber a odomknite si tieto pokročilé funkcie:"
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Použiť tento obrázok",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Vybrať obrázok z počítača",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Vybrať priečinok na stiahnutie",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Hľadať obrázky...",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Zobraziť výber obrázkov po kliknutí na obrázok"
 });
 /*
  * GNU AGPL-3.0 License
@@ -117586,12 +117731,17 @@ define("nls/sr/strings", {
   "PROMO_GET_APP_UPSELL_BUTTON": "Преузмите {0}",
   "PROMO_PRO_ENDED_TITLE": "Ваша пробна верзија {0} је истекла",
   "PROMO_ENDED_MESSAGE": "Претплатите се сада да бисте наставили да користите ове напредне функције:",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Откључајте моћ апликације {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Откључајте Уживо Измене са {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Претплатите се сада да бисте откључали ове напредне функције:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro пробна верзија ({0} дана преостало)",
   "GET_PHOENIX_PRO": "Преузмите Phoenix Pro",
   "USER_FREE_PLAN_NAME": "Бесплатан план",
-  "PROMO_PRO_UNLOCK_PRO_TITLE": "Откључајте моћ апликације {0}",
-  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Откључајте Уживо Измене са {0}",
-  "PROMO_PRO_UNLOCK_MESSAGE": "Претплатите се сада да бисте откључали ове напредне функције:"
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Користи ову слику",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Изаберите слику са рачунара",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Изаберите фасциклу за преузимање",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Претражите слике...",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Прикажи бирач слика при клику на слику"
 });
 /*
  * GNU AGPL-3.0 License
@@ -119179,12 +119329,17 @@ define("nls/sv/strings", {
   "PROMO_GET_APP_UPSELL_BUTTON": "Skaffa {0}",
   "PROMO_PRO_ENDED_TITLE": "Din {0}-provperiod har löpt ut",
   "PROMO_ENDED_MESSAGE": "Prenumerera nu för att fortsätta använda dessa avancerade funktioner:",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Frigör kraften i {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Lås upp Live Edit med {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Prenumerera nu för att låsa upp dessa avancerade funktioner:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro-provperiod ({0} dagar kvar)",
   "GET_PHOENIX_PRO": "Skaffa Phoenix Pro",
   "USER_FREE_PLAN_NAME": "Gratisplan",
-  "PROMO_PRO_UNLOCK_PRO_TITLE": "Frigör kraften i {0}",
-  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Lås upp Live Edit med {0}",
-  "PROMO_PRO_UNLOCK_MESSAGE": "Prenumerera nu för att låsa upp dessa avancerade funktioner:"
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Använd bilden",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Välj bild från datorn",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Välj nedladdningsmapp",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Sök bilder...",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Visa bildväljaren vid klick på bild"
 });
 /*
  * GNU AGPL-3.0 License
@@ -120689,12 +120844,17 @@ define("nls/tr/strings", {
   "PROMO_GET_APP_UPSELL_BUTTON": "{0} edinin",
   "PROMO_PRO_ENDED_TITLE": "{0} Denemeniz Sona Erdi",
   "PROMO_ENDED_MESSAGE": "Bu gelişmiş özellikleri kullanmaya devam etmek için hemen abone olun:",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "{0} ile gücün kilidini açın",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "{0} ile Canlı Düzenleme'nin kilidini açın",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Bu gelişmiş özelliklerin kilidini açmak için hemen abone olun:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro Deneme Sürümü ({0} gün kaldı)",
   "GET_PHOENIX_PRO": "Phoenix Pro'yu Edinin",
   "USER_FREE_PLAN_NAME": "Ücretsiz Plan",
-  "PROMO_PRO_UNLOCK_PRO_TITLE": "{0} ile gücün kilidini açın",
-  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "{0} ile Canlı Düzenleme'nin kilidini açın",
-  "PROMO_PRO_UNLOCK_MESSAGE": "Bu gelişmiş özelliklerin kilidini açmak için hemen abone olun:"
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Resmi kullan",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Bilgisayardan resim seç",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "İndirme klasörünü seç",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Resim ara...",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Resme tıklandığında Resim Seçiciyi Göster"
 });
 /*
  * GNU AGPL-3.0 License
@@ -122199,12 +122359,17 @@ define("nls/uk/strings", {
   "PROMO_GET_APP_UPSELL_BUTTON": "Отримати {0}",
   "PROMO_PRO_ENDED_TITLE": "Ваш пробний період {0} завершився",
   "PROMO_ENDED_MESSAGE": "Підпишіться зараз, щоб продовжити користуватися цими розширеними функціями:",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "Розкрийте можливості {0}",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Розблокуйте Live Edit з {0}",
+  "PROMO_PRO_UNLOCK_MESSAGE": "Підпишіться зараз, щоб розблокувати такі розширені функції:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Пробний період Phoenix Pro ({0} днів залишилось)",
   "GET_PHOENIX_PRO": "Отримати Phoenix Pro",
   "USER_FREE_PLAN_NAME": "Безкоштовний план",
-  "PROMO_PRO_UNLOCK_PRO_TITLE": "Розкрийте можливості {0}",
-  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Розблокуйте Live Edit з {0}",
-  "PROMO_PRO_UNLOCK_MESSAGE": "Підпишіться зараз, щоб розблокувати такі розширені функції:"
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Використати це зображення",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Вибрати зображення з комп'ютера",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Вибрати папку для завантаження",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Пошук зображень...",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Показати Вибір Зображень при кліку на зображення"
 });
 /*
  * GNU AGPL-3.0 License
@@ -123709,12 +123874,17 @@ define("nls/ur/strings", {
   "PROMO_GET_APP_UPSELL_BUTTON": "{0} حاصل کریں",
   "PROMO_PRO_ENDED_TITLE": "آپ کا {0} آزمائشی ورژن ختم ہو گیا ہے۔",
   "PROMO_ENDED_MESSAGE": "ان جدید خصوصیات کو استعمال جاری رکھنے کیلئے ابھی سبسکرائب کریں:",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "{0} کی طاقت کو کھولیں",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "{0} کے ساتھ لائیو ایڈٹ کو کھولیں",
+  "PROMO_PRO_UNLOCK_MESSAGE": "ان جدید خصوصیات کو کھولنے کے لیے ابھی سبسکرائب کریں:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro آزمائشی ورژن ({0} دن باقی)",
   "GET_PHOENIX_PRO": "Phoenix Pro حاصل کریں",
   "USER_FREE_PLAN_NAME": "مفت پلان",
-  "PROMO_PRO_UNLOCK_PRO_TITLE": "{0} کی طاقت کو کھولیں",
-  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "{0} کے ساتھ لائیو ایڈٹ کو کھولیں",
-  "PROMO_PRO_UNLOCK_MESSAGE": "ان جدید خصوصیات کو کھولنے کے لیے ابھی سبسکرائب کریں:"
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "اس تصویر کو استعمال کریں",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "کمپیوٹر سے تصویر منتخب کریں",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "ڈاؤن لوڈ فولڈر منتخب کریں",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "تصاویر تلاش کریں۔۔۔",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "تصویر پر کلک کرنے پر تصویری چننے والا دکھائیں"
 });
 /*
  * GNU AGPL-3.0 License
@@ -125249,12 +125419,17 @@ define("nls/zh-cn/strings", {
   "PROMO_GET_APP_UPSELL_BUTTON": "获取 {0}",
   "PROMO_PRO_ENDED_TITLE": "您的 {0} 试用已结束",
   "PROMO_ENDED_MESSAGE": "继续使用以下高级功能，立即订阅：",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "释放 {0} 的强大功能",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "使用 {0} 解锁实时编辑功能",
+  "PROMO_PRO_UNLOCK_MESSAGE": "立即订阅以解锁以下高级功能：",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro 试用版（剩余 {0} 天）",
   "GET_PHOENIX_PRO": "获取 Phoenix Pro",
   "USER_FREE_PLAN_NAME": "免费版",
-  "PROMO_PRO_UNLOCK_PRO_TITLE": "释放 {0} 的强大功能",
-  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "使用 {0} 解锁实时编辑功能",
-  "PROMO_PRO_UNLOCK_MESSAGE": "立即订阅以解锁以下高级功能："
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "使用此图片",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "从电脑选择图片",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "选择下载文件夹",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "搜索图片…",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "点击图片时显示图片选择器"
 });
 /*
  * GNU AGPL-3.0 License
@@ -126759,12 +126934,17 @@ define("nls/zh-tw/strings", {
   "PROMO_GET_APP_UPSELL_BUTTON": "取得 {0}",
   "PROMO_PRO_ENDED_TITLE": "您的 {0} 試用已結束",
   "PROMO_ENDED_MESSAGE": "立即訂閱以繼續使用這些進階功能：",
+  "PROMO_PRO_UNLOCK_PRO_TITLE": "釋放 {0} 的強大功能",
+  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "使用 {0} 解鎖即時編輯功能",
+  "PROMO_PRO_UNLOCK_MESSAGE": "立即訂閱以解鎖以下進階功能：",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro 試用版（剩餘 {0} 天）",
   "GET_PHOENIX_PRO": "取得 Phoenix Pro",
   "USER_FREE_PLAN_NAME": "免費方案",
-  "PROMO_PRO_UNLOCK_PRO_TITLE": "釋放 {0} 的強大功能",
-  "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "使用 {0} 解鎖即時編輯功能",
-  "PROMO_PRO_UNLOCK_MESSAGE": "立即訂閱以解鎖以下進階功能："
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "使用此圖片",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "從電腦選取圖片",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "選擇下載資料夾",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "搜尋圖片…",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "點擊圖片時顯示圖片選擇器"
 });
 /*
  * GNU AGPL-3.0 License
