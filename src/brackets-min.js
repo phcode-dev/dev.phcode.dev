@@ -4076,6 +4076,16 @@ define("LiveDevelopment/LiveDevMultiBrowser", function (require, exports, module
     function dismissLivePreviewBoxes() {
         if (_protocol) {
             _protocol.evaluate("_LD.dismissUIAndCleanupState()");
+            _protocol.evaluate("_LD.dismissImageRibbonGallery()");
+        }
+    }
+
+    /**
+     * Dismiss image ribbon gallery if it's open
+     */
+    function dismissImageRibbonGallery() {
+        if (_protocol) {
+            _protocol.evaluate("_LD.dismissImageRibbonGallery()");
         }
     }
 
@@ -4165,6 +4175,7 @@ define("LiveDevelopment/LiveDevMultiBrowser", function (require, exports, module
     exports.redrawHighlight     = redrawHighlight;
     exports.hasVisibleLivePreviewBoxes = hasVisibleLivePreviewBoxes;
     exports.dismissLivePreviewBoxes = dismissLivePreviewBoxes;
+    exports.dismissImageRibbonGallery = dismissImageRibbonGallery;
     exports.registerHandlers    = registerHandlers;
     exports.updateConfig        = updateConfig;
     exports.init                = init;
@@ -4410,6 +4421,9 @@ define("LiveDevelopment/LivePreviewEdit", function (require, exports, module) {
     const HTMLInstrumentation = require("LiveDevelopment/MultiBrowserImpl/language/HTMLInstrumentation");
     const LiveDevMultiBrowser = require("LiveDevelopment/LiveDevMultiBrowser");
     const CodeMirror = require("thirdparty/CodeMirror/lib/codemirror");
+    const ProjectManager = require("project/ProjectManager");
+    const FileSystem = require("filesystem/FileSystem");
+    const PathUtils = require("thirdparty/path-utils/path-utils");
 
     /**
      * This function syncs text content changes between the original source code
@@ -4976,6 +4990,204 @@ define("LiveDevelopment/LivePreviewEdit", function (require, exports, module) {
     }
 
     /**
+     * this is a helper function to make sure that when saving a new image, there's no existing file with the same name
+     * @param {String} basePath - this is the base path where the image will be saved
+     * @param {String} filename - the name of the image file
+     * @param {String} extnName - the name of the image extension. (defaults to "jpg")
+     * @returns {String} - the new file name
+     */
+    function getUniqueFilename(basePath, filename, extnName) {
+        let counter = 0;
+        let uniqueFilename = filename + extnName;
+
+        function checkAndIncrement() {
+            const filePath = basePath + uniqueFilename;
+            const file = FileSystem.getFileForPath(filePath);
+
+            return new Promise((resolve) => {
+                file.exists((err, exists) => {
+                    if (exists) {
+                        counter++;
+                        uniqueFilename = `${filename}-${counter}${extnName}`;
+                        checkAndIncrement().then(resolve);
+                    } else {
+                        resolve(uniqueFilename);
+                    }
+                });
+            });
+        }
+
+        return checkAndIncrement();
+    }
+
+    /**
+     * This function updates the src attribute of an image element in the source code
+     * @param {Number} tagId - the data-brackets-id of the image element
+     * @param {String} newSrcValue - the new src value to set
+     */
+    function _updateImageSrcAttribute(tagId, newSrcValue) {
+        const editor = _getEditorAndValidate(tagId);
+        if (!editor) {
+            return;
+        }
+
+        const range = _getElementRange(editor, tagId);
+        if (!range) {
+            return;
+        }
+
+        const { startPos, endPos } = range;
+        const elementText = editor.getTextBetween(startPos, endPos);
+
+        // parse it using DOM parser so that we can update the src attribute
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(elementText, "text/html");
+        const imgElement = doc.querySelector('img');
+
+        if (imgElement) {
+            imgElement.setAttribute('src', newSrcValue);
+            const updatedElementText = imgElement.outerHTML;
+
+            editor.document.batchOperation(function () {
+                editor.replaceRange(updatedElementText, startPos, endPos);
+            });
+        }
+    }
+
+    /**
+     * Helper function to update image src attribute and dismiss ribbon gallery
+     *
+     * @param {Number} tagId - the data-brackets-id of the image element
+     * @param {String} targetPath - the full path where the image was saved
+     * @param {String} filename - the filename of the saved image
+     */
+    function _updateImageAndDismissRibbon(tagId, targetPath, filename) {
+        const editor = _getEditorAndValidate(tagId);
+        if (editor) {
+            const htmlFilePath = editor.document.file.fullPath;
+            const relativePath = PathUtils.makePathRelative(targetPath, htmlFilePath);
+            _updateImageSrcAttribute(tagId, relativePath);
+        } else {
+            _updateImageSrcAttribute(tagId, filename);
+        }
+
+        // dismiss the image ribbon gallery
+        const currLiveDoc = LiveDevMultiBrowser.getCurrentLiveDoc();
+        if (currLiveDoc && currLiveDoc.protocol && currLiveDoc.protocol.evaluate) {
+            currLiveDoc.protocol.evaluate("_LD.dismissImageRibbonGallery()");
+        }
+    }
+
+    /**
+     * helper function to handle 'upload from computer'
+     * @param {Object} message - the message object
+     * @param {String} filename - the file name with which we need to save the image
+     * @param {Directory} projectRoot - the project root in which the image is to be saved
+     */
+    function _handleUseThisImageLocalFiles(message, filename, projectRoot) {
+        const { tagId, imageData } = message;
+
+        const uint8Array = new Uint8Array(imageData);
+        const targetPath = projectRoot.fullPath + filename;
+
+        window.fs.writeFile(targetPath, window.Filer.Buffer.from(uint8Array),
+            { encoding: window.fs.BYTE_ARRAY_ENCODING }, (err) => {
+                if (err) {
+                    console.error('Failed to save image:', err);
+                } else {
+                    _updateImageAndDismissRibbon(tagId, targetPath, filename);
+                }
+            });
+    }
+
+    /**
+     * helper function to handle 'use this image' button click on remote images
+     * @param {Object} message - the message object
+     * @param {String} filename - the file name with which we need to save the image
+     * @param {Directory} projectRoot - the project root in which the image is to be saved
+     */
+    function _handleUseThisImageRemote(message, filename, projectRoot) {
+        const { imageUrl, tagId } = message;
+
+        fetch(imageUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.arrayBuffer();
+            })
+            .then(arrayBuffer => {
+                const uint8Array = new Uint8Array(arrayBuffer);
+                const targetPath = projectRoot.fullPath + filename;
+
+                window.fs.writeFile(targetPath, window.Filer.Buffer.from(uint8Array),
+                    { encoding: window.fs.BYTE_ARRAY_ENCODING }, (err) => {
+                        if (err) {
+                            console.error('Failed to save image:', err);
+                        } else {
+                            _updateImageAndDismissRibbon(tagId, targetPath, filename);
+                        }
+                    });
+            })
+            .catch(error => {
+                console.error('Failed to fetch image:', error);
+            });
+    }
+
+    /**
+     * This function is called when 'use this image' button is clicked in the image ribbon gallery
+     * or user loads an image file from the computer
+     * this is responsible to download the image in the appropriate place
+     * and also change the src attribute of the element (by calling appropriate helper functions)
+     * @param {Object} message - the message object which stores all the required data for this operation
+     */
+    function _handleUseThisImage(message) {
+        const filename = message.filename;
+        const extnName = message.extnName || "jpg";
+
+        const projectRoot = ProjectManager.getProjectRoot();
+        if (!projectRoot) { return; }
+
+        // phoenix-assets folder, all the images will be stored inside this
+        const phoenixAssetsPath = projectRoot.fullPath + "phoenix-code-assets/";
+        const phoenixAssetsDir = FileSystem.getDirectoryForPath(phoenixAssetsPath);
+
+        // check if the phoenix-assets dir exists
+        // if present, download the image inside it, if not create the dir and then download the image inside it
+        phoenixAssetsDir.exists((err, exists) => {
+            if (err) { return; }
+
+            if (!exists) {
+                phoenixAssetsDir.create((err) => {
+                    if (err) {
+                        console.error('Error creating phoenix-code-assets directory:', err);
+                        return;
+                    }
+                    _downloadImageToPhoenixAssets(message, filename, extnName, phoenixAssetsDir);
+                });
+            } else {
+                _downloadImageToPhoenixAssets(message, filename, extnName, phoenixAssetsDir);
+            }
+        });
+    }
+
+    /**
+     * Helper function to download image to phoenix-assets folder
+     */
+    function _downloadImageToPhoenixAssets(message, filename, extnName, phoenixAssetsDir) {
+        getUniqueFilename(phoenixAssetsDir.fullPath, filename, extnName).then((uniqueFilename) => {
+            // check if the image is loaded from computer or from remote
+            if (message.isLocalFile && message.imageData) {
+                _handleUseThisImageLocalFiles(message, uniqueFilename, phoenixAssetsDir);
+            } else {
+                _handleUseThisImageRemote(message, uniqueFilename, phoenixAssetsDir);
+            }
+        }).catch(error => {
+            console.error('Something went wrong when trying to use this image', error);
+        });
+    }
+
+    /**
      * This is the main function that is exported.
      * it will be called by LiveDevProtocol when it receives a message from RemoteFunctions.js
      * or LiveDevProtocolRemote.js (for undo) using MessageBroker
@@ -5002,6 +5214,12 @@ define("LiveDevelopment/LivePreviewEdit", function (require, exports, module) {
         // handle move(drag & drop)
         if (message.move && message.sourceId && message.targetId) {
             _moveElementInSource(message.sourceId, message.targetId, message.insertAfter, message.insertInside);
+            return;
+        }
+
+        // use this image
+        if (message.useImage && message.imageUrl && message.filename) {
+            _handleUseThisImage(message);
             return;
         }
 
@@ -8226,6 +8444,7 @@ define("LiveDevelopment/main", function main(require, exports, module) {
         },
         isProUser: isProUser,
         elemHighlights: "hover", // default value, this will get updated when the extension loads
+        imageRibbon: true, // default value, this will get updated when the extension loads
         // this strings are used in RemoteFunctions.js
         // we need to pass this through config as remoteFunctions runs in browser context and cannot
         // directly reference Strings file
@@ -8235,7 +8454,11 @@ define("LiveDevelopment/main", function main(require, exports, module) {
             duplicate: Strings.LIVE_DEV_MORE_OPTIONS_DUPLICATE,
             delete: Strings.LIVE_DEV_MORE_OPTIONS_DELETE,
             ai: Strings.LIVE_DEV_MORE_OPTIONS_AI,
-            aiPromptPlaceholder: Strings.LIVE_DEV_AI_PROMPT_PLACEHOLDER
+            aiPromptPlaceholder: Strings.LIVE_DEV_AI_PROMPT_PLACEHOLDER,
+            imageGalleryUseImage: Strings.LIVE_DEV_IMAGE_GALLERY_USE_IMAGE,
+            imageGallerySelectFromComputer: Strings.LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER,
+            imageGalleryChooseFolder: Strings.LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER,
+            imageGallerySearchPlaceholder: Strings.LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER
         }
     };
     // Status labels/styles are ordered: error, not connected, progress1, progress2, connected.
@@ -8560,6 +8783,20 @@ define("LiveDevelopment/main", function main(require, exports, module) {
         }
     }
 
+    // this function is responsible to update image picker config
+    // called from live preview extension when preference changes
+    function updateImageRibbonConfig() {
+        const prefValue = PreferencesManager.get("livePreviewImagePicker");
+        config.imageRibbon = prefValue !== false; // default to true if undefined
+
+        if (MultiBrowserLiveDev && MultiBrowserLiveDev.status >= MultiBrowserLiveDev.STATUS_ACTIVE) {
+            if (!prefValue) { MultiBrowserLiveDev.dismissImageRibbonGallery(); } // to remove any existing image ribbons
+
+            MultiBrowserLiveDev.updateConfig(JSON.stringify(config));
+            MultiBrowserLiveDev.registerHandlers();
+        }
+    }
+
     // init commands
     CommandManager.register(Strings.CMD_LIVE_HIGHLIGHT, Commands.FILE_LIVE_HIGHLIGHT, togglePreviewHighlight);
     CommandManager.register(Strings.CMD_RELOAD_LIVE_PREVIEW, Commands.CMD_RELOAD_LIVE_PREVIEW, _handleReloadLivePreviewCommand);
@@ -8588,6 +8825,7 @@ define("LiveDevelopment/main", function main(require, exports, module) {
     exports.togglePreviewHighlight = togglePreviewHighlight;
     exports.setLivePreviewEditFeaturesActive = setLivePreviewEditFeaturesActive;
     exports.updateElementHighlightConfig = updateElementHighlightConfig;
+    exports.updateImageRibbonConfig = updateImageRibbonConfig;
     exports.getConnectionIds = MultiBrowserLiveDev.getConnectionIds;
     exports.getLivePreviewDetails = MultiBrowserLiveDev.getLivePreviewDetails;
     exports.hideHighlight = MultiBrowserLiveDev.hideHighlight;
@@ -45967,6 +46205,12 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
         description: Strings.LIVE_DEV_SETTINGS_ELEMENT_HIGHLIGHT_PREFERENCE
     });
 
+    // live preview image picker preference (whether to show image gallery when clicking images)
+    const PREFERENCE_PROJECT_IMAGE_RIBBON = "livePreviewImagePicker";
+    PreferencesManager.definePreference(PREFERENCE_PROJECT_IMAGE_RIBBON, "boolean", true, {
+        description: Strings.LIVE_PREVIEW_EDIT_IMAGE_RIBBON
+    });
+
     const LIVE_PREVIEW_PANEL_ID = "live-preview-panel";
     const LIVE_PREVIEW_IFRAME_ID = "panel-live-preview-frame";
     const LIVE_PREVIEW_IFRAME_HTML = `
@@ -46273,6 +46517,7 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
         if (isEditFeaturesActive) {
             items.push("---");
             items.push(Strings.LIVE_PREVIEW_EDIT_HIGHLIGHT_ON);
+            items.push(Strings.LIVE_PREVIEW_EDIT_IMAGE_RIBBON);
         }
 
         const rawMode = PreferencesManager.get(PREFERENCE_LIVE_PREVIEW_MODE) || _getDefaultMode();
@@ -46298,6 +46543,12 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
                     return `✓ ${Strings.LIVE_PREVIEW_EDIT_HIGHLIGHT_ON}`;
                 }
                 return `${'\u00A0'.repeat(4)}${Strings.LIVE_PREVIEW_EDIT_HIGHLIGHT_ON}`;
+            } else if (item === Strings.LIVE_PREVIEW_EDIT_IMAGE_RIBBON) {
+                const isImageRibbonEnabled = PreferencesManager.get(PREFERENCE_PROJECT_IMAGE_RIBBON) !== false;
+                if(isImageRibbonEnabled) {
+                    return `✓ ${item}`;
+                }
+                return `${'\u00A0'.repeat(4)}${item}`;
             }
             return item;
         });
@@ -46345,6 +46596,15 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
                 const currentMode = PreferencesManager.get(PREFERENCE_PROJECT_ELEMENT_HIGHLIGHT);
                 const newMode = currentMode !== "click" ? "click" : "hover";
                 PreferencesManager.set(PREFERENCE_PROJECT_ELEMENT_HIGHLIGHT, newMode);
+                return; // Don't dismiss highlights for this option
+            } else if (item === Strings.LIVE_PREVIEW_EDIT_IMAGE_RIBBON) {
+                // Don't allow image ribbon toggle if edit features are not active
+                if (!isEditFeaturesActive) {
+                    return;
+                }
+                // Toggle image ribbon preference
+                const currentEnabled = PreferencesManager.get(PREFERENCE_PROJECT_IMAGE_RIBBON);
+                PreferencesManager.set(PREFERENCE_PROJECT_IMAGE_RIBBON, !currentEnabled);
                 return; // Don't dismiss highlights for this option
             }
 
@@ -47150,8 +47410,15 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
             LiveDevelopment.updateElementHighlightConfig();
         });
 
+        // Handle image ribbon preference changes from this extension
+        PreferencesManager.on("change", PREFERENCE_PROJECT_IMAGE_RIBBON, function() {
+            LiveDevelopment.updateImageRibbonConfig();
+        });
+
         // Initialize element highlight config on startup
         LiveDevelopment.updateElementHighlightConfig();
+        // Initialize image ribbon config on startup
+        LiveDevelopment.updateImageRibbonConfig();
 
         LiveDevelopment.openLivePreview();
         LiveDevelopment.on(LiveDevelopment.EVENT_OPEN_PREVIEW_URL, _openLivePreviewURL);
@@ -111293,12 +111560,17 @@ define("nls/root/strings", {
     "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "Duplicate",
     "LIVE_DEV_MORE_OPTIONS_DELETE": "Delete",
     "LIVE_DEV_MORE_OPTIONS_AI": "Edit with AI",
+    "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Use this image",
+    "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Select image from computer",
+    "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Choose download folder",
+    "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Search images...",
     "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Ask Phoenix AI to modify this element...",
     "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Getting preview from your custom server {0}",
     "LIVE_PREVIEW_MODE_PREVIEW": "Preview Mode",
     "LIVE_PREVIEW_MODE_HIGHLIGHT": "Highlight Mode",
     "LIVE_PREVIEW_MODE_EDIT": "Edit Mode",
     "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Edit Highlights on Hover",
+    "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Show Image Picker on Image click",
     "LIVE_PREVIEW_MODE_PREFERENCE": "{0} shows only the webpage, {1} connects the webpage to your code - click on elements to jump to their code and vice versa, {2} provides highlighting along with advanced element manipulation",
     "LIVE_PREVIEW_CONFIGURE_MODES": "Configure Live Preview Modes",
     "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Pro Feature",
