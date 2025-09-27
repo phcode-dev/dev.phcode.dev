@@ -167180,6 +167180,16 @@ define("services/entitlements", function (require, exports, module) {
             });
     }
 
+    let effectiveEntitlements = null;
+    async function _getEffectiveEntitlements() {
+        if(effectiveEntitlements){
+            return effectiveEntitlements;
+        }
+        const entitlements = await LoginService.getEffectiveEntitlements();
+        effectiveEntitlements = entitlements;
+        return entitlements;
+    }
+
     /**
      * Get the plan details from entitlements with fallback to free plan defaults. If the user is
      * in pro trial(isInProTrial API), then paidSubscriber will always be true as we need to treat user as paid.
@@ -167187,7 +167197,7 @@ define("services/entitlements", function (require, exports, module) {
      * @returns {Promise<Object>} Plan details object
      */
     async function getPlanDetails() {
-        const entitlements = await LoginService.getEffectiveEntitlements();
+        const entitlements = await _getEffectiveEntitlements();
 
         if (entitlements && entitlements.plan) {
             return entitlements.plan;
@@ -167207,7 +167217,7 @@ define("services/entitlements", function (require, exports, module) {
      * @returns {Promise<boolean>} True if user is in pro trial, false otherwise
      */
     async function isInProTrial() {
-        const entitlements = await LoginService.getEffectiveEntitlements();
+        const entitlements = await _getEffectiveEntitlements();
         return !!(entitlements && entitlements.isInProTrial);
     }
 
@@ -167216,13 +167226,13 @@ define("services/entitlements", function (require, exports, module) {
      * @returns {Promise<number>} Number of remaining trial days
      */
     async function getTrialRemainingDays() {
-        const entitlements = await LoginService.getEffectiveEntitlements();
+        const entitlements = await _getEffectiveEntitlements();
         return entitlements && entitlements.trialDaysRemaining ? entitlements.trialDaysRemaining : 0;
     }
 
     /**
      * Get current raw entitlements. Should not be used directly, use individual feature entitlement instead
-     * like getLiveEditEntitlement.
+     * like getLiveEditEntitlement. Raw entitlements are server set and will not contain trial info.
      * @returns {Promise<Object|null>} Raw entitlements object or null
      */
     async function getRawEntitlements() {
@@ -167252,7 +167262,7 @@ define("services/entitlements", function (require, exports, module) {
      * }
      */
     async function getLiveEditEntitlement() {
-        const entitlements = await LoginService.getEffectiveEntitlements();
+        const entitlements = await _getEffectiveEntitlements();
 
         if (entitlements && entitlements.entitlements && entitlements.entitlements.liveEdit) {
             return entitlements.entitlements.liveEdit;
@@ -167278,6 +167288,7 @@ define("services/entitlements", function (require, exports, module) {
         LoginService = KernalModeTrust.loginService;
         // Set up event forwarding from LoginService
         LoginService.on(LoginService.EVENT_ENTITLEMENTS_CHANGED, function() {
+            effectiveEntitlements = null;
             Entitlements.trigger(EVENT_ENTITLEMENTS_CHANGED);
         });
     }
@@ -168451,8 +168462,10 @@ define("services/login-service", function (require, exports, module) {
 
 
     /**
-     * Get entitlements from API or cache
-     * Returns null if user is not logged in
+     * Get entitlements from API or disc cache.
+     * @param {string} forceRefresh If provided will always fetch from server and bypass cache. Use rarely like
+     *      when a user logs in/out/some other user activity/ account-related events.
+     * Returns null if the user is not logged in
      */
     async function getEntitlements(forceRefresh = false) {
         // Return null if not logged in
@@ -168488,7 +168501,8 @@ define("services/login-service", function (require, exports, module) {
         try {
             const accountBaseURL = LoginService.getAccountBaseURL();
             const language = brackets.getLocale();
-            let url = `${accountBaseURL}/getAppEntitlements?lang=${language}`;
+            const currentVersion = window.AppConfig.apiVersion || "1.0.0";
+            let url = `${accountBaseURL}/getAppEntitlements?lang=${language}&version=${currentVersion}`;
             let fetchOptions = {
                 method: 'GET',
                 headers: {
@@ -168651,8 +168665,8 @@ define("services/login-service", function (require, exports, module) {
     }
 
     /**
-     * Get effective entitlements for determining feature availability throughout the app.
-     * This is the primary API that should be used across Phoenix to check entitlements and enable/disable features.
+     * Get effective entitlements for determining feature availability.
+     * This is for internal use only. All consumers in phoenix code should use `KernalModeTrust.Entitlements` APIs.
      *
      * @returns {Promise<Object|null>} Entitlements object or null if not logged in and no trial active
      *
