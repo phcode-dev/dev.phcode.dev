@@ -253,7 +253,8 @@ define(function (require, exports, module) {
             const accountBaseURL = LoginService.getAccountBaseURL();
             const language = brackets.getLocale();
             const currentVersion = window.AppConfig.apiVersion || "1.0.0";
-            let url = `${accountBaseURL}/getAppEntitlements?lang=${language}&version=${currentVersion}`;
+            let url = `${accountBaseURL}/getAppEntitlements?lang=${language}&version=${currentVersion}`+
+                `&platform=${Phoenix.platform}&appType=${Phoenix.isNativeApp ? "desktop" : "browser"}}`;
             let fetchOptions = {
                 method: 'GET',
                 headers: {
@@ -352,21 +353,42 @@ define(function (require, exports, module) {
     /**
      * Start the 10-minute interval timer for monitoring entitlements
      */
-    function startEntitlementsMonitor() {
+    function startEffectiveEntitlementsMonitor() {
+        // Reconcile effective entitlements from server. So the effective entitlements api injects trial
+        // entitlements data. but only the server fetch will trigger the entitlements change event.
+        // so in here, we observe the effective entitlements, and if the effective entitlements are changed,
+        // since the last triggered state, we trigger a change event. This only concerens with the effective
+        // entitlement changes. This will not logout the user if user logged out from the server admin panel,
+        // but his entitlements will be cleared by this call anyways.
+
+        // At app start we refresh entitlements, then only one each user action like user clicks on profile icon,
+        // or if some user hits some backend api, we will refresh entitlements. But here, we periodically refresh
+        // entitlements from the server every 10 minutes, but only trigger entitlement change events only if some
+        // effective entitlement(Eg. trial) data changed or any validity expired.
+        if(Phoenix.isTestWindow){
+            return;
+        }
+        setTimeout( async function() {
+            // prime the entitlement monitor with the current effective entitlements, after app start, the system would
+            // have resolved any existing login info by now and effective entitlements would be available if any.
+            lastRecordedState = await getEffectiveEntitlements(false);
+        }, 30000);
         setInterval(async () => {
             try {
-                const current = await getEffectiveEntitlements(false); // Get effective entitlements
+                // Get fresh effective entitlements
+                const freshEntitlements = await getEffectiveEntitlements(true);
 
                 // Check if we need to refresh
-                const expiredPlanName = KernalModeTrust.LoginUtils.validTillExpired(current, lastRecordedState);
-                const hasChanged = KernalModeTrust.LoginUtils.haveEntitlementsChanged(current, lastRecordedState);
+                const expiredPlanName = KernalModeTrust.LoginUtils
+                    .validTillExpired(freshEntitlements, lastRecordedState);
+                const hasChanged = KernalModeTrust.LoginUtils
+                    .haveEntitlementsChanged(freshEntitlements, lastRecordedState);
 
                 if (expiredPlanName || hasChanged) {
                     console.log(`Entitlements monitor detected changes, Expired: ${expiredPlanName},` +
                         `changed: ${hasChanged} refreshing...`);
                     Metrics.countEvent(Metrics.EVENT_TYPE.PRO, "entRefresh",
                         expiredPlanName ? "exp_"+expiredPlanName : "changed");
-                    await getEffectiveEntitlements(true); // Force refresh
                     // if not logged in, the getEffectiveEntitlements will not trigger change even if some trial
                     // entitlements changed. so we trigger a change anyway here. The debounce will take care of
                     // multi fire and we are ok with multi fire 1 second apart.
@@ -374,7 +396,7 @@ define(function (require, exports, module) {
                 }
 
                 // Update last recorded state
-                lastRecordedState = current;
+                lastRecordedState = freshEntitlements;
             } catch (error) {
                 console.error('Entitlements monitor error:', error);
             }
@@ -394,7 +416,8 @@ define(function (require, exports, module) {
             entitlements.plan = {
                 ...entitlements.plan,
                 paidSubscriber: false,
-                name: Strings.USER_FREE_PLAN_NAME,
+                name: Strings.USER_FREE_PLAN_NAME_DO_NOT_TRANSLATE,
+                fullName: Strings.USER_FREE_PLAN_NAME_DO_NOT_TRANSLATE,
                 validTill: currentDate + (FREE_PLAN_VALIDITY_DAYS * MS_IN_DAY)
             };
         }
@@ -431,6 +454,8 @@ define(function (require, exports, module) {
      *   plan: {
      *     paidSubscriber: true,    // Always true for trial users
      *     name: "Phoenix Pro"
+     *     fullName: "Phoenix Pro" // this can be deceptive name like "Phoenix Pro For Education" to use in
+     *                             // profile popup, not main branding
      *   },
      *   isInProTrial: true,        // Indicates this is a trial user
      *   trialDaysRemaining: number, // Days left in trial
@@ -456,6 +481,8 @@ define(function (require, exports, module) {
      *   lang: string,
      *   plan: {
      *     name: "Phoenix Pro",
+     *     fullName: "Phoenix Pro" // this can be deceptive name like "Phoenix Pro For Education" to use in
+     *                            // profile popup, not main branding
      *     paidSubscriber: boolean,
      *     validTill: number        // Timestamp
      *   },
@@ -531,6 +558,7 @@ define(function (require, exports, module) {
                     ...serverEntitlements.plan,
                     paidSubscriber: true,
                     name: brackets.config.main_pro_plan,
+                    fullName: brackets.config.main_pro_plan,
                     validTill: dateNowFn() + trialDaysRemaining * MS_IN_DAY
                 },
                 isInProTrial: true,
@@ -552,6 +580,7 @@ define(function (require, exports, module) {
             plan: {
                 paidSubscriber: true,
                 name: brackets.config.main_pro_plan,
+                fullName: brackets.config.main_pro_plan,
                 validTill: dateNowFn() + trialDaysRemaining * MS_IN_DAY
             },
             isInProTrial: true,
@@ -597,7 +626,7 @@ define(function (require, exports, module) {
     }
 
     // Start the entitlements monitor timer
-    startEntitlementsMonitor();
+    startEffectiveEntitlementsMonitor();
 
     exports.init = init;
     // no public exports to prevent extension tampering

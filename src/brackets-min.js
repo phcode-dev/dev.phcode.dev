@@ -113196,7 +113196,7 @@ define("nls/root/strings", {
     "PROMO_PRO_UNLOCK_MESSAGE": "Subscribe now to unlock these advanced features:",
     "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro Trial ({0} days left)",
     "GET_PHOENIX_PRO": "Get Phoenix Pro",
-    "USER_FREE_PLAN_NAME": "Free Plan"
+    "USER_FREE_PLAN_NAME_DO_NOT_TRANSLATE": "Community Edition"
 });
 
 /*
@@ -167207,7 +167207,7 @@ define("services/entitlements", function (require, exports, module) {
         const currentDate = Date.now();
         return {
             paidSubscriber: false,
-            name: Strings.USER_FREE_PLAN_NAME,
+            name: Strings.USER_FREE_PLAN_NAME_DO_NOT_TRANSLATE,
             validTill: currentDate + (FREE_PLAN_VALIDITY_DAYS * MS_IN_DAY)
         };
     }
@@ -168502,7 +168502,8 @@ define("services/login-service", function (require, exports, module) {
             const accountBaseURL = LoginService.getAccountBaseURL();
             const language = brackets.getLocale();
             const currentVersion = window.AppConfig.apiVersion || "1.0.0";
-            let url = `${accountBaseURL}/getAppEntitlements?lang=${language}&version=${currentVersion}`;
+            let url = `${accountBaseURL}/getAppEntitlements?lang=${language}&version=${currentVersion}`+
+                `&platform=${Phoenix.platform}&appType=${Phoenix.isNativeApp ? "desktop" : "browser"}}`;
             let fetchOptions = {
                 method: 'GET',
                 headers: {
@@ -168601,21 +168602,42 @@ define("services/login-service", function (require, exports, module) {
     /**
      * Start the 10-minute interval timer for monitoring entitlements
      */
-    function startEntitlementsMonitor() {
+    function startEffectiveEntitlementsMonitor() {
+        // Reconcile effective entitlements from server. So the effective entitlements api injects trial
+        // entitlements data. but only the server fetch will trigger the entitlements change event.
+        // so in here, we observe the effective entitlements, and if the effective entitlements are changed,
+        // since the last triggered state, we trigger a change event. This only concerens with the effective
+        // entitlement changes. This will not logout the user if user logged out from the server admin panel,
+        // but his entitlements will be cleared by this call anyways.
+
+        // At app start we refresh entitlements, then only one each user action like user clicks on profile icon,
+        // or if some user hits some backend api, we will refresh entitlements. But here, we periodically refresh
+        // entitlements from the server every 10 minutes, but only trigger entitlement change events only if some
+        // effective entitlement(Eg. trial) data changed or any validity expired.
+        if(Phoenix.isTestWindow){
+            return;
+        }
+        setTimeout( async function() {
+            // prime the entitlement monitor with the current effective entitlements, after app start, the system would
+            // have resolved any existing login info by now and effective entitlements would be available if any.
+            lastRecordedState = await getEffectiveEntitlements(false);
+        }, 30000);
         setInterval(async () => {
             try {
-                const current = await getEffectiveEntitlements(false); // Get effective entitlements
+                // Get fresh effective entitlements
+                const freshEntitlements = await getEffectiveEntitlements(true);
 
                 // Check if we need to refresh
-                const expiredPlanName = KernalModeTrust.LoginUtils.validTillExpired(current, lastRecordedState);
-                const hasChanged = KernalModeTrust.LoginUtils.haveEntitlementsChanged(current, lastRecordedState);
+                const expiredPlanName = KernalModeTrust.LoginUtils
+                    .validTillExpired(freshEntitlements, lastRecordedState);
+                const hasChanged = KernalModeTrust.LoginUtils
+                    .haveEntitlementsChanged(freshEntitlements, lastRecordedState);
 
                 if (expiredPlanName || hasChanged) {
                     console.log(`Entitlements monitor detected changes, Expired: ${expiredPlanName},` +
                         `changed: ${hasChanged} refreshing...`);
                     Metrics.countEvent(Metrics.EVENT_TYPE.PRO, "entRefresh",
                         expiredPlanName ? "exp_"+expiredPlanName : "changed");
-                    await getEffectiveEntitlements(true); // Force refresh
                     // if not logged in, the getEffectiveEntitlements will not trigger change even if some trial
                     // entitlements changed. so we trigger a change anyway here. The debounce will take care of
                     // multi fire and we are ok with multi fire 1 second apart.
@@ -168623,7 +168645,7 @@ define("services/login-service", function (require, exports, module) {
                 }
 
                 // Update last recorded state
-                lastRecordedState = current;
+                lastRecordedState = freshEntitlements;
             } catch (error) {
                 console.error('Entitlements monitor error:', error);
             }
@@ -168643,7 +168665,8 @@ define("services/login-service", function (require, exports, module) {
             entitlements.plan = {
                 ...entitlements.plan,
                 paidSubscriber: false,
-                name: Strings.USER_FREE_PLAN_NAME,
+                name: Strings.USER_FREE_PLAN_NAME_DO_NOT_TRANSLATE,
+                fullName: Strings.USER_FREE_PLAN_NAME_DO_NOT_TRANSLATE,
                 validTill: currentDate + (FREE_PLAN_VALIDITY_DAYS * MS_IN_DAY)
             };
         }
@@ -168680,6 +168703,8 @@ define("services/login-service", function (require, exports, module) {
      *   plan: {
      *     paidSubscriber: true,    // Always true for trial users
      *     name: "Phoenix Pro"
+     *     fullName: "Phoenix Pro" // this can be deceptive name like "Phoenix Pro For Education" to use in
+     *                             // profile popup, not main branding
      *   },
      *   isInProTrial: true,        // Indicates this is a trial user
      *   trialDaysRemaining: number, // Days left in trial
@@ -168705,6 +168730,8 @@ define("services/login-service", function (require, exports, module) {
      *   lang: string,
      *   plan: {
      *     name: "Phoenix Pro",
+     *     fullName: "Phoenix Pro" // this can be deceptive name like "Phoenix Pro For Education" to use in
+     *                            // profile popup, not main branding
      *     paidSubscriber: boolean,
      *     validTill: number        // Timestamp
      *   },
@@ -168780,6 +168807,7 @@ define("services/login-service", function (require, exports, module) {
                     ...serverEntitlements.plan,
                     paidSubscriber: true,
                     name: brackets.config.main_pro_plan,
+                    fullName: brackets.config.main_pro_plan,
                     validTill: dateNowFn() + trialDaysRemaining * MS_IN_DAY
                 },
                 isInProTrial: true,
@@ -168801,6 +168829,7 @@ define("services/login-service", function (require, exports, module) {
             plan: {
                 paidSubscriber: true,
                 name: brackets.config.main_pro_plan,
+                fullName: brackets.config.main_pro_plan,
                 validTill: dateNowFn() + trialDaysRemaining * MS_IN_DAY
             },
             isInProTrial: true,
@@ -168846,7 +168875,7 @@ define("services/login-service", function (require, exports, module) {
     }
 
     // Start the entitlements monitor timer
-    startEntitlementsMonitor();
+    startEffectiveEntitlementsMonitor();
 
     exports.init = init;
     // no public exports to prevent extension tampering
@@ -169557,7 +169586,8 @@ define("services/profile-menu", function (require, exports, module) {
             // Use kernal mode apis for trusted check of pro features.
             Phoenix.pro.plan = {
                 paidSubscriber: false,
-                name: "Community Edition"
+                name: Strings.USER_FREE_PLAN_NAME_DO_NOT_TRANSLATE,
+                fullName: Strings.USER_FREE_PLAN_NAME_DO_NOT_TRANSLATE
             };
         }
 
@@ -169565,11 +169595,12 @@ define("services/profile-menu", function (require, exports, module) {
             Phoenix.pro.plan = {
                 paidSubscriber: entitlements.plan.paidSubscriber,
                 name: entitlements.plan.name,
+                fullName: entitlements.plan.fullName,
                 validTill: entitlements.plan.validTill
             };
         }
         if (entitlements && entitlements.plan && entitlements.plan.paidSubscriber) {
-            // Pro user (paid subscriber or trial): show plan name with feather icon
+            // Pro user (paid subscriber or trial): show short name branding with `name feather icon`(not full name)
             let displayName = entitlements.plan.name || brackets.config.main_pro_plan;
             if (entitlements.isInProTrial) {
                 displayName = brackets.config.main_pro_plan; // Just "Phoenix Pro" for branding, not "Phoenix Pro Trial"
@@ -169719,7 +169750,7 @@ define("services/profile-menu", function (require, exports, module) {
                 } else {
                     // For paid users: regular plan name with icon
                     const proTitle = `<span class="phoenix-pro-title">
-                        <span class="pro-plan-name user-plan-name">${entitlements.plan.name}</span>
+                        <span class="pro-plan-name user-plan-name">${entitlements.plan.fullName}</span>
                         <i class="fa-solid fa-feather" style="margin-left: 3px;"></i>
                     </span>`;
                     $planName.addClass('user-plan-paid').html(proTitle);
@@ -169727,7 +169758,7 @@ define("services/profile-menu", function (require, exports, module) {
                 }
             } else {
                 // Use simple text for free users
-                $planName.addClass('user-plan-free').text(entitlements.plan.name);
+                $planName.addClass('user-plan-free').text(entitlements.plan.fullName);
             }
         } else {
             $getProLink.removeClass('forced-hidden');
@@ -169776,7 +169807,7 @@ define("services/profile-menu", function (require, exports, module) {
             initials: profileData.profileIcon.initials,
             avatarColor: profileData.profileIcon.color,
             planClass: "user-plan-free",
-            planName: Strings.USER_FREE_PLAN_NAME,
+            planName: Strings.USER_FREE_PLAN_NAME_DO_NOT_TRANSLATE,
             titleText: "Ai Quota Used",
             usageText: "100 / 200 credits",
             usedPercent: 0,
