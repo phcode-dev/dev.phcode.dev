@@ -70920,12 +70920,17 @@ define("nls/ar/strings", {
   "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "تكرار",
   "LIVE_DEV_MORE_OPTIONS_DELETE": "حذف",
   "LIVE_DEV_MORE_OPTIONS_AI": "تعديل باستخدام الذكاء الاصطناعي",
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "استخدام هذه الصورة",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "تحديد صورة من الكمبيوتر",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "اختيار مجلد التنزيل",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "ابحث عن الصور...",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "اطلب من فينيكس AI تعديل هذا العنصر...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "الحصول على معاينة من خادمك المخصص {0}",
   "LIVE_PREVIEW_MODE_PREVIEW": "وضع المعاينة",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "وضع التمييز",
   "LIVE_PREVIEW_MODE_EDIT": "وضع التحرير",
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "تحرير التمييزات عند المرور",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "إظهار منتقي الصور عند النقر على الصورة",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} يعرض صفحة الويب فقط، {1} يربط صفحة الويب بكودك - انقر على العناصر للانتقال إلى الكود الخاص بها والعكس صحيح، {2} يوفر التمييز بالإضافة إلى معالجة العناصر المتقدمة",
   "LIVE_PREVIEW_CONFIGURE_MODES": "تكوين أوضاع المعاينة المباشرة",
   "LIVE_PREVIEW_PRO_FEATURE_TITLE": "ميزة احترافية",
@@ -72234,13 +72239,7 @@ define("nls/ar/strings", {
   "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "افتح ميزة التحرير المباشر مع {0}",
   "PROMO_PRO_UNLOCK_MESSAGE": "اشترك الآن لإلغاء قفل هذه الميزات المتقدمة:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "النسخة التجريبية من Phoenix Pro ({0} أيام متبقية)",
-  "GET_PHOENIX_PRO": "احصل على Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "باقة مجانية",
-  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "استخدام هذه الصورة",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "تحديد صورة من الكمبيوتر",
-  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "اختيار مجلد التنزيل",
-  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "ابحث عن الصور...",
-  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "إظهار منتقي الصور عند النقر على الصورة"
+  "GET_PHOENIX_PRO": "احصل على Phoenix Pro"
 });
 /*
  * GNU AGPL-3.0 License
@@ -72408,12 +72407,17 @@ define("nls/bg/strings", {
   "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "Копие на реда",
   "LIVE_DEV_MORE_OPTIONS_DELETE": "Изтриване",
   "LIVE_DEV_MORE_OPTIONS_AI": "Редактиране с ИИ",
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Използвай това изображение",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Избери изображение от компютъра",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Избери папка за изтегляне",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Търсене на изображения...",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Помолете Phoenix AI да модифицира този елемент...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Получаване на преглед от вашия потребителски сървър {0}",
   "LIVE_PREVIEW_MODE_PREVIEW": "Режим на преглед",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Режим на осветяване",
   "LIVE_PREVIEW_MODE_EDIT": "Режим на редактиране",
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Подсветяване при задържане на курсора",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Покажи селектор на изображения при кликване върху изображение",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} показва само уеб страницата, {1} свързва уеб страницата с вашия код - кликнете върху елементи, за да преминете към техния код и обратно, {2} предоставя подсветяване заедно с разширени манипулации на елементи",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Конфигуриране на режимите за преглед на живо",
   "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Pro функция",
@@ -73722,13 +73726,7 @@ define("nls/bg/strings", {
   "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Отключете редактиране на живо с {0}",
   "PROMO_PRO_UNLOCK_MESSAGE": "Абонирайте се сега, за да отключите тези разширени функции:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Пробен период на Phoenix Pro ({0} дни остават)",
-  "GET_PHOENIX_PRO": "Вземете Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Безплатен план",
-  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Използвай това изображение",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Избери изображение от компютъра",
-  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Избери папка за изтегляне",
-  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Търсене на изображения...",
-  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Покажи селектор на изображения при кликване върху изображение"
+  "GET_PHOENIX_PRO": "Вземете Phoenix Pro"
 });
 /*
  * Copyright (c) 2013 Adobe Systems Incorporated. All rights reserved.
@@ -73925,12 +73923,17 @@ define("nls/cs/strings", {
   "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "Duplikovat",
   "LIVE_DEV_MORE_OPTIONS_DELETE": "Smazat",
   "LIVE_DEV_MORE_OPTIONS_AI": "Upravit pomocí AI",
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Použít tento obrázek",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Vybrat obrázek z počítače",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Vybrat složku pro stažení",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Hledat obrázky…",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Požádejte Phoenix AI o úpravu tohoto prvku...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Získávání náhledu z vašeho vlastního serveru {0}",
   "LIVE_PREVIEW_MODE_PREVIEW": "Režim náhledu",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Režim zvýraznění",
   "LIVE_PREVIEW_MODE_EDIT": "Režim úprav",
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Zvýraznit při najetí myší",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Zobrazit výběr obrázků po kliknutí na obrázek",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} zobrazuje pouze webovou stránku, {1} propojuje webovou stránku s vaším kódem – kliknutím na prvky se přesunete do jejich kódu a naopak, {2} poskytuje zvýraznění spolu s pokročilou manipulací s prvky",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Konfigurovat režimy živého náhledu",
   "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Funkce Pro",
@@ -75239,13 +75242,7 @@ define("nls/cs/strings", {
   "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Odemkněte Živou úpravu s {0}",
   "PROMO_PRO_UNLOCK_MESSAGE": "Přihlaste se k odběru a odemkněte si tyto pokročilé funkce:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Zkušební verze Phoenix Pro ({0} dní zbývá)",
-  "GET_PHOENIX_PRO": "Získejte Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Bezplatný tarif",
-  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Použít tento obrázek",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Vybrat obrázek z počítače",
-  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Vybrat složku pro stažení",
-  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Hledat obrázky…",
-  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Zobrazit výběr obrázků po kliknutí na obrázek"
+  "GET_PHOENIX_PRO": "Získejte Phoenix Pro"
 });
 /*
  * GNU AGPL-3.0 License
@@ -75440,12 +75437,17 @@ define("nls/da/strings", {
   "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "Duplikér",
   "LIVE_DEV_MORE_OPTIONS_DELETE": "Slet",
   "LIVE_DEV_MORE_OPTIONS_AI": "Rediger med AI",
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Brug dette billede",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Vælg billede fra computeren",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Vælg downloadmappe",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Søg efter billeder...",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Bed Phoenix AI om at ændre dette element...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Henter forhåndsvisning fra din brugerdefinerede server {0}",
   "LIVE_PREVIEW_MODE_PREVIEW": "Forhåndsvisningstilstand",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Fremhævningstilstand",
   "LIVE_PREVIEW_MODE_EDIT": "Redigeringstilstand",
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Rediger fremhævninger ved hover",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Vis billedvælger ved klik på billede",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} viser kun websiden, {1} forbinder websiden til din kode - klik på elementer for at hoppe til deres kode og omvendt, {2} giver fremhævning sammen med avanceret elementmanipulation",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Konfigurer Live Preview-tilstande",
   "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Pro-funktion",
@@ -76754,13 +76756,7 @@ define("nls/da/strings", {
   "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Få Live Edit med {0}",
   "PROMO_PRO_UNLOCK_MESSAGE": "Abonner nu for at låse op for disse avancerede funktioner:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro prøveperiode ({0} dage tilbage)",
-  "GET_PHOENIX_PRO": "Få Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Gratisabonnement",
-  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Brug dette billede",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Vælg billede fra computeren",
-  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Vælg downloadmappe",
-  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Søg efter billeder...",
-  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Vis billedvælger ved klik på billede"
+  "GET_PHOENIX_PRO": "Få Phoenix Pro"
 });
 /*
  * GNU AGPL-3.0 License
@@ -76953,12 +76949,17 @@ define("nls/de/strings", {
   "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "Duplizieren",
   "LIVE_DEV_MORE_OPTIONS_DELETE": "Löschen",
   "LIVE_DEV_MORE_OPTIONS_AI": "Mit KI bearbeiten",
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Dieses Bild verwenden",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Bild vom Computer auswählen",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Download-Ordner auswählen",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Bilder suchen…",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Bitte Phoenix AI, dieses Element zu modifizieren...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Vorschau von Ihrem benutzerdefinierten Server {0} wird abgerufen",
   "LIVE_PREVIEW_MODE_PREVIEW": "Vorschaumodus",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Hervorhebungsmodus",
   "LIVE_PREVIEW_MODE_EDIT": "Bearbeitungsmodus",
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Hervorhebungen beim Hover bearbeiten",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Bildauswahl bei Klick auf Bild anzeigen",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} zeigt nur die Webseite an, {1} verbindet die Webseite mit Ihrem Code - klicken Sie auf Elemente, um zu deren Code zu springen und umgekehrt, {2} bietet Hervorhebungen zusammen mit erweiterter Elementmanipulation",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Live-Vorschau-Modi konfigurieren",
   "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Pro-Funktion",
@@ -78267,13 +78268,7 @@ define("nls/de/strings", {
   "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Schalte Live Edit mit {0} frei",
   "PROMO_PRO_UNLOCK_MESSAGE": "Abonniere jetzt, um die folgenden erweiterten Funktionen freizuschalten:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro-Testversion ({0} Tage verbleibend)",
-  "GET_PHOENIX_PRO": "Phoenix Pro herunterladen",
-  "USER_FREE_PLAN_NAME": "Kostenloser Plan",
-  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Dieses Bild verwenden",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Bild vom Computer auswählen",
-  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Download-Ordner auswählen",
-  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Bilder suchen…",
-  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Bildauswahl bei Klick auf Bild anzeigen"
+  "GET_PHOENIX_PRO": "Phoenix Pro herunterladen"
 });
 /*
  * GNU AGPL-3.0 License
@@ -78468,12 +78463,17 @@ define("nls/el/strings", {
   "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "Δημιουργία Αντιγράφου",
   "LIVE_DEV_MORE_OPTIONS_DELETE": "Διαγραφή",
   "LIVE_DEV_MORE_OPTIONS_AI": "Επεξεργασία με Τεχνητή Νοημοσύνη",
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Χρήση αυτής της εικόνας",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Επιλογή εικόνας από τον υπολογιστή",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Επιλογή φακέλου λήψης",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Αναζήτηση εικόνων...",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Ζητήστε από το Phoenix AI να τροποποιήσει αυτό το στοιχείο...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Λήψη προεπισκόπησης από τον προσαρμοσμένο διακομιστή σας {0}",
   "LIVE_PREVIEW_MODE_PREVIEW": "Λειτουργία Προεπισκόπησης",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Λειτουργία Επισήμανσης",
   "LIVE_PREVIEW_MODE_EDIT": "Λειτουργία Επεξεργασίας",
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Επεξεργασία Επισημάνσεων με Επιλογή",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Εμφάνιση Επιλογέα Εικόνας με κλικ στην εικόνα",
   "LIVE_PREVIEW_MODE_PREFERENCE": "Το {0} εμφανίζει μόνο την ιστοσελίδα, το {1} συνδέει την ιστοσελίδα με τον κώδικά σας - κάντε κλικ στα στοιχεία για να μεταβείτε στον κώδικά τους και αντίστροφα, το {2} παρέχει επισήμανση μαζί με προηγμένη χειραγώγηση στοιχείων",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Ρύθμιση Λειτουργιών Ζωντανής Προεπισκόπησης",
   "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Δυνατότητα Pro",
@@ -79782,13 +79782,7 @@ define("nls/el/strings", {
   "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Ξεκλειδώστε το Live Edit με το {0}",
   "PROMO_PRO_UNLOCK_MESSAGE": "Εγγραφείτε τώρα για να ξεκλειδώσετε αυτές τις προηγμένες λειτουργίες:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Δοκιμαστική έκδοση Phoenix Pro ({0} ημέρες απομένουν)",
-  "GET_PHOENIX_PRO": "Αποκτήστε το Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Δωρεάν Σχέδιο",
-  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Χρήση αυτής της εικόνας",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Επιλογή εικόνας από τον υπολογιστή",
-  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Επιλογή φακέλου λήψης",
-  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Αναζήτηση εικόνων...",
-  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Εμφάνιση Επιλογέα Εικόνας με κλικ στην εικόνα"
+  "GET_PHOENIX_PRO": "Αποκτήστε το Phoenix Pro"
 });
 /*
  * GNU AGPL-3.0 License
@@ -79983,12 +79977,17 @@ define("nls/en-gb/strings", {
   "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "Duplicate",
   "LIVE_DEV_MORE_OPTIONS_DELETE": "Delete",
   "LIVE_DEV_MORE_OPTIONS_AI": "Edit with AI",
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Use this image",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Select image from computer",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Choose download folder",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Search images…",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Ask Phoenix AI to modify this element…",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Getting preview from your custom server {0}",
   "LIVE_PREVIEW_MODE_PREVIEW": "Preview Mode",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Highlight Mode",
   "LIVE_PREVIEW_MODE_EDIT": "Edit Mode",
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Edit Highlights on Hover",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Show Image Picker on Image click",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} shows only the webpage, {1} connects the webpage to your code - click on elements to jump to their code and vice versa, {2} provides highlighting along with advanced element manipulation",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Configure Live Preview Modes",
   "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Pro Feature",
@@ -81297,13 +81296,7 @@ define("nls/en-gb/strings", {
   "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Unlock Live Edit with {0}",
   "PROMO_PRO_UNLOCK_MESSAGE": "Subscribe now to unlock these advanced features:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro Trial ({0} days remaining)",
-  "GET_PHOENIX_PRO": "Get Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Free Plan",
-  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Use this image",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Select image from computer",
-  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Choose download folder",
-  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Search images…",
-  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Show Image Picker on Image click"
+  "GET_PHOENIX_PRO": "Get Phoenix Pro"
 });
 /*
  * GNU AGPL-3.0 License
@@ -81471,12 +81464,17 @@ define("nls/es/strings", {
   "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "Duplicar",
   "LIVE_DEV_MORE_OPTIONS_DELETE": "Eliminar",
   "LIVE_DEV_MORE_OPTIONS_AI": "Editar con IA",
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Usar esta imagen",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Seleccionar imagen del ordenador",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Seleccionar carpeta de descarga",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Buscar imágenes...",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Pedir a Phoenix AI que modifique este elemento...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Obteniendo vista previa desde tu servidor personalizado {0}",
   "LIVE_PREVIEW_MODE_PREVIEW": "Modo de vista previa",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Modo de resaltado",
   "LIVE_PREVIEW_MODE_EDIT": "Modo de edición",
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Resaltar al pasar el cursor en la edición",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Mostrar el selector de imágenes al hacer clic en una imagen",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} muestra solo la página web, {1} conecta la página web a tu código (haz clic en los elementos para saltar a su código y viceversa), {2} proporciona resaltado junto con manipulación avanzada de elementos",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Configurar modos de Vista Previa en Vivo",
   "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Función Pro",
@@ -82785,13 +82783,7 @@ define("nls/es/strings", {
   "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Desbloquea la edición en vivo con {0}",
   "PROMO_PRO_UNLOCK_MESSAGE": "Suscríbete ahora para desbloquear estas funciones avanzadas:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Prueba de Phoenix Pro ({0} días restantes)",
-  "GET_PHOENIX_PRO": "Obtener Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Plan gratuito",
-  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Usar esta imagen",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Seleccionar imagen del ordenador",
-  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Seleccionar carpeta de descarga",
-  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Buscar imágenes...",
-  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Mostrar el selector de imágenes al hacer clic en una imagen"
+  "GET_PHOENIX_PRO": "Obtener Phoenix Pro"
 });
 /*
  * GNU AGPL-3.0 License
@@ -82987,12 +82979,17 @@ define("nls/fa-ir/strings", {
   "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "دو نسخه کردن خط",
   "LIVE_DEV_MORE_OPTIONS_DELETE": "حذف",
   "LIVE_DEV_MORE_OPTIONS_AI": "ویرایش با هوش مصنوعی",
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "از این تصویر استفاده کنید",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "انتخاب تصویر از رایانه",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "انتخاب پوشه دانلود",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "جستجوی تصاویر…",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "از فینیکس هوش مصنوعی بخواهید این المان را تغییر دهد...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "دریافت پیش‌نمایش از سرور سفارشی شما {0}",
   "LIVE_PREVIEW_MODE_PREVIEW": "حالت پیش‌نمایش",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "حالت هایلایت",
   "LIVE_PREVIEW_MODE_EDIT": "حالت ویرایش",
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "برجسته‌سازی هنگام شناور بودن روی عناصر",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "نمایش انتخابگر تصویر با کلیک روی تصویر",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} فقط صفحه وب را نشان می‌دهد، {1} صفحه وب را به کد شما متصل می‌کند - روی عناصر کلیک کنید تا به کد مربوطه پرش کنید و برعکس، {2} علاوه بر دستکاری پیشرفته عناصر، برجسته‌سازی را نیز فراهم می‌کند.",
   "LIVE_PREVIEW_CONFIGURE_MODES": "پیکربندی حالت‌های پیش‌نمایش زنده",
   "LIVE_PREVIEW_PRO_FEATURE_TITLE": "قابلیت ویژه حرفه‌ای",
@@ -84301,13 +84298,7 @@ define("nls/fa-ir/strings", {
   "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "ویرایش زنده را با {0} فعال کنید",
   "PROMO_PRO_UNLOCK_MESSAGE": "هم‌اکنون مشترک شوید تا این قابلیت‌های پیشرفته را فعال کنید:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "نسخه آزمایشی Phoenix Pro ({0} روز باقی مانده)",
-  "GET_PHOENIX_PRO": "دریافت Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "طرح رایگان",
-  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "از این تصویر استفاده کنید",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "انتخاب تصویر از رایانه",
-  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "انتخاب پوشه دانلود",
-  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "جستجوی تصاویر…",
-  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "نمایش انتخابگر تصویر با کلیک روی تصویر"
+  "GET_PHOENIX_PRO": "دریافت Phoenix Pro"
 });
 /*
  * GNU AGPL-3.0 License
@@ -84502,12 +84493,17 @@ define("nls/fi/strings", {
   "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "Monista",
   "LIVE_DEV_MORE_OPTIONS_DELETE": "Poista",
   "LIVE_DEV_MORE_OPTIONS_AI": "Muokkaa tekoälyn avulla",
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Käytä tätä kuvaa",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Valitse kuva tietokoneelta",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Valitse latauskansio",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Hae kuvia...",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Pyydä Phoenix-tekoälyä muokkaamaan tätä elementtiä...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Esikatselu haetaan mukautetulta palvelimeltasi {0}",
   "LIVE_PREVIEW_MODE_PREVIEW": "Esikatselutila",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Korostustila",
   "LIVE_PREVIEW_MODE_EDIT": "Muokkaustila",
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Korosta muokattavat kohdat osoitettaessa",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Näytä kuvanvalitsin kuvaa klikatessa",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} näyttää vain verkkosivun, {1} yhdistää verkkosivun koodiisi – klikkaa elementtejä siirtyäksesi niiden koodiin ja päinvastoin, {2} tarjoaa korostuksen sekä kehittyneet elementtien muokkaustyökalut",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Määritä reaaliaikaisen esikatselun tilat",
   "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Pro-ominaisuus",
@@ -85816,13 +85812,7 @@ define("nls/fi/strings", {
   "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Avaa Live Edit Phoenix Prolla {0}",
   "PROMO_PRO_UNLOCK_MESSAGE": "Tilaa nyt avataksesi nämä edistyneet ominaisuudet:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro -kokeiluversio ({0} päivää jäljellä)",
-  "GET_PHOENIX_PRO": "Hanki Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Ilmainen sopimus",
-  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Käytä tätä kuvaa",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Valitse kuva tietokoneelta",
-  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Valitse latauskansio",
-  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Hae kuvia...",
-  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Näytä kuvanvalitsin kuvaa klikatessa"
+  "GET_PHOENIX_PRO": "Hanki Phoenix Pro"
 });
 /*
  * GNU AGPL-3.0 License
@@ -86017,12 +86007,17 @@ define("nls/fr/strings", {
   "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "Dupliquer",
   "LIVE_DEV_MORE_OPTIONS_DELETE": "Supprimer",
   "LIVE_DEV_MORE_OPTIONS_AI": "Modifier avec l'IA",
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Utiliser cette image",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Sélectionner une image depuis l'ordinateur",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Choisir un dossier de téléchargement",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Rechercher des images…",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Demander à Phoenix AI de modifier cet élément...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Aperçu en direct depuis votre serveur personnalisé {0}",
   "LIVE_PREVIEW_MODE_PREVIEW": "Mode Aperçu",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Mode Surbrillance",
   "LIVE_PREVIEW_MODE_EDIT": "Mode Édition",
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Surligner au survol",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Afficher le sélecteur d'images au clic sur l'image",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} affiche uniquement la page web, {1} connecte la page web à votre code - cliquez sur les éléments pour accéder à leur code et vice versa, {2} fournit la mise en évidence ainsi que la manipulation avancée des éléments",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Configurer les modes d'aperçu en direct",
   "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Fonctionnalité Pro",
@@ -87331,13 +87326,7 @@ define("nls/fr/strings", {
   "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Débloquez la modification en direct avec {0}",
   "PROMO_PRO_UNLOCK_MESSAGE": "Abonnez-vous maintenant pour débloquer ces fonctionnalités avancées :",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Essai Phoenix Pro ({0} jours restants)",
-  "GET_PHOENIX_PRO": "Obtenir Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Formule gratuite",
-  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Utiliser cette image",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Sélectionner une image depuis l'ordinateur",
-  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Choisir un dossier de téléchargement",
-  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Rechercher des images…",
-  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Afficher le sélecteur d'images au clic sur l'image"
+  "GET_PHOENIX_PRO": "Obtenir Phoenix Pro"
 });
 /*
  * GNU AGPL-3.0 License
@@ -87532,12 +87521,17 @@ define("nls/gl/strings", {
   "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "Duplicar",
   "LIVE_DEV_MORE_OPTIONS_DELETE": "Eliminar",
   "LIVE_DEV_MORE_OPTIONS_AI": "Editar con IA",
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Usar esta imaxe",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Seleccionar imaxe do computador",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Escoller cartafol de descarga",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Buscar imaxes...",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Pedir a Phoenix AI que modifique este elemento...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Obtendo a vista previa do teu servidor personalizado {0}",
   "LIVE_PREVIEW_MODE_PREVIEW": "Modo de vista previa",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Modo de realce",
   "LIVE_PREVIEW_MODE_EDIT": "Modo de edición",
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Editar resaltados ao pasar o rato",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Mostrar o selector de imaxes ao premer na imaxe",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} mostra só a páxina web, {1} conecta a páxina web ao teu código (fai clic nos elementos para saltar ao seu código e viceversa), {2} proporciona resaltado xunto con manipulación avanzada de elementos",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Configurar os modos de vista previa en directo",
   "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Función Pro",
@@ -88846,13 +88840,7 @@ define("nls/gl/strings", {
   "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Desbloquea a Edición en Directo con {0}",
   "PROMO_PRO_UNLOCK_MESSAGE": "Subscríbete agora para desbloquear estas funcións avanzadas:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Proba de Phoenix Pro ({0} días restantes)",
-  "GET_PHOENIX_PRO": "Obtén Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Plan gratuíto",
-  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Usar esta imaxe",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Seleccionar imaxe do computador",
-  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Escoller cartafol de descarga",
-  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Buscar imaxes...",
-  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Mostrar o selector de imaxes ao premer na imaxe"
+  "GET_PHOENIX_PRO": "Obtén Phoenix Pro"
 });
 /*
  * GNU AGPL-3.0 License
@@ -89020,12 +89008,17 @@ define("nls/hi/strings", {
   "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "डुप्लिकेट करें",
   "LIVE_DEV_MORE_OPTIONS_DELETE": "हटाएँ",
   "LIVE_DEV_MORE_OPTIONS_AI": "AI से संपादित करें",
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "इस इमेज का इस्तेमाल करें",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "कंप्यूटर से इमेज चुनें",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "डाउनलोड फ़ोल्डर चुनें",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "इमेज खोजें...",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "इस एलिमेंट को संशोधित करने के लिए Phoenix AI से पूछें...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "आपके कस्टम सर्वर {0} से प्रीव्यू प्राप्त कर रहा है",
   "LIVE_PREVIEW_MODE_PREVIEW": "पूर्वावलोकन मोड",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "हाइलाइट मोड",
   "LIVE_PREVIEW_MODE_EDIT": "संपादन मोड",
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "होवर पर हाइलाइट संपादित करें",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "इमेज पर क्लिक करने पर इमेज पिकर दिखाएँ",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} केवल वेबपृष्ठ दिखाता है, {1} वेबपृष्ठ को आपके कोड से जोड़ता है - उनके कोड पर जाने के लिए तत्वों पर क्लिक करें और इसके विपरीत, {2} उन्नत तत्व हेरफेर के साथ हाइलाइटिंग प्रदान करता है",
   "LIVE_PREVIEW_CONFIGURE_MODES": "लाइव पूर्वावलोकन मोड कॉन्फ़िगर करें",
   "LIVE_PREVIEW_PRO_FEATURE_TITLE": "प्रो सुविधा",
@@ -90334,13 +90327,7 @@ define("nls/hi/strings", {
   "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "{0} के साथ लाइव एडिट अनलॉक करें",
   "PROMO_PRO_UNLOCK_MESSAGE": "इन उन्नत सुविधाओं को अनलॉक करने के लिए अभी सब्सक्राइब करें:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro परीक्षण ({0} दिन शेष)",
-  "GET_PHOENIX_PRO": "Phoenix Pro प्राप्त करें",
-  "USER_FREE_PLAN_NAME": "निःशुल्क योजना",
-  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "इस इमेज का इस्तेमाल करें",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "कंप्यूटर से इमेज चुनें",
-  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "डाउनलोड फ़ोल्डर चुनें",
-  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "इमेज खोजें...",
-  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "इमेज पर क्लिक करने पर इमेज पिकर दिखाएँ"
+  "GET_PHOENIX_PRO": "Phoenix Pro प्राप्त करें"
 });
 /*
  * GNU AGPL-3.0 License
@@ -90508,12 +90495,17 @@ define("nls/hr/strings", {
   "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "Udvostruči",
   "LIVE_DEV_MORE_OPTIONS_DELETE": "Obriši",
   "LIVE_DEV_MORE_OPTIONS_AI": "Uredi pomoću umjetne inteligencije",
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Koristi ovu sliku",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Odaberi sliku s računala",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Odaberi mapu za preuzimanje",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Traži slike...",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Zatražite od Phoenix AI-ja da izmijeni ovaj element...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Dohvaćanje pregleda s vašeg prilagođenog poslužitelja {0}",
   "LIVE_PREVIEW_MODE_PREVIEW": "Način pregleda",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Način isticanja",
   "LIVE_PREVIEW_MODE_EDIT": "Uredi",
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Istakni kod pri lebdenju",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Prikaži birač slika prilikom klika na sliku",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} prikazuje samo web stranicu, {1} povezuje web stranicu s vašim kodom - kliknite na elemente da biste skočili na njihov kod i obrnuto, {2} omogućuje isticanje zajedno s naprednom manipulacijom elementima",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Konfiguriraj načine rada pregleda uživo",
   "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Pro značajka",
@@ -91822,13 +91814,7 @@ define("nls/hr/strings", {
   "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Otključajte Live Edit uz {0}",
   "PROMO_PRO_UNLOCK_MESSAGE": "Pretplatite se sada kako biste otključali ove napredne značajke:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Probna verzija Phoenix Pro ({0} dana preostalo)",
-  "GET_PHOENIX_PRO": "Nabavite Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Besplatni plan",
-  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Koristi ovu sliku",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Odaberi sliku s računala",
-  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Odaberi mapu za preuzimanje",
-  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Traži slike...",
-  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Prikaži birač slika prilikom klika na sliku"
+  "GET_PHOENIX_PRO": "Nabavite Phoenix Pro"
 });
 /*
  * GNU AGPL-3.0 License
@@ -92023,12 +92009,17 @@ define("nls/hu/strings", {
   "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "Duplikálás",
   "LIVE_DEV_MORE_OPTIONS_DELETE": "Töröl",
   "LIVE_DEV_MORE_OPTIONS_AI": "Szerkesztés MI-vel",
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Kép használata",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Kép kiválasztása a számítógépről",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Letöltési mappa kiválasztása",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Képek keresése...",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Kérd meg a Phoenix MI-t, hogy módosítsa ezt az elemet...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Előnézet lekérése az egyéni szerverről ({0})",
   "LIVE_PREVIEW_MODE_PREVIEW": "Előnézeti mód",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Kiemelés mód",
   "LIVE_PREVIEW_MODE_EDIT": "Szerkesztő mód",
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Kiemelések szerkesztése az egérmutató fölé húzásakor",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Képszerkesztő megjelenítése képkattintásra",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} csak a weboldalt mutatja, {1} összeköti a weboldalt a kóddal - kattintson az elemekre, hogy a kódjukhoz ugorjon, és fordítva, {2} kiemelést biztosít a fejlett elemkezelés mellett",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Élő előnézeti módok konfigurálása",
   "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Pro funkció",
@@ -93337,13 +93328,7 @@ define("nls/hu/strings", {
   "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Oldd fel az Élő Szerkesztést a {0} segítségével",
   "PROMO_PRO_UNLOCK_MESSAGE": "Iratkozz fel most a következő fejlett funkciók eléréséhez:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro próbaverzió ({0} nap van hátra)",
-  "GET_PHOENIX_PRO": "Szerezd meg a Phoenix Pro-t",
-  "USER_FREE_PLAN_NAME": "Ingyenes csomag",
-  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Kép használata",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Kép kiválasztása a számítógépről",
-  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Letöltési mappa kiválasztása",
-  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Képek keresése...",
-  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Képszerkesztő megjelenítése képkattintásra"
+  "GET_PHOENIX_PRO": "Szerezd meg a Phoenix Pro-t"
 });
 /*
  * GNU AGPL-3.0 License
@@ -93511,12 +93496,17 @@ define("nls/id/strings", {
   "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "Gandakan",
   "LIVE_DEV_MORE_OPTIONS_DELETE": "Hapus",
   "LIVE_DEV_MORE_OPTIONS_AI": "Edit dengan AI",
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Gunakan gambar ini",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Pilih gambar dari komputer",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Pilih folder unduhan",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Cari gambar...",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Minta Phoenix AI untuk memodifikasi elemen ini...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Mendapatkan pratinjau dari server kustom Anda {0}",
   "LIVE_PREVIEW_MODE_PREVIEW": "Mode Pratinjau",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Mode Sorotan",
   "LIVE_PREVIEW_MODE_EDIT": "Mode Edit",
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Edit Sorotan saat Melayang",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Tampilkan Pemilih Gambar saat gambar diklik",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} hanya menampilkan halaman web, {1} menghubungkan halaman web ke kode Anda - klik elemen untuk melompat ke kodenya dan sebaliknya, {2} menyediakan penyorootan beserta manipulasi elemen lanjutan",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Konfigurasi Mode Pratinjau Langsung",
   "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Fitur Pro",
@@ -94825,13 +94815,7 @@ define("nls/id/strings", {
   "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Buka Live Edit dengan {0}",
   "PROMO_PRO_UNLOCK_MESSAGE": "Berlangganan sekarang untuk membuka fitur-fitur canggih ini:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Percobaan Phoenix Pro ({0} hari tersisa)",
-  "GET_PHOENIX_PRO": "Dapatkan Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Paket Gratis",
-  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Gunakan gambar ini",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Pilih gambar dari komputer",
-  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Pilih folder unduhan",
-  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Cari gambar...",
-  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Tampilkan Pemilih Gambar saat gambar diklik"
+  "GET_PHOENIX_PRO": "Dapatkan Phoenix Pro"
 });
 /*
  * GNU AGPL-3.0 License
@@ -95025,12 +95009,17 @@ define("nls/it/strings", {
   "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "Duplica",
   "LIVE_DEV_MORE_OPTIONS_DELETE": "Elimina",
   "LIVE_DEV_MORE_OPTIONS_AI": "Modifica con IA",
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Usa questa immagine",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Seleziona immagine dal computer",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Scegli la cartella di download",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Cerca immagini...",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Chiedi a Phoenix AI di modificare questo elemento...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Anteprima dal tuo server personalizzato {0}",
   "LIVE_PREVIEW_MODE_PREVIEW": "Modalità Anteprima",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Modalità Evidenziazione",
   "LIVE_PREVIEW_MODE_EDIT": "Modalità di modifica",
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Evidenzia al passaggio del mouse",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Mostra Selettore Immagini al clic sull'immagine",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} mostra solo la pagina web, {1} connette la pagina web al tuo codice - clicca sugli elementi per passare al loro codice e viceversa, {2} fornisce l'evidenziazione insieme alla manipolazione avanzata degli elementi",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Configura le modalità di Anteprima Live",
   "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Funzionalità Pro",
@@ -96339,13 +96328,7 @@ define("nls/it/strings", {
   "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Sblocca Live Edit con {0}",
   "PROMO_PRO_UNLOCK_MESSAGE": "Abbonati ora per sbloccare queste funzionalità avanzate:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Prova di Phoenix Pro ({0} giorni rimanenti)",
-  "GET_PHOENIX_PRO": "Ottieni Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Piano gratuito",
-  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Usa questa immagine",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Seleziona immagine dal computer",
-  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Scegli la cartella di download",
-  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Cerca immagini...",
-  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Mostra Selettore Immagini al clic sull'immagine"
+  "GET_PHOENIX_PRO": "Ottieni Phoenix Pro"
 });
 /*
  * GNU AGPL-3.0 License
@@ -96540,12 +96523,17 @@ define("nls/ja/strings", {
   "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "行を複製",
   "LIVE_DEV_MORE_OPTIONS_DELETE": "削除",
   "LIVE_DEV_MORE_OPTIONS_AI": "AIで編集",
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "この画像を使用",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "コンピューターから画像を選択",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "ダウンロードフォルダーを選択",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "画像を検索...",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Phoenix AIにこの要素の変更を依頼してください…",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "カスタムサーバー {0} からプレビューを取得しています",
   "LIVE_PREVIEW_MODE_PREVIEW": "プレビューモード",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "ハイライトモード",
   "LIVE_PREVIEW_MODE_EDIT": "編集モード",
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "ホバー時にハイライトを表示",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "画像クリックでイメージピッカーを表示",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0}はウェブページのみを表示し、{1}はウェブページとコードを接続します - 要素をクリックしてコードにジャンプしたり、その逆も可能です。{2}は高度な要素操作と共にハイライトを提供します。",
   "LIVE_PREVIEW_CONFIGURE_MODES": "ライブプレビューモードの設定",
   "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Pro 機能",
@@ -97854,13 +97842,7 @@ define("nls/ja/strings", {
   "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "{0}でライブ編集をアンロック",
   "PROMO_PRO_UNLOCK_MESSAGE": "今すぐ登録して、以下の高度な機能をアンロック：",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Proトライアル（残り{0}日）",
-  "GET_PHOENIX_PRO": "Phoenix Proを入手",
-  "USER_FREE_PLAN_NAME": "フリープラン",
-  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "この画像を使用",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "コンピューターから画像を選択",
-  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "ダウンロードフォルダーを選択",
-  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "画像を検索...",
-  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "画像クリックでイメージピッカーを表示"
+  "GET_PHOENIX_PRO": "Phoenix Proを入手"
 });
 /*
  * GNU AGPL-3.0 License
@@ -98055,12 +98037,17 @@ define("nls/ko/strings", {
   "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "행 복사",
   "LIVE_DEV_MORE_OPTIONS_DELETE": "삭제",
   "LIVE_DEV_MORE_OPTIONS_AI": "AI로 편집",
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "이 이미지 사용",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "컴퓨터에서 이미지 선택",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "다운로드 폴더 선택",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "이미지 검색...",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Phoenix AI에게 이 요소 수정을 요청하세요...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "사용자 지정 서버 {0}에서 미리보기 가져오는 중",
   "LIVE_PREVIEW_MODE_PREVIEW": "미리보기 모드",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "강조 표시 모드",
   "LIVE_PREVIEW_MODE_EDIT": "편집 모드",
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "마우스 오버 시 강조 표시 편집",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "이미지 클릭 시 이미지 선택 도구 표시",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0}은 웹페이지만 표시하고, {1}은 웹페이지를 코드에 연결합니다. 요소를 클릭하면 코드로 이동하고 그 반대도 가능합니다. {2}는 고급 요소 조작과 함께 강조 표시 기능을 제공합니다.",
   "LIVE_PREVIEW_CONFIGURE_MODES": "라이브 미리보기 모드 설정",
   "LIVE_PREVIEW_PRO_FEATURE_TITLE": "프로 기능",
@@ -99369,13 +99356,7 @@ define("nls/ko/strings", {
   "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "{0}로 라이브 편집 기능을 사용해 보세요",
   "PROMO_PRO_UNLOCK_MESSAGE": "다음과 같은 고급 기능을 사용하려면 지금 구독하세요:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro 평가판({0}일 남음)",
-  "GET_PHOENIX_PRO": "Phoenix Pro 받기",
-  "USER_FREE_PLAN_NAME": "무료 플랜",
-  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "이 이미지 사용",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "컴퓨터에서 이미지 선택",
-  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "다운로드 폴더 선택",
-  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "이미지 검색...",
-  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "이미지 클릭 시 이미지 선택 도구 표시"
+  "GET_PHOENIX_PRO": "Phoenix Pro 받기"
 });
 /*
  * GNU AGPL-3.0 License
@@ -99570,12 +99551,17 @@ define("nls/lv/strings", {
   "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "Dublēt",
   "LIVE_DEV_MORE_OPTIONS_DELETE": "Dzēst",
   "LIVE_DEV_MORE_OPTIONS_AI": "Rediģēt ar AI",
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Izmantot šo attēlu",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Atlasīt attēlu no datora",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Izvēlēties lejupielādes mapi",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Meklēt attēlus...",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Palūdziet Phoenix AI modificēt šo elementu...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Priekšskatījuma iegūšana no pielāgotā servera {0}",
   "LIVE_PREVIEW_MODE_PREVIEW": "Priekšskatījuma režīms",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Izcelšanas režīms",
   "LIVE_PREVIEW_MODE_EDIT": "Rediģēšanas režīms",
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Iezīmēt rediģēšanu, novietojot kursoru",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Rādīt attēlu atlasītāju, klikšķinot uz attēla",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} rāda tikai tīmekļa lapu, {1} savieno tīmekļa lapu ar jūsu kodu - noklikšķiniet uz elementiem, lai pārietu uz to kodu un otrādi, {2} nodrošina iezīmēšanu kopā ar uzlabotu elementu manipulāciju",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Konfigurēt tiešā priekšskatījuma režīmus",
   "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Pro līdzekļa funkcija",
@@ -100884,13 +100870,7 @@ define("nls/lv/strings", {
   "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Atklāj tiešraides rediģēšanu ar {0}",
   "PROMO_PRO_UNLOCK_MESSAGE": "Abonē tagad, lai atbloķētu šīs papildu funkcijas:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro izmēģinājuma versija ({0} dienas atlikušas)",
-  "GET_PHOENIX_PRO": "Iegūt Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Bezmaksas plāns",
-  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Izmantot šo attēlu",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Atlasīt attēlu no datora",
-  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Izvēlēties lejupielādes mapi",
-  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Meklēt attēlus...",
-  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Rādīt attēlu atlasītāju, klikšķinot uz attēla"
+  "GET_PHOENIX_PRO": "Iegūt Phoenix Pro"
 });
 /*
  * GNU AGPL-3.0 License
@@ -101058,12 +101038,17 @@ define("nls/ml/strings", {
   "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "ഡ്യൂപ്ലിക്കേറ്റ് ചെയ്യുക",
   "LIVE_DEV_MORE_OPTIONS_DELETE": "ഇല്ലാതാക്കുക",
   "LIVE_DEV_MORE_OPTIONS_AI": "AI ഉപയോഗിച്ച് എഡിറ്റ് ചെയ്യുക",
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "ഈ ചിത്രം ഉപയോഗിക്കുക",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "കമ്പ്യൂട്ടറിൽ നിന്ന് ചിത്രം തിരഞ്ഞെടുക്കുക",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "ഡൗൺലോഡ് ഫോൾഡർ തിരഞ്ഞെടുക്കുക",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "ചിത്രങ്ങൾക്കായി തിരയുക...",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "ഈ എലമെന്റ് മാറ്റാൻ ഫീനിക്സ് AI-യോട് ആവശ്യപ്പെടുക...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "നിങ്ങളുടെ ഇച്ഛാനുസൃത സെർവറിൽ നിന്ന് പ്രിവ്യൂ ലഭിക്കുന്നു {0}",
   "LIVE_PREVIEW_MODE_PREVIEW": "പ്രിവ്യൂ മോഡ്",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "ഹൈലൈറ്റ് മോഡ്",
   "LIVE_PREVIEW_MODE_EDIT": "എഡിറ്റ് മോഡ്",
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "ഹോവറിൽ ഹൈലൈറ്റുകൾ എഡിറ്റ് ചെയ്യുക",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "ചിത്രത്തിൽ ക്ലിക്ക് ചെയ്യുമ്പോൾ ഇമേജ് പിക്കർ കാണിക്കുക",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} വെബ്‌പേജ് മാത്രം കാണിക്കുന്നു, {1} വെബ്‌പേജിനെ നിങ്ങളുടെ കോഡുമായി ബന്ധിപ്പിക്കുന്നു - എലമെന്റുകളിൽ ക്ലിക്ക് ചെയ്‌ത് അവയുടെ കോഡിലേക്ക് പോകുക, തിരിച്ചും, {2} വിപുലമായ എലമെന്റ് കൈകാര്യം ചെയ്യലിനൊപ്പം ഹൈലൈറ്റിംഗും നൽകുന്നു",
   "LIVE_PREVIEW_CONFIGURE_MODES": "ലൈവ് പ്രിവ്യൂ മോഡുകൾ കോൺഫിഗർ ചെയ്യുക",
   "LIVE_PREVIEW_PRO_FEATURE_TITLE": "പ്രോ ഫീച്ചർ",
@@ -102372,13 +102357,7 @@ define("nls/ml/strings", {
   "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "{0} ഉപയോഗിച്ച് ലൈവ് എഡിറ്റ് അൺലോക്ക് ചെയ്യുക",
   "PROMO_PRO_UNLOCK_MESSAGE": "ഈ വിപുലമായ സവിശേഷതകൾ അൺലോക്ക് ചെയ്യാൻ ഇപ്പോൾ സബ്‌സ്‌ക്രൈബുചെയ്യുക:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "ഫീനിക്സ് പ്രോ പരീക്ഷണം ({0} ദിവസം ബാക്കി)",
-  "GET_PHOENIX_PRO": "ഫീനിക്സ് പ്രോ നേടുക",
-  "USER_FREE_PLAN_NAME": "സൗജന്യ പ്ലാൻ",
-  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "ഈ ചിത്രം ഉപയോഗിക്കുക",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "കമ്പ്യൂട്ടറിൽ നിന്ന് ചിത്രം തിരഞ്ഞെടുക്കുക",
-  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "ഡൗൺലോഡ് ഫോൾഡർ തിരഞ്ഞെടുക്കുക",
-  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "ചിത്രങ്ങൾക്കായി തിരയുക...",
-  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "ചിത്രത്തിൽ ക്ലിക്ക് ചെയ്യുമ്പോൾ ഇമേജ് പിക്കർ കാണിക്കുക"
+  "GET_PHOENIX_PRO": "ഫീനിക്സ് പ്രോ നേടുക"
 });
 /*
  * GNU AGPL-3.0 License
@@ -102546,12 +102525,17 @@ define("nls/nb/strings", {
   "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "Dupliser",
   "LIVE_DEV_MORE_OPTIONS_DELETE": "Slett",
   "LIVE_DEV_MORE_OPTIONS_AI": "Rediger med AI",
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Bruk dette bildet",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Velg bilde fra datamaskinen",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Velg nedlastingsmappe",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Søk etter bilder...",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Be Phoenix AI om å endre dette elementet...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Henter forhåndsvisning fra din tilpassede server {0}",
   "LIVE_PREVIEW_MODE_PREVIEW": "Forhåndsvisningsmodus",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Fremhevingsmodus",
   "LIVE_PREVIEW_MODE_EDIT": "Redigeringsmodus",
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Rediger uthevinger ved hovering",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Vis bildevelger ved klikk på bilde",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} viser bare nettsiden, {1} kobler nettsiden til koden din - klikk på elementer for å hoppe til koden deres og omvendt, {2} gir utheving sammen med avansert elementmanipulering",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Konfigurer forhåndsvisningsmoduser",
   "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Pro-funksjon",
@@ -103860,13 +103844,7 @@ define("nls/nb/strings", {
   "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Lås opp Live Edit med {0}",
   "PROMO_PRO_UNLOCK_MESSAGE": "Abonner nå for å låse opp disse avanserte funksjonene:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro prøveperiode ({0} dager igjen)",
-  "GET_PHOENIX_PRO": "Skaff deg Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Gratisabonnement",
-  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Bruk dette bildet",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Velg bilde fra datamaskinen",
-  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Velg nedlastingsmappe",
-  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Søk etter bilder...",
-  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Vis bildevelger ved klikk på bilde"
+  "GET_PHOENIX_PRO": "Skaff deg Phoenix Pro"
 });
 /*
  * GNU AGPL-3.0 License
@@ -104061,12 +104039,17 @@ define("nls/nl/strings", {
   "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "Dupliceer",
   "LIVE_DEV_MORE_OPTIONS_DELETE": "Verwijder",
   "LIVE_DEV_MORE_OPTIONS_AI": "Bewerken met AI",
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Afbeelding gebruiken",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Afbeelding van computer selecteren",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Downloadmap kiezen",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Zoek afbeeldingen...",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Vraag Phoenix AI om dit element aan te passen...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Voorbeeld ophalen van uw aangepaste server {0}",
   "LIVE_PREVIEW_MODE_PREVIEW": "Voorvertoningsmodus",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Markeringsmodus",
   "LIVE_PREVIEW_MODE_EDIT": "Bewerken",
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Markeringen bewerken bij hover",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Afbeeldingkiezer weergeven bij klik op afbeelding",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} toont alleen de webpagina, {1} verbindt de webpagina met je code - klik op elementen om naar hun code te springen en vice versa, {2} biedt markering samen met geavanceerde elementmanipulatie",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Live preview-modi configureren",
   "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Pro-functie",
@@ -105375,13 +105358,7 @@ define("nls/nl/strings", {
   "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Ontgrendel Live Bewerken met {0}",
   "PROMO_PRO_UNLOCK_MESSAGE": "Abonneer nu om deze geavanceerde functies te ontgrendelen:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro proefversie ({0} dagen resterend)",
-  "GET_PHOENIX_PRO": "Koop Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Gratis abonnement",
-  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Afbeelding gebruiken",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Afbeelding van computer selecteren",
-  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Downloadmap kiezen",
-  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Zoek afbeeldingen...",
-  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Afbeeldingkiezer weergeven bij klik op afbeelding"
+  "GET_PHOENIX_PRO": "Koop Phoenix Pro"
 });
 /*
  * GNU AGPL-3.0 License
@@ -105576,12 +105553,17 @@ define("nls/pl/strings", {
   "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "Duplikuj",
   "LIVE_DEV_MORE_OPTIONS_DELETE": "Usuń",
   "LIVE_DEV_MORE_OPTIONS_AI": "Edytuj z AI",
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Użyj tego obrazu",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Wybierz obraz z komputera",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Wybierz folder pobierania",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Wyszukaj obrazy…",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Poproś Phoenix AI o modyfikację tego elementu...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Pobieranie podglądu z Twojego własnego serwera {0}",
   "LIVE_PREVIEW_MODE_PREVIEW": "Tryb podglądu",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Tryb podświetlania",
   "LIVE_PREVIEW_MODE_EDIT": "Tryb edycji",
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Podświetlaj elementy po najechaniu",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Pokaż selektor obrazów po kliknięciu obrazu",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} pokazuje tylko stronę internetową, {1} łączy stronę internetową z Twoim kodem - kliknij na elementy, aby przejść do ich kodu i odwrotnie, {2} zapewnia podświetlanie wraz z zaawansowaną manipulacją elementami",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Konfiguruj tryby podglądu na żywo",
   "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Funkcja Pro",
@@ -106890,13 +106872,7 @@ define("nls/pl/strings", {
   "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Uwolnij Edycję na Żywo z {0}",
   "PROMO_PRO_UNLOCK_MESSAGE": "Subskrybuj teraz, aby odblokować te zaawansowane funkcje:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Okres próbny Phoenix Pro ({0} dni pozostało)",
-  "GET_PHOENIX_PRO": "Pobierz Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Plan darmowy",
-  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Użyj tego obrazu",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Wybierz obraz z komputera",
-  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Wybierz folder pobierania",
-  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Wyszukaj obrazy…",
-  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Pokaż selektor obrazów po kliknięciu obrazu"
+  "GET_PHOENIX_PRO": "Pobierz Phoenix Pro"
 });
 /*
  * GNU AGPL-3.0 License
@@ -107091,12 +107067,17 @@ define("nls/pt-br/strings", {
   "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "Duplicar",
   "LIVE_DEV_MORE_OPTIONS_DELETE": "Excluir",
   "LIVE_DEV_MORE_OPTIONS_AI": "Editar com IA",
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Usar esta imagem",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Selecionar imagem do computador",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Escolher pasta de download",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Buscar imagens...",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Peça à Phoenix AI para modificar este elemento...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Obtendo pré-visualização do seu servidor personalizado {0}",
   "LIVE_PREVIEW_MODE_PREVIEW": "Modo de Pré-visualização",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Modo de Destaque",
   "LIVE_PREVIEW_MODE_EDIT": "Modo de Edição",
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Editar Destaques ao Passar o Mouse",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Mostrar Seletor de Imagens ao clicar na imagem",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} mostra apenas a página web, {1} conecta a página web ao seu código - clique nos elementos para ir até o código e vice-versa, {2} fornece destaque junto com manipulação avançada de elementos",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Configurar Modos de Visualização em Tempo Real",
   "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Recurso Pro",
@@ -108405,13 +108386,7 @@ define("nls/pt-br/strings", {
   "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Libere a Edição em Tempo Real com o {0}",
   "PROMO_PRO_UNLOCK_MESSAGE": "Assine agora para liberar estes recursos avançados:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Teste do Phoenix Pro ({0} dias restantes)",
-  "GET_PHOENIX_PRO": "Adquira o Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Plano Gratuito",
-  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Usar esta imagem",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Selecionar imagem do computador",
-  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Escolher pasta de download",
-  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Buscar imagens...",
-  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Mostrar Seletor de Imagens ao clicar na imagem"
+  "GET_PHOENIX_PRO": "Adquira o Phoenix Pro"
 });
 /*
  * GNU AGPL-3.0 License
@@ -108604,12 +108579,17 @@ define("nls/pt-pt/strings", {
   "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "Duplicar",
   "LIVE_DEV_MORE_OPTIONS_DELETE": "Eliminar",
   "LIVE_DEV_MORE_OPTIONS_AI": "Editar com IA",
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Usar esta imagem",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Selecionar imagem do computador",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Escolher pasta de transferência",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Pesquisar imagens...",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Pedir à Phoenix AI para modificar este elemento...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "A obter pré-visualização do seu servidor personalizado {0}",
   "LIVE_PREVIEW_MODE_PREVIEW": "Modo de Pré-visualização",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Modo Destaque",
   "LIVE_PREVIEW_MODE_EDIT": "Modo Edição",
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Editar Destaques ao Sobrepor",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Mostrar Seletor de Imagens ao clicar numa imagem",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} mostra apenas a página web, {1} liga a página web ao seu código - clique nos elementos para saltar para o respetivo código e vice-versa, {2} fornece destaque juntamente com manipulação avançada de elementos",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Configurar Modos de Pré-visualização em Tempo Real",
   "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Funcionalidade Pro",
@@ -109918,13 +109898,7 @@ define("nls/pt-pt/strings", {
   "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Desbloqueie a Edição em Tempo Real com o {0}",
   "PROMO_PRO_UNLOCK_MESSAGE": "Assine agora para desbloquear estas funcionalidades avançadas:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Período experimental do Phoenix Pro ({0} dias restantes)",
-  "GET_PHOENIX_PRO": "Obter Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Plano Gratuito",
-  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Usar esta imagem",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Selecionar imagem do computador",
-  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Escolher pasta de transferência",
-  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Pesquisar imagens...",
-  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Mostrar Seletor de Imagens ao clicar numa imagem"
+  "GET_PHOENIX_PRO": "Obter Phoenix Pro"
 });
 /*
  * GNU AGPL-3.0 License
@@ -110117,12 +110091,17 @@ define("nls/ro/strings", {
   "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "Dublează",
   "LIVE_DEV_MORE_OPTIONS_DELETE": "Șterge",
   "LIVE_DEV_MORE_OPTIONS_AI": "Editează cu AI",
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Folosește această imagine",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Selectează imaginea de pe calculator",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Alege dosarul de descărcare",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Caută imagini...",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Roagă Phoenix AI să modifice acest element...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Se obține previzualizarea de la serverul personalizat {0}",
   "LIVE_PREVIEW_MODE_PREVIEW": "Mod Previzualizare",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Mod Evidențiere",
   "LIVE_PREVIEW_MODE_EDIT": "Mod Editare",
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Evidențiază la Trecere",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Arată selectorul de imagini la clic pe imagine",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} afișează doar pagina web, {1} conectează pagina web la codul tău - dă clic pe elemente pentru a sări la codul lor și invers, {2} oferă evidențiere împreună cu manipulare avansată a elementelor",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Configurează Modurile Live Preview",
   "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Funcționalitate Pro",
@@ -111431,13 +111410,7 @@ define("nls/ro/strings", {
   "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Deblochează Editarea Live cu {0}",
   "PROMO_PRO_UNLOCK_MESSAGE": "Abonează-te acum pentru a debloca aceste funcții avansate:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Probă Phoenix Pro ({0} zile rămase)",
-  "GET_PHOENIX_PRO": "Obține Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Abonament gratuit",
-  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Folosește această imagine",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Selectează imaginea de pe calculator",
-  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Alege dosarul de descărcare",
-  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Caută imagini...",
-  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Arată selectorul de imagini la clic pe imagine"
+  "GET_PHOENIX_PRO": "Obține Phoenix Pro"
 });
 /*
  * GNU AGPL-3.0 License
@@ -113392,12 +113365,17 @@ define("nls/ru/strings", {
   "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "Дублировать",
   "LIVE_DEV_MORE_OPTIONS_DELETE": "Удалить",
   "LIVE_DEV_MORE_OPTIONS_AI": "Редактировать с помощью ИИ",
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Использовать это изображение",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Выбрать изображение с компьютера",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Выбрать папку для загрузки",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Поиск изображений…",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Попросите Phoenix AI изменить этот элемент...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Получение предварительного просмотра с вашего пользовательского сервера {0}",
   "LIVE_PREVIEW_MODE_PREVIEW": "Режим предпросмотра",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Режим подсветки",
   "LIVE_PREVIEW_MODE_EDIT": "Режим редактирования",
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Подсвечивать при наведении в режиме редактирования",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Показать выбор изображений при клике на изображение",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} показывает только веб-страницу, {1} связывает веб-страницу с вашим кодом - кликните по элементам, чтобы перейти к их коду и наоборот, {2} обеспечивает подсветку наряду с расширенными возможностями манипуляции элементами",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Настроить режимы просмотра в реальном времени",
   "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Функция Pro",
@@ -114706,13 +114684,7 @@ define("nls/ru/strings", {
   "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Откройте доступ к функции Live Edit с {0}",
   "PROMO_PRO_UNLOCK_MESSAGE": "Подпишитесь сейчас, чтобы получить доступ к следующим расширенным функциям:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Пробный период Phoenix Pro ({0} дней осталось)",
-  "GET_PHOENIX_PRO": "Получить Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Бесплатный тариф",
-  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Использовать это изображение",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Выбрать изображение с компьютера",
-  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Выбрать папку для загрузки",
-  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Поиск изображений…",
-  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Показать выбор изображений при клике на изображение"
+  "GET_PHOENIX_PRO": "Получить Phoenix Pro"
 });
 /*
  * GNU AGPL-3.0 License
@@ -114907,12 +114879,17 @@ define("nls/sk/strings", {
   "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "Duplikovať",
   "LIVE_DEV_MORE_OPTIONS_DELETE": "Zmazať",
   "LIVE_DEV_MORE_OPTIONS_AI": "Upraviť s AI",
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Použiť tento obrázok",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Vybrať obrázok z počítača",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Vybrať priečinok na stiahnutie",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Hľadať obrázky...",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Požiadajte Phoenix AI o úpravu tohto prvku...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Získavanie náhľadu z vášho vlastného servera {0}",
   "LIVE_PREVIEW_MODE_PREVIEW": "Režim náhľadu",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Režim zvýraznenia",
   "LIVE_PREVIEW_MODE_EDIT": "Režim úprav",
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Zvýrazniť pri prejdení myšou",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Zobraziť výber obrázkov po kliknutí na obrázok",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} zobrazuje iba webovú stránku, {1} prepája webovú stránku s vaším kódom - kliknutím na prvky prejdete do ich kódu a naopak, {2} poskytuje zvýrazňovanie spolu s pokročilou manipuláciou s prvkami",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Konfigurovať režimy živého náhľadu",
   "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Funkcia Pro",
@@ -116221,13 +116198,7 @@ define("nls/sk/strings", {
   "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Odomknite si Živú úpravu s {0}",
   "PROMO_PRO_UNLOCK_MESSAGE": "Prihláste sa na odber a odomknite si tieto pokročilé funkcie:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Skúšobná verzia Phoenix Pro ({0} dní zostáva)",
-  "GET_PHOENIX_PRO": "Získajte Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Bezplatný program",
-  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Použiť tento obrázok",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Vybrať obrázok z počítača",
-  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Vybrať priečinok na stiahnutie",
-  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Hľadať obrázky...",
-  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Zobraziť výber obrázkov po kliknutí na obrázok"
+  "GET_PHOENIX_PRO": "Získajte Phoenix Pro"
 });
 /*
  * GNU AGPL-3.0 License
@@ -116421,12 +116392,17 @@ define("nls/sr/strings", {
   "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "Удвостручи",
   "LIVE_DEV_MORE_OPTIONS_DELETE": "Обриши",
   "LIVE_DEV_MORE_OPTIONS_AI": "Измени помоћу вештачке интелигенције",
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Користи ову слику",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Изаберите слику са рачунара",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Изаберите фасциклу за преузимање",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Претражите слике...",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Замолите Phoenix AI да измени овај елемент...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Преглед са вашег прилагођеног сервера {0}",
   "LIVE_PREVIEW_MODE_PREVIEW": "Режим прегледа",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Режим истицања",
   "LIVE_PREVIEW_MODE_EDIT": "Режим измене",
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Истицање при преласку мишем",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Прикажи бирач слика при клику на слику",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} приказује само веб страницу, {1} повезује веб страницу са вашим кодом - кликните на елементе да бисте прешли на њихов код и обрнуто, {2} пружа истицање заједно са напредним манипулацијама елементима",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Конфигуришите режиме живог прегледа",
   "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Про функција",
@@ -117735,13 +117711,7 @@ define("nls/sr/strings", {
   "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Откључајте Уживо Измене са {0}",
   "PROMO_PRO_UNLOCK_MESSAGE": "Претплатите се сада да бисте откључали ове напредне функције:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro пробна верзија ({0} дана преостало)",
-  "GET_PHOENIX_PRO": "Преузмите Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Бесплатан план",
-  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Користи ову слику",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Изаберите слику са рачунара",
-  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Изаберите фасциклу за преузимање",
-  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Претражите слике...",
-  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Прикажи бирач слика при клику на слику"
+  "GET_PHOENIX_PRO": "Преузмите Phoenix Pro"
 });
 /*
  * GNU AGPL-3.0 License
@@ -118019,12 +117989,17 @@ define("nls/sv/strings", {
   "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "Duplicera",
   "LIVE_DEV_MORE_OPTIONS_DELETE": "Radera",
   "LIVE_DEV_MORE_OPTIONS_AI": "Redigera med AI",
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Använd bilden",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Välj bild från datorn",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Välj nedladdningsmapp",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Sök bilder...",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Be Phoenix AI att modifiera detta element...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Hämtar förhandsvisning från din anpassade server {0}",
   "LIVE_PREVIEW_MODE_PREVIEW": "Förhandsgranskningsläge",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Markeringsläge",
   "LIVE_PREVIEW_MODE_EDIT": "Redigeringsläge",
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Redigera markeringar vid hovring",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Visa bildväljaren vid klick på bild",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} visar bara webbsidan, {1} kopplar webbsidan till din kod - klicka på element för att hoppa till deras kod och vice versa, {2} ger markering tillsammans med avancerad elementmanipulation",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Konfigurera Live Preview-lägen",
   "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Pro-funktion",
@@ -119333,13 +119308,7 @@ define("nls/sv/strings", {
   "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Lås upp Live Edit med {0}",
   "PROMO_PRO_UNLOCK_MESSAGE": "Prenumerera nu för att låsa upp dessa avancerade funktioner:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro-provperiod ({0} dagar kvar)",
-  "GET_PHOENIX_PRO": "Skaffa Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Gratisplan",
-  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Använd bilden",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Välj bild från datorn",
-  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Välj nedladdningsmapp",
-  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Sök bilder...",
-  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Visa bildväljaren vid klick på bild"
+  "GET_PHOENIX_PRO": "Skaffa Phoenix Pro"
 });
 /*
  * GNU AGPL-3.0 License
@@ -119534,12 +119503,17 @@ define("nls/tr/strings", {
   "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "Çoğalt",
   "LIVE_DEV_MORE_OPTIONS_DELETE": "Sil",
   "LIVE_DEV_MORE_OPTIONS_AI": "Yapay Zeka ile Düzenle",
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Resmi kullan",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Bilgisayardan resim seç",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "İndirme klasörünü seç",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Resim ara...",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Phoenix AI'dan bu öğeyi değiştirmesini isteyin...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Özel sunucunuzdan önizleme alınıyor {0}",
   "LIVE_PREVIEW_MODE_PREVIEW": "Önizleme Modu",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Vurgulama Modu",
   "LIVE_PREVIEW_MODE_EDIT": "Düzenleme Modu",
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Üzerine Gelince Vurguları Düzenle",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Resme tıklandığında Resim Seçiciyi Göster",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} yalnızca web sayfasını gösterir, {1} web sayfasını kodunuza bağlar - kodlarına gitmek için öğelere tıklayın ve tam tersi, {2} gelişmiş öğe manipülasyonu ile birlikte vurgulama sağlar",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Canlı Önizleme Modlarını Yapılandır",
   "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Pro Özelliği",
@@ -120848,13 +120822,7 @@ define("nls/tr/strings", {
   "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "{0} ile Canlı Düzenleme'nin kilidini açın",
   "PROMO_PRO_UNLOCK_MESSAGE": "Bu gelişmiş özelliklerin kilidini açmak için hemen abone olun:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro Deneme Sürümü ({0} gün kaldı)",
-  "GET_PHOENIX_PRO": "Phoenix Pro'yu Edinin",
-  "USER_FREE_PLAN_NAME": "Ücretsiz Plan",
-  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Resmi kullan",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Bilgisayardan resim seç",
-  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "İndirme klasörünü seç",
-  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Resim ara...",
-  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Resme tıklandığında Resim Seçiciyi Göster"
+  "GET_PHOENIX_PRO": "Phoenix Pro'yu Edinin"
 });
 /*
  * GNU AGPL-3.0 License
@@ -121049,12 +121017,17 @@ define("nls/uk/strings", {
   "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "Дублювати",
   "LIVE_DEV_MORE_OPTIONS_DELETE": "Видалити",
   "LIVE_DEV_MORE_OPTIONS_AI": "Редагувати за допомогою ШІ",
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Використати це зображення",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Вибрати зображення з комп'ютера",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Вибрати папку для завантаження",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Пошук зображень...",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Попросіть Phoenix AI змінити цей елемент...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Отримання попереднього перегляду з вашого власного сервера {0}",
   "LIVE_PREVIEW_MODE_PREVIEW": "Режим попереднього перегляду",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Режим підсвічування",
   "LIVE_PREVIEW_MODE_EDIT": "Режим редагування",
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Підсвічування при наведенні",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Показати Вибір Зображень при кліку на зображення",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} показує лише вебсторінку, {1} з'єднує вебсторінку з вашим кодом - клацніть на елементи, щоб перейти до їх коду і навпаки, {2} забезпечує підсвічування разом з розширеним керуванням елементами",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Налаштувати режими попереднього перегляду",
   "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Функція Pro",
@@ -122363,13 +122336,7 @@ define("nls/uk/strings", {
   "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "Розблокуйте Live Edit з {0}",
   "PROMO_PRO_UNLOCK_MESSAGE": "Підпишіться зараз, щоб розблокувати такі розширені функції:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Пробний період Phoenix Pro ({0} днів залишилось)",
-  "GET_PHOENIX_PRO": "Отримати Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "Безкоштовний план",
-  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Використати це зображення",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Вибрати зображення з комп'ютера",
-  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Вибрати папку для завантаження",
-  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Пошук зображень...",
-  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Показати Вибір Зображень при кліку на зображення"
+  "GET_PHOENIX_PRO": "Отримати Phoenix Pro"
 });
 /*
  * GNU AGPL-3.0 License
@@ -122564,12 +122531,17 @@ define("nls/ur/strings", {
   "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "نقل کریں",
   "LIVE_DEV_MORE_OPTIONS_DELETE": "حذف کریں",
   "LIVE_DEV_MORE_OPTIONS_AI": "مصنوعی ذہانت سے ترمیم کریں",
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "اس تصویر کو استعمال کریں",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "کمپیوٹر سے تصویر منتخب کریں",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "ڈاؤن لوڈ فولڈر منتخب کریں",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "تصاویر تلاش کریں۔۔۔",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "فینکس مصنوعی ذہانت سے اس عنصر میں ترمیم کرنے کو کہیں...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "آپ کے اپنی مرضی کے سرور {0} سے پیش نظارہ حاصل کرنا",
   "LIVE_PREVIEW_MODE_PREVIEW": "پیش نظارہ وضع",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "نمایاں وضع",
   "LIVE_PREVIEW_MODE_EDIT": "ترمیم وضع",
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "ماؤس منڈلانے پر نمایاں ترمیم کریں",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "تصویر پر کلک کرنے پر تصویری چننے والا دکھائیں",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} صرف ویب پیج دکھاتا ہے، {1} ویب پیج کو آپ کے کوڈ سے جوڑتا ہے - عناصر پر کلک کر کے ان کے کوڈ پر جائیں اور اس کے برعکس، {2} جدید عنصر ہیرا پھیری کے ساتھ نمایاں کرنے کی سہولت فراہم کرتا ہے۔",
   "LIVE_PREVIEW_CONFIGURE_MODES": "براہ راست پیش نظارہ کے طریقوں کو ترتیب دیں",
   "LIVE_PREVIEW_PRO_FEATURE_TITLE": "پرو خصوصیت",
@@ -123878,13 +123850,7 @@ define("nls/ur/strings", {
   "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "{0} کے ساتھ لائیو ایڈٹ کو کھولیں",
   "PROMO_PRO_UNLOCK_MESSAGE": "ان جدید خصوصیات کو کھولنے کے لیے ابھی سبسکرائب کریں:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro آزمائشی ورژن ({0} دن باقی)",
-  "GET_PHOENIX_PRO": "Phoenix Pro حاصل کریں",
-  "USER_FREE_PLAN_NAME": "مفت پلان",
-  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "اس تصویر کو استعمال کریں",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "کمپیوٹر سے تصویر منتخب کریں",
-  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "ڈاؤن لوڈ فولڈر منتخب کریں",
-  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "تصاویر تلاش کریں۔۔۔",
-  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "تصویر پر کلک کرنے پر تصویری چننے والا دکھائیں"
+  "GET_PHOENIX_PRO": "Phoenix Pro حاصل کریں"
 });
 /*
  * GNU AGPL-3.0 License
@@ -124109,12 +124075,17 @@ define("nls/zh-cn/strings", {
   "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "创建副本",
   "LIVE_DEV_MORE_OPTIONS_DELETE": "删除",
   "LIVE_DEV_MORE_OPTIONS_AI": "使用 AI 编辑",
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "使用此图片",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "从电脑选择图片",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "选择下载文件夹",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "搜索图片…",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "让 Phoenix AI 修改此元素……",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "正在从您的自定义服务器 {0} 获取预览",
   "LIVE_PREVIEW_MODE_PREVIEW": "预览模式",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "高亮模式",
   "LIVE_PREVIEW_MODE_EDIT": "编辑模式",
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "悬停时高亮编辑内容",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "点击图片时显示图片选择器",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} 仅显示网页，{1} 将网页连接到您的代码 - 点击元素跳转到代码，反之亦然，{2} 提供高亮显示以及高级元素操作",
   "LIVE_PREVIEW_CONFIGURE_MODES": "配置实时预览模式",
   "LIVE_PREVIEW_PRO_FEATURE_TITLE": "专业版功能",
@@ -125423,13 +125394,7 @@ define("nls/zh-cn/strings", {
   "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "使用 {0} 解锁实时编辑功能",
   "PROMO_PRO_UNLOCK_MESSAGE": "立即订阅以解锁以下高级功能：",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro 试用版（剩余 {0} 天）",
-  "GET_PHOENIX_PRO": "获取 Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "免费版",
-  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "使用此图片",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "从电脑选择图片",
-  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "选择下载文件夹",
-  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "搜索图片…",
-  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "点击图片时显示图片选择器"
+  "GET_PHOENIX_PRO": "获取 Phoenix Pro"
 });
 /*
  * GNU AGPL-3.0 License
@@ -125624,12 +125589,17 @@ define("nls/zh-tw/strings", {
   "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "整行複製",
   "LIVE_DEV_MORE_OPTIONS_DELETE": "刪除",
   "LIVE_DEV_MORE_OPTIONS_AI": "使用 AI 編輯",
+  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "使用此圖片",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "從電腦選取圖片",
+  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "選擇下載資料夾",
+  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "搜尋圖片…",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "讓 Phoenix AI 修改此元素…",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "從您的自訂伺服器 {0} 取得預覽",
   "LIVE_PREVIEW_MODE_PREVIEW": "預覽模式",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "醒目提示模式",
   "LIVE_PREVIEW_MODE_EDIT": "編輯模式",
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "滑鼠懸停時醒目顯示編輯內容",
+  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "點擊圖片時顯示圖片選擇器",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} 僅顯示網頁，{1} 將網頁連接到您的程式碼 - 點擊元素即可跳轉到其程式碼，反之亦然，{2} 提供醒目顯示以及進階元素操作",
   "LIVE_PREVIEW_CONFIGURE_MODES": "設定即時預覽模式",
   "LIVE_PREVIEW_PRO_FEATURE_TITLE": "專業版功能",
@@ -126938,13 +126908,7 @@ define("nls/zh-tw/strings", {
   "PROMO_PRO_UNLOCK_LIVE_EDIT_TITLE": "使用 {0} 解鎖即時編輯功能",
   "PROMO_PRO_UNLOCK_MESSAGE": "立即訂閱以解鎖以下進階功能：",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro 試用版（剩餘 {0} 天）",
-  "GET_PHOENIX_PRO": "取得 Phoenix Pro",
-  "USER_FREE_PLAN_NAME": "免費方案",
-  "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "使用此圖片",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "從電腦選取圖片",
-  "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "選擇下載資料夾",
-  "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "搜尋圖片…",
-  "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "點擊圖片時顯示圖片選擇器"
+  "GET_PHOENIX_PRO": "取得 Phoenix Pro"
 });
 /*
  * GNU AGPL-3.0 License
