@@ -9629,6 +9629,9 @@ define("command/Commands", function (require, exports, module) {
     /** Opens Phoenix Pro page */
     exports.HELP_GET_PRO                = "help.getPro";                // HelpCommandHandlers.js       _handleLinkMenuItem()
 
+    /** Manage Pro licenses */
+    exports.HELP_MANAGE_LICENSES        = "help.manageLicenses";        // HelpCommandHandlers.js       _handleLinkMenuItem()
+
     /** Opens feature suggestion page */
     exports.HELP_SUGGEST                = "help.suggest";               // HelpCommandHandlers.js       _handleLinkMenuItem()
 
@@ -9721,6 +9724,9 @@ define("command/Commands", function (require, exports, module) {
 
     /** Shows the sidebar */
     exports.SHOW_SIDEBAR                = "view.showSidebar";           // SidebarView.js               show()
+
+    /** Reinstalls credentials in keychain */
+    exports.REINSTALL_CREDS             = "debug.reinstallCreds";       // login-service.js             handleReinstallCreds()
 
     // commands
     /** Initializes a new git repository */
@@ -10088,6 +10094,9 @@ define("command/DefaultMenus", function (require, exports, module) {
         menu.addMenuItem(Commands.HELP_SUPPORT);
         menu.addMenuDivider();
         menu.addMenuItem(Commands.HELP_GET_PRO);
+        if(Phoenix.isNativeApp) {
+            menu.addMenuItem(Commands.HELP_MANAGE_LICENSES);
+        }
         menu.addMenuDivider();
         if (brackets.config.suggest_feature_url) {
             menu.addMenuItem(Commands.HELP_SUGGEST);
@@ -60023,7 +60032,8 @@ define("help/HelpCommandHandlers", function (require, exports, module) {
         FileUtils               = require("file/FileUtils"),
         NativeApp               = require("utils/NativeApp"),
         Strings                 = require("strings"),
-        StringUtils             = require("utils/StringUtils"),
+        StringUtils       = require("utils/StringUtils"),
+        ManageLicenses          = require("services/manage-licenses"),
         AboutDialogTemplate     = `<div class="about-dialog modal">
     <div class="modal-header">
         <h1 class="dialog-title">{{Strings.ABOUT}}</h1>
@@ -60199,6 +60209,7 @@ define("help/HelpCommandHandlers", function (require, exports, module) {
     CommandManager.register(Strings.CMD_GET_PRO,                Commands.HELP_GET_PRO,              _handleLinkMenuItem(brackets.config.purchase_url), {
         htmlName: getProString
     });
+    CommandManager.register(Strings.CMD_MANAGE_LICENSES,        Commands.HELP_MANAGE_LICENSES,      ManageLicenses.showManageLicensesDialog);
     CommandManager.register(Strings.CMD_SUGGEST,                Commands.HELP_SUGGEST,              _handleLinkMenuItem(brackets.config.suggest_feature_url));
     CommandManager.register(Strings.CMD_REPORT_ISSUE,           Commands.HELP_REPORT_ISSUE,         _handleLinkMenuItem(brackets.config.report_issue_url));
     CommandManager.register(Strings.CMD_RELEASE_NOTES,          Commands.HELP_RELEASE_NOTES,        _handleLinkMenuItem(brackets.config.release_notes_url));
@@ -112134,6 +112145,7 @@ define("nls/root/strings", {
     "CMD_HOW_TO_USE_BRACKETS": "How to Use {APP_NAME}",
     "CMD_SUPPORT": "{APP_NAME} Support",
     "CMD_GET_PRO": "Get Phoenix Pro",
+    "CMD_MANAGE_LICENSES": "Manage Licenses",
     "CMD_USER_PROFILE": "{APP_NAME} Account",
     "CMD_DOCS": "Help, Getting Started",
     "CMD_SUGGEST": "Suggest a Feature",
@@ -113169,7 +113181,30 @@ define("nls/root/strings", {
     "PROMO_PRO_UNLOCK_MESSAGE": "Subscribe now to unlock these advanced features:",
     "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro Trial ({0} days left)",
     "GET_PHOENIX_PRO": "Get Phoenix Pro",
-    "USER_FREE_PLAN_NAME_DO_NOT_TRANSLATE": "Community Edition"
+    "USER_FREE_PLAN_NAME_DO_NOT_TRANSLATE": "Community Edition",
+    // license dialogs
+    "MANAGE_LICENSE_DIALOG_TITLE": "Manage Device License",
+    "LICENSE_KEY": "License Key",
+    "LICENSE_KEY_ACTIVATE": "Activate License",
+    "LICENSE_KEY_ACTIVATING": "Activating\u2026",
+    "LICENSE_KEY_CURRENT": "Current Device License",
+    "LICENSE_KEY_CHECKING": "Checking license status\u2026",
+    "LICENSE_KEY_NONE": "No active device license found",
+    "LICENSE_STATUS_ACTIVE": "Active",
+    "LICENSE_INFO_STATUS_LABEL": "Status:",
+    "LICENSE_INFO_LICENSED_TO_LABEL": "Licensed to:",
+    "LICENSE_INFO_TYPE_LABEL": "License type:",
+    "LICENSE_INFO_VALID_UNTIL_LABEL": "Valid until:",
+    "LICENSE_CHECK_ERROR": "Error checking license status",
+    "LICENSE_STATUS_UNKNOWN": "Unknown",
+    "LICENSE_VALID_NEVER": "Never",
+    "LICENSE_STATUS_ERROR_CHECK": "Error checking license status",
+    "LICENSE_ACTIVATE_SUCCESS": "License activated system-wide. Please restart {APP_NAME} for the changes to take effect.",
+    "LICENSE_ACTIVATE_SUCCESS_PARTIAL": "License activated for your account only (not system-wide). Please restart {APP_NAME} for the changes to take effect.",
+    "LICENSE_ACTIVATE_FAIL": "Failed to activate license",
+    "LICENSE_ACTIVATE_FAIL_APPLY": "'Failed to apply license to device'",
+    "LICENSE_ENTER_KEY": "Please enter a license key",
+    "LICENSE_REAPPLY_TO_DEVICE": "Already activated? Reapply system-wide"
 });
 
 /*
@@ -167097,7 +167132,7 @@ define("search/SearchResultsView", function (require, exports, module) {
  * including plan details, trial status, and feature entitlements.
  */
 
-define("services/entitlements", function (require, exports, module) {
+define("services/EntitlementsManager", function (require, exports, module) {
     const KernalModeTrust = window.KernalModeTrust;
     if(!KernalModeTrust){
         // integrated extensions will have access to kernal mode, but not external extensions
@@ -167113,8 +167148,10 @@ define("services/entitlements", function (require, exports, module) {
     let LoginService;
 
     // Create secure exports and set up event dispatcher
-    const Entitlements = {};
-    EventDispatcher.makeEventDispatcher(Entitlements);
+    const EntitlementsManager = {};
+    EventDispatcher.makeEventDispatcher(EntitlementsManager);
+    // Set up KernalModeTrust.Entitlements
+    KernalModeTrust.EntitlementsManager = EntitlementsManager;
 
     // Event constants
     const EVENT_ENTITLEMENTS_CHANGED = "entitlements_changed";
@@ -167216,7 +167253,7 @@ define("services/entitlements", function (require, exports, module) {
      * @returns {Promise<number>} [entitlement.validTill] - Timestamp when entitlement expires (if from server)
      *
      * @example
-     * const liveEditEntitlement = await Entitlements.getLiveEditEntitlement();
+     * const liveEditEntitlement = await EntitlementsManager.getLiveEditEntitlement();
      * if (liveEditEntitlement.activated) {
      *     // Enable live edit feature
      *     enableLiveEditFeature();
@@ -167240,9 +167277,6 @@ define("services/entitlements", function (require, exports, module) {
         };
     }
 
-    // Set up KernalModeTrust.Entitlements
-    KernalModeTrust.Entitlements = Entitlements;
-
     let inited = false;
     function init() {
         if(inited){
@@ -167253,14 +167287,14 @@ define("services/entitlements", function (require, exports, module) {
         // Set up event forwarding from LoginService
         LoginService.on(LoginService.EVENT_ENTITLEMENTS_CHANGED, function() {
             effectiveEntitlements = null;
-            Entitlements.trigger(EVENT_ENTITLEMENTS_CHANGED);
+            EntitlementsManager.trigger(EVENT_ENTITLEMENTS_CHANGED);
         });
     }
 
     // Test-only exports for integration testing
     if (Phoenix.isTestWindow) {
         window._test_entitlements_exports = {
-            EntitlementsService: Entitlements,
+            EntitlementsService: EntitlementsManager,
             isLoggedIn,
             getPlanDetails,
             isInProTrial,
@@ -167275,14 +167309,14 @@ define("services/entitlements", function (require, exports, module) {
     // no public exports to prevent extension tampering
 
     // Add functions to secure exports. These can be accessed via `KernalModeTrust.Entitlements.*`
-    Entitlements.isLoggedIn = isLoggedIn;
-    Entitlements.loginToAccount = loginToAccount;
-    Entitlements.getPlanDetails = getPlanDetails;
-    Entitlements.isInProTrial = isInProTrial;
-    Entitlements.getTrialRemainingDays = getTrialRemainingDays;
-    Entitlements.getRawEntitlements = getRawEntitlements;
-    Entitlements.getLiveEditEntitlement = getLiveEditEntitlement;
-    Entitlements.EVENT_ENTITLEMENTS_CHANGED = EVENT_ENTITLEMENTS_CHANGED;
+    EntitlementsManager.isLoggedIn = isLoggedIn;
+    EntitlementsManager.loginToAccount = loginToAccount;
+    EntitlementsManager.getPlanDetails = getPlanDetails;
+    EntitlementsManager.isInProTrial = isInProTrial;
+    EntitlementsManager.getTrialRemainingDays = getTrialRemainingDays;
+    EntitlementsManager.getRawEntitlements = getRawEntitlements;
+    EntitlementsManager.getLiveEditEntitlement = getLiveEditEntitlement;
+    EntitlementsManager.EVENT_ENTITLEMENTS_CHANGED = EVENT_ENTITLEMENTS_CHANGED;
 });
 
 /*
@@ -168229,7 +168263,7 @@ define("services/login-desktop", function (require, exports, module) {
  *
  */
 
-/*global path*/
+/*global path, logger*/
 
 /**
  * Shared Login Service
@@ -168242,10 +168276,17 @@ define("services/login-service", function (require, exports, module) {
     require("./setup-login-service"); // this adds loginService to KernalModeTrust
     require("./promotions");
     require("./login-utils");
-    const EntitlementsDirectImport = require("./entitlements"); // this adds Entitlements to KernalModeTrust
+    const NodeUtils = require("utils/NodeUtils"),
+        PreferencesManager = require("preferences/PreferencesManager"),
+        Commands = require("command/Commands"),
+        CommandManager = require("command/CommandManager");
+    const EntitlementsDirectImport = require("./EntitlementsManager"); // this adds Entitlements to KernalModeTrust
 
     const Metrics = require("utils/Metrics"),
         Strings = require("strings");
+
+    const PREF_STATE_LICENSED_DEVICE_CHECK = "LICENSED_DEVICE_CHECK";
+    PreferencesManager.stateManager.definePreference(PREF_STATE_LICENSED_DEVICE_CHECK, "boolean", false);
 
     const MS_IN_DAY = 10 * 24 * 60 * 60 * 1000;
     const TEN_MINUTES = 10 * 60 * 1000;
@@ -168424,6 +168465,34 @@ define("services/login-service", function (require, exports, module) {
         }
     }
 
+    let deviceIDCached = undefined;
+    async function getDeviceID() {
+        if(!Phoenix.isNativeApp) {
+            // We only grant device licenses to desktop apps. Browsers cannot be uniquely device identified obviously.
+            return null;
+        }
+        if(deviceIDCached !== undefined) {
+            return deviceIDCached;
+        }
+        try {
+            const deviceID = await NodeUtils.getDeviceID();
+            if(!deviceID) {
+                deviceIDCached = null;
+                Metrics.countEvent(Metrics.EVENT_TYPE.AUTH, "deviceID", "nullErr");
+                return null;
+            }
+            deviceIDCached = KernalModeTrust.generateDataSignature(deviceID);
+        } catch (e) {
+            logger.reportError(e, "failed to sign deviceID");
+            Metrics.countEvent(Metrics.EVENT_TYPE.AUTH, "deviceID", "SignErr");
+            deviceIDCached = null;
+        }
+        return deviceIDCached;
+    }
+
+
+    let deviceLicensePrimed = false,
+        licencedDeviceCredsAvailable = false;
 
     /**
      * Get entitlements from API or disc cache.
@@ -168432,8 +168501,14 @@ define("services/login-service", function (require, exports, module) {
      * Returns null if the user is not logged in
      */
     async function getEntitlements(forceRefresh = false) {
+        if(!deviceLicensePrimed) {
+            deviceLicensePrimed = true;
+            // we cache this as device license is only checked at app start. As invoves some files in system loactions,
+            // we dont want file access errors to happen on every entitlement check.
+            licencedDeviceCredsAvailable = await isLicensedDevice();
+        }
         // Return null if not logged in
-        if (!LoginService.isLoggedIn()) {
+        if (!LoginService.isLoggedIn() && !licencedDeviceCredsAvailable) {
             return null;
         }
 
@@ -168467,7 +168542,10 @@ define("services/login-service", function (require, exports, module) {
             const language = brackets.getLocale();
             const currentVersion = window.AppConfig.apiVersion || "1.0.0";
             let url = `${accountBaseURL}/getAppEntitlements?lang=${language}&version=${currentVersion}`+
-                `&platform=${Phoenix.platform}&appType=${Phoenix.isNativeApp ? "desktop" : "browser"}}`;
+                `&platform=${Phoenix.platform}&appType=${Phoenix.isNativeApp ? "desktop" : "browser"}`;
+            if(licencedDeviceCredsAvailable) {
+                url += `&deviceID=${await getDeviceID()}`;
+            }
             let fetchOptions = {
                 method: 'GET',
                 headers: {
@@ -168481,7 +168559,7 @@ define("services/login-service", function (require, exports, module) {
                 const profile = LoginService.getProfile();
                 if (profile && profile.apiKey && profile.validationCode) {
                     url += `&appSessionID=${encodeURIComponent(profile.apiKey)}&validationCode=${encodeURIComponent(profile.validationCode)}`;
-                } else {
+                } else if(!licencedDeviceCredsAvailable){
                     console.error('Missing appSessionID or validationCode for desktop app entitlements');
                     return null;
                 }
@@ -168560,6 +168638,8 @@ define("services/login-service", function (require, exports, module) {
             cachedEntitlements = null;
             _debounceEntitlementsChanged();
         }
+        // Reset device license state so it's re-evaluated on next entitlement check
+        deviceLicensePrimed = false;
     }
 
 
@@ -168653,7 +168733,7 @@ define("services/login-service", function (require, exports, module) {
 
     /**
      * Get effective entitlements for determining feature availability.
-     * This is for internal use only. All consumers in phoenix code should use `KernalModeTrust.Entitlements` APIs.
+     * This is for internal use only. All consumers in phoenix should use `KernalModeTrust.EntitlementsManager` APIs.
      *
      * @returns {Promise<Object|null>} Entitlements object or null if not logged in and no trial active
      *
@@ -168756,15 +168836,16 @@ define("services/login-service", function (require, exports, module) {
             return serverEntitlements;
         }
 
-        // User has active trial
+        // now we need to grant trial, as user is entitled to trial if he is here.
+        // User has active server plan(either with login or device license)
         if (serverEntitlements && serverEntitlements.plan) {
-            // Logged-in user with trial
             if (serverEntitlements.plan.paidSubscriber) {
-                // Already a paid subscriber, return as-is
+                // Already a paid subscriber(or has device license), return as-is
+                // never inject trail data in this case.
                 return serverEntitlements;
             }
             // Enhance entitlements for trial user
-            // ie if any entitlement has valid till expired, we need to deactivate that entitlement
+            // user in not a paid subscriber(nor he has device license), inject trial
             return {
                 ...serverEntitlements,
                 plan: {
@@ -168788,7 +168869,7 @@ define("services/login-service", function (require, exports, module) {
             };
         }
 
-        // Non-logged-in user with trial - return synthetic entitlements
+        // Non-logged-in, non licensed user with trial - return synthetic entitlements
         return {
             plan: {
                 paidSubscriber: true,
@@ -168809,12 +168890,66 @@ define("services/login-service", function (require, exports, module) {
         };
     }
 
+    async function addDeviceLicense() {
+        deviceLicensePrimed = false;
+        PreferencesManager.stateManager.set(PREF_STATE_LICENSED_DEVICE_CHECK, true);
+        return NodeUtils.addDeviceLicenseSystemWide();
+    }
+
+    async function removeDeviceLicense() {
+        deviceLicensePrimed = false;
+        PreferencesManager.stateManager.set(PREF_STATE_LICENSED_DEVICE_CHECK, false);
+        return NodeUtils.removeDeviceLicenseSystemWide();
+    }
+
+    async function isLicensedDeviceSystemWide() {
+        return NodeUtils.isLicensedDeviceSystemWide();
+    }
+
+    let _isLicensedDeviceFlagForTest = false;
+
+    /**
+     * Checks if app is configured to check for device licenses at app start at system or user level.
+     *
+     * @returns {Promise<boolean>} - Resolves with `true` if the device is licensed, `false` otherwise.
+     */
+    async function isLicensedDevice() {
+        if(Phoenix.isTestWindow) {
+            return _isLicensedDeviceFlagForTest;
+        }
+        if(!Phoenix.isNativeApp) {
+            // browser app doesn't support device licence keys, obviously.
+            return false;
+        }
+        const userCheck = PreferencesManager.stateManager.get(PREF_STATE_LICENSED_DEVICE_CHECK);
+        const systemCheck = await isLicensedDeviceSystemWide();
+        return userCheck || systemCheck;
+    }
+
     // Add functions to secure exports
     LoginService.getEntitlements = getEntitlements;
     LoginService.getEffectiveEntitlements = getEffectiveEntitlements;
     LoginService.clearEntitlements = clearEntitlements;
     LoginService.getSalt = getSalt;
+    LoginService.addDeviceLicense = addDeviceLicense;
+    LoginService.removeDeviceLicense = removeDeviceLicense;
+    LoginService.isLicensedDevice = isLicensedDevice;
+    LoginService.isLicensedDeviceSystemWide = isLicensedDeviceSystemWide;
+    LoginService.getDeviceID = getDeviceID;
     LoginService.EVENT_ENTITLEMENTS_CHANGED = EVENT_ENTITLEMENTS_CHANGED;
+
+    async function handleReinstallCreds() {
+        if(!Phoenix.isNativeApp) {
+            throw new Error("Reinstall credentials is only available in native apps");
+        }
+        try {
+            await KernalModeTrust.reinstallCreds();
+            console.log("Credentials reinstalled successfully");
+        } catch (error) {
+            console.error("Error reinstalling credentials:", error);
+            throw error;
+        }
+    }
 
     let inited = false;
     function init() {
@@ -168823,15 +168958,23 @@ define("services/login-service", function (require, exports, module) {
         }
         inited = true;
         EntitlementsDirectImport.init();
+
+        // Register reinstall credentials command for native apps only
+        if(Phoenix.isNativeApp) {
+            CommandManager.register("Reinstall Credentials", Commands.REINSTALL_CREDS, handleReinstallCreds);
+        }
     }
     // Test-only exports for integration testing
     if (Phoenix.isTestWindow) {
         window._test_login_service_exports = {
             LoginService,
-            setFetchFn: function _setFetchFn(fn) {
+            setIsLicensedDevice: function (_isLicensedDevice) {
+                _isLicensedDeviceFlagForTest = _isLicensedDevice;
+            },
+            setFetchFn: function (fn) {
                 fetchFn = fn;
             },
-            setDateNowFn: function _setDdateNowFn(fn) {
+            setDateNowFn: function (fn) {
                 dateNowFn = fn;
             },
             _validateAndFilterEntitlements: _validateAndFilterEntitlements
@@ -168991,6 +169134,431 @@ define("services/login-utils", function (require, exports, module) {
         exports.validTillExpired = validTillExpired;
         exports.haveEntitlementsChanged = haveEntitlementsChanged;
     }
+});
+
+/*
+ * GNU AGPL-3.0 License
+ *
+ * Copyright (c) 2021 - present core.ai . All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
+ *
+ */
+
+/*global logger*/
+
+/**
+ * Shared Login Service
+ *
+ * This module contains shared login service functionality used by both
+ * browser and desktop login implementations, including entitlements management.
+ */
+
+define("services/manage-licenses", function (require, exports, module) {
+    const KernalModeTrust = window.KernalModeTrust;
+    if(!KernalModeTrust){
+        // integrated extensions will have access to kernal mode, but not external extensions
+        throw new Error("manage-licenses should have access to KernalModeTrust. Cannot boot without trust ring");
+    }
+
+    const Strings = require("strings"),
+        Dialogs = require("widgets/Dialogs"),
+        Mustache = require("thirdparty/mustache/mustache"),
+        licenseManagementHTML = `<div class="license-management-dialog modal">
+    <div class="modal-header">
+        <h1 class="dialog-title">{{Strings.MANAGE_LICENSE_DIALOG_TITLE}}</h1>
+    </div>
+
+    <div class="modal-body" style="max-height: 500px; padding: 24px;">
+        <!-- License Activation Section -->
+        <div class="license-activation-section">
+            <div class="license-form-group">
+                <label for="license-key-input" class="license-form-label">
+                    {{Strings.LICENSE_KEY}}
+                </label>
+                <input
+                    type="text"
+                    id="license-key-input"
+                    class="license-form-input"
+                    placeholder="Enter your license key..."
+                />
+            </div>
+            <button
+                id="activate-license-btn"
+                class="btn primary license-activate-btn">
+                <span class="btn-text"><i class="fa fa-key" style="margin-right: 8px;"></i>{{Strings.LICENSE_KEY_ACTIVATE}}</span>
+                <span class="btn-spinner">
+                    <i class="fa fa-spinner fa-spin" style="margin-right: 8px;"></i>{{Strings.LICENSE_KEY_ACTIVATING}}
+                </span>
+            </button>
+
+            <!-- Reapply License Secondary Action -->
+            <div id="reapply-license-container" class="license-reapply-container" style="display: none; margin-top: 12px; text-align: center;">
+                <a id="reapply-license-link" href="#" style="font-size: 13px; text-decoration: none;">
+                    <i class="fa fa-sync" style="margin-right: 6px;"></i>{{Strings.LICENSE_REAPPLY_TO_DEVICE}}
+                </a>
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <hr class="license-divider">
+
+        <!-- License Status Section -->
+        <div class="license-status-section">
+            <h3 class="license-section-title">
+                {{Strings.LICENSE_KEY_CURRENT}}
+            </h3>
+
+            <!-- Loading State -->
+            <div id="license-status-loading" class="license-status-loading">
+                <i class="fa fa-spinner fa-spin"></i>
+                <span>{{Strings.LICENSE_KEY_CHECKING}}</span>
+            </div>
+
+            <!-- No License State -->
+            <div id="license-status-none" class="license-status-none" style="display: none;">
+                <i class="fa fa-exclamation-circle"></i>
+                <span>{{Strings.LICENSE_KEY_NONE}}</span>
+            </div>
+
+            <!-- Valid License State -->
+            <div id="license-status-valid" class="license-status-valid" style="display: none;">
+                <div class="license-info-card">
+                    <div class="license-info-row" style="margin-bottom: 12px;">
+                        <span class="license-info-label">{{Strings.LICENSE_INFO_STATUS_LABEL}}</span>
+                        <span class="license-status-badge">{{Strings.LICENSE_STATUS_ACTIVE}}</span>
+                    </div>
+                    <div class="license-info-row">
+                        <span class="license-info-label">{{Strings.LICENSE_INFO_LICENSED_TO_LABEL}}</span>
+                        <span id="licensed-to-name" class="license-info-value"></span>
+                    </div>
+                    <div class="license-info-row">
+                        <span class="license-info-label">{{Strings.LICENSE_INFO_TYPE_LABEL}}</span>
+                        <span id="license-type-name" class="license-info-value"></span>
+                    </div>
+                    <div class="license-info-row">
+                        <span class="license-info-label">{{Strings.LICENSE_INFO_VALID_UNTIL_LABEL}}</span>
+                        <span id="license-valid-till" class="license-info-value"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error State -->
+            <div id="license-status-error" class="license-status-error" style="display: none;">
+                <i class="fa fa-exclamation-triangle"></i>
+                <span id="license-error-message">{{Strings.LICENSE_CHECK_ERROR}}</span>
+            </div>
+        </div>
+
+        <!-- Success/Error Messages for Activation -->
+        <div id="activation-message" class="license-activation-message">
+            <span id="activation-message-text"></span>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="dialog-button btn" data-button-id="close">{{Strings.CLOSE}}</button>
+    </div>
+</div>
+`;
+
+    // Save a copy of window.fetch so that extensions won't tamper with it
+    let fetchFn = window.fetch;
+
+    /**
+     * Get the API base URL for license operations
+     */
+    function _getAPIBaseURL() {
+        return Phoenix.config.account_url.replace(/\/$/, ''); // Remove trailing slash
+    }
+
+    /**
+     * Call the validateDeviceLicense API
+     */
+    async function _validateDeviceLicense(deviceLicenseKey) {
+        const apiURL = `${_getAPIBaseURL()}/validateDeviceLicense`;
+
+        try {
+            const response = await fetchFn(apiURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    deviceLicenseKey: deviceLicenseKey
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error('Error validating device license:', error);
+            throw error;
+        }
+    }
+
+    /**
+     * Call the registerDevice API to activate a license
+     */
+    async function _registerDevice(licenseKey, deviceLicenseKey, platform, deviceLabel) {
+        const apiURL = `${_getAPIBaseURL()}/registerDevice`;
+
+        try {
+            const response = await fetchFn(apiURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    licenseKey: licenseKey,
+                    deviceLicenseKey: deviceLicenseKey,
+                    platform: platform,
+                    deviceLabel: deviceLabel
+                })
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(result.errorMessage || `HTTP ${response.status}: ${response.statusText}`);
+            }
+
+            return result;
+        } catch (error) {
+            console.error('Error registering device:', error);
+            throw error;
+        }
+    }
+
+    /**
+     * Format date for display
+     */
+    function _formatDate(timestamp) {
+        if (!timestamp) {
+            return Strings.LICENSE_VALID_NEVER;
+        }
+        const date = new Date(timestamp);
+        return date.toLocaleDateString(Phoenix.getLocale(), {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    }
+
+    /**
+     * Update the license status display in the dialog
+     */
+    async function _updateLicenseStatusDisplay($dialog, licenseData) {
+        const $loading = $dialog.find('#license-status-loading');
+        const $none = $dialog.find('#license-status-none');
+        const $valid = $dialog.find('#license-status-valid');
+        const $error = $dialog.find('#license-status-error');
+        const $reapplyContainer = $dialog.find('#reapply-license-container');
+
+        // Hide all status sections
+        $loading.hide();
+        $none.hide();
+        $valid.hide();
+        $error.hide();
+        $reapplyContainer.hide();
+
+        if (licenseData && licenseData.isValid) {
+            // Show valid license info
+            $dialog.find('#licensed-to-name').text(licenseData.licensedToName || Strings.LICENSE_STATUS_UNKNOWN);
+            $dialog.find('#license-type-name').text(licenseData.licenseTypeName || Strings.LICENSE_STATUS_UNKNOWN);
+            $dialog.find('#license-valid-till').text(_formatDate(licenseData.validTill));
+            $valid.show();
+
+            // Show reapply button if license is valid but not applied system-wide
+            const isLicensed = await KernalModeTrust.loginService.isLicensedDeviceSystemWide();
+            if (!isLicensed) {
+                $reapplyContainer.show();
+            }
+        } else if (licenseData && licenseData.isValid === false) {
+            // No valid license
+            $none.show();
+        } else {
+            // Error state
+            $dialog.find('#license-error-message').text(Strings.LICENSE_STATUS_ERROR_CHECK);
+            $error.show();
+        }
+    }
+
+    /**
+     * Show activation result message
+     */
+    function _showActivationMessage($dialog, isSuccess, message) {
+        const $messageDiv = $dialog.find('#activation-message');
+        const $messageText = $dialog.find('#activation-message-text');
+
+        $messageText.text(message);
+
+        // Remove previous classes
+        $messageDiv.removeClass('success error');
+
+        // Add appropriate class
+        if (isSuccess) {
+            $messageDiv.addClass('success');
+        } else {
+            $messageDiv.addClass('error');
+        }
+
+        $messageDiv.show();
+
+        // Hide message after 5 seconds
+        setTimeout(() => {
+            $messageDiv.fadeOut();
+        }, 5000);
+    }
+
+    /**
+     * Load and display current license status
+     */
+    async function _loadLicenseStatus($dialog) {
+        try {
+            const deviceID = await KernalModeTrust.loginService.getDeviceID();
+            if (!deviceID) {
+                _updateLicenseStatusDisplay($dialog, { isValid: false });
+                return;
+            }
+
+            const licenseData = await _validateDeviceLicense(deviceID);
+            _updateLicenseStatusDisplay($dialog, licenseData);
+        } catch (error) {
+            console.error('Error loading license status:', error);
+            _updateLicenseStatusDisplay($dialog, null);
+        }
+    }
+
+    /**
+     * Handle license activation
+     */
+    async function _handleLicenseActivation($dialog, licenseKey) {
+        const $btn = $dialog.find('#activate-license-btn');
+        const $btnText = $btn.find('.btn-text');
+        const $btnSpinner = $btn.find('.btn-spinner');
+
+        try {
+            // Show loading state
+            $btn.prop('disabled', true);
+            $btnText.hide();
+            $btnSpinner.show();
+
+            const deviceID = await KernalModeTrust.loginService.getDeviceID();
+            if (!deviceID) {
+                throw new Error('Unable to get device ID. Device licenses are only supported on desktop applications.');
+            }
+
+            const platform = Phoenix.platform || 'unknown';
+            const deviceLabel = `Phoenix Code - ${platform}`;
+
+            const result = await _registerDevice(licenseKey, deviceID, platform, deviceLabel);
+
+            if (result.isSuccess) {
+                const addSuccess = await KernalModeTrust.loginService.addDeviceLicense();
+                const successString = addSuccess ?
+                    Strings.LICENSE_ACTIVATE_SUCCESS : Strings.LICENSE_ACTIVATE_SUCCESS_PARTIAL;
+                _showActivationMessage($dialog, true, successString);
+
+                // Clear the input field
+                $dialog.find('#license-key-input').val('');
+
+                // Refresh license status
+                await _loadLicenseStatus($dialog);
+            } else {
+                _showActivationMessage($dialog, false, result.errorMessage || Strings.LICENSE_ACTIVATE_FAIL);
+            }
+        } catch (error) {
+            _showActivationMessage($dialog, false, error.message || Strings.LICENSE_ACTIVATE_FAIL);
+        } finally {
+            // Reset button state
+            $btn.prop('disabled', false);
+            $btnText.show();
+            $btnSpinner.hide();
+        }
+    }
+
+    /**
+     * Handle reapply license to device
+     */
+    async function _handleReapplyLicense($dialog) {
+        const $link = $dialog.find('#reapply-license-link');
+        const originalText = $link.html();
+
+        try {
+            // Show loading state
+            $link.html('<i class="fa fa-spinner fa-spin" style="margin-right: 6px;"></i>Applying...');
+            $link.css('pointer-events', 'none');
+
+            const addSuccess = await KernalModeTrust.loginService.addDeviceLicense();
+            if (addSuccess) {
+                _showActivationMessage($dialog, true, Strings.LICENSE_ACTIVATE_SUCCESS);
+                // Refresh license status
+                await _loadLicenseStatus($dialog);
+            } else {
+                _showActivationMessage($dialog, false, Strings.LICENSE_ACTIVATE_FAIL_APPLY);
+            }
+        } catch (error) {
+            _showActivationMessage($dialog, false, Strings.LICENSE_ACTIVATE_FAIL_APPLY);
+        } finally {
+            // Reset link state
+            $link.html(originalText);
+            $link.css('pointer-events', 'auto');
+        }
+    }
+
+    async function showManageLicensesDialog() {
+        const $template = $(Mustache.render(licenseManagementHTML, {Strings}));
+
+        Dialogs.showModalDialogUsingTemplate($template);
+
+        // Set up event handlers
+        const $dialog = $template;
+        const $licenseInput = $dialog.find('#license-key-input');
+        const $activateBtn = $dialog.find('#activate-license-btn');
+        const $reapplyLink = $dialog.find('#reapply-license-link');
+
+        // Handle activate button click
+        $activateBtn.on('click', async function() {
+            const licenseKey = $licenseInput.val().trim();
+            if (!licenseKey) {
+                _showActivationMessage($dialog, false, Strings.LICENSE_ENTER_KEY);
+                return;
+            }
+
+            await _handleLicenseActivation($dialog, licenseKey);
+        });
+
+        // Handle Enter key in license input
+        $licenseInput.on('keypress', function(e) {
+            if (e.which === 13) { // Enter key
+                $activateBtn.click();
+            }
+        });
+
+        // Handle reapply license link click
+        $reapplyLink.on('click', async function(e) {
+            e.preventDefault();
+            await _handleReapplyLicense($dialog);
+        });
+
+        // Load current license status
+        await _loadLicenseStatus($dialog);
+    }
+
+    exports.showManageLicensesDialog = showManageLicensesDialog;
 });
 
 /*
@@ -169495,23 +170063,41 @@ define("services/profile-menu", function (require, exports, module) {
 
         positionPopup();
 
-        // Check for trial info asynchronously and update popup
+        // Check for trial info or device license asynchronously and update popup
         KernalModeTrust.loginService.getEffectiveEntitlements().then(effectiveEntitlements => {
-            if (effectiveEntitlements && effectiveEntitlements.isInProTrial && isPopupVisible && $popup) {
-                // Add trial info to the existing popup
-                const planName = StringUtils.format(Strings.PROMO_PRO_TRIAL_DAYS_LEFT,
-                    effectiveEntitlements.trialDaysRemaining);
-                const trialInfoHtml = `<div class="trial-plan-info">
-                    <span class="phoenix-pro-title-plain">
-                        <span class="pro-plan-name user-plan-name">${planName}</span>
-                        <i class="fa-solid fa-feather" style="margin-left: 3px;"></i>
-                    </span>
-                </div>`;
-                $popup.find('.popup-title').after(trialInfoHtml);
-                positionPopup(); // Reposition after adding content
+            // this is the login popup, so user is not logged in yet if we are here.
+            if (effectiveEntitlements && isPopupVisible && $popup) {
+                let proInfoHtml = null;
+
+                if (effectiveEntitlements.isInProTrial) {
+                    // isInProTrial will never be set if user has a pro device license(or a pro sub,
+                    // but that isn't relevant here). Add trial info to the existing popup.
+                    const planName = StringUtils.format(Strings.PROMO_PRO_TRIAL_DAYS_LEFT,
+                        effectiveEntitlements.trialDaysRemaining);
+                    proInfoHtml = `<div class="trial-plan-info">
+                        <span class="phoenix-pro-title-plain">
+                            <span class="pro-plan-name user-plan-name">${planName}</span>
+                            <i class="fa-solid fa-feather" style="margin-left: 3px;"></i>
+                        </span>
+                    </div>`;
+                } else if (effectiveEntitlements.plan && effectiveEntitlements.plan.paidSubscriber) {
+                    // Device-licensed user: show Phoenix Pro branding
+                    const planName = effectiveEntitlements.plan.fullName || brackets.config.main_pro_plan;
+                    proInfoHtml = `<div class="trial-plan-info">
+                        <span class="phoenix-pro-title-plain">
+                            <span class="pro-plan-name user-plan-name">${planName}</span>
+                            <i class="fa-solid fa-feather" style="margin-left: 3px;"></i>
+                        </span>
+                    </div>`;
+                }
+
+                if (proInfoHtml) {
+                    $popup.find('.popup-title').after(proInfoHtml);
+                    positionPopup(); // Reposition after adding content
+                }
             }
         }).catch(error => {
-            console.error('Failed to check trial info for login popup:', error);
+            console.error('Failed to check entitlements for login popup:', error);
         });
 
         PopUpManager.addPopUp($popup, function() {
@@ -169903,33 +170489,38 @@ define("services/profile-menu", function (require, exports, module) {
     }
 
     /**
-     * Check if user has an active trial (works for both logged-in and non-logged-in users)
+     * Check if user has Pro access (active trial or device license)
+     * Works for both logged-in and non-logged-in users
      */
-    async function _hasActiveTrial() {
+    async function _hasProActive() {
         try {
             const effectiveEntitlements = await KernalModeTrust.loginService.getEffectiveEntitlements();
-            return effectiveEntitlements && effectiveEntitlements.isInProTrial;
+            return effectiveEntitlements &&
+                (effectiveEntitlements.isInProTrial ||
+                    (effectiveEntitlements.plan && effectiveEntitlements.plan.paidSubscriber));
         } catch (error) {
-            console.error('Failed to check trial status:', error);
+            console.error('Failed to check Pro access status:', error);
             return false;
         }
     }
 
     /**
-     * Initialize branding for non-logged-in trial users on startup
+     * Initialize branding for non-logged-in users with Pro access (trial or device license) on startup
      */
-    async function _initializeBrandingForTrialUsers() {
+    async function _setBrandingForNonLoggedInUser() {
         try {
             const effectiveEntitlements = await KernalModeTrust.loginService.getEffectiveEntitlements();
-            if (effectiveEntitlements && effectiveEntitlements.isInProTrial) {
-                console.log('Profile Menu: Found active trial, updating branding...');
+            if (effectiveEntitlements &&
+                (effectiveEntitlements.isInProTrial ||
+                    (effectiveEntitlements.plan && effectiveEntitlements.plan.paidSubscriber))) {
+                console.log('Profile Menu: Found Pro entitlements (trial or device license), updating branding...');
                 _updateBranding(effectiveEntitlements);
             } else {
-                console.log('Profile Menu: No active trial found');
+                console.log('Profile Menu: No Pro entitlements found');
                 _updateBranding(null);
             }
         } catch (error) {
-            console.error('Failed to initialize branding for trial users:', error);
+            console.error('Failed to initialize branding for non-logged-in Pro users:', error);
         }
     }
 
@@ -169952,14 +170543,14 @@ define("services/profile-menu", function (require, exports, module) {
             togglePopup();
         });
 
-        // Initialize branding for non-logged-in trial users
-        _initializeBrandingForTrialUsers();
+        // Initialize branding for non-logged-in users with Pro access (trial or device license)
+        _setBrandingForNonLoggedInUser();
 
-        // Listen for entitlements changes to update branding for non-logged-in trial users
+        // Listen for entitlements changes to update branding for non-logged-in Pro users
         KernalModeTrust.loginService.on(KernalModeTrust.loginService.EVENT_ENTITLEMENTS_CHANGED, () => {
-            // When entitlements change (including trial activation) for non-logged-in users, update branding
+            // When entitlements change (trial activation or device license) for non-logged-in users, update branding
             if (!KernalModeTrust.loginService.isLoggedIn()) {
-                _initializeBrandingForTrialUsers();
+                _setBrandingForNonLoggedInUser();
             }
         });
     }
@@ -169971,19 +170562,19 @@ define("services/profile-menu", function (require, exports, module) {
         }
         _removeProfileIcon();
 
-        // Reset branding, but preserve trial branding if user has active trial
-        _hasActiveTrial().then(hasActiveTrial => {
-            if (!hasActiveTrial) {
-                // Only reset branding if no trial exists
-                console.log('Profile Menu: No trial, resetting branding to free');
+        // Reset branding, but preserve Pro branding if user has active trial or device license
+        _hasProActive().then(hasProActive => {
+            if (!hasProActive) {
+                // Only reset branding if no trial or device license exists
+                console.log('Profile Menu: No Pro access, resetting branding to free');
                 _updateBranding(null);
             } else {
-                // User has trial, maintain pro branding
-                console.log('Profile Menu: Trial exists, maintaining pro branding');
-                _initializeBrandingForTrialUsers();
+                // User has trial or device license, maintain pro branding
+                console.log('Profile Menu: Pro access exists, maintaining pro branding');
+                _setBrandingForNonLoggedInUser();
             }
         }).catch(error => {
-            console.error('Failed to check trial status during logout:', error);
+            console.error('Failed to check Pro access status during logout:', error);
             // Fallback to resetting branding
             _updateBranding(null);
         });
@@ -176711,6 +177302,8 @@ define("utils/NodeDomain", function (require, exports, module) {
 
 // @INCLUDE_IN_API_DOCS
 
+/*global logger*/
+
 /**
  * Generic node util APIs connector. see `src-node/utils.js` for node peer
  */
@@ -176879,6 +177472,90 @@ define("utils/NodeUtils", function (require, exports, module) {
         return utilsConnector.execPeer("openInDefaultApp", window.fs.getTauriPlatformPath(fullPath));
     }
 
+
+    let cachedDeviceID = undefined;
+    /**
+     * gets the os device id. this usually won't change till os reinstall.
+     *
+     * @returns {Promise<string|null>} - Resolves with the os identifier or null
+     * @throws {Error} - If called from the browser
+     */
+    async function getDeviceID() {
+        if (!Phoenix.isNativeApp) {
+            throw new Error("getDeviceID not available in browser");
+        }
+        if(cachedDeviceID !== undefined) {
+            return cachedDeviceID;
+        }
+        try {
+            cachedDeviceID = await utilsConnector.execPeer("getDeviceID");
+            return cachedDeviceID;
+        } catch (err) {
+            cachedDeviceID = null;
+            logger.reportError(err, "getDeviceID failed in NodeUtils");
+        }
+        return cachedDeviceID;
+    }
+
+    /**
+     * Enables device license by creating a system-wide license file.
+     * On Windows, macOS, and Linux this will request elevation if needed.
+     *
+     * @returns {Promise<boolean>} - Resolves true if system wide defile file added, else false.
+     * @throws {Error} - If called from the browser
+     */
+    async function addDeviceLicenseSystemWide() {
+        if (!Phoenix.isNativeApp) {
+            throw new Error("addDeviceLicense not available in browser");
+        }
+        try {
+            await utilsConnector.execPeer("addDeviceLicense");
+            return true;
+        } catch (err) {
+            logger.reportError(err, "system wide device license activation failed");
+        }
+        return false;
+    }
+
+    /**
+     * Removes the system-wide device license file.
+     * On Windows, macOS, and Linux this will request elevation if needed.
+     *
+     * @returns {Promise<boolean>} - Resolves true if system wide defile file removed, else false.
+     * @throws {Error} - If called from the browser
+     */
+    async function removeDeviceLicenseSystemWide() {
+        if (!Phoenix.isNativeApp) {
+            throw new Error("removeDeviceLicense not available in browser");
+        }
+        try {
+            await utilsConnector.execPeer("removeDeviceLicense");
+            return true;
+        } catch (err) {
+            logger.reportError(err, "system wide device license remove failed");
+        }
+        return false;
+    }
+
+    /**
+     * Checks if the current machine is configured to check for system-wide device license for all users at app start.
+     * This validates that the system-wide license file exists, contains valid JSON, and has `licensedDevice: true`.
+     *
+     * @returns {Promise<boolean>} - Resolves with `true` if the device is licensed, `false` otherwise.
+     */
+    async function isLicensedDeviceSystemWide() {
+        if (!Phoenix.isNativeApp) {
+            console.error("isLicensedDevice not available in browser");
+            return false;
+        }
+        try {
+            return utilsConnector.execPeer("isLicensedDevice");
+        } catch (err) {
+            logger.reportError(err, "system wide device check failed");
+        }
+        return false;
+    }
+
     if(NodeConnector.isNodeAvailable()) {
         // todo we need to update the strings if a user extension adds its translations. Since we dont support
         // node extensions for now, should consider when we support node extensions.
@@ -176917,6 +177594,10 @@ define("utils/NodeUtils", function (require, exports, module) {
     exports.getEnvironmentVariable = getEnvironmentVariable;
     exports.openNativeTerminal = openNativeTerminal;
     exports.openInDefaultApp = openInDefaultApp;
+    exports.addDeviceLicenseSystemWide = addDeviceLicenseSystemWide;
+    exports.removeDeviceLicenseSystemWide = removeDeviceLicenseSystemWide;
+    exports.isLicensedDeviceSystemWide = isLicensedDeviceSystemWide;
+    exports.getDeviceID = getDeviceID;
 
     /**
      * checks if Node connector is ready

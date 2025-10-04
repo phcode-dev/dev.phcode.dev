@@ -16,7 +16,7 @@
  *
  */
 
-/*global path*/
+/*global path, logger*/
 
 /**
  * Shared Login Service
@@ -29,10 +29,17 @@ define(function (require, exports, module) {
     require("./setup-login-service"); // this adds loginService to KernalModeTrust
     require("./promotions");
     require("./login-utils");
-    const EntitlementsDirectImport = require("./entitlements"); // this adds Entitlements to KernalModeTrust
+    const NodeUtils = require("utils/NodeUtils"),
+        PreferencesManager = require("preferences/PreferencesManager"),
+        Commands = require("command/Commands"),
+        CommandManager = require("command/CommandManager");
+    const EntitlementsDirectImport = require("./EntitlementsManager"); // this adds Entitlements to KernalModeTrust
 
     const Metrics = require("utils/Metrics"),
         Strings = require("strings");
+
+    const PREF_STATE_LICENSED_DEVICE_CHECK = "LICENSED_DEVICE_CHECK";
+    PreferencesManager.stateManager.definePreference(PREF_STATE_LICENSED_DEVICE_CHECK, "boolean", false);
 
     const MS_IN_DAY = 10 * 24 * 60 * 60 * 1000;
     const TEN_MINUTES = 10 * 60 * 1000;
@@ -211,6 +218,34 @@ define(function (require, exports, module) {
         }
     }
 
+    let deviceIDCached = undefined;
+    async function getDeviceID() {
+        if(!Phoenix.isNativeApp) {
+            // We only grant device licenses to desktop apps. Browsers cannot be uniquely device identified obviously.
+            return null;
+        }
+        if(deviceIDCached !== undefined) {
+            return deviceIDCached;
+        }
+        try {
+            const deviceID = await NodeUtils.getDeviceID();
+            if(!deviceID) {
+                deviceIDCached = null;
+                Metrics.countEvent(Metrics.EVENT_TYPE.AUTH, "deviceID", "nullErr");
+                return null;
+            }
+            deviceIDCached = KernalModeTrust.generateDataSignature(deviceID);
+        } catch (e) {
+            logger.reportError(e, "failed to sign deviceID");
+            Metrics.countEvent(Metrics.EVENT_TYPE.AUTH, "deviceID", "SignErr");
+            deviceIDCached = null;
+        }
+        return deviceIDCached;
+    }
+
+
+    let deviceLicensePrimed = false,
+        licencedDeviceCredsAvailable = false;
 
     /**
      * Get entitlements from API or disc cache.
@@ -219,8 +254,14 @@ define(function (require, exports, module) {
      * Returns null if the user is not logged in
      */
     async function getEntitlements(forceRefresh = false) {
+        if(!deviceLicensePrimed) {
+            deviceLicensePrimed = true;
+            // we cache this as device license is only checked at app start. As invoves some files in system loactions,
+            // we dont want file access errors to happen on every entitlement check.
+            licencedDeviceCredsAvailable = await isLicensedDevice();
+        }
         // Return null if not logged in
-        if (!LoginService.isLoggedIn()) {
+        if (!LoginService.isLoggedIn() && !licencedDeviceCredsAvailable) {
             return null;
         }
 
@@ -254,7 +295,10 @@ define(function (require, exports, module) {
             const language = brackets.getLocale();
             const currentVersion = window.AppConfig.apiVersion || "1.0.0";
             let url = `${accountBaseURL}/getAppEntitlements?lang=${language}&version=${currentVersion}`+
-                `&platform=${Phoenix.platform}&appType=${Phoenix.isNativeApp ? "desktop" : "browser"}}`;
+                `&platform=${Phoenix.platform}&appType=${Phoenix.isNativeApp ? "desktop" : "browser"}`;
+            if(licencedDeviceCredsAvailable) {
+                url += `&deviceID=${await getDeviceID()}`;
+            }
             let fetchOptions = {
                 method: 'GET',
                 headers: {
@@ -268,7 +312,7 @@ define(function (require, exports, module) {
                 const profile = LoginService.getProfile();
                 if (profile && profile.apiKey && profile.validationCode) {
                     url += `&appSessionID=${encodeURIComponent(profile.apiKey)}&validationCode=${encodeURIComponent(profile.validationCode)}`;
-                } else {
+                } else if(!licencedDeviceCredsAvailable){
                     console.error('Missing appSessionID or validationCode for desktop app entitlements');
                     return null;
                 }
@@ -347,6 +391,8 @@ define(function (require, exports, module) {
             cachedEntitlements = null;
             _debounceEntitlementsChanged();
         }
+        // Reset device license state so it's re-evaluated on next entitlement check
+        deviceLicensePrimed = false;
     }
 
 
@@ -440,7 +486,7 @@ define(function (require, exports, module) {
 
     /**
      * Get effective entitlements for determining feature availability.
-     * This is for internal use only. All consumers in phoenix code should use `KernalModeTrust.Entitlements` APIs.
+     * This is for internal use only. All consumers in phoenix should use `KernalModeTrust.EntitlementsManager` APIs.
      *
      * @returns {Promise<Object|null>} Entitlements object or null if not logged in and no trial active
      *
@@ -543,15 +589,16 @@ define(function (require, exports, module) {
             return serverEntitlements;
         }
 
-        // User has active trial
+        // now we need to grant trial, as user is entitled to trial if he is here.
+        // User has active server plan(either with login or device license)
         if (serverEntitlements && serverEntitlements.plan) {
-            // Logged-in user with trial
             if (serverEntitlements.plan.paidSubscriber) {
-                // Already a paid subscriber, return as-is
+                // Already a paid subscriber(or has device license), return as-is
+                // never inject trail data in this case.
                 return serverEntitlements;
             }
             // Enhance entitlements for trial user
-            // ie if any entitlement has valid till expired, we need to deactivate that entitlement
+            // user in not a paid subscriber(nor he has device license), inject trial
             return {
                 ...serverEntitlements,
                 plan: {
@@ -575,7 +622,7 @@ define(function (require, exports, module) {
             };
         }
 
-        // Non-logged-in user with trial - return synthetic entitlements
+        // Non-logged-in, non licensed user with trial - return synthetic entitlements
         return {
             plan: {
                 paidSubscriber: true,
@@ -596,12 +643,66 @@ define(function (require, exports, module) {
         };
     }
 
+    async function addDeviceLicense() {
+        deviceLicensePrimed = false;
+        PreferencesManager.stateManager.set(PREF_STATE_LICENSED_DEVICE_CHECK, true);
+        return NodeUtils.addDeviceLicenseSystemWide();
+    }
+
+    async function removeDeviceLicense() {
+        deviceLicensePrimed = false;
+        PreferencesManager.stateManager.set(PREF_STATE_LICENSED_DEVICE_CHECK, false);
+        return NodeUtils.removeDeviceLicenseSystemWide();
+    }
+
+    async function isLicensedDeviceSystemWide() {
+        return NodeUtils.isLicensedDeviceSystemWide();
+    }
+
+    let _isLicensedDeviceFlagForTest = false;
+
+    /**
+     * Checks if app is configured to check for device licenses at app start at system or user level.
+     *
+     * @returns {Promise<boolean>} - Resolves with `true` if the device is licensed, `false` otherwise.
+     */
+    async function isLicensedDevice() {
+        if(Phoenix.isTestWindow) {
+            return _isLicensedDeviceFlagForTest;
+        }
+        if(!Phoenix.isNativeApp) {
+            // browser app doesn't support device licence keys, obviously.
+            return false;
+        }
+        const userCheck = PreferencesManager.stateManager.get(PREF_STATE_LICENSED_DEVICE_CHECK);
+        const systemCheck = await isLicensedDeviceSystemWide();
+        return userCheck || systemCheck;
+    }
+
     // Add functions to secure exports
     LoginService.getEntitlements = getEntitlements;
     LoginService.getEffectiveEntitlements = getEffectiveEntitlements;
     LoginService.clearEntitlements = clearEntitlements;
     LoginService.getSalt = getSalt;
+    LoginService.addDeviceLicense = addDeviceLicense;
+    LoginService.removeDeviceLicense = removeDeviceLicense;
+    LoginService.isLicensedDevice = isLicensedDevice;
+    LoginService.isLicensedDeviceSystemWide = isLicensedDeviceSystemWide;
+    LoginService.getDeviceID = getDeviceID;
     LoginService.EVENT_ENTITLEMENTS_CHANGED = EVENT_ENTITLEMENTS_CHANGED;
+
+    async function handleReinstallCreds() {
+        if(!Phoenix.isNativeApp) {
+            throw new Error("Reinstall credentials is only available in native apps");
+        }
+        try {
+            await KernalModeTrust.reinstallCreds();
+            console.log("Credentials reinstalled successfully");
+        } catch (error) {
+            console.error("Error reinstalling credentials:", error);
+            throw error;
+        }
+    }
 
     let inited = false;
     function init() {
@@ -610,15 +711,23 @@ define(function (require, exports, module) {
         }
         inited = true;
         EntitlementsDirectImport.init();
+
+        // Register reinstall credentials command for native apps only
+        if(Phoenix.isNativeApp) {
+            CommandManager.register("Reinstall Credentials", Commands.REINSTALL_CREDS, handleReinstallCreds);
+        }
     }
     // Test-only exports for integration testing
     if (Phoenix.isTestWindow) {
         window._test_login_service_exports = {
             LoginService,
-            setFetchFn: function _setFetchFn(fn) {
+            setIsLicensedDevice: function (_isLicensedDevice) {
+                _isLicensedDeviceFlagForTest = _isLicensedDevice;
+            },
+            setFetchFn: function (fn) {
                 fetchFn = fn;
             },
-            setDateNowFn: function _setDdateNowFn(fn) {
+            setDateNowFn: function (fn) {
                 dateNowFn = fn;
             },
             _validateAndFilterEntitlements: _validateAndFilterEntitlements
