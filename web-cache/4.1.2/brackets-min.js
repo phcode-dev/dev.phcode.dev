@@ -72832,6 +72832,7 @@ define("nls/bg/strings", {
   "CMD_HOW_TO_USE_BRACKETS": "Как се използва {APP_NAME}",
   "CMD_SUPPORT": "Поддръжка на {APP_NAME}",
   "CMD_GET_PRO": "Вземете Phoenix Pro",
+  "CMD_MANAGE_LICENSES": "Управление на лицензи",
   "CMD_USER_PROFILE": "Профил в {APP_NAME}",
   "CMD_DOCS": "Помощ, Първи стъпки",
   "CMD_SUGGEST": "Предложете функционалност",
@@ -73774,7 +73775,6 @@ define("nls/bg/strings", {
   "PROMO_PRO_UNLOCK_MESSAGE": "Абонирайте се сега, за да отключите тези разширени функции:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Пробен период на Phoenix Pro ({0} дни остават)",
   "GET_PHOENIX_PRO": "Вземете Phoenix Pro",
-  "CMD_MANAGE_LICENSES": "Управление на лицензи",
   "MANAGE_LICENSE_DIALOG_TITLE": "Управление на лиценз за устройство",
   "LICENSE_KEY": "Лицензен ключ",
   "LICENSE_KEY_ACTIVATE": "Активирай лиценз",
@@ -73796,7 +73796,8 @@ define("nls/bg/strings", {
   "LICENSE_ACTIVATE_FAIL": "Неуспешно активиране на лиценза",
   "LICENSE_ACTIVATE_FAIL_APPLY": "Неуспешно прилагане на лиценза към устройството",
   "LICENSE_ENTER_KEY": "Моля, въведете лицензен ключ",
-  "LICENSE_REAPPLY_TO_DEVICE": "Вече активиран? Приложете отново системно"
+  "LICENSE_REAPPLY_TO_DEVICE": "Вече активиран? Приложете отново системно",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Разширението не е заредено. То е или остаряло, или несигурно."
 });
 /*
  * Copyright (c) 2013 Adobe Systems Incorporated. All rights reserved.
@@ -74371,6 +74372,7 @@ define("nls/cs/strings", {
   "CMD_HOW_TO_USE_BRACKETS": "Jak používat {APP_NAME}",
   "CMD_SUPPORT": "{APP_NAME} Podpora",
   "CMD_GET_PRO": "Získejte Phoenix Pro",
+  "CMD_MANAGE_LICENSES": "Spravovat licence",
   "CMD_USER_PROFILE": "Účet {APP_NAME}",
   "CMD_DOCS": "Nápověda, Začínáme",
   "CMD_SUGGEST": "Navrhněte funkci",
@@ -75313,7 +75315,6 @@ define("nls/cs/strings", {
   "PROMO_PRO_UNLOCK_MESSAGE": "Přihlaste se k odběru a odemkněte si tyto pokročilé funkce:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Zkušební verze Phoenix Pro ({0} dní zbývá)",
   "GET_PHOENIX_PRO": "Získejte Phoenix Pro",
-  "CMD_MANAGE_LICENSES": "Spravovat licence",
   "MANAGE_LICENSE_DIALOG_TITLE": "Spravovat licenci zařízení",
   "LICENSE_KEY": "Licenční klíč",
   "LICENSE_KEY_ACTIVATE": "Aktivovat licenci",
@@ -75335,7 +75336,8 @@ define("nls/cs/strings", {
   "LICENSE_ACTIVATE_FAIL": "Nepodařilo se aktivovat licenci",
   "LICENSE_ACTIVATE_FAIL_APPLY": "Nepodařilo se aplikovat licenci na zařízení.",
   "LICENSE_ENTER_KEY": "Zadejte prosím licenční klíč.",
-  "LICENSE_REAPPLY_TO_DEVICE": "Již aktivováno? Znovu aplikovat pro celý systém."
+  "LICENSE_REAPPLY_TO_DEVICE": "Již aktivováno? Znovu aplikovat pro celý systém.",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Rozšíření nebylo načteno. Je buď zastaralé, nebo nezabezpečené."
 });
 /*
  * GNU AGPL-3.0 License
@@ -75908,6 +75910,7 @@ define("nls/da/strings", {
   "CMD_HOW_TO_USE_BRACKETS": "Sådan bruger du {APP_NAME}",
   "CMD_SUPPORT": "{APP_NAME} support",
   "CMD_GET_PRO": "Få Phoenix Pro",
+  "CMD_MANAGE_LICENSES": "Administrer licenser",
   "CMD_USER_PROFILE": "{APP_NAME}-konto",
   "CMD_DOCS": "Hjælp, Kom godt i gang",
   "CMD_SUGGEST": "Foreslå en funktion",
@@ -76850,7 +76853,6 @@ define("nls/da/strings", {
   "PROMO_PRO_UNLOCK_MESSAGE": "Abonner nu for at låse op for disse avancerede funktioner:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro prøveperiode ({0} dage tilbage)",
   "GET_PHOENIX_PRO": "Få Phoenix Pro",
-  "CMD_MANAGE_LICENSES": "Administrer licenser",
   "MANAGE_LICENSE_DIALOG_TITLE": "Administrer enhedslicens",
   "LICENSE_KEY": "Licensnøgle",
   "LICENSE_KEY_ACTIVATE": "Aktivér licens",
@@ -76872,7 +76874,8 @@ define("nls/da/strings", {
   "LICENSE_ACTIVATE_FAIL": "Aktivering af licens mislykkedes",
   "LICENSE_ACTIVATE_FAIL_APPLY": "Kunne ikke anvende licens på enheden",
   "LICENSE_ENTER_KEY": "Indtast venligst en licensnøgle",
-  "LICENSE_REAPPLY_TO_DEVICE": "Allerede aktiveret? Genanvend for hele systemet"
+  "LICENSE_REAPPLY_TO_DEVICE": "Allerede aktiveret? Genanvend for hele systemet",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Udvidelse ikke indlæst. Den er enten forældet eller usikker."
 });
 /*
  * GNU AGPL-3.0 License
@@ -77443,6 +77446,7 @@ define("nls/de/strings", {
   "CMD_HOW_TO_USE_BRACKETS": "So verwendet man {APP_NAME}",
   "CMD_SUPPORT": "{APP_NAME}-Support",
   "CMD_GET_PRO": "Phoenix Pro herunterladen",
+  "CMD_MANAGE_LICENSES": "Lizenzen verwalten",
   "CMD_USER_PROFILE": "{APP_NAME}-Konto",
   "CMD_DOCS": "Hilfe, Erste Schritte",
   "CMD_SUGGEST": "Ein Feature vorschlagen",
@@ -78385,7 +78389,6 @@ define("nls/de/strings", {
   "PROMO_PRO_UNLOCK_MESSAGE": "Abonniere jetzt, um die folgenden erweiterten Funktionen freizuschalten:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro-Testversion ({0} Tage verbleibend)",
   "GET_PHOENIX_PRO": "Phoenix Pro herunterladen",
-  "CMD_MANAGE_LICENSES": "Lizenzen verwalten",
   "MANAGE_LICENSE_DIALOG_TITLE": "Gerätelizenz verwalten",
   "LICENSE_KEY": "Lizenzschlüssel",
   "LICENSE_KEY_ACTIVATE": "Lizenz aktivieren",
@@ -78407,7 +78410,8 @@ define("nls/de/strings", {
   "LICENSE_ACTIVATE_FAIL": "Aktivierung der Lizenz fehlgeschlagen",
   "LICENSE_ACTIVATE_FAIL_APPLY": "Die Lizenz konnte nicht auf das Gerät angewendet werden.",
   "LICENSE_ENTER_KEY": "Bitte geben Sie einen Lizenzschlüssel ein.",
-  "LICENSE_REAPPLY_TO_DEVICE": "Bereits aktiviert? Systemweit erneut anwenden."
+  "LICENSE_REAPPLY_TO_DEVICE": "Bereits aktiviert? Systemweit erneut anwenden.",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Erweiterung nicht geladen. Sie ist entweder veraltet oder unsicher."
 });
 /*
  * GNU AGPL-3.0 License
@@ -78980,6 +78984,7 @@ define("nls/el/strings", {
   "CMD_HOW_TO_USE_BRACKETS": "Πώς να Χρησιμοποιήσετε το {APP_NAME}",
   "CMD_SUPPORT": "Υποστήριξη {APP_NAME}",
   "CMD_GET_PRO": "Αποκτήστε το Phoenix Pro",
+  "CMD_MANAGE_LICENSES": "Διαχείριση αδειών",
   "CMD_USER_PROFILE": "Λογαριασμός {APP_NAME}",
   "CMD_DOCS": "Βοήθεια, Ξεκινώντας",
   "CMD_SUGGEST": "Πρότεινε Feature",
@@ -79922,7 +79927,6 @@ define("nls/el/strings", {
   "PROMO_PRO_UNLOCK_MESSAGE": "Εγγραφείτε τώρα για να ξεκλειδώσετε αυτές τις προηγμένες λειτουργίες:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Δοκιμαστική έκδοση Phoenix Pro ({0} ημέρες απομένουν)",
   "GET_PHOENIX_PRO": "Αποκτήστε το Phoenix Pro",
-  "CMD_MANAGE_LICENSES": "Διαχείριση αδειών",
   "MANAGE_LICENSE_DIALOG_TITLE": "Διαχείριση άδειας συσκευής",
   "LICENSE_KEY": "Κλειδί άδειας",
   "LICENSE_KEY_ACTIVATE": "Ενεργοποίηση άδειας",
@@ -79944,7 +79948,8 @@ define("nls/el/strings", {
   "LICENSE_ACTIVATE_FAIL": "Αποτυχία ενεργοποίησης της άδειας",
   "LICENSE_ACTIVATE_FAIL_APPLY": "Αποτυχία εφαρμογής της άδειας χρήσης στη συσκευή",
   "LICENSE_ENTER_KEY": "Παρακαλώ, εισαγάγετε ένα κλειδί άδειας χρήσης",
-  "LICENSE_REAPPLY_TO_DEVICE": "Έχει ήδη ενεργοποιηθεί; Επανεφαρμογή σε όλο το σύστημα"
+  "LICENSE_REAPPLY_TO_DEVICE": "Έχει ήδη ενεργοποιηθεί; Επανεφαρμογή σε όλο το σύστημα",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Η επέκταση δεν φορτώθηκε. Είναι είτε καταργημένη είτε μη ασφαλής."
 });
 /*
  * GNU AGPL-3.0 License
@@ -80517,6 +80522,7 @@ define("nls/en-gb/strings", {
   "CMD_HOW_TO_USE_BRACKETS": "How to Use {APP_NAME}",
   "CMD_SUPPORT": "{APP_NAME} Support",
   "CMD_GET_PRO": "Get Phoenix Pro",
+  "CMD_MANAGE_LICENSES": "Manage Licences",
   "CMD_USER_PROFILE": "{APP_NAME} Account",
   "CMD_DOCS": "Help: Getting Started",
   "CMD_SUGGEST": "Suggest a Feature",
@@ -81459,7 +81465,6 @@ define("nls/en-gb/strings", {
   "PROMO_PRO_UNLOCK_MESSAGE": "Subscribe now to unlock these advanced features:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro Trial ({0} days remaining)",
   "GET_PHOENIX_PRO": "Get Phoenix Pro",
-  "CMD_MANAGE_LICENSES": "Manage Licences",
   "MANAGE_LICENSE_DIALOG_TITLE": "Manage Device Licence",
   "LICENSE_KEY": "Licence Key",
   "LICENSE_KEY_ACTIVATE": "Activate Licence",
@@ -81481,7 +81486,8 @@ define("nls/en-gb/strings", {
   "LICENSE_ACTIVATE_FAIL": "Failed to activate licence",
   "LICENSE_ACTIVATE_FAIL_APPLY": "Failed to apply licence to device",
   "LICENSE_ENTER_KEY": "Please enter a licence key",
-  "LICENSE_REAPPLY_TO_DEVICE": "Already activated? Reapply system-wide"
+  "LICENSE_REAPPLY_TO_DEVICE": "Already activated? Reapply system-wide",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Extension not loaded. It is either deprecated or insecure."
 });
 /*
  * GNU AGPL-3.0 License
@@ -82027,6 +82033,7 @@ define("nls/es/strings", {
   "CMD_HOW_TO_USE_BRACKETS": "Cómo utilizar {APP_NAME}",
   "CMD_SUPPORT": "Soporte de {APP_NAME}",
   "CMD_GET_PRO": "Obtener Phoenix Pro",
+  "CMD_MANAGE_LICENSES": "Gestionar licencias",
   "CMD_USER_PROFILE": "Cuenta de {APP_NAME}",
   "CMD_DOCS": "Ayuda, introducción",
   "CMD_SUGGEST": "Sugerir una mejora",
@@ -82969,7 +82976,6 @@ define("nls/es/strings", {
   "PROMO_PRO_UNLOCK_MESSAGE": "Suscríbete ahora para desbloquear estas funciones avanzadas:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Prueba de Phoenix Pro ({0} días restantes)",
   "GET_PHOENIX_PRO": "Obtener Phoenix Pro",
-  "CMD_MANAGE_LICENSES": "Gestionar licencias",
   "MANAGE_LICENSE_DIALOG_TITLE": "Gestionar licencia del dispositivo",
   "LICENSE_KEY": "Clave de licencia",
   "LICENSE_KEY_ACTIVATE": "Activar licencia",
@@ -82991,7 +82997,8 @@ define("nls/es/strings", {
   "LICENSE_ACTIVATE_FAIL": "Error al activar la licencia",
   "LICENSE_ACTIVATE_FAIL_APPLY": "Error al aplicar la licencia al dispositivo",
   "LICENSE_ENTER_KEY": "Introduzca una clave de licencia",
-  "LICENSE_REAPPLY_TO_DEVICE": "¿Ya está activado? Reaplicar en todo el sistema"
+  "LICENSE_REAPPLY_TO_DEVICE": "¿Ya está activado? Reaplicar en todo el sistema",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Extensión no cargada. Está obsoleta o es insegura."
 });
 /*
  * GNU AGPL-3.0 License
@@ -85102,6 +85109,7 @@ define("nls/fi/strings", {
   "CMD_HOW_TO_USE_BRACKETS": "Kuinka käyttää {APP_NAME}iä",
   "CMD_SUPPORT": "{APP_NAME}-tuki",
   "CMD_GET_PRO": "Hanki Phoenix Pro",
+  "CMD_MANAGE_LICENSES": "Hallitse lisenssejä",
   "CMD_USER_PROFILE": "{APP_NAME}-tili",
   "CMD_DOCS": "Ohje, aloittaminen",
   "CMD_SUGGEST": "Ehdota ominaisuutta",
@@ -86044,7 +86052,6 @@ define("nls/fi/strings", {
   "PROMO_PRO_UNLOCK_MESSAGE": "Tilaa nyt avataksesi nämä edistyneet ominaisuudet:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro -kokeiluversio ({0} päivää jäljellä)",
   "GET_PHOENIX_PRO": "Hanki Phoenix Pro",
-  "CMD_MANAGE_LICENSES": "Hallitse lisenssejä",
   "MANAGE_LICENSE_DIALOG_TITLE": "Hallitse laitelisenssiä",
   "LICENSE_KEY": "Lisenssiavain",
   "LICENSE_KEY_ACTIVATE": "Aktivoi lisenssi",
@@ -86066,7 +86073,8 @@ define("nls/fi/strings", {
   "LICENSE_ACTIVATE_FAIL": "Lisenssin aktivointi epäonnistui",
   "LICENSE_ACTIVATE_FAIL_APPLY": "Lisenssin käyttöönotto laitteeseen epäonnistui.",
   "LICENSE_ENTER_KEY": "Syötä lisenssiavain.",
-  "LICENSE_REAPPLY_TO_DEVICE": "Jo aktivoitu? Ota käyttöön järjestelmänlaajuisesti."
+  "LICENSE_REAPPLY_TO_DEVICE": "Jo aktivoitu? Ota käyttöön järjestelmänlaajuisesti.",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Laajennusta ei ladattu. Se on joko vanhentunut tai turvaton."
 });
 /*
  * GNU AGPL-3.0 License
@@ -86639,6 +86647,7 @@ define("nls/fr/strings", {
   "CMD_HOW_TO_USE_BRACKETS": "Comment utiliser {APP_NAME}",
   "CMD_SUPPORT": "Assistance {APP_NAME}",
   "CMD_GET_PRO": "Obtenir Phoenix Pro",
+  "CMD_MANAGE_LICENSES": "Gérer les licences",
   "CMD_USER_PROFILE": "Compte {APP_NAME}",
   "CMD_DOCS": "Aide, Prise en main",
   "CMD_SUGGEST": "Suggérer une fonctionnalité",
@@ -87581,7 +87590,6 @@ define("nls/fr/strings", {
   "PROMO_PRO_UNLOCK_MESSAGE": "Abonnez-vous maintenant pour débloquer ces fonctionnalités avancées :",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Essai Phoenix Pro ({0} jours restants)",
   "GET_PHOENIX_PRO": "Obtenir Phoenix Pro",
-  "CMD_MANAGE_LICENSES": "Gérer les licences",
   "MANAGE_LICENSE_DIALOG_TITLE": "Gérer la licence de l'appareil",
   "LICENSE_KEY": "Clé de licence",
   "LICENSE_KEY_ACTIVATE": "Activer la licence",
@@ -87603,7 +87611,8 @@ define("nls/fr/strings", {
   "LICENSE_ACTIVATE_FAIL": "Échec de l'activation de la licence",
   "LICENSE_ACTIVATE_FAIL_APPLY": "Échec de l'application de la licence à l'appareil",
   "LICENSE_ENTER_KEY": "Veuillez saisir une clé de licence",
-  "LICENSE_REAPPLY_TO_DEVICE": "Déjà activée ? Réappliquer à l'échelle du système"
+  "LICENSE_REAPPLY_TO_DEVICE": "Déjà activée ? Réappliquer à l'échelle du système",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Extension non chargée. Elle est soit obsolète, soit non sécurisée."
 });
 /*
  * GNU AGPL-3.0 License
@@ -88176,6 +88185,7 @@ define("nls/gl/strings", {
   "CMD_HOW_TO_USE_BRACKETS": "Cómo utilizar {APP_NAME}",
   "CMD_SUPPORT": "Soporte de {APP_NAME}",
   "CMD_GET_PRO": "Obtén Phoenix Pro",
+  "CMD_MANAGE_LICENSES": "Xestionar licenzas",
   "CMD_USER_PROFILE": "Conta de {APP_NAME}",
   "CMD_DOCS": "Axuda, comezando",
   "CMD_SUGGEST": "Suxerir unha mellora",
@@ -89118,7 +89128,6 @@ define("nls/gl/strings", {
   "PROMO_PRO_UNLOCK_MESSAGE": "Subscríbete agora para desbloquear estas funcións avanzadas:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Proba de Phoenix Pro ({0} días restantes)",
   "GET_PHOENIX_PRO": "Obtén Phoenix Pro",
-  "CMD_MANAGE_LICENSES": "Xestionar licenzas",
   "MANAGE_LICENSE_DIALOG_TITLE": "Xestionar a licenza do dispositivo",
   "LICENSE_KEY": "Chave de licenza",
   "LICENSE_KEY_ACTIVATE": "Activar licenza",
@@ -89140,7 +89149,8 @@ define("nls/gl/strings", {
   "LICENSE_ACTIVATE_FAIL": "Erro ao activar a licenza",
   "LICENSE_ACTIVATE_FAIL_APPLY": "Non se puido aplicar a licenza ao dispositivo",
   "LICENSE_ENTER_KEY": "Introduza unha clave de licenza",
-  "LICENSE_REAPPLY_TO_DEVICE": "Xa está activado? Reaplicar en todo o sistema"
+  "LICENSE_REAPPLY_TO_DEVICE": "Xa está activado? Reaplicar en todo o sistema",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Extensión non cargada. Está obsoleta ou é insegura."
 });
 /*
  * GNU AGPL-3.0 License
@@ -89686,6 +89696,7 @@ define("nls/hi/strings", {
   "CMD_HOW_TO_USE_BRACKETS": "{APP_NAME} का उपयोग कैसे करें",
   "CMD_SUPPORT": "{APP_NAME} सहायता",
   "CMD_GET_PRO": "Phoenix Pro प्राप्त करें",
+  "CMD_MANAGE_LICENSES": "लाइसेंस प्रबंधित करें",
   "CMD_USER_PROFILE": "{APP_NAME} खाता",
   "CMD_DOCS": "सहायता, आरंभ करना",
   "CMD_SUGGEST": "एक सुविधा का सुझाव दें",
@@ -90628,7 +90639,6 @@ define("nls/hi/strings", {
   "PROMO_PRO_UNLOCK_MESSAGE": "इन उन्नत सुविधाओं को अनलॉक करने के लिए अभी सब्सक्राइब करें:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro परीक्षण ({0} दिन शेष)",
   "GET_PHOENIX_PRO": "Phoenix Pro प्राप्त करें",
-  "CMD_MANAGE_LICENSES": "लाइसेंस प्रबंधित करें",
   "MANAGE_LICENSE_DIALOG_TITLE": "डिवाइस लाइसेंस प्रबंधित करें",
   "LICENSE_KEY": "लाइसेंस कुंजी",
   "LICENSE_KEY_ACTIVATE": "लाइसेंस सक्रिय करें",
@@ -90650,7 +90660,8 @@ define("nls/hi/strings", {
   "LICENSE_ACTIVATE_FAIL": "लाइसेंस सक्रिय करने में विफल",
   "LICENSE_ACTIVATE_FAIL_APPLY": "डिवाइस पर लाइसेंस लागू करने में विफल",
   "LICENSE_ENTER_KEY": "कृपया लाइसेंस कुंजी दर्ज करें",
-  "LICENSE_REAPPLY_TO_DEVICE": "पहले से सक्रिय है? सिस्टम-व्यापी पुनः लागू करें"
+  "LICENSE_REAPPLY_TO_DEVICE": "पहले से सक्रिय है? सिस्टम-व्यापी पुनः लागू करें",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "एक्सटेंशन लोड नहीं हुआ। यह या तो अप्रचलित है या असुरक्षित।"
 });
 /*
  * GNU AGPL-3.0 License
@@ -91196,6 +91207,7 @@ define("nls/hr/strings", {
   "CMD_HOW_TO_USE_BRACKETS": "Kako koristiti {APP_NAME}",
   "CMD_SUPPORT": "{APP_NAME} Podrška (na engleskom)",
   "CMD_GET_PRO": "Nabavite Phoenix Pro",
+  "CMD_MANAGE_LICENSES": "Upravljanje licencama",
   "CMD_USER_PROFILE": "{APP_NAME} račun",
   "CMD_DOCS": "Pomoć, Početak rada",
   "CMD_SUGGEST": "Predloži mogućnost / značajku",
@@ -92138,7 +92150,6 @@ define("nls/hr/strings", {
   "PROMO_PRO_UNLOCK_MESSAGE": "Pretplatite se sada kako biste otključali ove napredne značajke:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Probna verzija Phoenix Pro ({0} dana preostalo)",
   "GET_PHOENIX_PRO": "Nabavite Phoenix Pro",
-  "CMD_MANAGE_LICENSES": "Upravljanje licencama",
   "MANAGE_LICENSE_DIALOG_TITLE": "Upravljanje licencom uređaja",
   "LICENSE_KEY": "Licencni ključ",
   "LICENSE_KEY_ACTIVATE": "Aktiviraj licencu",
@@ -92160,7 +92171,8 @@ define("nls/hr/strings", {
   "LICENSE_ACTIVATE_FAIL": "Aktivacija licence nije uspjela",
   "LICENSE_ACTIVATE_FAIL_APPLY": "Nije uspjelo primijeniti licencu na uređaj",
   "LICENSE_ENTER_KEY": "Molimo unesite licencni ključ",
-  "LICENSE_REAPPLY_TO_DEVICE": "Već aktivirano? Ponovno primijenite na cijeli sustav"
+  "LICENSE_REAPPLY_TO_DEVICE": "Već aktivirano? Ponovno primijenite na cijeli sustav",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Proširenje nije učitano. Ili je zastarjelo ili nesigurno."
 });
 /*
  * GNU AGPL-3.0 License
@@ -92733,6 +92745,7 @@ define("nls/hu/strings", {
   "CMD_HOW_TO_USE_BRACKETS": "{APP_NAME} használata",
   "CMD_SUPPORT": "{APP_NAME} támogatás",
   "CMD_GET_PRO": "Szerezd meg a Phoenix Pro-t",
+  "CMD_MANAGE_LICENSES": "Licencek kezelése",
   "CMD_USER_PROFILE": "{APP_NAME} fiók",
   "CMD_DOCS": "Súgó, Első lépések",
   "CMD_SUGGEST": "Javaslat új funkcióra",
@@ -93675,7 +93688,6 @@ define("nls/hu/strings", {
   "PROMO_PRO_UNLOCK_MESSAGE": "Iratkozz fel most a következő fejlett funkciók eléréséhez:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro próbaverzió ({0} nap van hátra)",
   "GET_PHOENIX_PRO": "Szerezd meg a Phoenix Pro-t",
-  "CMD_MANAGE_LICENSES": "Licencek kezelése",
   "MANAGE_LICENSE_DIALOG_TITLE": "Eszközlicenc kezelése",
   "LICENSE_KEY": "Licenckulcs",
   "LICENSE_KEY_ACTIVATE": "Licenc aktiválása",
@@ -93697,7 +93709,8 @@ define("nls/hu/strings", {
   "LICENSE_ACTIVATE_FAIL": "Nem sikerült aktiválni a licencet.",
   "LICENSE_ACTIVATE_FAIL_APPLY": "Nem sikerült a licencet az eszközre alkalmazni.",
   "LICENSE_ENTER_KEY": "Kérjük, adja meg a licenckulcsot.",
-  "LICENSE_REAPPLY_TO_DEVICE": "Már aktiválta? Újraalkalmazás rendszerszinten."
+  "LICENSE_REAPPLY_TO_DEVICE": "Már aktiválta? Újraalkalmazás rendszerszinten.",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "A bővítmény nem töltődött be. Vagy elavult, vagy nem biztonságos."
 });
 /*
  * GNU AGPL-3.0 License
@@ -94243,6 +94256,7 @@ define("nls/id/strings", {
   "CMD_HOW_TO_USE_BRACKETS": "Bagaimana Menggunakan {APP_NAME}",
   "CMD_SUPPORT": "Bantuan {APP_NAME}",
   "CMD_GET_PRO": "Dapatkan Phoenix Pro",
+  "CMD_MANAGE_LICENSES": "Kelola Lisensi",
   "CMD_USER_PROFILE": "Akun {APP_NAME}",
   "CMD_DOCS": "Bantuan, Memulai",
   "CMD_SUGGEST": "Sarankan Fitur",
@@ -95185,7 +95199,6 @@ define("nls/id/strings", {
   "PROMO_PRO_UNLOCK_MESSAGE": "Berlangganan sekarang untuk membuka fitur-fitur canggih ini:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Percobaan Phoenix Pro ({0} hari tersisa)",
   "GET_PHOENIX_PRO": "Dapatkan Phoenix Pro",
-  "CMD_MANAGE_LICENSES": "Kelola Lisensi",
   "MANAGE_LICENSE_DIALOG_TITLE": "Kelola Lisensi Perangkat",
   "LICENSE_KEY": "Kunci Lisensi",
   "LICENSE_KEY_ACTIVATE": "Aktifkan Lisensi",
@@ -95207,7 +95220,8 @@ define("nls/id/strings", {
   "LICENSE_ACTIVATE_FAIL": "Gagal mengaktifkan lisensi",
   "LICENSE_ACTIVATE_FAIL_APPLY": "Gagal menerapkan lisensi ke perangkat",
   "LICENSE_ENTER_KEY": "Silakan masukkan kunci lisensi",
-  "LICENSE_REAPPLY_TO_DEVICE": "Sudah diaktivasi? Terapkan ulang ke seluruh sistem"
+  "LICENSE_REAPPLY_TO_DEVICE": "Sudah diaktivasi? Terapkan ulang ke seluruh sistem",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Ekstensi tidak dimuat. Ekstensi tersebut usang atau tidak aman."
 });
 /*
  * GNU AGPL-3.0 License
@@ -95779,6 +95793,7 @@ define("nls/it/strings", {
   "CMD_HOW_TO_USE_BRACKETS": "Come usare {APP_NAME}",
   "CMD_SUPPORT": "Supporto per {APP_NAME}",
   "CMD_GET_PRO": "Ottieni Phoenix Pro",
+  "CMD_MANAGE_LICENSES": "Gestisci licenze",
   "CMD_USER_PROFILE": "Account {APP_NAME}",
   "CMD_DOCS": "Aiuto, Guida introduttiva",
   "CMD_SUGGEST": "Suggerisci una funzionalità",
@@ -96721,7 +96736,6 @@ define("nls/it/strings", {
   "PROMO_PRO_UNLOCK_MESSAGE": "Abbonati ora per sbloccare queste funzionalità avanzate:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Prova di Phoenix Pro ({0} giorni rimanenti)",
   "GET_PHOENIX_PRO": "Ottieni Phoenix Pro",
-  "CMD_MANAGE_LICENSES": "Gestisci licenze",
   "MANAGE_LICENSE_DIALOG_TITLE": "Gestisci licenza del dispositivo",
   "LICENSE_KEY": "Codice di licenza",
   "LICENSE_KEY_ACTIVATE": "Attiva licenza",
@@ -96743,7 +96757,8 @@ define("nls/it/strings", {
   "LICENSE_ACTIVATE_FAIL": "Attivazione della licenza non riuscita",
   "LICENSE_ACTIVATE_FAIL_APPLY": "Impossibile applicare la licenza al dispositivo",
   "LICENSE_ENTER_KEY": "Inserire un codice di licenza",
-  "LICENSE_REAPPLY_TO_DEVICE": "Già attivato? Riapplica a livello di sistema"
+  "LICENSE_REAPPLY_TO_DEVICE": "Già attivato? Riapplica a livello di sistema",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Estensione non caricata. È deprecata o insicura."
 });
 /*
  * GNU AGPL-3.0 License
@@ -97316,6 +97331,7 @@ define("nls/ja/strings", {
   "CMD_HOW_TO_USE_BRACKETS": "{APP_NAME} の使用方法",
   "CMD_SUPPORT": "{APP_NAME} サポート",
   "CMD_GET_PRO": "Phoenix Proを入手",
+  "CMD_MANAGE_LICENSES": "ライセンスの管理",
   "CMD_USER_PROFILE": "{APP_NAME}アカウント",
   "CMD_DOCS": "ヘルプ、はじめに",
   "CMD_SUGGEST": "機能改善の提案",
@@ -98258,7 +98274,6 @@ define("nls/ja/strings", {
   "PROMO_PRO_UNLOCK_MESSAGE": "今すぐ登録して、以下の高度な機能をアンロック：",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Proトライアル（残り{0}日）",
   "GET_PHOENIX_PRO": "Phoenix Proを入手",
-  "CMD_MANAGE_LICENSES": "ライセンスの管理",
   "MANAGE_LICENSE_DIALOG_TITLE": "デバイスライセンスの管理",
   "LICENSE_KEY": "ライセンスキー",
   "LICENSE_KEY_ACTIVATE": "ライセンスを有効化",
@@ -98280,7 +98295,8 @@ define("nls/ja/strings", {
   "LICENSE_ACTIVATE_FAIL": "ライセンス認証に失敗しました",
   "LICENSE_ACTIVATE_FAIL_APPLY": "デバイスへのライセンスの適用に失敗しました",
   "LICENSE_ENTER_KEY": "ライセンスキーを入力してください",
-  "LICENSE_REAPPLY_TO_DEVICE": "すでにアクティベート済みの場合、システム全体に再適用"
+  "LICENSE_REAPPLY_TO_DEVICE": "すでにアクティベート済みの場合、システム全体に再適用",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "エクステンションは非推奨、または安全ではないため読み込まれませんでした。"
 });
 /*
  * GNU AGPL-3.0 License
@@ -98853,6 +98869,7 @@ define("nls/ko/strings", {
   "CMD_HOW_TO_USE_BRACKETS": "{APP_NAME} 사용법",
   "CMD_SUPPORT": "{APP_NAME} 지원",
   "CMD_GET_PRO": "Phoenix Pro 받기",
+  "CMD_MANAGE_LICENSES": "라이선스 관리",
   "CMD_USER_PROFILE": "{APP_NAME} 계정",
   "CMD_DOCS": "도움말, 시작하기",
   "CMD_SUGGEST": "기능 제안",
@@ -99795,7 +99812,6 @@ define("nls/ko/strings", {
   "PROMO_PRO_UNLOCK_MESSAGE": "다음과 같은 고급 기능을 사용하려면 지금 구독하세요:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro 평가판({0}일 남음)",
   "GET_PHOENIX_PRO": "Phoenix Pro 받기",
-  "CMD_MANAGE_LICENSES": "라이선스 관리",
   "MANAGE_LICENSE_DIALOG_TITLE": "장치 라이선스 관리",
   "LICENSE_KEY": "라이선스 키",
   "LICENSE_KEY_ACTIVATE": "라이선스 활성화",
@@ -99817,7 +99833,8 @@ define("nls/ko/strings", {
   "LICENSE_ACTIVATE_FAIL": "라이선스 활성화에 실패했습니다.",
   "LICENSE_ACTIVATE_FAIL_APPLY": "디바이스에 라이선스를 적용하는 데 실패했습니다",
   "LICENSE_ENTER_KEY": "라이선스 키를 입력해 주세요",
-  "LICENSE_REAPPLY_TO_DEVICE": "이미 활성화하셨나요? 시스템 전체에 재적용"
+  "LICENSE_REAPPLY_TO_DEVICE": "이미 활성화하셨나요? 시스템 전체에 재적용",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "확장 프로그램이 로드되지 않았습니다. 지원이 중단되었거나 안전하지 않습니다."
 });
 /*
  * GNU AGPL-3.0 License
@@ -100390,6 +100407,7 @@ define("nls/lv/strings", {
   "CMD_HOW_TO_USE_BRACKETS": "Kā lietot {APP_NAME}",
   "CMD_SUPPORT": "{APP_NAME} palīdzība",
   "CMD_GET_PRO": "Iegūt Phoenix Pro",
+  "CMD_MANAGE_LICENSES": "Pārvaldīt licences",
   "CMD_USER_PROFILE": "{APP_NAME} konts",
   "CMD_DOCS": "Palīdzība, Sākšana",
   "CMD_SUGGEST": "Ieteikt funkciju",
@@ -101332,7 +101350,6 @@ define("nls/lv/strings", {
   "PROMO_PRO_UNLOCK_MESSAGE": "Abonē tagad, lai atbloķētu šīs papildu funkcijas:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro izmēģinājuma versija ({0} dienas atlikušas)",
   "GET_PHOENIX_PRO": "Iegūt Phoenix Pro",
-  "CMD_MANAGE_LICENSES": "Pārvaldīt licences",
   "MANAGE_LICENSE_DIALOG_TITLE": "Pārvaldīt ierīces licenci",
   "LICENSE_KEY": "Licences atslēga",
   "LICENSE_KEY_ACTIVATE": "Aktivizēt licenci",
@@ -101354,7 +101371,8 @@ define("nls/lv/strings", {
   "LICENSE_ACTIVATE_FAIL": "Neizdevās aktivizēt licenci",
   "LICENSE_ACTIVATE_FAIL_APPLY": "Neizdevās piemērot licenci ierīcei",
   "LICENSE_ENTER_KEY": "Lūdzu, ievadiet licences atslēgu",
-  "LICENSE_REAPPLY_TO_DEVICE": "Jau aktivizēts? Piemērot atkārtoti visā sistēmā"
+  "LICENSE_REAPPLY_TO_DEVICE": "Jau aktivizēts? Piemērot atkārtoti visā sistēmā",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Paplašinājums nav ielādēts. Tas ir vai nu novecojis, vai nedrošs."
 });
 /*
  * GNU AGPL-3.0 License
@@ -101900,6 +101918,7 @@ define("nls/ml/strings", {
   "CMD_HOW_TO_USE_BRACKETS": "{APP_NAME} എങ്ങനെ ഉപയോഗിക്കാം",
   "CMD_SUPPORT": "{APP_NAME} പിന്തുണ",
   "CMD_GET_PRO": "ഫീനിക്സ് പ്രോ നേടുക",
+  "CMD_MANAGE_LICENSES": "ലൈസൻസുകൾ നിയന്ത്രിക്കുക",
   "CMD_USER_PROFILE": "{APP_NAME} അക്കൗണ്ട്",
   "CMD_DOCS": "സഹായം, തുടക്കക്കാർക്ക്",
   "CMD_SUGGEST": "ഒരു സവിശേഷത നിർദ്ദേശിക്കുക",
@@ -102842,7 +102861,6 @@ define("nls/ml/strings", {
   "PROMO_PRO_UNLOCK_MESSAGE": "ഈ വിപുലമായ സവിശേഷതകൾ അൺലോക്ക് ചെയ്യാൻ ഇപ്പോൾ സബ്‌സ്‌ക്രൈബുചെയ്യുക:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "ഫീനിക്സ് പ്രോ പരീക്ഷണം ({0} ദിവസം ബാക്കി)",
   "GET_PHOENIX_PRO": "ഫീനിക്സ് പ്രോ നേടുക",
-  "CMD_MANAGE_LICENSES": "ലൈസൻസുകൾ നിയന്ത്രിക്കുക",
   "MANAGE_LICENSE_DIALOG_TITLE": "ഉപകരണ ലൈസൻസ് നിയന്ത്രിക്കുക",
   "LICENSE_KEY": "ലൈസൻസ് കീ",
   "LICENSE_KEY_ACTIVATE": "ലൈസൻസ് സജീവമാക്കുക",
@@ -102864,7 +102882,8 @@ define("nls/ml/strings", {
   "LICENSE_ACTIVATE_FAIL": "ലൈസൻസ് സജീവമാക്കുന്നതിൽ പരാജയപ്പെട്ടു",
   "LICENSE_ACTIVATE_FAIL_APPLY": "ഉപകരണത്തിൽ ലൈസൻസ് പ്രയോഗിക്കാൻ കഴിഞ്ഞില്ല",
   "LICENSE_ENTER_KEY": "ദയവായി ഒരു ലൈസൻസ് കീ നൽകുക",
-  "LICENSE_REAPPLY_TO_DEVICE": "ഇതിനകം ആക്റ്റിവേറ്റ് ചെയ്തോ? സിസ്റ്റത്തിലുടനീളം വീണ്ടും പ്രയോഗിക്കുക"
+  "LICENSE_REAPPLY_TO_DEVICE": "ഇതിനകം ആക്റ്റിവേറ്റ് ചെയ്തോ? സിസ്റ്റത്തിലുടനീളം വീണ്ടും പ്രയോഗിക്കുക",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "എക്സ്റ്റൻഷൻ ലോഡ് ചെയ്തിട്ടില്ല. അത് കാലഹരണപ്പെട്ടതോ സുരക്ഷിതമല്ലാത്തതോ ആണ്."
 });
 /*
  * GNU AGPL-3.0 License
@@ -103410,6 +103429,7 @@ define("nls/nb/strings", {
   "CMD_HOW_TO_USE_BRACKETS": "Hvordan bruke {APP_NAME}",
   "CMD_SUPPORT": "{APP_NAME} support",
   "CMD_GET_PRO": "Skaff deg Phoenix Pro",
+  "CMD_MANAGE_LICENSES": "Administrer lisenser",
   "CMD_USER_PROFILE": "{APP_NAME}-konto",
   "CMD_DOCS": "Hjelp, Kom i gang",
   "CMD_SUGGEST": "Foreslå en funksjonalitet",
@@ -104352,7 +104372,6 @@ define("nls/nb/strings", {
   "PROMO_PRO_UNLOCK_MESSAGE": "Abonner nå for å låse opp disse avanserte funksjonene:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro prøveperiode ({0} dager igjen)",
   "GET_PHOENIX_PRO": "Skaff deg Phoenix Pro",
-  "CMD_MANAGE_LICENSES": "Administrer lisenser",
   "MANAGE_LICENSE_DIALOG_TITLE": "Administrer enhetslisens",
   "LICENSE_KEY": "Lisensnøkkel",
   "LICENSE_KEY_ACTIVATE": "Aktiver lisens",
@@ -104374,7 +104393,8 @@ define("nls/nb/strings", {
   "LICENSE_ACTIVATE_FAIL": "Aktivering av lisens mislyktes",
   "LICENSE_ACTIVATE_FAIL_APPLY": "Kunne ikke anvende lisens på enheten",
   "LICENSE_ENTER_KEY": "Skriv inn en lisensnøkkel",
-  "LICENSE_REAPPLY_TO_DEVICE": "Allerede aktivert? Anvend på nytt for hele systemet"
+  "LICENSE_REAPPLY_TO_DEVICE": "Allerede aktivert? Anvend på nytt for hele systemet",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Utvidelsen ble ikke lastet. Den er enten foreldet eller usikker."
 });
 /*
  * GNU AGPL-3.0 License
@@ -104947,6 +104967,7 @@ define("nls/nl/strings", {
   "CMD_HOW_TO_USE_BRACKETS": "Hoe gebruik je {APP_NAME}",
   "CMD_SUPPORT": "{APP_NAME} ondersteuning",
   "CMD_GET_PRO": "Download Phoenix Pro",
+  "CMD_MANAGE_LICENSES": "Licenties beheren",
   "CMD_USER_PROFILE": "{APP_NAME}-account",
   "CMD_DOCS": "Help, aan de slag",
   "CMD_SUGGEST": "Stel een nieuwe functie voor",
@@ -105889,7 +105910,6 @@ define("nls/nl/strings", {
   "PROMO_PRO_UNLOCK_MESSAGE": "Abonneer nu om deze geavanceerde functies te ontgrendelen:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro proefversie ({0} dagen resterend)",
   "GET_PHOENIX_PRO": "Koop Phoenix Pro",
-  "CMD_MANAGE_LICENSES": "Licenties beheren",
   "MANAGE_LICENSE_DIALOG_TITLE": "Apparaatlicentie beheren",
   "LICENSE_KEY": "Licentiesleutel",
   "LICENSE_KEY_ACTIVATE": "Licentie activeren",
@@ -105911,7 +105931,8 @@ define("nls/nl/strings", {
   "LICENSE_ACTIVATE_FAIL": "Licentie activeren mislukt",
   "LICENSE_ACTIVATE_FAIL_APPLY": "Kon licentie niet toepassen op het apparaat",
   "LICENSE_ENTER_KEY": "Voer alstublieft een licentiesleutel in",
-  "LICENSE_REAPPLY_TO_DEVICE": "Al geactiveerd? Opnieuw systeembreed toepassen"
+  "LICENSE_REAPPLY_TO_DEVICE": "Al geactiveerd? Opnieuw systeembreed toepassen",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Extensie niet geladen. Deze is ofwel verouderd of onveilig."
 });
 /*
  * GNU AGPL-3.0 License
@@ -106484,6 +106505,7 @@ define("nls/pl/strings", {
   "CMD_HOW_TO_USE_BRACKETS": "Jak używać {APP_NAME}",
   "CMD_SUPPORT": "Wsparcie {APP_NAME}",
   "CMD_GET_PRO": "Pobierz Phoenix Pro",
+  "CMD_MANAGE_LICENSES": "Zarządzaj licencjami",
   "CMD_USER_PROFILE": "Konto {APP_NAME}",
   "CMD_DOCS": "Pomoc, Pierwsze kroki",
   "CMD_SUGGEST": "Zaproponuj swój pomysł",
@@ -107426,7 +107448,6 @@ define("nls/pl/strings", {
   "PROMO_PRO_UNLOCK_MESSAGE": "Subskrybuj teraz, aby odblokować te zaawansowane funkcje:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Okres próbny Phoenix Pro ({0} dni pozostało)",
   "GET_PHOENIX_PRO": "Pobierz Phoenix Pro",
-  "CMD_MANAGE_LICENSES": "Zarządzaj licencjami",
   "MANAGE_LICENSE_DIALOG_TITLE": "Zarządzaj licencją urządzenia",
   "LICENSE_KEY": "Klucz licencyjny",
   "LICENSE_KEY_ACTIVATE": "Aktywuj licencję",
@@ -107448,7 +107469,8 @@ define("nls/pl/strings", {
   "LICENSE_ACTIVATE_FAIL": "Nie udało się aktywować licencji",
   "LICENSE_ACTIVATE_FAIL_APPLY": "Nie udało się zastosować licencji na urządzeniu",
   "LICENSE_ENTER_KEY": "Wprowadź klucz licencyjny",
-  "LICENSE_REAPPLY_TO_DEVICE": "Już aktywowano? Zastosuj ponownie w całym systemie"
+  "LICENSE_REAPPLY_TO_DEVICE": "Już aktywowano? Zastosuj ponownie w całym systemie",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Rozszerzenie nie zostało załadowane. Jest przestarzałe lub niebezpieczne."
 });
 /*
  * GNU AGPL-3.0 License
@@ -108021,6 +108043,7 @@ define("nls/pt-br/strings", {
   "CMD_HOW_TO_USE_BRACKETS": "Como usar o {APP_NAME}",
   "CMD_SUPPORT": "Ajuda do {APP_NAME}",
   "CMD_GET_PRO": "Adquira o Phoenix Pro",
+  "CMD_MANAGE_LICENSES": "Gerenciar Licenças",
   "CMD_USER_PROFILE": "Conta do {APP_NAME}",
   "CMD_DOCS": "Ajuda, Primeiros Passos",
   "CMD_SUGGEST": "Sugira um recurso",
@@ -108963,7 +108986,6 @@ define("nls/pt-br/strings", {
   "PROMO_PRO_UNLOCK_MESSAGE": "Assine agora para liberar estes recursos avançados:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Teste do Phoenix Pro ({0} dias restantes)",
   "GET_PHOENIX_PRO": "Adquira o Phoenix Pro",
-  "CMD_MANAGE_LICENSES": "Gerenciar Licenças",
   "MANAGE_LICENSE_DIALOG_TITLE": "Gerenciar Licença do Dispositivo",
   "LICENSE_KEY": "Chave de Licença",
   "LICENSE_KEY_ACTIVATE": "Ativar Licença",
@@ -108985,7 +109007,8 @@ define("nls/pt-br/strings", {
   "LICENSE_ACTIVATE_FAIL": "Falha ao ativar a licença",
   "LICENSE_ACTIVATE_FAIL_APPLY": "Falha ao aplicar a licença ao dispositivo",
   "LICENSE_ENTER_KEY": "Por favor, insira uma chave de licença",
-  "LICENSE_REAPPLY_TO_DEVICE": "Já ativado? Reaplicar em todo o sistema"
+  "LICENSE_REAPPLY_TO_DEVICE": "Já ativado? Reaplicar em todo o sistema",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Extensão não carregada. Ela é obsoleta ou insegura."
 });
 /*
  * GNU AGPL-3.0 License
@@ -109556,6 +109579,7 @@ define("nls/pt-pt/strings", {
   "CMD_HOW_TO_USE_BRACKETS": "Como usar o {APP_NAME}",
   "CMD_SUPPORT": "Suporte do {APP_NAME}",
   "CMD_GET_PRO": "Obter Phoenix Pro",
+  "CMD_MANAGE_LICENSES": "Gerir Licenças",
   "CMD_USER_PROFILE": "Conta {APP_NAME}",
   "CMD_DOCS": "Ajuda, Introdução",
   "CMD_SUGGEST": "Sugerir uma funcionalidade",
@@ -110498,7 +110522,6 @@ define("nls/pt-pt/strings", {
   "PROMO_PRO_UNLOCK_MESSAGE": "Assine agora para desbloquear estas funcionalidades avançadas:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Período experimental do Phoenix Pro ({0} dias restantes)",
   "GET_PHOENIX_PRO": "Obter Phoenix Pro",
-  "CMD_MANAGE_LICENSES": "Gerir Licenças",
   "MANAGE_LICENSE_DIALOG_TITLE": "Gerir Licença do Dispositivo",
   "LICENSE_KEY": "Chave de Licença",
   "LICENSE_KEY_ACTIVATE": "Ativar Licença",
@@ -110520,7 +110543,8 @@ define("nls/pt-pt/strings", {
   "LICENSE_ACTIVATE_FAIL": "Falha ao ativar a licença",
   "LICENSE_ACTIVATE_FAIL_APPLY": "Falha ao aplicar a licença ao dispositivo",
   "LICENSE_ENTER_KEY": "Por favor, introduza uma chave de licença",
-  "LICENSE_REAPPLY_TO_DEVICE": "Já ativou? Reaplicar em todo o sistema"
+  "LICENSE_REAPPLY_TO_DEVICE": "Já ativou? Reaplicar em todo o sistema",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Extensão não carregada. Encontra-se obsoleta ou é insegura."
 });
 /*
  * GNU AGPL-3.0 License
@@ -111091,6 +111115,7 @@ define("nls/ro/strings", {
   "CMD_HOW_TO_USE_BRACKETS": "Cum să folosești {APP_NAME}",
   "CMD_SUPPORT": "Suport {APP_NAME}",
   "CMD_GET_PRO": "Obține Phoenix Pro",
+  "CMD_MANAGE_LICENSES": "Gestionare licențe",
   "CMD_USER_PROFILE": "Cont {APP_NAME}",
   "CMD_DOCS": "Ajutor, Noțiuni introductive",
   "CMD_SUGGEST": "Sugerează o funcționalitate",
@@ -112033,7 +112058,6 @@ define("nls/ro/strings", {
   "PROMO_PRO_UNLOCK_MESSAGE": "Abonează-te acum pentru a debloca aceste funcții avansate:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Probă Phoenix Pro ({0} zile rămase)",
   "GET_PHOENIX_PRO": "Obține Phoenix Pro",
-  "CMD_MANAGE_LICENSES": "Gestionare licențe",
   "MANAGE_LICENSE_DIALOG_TITLE": "Gestionare licență dispozitiv",
   "LICENSE_KEY": "Cheie de licență",
   "LICENSE_KEY_ACTIVATE": "Activează licența",
@@ -112055,7 +112079,8 @@ define("nls/ro/strings", {
   "LICENSE_ACTIVATE_FAIL": "Activarea licenței a eșuat",
   "LICENSE_ACTIVATE_FAIL_APPLY": "Nu s-a putut aplica licența pe dispozitiv",
   "LICENSE_ENTER_KEY": "Introduceți o cheie de licență",
-  "LICENSE_REAPPLY_TO_DEVICE": "Deja activat? Reaplicați la nivel de sistem"
+  "LICENSE_REAPPLY_TO_DEVICE": "Deja activat? Reaplicați la nivel de sistem",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Extensia nu s-a încărcat. Este fie învechită, fie nesigură."
 });
 /*
  * GNU AGPL-3.0 License
@@ -114413,6 +114438,7 @@ define("nls/ru/strings", {
   "CMD_HOW_TO_USE_BRACKETS": "Как использовать {APP_NAME}",
   "CMD_SUPPORT": "Поддержка {APP_NAME}",
   "CMD_GET_PRO": "Получить Phoenix Pro",
+  "CMD_MANAGE_LICENSES": "Управление лицензиями",
   "CMD_USER_PROFILE": "Учётная запись {APP_NAME}",
   "CMD_DOCS": "Справка, начало работы",
   "CMD_SUGGEST": "Предложить улучшение",
@@ -115355,7 +115381,6 @@ define("nls/ru/strings", {
   "PROMO_PRO_UNLOCK_MESSAGE": "Подпишитесь сейчас, чтобы получить доступ к следующим расширенным функциям:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Пробный период Phoenix Pro ({0} дней осталось)",
   "GET_PHOENIX_PRO": "Получить Phoenix Pro",
-  "CMD_MANAGE_LICENSES": "Управление лицензиями",
   "MANAGE_LICENSE_DIALOG_TITLE": "Управление лицензией устройства",
   "LICENSE_KEY": "Лицензионный ключ",
   "LICENSE_KEY_ACTIVATE": "Активировать лицензию",
@@ -115377,7 +115402,8 @@ define("nls/ru/strings", {
   "LICENSE_ACTIVATE_FAIL": "Не удалось активировать лицензию",
   "LICENSE_ACTIVATE_FAIL_APPLY": "Не удалось применить лицензию к устройству",
   "LICENSE_ENTER_KEY": "Введите лицензионный ключ",
-  "LICENSE_REAPPLY_TO_DEVICE": "Уже активировали? Применить повторно для всей системы"
+  "LICENSE_REAPPLY_TO_DEVICE": "Уже активировали? Применить повторно для всей системы",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Расширение не загружено. Оно устарело или небезопасно."
 });
 /*
  * GNU AGPL-3.0 License
@@ -115950,6 +115976,7 @@ define("nls/sk/strings", {
   "CMD_HOW_TO_USE_BRACKETS": "Ako používať {APP_NAME}",
   "CMD_SUPPORT": "Podpora pre {APP_NAME}",
   "CMD_GET_PRO": "Získajte Phoenix Pro",
+  "CMD_MANAGE_LICENSES": "Spravovať licencie",
   "CMD_USER_PROFILE": "Účet {APP_NAME}",
   "CMD_DOCS": "Pomocník, Začíname",
   "CMD_SUGGEST": "Navrhnúť funkciu",
@@ -116892,7 +116919,6 @@ define("nls/sk/strings", {
   "PROMO_PRO_UNLOCK_MESSAGE": "Prihláste sa na odber a odomknite si tieto pokročilé funkcie:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Skúšobná verzia Phoenix Pro ({0} dní zostáva)",
   "GET_PHOENIX_PRO": "Získajte Phoenix Pro",
-  "CMD_MANAGE_LICENSES": "Spravovať licencie",
   "MANAGE_LICENSE_DIALOG_TITLE": "Spravovať licenciu zariadenia",
   "LICENSE_KEY": "Licenčný kľúč",
   "LICENSE_KEY_ACTIVATE": "Aktivovať licenciu",
@@ -116914,7 +116940,8 @@ define("nls/sk/strings", {
   "LICENSE_ACTIVATE_FAIL": "Aktivácia licencie zlyhala.",
   "LICENSE_ACTIVATE_FAIL_APPLY": "Nepodarilo sa aplikovať licenciu na zariadenie",
   "LICENSE_ENTER_KEY": "Prosím, zadajte licenčný kľúč",
-  "LICENSE_REAPPLY_TO_DEVICE": "Už aktivované? Znovu aplikovať pre celý systém"
+  "LICENSE_REAPPLY_TO_DEVICE": "Už aktivované? Znovu aplikovať pre celý systém",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Rozšírenie sa nenačítalo. Je buď zastarané, alebo nezabezpečené."
 });
 /*
  * GNU AGPL-3.0 License
@@ -117486,6 +117513,7 @@ define("nls/sr/strings", {
   "CMD_HOW_TO_USE_BRACKETS": "Корисничко упутство за {APP_NAME}",
   "CMD_SUPPORT": "{APP_NAME} подршка",
   "CMD_GET_PRO": "Преузмите Phoenix Pro",
+  "CMD_MANAGE_LICENSES": "Управљање лиценцама",
   "CMD_USER_PROFILE": "Налог за {APP_NAME}",
   "CMD_DOCS": "Помоћ, почетак рада",
   "CMD_SUGGEST": "Предложи нову функционалност",
@@ -118428,7 +118456,6 @@ define("nls/sr/strings", {
   "PROMO_PRO_UNLOCK_MESSAGE": "Претплатите се сада да бисте откључали ове напредне функције:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro пробна верзија ({0} дана преостало)",
   "GET_PHOENIX_PRO": "Преузмите Phoenix Pro",
-  "CMD_MANAGE_LICENSES": "Управљање лиценцама",
   "MANAGE_LICENSE_DIALOG_TITLE": "Управљање лиценцом уређаја",
   "LICENSE_KEY": "Кључ лиценце",
   "LICENSE_KEY_ACTIVATE": "Активирај лиценцу",
@@ -118450,7 +118477,8 @@ define("nls/sr/strings", {
   "LICENSE_ACTIVATE_FAIL": "Активирање лиценце није успело",
   "LICENSE_ACTIVATE_FAIL_APPLY": "Примена лиценце на уређај није успела.",
   "LICENSE_ENTER_KEY": "Унесите кључ лиценце",
-  "LICENSE_REAPPLY_TO_DEVICE": "Већ активирано? Поново примени на нивоу система"
+  "LICENSE_REAPPLY_TO_DEVICE": "Већ активирано? Поново примени на нивоу система",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Екстензија није учитана. Или је застарела или небезбедна."
 });
 /*
  * GNU AGPL-3.0 License
@@ -119106,6 +119134,7 @@ define("nls/sv/strings", {
   "CMD_HOW_TO_USE_BRACKETS": "Hur du använder {APP_NAME}",
   "CMD_SUPPORT": "{APP_NAME}-forum",
   "CMD_GET_PRO": "Skaffa Phoenix Pro",
+  "CMD_MANAGE_LICENSES": "Hantera licenser",
   "CMD_USER_PROFILE": "{APP_NAME}-konto",
   "CMD_DOCS": "Hjälp, Kom igång",
   "CMD_SUGGEST": "Föreslå en funktion",
@@ -120048,7 +120077,6 @@ define("nls/sv/strings", {
   "PROMO_PRO_UNLOCK_MESSAGE": "Prenumerera nu för att låsa upp dessa avancerade funktioner:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro-provperiod ({0} dagar kvar)",
   "GET_PHOENIX_PRO": "Skaffa Phoenix Pro",
-  "CMD_MANAGE_LICENSES": "Hantera licenser",
   "MANAGE_LICENSE_DIALOG_TITLE": "Hantera enhetslicens",
   "LICENSE_KEY": "Licensnyckel",
   "LICENSE_KEY_ACTIVATE": "Aktivera licens",
@@ -120070,7 +120098,8 @@ define("nls/sv/strings", {
   "LICENSE_ACTIVATE_FAIL": "Det gick inte att aktivera licensen",
   "LICENSE_ACTIVATE_FAIL_APPLY": "Det gick inte att tillämpa licensen på enheten",
   "LICENSE_ENTER_KEY": "Ange en licensnyckel",
-  "LICENSE_REAPPLY_TO_DEVICE": "Redan aktiverad? Tillämpa systemomfattande"
+  "LICENSE_REAPPLY_TO_DEVICE": "Redan aktiverad? Tillämpa systemomfattande",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Tillägget laddades inte. Det är antingen föråldrat eller osäkert."
 });
 /*
  * GNU AGPL-3.0 License
@@ -120643,6 +120672,7 @@ define("nls/tr/strings", {
   "CMD_HOW_TO_USE_BRACKETS": "{APP_NAME} Nasıl Kullanılır",
   "CMD_SUPPORT": "{APP_NAME} Desteği",
   "CMD_GET_PRO": "Phoenix Pro'yu Edinin",
+  "CMD_MANAGE_LICENSES": "Lisansları Yönet",
   "CMD_USER_PROFILE": "{APP_NAME} Hesabı",
   "CMD_DOCS": "Yardım, Başlarken",
   "CMD_SUGGEST": "Yeni Özellik Öner",
@@ -121585,7 +121615,6 @@ define("nls/tr/strings", {
   "PROMO_PRO_UNLOCK_MESSAGE": "Bu gelişmiş özelliklerin kilidini açmak için hemen abone olun:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro Deneme Sürümü ({0} gün kaldı)",
   "GET_PHOENIX_PRO": "Phoenix Pro'yu Edinin",
-  "CMD_MANAGE_LICENSES": "Lisansları Yönet",
   "MANAGE_LICENSE_DIALOG_TITLE": "Cihaz Lisansını Yönet",
   "LICENSE_KEY": "Lisans Anahtarı",
   "LICENSE_KEY_ACTIVATE": "Lisansı Etkinleştir",
@@ -121607,7 +121636,8 @@ define("nls/tr/strings", {
   "LICENSE_ACTIVATE_FAIL": "Lisans etkinleştirilemedi",
   "LICENSE_ACTIVATE_FAIL_APPLY": "Lisans cihaza uygulanamadı",
   "LICENSE_ENTER_KEY": "Lütfen bir lisans anahtarı girin",
-  "LICENSE_REAPPLY_TO_DEVICE": "Zaten etkinleştirildi mi? Sistem genelinde yeniden uygula"
+  "LICENSE_REAPPLY_TO_DEVICE": "Zaten etkinleştirildi mi? Sistem genelinde yeniden uygula",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Eklenti yüklenmedi. Kullanımdan kaldırılmış veya güvensiz."
 });
 /*
  * GNU AGPL-3.0 License
@@ -122180,6 +122210,7 @@ define("nls/uk/strings", {
   "CMD_HOW_TO_USE_BRACKETS": "Як використовувати {APP_NAME}",
   "CMD_SUPPORT": "Підтримка {APP_NAME}",
   "CMD_GET_PRO": "Отримати Phoenix Pro",
+  "CMD_MANAGE_LICENSES": "Керування ліцензіями",
   "CMD_USER_PROFILE": "Обліковий запис {APP_NAME}",
   "CMD_DOCS": "Довідка, початок роботи",
   "CMD_SUGGEST": "Запропонувати ідею",
@@ -123122,7 +123153,6 @@ define("nls/uk/strings", {
   "PROMO_PRO_UNLOCK_MESSAGE": "Підпишіться зараз, щоб розблокувати такі розширені функції:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Пробний період Phoenix Pro ({0} днів залишилось)",
   "GET_PHOENIX_PRO": "Отримати Phoenix Pro",
-  "CMD_MANAGE_LICENSES": "Керування ліцензіями",
   "MANAGE_LICENSE_DIALOG_TITLE": "Керування ліцензією пристрою",
   "LICENSE_KEY": "Ліцензійний ключ",
   "LICENSE_KEY_ACTIVATE": "Активувати ліцензію",
@@ -123144,7 +123174,8 @@ define("nls/uk/strings", {
   "LICENSE_ACTIVATE_FAIL": "Не вдалося активувати ліцензію",
   "LICENSE_ACTIVATE_FAIL_APPLY": "Не вдалося застосувати ліцензію до пристрою",
   "LICENSE_ENTER_KEY": "Введіть ліцензійний ключ",
-  "LICENSE_REAPPLY_TO_DEVICE": "Уже активовано? Повторно застосувати для всієї системи"
+  "LICENSE_REAPPLY_TO_DEVICE": "Уже активовано? Повторно застосувати для всієї системи",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Розширення не завантажено. Воно або застаріле, або небезпечне."
 });
 /*
  * GNU AGPL-3.0 License
@@ -123717,6 +123748,7 @@ define("nls/ur/strings", {
   "CMD_HOW_TO_USE_BRACKETS": "{APP_NAME} استعمال کرنے کا طریقہ",
   "CMD_SUPPORT": "{APP_NAME} سپورٹ",
   "CMD_GET_PRO": "Phoenix Pro حاصل کریں",
+  "CMD_MANAGE_LICENSES": "لائسنسوں کا انتظام کریں",
   "CMD_USER_PROFILE": "{APP_NAME} اکاؤنٹ",
   "CMD_DOCS": "مدد، شروع کرنا",
   "CMD_SUGGEST": "خصوصیت تجویز کریں",
@@ -124659,7 +124691,6 @@ define("nls/ur/strings", {
   "PROMO_PRO_UNLOCK_MESSAGE": "ان جدید خصوصیات کو کھولنے کے لیے ابھی سبسکرائب کریں:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro آزمائشی ورژن ({0} دن باقی)",
   "GET_PHOENIX_PRO": "Phoenix Pro حاصل کریں",
-  "CMD_MANAGE_LICENSES": "لائسنسوں کا انتظام کریں",
   "MANAGE_LICENSE_DIALOG_TITLE": "ڈیوائس لائسنس کا انتظام",
   "LICENSE_KEY": "لائسنس کی",
   "LICENSE_KEY_ACTIVATE": "لائسنس فعال کریں",
@@ -124681,7 +124712,8 @@ define("nls/ur/strings", {
   "LICENSE_ACTIVATE_FAIL": "لائسنس فعال کرنے میں ناکامی",
   "LICENSE_ACTIVATE_FAIL_APPLY": "ڈیوائس پر لائسنس لاگو کرنے میں ناکام",
   "LICENSE_ENTER_KEY": "براہ کرم لائسنس کی درج کریں",
-  "LICENSE_REAPPLY_TO_DEVICE": "پہلے ہی فعال ہے؟ سسٹم بھر میں دوبارہ لاگو کریں"
+  "LICENSE_REAPPLY_TO_DEVICE": "پہلے ہی فعال ہے؟ سسٹم بھر میں دوبارہ لاگو کریں",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "ایکسٹینشن لوڈ نہیں ہوئی۔ یہ یا تو متروک ہے یا غیر محفوظ۔"
 });
 /*
  * GNU AGPL-3.0 License
@@ -125284,6 +125316,7 @@ define("nls/zh-cn/strings", {
   "CMD_HOW_TO_USE_BRACKETS": "如何使用 {APP_NAME}",
   "CMD_SUPPORT": "{APP_NAME} 支持",
   "CMD_GET_PRO": "获取 Phoenix Pro",
+  "CMD_MANAGE_LICENSES": "管理许可证",
   "CMD_USER_PROFILE": "{APP_NAME} 帐户",
   "CMD_DOCS": "帮助，入门指南",
   "CMD_SUGGEST": "推荐功能",
@@ -126226,7 +126259,6 @@ define("nls/zh-cn/strings", {
   "PROMO_PRO_UNLOCK_MESSAGE": "立即订阅以解锁以下高级功能：",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro 试用版（剩余 {0} 天）",
   "GET_PHOENIX_PRO": "获取 Phoenix Pro",
-  "CMD_MANAGE_LICENSES": "管理许可证",
   "MANAGE_LICENSE_DIALOG_TITLE": "管理设备许可证",
   "LICENSE_KEY": "许可证密钥",
   "LICENSE_KEY_ACTIVATE": "激活许可证",
@@ -126248,7 +126280,8 @@ define("nls/zh-cn/strings", {
   "LICENSE_ACTIVATE_FAIL": "激活许可证失败",
   "LICENSE_ACTIVATE_FAIL_APPLY": "未能将许可证应用于设备",
   "LICENSE_ENTER_KEY": "请输入许可证密钥",
-  "LICENSE_REAPPLY_TO_DEVICE": "已激活？重新应用至全系统"
+  "LICENSE_REAPPLY_TO_DEVICE": "已激活？重新应用至全系统",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "扩展未加载。它已弃用或不安全。"
 });
 /*
  * GNU AGPL-3.0 License
@@ -126821,6 +126854,7 @@ define("nls/zh-tw/strings", {
   "CMD_HOW_TO_USE_BRACKETS": "如何使用 {APP_NAME}",
   "CMD_SUPPORT": "{APP_NAME} 支援",
   "CMD_GET_PRO": "取得 Phoenix Pro",
+  "CMD_MANAGE_LICENSES": "管理授權",
   "CMD_USER_PROFILE": "{APP_NAME} 帳號",
   "CMD_DOCS": "說明、入門指南",
   "CMD_SUGGEST": "功能建議",
@@ -127763,7 +127797,6 @@ define("nls/zh-tw/strings", {
   "PROMO_PRO_UNLOCK_MESSAGE": "立即訂閱以解鎖以下進階功能：",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "Phoenix Pro 試用版（剩餘 {0} 天）",
   "GET_PHOENIX_PRO": "取得 Phoenix Pro",
-  "CMD_MANAGE_LICENSES": "管理授權",
   "MANAGE_LICENSE_DIALOG_TITLE": "管理裝置授權",
   "LICENSE_KEY": "授權金鑰",
   "LICENSE_KEY_ACTIVATE": "啟用授權",
@@ -127785,7 +127818,8 @@ define("nls/zh-tw/strings", {
   "LICENSE_ACTIVATE_FAIL": "啟用授權失敗",
   "LICENSE_ACTIVATE_FAIL_APPLY": "無法將授權套用至裝置",
   "LICENSE_ENTER_KEY": "請輸入授權金鑰",
-  "LICENSE_REAPPLY_TO_DEVICE": "已啟用？ 全系統重新套用"
+  "LICENSE_REAPPLY_TO_DEVICE": "已啟用？ 全系統重新套用",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "擴充功能未載入。其已棄用或不安全。"
 });
 /*
  * GNU AGPL-3.0 License
