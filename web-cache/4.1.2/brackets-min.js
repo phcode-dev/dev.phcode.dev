@@ -31670,6 +31670,7 @@ define("extensibility/ExtensionManager", function (require, exports, module) {
     exports.updateExtensions        = updateExtensions;
     exports.getAvailableUpdates     = getAvailableUpdates;
     exports.cleanAvailableUpdates   = cleanAvailableUpdates;
+    exports.isExtensionTakenDown    = ExtensionLoader.isExtensionTakenDown;
 
     exports.ENABLED       = ENABLED;
     exports.DISABLED      = DISABLED;
@@ -32262,6 +32263,11 @@ define("extensibility/ExtensionManagerView", function (require, exports, module)
         </div>
     </td>
     <td class="ext-desc">
+        {{#isDeprecatedExtension}}
+            {{#isInstalled}}
+                <div class="alert warning">{{Strings.EXTENSION_DEPRECATED_NOT_LOADED}}</div>
+            {{/isInstalled}}
+        {{/isDeprecatedExtension}}
         {{#showInstallButton}}
             <!-- Warnings when trying to install extension where latest/all versions not compatible -->
             {{#defaultFeature}}
@@ -32363,8 +32369,8 @@ define("extensibility/ExtensionManagerView", function (require, exports, module)
 </tr>
 `,
         PreferencesManager        = require("preferences/PreferencesManager"),
-        warnExtensionIDs = JSON.parse(require("text!extensions/default/DefaultExtensions.json"))
-            .warnExtensionStoreExtensions.extensionIDs,
+        DefaultExtensions         = JSON.parse(require("text!extensions/default/DefaultExtensions.json")),
+        warnExtensionIDs          = new Set(DefaultExtensions.warnExtensionStoreExtensions.extensionIDs),
         Metrics                   = require("utils/Metrics");
 
 
@@ -32683,7 +32689,8 @@ define("extensibility/ExtensionManagerView", function (require, exports, module)
         context.isCurrentTheme = entry.installInfo &&
             (entry.installInfo.metadata.name === ThemeManager.getCurrentTheme().name);
 
-        context.defaultFeature = warnExtensionIDs.includes(info.metadata.name);
+        context.defaultFeature = warnExtensionIDs.has(info.metadata.name);
+        context.isDeprecatedExtension = ExtensionManager.isExtensionTakenDown(info.metadata.name);
 
         context.allowInstall = context.isCompatible && !context.isInstalled;
 
@@ -32739,9 +32746,9 @@ define("extensibility/ExtensionManagerView", function (require, exports, module)
         var isDefaultOrInstalled = this.model.source === "default" || this.model.source === "installed";
         var isDefaultAndTheme = this.model.source === "default" && context.metadata.theme;
         context.disablingAllowed = isDefaultOrInstalled && !isDefaultAndTheme && !context.disabled
-            && !hasPendingAction && !context.metadata.theme;
+            && !hasPendingAction && !context.metadata.theme && !context.isDeprecatedExtension;
         context.enablingAllowed = isDefaultOrInstalled && !isDefaultAndTheme && context.disabled
-            && !hasPendingAction && !context.metadata.theme;
+            && !hasPendingAction && !context.metadata.theme && !context.isDeprecatedExtension;
 
         // Copy over helper functions that we share with the registry app.
         ["lastVersionDate", "authorInfo"].forEach(function (helper) {
@@ -32895,11 +32902,11 @@ define("extensibility/ExtensionManagerViewModel", function (require, exports, mo
 
     var _ = require("thirdparty/lodash");
 
-    var ExtensionManager    = require("extensibility/ExtensionManager"),
-        registry_utils      = require("extensibility/registry_utils"),
-        EventDispatcher     = require("utils/EventDispatcher"),
-        Strings             = require("strings"),
-        PreferencesManager  = require("preferences/PreferencesManager");
+    const ExtensionManager    = require("extensibility/ExtensionManager"),
+        registry_utils        = require("extensibility/registry_utils"),
+        EventDispatcher        = require("utils/EventDispatcher"),
+        Strings                = require("strings"),
+        PreferencesManager     = require("preferences/PreferencesManager");
 
     /**
      * @private
@@ -33176,6 +33183,9 @@ define("extensibility/ExtensionManagerViewModel", function (require, exports, mo
                 return entry.registryInfo && entry.registryInfo.metadata.theme;
 
             })
+            .filter(function (entry) {
+                return !ExtensionManager.isExtensionTakenDown(entry.registryInfo.metadata.name);
+            })
             .map(function (entry) {
                 return entry.registryInfo.metadata.name;
             });
@@ -33424,6 +33434,9 @@ define("extensibility/ExtensionManagerViewModel", function (require, exports, mo
             .filter(function (key) {
                 return self.extensions[key].installInfo &&
                     self.extensions[key].installInfo.locationType === ExtensionManager.LOCATION_DEFAULT;
+            })
+            .filter(function (key) {
+                return !ExtensionManager.isExtensionTakenDown(key);
             });
         this._sortFullSet();
         this._setInitialFilter();
@@ -112920,6 +112933,7 @@ define("nls/root/strings", {
     "EXTENSION_INCOMPATIBLE_NEWER": "This extension requires a newer version of {APP_NAME}.",
     "EXTENSION_INCOMPATIBLE_OLDER": "This extension currently only works with older versions of {APP_NAME}.",
     "EXTENSION_DEFAULT_FEATURE_PRESENT": "You may not need this extension. {APP_NAME} already has this feature.",
+    "EXTENSION_DEPRECATED_NOT_LOADED": "Extension not loaded. It is either deprecated or insecure.",
     "EXTENSION_LATEST_INCOMPATIBLE_NEWER": "Version {0} of this extension requires a newer version of {APP_NAME}. But you can install the earlier version {1}.",
     "EXTENSION_LATEST_INCOMPATIBLE_OLDER": "Version {0} of this extension only works with older versions of {APP_NAME}. But you can install the earlier version {1}.",
     "EXTENSION_NO_DESCRIPTION": "No description",
@@ -174797,6 +174811,96 @@ define("utils/ExtensionLoader", function (require, exports, module) {
         PathUtils      = require("thirdparty/path-utils/path-utils"),
         DefaultExtensions = JSON.parse(require("text!extensions/default/DefaultExtensions.json"));
 
+    // takedown/dont load extensions that are compromised at app start - start
+    const EXTENSION_TAKEDOWN_LOCALSTORAGE_KEY = "PH_EXTENSION_TAKEDOWN_LIST";
+
+    function _getTakedownListLS() {
+        try{
+            let list = localStorage.getItem(EXTENSION_TAKEDOWN_LOCALSTORAGE_KEY);
+            if(list) {
+                list = JSON.parse(list);
+                if (Array.isArray(list)) {
+                    return list;
+                }
+            }
+        } catch (e) {
+            console.error(e);
+        }
+        return [];
+    }
+
+    const loadedExtensionIDs = new Set();
+    let takedownExtensionList = new Set(_getTakedownListLS());
+
+    const EXTENSION_TAKEDOWN_URL = brackets.config.extensionTakedownURL;
+
+    function _anyTakenDownExtensionLoaded() {
+        if (takedownExtensionList.size === 0 || loadedExtensionIDs.size === 0) {
+            return [];
+        }
+        let smaller;
+        let larger;
+
+        if (takedownExtensionList.size < loadedExtensionIDs.size) {
+            smaller = takedownExtensionList;
+            larger = loadedExtensionIDs;
+        } else {
+            smaller = loadedExtensionIDs;
+            larger = takedownExtensionList;
+        }
+
+        const matches = [];
+
+        for (const id of smaller) {
+            if (larger.has(id)) {
+                matches.push(id);
+            }
+        }
+
+        return matches;
+    }
+
+    function fetchWithTimeout(url, ms) {
+        const c = new AbortController();
+        const t = setTimeout(() => c.abort(), ms);
+        return fetch(url, { signal: c.signal }).finally(() => clearTimeout(t));
+    }
+
+    // we dont want a restart after user does too much in the app causing data loss. So we wont reload after 20 seconds.
+    fetchWithTimeout(EXTENSION_TAKEDOWN_URL, 20000)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status} - ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Extension takedown data:', data);
+            if (!Array.isArray(data) || !data.every(x => typeof x === "string")) {
+                console.error("Takedown list must be an array of strings.");
+                return;
+            }
+            const dataToWrite = JSON.stringify(data);
+            localStorage.setItem(EXTENSION_TAKEDOWN_LOCALSTORAGE_KEY, dataToWrite);
+            takedownExtensionList = new Set(data);
+            const compromisedExtensionsLoaded = _anyTakenDownExtensionLoaded();
+            if(!compromisedExtensionsLoaded.length){
+                return;
+            }
+            // if we are here, we have already loaded some compromised extensions. we need to reload app as soon as
+            // possible. no await after this. all sync js calls to prevent extension from tampering with this list.
+            const writtenData = localStorage.getItem(EXTENSION_TAKEDOWN_LOCALSTORAGE_KEY);
+            if(writtenData !== dataToWrite) {
+                // the write did not succeded. local storage write can fail if storage full, if so we may cause infinite
+                // reloads here if we dont do the check.
+                console.error("Failed to write taken down extension to localstorage");
+                return;
+            }
+            location.reload();
+        })
+        .catch(console.error);
+    // takedown/dont load extensions that are compromised at app start - end
+
     const desktopOnlyExtensions = DefaultExtensions.desktopOnly;
     const DefaultExtensionsList = Phoenix.isNativeApp ?
         [...DefaultExtensions.defaultExtensionsList, ...desktopOnlyExtensions]:
@@ -175157,6 +175261,16 @@ define("utils/ExtensionLoader", function (require, exports, module) {
 
         return promise
             .then(function (metadata) {
+                if (isExtensionTakenDown(metadata.name)) {
+                    logger.leaveTrail("skip load taken down extension: " + metadata.name);
+                    console.warn("skip load taken down extension: " + metadata.name);
+                    return new $.Deferred().reject("disabled").promise();
+                }
+
+                if(metadata.name) {
+                    loadedExtensionIDs.add(metadata.name);
+                }
+
                 // No special handling for themes... Let the promise propagate into the ExtensionManager
                 if (metadata && metadata.theme) {
                     return;
@@ -175664,6 +175778,15 @@ define("utils/ExtensionLoader", function (require, exports, module) {
         return promise;
     }
 
+    function isExtensionTakenDown(extensionID) {
+        if(!extensionID){
+            // extensions without id can happen with local development. these are never distributed in store.
+            // so safe to return false here.
+            return false;
+        }
+        return takedownExtensionList.has(extensionID);
+    }
+
 
     EventDispatcher.makeEventDispatcher(exports);
 
@@ -175687,6 +175810,7 @@ define("utils/ExtensionLoader", function (require, exports, module) {
     exports.testExtension = testExtension;
     exports.loadAllExtensionsInNativeDirectory = loadAllExtensionsInNativeDirectory;
     exports.loadExtensionFromNativeDirectory = loadExtensionFromNativeDirectory;
+    exports.isExtensionTakenDown = isExtensionTakenDown;
     exports.testAllExtensionsInNativeDirectory = testAllExtensionsInNativeDirectory;
     exports.testAllDefaultExtensions = testAllDefaultExtensions;
     exports.EVENT_EXTENSION_LOADED = EVENT_EXTENSION_LOADED;
@@ -178384,6 +178508,37 @@ define("utils/NodeUtils", function (require, exports, module) {
         return false;
     }
 
+    /**
+     * Retrieves the operating system username of the current user.
+     * This method is only available in native apps.
+     *
+     * @throws {Error} Throws an error if called in a browser environment.
+     * @return {Promise<string>} A promise that resolves to the OS username of the current user.
+     */
+    async function getOSUserName() {
+        if (!Phoenix.isNativeApp) {
+            throw new Error("getOSUserName not available in browser");
+        }
+        return utilsConnector.execPeer("getOSUserName");
+    }
+
+    let _systemSettingsDir;
+    /**
+     * Retrieves the directory path for system settings. This method is applicable to native apps only.
+     *
+     * @return {Promise<string>} A promise that resolves to the path of the system settings directory.
+     * @throws {Error} If the method is called in browser app.
+     */
+    async function getSystemSettingsDir() {
+        if (!Phoenix.isNativeApp) {
+            throw new Error("getSystemSettingsDir is sudo folder is win/linux/mac. not available in browser.");
+        }
+        if(!_systemSettingsDir){
+            _systemSettingsDir = await utilsConnector.execPeer("getSystemSettingsDir");
+        }
+        return _systemSettingsDir;
+    }
+
     if(NodeConnector.isNodeAvailable()) {
         // todo we need to update the strings if a user extension adds its translations. Since we dont support
         // node extensions for now, should consider when we support node extensions.
@@ -178426,6 +178581,8 @@ define("utils/NodeUtils", function (require, exports, module) {
     exports.removeDeviceLicenseSystemWide = removeDeviceLicenseSystemWide;
     exports.isLicensedDeviceSystemWide = isLicensedDeviceSystemWide;
     exports.getDeviceID = getDeviceID;
+    exports.getOSUserName = getOSUserName;
+    exports.getSystemSettingsDir = getSystemSettingsDir;
 
     /**
      * checks if Node connector is ready
