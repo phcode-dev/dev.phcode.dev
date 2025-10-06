@@ -113864,7 +113864,19 @@ define("nls/root/strings", {
     "LICENSE_ACTIVATE_FAIL": "Failed to activate license",
     "LICENSE_ACTIVATE_FAIL_APPLY": "'Failed to apply license to device'",
     "LICENSE_ENTER_KEY": "Please enter a license key",
-    "LICENSE_REAPPLY_TO_DEVICE": "Already activated? Reapply system-wide"
+    "LICENSE_REAPPLY_TO_DEVICE": "Already activated? Reapply system-wide",
+    // AI CONTROL
+    "AI_LOGIN_DIALOG_TITLE": "Sign In to Use AI Edits",
+    "AI_LOGIN_DIALOG_MESSAGE": "Please log in to use AI-powered edits",
+    "AI_LOGIN_DIALOG_BUTTON": "Get AI Access",
+    "AI_DISABLED_DIALOG_TITLE": "AI is disabled",
+    "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "No AI config file found in system. AI is enabled for all users.",
+    "AI_CONTROL_ALL_ALLOWED": "AI is enabled for all users.",
+    "AI_CONTROL_USER_ALLOWED": "AI is enabled for user ({0}) but disabled for others",
+    "AI_CONTROL_ADMIN_DISABLED": "AI access has been disabled by your system administrator",
+    "AI_CONTROL_ADMIN_DISABLED_CONTACT": "AI access has been disabled by your system administrator. Please contact {0} for assistance.",
+    "AI_UPSELL_DIALOG_TITLE": "Continue with {0}?",
+    "AI_UPSELL_DIALOG_MESSAGE": "You’ve discovered AI-powered edits. To proceed, you’ll need an AI subscription or credits."
 });
 
 /*
@@ -168016,7 +168028,9 @@ define("services/EntitlementsManager", function (require, exports, module) {
     }
 
     const EventDispatcher = require("utils/EventDispatcher"),
-        Strings = require("strings");
+        AIControl = require("./ai-control"),
+        Strings = require("strings"),
+        StringUtils = require("utils/StringUtils");
 
     const MS_IN_DAY = 24 * 60 * 60 * 1000;
     const FREE_PLAN_VALIDITY_DAYS = 10000;
@@ -168057,13 +168071,13 @@ define("services/EntitlementsManager", function (require, exports, module) {
             });
     }
 
-    let effectiveEntitlements = null;
+    let effectiveEntitlementsCached = undefined; // entitlements can be null and its valid if no login/trial
     async function _getEffectiveEntitlements() {
-        if(effectiveEntitlements){
-            return effectiveEntitlements;
+        if(effectiveEntitlementsCached !== undefined){
+            return effectiveEntitlementsCached;
         }
         const entitlements = await LoginService.getEffectiveEntitlements();
-        effectiveEntitlements = entitlements;
+        effectiveEntitlementsCached = entitlements;
         return entitlements;
     }
 
@@ -168153,6 +168167,117 @@ define("services/EntitlementsManager", function (require, exports, module) {
         };
     }
 
+    /**
+     * Get AI is enabled for user, based on his logged in pro-user/trial status.
+     *
+     * @returns {Promise<Object>} AI entitlement object with the following shape:
+     * @returns {Promise<boolean>} entitlement.activated - If true, enable AI features. If false, check upsellDialog.
+     * @returns {Promise<boolean>} [entitlement.needsLogin] - If true, user needs to login first.
+     * @returns {Promise<string>} [entitlement.aiBrandName] - The brand name used for AI. Eg: `Phoenix AI`
+     * @returns {Promise<string>} [entitlement.buyURL] - URL to subscribe/purchase if not activated. Can be null if AI
+     *                                            is not purchasable.
+     * @returns {Promise<string>} [entitlement.upgradeToPlan] - Plan name that includes AI entitlement
+     * @returns {Promise<number>} [entitlement.validTill] - Timestamp when entitlement expires (if from server)
+     * @returns {Promise<Object>} [entitlement.upsellDialog] - Dialog configuration if user needs to be shown an upsell.
+     *                                            Only present when activated is false.
+     * @returns {Promise<string>} [entitlement.upsellDialog.title] - Dialog title
+     * @returns {Promise<string>} [entitlement.upsellDialog.message] - Dialog message
+     * @returns {Promise<string>} [entitlement.upsellDialog.buyURL] - Purchase URL. If present, dialog shows
+     *                                            "Get AI Access" button. If absent, shows only OK button.
+     *
+     * @example
+     * const aiEntitlement = await EntitlementsManager.getAIEntitlement();
+     * if (aiEntitlement.activated) {
+     *     // Enable AI features
+     *     enableAIFeature();
+     * } else if (aiEntitlement.upsellDialog) {
+     *     // Show upsell dialog when user tries to use AI
+     *     promotions.showAIUpsellDialog(aiEntitlement);
+     * }
+     */
+    async function getAIEntitlement() {
+        if(!isLoggedIn()) {
+            return {
+                needsLogin: true,
+                activated: false,
+                upsellDialog: {
+                    title: Strings.AI_LOGIN_DIALOG_TITLE,
+                    message: Strings.AI_LOGIN_DIALOG_MESSAGE
+                    // no buy url as it is a sign in hint. only ok button will be there in this dialog.
+                }
+            };
+        }
+        const aiControlStatus = await EntitlementsManager.getAIControlStatus();
+        if(!aiControlStatus.aiEnabled) {
+            return {
+                activated: false,
+                upsellDialog: {
+                    title: Strings.AI_DISABLED_DIALOG_TITLE,
+                    // Eg. AI is disabled by school admin/root user.
+                    // no buyURL as ai is disabled explicitly. only ok button will be there in this dialog.
+                    message: aiControlStatus.message || Strings.AI_CONTROL_ADMIN_DISABLED
+                }
+            };
+        }
+        const defaultAIBrandName = brackets.config.ai_brand_name,
+            defaultPurchaseURL = brackets.config.purchase_url,
+            defaultUpsellTitle = StringUtils.format(Strings.AI_UPSELL_DIALOG_TITLE, defaultAIBrandName);
+        const entitlements = await _getEffectiveEntitlements();
+        if(!entitlements || !entitlements.entitlements || !entitlements.entitlements.aiAgent) {
+            return {
+                activated: false,
+                aiBrandName: defaultAIBrandName,
+                buyURL: defaultPurchaseURL,
+                upgradeToPlan: defaultAIBrandName,
+                upsellDialog: {
+                    title: defaultUpsellTitle,
+                    message: Strings.AI_UPSELL_DIALOG_MESSAGE,
+                    buyURL: defaultPurchaseURL
+                }
+            };
+        }
+        const aiEntitlement = entitlements.entitlements.aiAgent;
+        // entitlements.entitlements.aiAgent: {
+        //       activated: boolean,
+        //       aiBrandName: string,
+        //       subscribeURL: string,
+        //       upgradeToPlan: string,
+        //       validTill: number,
+        //       upsellDialog: {
+        //          title: "if activated is false, server can send a custom upsell dialog to show",
+        //          message: "this is the message to show",
+        //          buyURL: "if this url is present from server, this will be shown to as buy link"
+        //      }
+        //     }
+
+        if(aiEntitlement.activated) {
+            return {
+                activated: true,
+                aiBrandName: aiEntitlement.aiBrandName,
+                buyURL: aiEntitlement.subscribeURL,
+                upgradeToPlan: aiEntitlement.upgradeToPlan,
+                validTill: aiEntitlement.validTill
+                // no upsellDialog, as it need not be shown.
+            };
+        }
+
+        const upsellTitle = StringUtils.format(Strings.AI_UPSELL_DIALOG_TITLE,
+            aiEntitlement.aiBrandName || defaultAIBrandName);
+        const upsellDialog = aiEntitlement.upsellDialog || {};
+        return {
+            activated: false,
+            aiBrandName: aiEntitlement.aiBrandName,
+            buyURL: aiEntitlement.subscribeURL || defaultPurchaseURL,
+            upgradeToPlan: aiEntitlement.upgradeToPlan,
+            validTill: aiEntitlement.validTill,
+            upsellDialog: {
+                title: upsellDialog.title || upsellTitle,
+                message: upsellDialog.message || Strings.AI_UPSELL_DIALOG_MESSAGE,
+                buyURL: upsellDialog.buyURL || aiEntitlement.subscribeURL || defaultPurchaseURL
+            }
+        };
+    }
+
     let inited = false;
     function init() {
         if(inited){
@@ -168162,9 +168287,10 @@ define("services/EntitlementsManager", function (require, exports, module) {
         LoginService = KernalModeTrust.loginService;
         // Set up event forwarding from LoginService
         LoginService.on(LoginService.EVENT_ENTITLEMENTS_CHANGED, function() {
-            effectiveEntitlements = null;
+            effectiveEntitlementsCached = undefined;
             EntitlementsManager.trigger(EVENT_ENTITLEMENTS_CHANGED);
         });
+        AIControl.init();
     }
 
     // Test-only exports for integration testing
@@ -168192,7 +168318,143 @@ define("services/EntitlementsManager", function (require, exports, module) {
     EntitlementsManager.getTrialRemainingDays = getTrialRemainingDays;
     EntitlementsManager.getRawEntitlements = getRawEntitlements;
     EntitlementsManager.getLiveEditEntitlement = getLiveEditEntitlement;
+    EntitlementsManager.getAIEntitlement = getAIEntitlement;
     EntitlementsManager.EVENT_ENTITLEMENTS_CHANGED = EVENT_ENTITLEMENTS_CHANGED;
+});
+
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (c) 2021 - present core.ai. All rights reserved.
+
+/**
+ * This file is only relevant to desktop apps.
+ *
+ * AI can be not active in phoenix code either by:
+ * 1. Schools with admin control. See https://docs.phcode.dev/docs/control-ai
+ * 2. user is not entitled to ai services by his subscription.
+ *
+ * This file only deals with case 1. you should use `EntitlementsManager.js` to resolve the correct AI entitlment,
+ * which will reconcile 1 and 2 to give you appropriate status.
+ **/
+
+/*global */
+
+define("services/ai-control", function (require, exports, module) {
+    const KernalModeTrust = window.KernalModeTrust;
+    if(!KernalModeTrust){
+        // integrated extensions will have access to kernal mode, but not external extensions
+        throw new Error("ai-control.js should have access to KernalModeTrust. Cannot boot without trust ring");
+    }
+
+    const NodeUtils = require("utils/NodeUtils"),
+        Strings = require("strings"),
+        StringUtils = require("utils/StringUtils");
+    let EntitlementsManager;
+
+    /**
+     * Get the platform-specific config file path
+     * @returns {string} The path to the config file
+     */
+    function _getAIConfigFilePath() {
+        let aiConfigPath;
+        // The path is decided by https://github.com/phcode-dev/phoenix-code-ai-control/tree/main/install_scripts
+
+        if(!Phoenix.isNativeApp) {
+            return "";
+        }
+
+        if (Phoenix.platform === 'win') {
+            aiConfigPath = 'C:\\Program Files\\Phoenix AI Control\\config.json';
+        } else if (Phoenix.platform === 'mac') {
+            aiConfigPath = '/Library/Application Support/Phoenix AI Control/config.json';
+        } else if (Phoenix.platform === 'linux') {
+            aiConfigPath = '/etc/phoenix-ai-control/config.json';
+        } else {
+            throw new Error(`Unsupported platform: ${Phoenix.platform}`);
+        }
+        return Phoenix.VFS.getTauriVirtualPath(aiConfigPath);
+    }
+    const AI_CONFIG_FILE_PATH = _getAIConfigFilePath();
+    if(Phoenix.isNativeApp) {
+        console.log("AI system Config File is: ", AI_CONFIG_FILE_PATH);
+    }
+
+    /**
+     * Check if the current user is in the allowed users list
+     * @param {Array<string>} allowedUsers - List of allowed usernames
+     * @param {string} currentUser to check against
+     * @returns {boolean} True if current user is allowed
+     */
+    function _isCurrentUserAllowed(allowedUsers, currentUser) {
+        if (!allowedUsers || !Array.isArray(allowedUsers) || allowedUsers.length === 0) {
+            return false;
+        }
+
+        return allowedUsers.includes(currentUser);
+    }
+
+    /**
+     * Get AI control configuration
+     * @returns {Object} The configuration status and details
+     */
+    async function getAIControlStatus() {
+        try {
+            if(!Phoenix.isNativeApp) {
+                return {aiEnabled: true}; // AI control with system files in not available in browser.
+                // In browser, AI can be disabled with firewall only.
+            }
+            const fileData = await Phoenix.VFS.readFileResolves(AI_CONFIG_FILE_PATH, 'utf8');
+
+            if (fileData.error || !fileData.data) {
+                return {
+                    aiEnabled: true,
+                    message: Strings.AI_CONTROL_ALL_ALLOWED_NO_CONFIG
+                }; // No ai config file exists
+            }
+
+            const aiConfig = JSON.parse(fileData.data);
+            const currentUser = await NodeUtils.getOSUserName();
+
+            // Check if AI is disabled globally
+            if (aiConfig.disableAI === true) {
+                // Check if current user is in allowed users list
+                if (aiConfig.allowedUsers && _isCurrentUserAllowed(aiConfig.allowedUsers, currentUser)) {
+                    return {
+                        aiEnabled: true,
+                        message: StringUtils.format(Strings.AI_CONTROL_USER_ALLOWED, currentUser)
+                    };
+                } else if(aiConfig.managedByEmail){
+                    return {
+                        aiEnabled: false,
+                        message: StringUtils.format(Strings.AI_CONTROL_ADMIN_DISABLED_CONTACT, aiConfig.managedByEmail)
+                    };
+                }
+                return {
+                    aiEnabled: false,
+                    message: Strings.AI_CONTROL_ADMIN_DISABLED
+                };
+            }
+            // AI is enabled globally
+            return {
+                aiEnabled: true,
+                message: Strings.AI_CONTROL_ALL_ALLOWED
+            };
+        } catch (error) {
+            console.error('Error checking AI control:', error);
+            return {aiEnabled: true, message: error.message};
+        }
+    }
+
+    let inited = false;
+    function init() {
+        if(inited){
+            return;
+        }
+        inited = true;
+        EntitlementsManager = KernalModeTrust.EntitlementsManager;
+        EntitlementsManager.getAIControlStatus = getAIControlStatus;
+    }
+
+    exports.init = init;
 });
 
 /*
@@ -168329,6 +168591,10 @@ define("services/login-browser", function (require, exports, module) {
             return {err: ERR_RETRY_LATER};
         }
         try {
+            if(Phoenix.isTestWindow && fetchFn === fetch){
+                // so we never allow tests to hit the actual login service.
+                return {err: ERR_NOT_LOGGED_IN};
+            }
             const response = await fetchFn(resolveURL, {
                 method: 'GET',
                 credentials: 'include', // Include cookies
@@ -168549,6 +168815,10 @@ define("services/login-browser", function (require, exports, module) {
     async function signOutBrowser() {
         const logoutURL = `${_getAccountBaseURL()}/signOut`;
         try {
+            if(Phoenix.isTestWindow && fetchFn === fetch){
+                // so we never allow tests to hit the actual login service.
+                return;
+            }
             const response = await fetchFn(logoutURL, {
                 method: 'POST',
                 credentials: 'include', // Include cookies
@@ -168784,6 +169054,10 @@ define("services/login-desktop", function (require, exports, module) {
             return {err: ERR_RETRY_LATER};
         }
         try {
+            if(Phoenix.isTestWindow && fetchFn === fetch){
+                // so we never allow tests to hit the actual login service.
+                return {err: ERR_INVALID};
+            }
             const response = await fetchFn(resolveURL);
             if (response.status === 400 || response.status === 404) {
                 // 404 api key not found and 400 Bad Request, eg: verification code mismatch
@@ -168878,6 +169152,10 @@ define("services/login-desktop", function (require, exports, module) {
         const resolveURL = `${Phoenix.config.account_url}getAppAuthSession?autoAuthPort=${authPortURL}&appName=${appName}`;
         // {"isSuccess":true,"appSessionID":"a uuid...","validationCode":"SWXP07"}
         try {
+            if(Phoenix.isTestWindow && fetchFn === fetch){
+                // so we never allow tests to hit the actual login service.
+                return null;
+            }
             const response = await fetchFn(resolveURL);
             if (response.ok) {
                 const {appSessionID, validationCode} = await response.json();
@@ -169031,6 +169309,10 @@ define("services/login-desktop", function (require, exports, module) {
                 appSessionID: userProfile.apiKey
             };
 
+            if(Phoenix.isTestWindow && fetchFn === fetch){
+                // so we never allow tests to hit the actual login service.
+                return;
+            }
             const response = await fetchFn(resolveURL, {
                 method: 'POST',
                 headers: {
@@ -169195,7 +169477,7 @@ define("services/login-service", function (require, exports, module) {
     const EVENT_ENTITLEMENTS_CHANGED = "entitlements_changed";
 
     // Cached entitlements data
-    let cachedEntitlements = null;
+    let cachedEntitlements = undefined;
 
     // Last recorded state for entitlements monitoring
     let lastRecordedState = null;
@@ -169389,7 +169671,7 @@ define("services/login-service", function (require, exports, module) {
         }
 
         // Return cached data if available and not forcing refresh
-        if (cachedEntitlements && !forceRefresh) {
+        if (cachedEntitlements !== undefined && !forceRefresh) {
             return cachedEntitlements;
         }
 
@@ -169511,7 +169793,7 @@ define("services/login-service", function (require, exports, module) {
      */
     async function clearEntitlements() {
         if (cachedEntitlements) {
-            cachedEntitlements = null;
+            cachedEntitlements = undefined;
             _debounceEntitlementsChanged();
         }
         // Reset device license state so it's re-evaluated on next entitlement check
@@ -169670,12 +169952,17 @@ define("services/login-service", function (require, exports, module) {
      *       upgradeToPlan: string, // Plan name that includes this entitlement
      *       validTill: number      // Timestamp when entitlement expires
      *     },
-     *     liveEditAI: {
+     *     aiAgent: {
      *       activated: boolean,
+     *       aiBrandName: string,
      *       subscribeURL: string,
-     *       purchaseCreditsURL: string, // URL to purchase AI credits
      *       upgradeToPlan: string,
-     *       validTill: number
+     *       validTill: number,
+     *       upsellDialog: {
+     *           title: "if activated is false, server can send a custom upsell dialog to show",
+     *           message: "this is the message to show",
+     *           buyURL: "if this url is present from server, this will be shown to as buy link"
+     *       }
      *     }
      *   }
      * }
@@ -169735,6 +170022,8 @@ define("services/login-service", function (require, exports, module) {
                 trialDaysRemaining: trialDaysRemaining,
                 entitlements: {
                     ...serverEntitlements.entitlements,
+                    // below we only override things we grant in trial. AI which is not part of trial
+                    // is always server injected. the EntitlementsManager will resolve it appropriately.
                     liveEdit: {
                         activated: true,
                         subscribeURL: brackets.config.purchase_url,
@@ -169756,6 +170045,8 @@ define("services/login-service", function (require, exports, module) {
             isInProTrial: true,
             trialDaysRemaining: trialDaysRemaining,
             entitlements: {
+                // below we only override things we grant in trial. AI which is not part of trial
+                // is always server injected. the EntitlementsManager will resolve it appropriately.
                 liveEdit: {
                     activated: true,
                     subscribeURL: brackets.config.purchase_url,
@@ -170465,6 +170756,12 @@ define("services/manage-licenses", function (require, exports, module) {
  */
 
 define("services/pro-dialogs", function (require, exports, module) {
+    const KernalModeTrust = window.KernalModeTrust;
+    if(!KernalModeTrust){
+        // integrated extensions will have access to kernal mode, but not external extensions
+        throw new Error("pro-dialogs.js should have access to KernalModeTrust. Cannot boot without trust ring");
+    }
+
     const proTitle = `<span class="phoenix-pro-title">
                     <span class="pro-plan-name">${brackets.config.main_pro_plan}</span>
                     <i class="fa-solid fa-feather orange-gold" style="margin-left: 3px;"></i>
@@ -170682,6 +170979,49 @@ define("services/pro-dialogs", function (require, exports, module) {
         }
     }
 
+    function showAIUpsellDialog(getAIEntitlementResponse) {
+        // Only show dialog if upsellDialog field is present
+        if (!getAIEntitlementResponse || !getAIEntitlementResponse.upsellDialog) {
+            return;
+        }
+
+        const upsellDialog = getAIEntitlementResponse.upsellDialog;
+        const title = upsellDialog.title;
+        const message = upsellDialog.message;
+        const buyURL = upsellDialog.buyURL;
+        const needsLogin = getAIEntitlementResponse.needsLogin;
+
+        let buttons;
+        if (needsLogin || buyURL) {
+            // Show primary action button and Cancel
+            const primaryButtonText = needsLogin ? Strings.PROFILE_SIGN_IN : Strings.AI_LOGIN_DIALOG_BUTTON;
+            buttons = [
+                { className: Dialogs.DIALOG_BTN_CLASS_NORMAL, id: Dialogs.DIALOG_BTN_CANCEL, text: Strings.CANCEL },
+                { className: Dialogs.DIALOG_BTN_CLASS_PRIMARY, id: "mainAction", text: primaryButtonText }
+            ];
+        } else {
+            // Show only OK button (for disabled AI messages)
+            buttons = [
+                { className: Dialogs.DIALOG_BTN_CLASS_PRIMARY, id: Dialogs.DIALOG_BTN_OK, text: Strings.OK }
+            ];
+        }
+
+        Dialogs.showModalDialog(Dialogs.DIALOG_ID_INFO, title, message, buttons).done(function (id) {
+            Metrics.countEvent(Metrics.EVENT_TYPE.AI, "dlgUpsell", "show");
+            if(id === 'mainAction') {
+                if (needsLogin) {
+                    Metrics.countEvent(Metrics.EVENT_TYPE.AI, "dlgUpsell", "signIn");
+                    KernalModeTrust.EntitlementsManager.loginToAccount();
+                } else {
+                    Metrics.countEvent(Metrics.EVENT_TYPE.AI, "dlgUpsell", "buyClick");
+                    Phoenix.app.openURLInDefaultBrowser(buyURL);
+                }
+            } else {
+                Metrics.countEvent(Metrics.EVENT_TYPE.AI, "dlgUpsell", id);
+            }
+        });
+    }
+
     if (Phoenix.isTestWindow) {
         window._test_pro_dlg_login_exports = {
             setFetchFn: function _setDdateNowFn(fn) {
@@ -170692,6 +171032,7 @@ define("services/pro-dialogs", function (require, exports, module) {
 
     exports.showProTrialStartDialog = showProTrialStartDialog;
     exports.showProUpsellDialog = showProUpsellDialog;
+    exports.showAIUpsellDialog = showAIUpsellDialog;
     exports.UPSELL_TYPE_PRO_TRIAL_ENDED = UPSELL_TYPE_PRO_TRIAL_ENDED;
     exports.UPSELL_TYPE_GET_PRO = UPSELL_TYPE_GET_PRO;
     exports.UPSELL_TYPE_LIVE_EDIT = UPSELL_TYPE_LIVE_EDIT;
