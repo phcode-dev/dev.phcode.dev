@@ -71322,6 +71322,7 @@ define("nls/ar/strings", {
   "CMD_HOW_TO_USE_BRACKETS": "كيفية استخدام {APP_NAME}",
   "CMD_SUPPORT": "دعم {APP_NAME}",
   "CMD_GET_PRO": "احصل على Phoenix Pro",
+  "CMD_MANAGE_LICENSES": "إدارة التراخيص",
   "CMD_USER_PROFILE": "حساب {APP_NAME}",
   "CMD_DOCS": "مساعدة، البدء",
   "CMD_SUGGEST": "اقتراح ميزة",
@@ -72264,7 +72265,6 @@ define("nls/ar/strings", {
   "PROMO_PRO_UNLOCK_MESSAGE": "اشترك الآن لإلغاء قفل هذه الميزات المتقدمة:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "النسخة التجريبية من Phoenix Pro ({0} أيام متبقية)",
   "GET_PHOENIX_PRO": "احصل على Phoenix Pro",
-  "CMD_MANAGE_LICENSES": "إدارة التراخيص",
   "MANAGE_LICENSE_DIALOG_TITLE": "إدارة ترخيص الجهاز",
   "LICENSE_KEY": "مفتاح الترخيص",
   "LICENSE_KEY_ACTIVATE": "تفعيل الترخيص",
@@ -72286,7 +72286,17 @@ define("nls/ar/strings", {
   "LICENSE_ACTIVATE_FAIL": "فشل تفعيل الترخيص",
   "LICENSE_ACTIVATE_FAIL_APPLY": "فشل تطبيق الترخيص على الجهاز",
   "LICENSE_ENTER_KEY": "الرجاء إدخال مفتاح الترخيص",
-  "LICENSE_REAPPLY_TO_DEVICE": "تم التنشيط بالفعل؟ إعادة التطبيق على مستوى النظام"
+  "LICENSE_REAPPLY_TO_DEVICE": "تم التنشيط بالفعل؟ إعادة التطبيق على مستوى النظام",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "لم يتم تحميل الملحق. إنه إما مهمل أو غير آمن.",
+  "AI_LOGIN_DIALOG_TITLE": "تسجيل الدخول لاستخدام تعديلات الذكاء الاصطناعي",
+  "AI_LOGIN_DIALOG_MESSAGE": "يرجى تسجيل الدخول لاستخدام التعديلات المدعومة بالذكاء الاصطناعي",
+  "AI_LOGIN_DIALOG_BUTTON": "الحصول على وصول للذكاء الاصطناعي",
+  "AI_DISABLED_DIALOG_TITLE": "الذكاء الاصطناعي معطل",
+  "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "لم يتم العثور على ملف تكوين الذكاء الاصطناعي في النظام. الذكاء الاصطناعي ممكّن لجميع المستخدمين.",
+  "AI_CONTROL_ALL_ALLOWED": "الذكاء الاصطناعي ممكّن لجميع المستخدمين.",
+  "AI_CONTROL_USER_ALLOWED": "الذكاء الاصطناعي ممكّن للمستخدم ({0}) ولكنه معطل للآخرين",
+  "AI_CONTROL_ADMIN_DISABLED": "قام مسؤول النظام بتعطيل الوصول إلى الذكاء الاصطناعي",
+  "AI_CONTROL_ADMIN_DISABLED_CONTACT": "قام مسؤول النظام بتعطيل الوصول إلى الذكاء الاصطناعي. يرجى الاتصال بـ {0} للحصول على المساعدة."
 });
 /*
  * GNU AGPL-3.0 License
@@ -72974,6 +72984,7 @@ define("nls/bg/strings", {
   "EXTENSION_INCOMPATIBLE_NEWER": "Това разширение изисква по-ново издание на {APP_NAME}.",
   "EXTENSION_INCOMPATIBLE_OLDER": "Това разширение в момента работи само с по-стари издания на {APP_NAME}.",
   "EXTENSION_DEFAULT_FEATURE_PRESENT": "Може би не се нуждаете от това разширение. {APP_NAME} вече има тази функция.",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Разширението не е заредено. То е или остаряло, или несигурно.",
   "EXTENSION_LATEST_INCOMPATIBLE_NEWER": "Версия {0} на това разширение изисква по-ново издание на {APP_NAME}. Но можете да инсталирате по-старата версия {1}.",
   "EXTENSION_LATEST_INCOMPATIBLE_OLDER": "Версия {0} на това разширение работи само с по-стари издания на {APP_NAME}. Но можете да инсталирате по-старата версия {1}.",
   "EXTENSION_NO_DESCRIPTION": "Няма описание",
@@ -73797,7 +73808,17 @@ define("nls/bg/strings", {
   "LICENSE_ACTIVATE_FAIL_APPLY": "Неуспешно прилагане на лиценза към устройството",
   "LICENSE_ENTER_KEY": "Моля, въведете лицензен ключ",
   "LICENSE_REAPPLY_TO_DEVICE": "Вече активиран? Приложете отново системно",
-  "EXTENSION_DEPRECATED_NOT_LOADED": "Разширението не е заредено. То е или остаряло, или несигурно."
+  "AI_LOGIN_DIALOG_TITLE": "Влезте, за да използвате AI редакции",
+  "AI_LOGIN_DIALOG_MESSAGE": "Моля, влезте, за да използвате редакции с AI",
+  "AI_LOGIN_DIALOG_BUTTON": "Получете достъп до AI",
+  "AI_DISABLED_DIALOG_TITLE": "AI е деактивиран",
+  "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "В системата не е намерен конфигурационен файл за AI. AI е активиран за всички потребители.",
+  "AI_CONTROL_ALL_ALLOWED": "AI е активиран за всички потребители.",
+  "AI_CONTROL_USER_ALLOWED": "AI е активиран за потребител ({0}), но е деактивиран за останалите.",
+  "AI_CONTROL_ADMIN_DISABLED": "Достъпът до AI е деактивиран от вашия системен администратор.",
+  "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Достъпът до AI е деактивиран от вашия системен администратор. Моля, свържете се с {0} за съдействие.",
+  "AI_UPSELL_DIALOG_TITLE": "Да продължите ли с {0}?",
+  "AI_UPSELL_DIALOG_MESSAGE": "Открихте редакциите с изкуствен интелект. За да продължите, ще ви е необходим абонамент за ИИ или кредити."
 });
 /*
  * Copyright (c) 2013 Adobe Systems Incorporated. All rights reserved.
@@ -74514,6 +74535,7 @@ define("nls/cs/strings", {
   "EXTENSION_INCOMPATIBLE_NEWER": "Tento doplněk požaduje novější verzi {APP_NAME}.",
   "EXTENSION_INCOMPATIBLE_OLDER": "Tento doplněk funguje pouze ve starší verzi {APP_NAME}.",
   "EXTENSION_DEFAULT_FEATURE_PRESENT": "Toto rozšíření pravděpodobně nepotřebujete. {APP_NAME} tuto funkci již obsahuje.",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Rozšíření nebylo načteno. Je buď zastaralé, nebo nezabezpečené.",
   "EXTENSION_LATEST_INCOMPATIBLE_NEWER": "Verze {0} tohoto doplňku vyžaduje novější verzi {APP_NAME}. Můžete si ale nainstalovat dřívější verzi {1}.",
   "EXTENSION_LATEST_INCOMPATIBLE_OLDER": "Verze {0} tohoto doplňku funguje pouze se starší verzí {APP_NAME}. Můžete si ale nainstalovat dřívější verzi {1}.",
   "EXTENSION_NO_DESCRIPTION": "Bez popisu",
@@ -75337,7 +75359,17 @@ define("nls/cs/strings", {
   "LICENSE_ACTIVATE_FAIL_APPLY": "Nepodařilo se aplikovat licenci na zařízení.",
   "LICENSE_ENTER_KEY": "Zadejte prosím licenční klíč.",
   "LICENSE_REAPPLY_TO_DEVICE": "Již aktivováno? Znovu aplikovat pro celý systém.",
-  "EXTENSION_DEPRECATED_NOT_LOADED": "Rozšíření nebylo načteno. Je buď zastaralé, nebo nezabezpečené."
+  "AI_LOGIN_DIALOG_TITLE": "Přihlaste se k používání úprav pomocí AI",
+  "AI_LOGIN_DIALOG_MESSAGE": "Pro používání úprav s podporou AI se prosím přihlaste",
+  "AI_LOGIN_DIALOG_BUTTON": "Získat přístup k AI",
+  "AI_DISABLED_DIALOG_TITLE": "AI je zakázána",
+  "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "V systému nebyl nalezen žádný konfigurační soubor AI. AI je povolena pro všechny uživatele.",
+  "AI_CONTROL_ALL_ALLOWED": "AI je povolena pro všechny uživatele.",
+  "AI_CONTROL_USER_ALLOWED": "AI je povolena pro uživatele ({0}), ale pro ostatní je zakázána.",
+  "AI_CONTROL_ADMIN_DISABLED": "Přístup k AI byl zakázán správcem systému.",
+  "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Přístup k AI byl zakázán správcem systému. Pro pomoc prosím kontaktujte {0}.",
+  "AI_UPSELL_DIALOG_TITLE": "Pokračovat s {0}?",
+  "AI_UPSELL_DIALOG_MESSAGE": "Objevili jste úpravy s podporou AI. Chcete-li pokračovat, budete potřebovat předplatné AI nebo kredity."
 });
 /*
  * GNU AGPL-3.0 License
@@ -76052,6 +76084,7 @@ define("nls/da/strings", {
   "EXTENSION_INCOMPATIBLE_NEWER": "Denne udvidelse kræver en nyere version af {APP_NAME}.",
   "EXTENSION_INCOMPATIBLE_OLDER": "Denne udvidelse virker i øjeblikket kun med ældre versioner af {APP_NAME}.",
   "EXTENSION_DEFAULT_FEATURE_PRESENT": "Du har muligvis ikke brug for denne udvidelse. {APP_NAME} har allerede denne funktion.",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Udvidelse ikke indlæst. Den er enten forældet eller usikker.",
   "EXTENSION_LATEST_INCOMPATIBLE_NEWER": "Version {0} af denne udvidelse kræver en nyere version af {APP_NAME}. Men du kan installere den tidligere version {1}.",
   "EXTENSION_LATEST_INCOMPATIBLE_OLDER": "Version {0} af denne udvidelse virker kun med en ældre version af {APP_NAME}. Men du kan installere den tidligere version {1}.",
   "EXTENSION_NO_DESCRIPTION": "Ingen beskrivelse",
@@ -76875,7 +76908,17 @@ define("nls/da/strings", {
   "LICENSE_ACTIVATE_FAIL_APPLY": "Kunne ikke anvende licens på enheden",
   "LICENSE_ENTER_KEY": "Indtast venligst en licensnøgle",
   "LICENSE_REAPPLY_TO_DEVICE": "Allerede aktiveret? Genanvend for hele systemet",
-  "EXTENSION_DEPRECATED_NOT_LOADED": "Udvidelse ikke indlæst. Den er enten forældet eller usikker."
+  "AI_LOGIN_DIALOG_TITLE": "Log ind for at bruge AI-redigeringer",
+  "AI_LOGIN_DIALOG_MESSAGE": "Log venligst ind for at bruge AI-drevne redigeringer",
+  "AI_LOGIN_DIALOG_BUTTON": "Få AI-adgang",
+  "AI_DISABLED_DIALOG_TITLE": "AI er deaktiveret",
+  "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "Ingen AI-konfigurationsfil fundet i systemet. AI er aktiveret for alle brugere.",
+  "AI_CONTROL_ALL_ALLOWED": "AI er aktiveret for alle brugere.",
+  "AI_CONTROL_USER_ALLOWED": "AI er aktiveret for bruger ({0}), men deaktiveret for andre",
+  "AI_CONTROL_ADMIN_DISABLED": "Adgang til AI er blevet deaktiveret af din systemadministrator",
+  "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Adgang til AI er blevet deaktiveret af din systemadministrator. Kontakt venligst {0} for hjælp.",
+  "AI_UPSELL_DIALOG_TITLE": "Fortsæt med {0}?",
+  "AI_UPSELL_DIALOG_MESSAGE": "Du har opdaget AI-drevne redigeringer. For at fortsætte skal du bruge et AI-abonnement eller kreditter."
 });
 /*
  * GNU AGPL-3.0 License
@@ -77588,6 +77631,7 @@ define("nls/de/strings", {
   "EXTENSION_INCOMPATIBLE_NEWER": "Diese Erweiterung benötigt eine neuere Version von {APP_NAME}.",
   "EXTENSION_INCOMPATIBLE_OLDER": "Diese Erweiterung funktioniert momentan nur mit älteren Versionen von {APP_NAME}.",
   "EXTENSION_DEFAULT_FEATURE_PRESENT": "Sie benötigen diese Erweiterung möglicherweise nicht. {APP_NAME} verfügt bereits über diese Funktion.",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Erweiterung nicht geladen. Sie ist entweder veraltet oder unsicher.",
   "EXTENSION_LATEST_INCOMPATIBLE_NEWER": "Die Version {0} dieser Erweiterung benötigt eine neuere Version von {APP_NAME}. Sie können jedoch die ältere Version {1} installieren.",
   "EXTENSION_LATEST_INCOMPATIBLE_OLDER": "Die Version {0} dieser Erweiterung funktioniert nur mit älteren Versionen von {APP_NAME}. Sie können jedoch die ältere Version {1} installieren.",
   "EXTENSION_NO_DESCRIPTION": "Keine Beschreibung",
@@ -78411,7 +78455,17 @@ define("nls/de/strings", {
   "LICENSE_ACTIVATE_FAIL_APPLY": "Die Lizenz konnte nicht auf das Gerät angewendet werden.",
   "LICENSE_ENTER_KEY": "Bitte geben Sie einen Lizenzschlüssel ein.",
   "LICENSE_REAPPLY_TO_DEVICE": "Bereits aktiviert? Systemweit erneut anwenden.",
-  "EXTENSION_DEPRECATED_NOT_LOADED": "Erweiterung nicht geladen. Sie ist entweder veraltet oder unsicher."
+  "AI_LOGIN_DIALOG_TITLE": "Für KI-Bearbeitungen anmelden",
+  "AI_LOGIN_DIALOG_MESSAGE": "Bitte melden Sie sich an, um KI-gestützte Bearbeitungen zu nutzen.",
+  "AI_LOGIN_DIALOG_BUTTON": "KI-Zugriff erhalten",
+  "AI_DISABLED_DIALOG_TITLE": "KI ist deaktiviert",
+  "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "Keine KI-Konfigurationsdatei im System gefunden. KI ist für alle Benutzer aktiviert.",
+  "AI_CONTROL_ALL_ALLOWED": "KI ist für alle Benutzer aktiviert.",
+  "AI_CONTROL_USER_ALLOWED": "KI ist für Benutzer ({0}) aktiviert, aber für andere deaktiviert.",
+  "AI_CONTROL_ADMIN_DISABLED": "Der KI-Zugriff wurde von Ihrem Systemadministrator deaktiviert.",
+  "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Der KI-Zugriff wurde von Ihrem Systemadministrator deaktiviert. Bitte kontaktieren Sie {0} für Unterstützung.",
+  "AI_UPSELL_DIALOG_TITLE": "Mit {0} fortfahren?",
+  "AI_UPSELL_DIALOG_MESSAGE": "Sie haben KI-gestützte Bearbeitungen entdeckt. Um fortzufahren, benötigen Sie ein KI-Abonnement oder Guthaben."
 });
 /*
  * GNU AGPL-3.0 License
@@ -79126,6 +79180,7 @@ define("nls/el/strings", {
   "EXTENSION_INCOMPATIBLE_NEWER": "Αυτή η επέκταση απαιτεί νεότερη έκδοση του {APP_NAME}.",
   "EXTENSION_INCOMPATIBLE_OLDER": "Αυτή η επέκταση προς το παρόν δουλεύει μόνο με παλαιότερες εκδόσεις του {APP_NAME}.",
   "EXTENSION_DEFAULT_FEATURE_PRESENT": "Μπορεί να μην χρειάζεστε αυτήν την επέκταση. Το {APP_NAME} διαθέτει ήδη αυτήν τη λειτουργία.",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Η επέκταση δεν φορτώθηκε. Είναι είτε καταργημένη είτε μη ασφαλής.",
   "EXTENSION_LATEST_INCOMPATIBLE_NEWER": "Η έκδοση {0} αυτής της επέκτασης απαιτεί μια νεότερη έκδοση του {APP_NAME}. Αλλά μπορείτε να εγκαταστήσετε την προηγούμενη έκδοση {1}.",
   "EXTENSION_LATEST_INCOMPATIBLE_OLDER": "Η έκδοση {0} αυτής της επέκτασης λειτουργεί μόνο με παλαιότερες εκδόσεις του {APP_NAME}. Αλλά μπορείτε να εγκαταστήσετε την προηγούμενη έκδοση {1}.",
   "EXTENSION_NO_DESCRIPTION": "Δεν υπάρχει περιγραφή",
@@ -79949,7 +80004,17 @@ define("nls/el/strings", {
   "LICENSE_ACTIVATE_FAIL_APPLY": "Αποτυχία εφαρμογής της άδειας χρήσης στη συσκευή",
   "LICENSE_ENTER_KEY": "Παρακαλώ, εισαγάγετε ένα κλειδί άδειας χρήσης",
   "LICENSE_REAPPLY_TO_DEVICE": "Έχει ήδη ενεργοποιηθεί; Επανεφαρμογή σε όλο το σύστημα",
-  "EXTENSION_DEPRECATED_NOT_LOADED": "Η επέκταση δεν φορτώθηκε. Είναι είτε καταργημένη είτε μη ασφαλής."
+  "AI_LOGIN_DIALOG_TITLE": "Συνδεθείτε για να Χρησιμοποιήσετε τις Επεξεργασίες AI",
+  "AI_LOGIN_DIALOG_MESSAGE": "Παρακαλούμε συνδεθείτε για να χρησιμοποιήσετε τις επεξεργασίες με την υποστήριξη AI",
+  "AI_LOGIN_DIALOG_BUTTON": "Αποκτήστε Πρόσβαση AI",
+  "AI_DISABLED_DIALOG_TITLE": "Η λειτουργία AI είναι απενεργοποιημένη",
+  "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "Δεν βρέθηκε αρχείο διαμόρφωσης AI στο σύστημα. Η λειτουργία AI είναι ενεργοποιημένη για όλους τους χρήστες.",
+  "AI_CONTROL_ALL_ALLOWED": "Η λειτουργία AI είναι ενεργοποιημένη για όλους τους χρήστες.",
+  "AI_CONTROL_USER_ALLOWED": "Η λειτουργία AI είναι ενεργοποιημένη για τον χρήστη ({0}) αλλά απενεργοποιημένη για τους άλλους",
+  "AI_CONTROL_ADMIN_DISABLED": "Η πρόσβαση στο AI έχει απενεργοποιηθεί από τον διαχειριστή του συστήματός σας",
+  "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Η πρόσβαση στο AI έχει απενεργοποιηθεί από τον διαχειριστή του συστήματός σας. Παρακαλούμε επικοινωνήστε με {0} για βοήθεια.",
+  "AI_UPSELL_DIALOG_TITLE": "Συνέχεια με {0};",
+  "AI_UPSELL_DIALOG_MESSAGE": "Ανακαλύψατε τις επεξεργασίες με τεχνητή νοημοσύνη. Για να συνεχίσετε, θα χρειαστείτε μια συνδρομή AI ή μονάδες."
 });
 /*
  * GNU AGPL-3.0 License
@@ -80664,6 +80729,7 @@ define("nls/en-gb/strings", {
   "EXTENSION_INCOMPATIBLE_NEWER": "This extension requires a newer version of {APP_NAME}.",
   "EXTENSION_INCOMPATIBLE_OLDER": "This extension currently only works with older versions of {APP_NAME}.",
   "EXTENSION_DEFAULT_FEATURE_PRESENT": "You may not need this extension. {APP_NAME} already has this feature.",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Extension not loaded. It is either deprecated or insecure.",
   "EXTENSION_LATEST_INCOMPATIBLE_NEWER": "Version {0} of this extension requires a newer version of {APP_NAME}. But you can install the earlier version {1}.",
   "EXTENSION_LATEST_INCOMPATIBLE_OLDER": "Version {0} of this extension only works with older versions of {APP_NAME}. But you can install the earlier version {1}.",
   "EXTENSION_NO_DESCRIPTION": "No description",
@@ -81487,7 +81553,17 @@ define("nls/en-gb/strings", {
   "LICENSE_ACTIVATE_FAIL_APPLY": "Failed to apply licence to device",
   "LICENSE_ENTER_KEY": "Please enter a licence key",
   "LICENSE_REAPPLY_TO_DEVICE": "Already activated? Reapply system-wide",
-  "EXTENSION_DEPRECATED_NOT_LOADED": "Extension not loaded. It is either deprecated or insecure."
+  "AI_LOGIN_DIALOG_TITLE": "Log In to Use AI Edits",
+  "AI_LOGIN_DIALOG_MESSAGE": "Please log in to use AI-powered edits",
+  "AI_LOGIN_DIALOG_BUTTON": "Get AI Access",
+  "AI_DISABLED_DIALOG_TITLE": "AI is disabled",
+  "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "No AI config file found in system. AI is enabled for all users.",
+  "AI_CONTROL_ALL_ALLOWED": "AI is enabled for all users.",
+  "AI_CONTROL_USER_ALLOWED": "AI is enabled for user ({0}) but disabled for others",
+  "AI_CONTROL_ADMIN_DISABLED": "AI access has been disabled by your system administrator",
+  "AI_CONTROL_ADMIN_DISABLED_CONTACT": "AI access has been disabled by your system administrator. Please contact {0} for assistance.",
+  "AI_UPSELL_DIALOG_TITLE": "Continue with {0}?",
+  "AI_UPSELL_DIALOG_MESSAGE": "You’ve discovered AI-powered edits. To proceed, you’ll need an AI subscription or credits."
 });
 /*
  * GNU AGPL-3.0 License
@@ -82175,6 +82251,7 @@ define("nls/es/strings", {
   "EXTENSION_INCOMPATIBLE_NEWER": "Esta extensión necesita una versión más actualizada de {APP_NAME}.",
   "EXTENSION_INCOMPATIBLE_OLDER": "En estos momentos esta extensión sólo funciona con versiones anteriores de {APP_NAME}.",
   "EXTENSION_DEFAULT_FEATURE_PRESENT": "Puede que no necesite esta extensión. {APP_NAME} ya cuenta con esta función.",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Extensión no cargada. Está obsoleta o es insegura.",
   "EXTENSION_LATEST_INCOMPATIBLE_NEWER": "La versión {0} de esta extensión necesita una versión superior de {APP_NAME}. Puedes instalar la versión anterior {1}.",
   "EXTENSION_LATEST_INCOMPATIBLE_OLDER": "La versión {0} de esta extensión sólo funciona con versiones anteriores de {APP_NAME}. Puedes instalar la versión anterior {1}.",
   "EXTENSION_NO_DESCRIPTION": "Sin descripción",
@@ -82998,7 +83075,17 @@ define("nls/es/strings", {
   "LICENSE_ACTIVATE_FAIL_APPLY": "Error al aplicar la licencia al dispositivo",
   "LICENSE_ENTER_KEY": "Introduzca una clave de licencia",
   "LICENSE_REAPPLY_TO_DEVICE": "¿Ya está activado? Reaplicar en todo el sistema",
-  "EXTENSION_DEPRECATED_NOT_LOADED": "Extensión no cargada. Está obsoleta o es insegura."
+  "AI_LOGIN_DIALOG_TITLE": "Iniciar sesión para usar las ediciones con IA",
+  "AI_LOGIN_DIALOG_MESSAGE": "Por favor, inicia sesión para usar las ediciones con IA",
+  "AI_LOGIN_DIALOG_BUTTON": "Obtener acceso a la IA",
+  "AI_DISABLED_DIALOG_TITLE": "La IA está desactivada",
+  "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "No se ha encontrado ningún archivo de configuración de la IA en el sistema. La IA está activada para todos los usuarios.",
+  "AI_CONTROL_ALL_ALLOWED": "La IA está activada para todos los usuarios.",
+  "AI_CONTROL_USER_ALLOWED": "La IA está activada para el usuario ({0}), pero desactivada para los demás.",
+  "AI_CONTROL_ADMIN_DISABLED": "El acceso a la IA ha sido desactivado por el administrador del sistema.",
+  "AI_CONTROL_ADMIN_DISABLED_CONTACT": "El acceso a la IA ha sido desactivado por el administrador del sistema. Póngase en contacto con {0} para obtener ayuda.",
+  "AI_UPSELL_DIALOG_TITLE": "¿Continuar con {0}?",
+  "AI_UPSELL_DIALOG_MESSAGE": "Has descubierto las ediciones con IA. Para continuar, necesitarás una suscripción de IA o créditos."
 });
 /*
  * GNU AGPL-3.0 License
@@ -83572,6 +83659,7 @@ define("nls/fa-ir/strings", {
   "CMD_HOW_TO_USE_BRACKETS": "چگونگی استفاده از {APP_NAME}",
   "CMD_SUPPORT": "{APP_NAME} پشتیبانی",
   "CMD_GET_PRO": "دریافت Phoenix Pro",
+  "CMD_MANAGE_LICENSES": "مدیریت مجوزها",
   "CMD_USER_PROFILE": "حساب کاربری {APP_NAME}",
   "CMD_DOCS": "راهنما، شروع به کار",
   "CMD_SUGGEST": "پیشنهاد یک امکان جدید",
@@ -84514,7 +84602,6 @@ define("nls/fa-ir/strings", {
   "PROMO_PRO_UNLOCK_MESSAGE": "هم‌اکنون مشترک شوید تا این قابلیت‌های پیشرفته را فعال کنید:",
   "PROMO_PRO_TRIAL_DAYS_LEFT": "نسخه آزمایشی Phoenix Pro ({0} روز باقی مانده)",
   "GET_PHOENIX_PRO": "دریافت Phoenix Pro",
-  "CMD_MANAGE_LICENSES": "مدیریت مجوزها",
   "MANAGE_LICENSE_DIALOG_TITLE": "مدیریت مجوز دستگاه",
   "LICENSE_KEY": "کلید مجوز",
   "LICENSE_KEY_ACTIVATE": "فعال‌سازی مجوز",
@@ -84536,7 +84623,19 @@ define("nls/fa-ir/strings", {
   "LICENSE_ACTIVATE_FAIL": "فعال‌سازی مجوز ناموفق بود",
   "LICENSE_ACTIVATE_FAIL_APPLY": "اعمال لایسنس روی دستگاه ناموفق بود",
   "LICENSE_ENTER_KEY": "لطفاً کلید لایسنس را وارد کنید",
-  "LICENSE_REAPPLY_TO_DEVICE": "قبلاً فعال‌سازی کرده‌اید؟ اعمال مجدد برای کل سیستم"
+  "LICENSE_REAPPLY_TO_DEVICE": "قبلاً فعال‌سازی کرده‌اید؟ اعمال مجدد برای کل سیستم",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "افزونه بارگیری نشد. این افزونه یا منسوخ شده یا ناامن است.",
+  "AI_LOGIN_DIALOG_TITLE": "برای استفاده از ویرایش‌های هوش مصنوعی وارد شوید",
+  "AI_LOGIN_DIALOG_MESSAGE": "لطفاً برای استفاده از ویرایش‌های مبتنی بر هوش مصنوعی وارد شوید",
+  "AI_LOGIN_DIALOG_BUTTON": "دریافت دسترسی به هوش مصنوعی",
+  "AI_DISABLED_DIALOG_TITLE": "هوش مصنوعی غیرفعال است",
+  "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "هیچ فایل پیکربندی هوش مصنوعی در سیستم یافت نشد. هوش مصنوعی برای همه کاربران فعال است.",
+  "AI_CONTROL_ALL_ALLOWED": "هوش مصنوعی برای همه کاربران فعال است.",
+  "AI_CONTROL_USER_ALLOWED": "هوش مصنوعی برای کاربر ({0}) فعال، اما برای دیگران غیرفعال است",
+  "AI_CONTROL_ADMIN_DISABLED": "دسترسی به هوش مصنوعی توسط مدیر سیستم شما غیرفعال شده است",
+  "AI_CONTROL_ADMIN_DISABLED_CONTACT": "دسترسی به هوش مصنوعی توسط مدیر سیستم شما غیرفعال شده است. لطفاً برای راهنمایی با {0} تماس بگیرید.",
+  "AI_UPSELL_DIALOG_TITLE": "ادامه با {0}؟",
+  "AI_UPSELL_DIALOG_MESSAGE": "شما ویرایش‌های مبتنی بر هوش مصنوعی را کشف کرده‌اید. برای ادامه، به اشتراک هوش مصنوعی یا اعتبار نیاز دارید."
 });
 /*
  * GNU AGPL-3.0 License
@@ -85251,6 +85350,7 @@ define("nls/fi/strings", {
   "EXTENSION_INCOMPATIBLE_NEWER": "Tämä laajennus vaatii uudemman {APP_NAME}-version.",
   "EXTENSION_INCOMPATIBLE_OLDER": "Tämä laajennus toimii tällä hetkellä vain vanhemmilla {APP_NAME}-versioilla.",
   "EXTENSION_DEFAULT_FEATURE_PRESENT": "Et ehkä tarvitse tätä laajennusta. {APP_NAME}-sovelluksessa on jo tämä ominaisuus.",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Laajennusta ei ladattu. Se on joko vanhentunut tai turvaton.",
   "EXTENSION_LATEST_INCOMPATIBLE_NEWER": "Tämän laajennuksen versio {0} vaatii uudemman {APP_NAME}-version, mutta voit asentaa aikaisemman version {1}.",
   "EXTENSION_LATEST_INCOMPATIBLE_OLDER": "Tämän laajennuksen versio {0} toimii vain vanhemmilla {APP_NAME}-versioilla, mutta voit asentaa aikaisemman version {1}.",
   "EXTENSION_NO_DESCRIPTION": "Ei kuvausta",
@@ -86074,7 +86174,17 @@ define("nls/fi/strings", {
   "LICENSE_ACTIVATE_FAIL_APPLY": "Lisenssin käyttöönotto laitteeseen epäonnistui.",
   "LICENSE_ENTER_KEY": "Syötä lisenssiavain.",
   "LICENSE_REAPPLY_TO_DEVICE": "Jo aktivoitu? Ota käyttöön järjestelmänlaajuisesti.",
-  "EXTENSION_DEPRECATED_NOT_LOADED": "Laajennusta ei ladattu. Se on joko vanhentunut tai turvaton."
+  "AI_LOGIN_DIALOG_TITLE": "Kirjaudu sisään käyttääksesi tekoälymuokkauksia",
+  "AI_LOGIN_DIALOG_MESSAGE": "Kirjaudu sisään käyttääksesi tekoälyavusteisia muokkauksia",
+  "AI_LOGIN_DIALOG_BUTTON": "Hanki tekoälyn käyttöoikeus",
+  "AI_DISABLED_DIALOG_TITLE": "Tekoäly on poistettu käytöstä",
+  "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "Järjestelmästä ei löytynyt tekoälyn asetustiedostoa. Tekoäly on käytössä kaikilla käyttäjillä.",
+  "AI_CONTROL_ALL_ALLOWED": "Tekoäly on käytössä kaikilla käyttäjillä.",
+  "AI_CONTROL_USER_ALLOWED": "Tekoäly on käytössä käyttäjällä ({0}), mutta poissa käytöstä muilta.",
+  "AI_CONTROL_ADMIN_DISABLED": "Järjestelmänvalvoja on poistanut tekoälyn käytöstä.",
+  "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Järjestelmänvalvoja on poistanut tekoälyn käytöstä. Ota yhteyttä {0} saadaksesi apua.",
+  "AI_UPSELL_DIALOG_TITLE": "Jatketaanko {0}:n kanssa?",
+  "AI_UPSELL_DIALOG_MESSAGE": "Olet löytänyt tekoälyavusteiset muokkaukset. Jatkaaksesi tarvitset tekoälytilauksen tai krediittejä."
 });
 /*
  * GNU AGPL-3.0 License
@@ -86789,6 +86899,7 @@ define("nls/fr/strings", {
   "EXTENSION_INCOMPATIBLE_NEWER": "Cette extension nécessite une version plus récente de l’application {APP_NAME}.",
   "EXTENSION_INCOMPATIBLE_OLDER": "Cette extension n’est actuellement compatible qu’avec les versions antérieures de l’application {APP_NAME}.",
   "EXTENSION_DEFAULT_FEATURE_PRESENT": "Vous n'avez peut-être pas besoin de cette extension. {APP_NAME} possède déjà cette fonctionnalité.",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Extension non chargée. Elle est soit obsolète, soit non sécurisée.",
   "EXTENSION_LATEST_INCOMPATIBLE_NEWER": "La version {0} de cette extension nécessite une version plus récente de {APP_NAME}. Mais vous pouvez installer la version antérieure {1}.",
   "EXTENSION_LATEST_INCOMPATIBLE_OLDER": "La version {0} de cette extension n’est compatible qu’avec les anciennes versions de {APP_NAME}. Mais vous pouvez installer la version antérieure {1}.",
   "EXTENSION_NO_DESCRIPTION": "Aucune description",
@@ -87612,7 +87723,17 @@ define("nls/fr/strings", {
   "LICENSE_ACTIVATE_FAIL_APPLY": "Échec de l'application de la licence à l'appareil",
   "LICENSE_ENTER_KEY": "Veuillez saisir une clé de licence",
   "LICENSE_REAPPLY_TO_DEVICE": "Déjà activée ? Réappliquer à l'échelle du système",
-  "EXTENSION_DEPRECATED_NOT_LOADED": "Extension non chargée. Elle est soit obsolète, soit non sécurisée."
+  "AI_LOGIN_DIALOG_TITLE": "Connectez-vous pour utiliser les modifications IA",
+  "AI_LOGIN_DIALOG_MESSAGE": "Veuillez vous connecter pour utiliser les modifications assistées par IA",
+  "AI_LOGIN_DIALOG_BUTTON": "Accéder à l'IA",
+  "AI_DISABLED_DIALOG_TITLE": "L'IA est désactivée",
+  "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "Aucun fichier de configuration IA trouvé dans le système. L'IA est activée pour tous les utilisateurs.",
+  "AI_CONTROL_ALL_ALLOWED": "L'IA est activée pour tous les utilisateurs.",
+  "AI_CONTROL_USER_ALLOWED": "L'IA est activée pour l'utilisateur ({0}) mais désactivée pour les autres",
+  "AI_CONTROL_ADMIN_DISABLED": "L'accès à l'IA a été désactivé par votre administrateur système",
+  "AI_CONTROL_ADMIN_DISABLED_CONTACT": "L'accès à l'IA a été désactivé par votre administrateur système. Veuillez contacter {0} pour obtenir de l'aide.",
+  "AI_UPSELL_DIALOG_TITLE": "Continuer avec {0} ?",
+  "AI_UPSELL_DIALOG_MESSAGE": "Vous avez découvert les modifications assistées par l'IA. Pour continuer, vous aurez besoin d'un abonnement IA ou de crédits."
 });
 /*
  * GNU AGPL-3.0 License
@@ -88327,6 +88448,7 @@ define("nls/gl/strings", {
   "EXTENSION_INCOMPATIBLE_NEWER": "Esta extensión necesita unha versión máis actualizada de {APP_NAME}.",
   "EXTENSION_INCOMPATIBLE_OLDER": "Nestes momentos esta extensión só funciona con versións anteriores de {APP_NAME}.",
   "EXTENSION_DEFAULT_FEATURE_PRESENT": "Pode que non necesites esta extensión. {APP_NAME} xa ten esta funcionalidade.",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Extensión non cargada. Está obsoleta ou é insegura.",
   "EXTENSION_LATEST_INCOMPATIBLE_NEWER": "A versión {0} de esta extensión precisa unha versión superior de {APP_NAME}. Podes instalar a versión anterior {1}.",
   "EXTENSION_LATEST_INCOMPATIBLE_OLDER": "A versión {0} de esta extensión só funciona con versións anteriores de {APP_NAME}. Podes instalar a versión anterior {1}.",
   "EXTENSION_NO_DESCRIPTION": "Sen descripción",
@@ -89150,7 +89272,17 @@ define("nls/gl/strings", {
   "LICENSE_ACTIVATE_FAIL_APPLY": "Non se puido aplicar a licenza ao dispositivo",
   "LICENSE_ENTER_KEY": "Introduza unha clave de licenza",
   "LICENSE_REAPPLY_TO_DEVICE": "Xa está activado? Reaplicar en todo o sistema",
-  "EXTENSION_DEPRECATED_NOT_LOADED": "Extensión non cargada. Está obsoleta ou é insegura."
+  "AI_LOGIN_DIALOG_TITLE": "Iniciar sesión para usar as edicións con IA",
+  "AI_LOGIN_DIALOG_MESSAGE": "Por favor, inicie sesión para usar as edicións con IA",
+  "AI_LOGIN_DIALOG_BUTTON": "Obter acceso á IA",
+  "AI_DISABLED_DIALOG_TITLE": "A IA está desactivada",
+  "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "Non se atopou ningún ficheiro de configuración da IA no sistema. A IA está activada para todos os usuarios.",
+  "AI_CONTROL_ALL_ALLOWED": "A IA está activada para todos os usuarios.",
+  "AI_CONTROL_USER_ALLOWED": "A IA está activada para o usuario ({0}), pero desactivada para os demais",
+  "AI_CONTROL_ADMIN_DISABLED": "O acceso á IA foi desactivado polo seu administrador do sistema",
+  "AI_CONTROL_ADMIN_DISABLED_CONTACT": "O acceso á IA foi desactivado polo seu administrador do sistema. Póñase en contacto con {0} para obter axuda.",
+  "AI_UPSELL_DIALOG_TITLE": "Continuar con {0}?",
+  "AI_UPSELL_DIALOG_MESSAGE": "Descubriches as edicións con IA. Para continuar, necesitarás unha subscrición de IA ou créditos."
 });
 /*
  * GNU AGPL-3.0 License
@@ -89838,6 +89970,7 @@ define("nls/hi/strings", {
   "EXTENSION_INCOMPATIBLE_NEWER": "इस एक्सटेंशन के लिए {APP_NAME} के नए संस्करण की आवश्यकता है।",
   "EXTENSION_INCOMPATIBLE_OLDER": "यह एक्सटेंशन वर्तमान में केवल {APP_NAME} के पुराने संस्करणों के साथ काम करता है।",
   "EXTENSION_DEFAULT_FEATURE_PRESENT": "आपको इस एक्सटेंशन की आवश्यकता नहीं हो सकती है। {APP_NAME} में यह सुविधा पहले से मौजूद है।",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "एक्सटेंशन लोड नहीं हुआ। यह या तो अप्रचलित है या असुरक्षित।",
   "EXTENSION_LATEST_INCOMPATIBLE_NEWER": "इस एक्सटेंशन के संस्करण {0} के लिए {APP_NAME} के नए संस्करण की आवश्यकता है। लेकिन आप पुराना संस्करण {1} इंस्टॉल कर सकते हैं।",
   "EXTENSION_LATEST_INCOMPATIBLE_OLDER": "इस एक्सटेंशन का संस्करण {0} केवल {APP_NAME} के पुराने संस्करणों के साथ काम करता है। लेकिन आप पुराना संस्करण {1} इंस्टॉल कर सकते हैं।",
   "EXTENSION_NO_DESCRIPTION": "कोई विवरण नहीं",
@@ -90661,7 +90794,17 @@ define("nls/hi/strings", {
   "LICENSE_ACTIVATE_FAIL_APPLY": "डिवाइस पर लाइसेंस लागू करने में विफल",
   "LICENSE_ENTER_KEY": "कृपया लाइसेंस कुंजी दर्ज करें",
   "LICENSE_REAPPLY_TO_DEVICE": "पहले से सक्रिय है? सिस्टम-व्यापी पुनः लागू करें",
-  "EXTENSION_DEPRECATED_NOT_LOADED": "एक्सटेंशन लोड नहीं हुआ। यह या तो अप्रचलित है या असुरक्षित।"
+  "AI_LOGIN_DIALOG_TITLE": "AI एडिट्स का उपयोग करने के लिए साइन इन करें",
+  "AI_LOGIN_DIALOG_MESSAGE": "कृपया AI-संचालित एडिट्स का उपयोग करने के लिए लॉग इन करें",
+  "AI_LOGIN_DIALOG_BUTTON": "AI एक्सेस पाएँ",
+  "AI_DISABLED_DIALOG_TITLE": "AI अक्षम है",
+  "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "सिस्टम में कोई AI कॉन्फ़िग फ़ाइल नहीं मिली। AI सभी उपयोगकर्ताओं के लिए सक्षम है।",
+  "AI_CONTROL_ALL_ALLOWED": "AI सभी उपयोगकर्ताओं के लिए सक्षम है।",
+  "AI_CONTROL_USER_ALLOWED": "AI उपयोगकर्ता ({0}) के लिए सक्षम है, लेकिन दूसरों के लिए अक्षम है।",
+  "AI_CONTROL_ADMIN_DISABLED": "आपके सिस्टम एडमिनिस्ट्रेटर द्वारा AI एक्सेस अक्षम कर दिया गया है।",
+  "AI_CONTROL_ADMIN_DISABLED_CONTACT": "आपके सिस्टम एडमिनिस्ट्रेटर द्वारा AI एक्सेस अक्षम कर दिया गया है। सहायता के लिए कृपया {0} से संपर्क करें।",
+  "AI_UPSELL_DIALOG_TITLE": "{0} के साथ जारी रखें?",
+  "AI_UPSELL_DIALOG_MESSAGE": "आपने AI-संचालित संपादन खोजे हैं। आगे बढ़ने के लिए, आपको AI सदस्यता या क्रेडिट की आवश्यकता होगी।"
 });
 /*
  * GNU AGPL-3.0 License
@@ -91349,6 +91492,7 @@ define("nls/hr/strings", {
   "EXTENSION_INCOMPATIBLE_NEWER": "Ova extenzija zahtjeva noviju verziju aplikacije {APP_NAME}.",
   "EXTENSION_INCOMPATIBLE_OLDER": "Ova extenzija trenutno radi samo sa starijom verzijom aplikacije {APP_NAME}.",
   "EXTENSION_DEFAULT_FEATURE_PRESENT": "Ovaj proširak vam možda neće biti potreban. {APP_NAME} već ima ovu značajku.",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Proširenje nije učitano. Ili je zastarjelo ili nesigurno.",
   "EXTENSION_LATEST_INCOMPATIBLE_NEWER": "Verzija {0} ove ekstenzije traži noviju verziju aplikacije {APP_NAME}. Ali možete instalirati raniju verziju {1}.",
   "EXTENSION_LATEST_INCOMPATIBLE_OLDER": "Verzija {0} ove ekstenzije radi samo sa starijim verzijama aplikacije {APP_NAME}. Ali možete instalirati raniju verziju {1}.",
   "EXTENSION_NO_DESCRIPTION": "Nema opisa",
@@ -92172,7 +92316,17 @@ define("nls/hr/strings", {
   "LICENSE_ACTIVATE_FAIL_APPLY": "Nije uspjelo primijeniti licencu na uređaj",
   "LICENSE_ENTER_KEY": "Molimo unesite licencni ključ",
   "LICENSE_REAPPLY_TO_DEVICE": "Već aktivirano? Ponovno primijenite na cijeli sustav",
-  "EXTENSION_DEPRECATED_NOT_LOADED": "Proširenje nije učitano. Ili je zastarjelo ili nesigurno."
+  "AI_LOGIN_DIALOG_TITLE": "Prijavite se za korištenje AI uređivanja",
+  "AI_LOGIN_DIALOG_MESSAGE": "Molimo prijavite se za korištenje AI uređivanja.",
+  "AI_LOGIN_DIALOG_BUTTON": "Pristupite AI-ju",
+  "AI_DISABLED_DIALOG_TITLE": "AI je onemogućen",
+  "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "U sustavu nije pronađena AI konfiguracijska datoteka. AI je omogućen za sve korisnike.",
+  "AI_CONTROL_ALL_ALLOWED": "AI je omogućen za sve korisnike.",
+  "AI_CONTROL_USER_ALLOWED": "AI je omogućen za korisnika ({0}), ali je onemogućen za ostale.",
+  "AI_CONTROL_ADMIN_DISABLED": "Pristup AI-ju onemogućio je vaš administrator sustava.",
+  "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Pristup AI-ju onemogućio je vaš administrator sustava. Molimo kontaktirajte {0} za pomoć.",
+  "AI_UPSELL_DIALOG_TITLE": "Nastaviti s {0}?",
+  "AI_UPSELL_DIALOG_MESSAGE": "Otkrili ste uređivanja pomoću umjetne inteligencije. Za nastavak vam je potrebna pretplata za AI ili krediti."
 });
 /*
  * GNU AGPL-3.0 License
@@ -92887,6 +93041,7 @@ define("nls/hu/strings", {
   "EXTENSION_INCOMPATIBLE_NEWER": "Ez a bővítmény csak a {APP_NAME} újabb verziójához jó.",
   "EXTENSION_INCOMPATIBLE_OLDER": "Ez a bővítmény csak a {APP_NAME} régebbi verziójához jó",
   "EXTENSION_DEFAULT_FEATURE_PRESENT": "Lehet, hogy nincs szüksége erre a bővítményre. A(z) {APP_NAME} már rendelkezik ezzel a funkcióval.",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "A bővítmény nem töltődött be. Vagy elavult, vagy nem biztonságos.",
   "EXTENSION_LATEST_INCOMPATIBLE_NEWER": "A bővítmény {0} verziója a(z) {APP_NAME} újabb verzióját igényli. Telepítheti azonban a korábbi {1} verziót.",
   "EXTENSION_LATEST_INCOMPATIBLE_OLDER": "A bővítmény {0} verziója csak a(z) {APP_NAME} régebbi verzióival működik. Telepítheti azonban a korábbi {1} verziót.",
   "EXTENSION_NO_DESCRIPTION": "Nincs leírás",
@@ -93710,7 +93865,17 @@ define("nls/hu/strings", {
   "LICENSE_ACTIVATE_FAIL_APPLY": "Nem sikerült a licencet az eszközre alkalmazni.",
   "LICENSE_ENTER_KEY": "Kérjük, adja meg a licenckulcsot.",
   "LICENSE_REAPPLY_TO_DEVICE": "Már aktiválta? Újraalkalmazás rendszerszinten.",
-  "EXTENSION_DEPRECATED_NOT_LOADED": "A bővítmény nem töltődött be. Vagy elavult, vagy nem biztonságos."
+  "AI_LOGIN_DIALOG_TITLE": "Bejelentkezés a MI-szerkesztések használatához",
+  "AI_LOGIN_DIALOG_MESSAGE": "Kérjük, jelentkezzen be a MI-alapú szerkesztések használatához.",
+  "AI_LOGIN_DIALOG_BUTTON": "MI-hozzáférés",
+  "AI_DISABLED_DIALOG_TITLE": "A MI le van tiltva",
+  "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "A rendszerben nem található MI-konfigurációs fájl. A MI minden felhasználó számára engedélyezve van.",
+  "AI_CONTROL_ALL_ALLOWED": "A MI minden felhasználó számára engedélyezve van.",
+  "AI_CONTROL_USER_ALLOWED": "A MI engedélyezve van a(z) {0} felhasználó számára, de mások számára le van tiltva.",
+  "AI_CONTROL_ADMIN_DISABLED": "A MI-hozzáférést a rendszergazda letiltotta.",
+  "AI_CONTROL_ADMIN_DISABLED_CONTACT": "A MI-hozzáférést a rendszergazda letiltotta. Segítségért forduljon a(z) {0} elérhetőséghez.",
+  "AI_UPSELL_DIALOG_TITLE": "Folytatja a(z) {0} használatával?",
+  "AI_UPSELL_DIALOG_MESSAGE": "Felfedezted az MI-alapú szerkesztéseket. A folytatáshoz MI-előfizetésre vagy kreditekre lesz szükséged."
 });
 /*
  * GNU AGPL-3.0 License
@@ -94398,6 +94563,7 @@ define("nls/id/strings", {
   "EXTENSION_INCOMPATIBLE_NEWER": "Ekstensi ini membutuhkan versi {APP_NAME} yang lebih baru.",
   "EXTENSION_INCOMPATIBLE_OLDER": "Ekstensi ini hanya  kompatibel dengan versi {APP_NAME} yang lama.",
   "EXTENSION_DEFAULT_FEATURE_PRESENT": "Anda mungkin tidak memerlukan ekstensi ini. {APP_NAME} sudah memiliki fitur ini.",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Ekstensi tidak dimuat. Ekstensi tersebut usang atau tidak aman.",
   "EXTENSION_LATEST_INCOMPATIBLE_NEWER": "Versi {0} dari ekstensi ini membutuhkan versi terbaru dari {APP_NAME}. Tapi Anda dapat menginstal versi sebelumnya {1}.",
   "EXTENSION_LATEST_INCOMPATIBLE_OLDER": "Versi {0} hanya kompatibel dengan versi {APP_NAME} yang lama. Tapi Anda dapat menginstal versi sebelumnya {1}.",
   "EXTENSION_NO_DESCRIPTION": "Tanpa keterangan",
@@ -95221,7 +95387,17 @@ define("nls/id/strings", {
   "LICENSE_ACTIVATE_FAIL_APPLY": "Gagal menerapkan lisensi ke perangkat",
   "LICENSE_ENTER_KEY": "Silakan masukkan kunci lisensi",
   "LICENSE_REAPPLY_TO_DEVICE": "Sudah diaktivasi? Terapkan ulang ke seluruh sistem",
-  "EXTENSION_DEPRECATED_NOT_LOADED": "Ekstensi tidak dimuat. Ekstensi tersebut usang atau tidak aman."
+  "AI_LOGIN_DIALOG_TITLE": "Masuk untuk Menggunakan Edit AI",
+  "AI_LOGIN_DIALOG_MESSAGE": "Silakan masuk untuk menggunakan edit berbasis AI",
+  "AI_LOGIN_DIALOG_BUTTON": "Dapatkan Akses AI",
+  "AI_DISABLED_DIALOG_TITLE": "AI dinonaktifkan",
+  "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "Tidak ada file konfigurasi AI yang ditemukan di sistem. AI diaktifkan untuk semua pengguna.",
+  "AI_CONTROL_ALL_ALLOWED": "AI diaktifkan untuk semua pengguna.",
+  "AI_CONTROL_USER_ALLOWED": "AI diaktifkan untuk pengguna ({0}) tetapi dinonaktifkan untuk yang lain",
+  "AI_CONTROL_ADMIN_DISABLED": "Akses AI telah dinonaktifkan oleh administrator sistem Anda",
+  "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Akses AI telah dinonaktifkan oleh administrator sistem Anda. Silakan hubungi {0} untuk bantuan.",
+  "AI_UPSELL_DIALOG_TITLE": "Lanjutkan dengan {0}?",
+  "AI_UPSELL_DIALOG_MESSAGE": "Anda telah menemukan editan berbasis AI. Untuk melanjutkan, Anda memerlukan langganan AI atau kredit."
 });
 /*
  * GNU AGPL-3.0 License
@@ -95935,6 +96111,7 @@ define("nls/it/strings", {
   "EXTENSION_INCOMPATIBLE_NEWER": "Questa estensione richiede una versione di {APP_NAME} più recente.",
   "EXTENSION_INCOMPATIBLE_OLDER": "Questa estensione al momento può funzionare solo con versioni di {APP_NAME} più vecchie.",
   "EXTENSION_DEFAULT_FEATURE_PRESENT": "Potresti non aver bisogno di questa estensione. {APP_NAME} ha già questa funzionalità.",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Estensione non caricata. È deprecata o insicura.",
   "EXTENSION_LATEST_INCOMPATIBLE_NEWER": "La versione {0} di questa estensione richiede una versione di {APP_NAME} più recente.",
   "EXTENSION_LATEST_INCOMPATIBLE_OLDER": "La versione {0} di questa estensione richiede una versione di {APP_NAME} più vecchia. Ma puoi comunque installare una versione più recente {1}.",
   "EXTENSION_NO_DESCRIPTION": "Nessuna descrizione",
@@ -96758,7 +96935,17 @@ define("nls/it/strings", {
   "LICENSE_ACTIVATE_FAIL_APPLY": "Impossibile applicare la licenza al dispositivo",
   "LICENSE_ENTER_KEY": "Inserire un codice di licenza",
   "LICENSE_REAPPLY_TO_DEVICE": "Già attivato? Riapplica a livello di sistema",
-  "EXTENSION_DEPRECATED_NOT_LOADED": "Estensione non caricata. È deprecata o insicura."
+  "AI_LOGIN_DIALOG_TITLE": "Accedi per usare le modifiche AI",
+  "AI_LOGIN_DIALOG_MESSAGE": "Effettua l'accesso per usare le modifiche AI",
+  "AI_LOGIN_DIALOG_BUTTON": "Accedi all'AI",
+  "AI_DISABLED_DIALOG_TITLE": "L'AI è disattivata",
+  "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "Nessun file di configurazione AI trovato nel sistema. L'AI è abilitata per tutti gli utenti.",
+  "AI_CONTROL_ALL_ALLOWED": "L'AI è abilitata per tutti gli utenti.",
+  "AI_CONTROL_USER_ALLOWED": "L'AI è abilitata per l'utente ({0}) ma disattivata per gli altri.",
+  "AI_CONTROL_ADMIN_DISABLED": "L'accesso all'AI è stato disattivato dal tuo amministratore di sistema.",
+  "AI_CONTROL_ADMIN_DISABLED_CONTACT": "L'accesso all'AI è stato disattivato dal tuo amministratore di sistema. Contatta {0} per assistenza.",
+  "AI_UPSELL_DIALOG_TITLE": "Continuare con {0}?",
+  "AI_UPSELL_DIALOG_MESSAGE": "Hai scoperto le modifiche potenziate dall'IA. Per procedere, è necessario un abbonamento IA o dei crediti."
 });
 /*
  * GNU AGPL-3.0 License
@@ -97473,6 +97660,7 @@ define("nls/ja/strings", {
   "EXTENSION_INCOMPATIBLE_NEWER": "この拡張機能には新しいバージョンの {APP_NAME} が必要です。",
   "EXTENSION_INCOMPATIBLE_OLDER": "この拡張機能は現在、古いバージョンの {APP_NAME} でしか動作しません。",
   "EXTENSION_DEFAULT_FEATURE_PRESENT": "この拡張機能は必要ない可能性があります。{APP_NAME}には既にこの機能が備わっています。",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "エクステンションは非推奨、または安全ではないため読み込まれませんでした。",
   "EXTENSION_LATEST_INCOMPATIBLE_NEWER": "この拡張機能のバージョン {0} には {APP_NAME} の新しいバージョンが必要です。ただし、以前のバージョン {1} をインストールすることができます。",
   "EXTENSION_LATEST_INCOMPATIBLE_OLDER": "この拡張機能のバージョン {0} は {APP_NAME} の古いバージョンでのみ動作します。ただし、以前のバージョン {1} をインストールすることができます。",
   "EXTENSION_NO_DESCRIPTION": "説明なし",
@@ -98296,7 +98484,17 @@ define("nls/ja/strings", {
   "LICENSE_ACTIVATE_FAIL_APPLY": "デバイスへのライセンスの適用に失敗しました",
   "LICENSE_ENTER_KEY": "ライセンスキーを入力してください",
   "LICENSE_REAPPLY_TO_DEVICE": "すでにアクティベート済みの場合、システム全体に再適用",
-  "EXTENSION_DEPRECATED_NOT_LOADED": "エクステンションは非推奨、または安全ではないため読み込まれませんでした。"
+  "AI_LOGIN_DIALOG_TITLE": "AI編集機能を利用するためにサインイン",
+  "AI_LOGIN_DIALOG_MESSAGE": "AIを活用した編集機能をご利用いただくには、ログインしてください。",
+  "AI_LOGIN_DIALOG_BUTTON": "AI機能の利用を開始",
+  "AI_DISABLED_DIALOG_TITLE": "AIが無効になっています",
+  "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "システムにAI設定ファイルが見つかりません。AIはすべてのユーザーに対して有効です。",
+  "AI_CONTROL_ALL_ALLOWED": "AIはすべてのユーザーに対して有効です。",
+  "AI_CONTROL_USER_ALLOWED": "AIはユーザー({0})には有効ですが、他のユーザーには無効です。",
+  "AI_CONTROL_ADMIN_DISABLED": "AIアクセスはシステム管理者によって無効にされています。",
+  "AI_CONTROL_ADMIN_DISABLED_CONTACT": "AIアクセスはシステム管理者によって無効にされています。サポートが必要な場合は、{0}にお問い合わせください。",
+  "AI_UPSELL_DIALOG_TITLE": "{0}を続行しますか？",
+  "AI_UPSELL_DIALOG_MESSAGE": "ＡＩを活用した編集機能です。ご利用には、ＡＩサブスクリプションまたはクレジットが必要です。"
 });
 /*
  * GNU AGPL-3.0 License
@@ -99011,6 +99209,7 @@ define("nls/ko/strings", {
   "EXTENSION_INCOMPATIBLE_NEWER": "이 확장 기능은 새 버전의 {APP_NAME}가 필요합니다.",
   "EXTENSION_INCOMPATIBLE_OLDER": "이 확장 기능은 현재 이전 버전의 {APP_NAME}에서 작동하지 않습니다.",
   "EXTENSION_DEFAULT_FEATURE_PRESENT": "이 확장 프로그램이 필요하지 않을 수 있습니다. {APP_NAME}에 이미 이 기능이 있습니다.",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "확장 프로그램이 로드되지 않았습니다. 지원이 중단되었거나 안전하지 않습니다.",
   "EXTENSION_LATEST_INCOMPATIBLE_NEWER": "이 확장 기능 버전 {0}에는 {APP_NAME}의 새 버전이 필요합니다. 그러나 이전 버전 {1}을 설치할 수 있습니다.",
   "EXTENSION_LATEST_INCOMPATIBLE_OLDER": "이 확장 기능 버전 {0} {APP_NAME}의 이전 버전에서만 작동합니다. 그러나 이전 버전 {1}을 설치할 수 있습니다.",
   "EXTENSION_NO_DESCRIPTION": "설명 없음",
@@ -99834,7 +100033,17 @@ define("nls/ko/strings", {
   "LICENSE_ACTIVATE_FAIL_APPLY": "디바이스에 라이선스를 적용하는 데 실패했습니다",
   "LICENSE_ENTER_KEY": "라이선스 키를 입력해 주세요",
   "LICENSE_REAPPLY_TO_DEVICE": "이미 활성화하셨나요? 시스템 전체에 재적용",
-  "EXTENSION_DEPRECATED_NOT_LOADED": "확장 프로그램이 로드되지 않았습니다. 지원이 중단되었거나 안전하지 않습니다."
+  "AI_LOGIN_DIALOG_TITLE": "AI 편집 기능 사용을 위한 로그인",
+  "AI_LOGIN_DIALOG_MESSAGE": "AI 기반 편집 기능을 사용하려면 로그인해 주세요.",
+  "AI_LOGIN_DIALOG_BUTTON": "AI 액세스하기",
+  "AI_DISABLED_DIALOG_TITLE": "AI가 비활성화되었습니다",
+  "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "시스템에서 AI 구성 파일을 찾을 수 없습니다. 모든 사용자에게 AI가 활성화됩니다.",
+  "AI_CONTROL_ALL_ALLOWED": "모든 사용자에 대해 AI가 활성화되어 있습니다.",
+  "AI_CONTROL_USER_ALLOWED": "AI는 사용자({0})에게는 활성화되어 있지만 다른 사용자에게는 비활성화되어 있습니다.",
+  "AI_CONTROL_ADMIN_DISABLED": "시스템 관리자에 의해 AI 액세스가 비활성화되었습니다.",
+  "AI_CONTROL_ADMIN_DISABLED_CONTACT": "시스템 관리자에 의해 AI 액세스가 비활성화되었습니다. 도움이 필요하시면 {0}에게 문의하세요.",
+  "AI_UPSELL_DIALOG_TITLE": "{0}(으)로 계속하시겠습니까?",
+  "AI_UPSELL_DIALOG_MESSAGE": "AI 기반 편집 기능을 발견하셨군요. 계속 진행하시려면 AI 구독 또는 크레딧이 필요합니다."
 });
 /*
  * GNU AGPL-3.0 License
@@ -100549,6 +100758,7 @@ define("nls/lv/strings", {
   "EXTENSION_INCOMPATIBLE_NEWER": "Šim paplašinājumam nepieciešama jaunāka {APP_NAME} versija.",
   "EXTENSION_INCOMPATIBLE_OLDER": "Pašlaik šis paplašinājums darbojas tikai ar vecākām {APP_NAME} versijām.",
   "EXTENSION_DEFAULT_FEATURE_PRESENT": "Jums, iespējams, šis paplašinājums nav nepieciešams. {APP_NAME} jau ir šī funkcija.",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Paplašinājums nav ielādēts. Tas ir vai nu novecojis, vai nedrošs.",
   "EXTENSION_LATEST_INCOMPATIBLE_NEWER": "Šai paplašinājuma versijai {0} nepieciešama jaunāka {APP_NAME} versija. Bet jūs varat instalēt agrāko versiju {1}. ",
   "EXTENSION_LATEST_INCOMPATIBLE_OLDER": "Šī paplašinājuma versija {0} darbojas tikai ar vecākām {APP_NAME} versijām. Bet jūs varat instalēt agrāko versiju {1}.",
   "EXTENSION_NO_DESCRIPTION": "Nav apraksta",
@@ -101372,7 +101582,17 @@ define("nls/lv/strings", {
   "LICENSE_ACTIVATE_FAIL_APPLY": "Neizdevās piemērot licenci ierīcei",
   "LICENSE_ENTER_KEY": "Lūdzu, ievadiet licences atslēgu",
   "LICENSE_REAPPLY_TO_DEVICE": "Jau aktivizēts? Piemērot atkārtoti visā sistēmā",
-  "EXTENSION_DEPRECATED_NOT_LOADED": "Paplašinājums nav ielādēts. Tas ir vai nu novecojis, vai nedrošs."
+  "AI_LOGIN_DIALOG_TITLE": "Pierakstieties, lai izmantotu MI labojumus",
+  "AI_LOGIN_DIALOG_MESSAGE": "Lūdzu, pierakstieties, lai izmantotu MI labojumus",
+  "AI_LOGIN_DIALOG_BUTTON": "Iegūt MI piekļuvi",
+  "AI_DISABLED_DIALOG_TITLE": "MI ir atspējots",
+  "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "Sistēmā nav atrasts MI konfigurācijas fails. MI ir iespējots visiem lietotājiem.",
+  "AI_CONTROL_ALL_ALLOWED": "MI ir iespējots visiem lietotājiem.",
+  "AI_CONTROL_USER_ALLOWED": "MI ir iespējots lietotājam ({0}), bet citiem ir atspējots",
+  "AI_CONTROL_ADMIN_DISABLED": "MI piekļuvi ir atspējojis jūsu sistēmas administrators",
+  "AI_CONTROL_ADMIN_DISABLED_CONTACT": "MI piekļuvi ir atspējojis jūsu sistēmas administrators. Lūdzu, sazinieties ar {0}, lai saņemtu palīdzību.",
+  "AI_UPSELL_DIALOG_TITLE": "Turpināt ar {0}?",
+  "AI_UPSELL_DIALOG_MESSAGE": "Jūs atklājāt ar MI darbinātus labojumus. Lai turpinātu, jums būs nepieciešams MI abonements vai kredīti."
 });
 /*
  * GNU AGPL-3.0 License
@@ -102060,6 +102280,7 @@ define("nls/ml/strings", {
   "EXTENSION_INCOMPATIBLE_NEWER": "ഈ എക്സ്റ്റെൻഷന് {APP_NAME}-ന്റെ പുതിയ പതിപ്പ് ആവശ്യമാണ്.",
   "EXTENSION_INCOMPATIBLE_OLDER": "ഈ എക്സ്റ്റെൻഷൻ നിലവിൽ {APP_NAME}-ന്റെ പഴയ പതിപ്പുകളിൽ മാത്രമേ പ്രവർത്തിക്കൂ.",
   "EXTENSION_DEFAULT_FEATURE_PRESENT": "നിങ്ങൾക്ക് ഈ എക്സ്റ്റെൻഷൻ ആവശ്യമില്ലായിരിക്കാം. {APP_NAME}-ൽ ഈ സവിശേഷത ഇതിനകം തന്നെ ഉണ്ട്.",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "എക്സ്റ്റൻഷൻ ലോഡ് ചെയ്തിട്ടില്ല. അത് കാലഹരണപ്പെട്ടതോ സുരക്ഷിതമല്ലാത്തതോ ആണ്.",
   "EXTENSION_LATEST_INCOMPATIBLE_NEWER": "ഈ എക്സ്റ്റെൻഷന്റെ {0} പതിപ്പിന് {APP_NAME}-ന്റെ പുതിയ പതിപ്പ് ആവശ്യമാണ്. എന്നാൽ നിങ്ങൾക്ക് മുൻ പതിപ്പ് {1} ഇൻസ്റ്റാൾ ചെയ്യാൻ കഴിയും.",
   "EXTENSION_LATEST_INCOMPATIBLE_OLDER": "ഈ എക്സ്റ്റെൻഷന്റെ {0} പതിപ്പ് {APP_NAME}-ന്റെ പഴയ പതിപ്പുകളിൽ മാത്രമേ പ്രവർത്തിക്കൂ. എന്നാൽ നിങ്ങൾക്ക് മുൻ പതിപ്പ് {1} ഇൻസ്റ്റാൾ ചെയ്യാൻ കഴിയും.",
   "EXTENSION_NO_DESCRIPTION": "വിവരണം ലഭ്യമല്ല",
@@ -102883,7 +103104,17 @@ define("nls/ml/strings", {
   "LICENSE_ACTIVATE_FAIL_APPLY": "ഉപകരണത്തിൽ ലൈസൻസ് പ്രയോഗിക്കാൻ കഴിഞ്ഞില്ല",
   "LICENSE_ENTER_KEY": "ദയവായി ഒരു ലൈസൻസ് കീ നൽകുക",
   "LICENSE_REAPPLY_TO_DEVICE": "ഇതിനകം ആക്റ്റിവേറ്റ് ചെയ്തോ? സിസ്റ്റത്തിലുടനീളം വീണ്ടും പ്രയോഗിക്കുക",
-  "EXTENSION_DEPRECATED_NOT_LOADED": "എക്സ്റ്റൻഷൻ ലോഡ് ചെയ്തിട്ടില്ല. അത് കാലഹരണപ്പെട്ടതോ സുരക്ഷിതമല്ലാത്തതോ ആണ്."
+  "AI_LOGIN_DIALOG_TITLE": "എഐ എഡിറ്റുകൾ ഉപയോഗിക്കാൻ സൈൻ ഇൻ ചെയ്യുക",
+  "AI_LOGIN_DIALOG_MESSAGE": "എഐ എഡിറ്റുകൾ ഉപയോഗിക്കാൻ ദയവായി ലോഗിൻ ചെയ്യുക",
+  "AI_LOGIN_DIALOG_BUTTON": "എഐ ആക്‌സസ് നേടുക",
+  "AI_DISABLED_DIALOG_TITLE": "എഐ പ്രവർത്തനരഹിതമാണ്",
+  "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "സിസ്റ്റത്തിൽ എഐ കോൺഫിഗറേഷൻ ഫയൽ കണ്ടെത്തിയില്ല. എല്ലാ ഉപയോക്താക്കൾക്കും എഐ പ്രവർത്തനക്ഷമമാക്കിയിരിക്കുന്നു.",
+  "AI_CONTROL_ALL_ALLOWED": "എല്ലാ ഉപയോക്താക്കൾക്കും എഐ പ്രവർത്തനക്ഷമമാക്കിയിരിക്കുന്നു.",
+  "AI_CONTROL_USER_ALLOWED": "ഉപയോക്താവിന് ({0}) എഐ പ്രവർത്തനക്ഷമമാക്കിയിരിക്കുന്നു, എന്നാൽ മറ്റുള്ളവർക്ക് ഇത് പ്രവർത്തനരഹിതമാണ്.",
+  "AI_CONTROL_ADMIN_DISABLED": "നിങ്ങളുടെ സിസ്റ്റം അഡ്മിനിസ്ട്രേറ്റർ എഐ ആക്‌സസ് പ്രവർത്തനരഹിതമാക്കിയിരിക്കുന്നു.",
+  "AI_CONTROL_ADMIN_DISABLED_CONTACT": "നിങ്ങളുടെ സിസ്റ്റം അഡ്മിനിസ്ട്രേറ്റർ എഐ ആക്‌സസ് പ്രവർത്തനരഹിതമാക്കിയിരിക്കുന്നു. സഹായത്തിനായി ദയവായി {0}-മായി ബന്ധപ്പെടുക.",
+  "AI_UPSELL_DIALOG_TITLE": "{0} ഉപയോഗിച്ച് തുടരണോ?",
+  "AI_UPSELL_DIALOG_MESSAGE": "നിങ്ങൾ AI സഹായത്തോടെയുള്ള തിരുത്തലുകൾ കണ്ടെത്തിയിരിക്കുന്നു. തുടരുന്നതിന്, നിങ്ങൾക്ക് ഒരു AI സബ്സ്ക്രിപ്ഷനോ ക്രെഡിറ്റുകളോ ആവശ്യമാണ്."
 });
 /*
  * GNU AGPL-3.0 License
@@ -103571,6 +103802,7 @@ define("nls/nb/strings", {
   "EXTENSION_INCOMPATIBLE_NEWER": "Denne utvidelsen krever en nyere versjon av {APP_NAME}.",
   "EXTENSION_INCOMPATIBLE_OLDER": "Denne utvidelsen virker bare med en eldre versjon av {APP_NAME}.",
   "EXTENSION_DEFAULT_FEATURE_PRESENT": "Du trenger kanskje ikke denne utvidelsen. {APP_NAME} har allerede denne funksjonen.",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Utvidelsen ble ikke lastet. Den er enten foreldet eller usikker.",
   "EXTENSION_LATEST_INCOMPATIBLE_NEWER": "Versjon {0} av denne utvidelsen krever en nyere versjon av {APP_NAME}. Men du kan installere tidligere versjon {1}.",
   "EXTENSION_LATEST_INCOMPATIBLE_OLDER": "Versjon {0} av denne utvidelsen krever en eldre versjon av {APP_NAME}. Men du kan installere tidligere versjon {1}.",
   "EXTENSION_NO_DESCRIPTION": "Ingen beskrivelse",
@@ -104394,7 +104626,17 @@ define("nls/nb/strings", {
   "LICENSE_ACTIVATE_FAIL_APPLY": "Kunne ikke anvende lisens på enheten",
   "LICENSE_ENTER_KEY": "Skriv inn en lisensnøkkel",
   "LICENSE_REAPPLY_TO_DEVICE": "Allerede aktivert? Anvend på nytt for hele systemet",
-  "EXTENSION_DEPRECATED_NOT_LOADED": "Utvidelsen ble ikke lastet. Den er enten foreldet eller usikker."
+  "AI_LOGIN_DIALOG_TITLE": "Logg inn for å bruke AI-redigeringer",
+  "AI_LOGIN_DIALOG_MESSAGE": "Vennligst logg inn for å bruke AI-drevne redigeringer",
+  "AI_LOGIN_DIALOG_BUTTON": "Få AI-tilgang",
+  "AI_DISABLED_DIALOG_TITLE": "AI er deaktivert",
+  "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "Ingen AI-konfigurasjonsfil funnet i systemet. AI er aktivert for alle brukere.",
+  "AI_CONTROL_ALL_ALLOWED": "AI er aktivert for alle brukere.",
+  "AI_CONTROL_USER_ALLOWED": "AI er aktivert for bruker ({0}), men deaktivert for andre",
+  "AI_CONTROL_ADMIN_DISABLED": "AI-tilgang er deaktivert av systemadministratoren din",
+  "AI_CONTROL_ADMIN_DISABLED_CONTACT": "AI-tilgang er deaktivert av systemadministratoren din. Vennligst kontakt {0} for hjelp.",
+  "AI_UPSELL_DIALOG_TITLE": "Fortsette med {0}?",
+  "AI_UPSELL_DIALOG_MESSAGE": "Du har oppdaget AI-drevne redigeringer. For å fortsette trenger du et AI-abonnement eller kreditter."
 });
 /*
  * GNU AGPL-3.0 License
@@ -105109,6 +105351,7 @@ define("nls/nl/strings", {
   "EXTENSION_INCOMPATIBLE_NEWER": "Deze extensie vereist een nieuwere versie van {APP_NAME}.",
   "EXTENSION_INCOMPATIBLE_OLDER": "Deze extensie werkt momenteel enkel met oudere versies van {APP_NAME}.",
   "EXTENSION_DEFAULT_FEATURE_PRESENT": "Mogelijk hebt u deze extensie niet nodig. {APP_NAME} heeft deze functie al.",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Extensie niet geladen. Deze is ofwel verouderd of onveilig.",
   "EXTENSION_LATEST_INCOMPATIBLE_NEWER": "Versie {0} van deze extensie vereist een nieuwere versie van {APP_NAME}. Je kan wel de oudere versie {1} installeren.",
   "EXTENSION_LATEST_INCOMPATIBLE_OLDER": "Versie {0} van deze extensie werkt alleen met oudere versies van {APP_NAME}. Je kan wel de oudere versie {1} installeren.",
   "EXTENSION_NO_DESCRIPTION": "Geen beschrijving",
@@ -105932,7 +106175,17 @@ define("nls/nl/strings", {
   "LICENSE_ACTIVATE_FAIL_APPLY": "Kon licentie niet toepassen op het apparaat",
   "LICENSE_ENTER_KEY": "Voer alstublieft een licentiesleutel in",
   "LICENSE_REAPPLY_TO_DEVICE": "Al geactiveerd? Opnieuw systeembreed toepassen",
-  "EXTENSION_DEPRECATED_NOT_LOADED": "Extensie niet geladen. Deze is ofwel verouderd of onveilig."
+  "AI_LOGIN_DIALOG_TITLE": "Meld u aan om AI-bewerkingen te gebruiken",
+  "AI_LOGIN_DIALOG_MESSAGE": "Meld u aan om AI-gestuurde bewerkingen te gebruiken",
+  "AI_LOGIN_DIALOG_BUTTON": "Krijg toegang tot AI",
+  "AI_DISABLED_DIALOG_TITLE": "AI is uitgeschakeld",
+  "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "Geen AI-configuratiebestand gevonden in het systeem. AI is ingeschakeld voor alle gebruikers.",
+  "AI_CONTROL_ALL_ALLOWED": "AI is ingeschakeld voor alle gebruikers.",
+  "AI_CONTROL_USER_ALLOWED": "AI is ingeschakeld voor gebruiker ({0}), maar uitgeschakeld voor anderen.",
+  "AI_CONTROL_ADMIN_DISABLED": "De toegang tot AI is uitgeschakeld door uw systeembeheerder.",
+  "AI_CONTROL_ADMIN_DISABLED_CONTACT": "De toegang tot AI is uitgeschakeld door uw systeembeheerder. Neem contact op met {0} voor hulp.",
+  "AI_UPSELL_DIALOG_TITLE": "Doorgaan met {0}?",
+  "AI_UPSELL_DIALOG_MESSAGE": "Je hebt bewerkingen met AI ontdekt. Om door te gaan, heb je een AI-abonnement of credits nodig."
 });
 /*
  * GNU AGPL-3.0 License
@@ -106647,6 +106900,7 @@ define("nls/pl/strings", {
   "EXTENSION_INCOMPATIBLE_NEWER": "To rozszerzenie wymaga nowszej wersji {APP_NAME}.",
   "EXTENSION_INCOMPATIBLE_OLDER": "To rozszerzenie działa tylko ze starszymi wersjami {APP_NAME}.",
   "EXTENSION_DEFAULT_FEATURE_PRESENT": "Możesz nie potrzebować tego rozszerzenia. {APP_NAME} ma już tę funkcję.",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Rozszerzenie nie zostało załadowane. Jest przestarzałe lub niebezpieczne.",
   "EXTENSION_LATEST_INCOMPATIBLE_NEWER": "Wersja {0} tego rozszerzenia wymaga nowszej wersji {APP_NAME}, ale możesz zainstalować starszą wersję {1}.",
   "EXTENSION_LATEST_INCOMPATIBLE_OLDER": "Wersja {0} tego rozszerzenia wymaga starszej wersji {APP_NAME}, ale możesz zainstalować starszą wersję {1}.",
   "EXTENSION_NO_DESCRIPTION": "Brak opisu",
@@ -107470,7 +107724,17 @@ define("nls/pl/strings", {
   "LICENSE_ACTIVATE_FAIL_APPLY": "Nie udało się zastosować licencji na urządzeniu",
   "LICENSE_ENTER_KEY": "Wprowadź klucz licencyjny",
   "LICENSE_REAPPLY_TO_DEVICE": "Już aktywowano? Zastosuj ponownie w całym systemie",
-  "EXTENSION_DEPRECATED_NOT_LOADED": "Rozszerzenie nie zostało załadowane. Jest przestarzałe lub niebezpieczne."
+  "AI_LOGIN_DIALOG_TITLE": "Zaloguj się, aby korzystać z edycji AI",
+  "AI_LOGIN_DIALOG_MESSAGE": "Proszę się zalogować, aby korzystać z edycji AI",
+  "AI_LOGIN_DIALOG_BUTTON": "Uzyskaj dostęp do AI",
+  "AI_DISABLED_DIALOG_TITLE": "AI jest wyłączone",
+  "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "W systemie nie znaleziono pliku konfiguracyjnego AI. AI jest włączone dla wszystkich użytkowników.",
+  "AI_CONTROL_ALL_ALLOWED": "AI jest włączone dla wszystkich użytkowników.",
+  "AI_CONTROL_USER_ALLOWED": "AI jest włączone dla użytkownika ({0}), ale wyłączone dla pozostałych.",
+  "AI_CONTROL_ADMIN_DISABLED": "Dostęp do AI został wyłączony przez administratora systemu.",
+  "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Dostęp do AI został wyłączony przez administratora systemu. Prosimy o kontakt z {0} w celu uzyskania pomocy.",
+  "AI_UPSELL_DIALOG_TITLE": "Kontynuować z {0}?",
+  "AI_UPSELL_DIALOG_MESSAGE": "Odkryłeś edycje wspomagane przez AI. Aby kontynuować, potrzebujesz subskrypcji AI lub kredytów."
 });
 /*
  * GNU AGPL-3.0 License
@@ -108185,6 +108449,7 @@ define("nls/pt-br/strings", {
   "EXTENSION_INCOMPATIBLE_NEWER": "Esta extensão requer uma versão mais recente do {APP_NAME}.",
   "EXTENSION_INCOMPATIBLE_OLDER": "Esta extensão atualmente só funciona com versões mais antigas do {APP_NAME}.",
   "EXTENSION_DEFAULT_FEATURE_PRESENT": "Você pode não precisar desta extensão. O {APP_NAME} já possui este recurso.",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Extensão não carregada. Ela é obsoleta ou insegura.",
   "EXTENSION_LATEST_INCOMPATIBLE_NEWER": "A versão {0} desta extensão exige uma versão mais recente do {APP_NAME}. Mas você pode instalar a versão {1} mais antiga.",
   "EXTENSION_LATEST_INCOMPATIBLE_OLDER": "A versão {0} desta extensão funciona apenas com versões mais antigas do {APP_NAME}. Mas você pode instalar a versão {1} mais recente.",
   "EXTENSION_NO_DESCRIPTION": "Sem descrição",
@@ -109008,7 +109273,17 @@ define("nls/pt-br/strings", {
   "LICENSE_ACTIVATE_FAIL_APPLY": "Falha ao aplicar a licença ao dispositivo",
   "LICENSE_ENTER_KEY": "Por favor, insira uma chave de licença",
   "LICENSE_REAPPLY_TO_DEVICE": "Já ativado? Reaplicar em todo o sistema",
-  "EXTENSION_DEPRECATED_NOT_LOADED": "Extensão não carregada. Ela é obsoleta ou insegura."
+  "AI_LOGIN_DIALOG_TITLE": "Faça Login para Usar as Edições de IA",
+  "AI_LOGIN_DIALOG_MESSAGE": "Faça o login para usar as edições de IA",
+  "AI_LOGIN_DIALOG_BUTTON": "Obter Acesso à IA",
+  "AI_DISABLED_DIALOG_TITLE": "A IA está desativada",
+  "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "Nenhum arquivo de configuração de IA encontrado no sistema. A IA está ativada para todos os usuários.",
+  "AI_CONTROL_ALL_ALLOWED": "A IA está ativada para todos os usuários.",
+  "AI_CONTROL_USER_ALLOWED": "A IA está ativada para o usuário ({0}), mas desativada para os outros.",
+  "AI_CONTROL_ADMIN_DISABLED": "O acesso à IA foi desativado pelo administrador do seu sistema.",
+  "AI_CONTROL_ADMIN_DISABLED_CONTACT": "O acesso à IA foi desativado pelo administrador do seu sistema. Entre em contato com {0} para obter assistência.",
+  "AI_UPSELL_DIALOG_TITLE": "Continuar com {0}?",
+  "AI_UPSELL_DIALOG_MESSAGE": "Você descobriu as edições com IA. Para prosseguir, você precisará de uma assinatura de IA ou créditos."
 });
 /*
  * GNU AGPL-3.0 License
@@ -109721,6 +109996,7 @@ define("nls/pt-pt/strings", {
   "EXTENSION_INCOMPATIBLE_NEWER": "Esta extensão requer uma versão mais recente do {APP_NAME}.",
   "EXTENSION_INCOMPATIBLE_OLDER": "Esta extensão funciona atualmente apenas com versões mais antigas do {APP_NAME}.",
   "EXTENSION_DEFAULT_FEATURE_PRESENT": "Pode não precisar desta extensão. O {APP_NAME} já tem esta funcionalidade.",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Extensão não carregada. Encontra-se obsoleta ou é insegura.",
   "EXTENSION_LATEST_INCOMPATIBLE_NEWER": "A versão {0} desta extensão requer uma versão mais recente do {APP_NAME}. Mas pode instalar a versão anterior {1}.",
   "EXTENSION_LATEST_INCOMPATIBLE_OLDER": "A versão {0} desta extensão funciona apenas com versões mais antigas do {APP_NAME}. Mas pode instalar a versão anterior {1}.",
   "EXTENSION_NO_DESCRIPTION": "Sem descrição",
@@ -110544,7 +110820,17 @@ define("nls/pt-pt/strings", {
   "LICENSE_ACTIVATE_FAIL_APPLY": "Falha ao aplicar a licença ao dispositivo",
   "LICENSE_ENTER_KEY": "Por favor, introduza uma chave de licença",
   "LICENSE_REAPPLY_TO_DEVICE": "Já ativou? Reaplicar em todo o sistema",
-  "EXTENSION_DEPRECATED_NOT_LOADED": "Extensão não carregada. Encontra-se obsoleta ou é insegura."
+  "AI_LOGIN_DIALOG_TITLE": "Inicie sessão para usar as edições de IA",
+  "AI_LOGIN_DIALOG_MESSAGE": "Por favor, inicie sessão para usar as edições com IA",
+  "AI_LOGIN_DIALOG_BUTTON": "Obter acesso à IA",
+  "AI_DISABLED_DIALOG_TITLE": "A IA está desativada",
+  "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "Não foi encontrado nenhum ficheiro de configuração de IA no sistema. A IA está ativada para todos os utilizadores.",
+  "AI_CONTROL_ALL_ALLOWED": "A IA está ativada para todos os utilizadores.",
+  "AI_CONTROL_USER_ALLOWED": "A IA está ativada para o utilizador ({0}), mas desativada para os restantes",
+  "AI_CONTROL_ADMIN_DISABLED": "O acesso à IA foi desativado pelo seu administrador de sistema",
+  "AI_CONTROL_ADMIN_DISABLED_CONTACT": "O acesso à IA foi desativado pelo seu administrador de sistema. Por favor, contacte {0} para obter assistência.",
+  "AI_UPSELL_DIALOG_TITLE": "Continuar com {0}?",
+  "AI_UPSELL_DIALOG_MESSAGE": "Descobriu as edições assistidas por IA. Para prosseguir, precisará de uma subscrição de IA ou de créditos."
 });
 /*
  * GNU AGPL-3.0 License
@@ -111257,6 +111543,7 @@ define("nls/ro/strings", {
   "EXTENSION_INCOMPATIBLE_NEWER": "Această extensie necesită o vesiune mai nouă {APP_NAME}.",
   "EXTENSION_INCOMPATIBLE_OLDER": "Această extensie funcționează doar cu versiunile mai vechi {APP_NAME}.",
   "EXTENSION_DEFAULT_FEATURE_PRESENT": "Este posibil să nu aveți nevoie de această extensie. {APP_NAME} are deja această funcționalitate.",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Extensia nu s-a încărcat. Este fie învechită, fie nesigură.",
   "EXTENSION_LATEST_INCOMPATIBLE_NEWER": "Versiunea {0} a acestei extensii necesită o vesiune mai nouă {APP_NAME}. Dar puteți instala versiunea {1} a extensiei.",
   "EXTENSION_LATEST_INCOMPATIBLE_OLDER": "Versiunea {0} a acestei extensii funcționează doar cu versiunile vechi {APP_NAME}. Dar puteți instala versiunea {1} a extensiei.",
   "EXTENSION_NO_DESCRIPTION": "Nicio descriere",
@@ -112080,7 +112367,17 @@ define("nls/ro/strings", {
   "LICENSE_ACTIVATE_FAIL_APPLY": "Nu s-a putut aplica licența pe dispozitiv",
   "LICENSE_ENTER_KEY": "Introduceți o cheie de licență",
   "LICENSE_REAPPLY_TO_DEVICE": "Deja activat? Reaplicați la nivel de sistem",
-  "EXTENSION_DEPRECATED_NOT_LOADED": "Extensia nu s-a încărcat. Este fie învechită, fie nesigură."
+  "AI_LOGIN_DIALOG_TITLE": "Autentificați-vă pentru a utiliza editările AI",
+  "AI_LOGIN_DIALOG_MESSAGE": "Vă rugăm să vă autentificați pentru a utiliza editările bazate pe AI",
+  "AI_LOGIN_DIALOG_BUTTON": "Obțineți acces AI",
+  "AI_DISABLED_DIALOG_TITLE": "AI este dezactivat",
+  "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "Nu a fost găsit niciun fișier de configurare AI în sistem. AI este activat pentru toți utilizatorii.",
+  "AI_CONTROL_ALL_ALLOWED": "AI este activat pentru toți utilizatorii.",
+  "AI_CONTROL_USER_ALLOWED": "AI este activat pentru utilizatorul ({0}), dar dezactivat pentru ceilalți",
+  "AI_CONTROL_ADMIN_DISABLED": "Accesul AI a fost dezactivat de către administratorul dvs. de sistem",
+  "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Accesul AI a fost dezactivat de către administratorul dvs. de sistem. Vă rugăm să contactați {0} pentru asistență.",
+  "AI_UPSELL_DIALOG_TITLE": "Continuați cu {0}?",
+  "AI_UPSELL_DIALOG_MESSAGE": "Ați descoperit editările asistate de AI. Pentru a continua, aveți nevoie de un abonament AI sau de credite."
 });
 /*
  * GNU AGPL-3.0 License
@@ -114592,6 +114889,7 @@ define("nls/ru/strings", {
   "EXTENSION_INCOMPATIBLE_NEWER": "Это расширение требует новой версии {APP_NAME}.",
   "EXTENSION_INCOMPATIBLE_OLDER": "Это расширение работает только с предыдущими версиями {APP_NAME}.",
   "EXTENSION_DEFAULT_FEATURE_PRESENT": "Возможно, вам не нужно это расширение. {APP_NAME} уже имеет эту функцию.",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Расширение не загружено. Оно устарело или небезопасно.",
   "EXTENSION_LATEST_INCOMPATIBLE_NEWER": "Версия {0} данного расширения требует новой версии {APP_NAME}. Вы можете установить предыдущую версию расширения{1}.",
   "EXTENSION_LATEST_INCOMPATIBLE_OLDER": "Версия {0} данного расширения требует предыдущей версии {APP_NAME}. Вы можете установить предыдущую версию {1}.",
   "EXTENSION_NO_DESCRIPTION": "Описание отсутвует",
@@ -115415,7 +115713,17 @@ define("nls/ru/strings", {
   "LICENSE_ACTIVATE_FAIL_APPLY": "Не удалось применить лицензию к устройству",
   "LICENSE_ENTER_KEY": "Введите лицензионный ключ",
   "LICENSE_REAPPLY_TO_DEVICE": "Уже активировали? Применить повторно для всей системы",
-  "EXTENSION_DEPRECATED_NOT_LOADED": "Расширение не загружено. Оно устарело или небезопасно."
+  "AI_LOGIN_DIALOG_TITLE": "Войдите, чтобы использовать ИИ-правки",
+  "AI_LOGIN_DIALOG_MESSAGE": "Пожалуйста, войдите в систему, чтобы использовать правки с помощью ИИ",
+  "AI_LOGIN_DIALOG_BUTTON": "Получить доступ к ИИ",
+  "AI_DISABLED_DIALOG_TITLE": "ИИ отключён",
+  "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "Файл конфигурации ИИ не найден в системе. ИИ включён для всех пользователей.",
+  "AI_CONTROL_ALL_ALLOWED": "ИИ включён для всех пользователей.",
+  "AI_CONTROL_USER_ALLOWED": "ИИ включён для пользователя ({0}), но отключён для остальных",
+  "AI_CONTROL_ADMIN_DISABLED": "Доступ к ИИ был отключён вашим системным администратором",
+  "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Доступ к ИИ был отключён вашим системным администратором. Пожалуйста, свяжитесь с {0} для получения помощи.",
+  "AI_UPSELL_DIALOG_TITLE": "Продолжить с {0}?",
+  "AI_UPSELL_DIALOG_MESSAGE": "Вы открыли для себя редактирование с помощью ИИ. Чтобы продолжить, вам потребуется подписка на ИИ или кредиты."
 });
 /*
  * GNU AGPL-3.0 License
@@ -116130,6 +116438,7 @@ define("nls/sk/strings", {
   "EXTENSION_INCOMPATIBLE_NEWER": "Tento doplnok vyžaduje novšiu verziu {APP_NAME}.",
   "EXTENSION_INCOMPATIBLE_OLDER": "Tento doplnok momentálne funguje iba zo staršími verziami {APP_NAME}.",
   "EXTENSION_DEFAULT_FEATURE_PRESENT": "Toto rozšírenie pravdepodobne nepotrebujete. {APP_NAME} už túto funkciu obsahuje.",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Rozšírenie sa nenačítalo. Je buď zastarané, alebo nezabezpečené.",
   "EXTENSION_LATEST_INCOMPATIBLE_NEWER": "Verzia {0} tohto rozšírenia vyžaduje novšiu verziu {APP_NAME}. Môžete si však nainštalovať staršiu verziu {1}.",
   "EXTENSION_LATEST_INCOMPATIBLE_OLDER": "Verzia {0} tohto rozšírenia funguje iba so staršími verziami {APP_NAME}. Môžete si však nainštalovať staršiu verziu {1}.",
   "EXTENSION_NO_DESCRIPTION": "Bez popisu",
@@ -116953,7 +117262,17 @@ define("nls/sk/strings", {
   "LICENSE_ACTIVATE_FAIL_APPLY": "Nepodarilo sa aplikovať licenciu na zariadenie",
   "LICENSE_ENTER_KEY": "Prosím, zadajte licenčný kľúč",
   "LICENSE_REAPPLY_TO_DEVICE": "Už aktivované? Znovu aplikovať pre celý systém",
-  "EXTENSION_DEPRECATED_NOT_LOADED": "Rozšírenie sa nenačítalo. Je buď zastarané, alebo nezabezpečené."
+  "AI_LOGIN_DIALOG_TITLE": "Prihláste sa na používanie úprav pomocou AI",
+  "AI_LOGIN_DIALOG_MESSAGE": "Prosím, prihláste sa, aby ste mohli používať úpravy s podporou AI",
+  "AI_LOGIN_DIALOG_BUTTON": "Získať prístup k AI",
+  "AI_DISABLED_DIALOG_TITLE": "AI je vypnutá",
+  "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "V systéme sa nenašiel žiadny konfiguračný súbor AI. AI je povolená pre všetkých používateľov.",
+  "AI_CONTROL_ALL_ALLOWED": "AI je povolená pre všetkých používateľov.",
+  "AI_CONTROL_USER_ALLOWED": "AI je povolená pre používateľa ({0}), ale pre ostatných je vypnutá",
+  "AI_CONTROL_ADMIN_DISABLED": "Prístup k AI bol vypnutý správcom vášho systému",
+  "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Prístup k AI bol vypnutý správcom vášho systému. So žiadosťou o pomoc sa obráťte na {0}.",
+  "AI_UPSELL_DIALOG_TITLE": "Pokračovať s {0}?",
+  "AI_UPSELL_DIALOG_MESSAGE": "Objavili ste úpravy s podporou umelej inteligencie. Ak chcete pokračovať, budete potrebovať predplatné AI alebo kredity."
 });
 /*
  * GNU AGPL-3.0 License
@@ -117667,6 +117986,7 @@ define("nls/sr/strings", {
   "EXTENSION_INCOMPATIBLE_NEWER": "Ова екстензија захтева новиу верзију {APP_NAME}-а.",
   "EXTENSION_INCOMPATIBLE_OLDER": "Ова екстензија тренутно ради само у старијим верзијама {APP_NAME}-а.",
   "EXTENSION_DEFAULT_FEATURE_PRESENT": "Можда вам ово проширење није потребно. {APP_NAME} већ има ову функцију.",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Екстензија није учитана. Или је застарела или небезбедна.",
   "EXTENSION_LATEST_INCOMPATIBLE_NEWER": "Верзија {0} ове екстензије захтева новију верзију апликације {APP_NAME}. Али можете инсталирати ранију верзију {1}.",
   "EXTENSION_LATEST_INCOMPATIBLE_OLDER": "Верзија {0} ове екстензије ради искључиво са старијим верзијама апликације {APP_NAME}. Али можете инсталирати ранију верзију {1}.",
   "EXTENSION_NO_DESCRIPTION": "Не постоји опис",
@@ -118490,7 +118810,17 @@ define("nls/sr/strings", {
   "LICENSE_ACTIVATE_FAIL_APPLY": "Примена лиценце на уређај није успела.",
   "LICENSE_ENTER_KEY": "Унесите кључ лиценце",
   "LICENSE_REAPPLY_TO_DEVICE": "Већ активирано? Поново примени на нивоу система",
-  "EXTENSION_DEPRECATED_NOT_LOADED": "Екстензија није учитана. Или је застарела или небезбедна."
+  "AI_LOGIN_DIALOG_TITLE": "Пријавите се да бисте користили AI измене",
+  "AI_LOGIN_DIALOG_MESSAGE": "Молимо вас, пријавите се да бисте користили измене помоћу вештачке интелигенције",
+  "AI_LOGIN_DIALOG_BUTTON": "Приступите AI",
+  "AI_DISABLED_DIALOG_TITLE": "AI је онемогућена",
+  "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "У систему није пронађена AI конфигурациона датотека. AI је омогућена за све кориснике.",
+  "AI_CONTROL_ALL_ALLOWED": "AI је омогућена за све кориснике.",
+  "AI_CONTROL_USER_ALLOWED": "AI је омогућена за корисника ({0}), али је онемогућена за остале",
+  "AI_CONTROL_ADMIN_DISABLED": "Приступ AI је онемогућио администратор система",
+  "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Приступ AI је онемогућио администратор система. Молимо вас, контактирајте {0} за помоћ.",
+  "AI_UPSELL_DIALOG_TITLE": "Наставити са {0}?",
+  "AI_UPSELL_DIALOG_MESSAGE": "Открили сте измене које покреће вештачка интелигенција. Да бисте наставили, потребна вам је AI претплата или кредити."
 });
 /*
  * GNU AGPL-3.0 License
@@ -119288,6 +119618,7 @@ define("nls/sv/strings", {
   "EXTENSION_INCOMPATIBLE_NEWER": "Detta tillägg kräver en nyare version av {APP_NAME}.",
   "EXTENSION_INCOMPATIBLE_OLDER": "Detta tillägg fungerar för närvarande bara med äldre versioner av {APP_NAME}.",
   "EXTENSION_DEFAULT_FEATURE_PRESENT": "Du kanske inte behöver det här tillägget. {APP_NAME} har redan den här funktionen.",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Tillägget laddades inte. Det är antingen föråldrat eller osäkert.",
   "EXTENSION_LATEST_INCOMPATIBLE_NEWER": "Version {0} av detta tillägg kräver en nyare version av {APP_NAME} men du kan installera den äldre versionen {1}.",
   "EXTENSION_LATEST_INCOMPATIBLE_OLDER": "Version {0} av detta tillägg fungerar endast med äldre versioner av {APP_NAME} men du kan installera den äldre versionen {1}.",
   "EXTENSION_NO_DESCRIPTION": "Ingen beskrivning",
@@ -120111,7 +120442,17 @@ define("nls/sv/strings", {
   "LICENSE_ACTIVATE_FAIL_APPLY": "Det gick inte att tillämpa licensen på enheten",
   "LICENSE_ENTER_KEY": "Ange en licensnyckel",
   "LICENSE_REAPPLY_TO_DEVICE": "Redan aktiverad? Tillämpa systemomfattande",
-  "EXTENSION_DEPRECATED_NOT_LOADED": "Tillägget laddades inte. Det är antingen föråldrat eller osäkert."
+  "AI_LOGIN_DIALOG_TITLE": "Logga in för att använda AI-redigeringar",
+  "AI_LOGIN_DIALOG_MESSAGE": "Vänligen logga in för att använda AI-drivna redigeringar",
+  "AI_LOGIN_DIALOG_BUTTON": "Få AI-åtkomst",
+  "AI_DISABLED_DIALOG_TITLE": "AI är inaktiverat",
+  "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "Ingen AI-konfigurationsfil hittades i systemet. AI är aktiverat för alla användare.",
+  "AI_CONTROL_ALL_ALLOWED": "AI är aktiverat för alla användare.",
+  "AI_CONTROL_USER_ALLOWED": "AI är aktiverat för användare ({0}) men inaktiverat för andra.",
+  "AI_CONTROL_ADMIN_DISABLED": "AI-åtkomst har inaktiverats av din systemadministratör.",
+  "AI_CONTROL_ADMIN_DISABLED_CONTACT": "AI-åtkomst har inaktiverats av din systemadministratör. Kontakta {0} för hjälp.",
+  "AI_UPSELL_DIALOG_TITLE": "Fortsätt med {0}?",
+  "AI_UPSELL_DIALOG_MESSAGE": "Du har upptäckt AI-drivna redigeringar. För att fortsätta behöver du en AI-prenumeration eller krediter."
 });
 /*
  * GNU AGPL-3.0 License
@@ -120826,6 +121167,7 @@ define("nls/tr/strings", {
   "EXTENSION_INCOMPATIBLE_NEWER": "Bu uzantı, {APP_NAME}'in daha yeni bir sürümünü gerektiriyor.",
   "EXTENSION_INCOMPATIBLE_OLDER": "Bu uzantı şu anda yalnızca {APP_NAME}'in eski sürümleriyle çalışıyor.",
   "EXTENSION_DEFAULT_FEATURE_PRESENT": "Bu uzantıya ihtiyacınız olmayabilir. {APP_NAME} zaten bu özelliğe sahip.",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Eklenti yüklenmedi. Kullanımdan kaldırılmış veya güvensiz.",
   "EXTENSION_LATEST_INCOMPATIBLE_NEWER": "Bu uzantının {0} sürümü, {APP_NAME}'in daha yeni bir sürümünü gerektiriyor. Ancak daha eski sürüm olan {1}'i yükleyebilirsiniz.",
   "EXTENSION_LATEST_INCOMPATIBLE_OLDER": "Bu uzantının {0} sürümü yalnızca {APP_NAME}'in eski sürümleriyle çalışır. Ancak daha eski sürüm olan {1}'i yükleyebilirsiniz.",
   "EXTENSION_NO_DESCRIPTION": "Açıklama yok",
@@ -121649,7 +121991,17 @@ define("nls/tr/strings", {
   "LICENSE_ACTIVATE_FAIL_APPLY": "Lisans cihaza uygulanamadı",
   "LICENSE_ENTER_KEY": "Lütfen bir lisans anahtarı girin",
   "LICENSE_REAPPLY_TO_DEVICE": "Zaten etkinleştirildi mi? Sistem genelinde yeniden uygula",
-  "EXTENSION_DEPRECATED_NOT_LOADED": "Eklenti yüklenmedi. Kullanımdan kaldırılmış veya güvensiz."
+  "AI_LOGIN_DIALOG_TITLE": "Yapay Zeka Düzenlemelerini Kullanmak için Oturum Açın",
+  "AI_LOGIN_DIALOG_MESSAGE": "Yapay zeka destekli düzenlemeleri kullanmak için lütfen oturum açın",
+  "AI_LOGIN_DIALOG_BUTTON": "Yapay Zeka Erişimi Alın",
+  "AI_DISABLED_DIALOG_TITLE": "Yapay Zeka devre dışı",
+  "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "Sistemde yapay zeka yapılandırma dosyası bulunamadı. Yapay Zeka tüm kullanıcılar için etkinleştirildi.",
+  "AI_CONTROL_ALL_ALLOWED": "Yapay Zeka tüm kullanıcılar için etkinleştirildi.",
+  "AI_CONTROL_USER_ALLOWED": "Yapay Zeka, ({0}) kullanıcısı için etkin ancak diğerleri için devre dışı.",
+  "AI_CONTROL_ADMIN_DISABLED": "Yapay zeka erişimi sistem yöneticiniz tarafından devre dışı bırakıldı.",
+  "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Yapay zeka erişimi sistem yöneticiniz tarafından devre dışı bırakıldı. Yardım için lütfen {0} ile iletişime geçin.",
+  "AI_UPSELL_DIALOG_TITLE": "{0} ile devam edilsin mi?",
+  "AI_UPSELL_DIALOG_MESSAGE": "Yapay zeka destekli düzenlemeleri keşfettiniz. Devam etmek için bir Yapay Zeka aboneliğine veya kredilere ihtiyacınız olacak."
 });
 /*
  * GNU AGPL-3.0 License
@@ -122364,6 +122716,7 @@ define("nls/uk/strings", {
   "EXTENSION_INCOMPATIBLE_NEWER": "Це розширення потребує новішої версії {APP_NAME}.",
   "EXTENSION_INCOMPATIBLE_OLDER": "Наразі це розширення працює зі старішими версіями {APP_NAME}.",
   "EXTENSION_DEFAULT_FEATURE_PRESENT": "Вам може не знадобитися це розширення. {APP_NAME} вже має цю функцію.",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "Розширення не завантажено. Воно або застаріле, або небезпечне.",
   "EXTENSION_LATEST_INCOMPATIBLE_NEWER": "Версія {0} цього розширення потребує новішої версії {APP_NAME}. Як варіант, ви можете встановити новішу версію {1}.",
   "EXTENSION_LATEST_INCOMPATIBLE_OLDER": "Версія {0} цього розширення працює тільки зі старішими версіями {APP_NAME}. Як варіант, ви можете встановити новішу версію {1}.",
   "EXTENSION_NO_DESCRIPTION": "Опис відсутній",
@@ -123187,7 +123540,17 @@ define("nls/uk/strings", {
   "LICENSE_ACTIVATE_FAIL_APPLY": "Не вдалося застосувати ліцензію до пристрою",
   "LICENSE_ENTER_KEY": "Введіть ліцензійний ключ",
   "LICENSE_REAPPLY_TO_DEVICE": "Уже активовано? Повторно застосувати для всієї системи",
-  "EXTENSION_DEPRECATED_NOT_LOADED": "Розширення не завантажено. Воно або застаріле, або небезпечне."
+  "AI_LOGIN_DIALOG_TITLE": "Увійдіть, щоб використовувати правки ШІ",
+  "AI_LOGIN_DIALOG_MESSAGE": "Будь ласка, увійдіть, щоб використовувати правки на основі ШІ",
+  "AI_LOGIN_DIALOG_BUTTON": "Отримати доступ до ШІ",
+  "AI_DISABLED_DIALOG_TITLE": "ШІ вимкнено",
+  "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "Файл конфігурації ШІ не знайдено в системі. ШІ увімкнено для всіх користувачів.",
+  "AI_CONTROL_ALL_ALLOWED": "ШІ увімкнено для всіх користувачів.",
+  "AI_CONTROL_USER_ALLOWED": "ШІ увімкнено для користувача ({0}), але вимкнено для інших",
+  "AI_CONTROL_ADMIN_DISABLED": "Доступ до ШІ було вимкнено вашим системним адміністратором",
+  "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Доступ до ШІ було вимкнено вашим системним адміністратором. Будь ласка, зверніться до {0} за допомогою.",
+  "AI_UPSELL_DIALOG_TITLE": "Продовжити з {0}?",
+  "AI_UPSELL_DIALOG_MESSAGE": "Ви відкрили для себе редагування за допомогою ШІ. Щоб продовжити, вам знадобиться підписка на ШІ або кредити."
 });
 /*
  * GNU AGPL-3.0 License
@@ -123902,6 +124265,7 @@ define("nls/ur/strings", {
   "EXTENSION_INCOMPATIBLE_NEWER": "اس ایکسٹینشن کے لیے {APP_NAME} کے ایک نئے ورژن کی ضرورت ہے۔",
   "EXTENSION_INCOMPATIBLE_OLDER": "یہ ایکسٹینشن فی الحال صرف {APP_NAME} کے پرانے ورژنز کے ساتھ کام کرتا ہے۔",
   "EXTENSION_DEFAULT_FEATURE_PRESENT": "ہو سکتا ہے کہ آپ کو اس ایکسٹینشن کی ضرورت نہ ہو۔ {APP_NAME} میں پہلے سے ہی یہ فیچر موجود ہے۔",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "ایکسٹینشن لوڈ نہیں ہوئی۔ یہ یا تو متروک ہے یا غیر محفوظ۔",
   "EXTENSION_LATEST_INCOMPATIBLE_NEWER": "اس ایکسٹینشن کے ورژن {0} کے لیے {APP_NAME} کے ایک نئے ورژن کی ضرورت ہے۔ لیکن آپ اس کا پہلا ورژن {1} انسٹال کر سکتے ہیں۔",
   "EXTENSION_LATEST_INCOMPATIBLE_OLDER": "اس ایکسٹینشن کا ورژن {0} صرف {APP_NAME} کے پرانے ورژنز کے ساتھ کام کرتا ہے۔ لیکن آپ اس کا پہلا ورژن {1} انسٹال کر سکتے ہیں۔",
   "EXTENSION_NO_DESCRIPTION": "کوئی وضاحت نہیں",
@@ -124725,7 +125089,17 @@ define("nls/ur/strings", {
   "LICENSE_ACTIVATE_FAIL_APPLY": "ڈیوائس پر لائسنس لاگو کرنے میں ناکام",
   "LICENSE_ENTER_KEY": "براہ کرم لائسنس کی درج کریں",
   "LICENSE_REAPPLY_TO_DEVICE": "پہلے ہی فعال ہے؟ سسٹم بھر میں دوبارہ لاگو کریں",
-  "EXTENSION_DEPRECATED_NOT_LOADED": "ایکسٹینشن لوڈ نہیں ہوئی۔ یہ یا تو متروک ہے یا غیر محفوظ۔"
+  "AI_LOGIN_DIALOG_TITLE": "AI ترامیم استعمال کرنے کے لیے سائن ان کریں",
+  "AI_LOGIN_DIALOG_MESSAGE": "براہ کرم AI سے چلنے والی ترامیم استعمال کرنے کے لیے لاگ ان کریں",
+  "AI_LOGIN_DIALOG_BUTTON": "AI تک رسائی حاصل کریں",
+  "AI_DISABLED_DIALOG_TITLE": "AI غیر فعال ہے",
+  "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "سسٹم میں کوئی AI کنفگ فائل نہیں ملی۔ AI تمام صارفین کے لیے فعال ہے۔",
+  "AI_CONTROL_ALL_ALLOWED": "AI تمام صارفین کے لیے فعال ہے۔",
+  "AI_CONTROL_USER_ALLOWED": "AI صارف ({0}) کے لیے فعال ہے لیکن دوسروں کے لیے غیر فعال ہے",
+  "AI_CONTROL_ADMIN_DISABLED": "آپ کے سسٹم ایڈمنسٹریٹر نے AI تک رسائی کو غیر فعال کر دیا ہے",
+  "AI_CONTROL_ADMIN_DISABLED_CONTACT": "آپ کے سسٹم ایڈمنسٹریٹر نے AI تک رسائی کو غیر فعال کر دیا ہے۔ براہ کرم مدد کے لیے {0} سے رابطہ کریں۔",
+  "AI_UPSELL_DIALOG_TITLE": "{0} کے ساتھ جاری رکھیں؟",
+  "AI_UPSELL_DIALOG_MESSAGE": "آپ نے AI سے چلنے والی ترامیم دریافت کی ہیں۔ آگے بڑھنے کے لیے، آپ کو AI سبسکرپشن یا کریڈٹس کی ضرورت ہوگی۔"
 });
 /*
  * GNU AGPL-3.0 License
@@ -125470,6 +125844,7 @@ define("nls/zh-cn/strings", {
   "EXTENSION_INCOMPATIBLE_NEWER": "这个扩展需要更新版本的 {APP_NAME}。",
   "EXTENSION_INCOMPATIBLE_OLDER": "这个扩展目前只能在旧版本的 {APP_NAME} 上运行。",
   "EXTENSION_DEFAULT_FEATURE_PRESENT": "您可能不需要此扩展。{APP_NAME} 已具备此功能。",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "扩展未加载。它已弃用或不安全。",
   "EXTENSION_LATEST_INCOMPATIBLE_NEWER": "扩展版本为 {0} 需要一个更新版本的 {APP_NAME}，但你可以安装旧版本的扩展 {1}。",
   "EXTENSION_LATEST_INCOMPATIBLE_OLDER": "扩展版本为 {0} 需要一个更旧版本的 {APP_NAME}，但你可以安装旧版本的扩展 {1}。",
   "EXTENSION_NO_DESCRIPTION": "没有描述",
@@ -126293,7 +126668,17 @@ define("nls/zh-cn/strings", {
   "LICENSE_ACTIVATE_FAIL_APPLY": "未能将许可证应用于设备",
   "LICENSE_ENTER_KEY": "请输入许可证密钥",
   "LICENSE_REAPPLY_TO_DEVICE": "已激活？重新应用至全系统",
-  "EXTENSION_DEPRECATED_NOT_LOADED": "扩展未加载。它已弃用或不安全。"
+  "AI_LOGIN_DIALOG_TITLE": "登录以使用 AI 编辑",
+  "AI_LOGIN_DIALOG_MESSAGE": "请登录以使用 AI 编辑功能",
+  "AI_LOGIN_DIALOG_BUTTON": "获取 AI 访问权限",
+  "AI_DISABLED_DIALOG_TITLE": "AI 已禁用",
+  "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "系统中未找到 AI 配置文件。AI 已为所有用户启用。",
+  "AI_CONTROL_ALL_ALLOWED": "AI 已为所有用户启用。",
+  "AI_CONTROL_USER_ALLOWED": "AI 已为用户 ({0}) 启用，但为其他用户禁用。",
+  "AI_CONTROL_ADMIN_DISABLED": "AI 访问权限已被您的系统管理员禁用。",
+  "AI_CONTROL_ADMIN_DISABLED_CONTACT": "AI 访问权限已被您的系统管理员禁用。请联系 {0} 以获取帮助。",
+  "AI_UPSELL_DIALOG_TITLE": "继续使用 {0}？",
+  "AI_UPSELL_DIALOG_MESSAGE": "您已发现 AI 赋能的编辑功能。若要继续，您需要 AI 订阅或点数。"
 });
 /*
  * GNU AGPL-3.0 License
@@ -127008,6 +127393,7 @@ define("nls/zh-tw/strings", {
   "EXTENSION_INCOMPATIBLE_NEWER": "這個擴充功能需要較新版的 {APP_NAME} 才能使用。",
   "EXTENSION_INCOMPATIBLE_OLDER": "這個擴充功能目前只能在舊版 {APP_NAME} 中使用。",
   "EXTENSION_DEFAULT_FEATURE_PRESENT": "您可能不需要此擴充功能。{APP_NAME} 已具備此功能。",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "擴充功能未載入。其已棄用或不安全。",
   "EXTENSION_LATEST_INCOMPATIBLE_NEWER": "這個擴充功能 {0} 版只能在新版 {APP_NAME} 中使用。不過您可以選擇安裝較舊的 {1} 版。",
   "EXTENSION_LATEST_INCOMPATIBLE_OLDER": "這個擴充功能 {0} 版只能在舊版 {APP_NAME} 中使用。不過您可以選擇安裝較舊的 {1} 版。",
   "EXTENSION_NO_DESCRIPTION": "沒有描述資訊",
@@ -127831,7 +128217,17 @@ define("nls/zh-tw/strings", {
   "LICENSE_ACTIVATE_FAIL_APPLY": "無法將授權套用至裝置",
   "LICENSE_ENTER_KEY": "請輸入授權金鑰",
   "LICENSE_REAPPLY_TO_DEVICE": "已啟用？ 全系統重新套用",
-  "EXTENSION_DEPRECATED_NOT_LOADED": "擴充功能未載入。其已棄用或不安全。"
+  "AI_LOGIN_DIALOG_TITLE": "登入以使用 AI 編輯功能",
+  "AI_LOGIN_DIALOG_MESSAGE": "請登入以使用 AI 支援的編輯功能",
+  "AI_LOGIN_DIALOG_BUTTON": "取得 AI 存取權限",
+  "AI_DISABLED_DIALOG_TITLE": "AI 功能已停用",
+  "AI_CONTROL_ALL_ALLOWED_NO_CONFIG": "系統中找不到 AI 設定檔。AI 功能已為所有使用者啟用。",
+  "AI_CONTROL_ALL_ALLOWED": "AI 功能已為所有使用者啟用。",
+  "AI_CONTROL_USER_ALLOWED": "AI 功能已為使用者 ({0}) 啟用，但已為其他使用者停用。",
+  "AI_CONTROL_ADMIN_DISABLED": "您的系統管理員已停用 AI 存取權限。",
+  "AI_CONTROL_ADMIN_DISABLED_CONTACT": "您的系統管理員已停用 AI 存取權限。如需協助，請聯絡 {0}。",
+  "AI_UPSELL_DIALOG_TITLE": "要繼續使用 {0} 嗎？",
+  "AI_UPSELL_DIALOG_MESSAGE": "您已發現 AI 輔助編輯功能。若要繼續，您需要 AI 訂閱方案或點數。"
 });
 /*
  * GNU AGPL-3.0 License
