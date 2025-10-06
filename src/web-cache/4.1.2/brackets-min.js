@@ -73820,7 +73820,7 @@ define("nls/bg/strings", {
   "AI_CONTROL_ADMIN_DISABLED": "Достъпът до AI е деактивиран от вашия системен администратор.",
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Достъпът до AI е деактивиран от вашия системен администратор. Моля, свържете се с {0} за съдействие.",
   "AI_UPSELL_DIALOG_TITLE": "Да продължите ли с {0}?",
-  "AI_UPSELL_DIALOG_MESSAGE": "Открихте редакциите с изкуствен интелект. За да продължите, ще ви е необходим абонамент за ИИ или кредити."
+  "AI_UPSELL_DIALOG_MESSAGE": "Вие открихте {0}. За да продължите, ще ви е необходим AI абонамент или кредити."
 });
 /*
  * Copyright (c) 2013 Adobe Systems Incorporated. All rights reserved.
@@ -75371,7 +75371,7 @@ define("nls/cs/strings", {
   "AI_CONTROL_ADMIN_DISABLED": "Přístup k AI byl zakázán správcem systému.",
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Přístup k AI byl zakázán správcem systému. Pro pomoc prosím kontaktujte {0}.",
   "AI_UPSELL_DIALOG_TITLE": "Pokračovat s {0}?",
-  "AI_UPSELL_DIALOG_MESSAGE": "Objevili jste úpravy s podporou AI. Chcete-li pokračovat, budete potřebovat předplatné AI nebo kredity."
+  "AI_UPSELL_DIALOG_MESSAGE": "Objevili jste {0}. Chcete-li pokračovat, budete potřebovat předplatné AI nebo kredity."
 });
 /*
  * GNU AGPL-3.0 License
@@ -76920,7 +76920,7 @@ define("nls/da/strings", {
   "AI_CONTROL_ADMIN_DISABLED": "Adgang til AI er blevet deaktiveret af din systemadministrator",
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Adgang til AI er blevet deaktiveret af din systemadministrator. Kontakt venligst {0} for hjælp.",
   "AI_UPSELL_DIALOG_TITLE": "Fortsæt med {0}?",
-  "AI_UPSELL_DIALOG_MESSAGE": "Du har opdaget AI-drevne redigeringer. For at fortsætte skal du bruge et AI-abonnement eller kreditter."
+  "AI_UPSELL_DIALOG_MESSAGE": "Du har opdaget {0}. For at fortsætte har du brug for et AI-abonnement eller kreditter."
 });
 /*
  * GNU AGPL-3.0 License
@@ -78467,7 +78467,7 @@ define("nls/de/strings", {
   "AI_CONTROL_ADMIN_DISABLED": "Der KI-Zugriff wurde von Ihrem Systemadministrator deaktiviert.",
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Der KI-Zugriff wurde von Ihrem Systemadministrator deaktiviert. Bitte kontaktieren Sie {0} für Unterstützung.",
   "AI_UPSELL_DIALOG_TITLE": "Mit {0} fortfahren?",
-  "AI_UPSELL_DIALOG_MESSAGE": "Sie haben KI-gestützte Bearbeitungen entdeckt. Um fortzufahren, benötigen Sie ein KI-Abonnement oder Guthaben."
+  "AI_UPSELL_DIALOG_MESSAGE": "Sie haben {0} entdeckt. Um fortzufahren, benötigen Sie ein KI-Abonnement oder Guthaben."
 });
 /*
  * GNU AGPL-3.0 License
@@ -80016,7 +80016,7 @@ define("nls/el/strings", {
   "AI_CONTROL_ADMIN_DISABLED": "Η πρόσβαση στο AI έχει απενεργοποιηθεί από τον διαχειριστή του συστήματός σας",
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Η πρόσβαση στο AI έχει απενεργοποιηθεί από τον διαχειριστή του συστήματός σας. Παρακαλούμε επικοινωνήστε με {0} για βοήθεια.",
   "AI_UPSELL_DIALOG_TITLE": "Συνέχεια με {0};",
-  "AI_UPSELL_DIALOG_MESSAGE": "Ανακαλύψατε τις επεξεργασίες με τεχνητή νοημοσύνη. Για να συνεχίσετε, θα χρειαστείτε μια συνδρομή AI ή μονάδες."
+  "AI_UPSELL_DIALOG_MESSAGE": "Ανακαλύψατε το {0}. Για να συνεχίσετε, θα χρειαστείτε μια συνδρομή AI ή πιστώσεις."
 });
 /*
  * GNU AGPL-3.0 License
@@ -81565,7 +81565,7 @@ define("nls/en-gb/strings", {
   "AI_CONTROL_ADMIN_DISABLED": "AI access has been disabled by your system administrator",
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "AI access has been disabled by your system administrator. Please contact {0} for assistance.",
   "AI_UPSELL_DIALOG_TITLE": "Continue with {0}?",
-  "AI_UPSELL_DIALOG_MESSAGE": "You’ve discovered AI-powered edits. To proceed, you’ll need an AI subscription or credits."
+  "AI_UPSELL_DIALOG_MESSAGE": "You’ve discovered {0}. To proceed, you’ll need an AI subscription or credits."
 });
 /*
  * GNU AGPL-3.0 License
@@ -83087,7 +83087,7 @@ define("nls/es/strings", {
   "AI_CONTROL_ADMIN_DISABLED": "El acceso a la IA ha sido desactivado por el administrador del sistema.",
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "El acceso a la IA ha sido desactivado por el administrador del sistema. Póngase en contacto con {0} para obtener ayuda.",
   "AI_UPSELL_DIALOG_TITLE": "¿Continuar con {0}?",
-  "AI_UPSELL_DIALOG_MESSAGE": "Has descubierto las ediciones con IA. Para continuar, necesitarás una suscripción de IA o créditos."
+  "AI_UPSELL_DIALOG_MESSAGE": "Has descubierto {0}. Para continuar, necesitarás una suscripción de IA o créditos."
 });
 /*
  * GNU AGPL-3.0 License
@@ -83803,6 +83803,7 @@ define("nls/fa-ir/strings", {
   "EXTENSION_INCOMPATIBLE_NEWER": "این افزونه نیاز به نسخه جدیدی از {APP_NAME} دارد.",
   "EXTENSION_INCOMPATIBLE_OLDER": " نسخه فعلی این افزونه فقط با نسخه های قبلی {APP_NAME} سازگار است.",
   "EXTENSION_DEFAULT_FEATURE_PRESENT": "ممکن است به این افزونه نیازی نداشته باشید. {APP_NAME} از قبل این ویژگی را دارد.",
+  "EXTENSION_DEPRECATED_NOT_LOADED": "افزونه بارگیری نشد. این افزونه یا منسوخ شده یا ناامن است.",
   "EXTENSION_LATEST_INCOMPATIBLE_NEWER": "نسخه {0} از این افزونه نیازمند نسخه جدیدی از {APP_NAME} می باشد. ولی شما می توانید یک نسخه پایین تر از {1} را نصب کنید.",
   "EXTENSION_LATEST_INCOMPATIBLE_OLDER": "نسخه {0} از این افزونه فقط با نسخه قدیمی از {APP_NAME} کار می کند. اما شما به راحتی می توانید نصب کنید نسخه {1} را ",
   "EXTENSION_NO_DESCRIPTION": "بدون شرح",
@@ -84626,7 +84627,6 @@ define("nls/fa-ir/strings", {
   "LICENSE_ACTIVATE_FAIL_APPLY": "اعمال لایسنس روی دستگاه ناموفق بود",
   "LICENSE_ENTER_KEY": "لطفاً کلید لایسنس را وارد کنید",
   "LICENSE_REAPPLY_TO_DEVICE": "قبلاً فعال‌سازی کرده‌اید؟ اعمال مجدد برای کل سیستم",
-  "EXTENSION_DEPRECATED_NOT_LOADED": "افزونه بارگیری نشد. این افزونه یا منسوخ شده یا ناامن است.",
   "AI_LOGIN_DIALOG_TITLE": "برای استفاده از ویرایش‌های هوش مصنوعی وارد شوید",
   "AI_LOGIN_DIALOG_MESSAGE": "لطفاً برای استفاده از ویرایش‌های مبتنی بر هوش مصنوعی وارد شوید",
   "AI_LOGIN_DIALOG_BUTTON": "دریافت دسترسی به هوش مصنوعی",
@@ -84637,7 +84637,7 @@ define("nls/fa-ir/strings", {
   "AI_CONTROL_ADMIN_DISABLED": "دسترسی به هوش مصنوعی توسط مدیر سیستم شما غیرفعال شده است",
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "دسترسی به هوش مصنوعی توسط مدیر سیستم شما غیرفعال شده است. لطفاً برای راهنمایی با {0} تماس بگیرید.",
   "AI_UPSELL_DIALOG_TITLE": "ادامه با {0}؟",
-  "AI_UPSELL_DIALOG_MESSAGE": "شما ویرایش‌های مبتنی بر هوش مصنوعی را کشف کرده‌اید. برای ادامه، به اشتراک هوش مصنوعی یا اعتبار نیاز دارید."
+  "AI_UPSELL_DIALOG_MESSAGE": "شما قابلیت {0} را کشف کرده‌اید. برای ادامه، به اشتراک AI یا اعتبار نیاز دارید."
 });
 /*
  * GNU AGPL-3.0 License
@@ -86186,7 +86186,7 @@ define("nls/fi/strings", {
   "AI_CONTROL_ADMIN_DISABLED": "Järjestelmänvalvoja on poistanut tekoälyn käytöstä.",
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Järjestelmänvalvoja on poistanut tekoälyn käytöstä. Ota yhteyttä {0} saadaksesi apua.",
   "AI_UPSELL_DIALOG_TITLE": "Jatketaanko {0}:n kanssa?",
-  "AI_UPSELL_DIALOG_MESSAGE": "Olet löytänyt tekoälyavusteiset muokkaukset. Jatkaaksesi tarvitset tekoälytilauksen tai krediittejä."
+  "AI_UPSELL_DIALOG_MESSAGE": "Olet löytänyt ominaisuuden {0}. Jatkaaksesi tarvitset tekoälytilauksen tai krediittejä."
 });
 /*
  * GNU AGPL-3.0 License
@@ -87735,7 +87735,7 @@ define("nls/fr/strings", {
   "AI_CONTROL_ADMIN_DISABLED": "L'accès à l'IA a été désactivé par votre administrateur système",
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "L'accès à l'IA a été désactivé par votre administrateur système. Veuillez contacter {0} pour obtenir de l'aide.",
   "AI_UPSELL_DIALOG_TITLE": "Continuer avec {0} ?",
-  "AI_UPSELL_DIALOG_MESSAGE": "Vous avez découvert les modifications assistées par l'IA. Pour continuer, vous aurez besoin d'un abonnement IA ou de crédits."
+  "AI_UPSELL_DIALOG_MESSAGE": "Vous avez découvert {0}. Pour continuer, vous aurez besoin d'un abonnement IA ou de crédits."
 });
 /*
  * GNU AGPL-3.0 License
@@ -89284,7 +89284,7 @@ define("nls/gl/strings", {
   "AI_CONTROL_ADMIN_DISABLED": "O acceso á IA foi desactivado polo seu administrador do sistema",
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "O acceso á IA foi desactivado polo seu administrador do sistema. Póñase en contacto con {0} para obter axuda.",
   "AI_UPSELL_DIALOG_TITLE": "Continuar con {0}?",
-  "AI_UPSELL_DIALOG_MESSAGE": "Descubriches as edicións con IA. Para continuar, necesitarás unha subscrición de IA ou créditos."
+  "AI_UPSELL_DIALOG_MESSAGE": "Descubriches {0}. Para continuar, necesitarás unha subscrición de IA ou créditos."
 });
 /*
  * GNU AGPL-3.0 License
@@ -90806,7 +90806,7 @@ define("nls/hi/strings", {
   "AI_CONTROL_ADMIN_DISABLED": "आपके सिस्टम एडमिनिस्ट्रेटर द्वारा AI एक्सेस अक्षम कर दिया गया है।",
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "आपके सिस्टम एडमिनिस्ट्रेटर द्वारा AI एक्सेस अक्षम कर दिया गया है। सहायता के लिए कृपया {0} से संपर्क करें।",
   "AI_UPSELL_DIALOG_TITLE": "{0} के साथ जारी रखें?",
-  "AI_UPSELL_DIALOG_MESSAGE": "आपने AI-संचालित संपादन खोजे हैं। आगे बढ़ने के लिए, आपको AI सदस्यता या क्रेडिट की आवश्यकता होगी।"
+  "AI_UPSELL_DIALOG_MESSAGE": "आपने {0} खोज लिया है। आगे बढ़ने के लिए, आपको AI सब्सक्रिप्शन या क्रेडिट्स की ज़रूरत होगी।"
 });
 /*
  * GNU AGPL-3.0 License
@@ -92328,7 +92328,7 @@ define("nls/hr/strings", {
   "AI_CONTROL_ADMIN_DISABLED": "Pristup AI-ju onemogućio je vaš administrator sustava.",
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Pristup AI-ju onemogućio je vaš administrator sustava. Molimo kontaktirajte {0} za pomoć.",
   "AI_UPSELL_DIALOG_TITLE": "Nastaviti s {0}?",
-  "AI_UPSELL_DIALOG_MESSAGE": "Otkrili ste uređivanja pomoću umjetne inteligencije. Za nastavak vam je potrebna pretplata za AI ili krediti."
+  "AI_UPSELL_DIALOG_MESSAGE": "Otkrili ste {0}. Da biste nastavili, potrebna vam je AI pretplata ili krediti."
 });
 /*
  * GNU AGPL-3.0 License
@@ -93877,7 +93877,7 @@ define("nls/hu/strings", {
   "AI_CONTROL_ADMIN_DISABLED": "A MI-hozzáférést a rendszergazda letiltotta.",
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "A MI-hozzáférést a rendszergazda letiltotta. Segítségért forduljon a(z) {0} elérhetőséghez.",
   "AI_UPSELL_DIALOG_TITLE": "Folytatja a(z) {0} használatával?",
-  "AI_UPSELL_DIALOG_MESSAGE": "Felfedezted az MI-alapú szerkesztéseket. A folytatáshoz MI-előfizetésre vagy kreditekre lesz szükséged."
+  "AI_UPSELL_DIALOG_MESSAGE": "Felfedezte a(z) {0} szolgáltatást. A folytatáshoz MI-előfizetésre vagy kreditekre lesz szüksége."
 });
 /*
  * GNU AGPL-3.0 License
@@ -95399,7 +95399,7 @@ define("nls/id/strings", {
   "AI_CONTROL_ADMIN_DISABLED": "Akses AI telah dinonaktifkan oleh administrator sistem Anda",
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Akses AI telah dinonaktifkan oleh administrator sistem Anda. Silakan hubungi {0} untuk bantuan.",
   "AI_UPSELL_DIALOG_TITLE": "Lanjutkan dengan {0}?",
-  "AI_UPSELL_DIALOG_MESSAGE": "Anda telah menemukan editan berbasis AI. Untuk melanjutkan, Anda memerlukan langganan AI atau kredit."
+  "AI_UPSELL_DIALOG_MESSAGE": "Anda telah menemukan {0}. Untuk melanjutkan, Anda memerlukan langganan AI atau kredit."
 });
 /*
  * GNU AGPL-3.0 License
@@ -96947,7 +96947,7 @@ define("nls/it/strings", {
   "AI_CONTROL_ADMIN_DISABLED": "L'accesso all'AI è stato disattivato dal tuo amministratore di sistema.",
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "L'accesso all'AI è stato disattivato dal tuo amministratore di sistema. Contatta {0} per assistenza.",
   "AI_UPSELL_DIALOG_TITLE": "Continuare con {0}?",
-  "AI_UPSELL_DIALOG_MESSAGE": "Hai scoperto le modifiche potenziate dall'IA. Per procedere, è necessario un abbonamento IA o dei crediti."
+  "AI_UPSELL_DIALOG_MESSAGE": "Hai scoperto {0}. Per procedere, avrai bisogno di un abbonamento AI o di crediti."
 });
 /*
  * GNU AGPL-3.0 License
@@ -98496,7 +98496,7 @@ define("nls/ja/strings", {
   "AI_CONTROL_ADMIN_DISABLED": "AIアクセスはシステム管理者によって無効にされています。",
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "AIアクセスはシステム管理者によって無効にされています。サポートが必要な場合は、{0}にお問い合わせください。",
   "AI_UPSELL_DIALOG_TITLE": "{0}を続行しますか？",
-  "AI_UPSELL_DIALOG_MESSAGE": "ＡＩを活用した編集機能です。ご利用には、ＡＩサブスクリプションまたはクレジットが必要です。"
+  "AI_UPSELL_DIALOG_MESSAGE": "「{0}」をご利用になるには、AIサブスクリプションまたはクレジットが必要です。"
 });
 /*
  * GNU AGPL-3.0 License
@@ -100045,7 +100045,7 @@ define("nls/ko/strings", {
   "AI_CONTROL_ADMIN_DISABLED": "시스템 관리자에 의해 AI 액세스가 비활성화되었습니다.",
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "시스템 관리자에 의해 AI 액세스가 비활성화되었습니다. 도움이 필요하시면 {0}에게 문의하세요.",
   "AI_UPSELL_DIALOG_TITLE": "{0}(으)로 계속하시겠습니까?",
-  "AI_UPSELL_DIALOG_MESSAGE": "AI 기반 편집 기능을 발견하셨군요. 계속 진행하시려면 AI 구독 또는 크레딧이 필요합니다."
+  "AI_UPSELL_DIALOG_MESSAGE": "{0} 기능을 발견하셨습니다. 계속 진행하려면 AI 구독 또는 크레딧이 필요합니다."
 });
 /*
  * GNU AGPL-3.0 License
@@ -101594,7 +101594,7 @@ define("nls/lv/strings", {
   "AI_CONTROL_ADMIN_DISABLED": "MI piekļuvi ir atspējojis jūsu sistēmas administrators",
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "MI piekļuvi ir atspējojis jūsu sistēmas administrators. Lūdzu, sazinieties ar {0}, lai saņemtu palīdzību.",
   "AI_UPSELL_DIALOG_TITLE": "Turpināt ar {0}?",
-  "AI_UPSELL_DIALOG_MESSAGE": "Jūs atklājāt ar MI darbinātus labojumus. Lai turpinātu, jums būs nepieciešams MI abonements vai kredīti."
+  "AI_UPSELL_DIALOG_MESSAGE": "Jūs atklājāt {0}. Lai turpinātu, jums būs nepieciešams MI abonements vai kredīti."
 });
 /*
  * GNU AGPL-3.0 License
@@ -103116,7 +103116,7 @@ define("nls/ml/strings", {
   "AI_CONTROL_ADMIN_DISABLED": "നിങ്ങളുടെ സിസ്റ്റം അഡ്മിനിസ്ട്രേറ്റർ എഐ ആക്‌സസ് പ്രവർത്തനരഹിതമാക്കിയിരിക്കുന്നു.",
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "നിങ്ങളുടെ സിസ്റ്റം അഡ്മിനിസ്ട്രേറ്റർ എഐ ആക്‌സസ് പ്രവർത്തനരഹിതമാക്കിയിരിക്കുന്നു. സഹായത്തിനായി ദയവായി {0}-മായി ബന്ധപ്പെടുക.",
   "AI_UPSELL_DIALOG_TITLE": "{0} ഉപയോഗിച്ച് തുടരണോ?",
-  "AI_UPSELL_DIALOG_MESSAGE": "നിങ്ങൾ AI സഹായത്തോടെയുള്ള തിരുത്തലുകൾ കണ്ടെത്തിയിരിക്കുന്നു. തുടരുന്നതിന്, നിങ്ങൾക്ക് ഒരു AI സബ്സ്ക്രിപ്ഷനോ ക്രെഡിറ്റുകളോ ആവശ്യമാണ്."
+  "AI_UPSELL_DIALOG_MESSAGE": "നിങ്ങൾ {0} കണ്ടെത്തിയിരിക്കുന്നു. തുടരാൻ, നിങ്ങൾക്ക് ഒരു എഐ സബ്സ്ക്രിപ്ഷനോ ക്രെഡിറ്റുകളോ ആവശ്യമാണ്."
 });
 /*
  * GNU AGPL-3.0 License
@@ -104638,7 +104638,7 @@ define("nls/nb/strings", {
   "AI_CONTROL_ADMIN_DISABLED": "AI-tilgang er deaktivert av systemadministratoren din",
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "AI-tilgang er deaktivert av systemadministratoren din. Vennligst kontakt {0} for hjelp.",
   "AI_UPSELL_DIALOG_TITLE": "Fortsette med {0}?",
-  "AI_UPSELL_DIALOG_MESSAGE": "Du har oppdaget AI-drevne redigeringer. For å fortsette trenger du et AI-abonnement eller kreditter."
+  "AI_UPSELL_DIALOG_MESSAGE": "Du har oppdaget {0}. For å fortsette trenger du et AI-abonnement eller kreditter."
 });
 /*
  * GNU AGPL-3.0 License
@@ -106187,7 +106187,7 @@ define("nls/nl/strings", {
   "AI_CONTROL_ADMIN_DISABLED": "De toegang tot AI is uitgeschakeld door uw systeembeheerder.",
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "De toegang tot AI is uitgeschakeld door uw systeembeheerder. Neem contact op met {0} voor hulp.",
   "AI_UPSELL_DIALOG_TITLE": "Doorgaan met {0}?",
-  "AI_UPSELL_DIALOG_MESSAGE": "Je hebt bewerkingen met AI ontdekt. Om door te gaan, heb je een AI-abonnement of credits nodig."
+  "AI_UPSELL_DIALOG_MESSAGE": "U heeft {0} ontdekt. Om verder te gaan, heeft u een AI-abonnement of credits nodig."
 });
 /*
  * GNU AGPL-3.0 License
@@ -107736,7 +107736,7 @@ define("nls/pl/strings", {
   "AI_CONTROL_ADMIN_DISABLED": "Dostęp do AI został wyłączony przez administratora systemu.",
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Dostęp do AI został wyłączony przez administratora systemu. Prosimy o kontakt z {0} w celu uzyskania pomocy.",
   "AI_UPSELL_DIALOG_TITLE": "Kontynuować z {0}?",
-  "AI_UPSELL_DIALOG_MESSAGE": "Odkryłeś edycje wspomagane przez AI. Aby kontynuować, potrzebujesz subskrypcji AI lub kredytów."
+  "AI_UPSELL_DIALOG_MESSAGE": "Odkryłeś {0}. Aby kontynuować, potrzebujesz subskrypcji AI lub kredytów."
 });
 /*
  * GNU AGPL-3.0 License
@@ -109285,7 +109285,7 @@ define("nls/pt-br/strings", {
   "AI_CONTROL_ADMIN_DISABLED": "O acesso à IA foi desativado pelo administrador do seu sistema.",
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "O acesso à IA foi desativado pelo administrador do seu sistema. Entre em contato com {0} para obter assistência.",
   "AI_UPSELL_DIALOG_TITLE": "Continuar com {0}?",
-  "AI_UPSELL_DIALOG_MESSAGE": "Você descobriu as edições com IA. Para prosseguir, você precisará de uma assinatura de IA ou créditos."
+  "AI_UPSELL_DIALOG_MESSAGE": "Você descobriu o {0}. Para prosseguir, você precisará de uma assinatura de IA ou de créditos."
 });
 /*
  * GNU AGPL-3.0 License
@@ -110832,7 +110832,7 @@ define("nls/pt-pt/strings", {
   "AI_CONTROL_ADMIN_DISABLED": "O acesso à IA foi desativado pelo seu administrador de sistema",
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "O acesso à IA foi desativado pelo seu administrador de sistema. Por favor, contacte {0} para obter assistência.",
   "AI_UPSELL_DIALOG_TITLE": "Continuar com {0}?",
-  "AI_UPSELL_DIALOG_MESSAGE": "Descobriu as edições assistidas por IA. Para prosseguir, precisará de uma subscrição de IA ou de créditos."
+  "AI_UPSELL_DIALOG_MESSAGE": "Descobriu {0}. Para continuar, precisará de uma subscrição de IA ou de créditos."
 });
 /*
  * GNU AGPL-3.0 License
@@ -112379,7 +112379,7 @@ define("nls/ro/strings", {
   "AI_CONTROL_ADMIN_DISABLED": "Accesul AI a fost dezactivat de către administratorul dvs. de sistem",
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Accesul AI a fost dezactivat de către administratorul dvs. de sistem. Vă rugăm să contactați {0} pentru asistență.",
   "AI_UPSELL_DIALOG_TITLE": "Continuați cu {0}?",
-  "AI_UPSELL_DIALOG_MESSAGE": "Ați descoperit editările asistate de AI. Pentru a continua, aveți nevoie de un abonament AI sau de credite."
+  "AI_UPSELL_DIALOG_MESSAGE": "Ați descoperit {0}. Pentru a continua, veți avea nevoie de un abonament AI sau de credite."
 });
 /*
  * GNU AGPL-3.0 License
@@ -114175,7 +114175,7 @@ define("nls/root/strings", {
     "AI_CONTROL_ADMIN_DISABLED": "AI access has been disabled by your system administrator",
     "AI_CONTROL_ADMIN_DISABLED_CONTACT": "AI access has been disabled by your system administrator. Please contact {0} for assistance.",
     "AI_UPSELL_DIALOG_TITLE": "Continue with {0}?",
-    "AI_UPSELL_DIALOG_MESSAGE": "You’ve discovered AI-powered edits. To proceed, you’ll need an AI subscription or credits."
+    "AI_UPSELL_DIALOG_MESSAGE": "You’ve discovered {0}. To proceed, you’ll need an AI subscription or credits."
 });
 
 /*
@@ -115725,7 +115725,7 @@ define("nls/ru/strings", {
   "AI_CONTROL_ADMIN_DISABLED": "Доступ к ИИ был отключён вашим системным администратором",
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Доступ к ИИ был отключён вашим системным администратором. Пожалуйста, свяжитесь с {0} для получения помощи.",
   "AI_UPSELL_DIALOG_TITLE": "Продолжить с {0}?",
-  "AI_UPSELL_DIALOG_MESSAGE": "Вы открыли для себя редактирование с помощью ИИ. Чтобы продолжить, вам потребуется подписка на ИИ или кредиты."
+  "AI_UPSELL_DIALOG_MESSAGE": "Вы открыли для себя {0}. Чтобы продолжить, вам понадобится подписка на ИИ или кредиты."
 });
 /*
  * GNU AGPL-3.0 License
@@ -117274,7 +117274,7 @@ define("nls/sk/strings", {
   "AI_CONTROL_ADMIN_DISABLED": "Prístup k AI bol vypnutý správcom vášho systému",
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Prístup k AI bol vypnutý správcom vášho systému. So žiadosťou o pomoc sa obráťte na {0}.",
   "AI_UPSELL_DIALOG_TITLE": "Pokračovať s {0}?",
-  "AI_UPSELL_DIALOG_MESSAGE": "Objavili ste úpravy s podporou umelej inteligencie. Ak chcete pokračovať, budete potrebovať predplatné AI alebo kredity."
+  "AI_UPSELL_DIALOG_MESSAGE": "Objavili ste {0}. Ak chcete pokračovať, budete potrebovať predplatné AI alebo kredity."
 });
 /*
  * GNU AGPL-3.0 License
@@ -118822,7 +118822,7 @@ define("nls/sr/strings", {
   "AI_CONTROL_ADMIN_DISABLED": "Приступ AI је онемогућио администратор система",
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Приступ AI је онемогућио администратор система. Молимо вас, контактирајте {0} за помоћ.",
   "AI_UPSELL_DIALOG_TITLE": "Наставити са {0}?",
-  "AI_UPSELL_DIALOG_MESSAGE": "Открили сте измене које покреће вештачка интелигенција. Да бисте наставили, потребна вам је AI претплата или кредити."
+  "AI_UPSELL_DIALOG_MESSAGE": "Открили сте {0}. Да бисте наставили, потребна вам је AI претплата или кредити."
 });
 /*
  * GNU AGPL-3.0 License
@@ -120454,7 +120454,7 @@ define("nls/sv/strings", {
   "AI_CONTROL_ADMIN_DISABLED": "AI-åtkomst har inaktiverats av din systemadministratör.",
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "AI-åtkomst har inaktiverats av din systemadministratör. Kontakta {0} för hjälp.",
   "AI_UPSELL_DIALOG_TITLE": "Fortsätt med {0}?",
-  "AI_UPSELL_DIALOG_MESSAGE": "Du har upptäckt AI-drivna redigeringar. För att fortsätta behöver du en AI-prenumeration eller krediter."
+  "AI_UPSELL_DIALOG_MESSAGE": "Du har upptäckt {0}. För att fortsätta behöver du ett AI-abonnemang eller krediter."
 });
 /*
  * GNU AGPL-3.0 License
@@ -122003,7 +122003,7 @@ define("nls/tr/strings", {
   "AI_CONTROL_ADMIN_DISABLED": "Yapay zeka erişimi sistem yöneticiniz tarafından devre dışı bırakıldı.",
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Yapay zeka erişimi sistem yöneticiniz tarafından devre dışı bırakıldı. Yardım için lütfen {0} ile iletişime geçin.",
   "AI_UPSELL_DIALOG_TITLE": "{0} ile devam edilsin mi?",
-  "AI_UPSELL_DIALOG_MESSAGE": "Yapay zeka destekli düzenlemeleri keşfettiniz. Devam etmek için bir Yapay Zeka aboneliğine veya kredilere ihtiyacınız olacak."
+  "AI_UPSELL_DIALOG_MESSAGE": "{0} özelliğini keşfettiniz. Devam etmek için bir Yapay Zeka aboneliğine veya kredilere ihtiyacınız var."
 });
 /*
  * GNU AGPL-3.0 License
@@ -123552,7 +123552,7 @@ define("nls/uk/strings", {
   "AI_CONTROL_ADMIN_DISABLED": "Доступ до ШІ було вимкнено вашим системним адміністратором",
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Доступ до ШІ було вимкнено вашим системним адміністратором. Будь ласка, зверніться до {0} за допомогою.",
   "AI_UPSELL_DIALOG_TITLE": "Продовжити з {0}?",
-  "AI_UPSELL_DIALOG_MESSAGE": "Ви відкрили для себе редагування за допомогою ШІ. Щоб продовжити, вам знадобиться підписка на ШІ або кредити."
+  "AI_UPSELL_DIALOG_MESSAGE": "Ви відкрили для себе {0}. Щоб продовжити, вам знадобиться підписка на ШІ або кредити."
 });
 /*
  * GNU AGPL-3.0 License
@@ -125101,7 +125101,7 @@ define("nls/ur/strings", {
   "AI_CONTROL_ADMIN_DISABLED": "آپ کے سسٹم ایڈمنسٹریٹر نے AI تک رسائی کو غیر فعال کر دیا ہے",
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "آپ کے سسٹم ایڈمنسٹریٹر نے AI تک رسائی کو غیر فعال کر دیا ہے۔ براہ کرم مدد کے لیے {0} سے رابطہ کریں۔",
   "AI_UPSELL_DIALOG_TITLE": "{0} کے ساتھ جاری رکھیں؟",
-  "AI_UPSELL_DIALOG_MESSAGE": "آپ نے AI سے چلنے والی ترامیم دریافت کی ہیں۔ آگے بڑھنے کے لیے، آپ کو AI سبسکرپشن یا کریڈٹس کی ضرورت ہوگی۔"
+  "AI_UPSELL_DIALOG_MESSAGE": "آپ نے {0} کو دریافت کیا ہے۔ آگے بڑھنے کے لیے، آپ کو AI سبسکرپشن یا کریڈٹس کی ضرورت ہوگی۔"
 });
 /*
  * GNU AGPL-3.0 License
@@ -126680,7 +126680,7 @@ define("nls/zh-cn/strings", {
   "AI_CONTROL_ADMIN_DISABLED": "AI 访问权限已被您的系统管理员禁用。",
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "AI 访问权限已被您的系统管理员禁用。请联系 {0} 以获取帮助。",
   "AI_UPSELL_DIALOG_TITLE": "继续使用 {0}？",
-  "AI_UPSELL_DIALOG_MESSAGE": "您已发现 AI 赋能的编辑功能。若要继续，您需要 AI 订阅或点数。"
+  "AI_UPSELL_DIALOG_MESSAGE": "您发现了 {0}。要继续，您需要 AI 订阅或点数。"
 });
 /*
  * GNU AGPL-3.0 License
@@ -128229,7 +128229,7 @@ define("nls/zh-tw/strings", {
   "AI_CONTROL_ADMIN_DISABLED": "您的系統管理員已停用 AI 存取權限。",
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "您的系統管理員已停用 AI 存取權限。如需協助，請聯絡 {0}。",
   "AI_UPSELL_DIALOG_TITLE": "要繼續使用 {0} 嗎？",
-  "AI_UPSELL_DIALOG_MESSAGE": "您已發現 AI 輔助編輯功能。若要繼續，您需要 AI 訂閱方案或點數。"
+  "AI_UPSELL_DIALOG_MESSAGE": "您已發現 {0}。您需要 AI 訂閱或點數才能繼續。"
 });
 /*
  * GNU AGPL-3.0 License
@@ -168619,7 +168619,8 @@ define("services/EntitlementsManager", function (require, exports, module) {
         }
         const defaultAIBrandName = brackets.config.ai_brand_name,
             defaultPurchaseURL = brackets.config.purchase_url,
-            defaultUpsellTitle = StringUtils.format(Strings.AI_UPSELL_DIALOG_TITLE, defaultAIBrandName);
+            defaultUpsellTitle = StringUtils.format(Strings.AI_UPSELL_DIALOG_TITLE, defaultAIBrandName),
+            defaultUpsellMessage = StringUtils.format(Strings.AI_UPSELL_DIALOG_MESSAGE, defaultAIBrandName);
         const entitlements = await _getEffectiveEntitlements();
         if(!entitlements || !entitlements.entitlements || !entitlements.entitlements.aiAgent) {
             return {
@@ -168629,7 +168630,7 @@ define("services/EntitlementsManager", function (require, exports, module) {
                 upgradeToPlan: defaultAIBrandName,
                 upsellDialog: {
                     title: defaultUpsellTitle,
-                    message: Strings.AI_UPSELL_DIALOG_MESSAGE,
+                    message: defaultUpsellMessage,
                     buyURL: defaultPurchaseURL
                 }
             };
@@ -168661,6 +168662,8 @@ define("services/EntitlementsManager", function (require, exports, module) {
 
         const upsellTitle = StringUtils.format(Strings.AI_UPSELL_DIALOG_TITLE,
             aiEntitlement.aiBrandName || defaultAIBrandName);
+        const upsellMessage = StringUtils.format(Strings.AI_UPSELL_DIALOG_MESSAGE,
+            aiEntitlement.aiBrandName || defaultAIBrandName);
         const upsellDialog = aiEntitlement.upsellDialog || {};
         return {
             activated: false,
@@ -168670,7 +168673,7 @@ define("services/EntitlementsManager", function (require, exports, module) {
             validTill: aiEntitlement.validTill,
             upsellDialog: {
                 title: upsellDialog.title || upsellTitle,
-                message: upsellDialog.message || Strings.AI_UPSELL_DIALOG_MESSAGE,
+                message: upsellDialog.message || upsellMessage,
                 buyURL: upsellDialog.buyURL || aiEntitlement.subscribeURL || defaultPurchaseURL
             }
         };
