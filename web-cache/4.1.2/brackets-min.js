@@ -4424,6 +4424,13 @@ define("LiveDevelopment/LivePreviewEdit", function (require, exports, module) {
     const ProjectManager = require("project/ProjectManager");
     const FileSystem = require("filesystem/FileSystem");
     const PathUtils = require("thirdparty/path-utils/path-utils");
+    const ProDialogs = require("services/pro-dialogs");
+
+    const KernalModeTrust = window.KernalModeTrust;
+    if(!KernalModeTrust){
+        // integrated extensions will have access to kernal mode, but not external extensions
+        throw new Error("LivePreviewEdit.js should have access to KernalModeTrust. Cannot boot without trust ring");
+    }
 
     /**
      * This function syncs text content changes between the original source code
@@ -4984,9 +4991,17 @@ define("LiveDevelopment/LivePreviewEdit", function (require, exports, module) {
         return AIData;
     }
 
-    function _editWithAI(message) {
+    async function _editWithAI(message) {
         const AIData = _getRequiredDataForAI(message);
-        // write the AI implementation here...@abose
+        const aiEntitlement = await KernalModeTrust.EntitlementsManager.getAIEntitlement();
+        if (!aiEntitlement.activated) {
+            // Ai is not activated for user(not logged in/no ai plan/disabled by system admin)
+            // the showAIUpsellDialog will show an appropriate message for each case.
+            ProDialogs.showAIUpsellDialog(aiEntitlement);
+            return;
+        }
+        // todo @abose ai wire in
+        console.log(AIData);
     }
 
     /**
