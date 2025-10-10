@@ -183,6 +183,7 @@ define(function (require, exports, module) {
                                 Date.now() + 30 * 24 * 60 * 60 * 1000; // valid for 30 days
 
                             entitlementsResponse.plan = {
+                                isSubscriber: true,
                                 paidSubscriber: true,
                                 name: "Phoenix Pro",
                                 fullName: "Phoenix Pro",
@@ -196,6 +197,7 @@ define(function (require, exports, module) {
                             };
                         } else {
                             entitlementsResponse.plan = {
+                                isSubscriber: false,
                                 paidSubscriber: false,
                                 name: "Free Plan",
                                 fullName: "Free Plan"

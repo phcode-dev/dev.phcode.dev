@@ -168497,8 +168497,9 @@ define("services/EntitlementsManager", function (require, exports, module) {
 
     /**
      * Get the plan details from entitlements with fallback to free plan defaults. If the user is
-     * in pro trial(isInProTrial API), then paidSubscriber will always be true as we need to treat user as paid.
-     * you should use isInProTrial API to check if user is in pro trial if some trial-related logic needs to be done.
+     * in pro trial(isInProTrial API), then isSubscriber will always be true as we need to treat
+     * user as subcriber. you should use isInProTrial API to check if user is in pro trial if some
+     * trial-related logic needs to be done.
      * @returns {Promise<Object>} Plan details object
      */
     async function getPlanDetails() {
@@ -168511,6 +168512,7 @@ define("services/EntitlementsManager", function (require, exports, module) {
         // Fallback to free plan defaults
         const currentDate = Date.now();
         return {
+            isSubscriber: false,
             paidSubscriber: false,
             name: Strings.USER_FREE_PLAN_NAME_DO_NOT_TRANSLATE,
             validTill: currentDate + (FREE_PLAN_VALIDITY_DAYS * MS_IN_DAY)
@@ -168518,7 +168520,7 @@ define("services/EntitlementsManager", function (require, exports, module) {
     }
 
     /**
-     * Check if user is in a pro trial. IF the user is in pro trail, then `plan.paidSubscriber` will always be true.
+     * Check if user is in a pro trial. IF the user is in pro trail, then `plan.isSubscriber` will always be true.
      * @returns {Promise<boolean>} True if user is in pro trial, false otherwise
      */
     async function isInProTrial() {
@@ -170246,16 +170248,20 @@ define("services/login-service", function (require, exports, module) {
     // Debounced trigger for entitlements changed
     let entitlementsChangedTimer = null;
 
+    const ENTITLEMENT_CHANGED_DEBOUNCE_WINDOW = Phoenix.isTestWindow ? 100 : 1000;
+
     function _debounceEntitlementsChanged() {
         if (entitlementsChangedTimer) {
             // already scheduled, skip
             return;
         }
 
+        // atmost 1 entitlement changed event will be triggered in this window to prevent too many entitlment changed
+        // events firing.
         entitlementsChangedTimer = setTimeout(() => {
             LoginService.trigger(EVENT_ENTITLEMENTS_CHANGED);
             entitlementsChangedTimer = null;
-        }, 1000); // atmost 1 entitlement changed event will be triggered in a second
+        }, ENTITLEMENT_CHANGED_DEBOUNCE_WINDOW);
     }
 
 
@@ -170627,6 +170633,7 @@ define("services/login-service", function (require, exports, module) {
         if(entitlements.plan && (!entitlements.plan.validTill || currentDate > entitlements.plan.validTill)) {
             entitlements.plan = {
                 ...entitlements.plan,
+                isSubscriber: false,
                 paidSubscriber: false,
                 name: Strings.USER_FREE_PLAN_NAME_DO_NOT_TRANSLATE,
                 fullName: Strings.USER_FREE_PLAN_NAME_DO_NOT_TRANSLATE,
@@ -170664,7 +170671,8 @@ define("services/login-service", function (require, exports, module) {
      * ```javascript
      * {
      *   plan: {
-     *     paidSubscriber: true,    // Always true for trial users
+     *     isSubscriber: true,    // Always true for trial users
+     *     paidSubscriber: false, // if the user is a paid for the plan, or is it an unpaid promo
      *     name: "Phoenix Pro"
      *     fullName: "Phoenix Pro" // this can be deceptive name like "Phoenix Pro For Education" to use in
      *                             // profile popup, not main branding
@@ -170680,11 +170688,12 @@ define("services/login-service", function (require, exports, module) {
      * ```
      *
      * **For logged-in trial users:**
-     * - If remote response has `plan.paidSubscriber: false`, injects `paidSubscriber: true`
+     * - If remote response has `plan.isSubscriber: false`, injects `isSubscriber: true`
      * - Adds `isInProTrial: true` and `trialDaysRemaining`
      * - Injects `entitlements.liveEdit.activated: true`
-     * - Note: Trial users may not be actual paid subscribers, but `paidSubscriber: true` is set
-     *   so all Phoenix code treats them as paid subscribers
+     * - Note: Trial users may not be actual paid subscribers, but `isSubscriber: true` is set
+     *   so all Phoenix code treats them as subscribers. to check if they actually paid or not, use
+     *   `paidSubscriber` field.
      *
      * **For logged-in users (full remote response):**
      * ```javascript
@@ -170695,6 +170704,7 @@ define("services/login-service", function (require, exports, module) {
      *     name: "Phoenix Pro",
      *     fullName: "Phoenix Pro" // this can be deceptive name like "Phoenix Pro For Education" to use in
      *                            // profile popup, not main branding
+     *     isSubscriber: boolean,
      *     paidSubscriber: boolean,
      *     validTill: number        // Timestamp
      *   },
@@ -170740,7 +170750,7 @@ define("services/login-service", function (require, exports, module) {
      *
      * // Get current entitlements
      * const entitlements = await LoginService.getEffectiveEntitlements();
-     * if (entitlements?.plan?.paidSubscriber) {
+     * if (entitlements?.plan?.isSubscriber) {
      *   // Enable pro features
      * }
      * if (entitlements?.entitlements?.liveEdit?.activated) {
@@ -170763,8 +170773,8 @@ define("services/login-service", function (require, exports, module) {
         // now we need to grant trial, as user is entitled to trial if he is here.
         // User has active server plan(either with login or device license)
         if (serverEntitlements && serverEntitlements.plan) {
-            if (serverEntitlements.plan.paidSubscriber) {
-                // Already a paid subscriber(or has device license), return as-is
+            if (serverEntitlements.plan.isSubscriber) {
+                // Already a subscriber(or has device license), return as-is
                 // never inject trail data in this case.
                 return serverEntitlements;
             }
@@ -170774,7 +170784,8 @@ define("services/login-service", function (require, exports, module) {
                 ...serverEntitlements,
                 plan: {
                     ...serverEntitlements.plan,
-                    paidSubscriber: true,
+                    isSubscriber: true,
+                    paidSubscriber: serverEntitlements.plan.paidSubscriber || false,
                     name: brackets.config.main_pro_plan,
                     fullName: brackets.config.main_pro_plan,
                     validTill: dateNowFn() + trialDaysRemaining * MS_IN_DAY
@@ -170798,7 +170809,8 @@ define("services/login-service", function (require, exports, module) {
         // Non-logged-in, non licensed user with trial - return synthetic entitlements
         return {
             plan: {
-                paidSubscriber: true,
+                isSubscriber: true,
+                paidSubscriber: false,
                 name: brackets.config.main_pro_plan,
                 fullName: brackets.config.main_pro_plan,
                 validTill: dateNowFn() + trialDaysRemaining * MS_IN_DAY
@@ -171028,7 +171040,10 @@ define("services/login-utils", function (require, exports, module) {
         // Check paidSubscriber changes
         const currentPaidSub = current.plan && current.plan.paidSubscriber;
         const lastPaidSub = last.plan && last.plan.paidSubscriber;
-        if (currentPaidSub !== lastPaidSub) {
+        // Check isSubscriber changes
+        const currentIsSubscriber = current.plan && current.plan.isSubscriber;
+        const lastIsSubscriber = last.plan && last.plan.isSubscriber;
+        if (currentIsSubscriber !== lastIsSubscriber || currentPaidSub !== lastPaidSub) {
             return true;
         }
 
@@ -172061,7 +172076,7 @@ define("services/profile-menu", function (require, exports, module) {
                             <i class="fa-solid fa-feather" style="margin-left: 3px;"></i>
                         </span>
                     </div>`;
-                } else if (effectiveEntitlements.plan && effectiveEntitlements.plan.paidSubscriber) {
+                } else if (effectiveEntitlements.plan && effectiveEntitlements.plan.isSubscriber) {
                     // Device-licensed user: show Phoenix Pro branding
                     const planName = effectiveEntitlements.plan.fullName || brackets.config.main_pro_plan;
                     proInfoHtml = `<div class="trial-plan-info">
@@ -172116,7 +172131,7 @@ define("services/profile-menu", function (require, exports, module) {
             // Phoenix.pro is only for display purposes and should not be used to gate features.
             // Use kernal mode apis for trusted check of pro features.
             Phoenix.pro.plan = {
-                paidSubscriber: false,
+                isSubscriber: false,
                 name: Strings.USER_FREE_PLAN_NAME_DO_NOT_TRANSLATE,
                 fullName: Strings.USER_FREE_PLAN_NAME_DO_NOT_TRANSLATE
             };
@@ -172124,13 +172139,13 @@ define("services/profile-menu", function (require, exports, module) {
 
         if (entitlements && entitlements.plan){
             Phoenix.pro.plan = {
-                paidSubscriber: entitlements.plan.paidSubscriber,
+                isSubscriber: entitlements.plan.isSubscriber,
                 name: entitlements.plan.name,
                 fullName: entitlements.plan.fullName,
                 validTill: entitlements.plan.validTill
             };
         }
-        if (entitlements && entitlements.plan && entitlements.plan.paidSubscriber) {
+        if (entitlements && entitlements.plan && entitlements.plan.isSubscriber) {
             // Pro user (paid subscriber or trial): show short name branding with `name feather icon`(not full name)
             let displayName = entitlements.plan.name || brackets.config.main_pro_plan;
             if (entitlements.isInProTrial) {
@@ -172266,7 +172281,7 @@ define("services/profile-menu", function (require, exports, module) {
             // Update plan class and content based on paid subscriber status
             $planName.removeClass('user-plan-free user-plan-paid');
 
-            if (entitlements.plan.paidSubscriber) {
+            if (entitlements.plan.isSubscriber) {
                 // Use pro styling with feather icon for pro users (paid or trial)
                 if (entitlements.isInProTrial) {
                     // For trial users: separate "Phoenix Pro" with icon from "(X days left)" text
@@ -172478,7 +172493,7 @@ define("services/profile-menu", function (require, exports, module) {
             const effectiveEntitlements = await KernalModeTrust.loginService.getEffectiveEntitlements();
             return effectiveEntitlements &&
                 (effectiveEntitlements.isInProTrial ||
-                    (effectiveEntitlements.plan && effectiveEntitlements.plan.paidSubscriber));
+                    (effectiveEntitlements.plan && effectiveEntitlements.plan.isSubscriber));
         } catch (error) {
             console.error('Failed to check Pro access status:', error);
             return false;
@@ -172493,7 +172508,7 @@ define("services/profile-menu", function (require, exports, module) {
             const effectiveEntitlements = await KernalModeTrust.loginService.getEffectiveEntitlements();
             if (effectiveEntitlements &&
                 (effectiveEntitlements.isInProTrial ||
-                    (effectiveEntitlements.plan && effectiveEntitlements.plan.paidSubscriber))) {
+                    (effectiveEntitlements.plan && effectiveEntitlements.plan.isSubscriber))) {
                 console.log('Profile Menu: Found Pro entitlements (trial or device license), updating branding...');
                 _updateBranding(effectiveEntitlements);
             } else {
@@ -172800,7 +172815,7 @@ define("services/promotions", function (require, exports, module) {
 
             // getEntitlements() returns null if not logged in
             const entitlements = await LoginService.getEntitlements();
-            return entitlements && entitlements.plan && entitlements.plan.paidSubscriber === true;
+            return entitlements && entitlements.plan && entitlements.plan.isSubscriber === true;
         } catch (error) {
             console.error("Error checking pro subscription:", error);
             return false;
