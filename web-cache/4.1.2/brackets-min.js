@@ -46347,6 +46347,10 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
         // remove any existing overlay & timer
         _hideOverlay();
 
+        if(LivePreviewSettings.isUsingCustomServer()){
+            return;
+        }
+
         // to not show the overlays if user has already closed it before
         if(status === MultiBrowserLiveDev.STATUS_CONNECTING && !shouldShowConnectingOverlay) { return; }
         if(status === MultiBrowserLiveDev.STATUS_SYNC_ERROR && !shouldShowSyncErrorOverlay) { return; }
@@ -47242,6 +47246,7 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
      */
     async function _openLivePreviewURL(_event, previewDetails) {
         if(LivePreviewSettings.isUsingCustomServer()){
+            _hideOverlay();
             return;
         }
         _loadPreview(true);
@@ -47488,7 +47493,9 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
         });
 
         MultiBrowserLiveDev.on(MultiBrowserLiveDev.EVENT_STATUS_CHANGE, function(event, status) {
-            if (status === MultiBrowserLiveDev.STATUS_CONNECTING) {
+            if(LivePreviewSettings.isUsingCustomServer()){
+                _hideOverlay();
+            } else if (status === MultiBrowserLiveDev.STATUS_CONNECTING) {
                 _handleOverlay(Strings.LIVE_DEV_STATUS_TIP_PROGRESS1, status);
             } else if (status === MultiBrowserLiveDev.STATUS_SYNC_ERROR) {
                 _handleOverlay(Strings.LIVE_DEV_STATUS_TIP_SYNC_ERROR, status);
