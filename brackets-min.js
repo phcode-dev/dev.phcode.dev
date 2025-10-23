@@ -172474,7 +172474,7 @@ define("services/promotions", function (require, exports, module) {
     const EVENT_PRO_UPGRADE_ON_INSTALL = "pro_upgrade_on_install";
     const PROMO_LOCAL_FILE = path.join(Phoenix.app.getApplicationSupportDirectory(),
         Phoenix.isTestWindow ? "entitlements_promo_test.json" : "entitlements_promo.json");
-    const TRIAL_POLL_MS = 10 * 1000; // 10 seconds after start, we assign a free trial if possible
+    const TRIAL_POLL_MS = 1000; // We assign a free trial if possible as soon as user comes in for best UX.
     const FIRST_INSTALL_TRIAL_DAYS = 30;
     const SUBSEQUENT_TRIAL_DAYS = 7;
     const MS_PER_DAY = 24 * 60 * 60 * 1000;
@@ -172797,10 +172797,9 @@ define("services/promotions", function (require, exports, module) {
     }
 
     function _isAnyDialogsVisible() {
-        const $modal = $(`.modal.instance`);
-        const $notifications = $(`.notification-ui-tooltip`);
-        return ($modal.length > 0 && $modal.is(':visible')) ||
-            ($notifications.length > 0 && $notifications.is(':visible'));
+        const dialogsVisible = $(`.modal.instance`).is(':visible');
+        const notificationsVisible = $(`.notification-ui-tooltip`).is(':visible');
+        return dialogsVisible || notificationsVisible;
     }
 
     /**
