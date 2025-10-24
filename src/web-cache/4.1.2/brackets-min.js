@@ -169369,6 +169369,9 @@ define("services/login-browser", function (require, exports, module) {
                 Metrics.countEvent(Metrics.EVENT_TYPE.AUTH, "browserLogin", "browser");
             }, 1500);
         }
+        // on login we fire an entitlements changed event forcefully as new user came online
+        // even if entitlements didn't change(entitlements may not change between trial users for eg.).
+        LoginService._debounceEntitlementsChanged();
     }
 
     function _cancelLoginWaiting() {
@@ -169876,13 +169879,16 @@ define("services/login-desktop", function (require, exports, module) {
                 if(resolveResponse.userDetails) {
                     // the user has validated the creds
                     userProfile = resolveResponse.userDetails;
+                    isLoggedInUser = true;
                     ProfileMenu.setLoggedIn(userProfile.profileIcon.initials, userProfile.profileIcon.color);
                     await KernalModeTrust.setCredential(KernalModeTrust.CRED_KEY_API, JSON.stringify(userProfile));
                     // bump the version so that in multi windows, the other window gets notified of the change
                     PreferencesManager.stateManager.set(PREF_USER_PROFILE_VERSION, crypto.randomUUID());
                     checkAgain = false;
-                    isLoggedInUser = true;
                     dialog.close();
+                    // on login we fire an entitlements changed event forcefully as new user came online
+                    // even if entitlements didn't change(entitlements may not change between trial users for eg.).
+                    LoginService._debounceEntitlementsChanged();
                 }
             } catch (e) {
                 console.error("Failed to check login status.", e);
@@ -170415,6 +170421,7 @@ define("services/login-service", function (require, exports, module) {
         }
         // Reset device license state so it's re-evaluated on next entitlement check
         deviceLicensePrimed = false;
+        await _clearCachedEntitlements();
     }
 
 
@@ -170726,6 +170733,7 @@ define("services/login-service", function (require, exports, module) {
     LoginService.isLicensedDevice = isLicensedDevice;
     LoginService.isLicensedDeviceSystemWide = isLicensedDeviceSystemWide;
     LoginService.getDeviceID = getDeviceID;
+    LoginService._debounceEntitlementsChanged = _debounceEntitlementsChanged;
     LoginService.EVENT_ENTITLEMENTS_CHANGED = EVENT_ENTITLEMENTS_CHANGED;
 
     async function handleReinstallCreds() {
@@ -177832,6 +177840,12 @@ define("utils/LocalizationUtils", function (require, exports, module) {
  * @module utils/Metrics
  */
 define("utils/Metrics", function (require, exports, module) {
+    const KernalModeTrust = window.KernalModeTrust;
+    if(!KernalModeTrust){
+        // integrated extensions will have access to kernal mode, but not external extensions
+        throw new Error("Metrics should have access to KernalModeTrust. Cannot boot without trust ring");
+    }
+
     const MAX_AUDIT_ENTRIES = 3000,
         ONE_DAY = 24 * 60* 60 * 1000;
     let initDone = false,
@@ -177839,7 +177853,7 @@ define("utils/Metrics", function (require, exports, module) {
         loggedDataForAudit = new Map();
 
     let isFirstUseDay;
-    let userID, isPowerUserFn;
+    let userID, isPowerUserFn, powerUserPrefix;
     let cachedIsPowerUser = false;
 
     function _setUserID() {
@@ -178053,6 +178067,25 @@ define("utils/Metrics", function (require, exports, module) {
         document.getElementsByTagName('head')[0].appendChild(script);
     }
 
+    async function _setPowerUserPrefix() {
+        powerUserPrefix = null;
+        const EntitlementsManager = KernalModeTrust.EntitlementsManager;
+        if(cachedIsPowerUser){
+            // A power user is someone who used Phoenix at least 3 days/8 hours in the last two weeks
+            powerUserPrefix = "P";
+        } else if(!isFirstUseDay){
+            // A repeat user is a user who has used phoenix at least one other day before
+            powerUserPrefix = "R";
+        }
+        if(EntitlementsManager.isLoggedIn()){
+            if(await EntitlementsManager.isPaidSubscriber()){
+                powerUserPrefix = "S"; // subscriber
+                return;
+            }
+            powerUserPrefix = "L"; // logged in user
+        }
+    }
+
     /**
      * We are transitioning to our own analytics instead of google as we breached the free user threshold of google
      * and paid plans for GA starts at 100,000 USD.
@@ -178068,10 +178101,14 @@ define("utils/Metrics", function (require, exports, module) {
         if (initOptions.isPowerUserFn) {
             isPowerUserFn = initOptions.isPowerUserFn;
             cachedIsPowerUser = isPowerUserFn();  // only call once to avoid heavy computations repeatedly
+            _setPowerUserPrefix();
             setInterval(()=>{
                 cachedIsPowerUser = isPowerUserFn();
+                _setPowerUserPrefix();
             }, ONE_DAY);
         }
+        KernalModeTrust.EntitlementsManager.on(KernalModeTrust.EntitlementsManager.EVENT_ENTITLEMENTS_CHANGED,
+            _setPowerUserPrefix);
     }
 
     // some events generate too many ga events that ga can't handle. ignore them.
@@ -178156,12 +178193,9 @@ define("utils/Metrics", function (require, exports, module) {
      * @type {function}
      */
     function countEvent(eventType, eventCategory, eventSubCategory, count= 1) {
-        if(cachedIsPowerUser){
+        if(powerUserPrefix){
             // emit power user metrics too
-            _countEvent(`P-${eventType}`, eventCategory, eventSubCategory, count);
-        } else if(!isFirstUseDay){
-            // emit repeat user metrics too
-            _countEvent(`R-${eventType}`, eventCategory, eventSubCategory, count);
+            _countEvent(`${powerUserPrefix}-${eventType}`, eventCategory, eventSubCategory, count);
         }
         _countEvent(eventType, eventCategory, eventSubCategory, count);
     }
@@ -178187,12 +178221,9 @@ define("utils/Metrics", function (require, exports, module) {
      * @type {function}
      */
     function valueEvent(eventType, eventCategory, eventSubCategory, value) {
-        if(cachedIsPowerUser){
+        if(powerUserPrefix){
             // emit power user metrics too
-            _valueEvent(`P-${eventType}`, eventCategory, eventSubCategory, value);
-        } else if(!isFirstUseDay){
-            // emit repeat user metrics too
-            _valueEvent(`R-${eventType}`, eventCategory, eventSubCategory, value);
+            _valueEvent(`${powerUserPrefix}-${eventType}`, eventCategory, eventSubCategory, value);
         }
         _valueEvent(eventType, eventCategory, eventSubCategory, value);
     }

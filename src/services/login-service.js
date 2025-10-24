@@ -397,6 +397,7 @@ define(function (require, exports, module) {
         }
         // Reset device license state so it's re-evaluated on next entitlement check
         deviceLicensePrimed = false;
+        await _clearCachedEntitlements();
     }
 
 
@@ -708,6 +709,7 @@ define(function (require, exports, module) {
     LoginService.isLicensedDevice = isLicensedDevice;
     LoginService.isLicensedDeviceSystemWide = isLicensedDeviceSystemWide;
     LoginService.getDeviceID = getDeviceID;
+    LoginService._debounceEntitlementsChanged = _debounceEntitlementsChanged;
     LoginService.EVENT_ENTITLEMENTS_CHANGED = EVENT_ENTITLEMENTS_CHANGED;
 
     async function handleReinstallCreds() {
