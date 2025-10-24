@@ -145,7 +145,7 @@ define(function (require, exports, module) {
     function formatEmmetHint(abbr) {
         // Create the main container for the hint
         var $hint = $("<span>")
-            .addClass("emmet-hint");
+            .css("margin-right", "48px");
 
         // Create a wrapper for the text content
         var $textContent = $("<span>")
@@ -153,7 +153,7 @@ define(function (require, exports, module) {
             .text(abbr);
 
         // style in brackets_patterns_override.less file
-        let $icon = $(`<span class="emmet-code-hint">Emmet</span>`);
+        let $icon = $(`<span class="emmet-html-code-hint">Emmet</span>`);
 
         // Append both text content and icon to the main container
         $hint.append($textContent);
@@ -498,7 +498,7 @@ define(function (require, exports, module) {
         ) {
 
             try {
-                return  expandAbbr(word, { syntax: "html", type: "markup" }); // expanded
+                return  expandAbbr(word, { syntax: "html", type: "markup", maxRepeat: 400 }); // expanded
             } catch (error) {
 
                 // emmet api throws an error when abbr contains unclosed quotes, handling that case
@@ -510,7 +510,7 @@ define(function (require, exports, module) {
                         const modifiedWord = word + nextChar;
 
                         try {
-                            return expandAbbr(modifiedWord, { syntax: "html", type: "markup" }); //expandedModified
+                            return expandAbbr(modifiedWord, { syntax: "html", type: "markup", maxRepeat: 400 });
                         } catch (innerError) {
                             // If it still fails, return false
                             return null;
