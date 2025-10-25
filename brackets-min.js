@@ -9487,7 +9487,7 @@ define("command/CommandManager", function (require, exports, module) {
      *
      * @param {string} name
      * @param {string} htmlName If set, this will be displayed in ui menus instead of the name given.
-     *     Eg. "Phoenix menu<i class='fa fa-car' style='margin-left: 4px;'></i>"
+     *      Example: `"Phoenix menu<i class='fa fa-car' style='margin-left: 4px;'></i>"`
      */
     Command.prototype.setName = function (name, htmlName) {
         let changed = this._name !== name;
@@ -9530,7 +9530,8 @@ define("command/CommandManager", function (require, exports, module) {
      * with details about the source(invoker) as event.eventSource(one of the `CommandManager.SOURCE_*`) and
      * event.sourceType(Eg. Ctrl-K) parameter.
      * @param {string} options.htmlName If set, this will be displayed in ui menus instead of the name given.
-     *     Eg. "Phoenix menu<i class='fa fa-car' style='margin-left: 4px;'></i>"
+     *      Example: `"Phoenix menu<i class='fa fa-car' style='margin-left: 4px;'></i>"`
+     *
      * @return {?Command}
      */
     function register(name, id, commandFn, options={}) {
@@ -114579,7 +114580,7 @@ define("nls/root/strings", {
     "ERROR_FETCH_REMOTE": "Fetching remote information failed",
     "ERROR_PREPARING_COMMIT_DIALOG": "Preparing commit dialog failed",
     "GIT_TOAST_TITLE": "Explore Git Features in Phoenix Code",
-    "GIT_TOAST_MESSAGE": "Click the Git panel icon to manage your repository. Easily commit, push, pull, and view your project history—all in one place.<br><a href='https://docs.phcode.dev/docs/Features/git'>Learn more about the Git panel →</a>",
+    "GIT_TOAST_MESSAGE": "Click the Git panel icon to manage your repository. Easily commit, push, pull, and view your project history—all in one place.<br><a href='https://docs.phcode.dev/app-links/git'>Learn more about the Git panel →</a>",
 
     // surveys
     "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote for the features you want to see next!",
