@@ -804,6 +804,8 @@ define({
     "EXTENSION_VERIFIED_SORT": "Verified",
     "EXTENSION_STAR": "Star",
     "EXTENSION_STAR_SORT": "Star Rating",
+    "ERROR_UNINSTALLING_EXTENSION_TITLE": "Error Uninstalling Extension",
+    "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "Failed to uninstall extension {0}",
     // For NOT_FOUND_ERR, see generic strings above
     "EXTENSION_MANAGER_TITLE": "Extension Manager",
     "EXTENSION_MANAGER_ERROR_LOAD": "Unable to access the extension registry. Please try again later.",
@@ -1171,10 +1173,12 @@ define({
     "DOWNLOAD_ERROR": "Error occurred while downloading.",
     "NETWORK_SLOW_OR_DISCONNECTED": "Network is disconnected or too slow.",
     "RESTART_BUTTON": "Restart",
+    "RESTART_APP_BUTTON": "Restart {APP_NAME}",
     "LATER_BUTTON": "Later",
     "DESCRIPTION_AUTO_UPDATE": "Enable/disable {APP_NAME} Auto-update",
     "AUTOUPDATE_ERROR": "Error!",
     "AUTOUPDATE_IN_PROGRESS": "An update is already in progress.",
+    "REMOVING": "Removing\u2026",
 
     "NUMBER_WITH_PERCENTAGE": "{0}%",
     // Strings for Related Files
@@ -1723,6 +1727,10 @@ define({
     "LICENSE_ACTIVATE_FAIL_APPLY": "'Failed to apply license to device'",
     "LICENSE_ENTER_KEY": "Please enter a license key",
     "LICENSE_REAPPLY_TO_DEVICE": "Already activated? Reapply system-wide",
+    // Deprecated Extensions Dialog
+    "DEPRECATED_EXTENSIONS_TITLE": "Deprecated Extensions Detected",
+    "DEPRECATED_EXTENSIONS_MESSAGE": "The following installed extensions are now natively supported by {APP_NAME} and can be safely uninstalled from the Extension Manager:",
+    "DEPRECATED_EXTENSIONS_LEARN_MORE": "Now built-in — learn more",
     // AI CONTROL
     "AI_LOGIN_DIALOG_TITLE": "Sign In to Use AI Edits",
     "AI_LOGIN_DIALOG_MESSAGE": "Please log in to use AI-powered edits",
