@@ -4075,17 +4075,8 @@ define("LiveDevelopment/LiveDevMultiBrowser", function (require, exports, module
      */
     function dismissLivePreviewBoxes() {
         if (_protocol) {
+            _protocol.evaluate("_LD.enableHoverListeners()"); // so that if hover lock is there it will get cleared
             _protocol.evaluate("_LD.dismissUIAndCleanupState()");
-            _protocol.evaluate("_LD.dismissImageRibbonGallery()");
-        }
-    }
-
-    /**
-     * Dismiss image ribbon gallery if it's open
-     */
-    function dismissImageRibbonGallery() {
-        if (_protocol) {
-            _protocol.evaluate("_LD.dismissImageRibbonGallery()");
         }
     }
 
@@ -4175,7 +4166,6 @@ define("LiveDevelopment/LiveDevMultiBrowser", function (require, exports, module
     exports.redrawHighlight     = redrawHighlight;
     exports.hasVisibleLivePreviewBoxes = hasVisibleLivePreviewBoxes;
     exports.dismissLivePreviewBoxes = dismissLivePreviewBoxes;
-    exports.dismissImageRibbonGallery = dismissImageRibbonGallery;
     exports.registerHandlers    = registerHandlers;
     exports.updateConfig        = updateConfig;
     exports.init                = init;
@@ -4424,7 +4414,48 @@ define("LiveDevelopment/LivePreviewEdit", function (require, exports, module) {
     const ProjectManager = require("project/ProjectManager");
     const FileSystem = require("filesystem/FileSystem");
     const PathUtils = require("thirdparty/path-utils/path-utils");
+    const StringMatch = require("utils/StringMatch");
+    const Dialogs = require("widgets/Dialogs");
+    const StateManager = require("preferences/StateManager");
     const ProDialogs = require("services/pro-dialogs");
+    const Mustache = require("thirdparty/mustache/mustache");
+    const Strings = require("strings");
+    const ImageFolderDialogTemplate = `<div class="image-folder-dialog template modal">
+    <div class="modal-header">
+        <h1 class="dialog-title">{{Strings.LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE}}</h1>
+    </div>
+    <div class="modal-body">
+        <p>{{Strings.LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION}}</p>
+        <input type="text"
+               id="folder-path-input"
+               placeholder="{{Strings.LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER}}"
+               value=""
+               autocomplete="off"
+               spellcheck="false">
+
+        <!-- the folder suggestions will come here dynamically -->
+        <div id="folder-suggestions"></div>
+
+        <p class="folder-help-text">
+            {{Strings.LIVE_DEV_IMAGE_FOLDER_DIALOG_HELP}}
+        </p>
+
+        <div class="remember-folder-container">
+            <label>
+                <input type="checkbox" id="remember-folder-checkbox" checked>
+                <span>{{Strings.LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER}}</span>
+            </label>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="dialog-button btn" data-button-id="cancel">{{Strings.CANCEL}}</button>
+        <button class="dialog-button btn primary" data-button-id="ok">{{Strings.OK}}</button>
+    </div>
+</div>
+`;
+
+    // state manager key, to save the download location of the image
+    const IMAGE_DOWNLOAD_FOLDER_KEY = "imageGallery.downloadFolder";
 
     const KernalModeTrust = window.KernalModeTrust;
     if(!KernalModeTrust){
@@ -5086,10 +5117,10 @@ define("LiveDevelopment/LivePreviewEdit", function (require, exports, module) {
             _updateImageSrcAttribute(tagId, filename);
         }
 
-        // dismiss the image ribbon gallery
+        // dismiss all UI boxes including the image ribbon gallery
         const currLiveDoc = LiveDevMultiBrowser.getCurrentLiveDoc();
         if (currLiveDoc && currLiveDoc.protocol && currLiveDoc.protocol.evaluate) {
-            currLiveDoc.protocol.evaluate("_LD.dismissImageRibbonGallery()");
+            currLiveDoc.protocol.evaluate("_LD.dismissUIAndCleanupState()");
         }
     }
 
@@ -5150,56 +5181,442 @@ define("LiveDevelopment/LivePreviewEdit", function (require, exports, module) {
     }
 
     /**
-     * This function is called when 'use this image' button is clicked in the image ribbon gallery
-     * or user loads an image file from the computer
-     * this is responsible to download the image in the appropriate place
-     * and also change the src attribute of the element (by calling appropriate helper functions)
-     * @param {Object} message - the message object which stores all the required data for this operation
+     * Downloads image to the specified folder
+     * @private
+     * @param {Object} message - The message containing image download info
+     * @param {string} folderPath - Relative path to the folder
      */
-    function _handleUseThisImage(message) {
+    function _downloadToFolder(message, folderPath) {
+        const projectRoot = ProjectManager.getProjectRoot();
+        if (!projectRoot) {
+            console.error('No project root found');
+            return;
+        }
+
         const filename = message.filename;
         const extnName = message.extnName || "jpg";
 
-        const projectRoot = ProjectManager.getProjectRoot();
-        if (!projectRoot) { return; }
+        // the folder path should always end with /
+        if (!folderPath.endsWith('/')) {
+            folderPath += '/';
+        }
 
-        // phoenix-assets folder, all the images will be stored inside this
-        const phoenixAssetsPath = projectRoot.fullPath + "phoenix-code-assets/";
-        const phoenixAssetsDir = FileSystem.getDirectoryForPath(phoenixAssetsPath);
+        const targetPath = projectRoot.fullPath + folderPath;
+        const targetDir = FileSystem.getDirectoryForPath(targetPath);
 
-        // check if the phoenix-assets dir exists
-        // if present, download the image inside it, if not create the dir and then download the image inside it
-        phoenixAssetsDir.exists((err, exists) => {
+        // the directory name that user wrote, first check if it exists or not
+        // if it doesn't exist we create it and then download the image inside it
+        targetDir.exists((err, exists) => {
             if (err) { return; }
 
             if (!exists) {
-                phoenixAssetsDir.create((err) => {
-                    if (err) {
-                        console.error('Error creating phoenix-code-assets directory:', err);
-                        return;
-                    }
-                    _downloadImageToPhoenixAssets(message, filename, extnName, phoenixAssetsDir);
+                targetDir.create((err) => {
+                    if (err) { return; }
+                    _downloadImageToDirectory(message, filename, extnName, targetDir);
                 });
             } else {
-                _downloadImageToPhoenixAssets(message, filename, extnName, phoenixAssetsDir);
+                _downloadImageToDirectory(message, filename, extnName, targetDir);
             }
         });
     }
 
     /**
-     * Helper function to download image to phoenix-assets folder
+     * This function is to determine whether we need to exclude a folder from the suggestions list
+     * so we exclude all the folders that start with . 'dot' as this are generally irrelevant dirs
+     * secondly, we also exclude large dirs like node modules as they might freeze the UI if we scan them
+     * @param {String} folderName - the folder name to check if we need to exclude it or not
+     * @returns {Boolean} - true if we should exclude otherwise false
      */
-    function _downloadImageToPhoenixAssets(message, filename, extnName, phoenixAssetsDir) {
-        getUniqueFilename(phoenixAssetsDir.fullPath, filename, extnName).then((uniqueFilename) => {
+    function _isExcludedFolder(folderName) {
+        if (folderName.startsWith('.')) { return true; }
+
+        const UNNECESSARY_FOLDERS = ['node_modules', 'bower_components'];
+        if (UNNECESSARY_FOLDERS.includes(folderName)) { return true; }
+
+        return false;
+    }
+
+    /**
+     * this function scans all the root directories
+     * root directories means those directories that are directly inside the project folder
+     * we need this to show when the query is empty
+     *
+     * @param {Directory} directory - project root directory
+     * @param {Array<string>} folderList - array to store discovered root folder paths
+     * @return {Promise} Resolves when root scan is complete
+     */
+    function _scanRootDirectoriesOnly(directory, folderList) {
+        return new Promise((resolve) => {
+            directory.getContents((err, contents) => {
+                if (err) {
+                    resolve();
+                    return;
+                }
+
+                const directories = contents.filter(entry => entry.isDirectory);
+
+                directories.forEach(dir => {
+                    if (_isExcludedFolder(dir.name)) { return; }
+                    // add root folder name with trailing slash
+                    folderList.push(dir.name + '/');
+                });
+                resolve();
+            });
+        });
+    }
+
+    /**
+     * this function scans all the directories recursively
+     * and then add the relative paths of the directories to the folderList array
+     *
+     * @param {Directory} directory - The parent directory to scan
+     * @param {string} relativePath - The relative path from project root
+     * @param {Array<string>} folderList - Array to store all discovered folder paths
+     * @return {Promise} Resolves when scanning is complete
+     */
+    function _scanDirectories(directory, relativePath, folderList) {
+        return new Promise((resolve) => {
+            directory.getContents((err, contents) => {
+                if (err) {
+                    resolve();
+                    return;
+                }
+
+                const directories = contents.filter(entry => entry.isDirectory);
+                const scanPromises = [];
+
+                directories.forEach(dir => {
+                    if (_isExcludedFolder(dir.name)) { return; }
+
+                    const dirRelativePath = relativePath ? `${relativePath}${dir.name}/` : `${dir.name}/`;
+                    folderList.push(dirRelativePath);
+
+                    // also check subdirectories for this dir
+                    scanPromises.push(_scanDirectories(dir, dirRelativePath, folderList));
+                });
+
+                Promise.all(scanPromises).then(() => resolve());
+            });
+        });
+    }
+
+    /**
+     * this function is responsible to get the subdirectories inside a directory
+     * we need this because we need to show the drilled down folders...
+     * @param {String} parentPath - Parent folder path (e.g., "images/")
+     * @param {Array<string>} folderList - Complete list of all folder paths
+     * @return {Array<string>} Array of direct subfolders only
+     */
+    function _getSubfolders(parentPath, folderList) {
+        return folderList.filter(folder => {
+            if (!folder.startsWith(parentPath)) { return false; }
+
+            const relativePath = folder.substring(parentPath.length);
+            const pathWithoutTrailingSlash = relativePath.replace(/\/$/, '');
+            return !pathWithoutTrailingSlash.includes('/');
+        });
+    }
+
+    /**
+     * Renders folder suggestions as a dropdown in the UI with fuzzy match highlighting
+     *
+     * @param {Array<string|Object>} matches - Array of folder paths (strings) or fuzzy match objects with stringRanges
+     * @param {JQuery} $suggestions - jQuery element for the suggestions container
+     * @param {JQuery} $input - jQuery element for the input field
+     */
+    function _renderFolderSuggestions(matches, $suggestions, $input) {
+        if (matches.length === 0) {
+            $suggestions.empty();
+            return;
+        }
+
+        let html = '<ul class="folder-suggestions-list">';
+        matches.forEach((match, index) => {
+            let displayHTML = '';
+            let folderPath = '';
+
+            // Check if match is a string or an object
+            if (typeof match === 'string') {
+                // Simple string (from empty query showing folders)
+                displayHTML = match;
+                folderPath = match;
+            } else if (match && match.stringRanges) {
+                // fuzzy match, highlight matched chars
+                match.stringRanges.forEach(range => {
+                    if (range.matched) {
+                        displayHTML += `<span class="folder-match-highlight">${range.text}</span>`;
+                    } else {
+                        displayHTML += range.text;
+                    }
+                });
+                folderPath = match.label || '';
+            }
+
+            // first item should be selected by default
+            const selectedClass = index === 0 ? ' selected' : '';
+            html += `<li class="folder-suggestion-item${selectedClass}" data-path="${folderPath}">${displayHTML}</li>`;
+        });
+        html += '</ul>';
+
+        $suggestions.html(html);
+        $suggestions.scrollTop(0); // always need to scroll to top when query changes
+
+        // when a suggestion is clicked we add the folder path in the input box
+        $suggestions.find('.folder-suggestion-item').on('click', function() {
+            const folderPath = $(this).data('path');
+            $input.val(folderPath).trigger('input');
+        });
+    }
+
+    /**
+     * This function is responsible to update the folder suggestion everytime a new char is inserted in the input field
+     *
+     * @param {string} query - The search query from the input field
+     * @param {Array<string>} folderList - List of all available folder paths
+     * @param {Array<string>} rootFolders - list of root-level folder paths
+     * @param {StringMatch.StringMatcher} stringMatcher - StringMatcher instance for fuzzy matching
+     * @param {JQuery} $suggestions - jQuery element for the suggestions container
+     * @param {JQuery} $input - jQuery element for the input field
+     */
+    function _updateFolderSuggestions(query, folderList, rootFolders, stringMatcher, $suggestions, $input) {
+        if (!query || query.trim() === '') {
+            // when input is empty we show the root folders
+            _renderFolderSuggestions(rootFolders.slice(0, 15), $suggestions, $input);
+            return;
+        }
+
+        // if the query ends with a /
+        // we then show the drilled down list of dirs inside that parent directory
+        if (query.endsWith('/')) {
+            const subfolders = _getSubfolders(query, folderList);
+            const formattedSubfolders = subfolders.map(folder => {
+                return stringMatcher.match(folder, query) || { label: folder, stringRanges: [{ text: folder, matched: false }] };
+            });
+
+            _renderFolderSuggestions(formattedSubfolders.slice(0, 15), $suggestions, $input);
+            return;
+        }
+
+        if (!stringMatcher) { return; }
+
+        // filter folders using fuzzy matching
+        const matches = folderList
+            .map(folder => {
+                const result = stringMatcher.match(folder, query);
+                if (result) {
+                    // get the last folder name (e.g., "assets/images/" -> "images")
+                    const folderPath = result.label || folder;
+                    const segments = folderPath.split('/').filter(s => s.length > 0);
+                    const lastSegment = segments[segments.length - 1] || '';
+                    result.folderName = lastSegment.toLowerCase();
+
+                    // we need to boost the score significantly if the last folder segment starts with the query
+                    // This ensures folders like "images/" rank higher than "testing/maps/google/" when typing "image"
+                    // note: here testing/maps/google has all the chars of 'image'
+                    if (lastSegment.toLowerCase().startsWith(query.toLowerCase())) {
+                        // Use a large positive boost (matchGoodness is negative, so we subtract a large negative number)
+                        result.matchGoodness -= 10000;
+                    }
+                    // Also boost (but less) if the last segment contains the query as a substring
+                    else if (lastSegment.toLowerCase().includes(query.toLowerCase())) {
+                        result.matchGoodness -= 1000;
+                    }
+                }
+                return result;
+            })
+            .filter(result => result !== null && result !== undefined);
+
+        // Sort by matchGoodness first (prefix matches will have best scores),
+        // then alphabetically by folder name, then by full path
+        StringMatch.multiFieldSort(matches, { matchGoodness: 0, folderName: 1, label: 2 });
+
+        const topMatches = matches.slice(0, 15);
+        _renderFolderSuggestions(topMatches, $suggestions, $input);
+    }
+
+    /**
+     * register the input box handlers (folder selection dialog)
+     * also registers the 'arrow up/down and enter' key handler for folder selection and move the selected folder,
+     * in the list of suggestions
+     *
+     * @param {JQuery} $input - the input box element
+     * @param {JQuery} $suggestions - the suggestions list element
+     * @param {JQuery} $dlg - the dialog box element
+     */
+    function _registerFolderDialogInputHandlers($input, $suggestions, $dlg) {
+        // keyboard navigation handler for arrow keys
+        $input.on('keydown', function(e) {
+            const isArrowDown = e.keyCode === 40;
+            const isArrowUp = e.keyCode === 38;
+            // we only want to handle the arrow up arrow down keys
+            if (!isArrowDown && !isArrowUp) { return; }
+
+            e.preventDefault();
+            const $items = $suggestions.find('.folder-suggestion-item');
+            if ($items.length === 0) { return; }
+
+            const $selected = $items.filter('.selected');
+
+            // determine which item to select next
+            let $nextItem;
+            if ($selected.length === 0) {
+                // no selection - select first or last based on direction
+                $nextItem = isArrowDown ? $items.first() : $items.last();
+            } else {
+                // move selection
+                const currentIndex = $items.index($selected);
+                $selected.removeClass('selected');
+                const nextIndex = isArrowDown
+                    ? (currentIndex + 1) % $items.length
+                    : (currentIndex - 1 + $items.length) % $items.length;
+                $nextItem = $items.eq(nextIndex);
+            }
+
+            // apply selection and scroll the selected item into view (if not in view)
+            $nextItem.addClass('selected');
+            if ($nextItem.length > 0) {
+                $nextItem[0].scrollIntoView({ block: "nearest", behavior: "auto" });
+            }
+        });
+
+        // for enter key, we're using keyup handler because keydown was interfering with dialog's default behaviour
+        // when enter key is pressed, we check if there are any selected folders in the suggestions
+        // if yes, we type the folder path in the input box,
+        // if no, we click the ok button of the dialog
+        $input.on('keyup', function(e) {
+            if (e.keyCode === 13) { // enter key
+                const $items = $suggestions.find('.folder-suggestion-item');
+                const $selected = $items.filter('.selected');
+
+                // if there's a selected suggestion, use it
+                if ($selected.length > 0) {
+                    const folderPath = $selected.data('path');
+                    $input.val(folderPath).trigger('input');
+                } else {
+                    // no suggestions, trigger OK button click
+                    $dlg.find('[data-button-id="ok"]').click();
+                }
+            }
+        });
+    }
+
+    /**
+     * this shows the folder selection dialog for choosing where to download images
+     * @param {Object} message - the message object (optional, only needed when downloading image)
+     * @private
+     */
+    function _showFolderSelectionDialog(message) {
+        const projectRoot = ProjectManager.getProjectRoot();
+        if (!projectRoot) { return; }
+
+        // show the dialog with a text box to select a folder
+        // dialog html is written in 'image-folder-dialog.html'
+        const templateVars = {
+            Strings: Strings
+        };
+        const dialog = Dialogs.showModalDialogUsingTemplate(Mustache.render(ImageFolderDialogTemplate, templateVars), false);
+        const $dlg = dialog.getElement();
+        const $input = $dlg.find("#folder-path-input");
+        const $suggestions = $dlg.find("#folder-suggestions");
+        const $rememberCheckbox = $dlg.find("#remember-folder-checkbox");
+
+        let folderList = [];
+        let rootFolders = [];
+        let stringMatcher = null;
+
+        _scanRootDirectoriesOnly(projectRoot, rootFolders).then(() => {
+            stringMatcher = new StringMatch.StringMatcher({ segmentedSearch: true });
+            _renderFolderSuggestions(rootFolders.slice(0, 15), $suggestions, $input);
+        });
+
+        _scanDirectories(projectRoot, '', folderList);
+
+        // input event handler
+        $input.on('input', function() {
+            _updateFolderSuggestions($input.val(), folderList, rootFolders, stringMatcher, $suggestions, $input);
+        });
+        _registerFolderDialogInputHandlers($input, $suggestions, $dlg);
+        // focus the input box
+        setTimeout(function() {
+            $input.focus();
+        }, 100);
+
+        // handle dialog button clicks
+        // so the logic is either its an ok button click or cancel button click, so if its ok click
+        // then we download image in that folder and close the dialog, in close btn click we directly close the dialog
+        $dlg.one("buttonClick", function(e, buttonId) {
+            if (buttonId === Dialogs.DIALOG_BTN_OK) {
+                const folderPath = $input.val().trim();
+
+                // if the checkbox is checked, we save the folder preference for this project
+                if ($rememberCheckbox.is(':checked')) {
+                    StateManager.set(IMAGE_DOWNLOAD_FOLDER_KEY, folderPath, StateManager.PROJECT_CONTEXT);
+                }
+
+                // if message is provided, download the image
+                if (message) {
+                    _downloadToFolder(message, folderPath);
+                }
+            }
+            dialog.close();
+        });
+    }
+
+    /**
+     * This function is called when 'use this image' button is clicked in the image ribbon gallery
+     * or user loads an image file from the computer
+     * this is responsible to download the image in the appropriate place
+     * and also change the src attribute of the element (by calling appropriate helper functions)
+     *
+     * @param {Object} message - the message object which stores all the required data for this operation
+     */
+    function _handleUseThisImage(message) {
+        const projectRoot = ProjectManager.getProjectRoot();
+        if (!projectRoot) { return; }
+
+        // check if user has already saved a folder preference for this project
+        const savedFolder = StateManager.get(IMAGE_DOWNLOAD_FOLDER_KEY, StateManager.PROJECT_CONTEXT);
+        // we specifically check for nullish type vals because empty string is possible as it means project root
+        if (savedFolder !== null && savedFolder !== undefined) {
+            _downloadToFolder(message, savedFolder);
+        } else {
+            // show the folder selection dialog
+            _showFolderSelectionDialog(message);
+        }
+    }
+
+    /**
+     * Helper function to download image to the specified directory
+     *
+     * @param {Object} message - Message containing image download info
+     * @param {string} filename - Name of the image file
+     * @param {string} extnName - File extension (e.g., "jpg")
+     * @param {Directory} targetDir - Target directory to save the image
+     */
+    function _downloadImageToDirectory(message, filename, extnName, targetDir) {
+        getUniqueFilename(targetDir.fullPath, filename, extnName).then((uniqueFilename) => {
             // check if the image is loaded from computer or from remote
             if (message.isLocalFile && message.imageData) {
-                _handleUseThisImageLocalFiles(message, uniqueFilename, phoenixAssetsDir);
+                _handleUseThisImageLocalFiles(message, uniqueFilename, targetDir);
             } else {
-                _handleUseThisImageRemote(message, uniqueFilename, phoenixAssetsDir);
+                _handleUseThisImageRemote(message, uniqueFilename, targetDir);
             }
         }).catch(error => {
             console.error('Something went wrong when trying to use this image', error);
         });
+    }
+
+    /**
+     * Handles reset of image folder selection - clears the saved preference and shows the dialog
+     * @private
+     */
+    function _handleResetImageFolderSelection() {
+        // clear the saved folder preference for this project
+        StateManager.set(IMAGE_DOWNLOAD_FOLDER_KEY, null, StateManager.PROJECT_CONTEXT);
+
+        // show the folder selection dialog for the user to choose a new folder
+        // we pass null because we're not downloading an image, just setting the preference
+        _showFolderSelectionDialog(null);
     }
 
     /**
@@ -5226,6 +5643,12 @@ define("LiveDevelopment/LivePreviewEdit", function (require, exports, module) {
     * these are the main properties that are passed through the message
      */
     function handleLivePreviewEditOperation(message) {
+        // handle reset image folder selection
+        if (message.resetImageFolderSelection) {
+            _handleResetImageFolderSelection();
+            return;
+        }
+
         // handle move(drag & drop)
         if (message.move && message.sourceId && message.targetId) {
             _moveElementInSource(message.sourceId, message.targetId, message.insertAfter, message.insertInside);
@@ -8478,7 +8901,6 @@ define("LiveDevelopment/main", function main(require, exports, module) {
         },
         isProUser: isProUser,
         elemHighlights: "hover", // default value, this will get updated when the extension loads
-        imageRibbon: true, // default value, this will get updated when the extension loads
         // this strings are used in RemoteFunctions.js
         // we need to pass this through config as remoteFunctions runs in browser context and cannot
         // directly reference Strings file
@@ -8488,11 +8910,17 @@ define("LiveDevelopment/main", function main(require, exports, module) {
             duplicate: Strings.LIVE_DEV_MORE_OPTIONS_DUPLICATE,
             delete: Strings.LIVE_DEV_MORE_OPTIONS_DELETE,
             ai: Strings.LIVE_DEV_MORE_OPTIONS_AI,
+            imageGallery: Strings.LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY,
             aiPromptPlaceholder: Strings.LIVE_DEV_AI_PROMPT_PLACEHOLDER,
             imageGalleryUseImage: Strings.LIVE_DEV_IMAGE_GALLERY_USE_IMAGE,
             imageGallerySelectFromComputer: Strings.LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER,
-            imageGalleryChooseFolder: Strings.LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER,
-            imageGallerySearchPlaceholder: Strings.LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER
+            imageGallerySelectDownloadFolder: Strings.LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER,
+            imageGallerySearchPlaceholder: Strings.LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER,
+            imageGallerySearchButton: Strings.LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON,
+            imageGalleryLoadingInitial: Strings.LIVE_DEV_IMAGE_GALLERY_LOADING_INITIAL,
+            imageGalleryLoadingMore: Strings.LIVE_DEV_IMAGE_GALLERY_LOADING_MORE,
+            imageGalleryNoImages: Strings.LIVE_DEV_IMAGE_GALLERY_NO_IMAGES,
+            imageGalleryLoadError: Strings.LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR
         }
     };
     // Status labels/styles are ordered: error, not connected, progress1, progress2, connected.
@@ -8817,20 +9245,6 @@ define("LiveDevelopment/main", function main(require, exports, module) {
         }
     }
 
-    // this function is responsible to update image picker config
-    // called from live preview extension when preference changes
-    function updateImageRibbonConfig() {
-        const prefValue = PreferencesManager.get("livePreviewImagePicker");
-        config.imageRibbon = prefValue !== false; // default to true if undefined
-
-        if (MultiBrowserLiveDev && MultiBrowserLiveDev.status >= MultiBrowserLiveDev.STATUS_ACTIVE) {
-            if (!prefValue) { MultiBrowserLiveDev.dismissImageRibbonGallery(); } // to remove any existing image ribbons
-
-            MultiBrowserLiveDev.updateConfig(JSON.stringify(config));
-            MultiBrowserLiveDev.registerHandlers();
-        }
-    }
-
     // init commands
     CommandManager.register(Strings.CMD_LIVE_HIGHLIGHT, Commands.FILE_LIVE_HIGHLIGHT, togglePreviewHighlight);
     CommandManager.register(Strings.CMD_RELOAD_LIVE_PREVIEW, Commands.CMD_RELOAD_LIVE_PREVIEW, _handleReloadLivePreviewCommand);
@@ -8859,7 +9273,6 @@ define("LiveDevelopment/main", function main(require, exports, module) {
     exports.togglePreviewHighlight = togglePreviewHighlight;
     exports.setLivePreviewEditFeaturesActive = setLivePreviewEditFeaturesActive;
     exports.updateElementHighlightConfig = updateElementHighlightConfig;
-    exports.updateImageRibbonConfig = updateImageRibbonConfig;
     exports.getConnectionIds = MultiBrowserLiveDev.getConnectionIds;
     exports.getLivePreviewDetails = MultiBrowserLiveDev.getLivePreviewDetails;
     exports.hideHighlight = MultiBrowserLiveDev.hideHighlight;
@@ -46181,12 +46594,6 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
         description: Strings.LIVE_DEV_SETTINGS_ELEMENT_HIGHLIGHT_PREFERENCE
     });
 
-    // live preview image picker preference (whether to show image gallery when clicking images)
-    const PREFERENCE_PROJECT_IMAGE_RIBBON = "livePreviewImagePicker";
-    PreferencesManager.definePreference(PREFERENCE_PROJECT_IMAGE_RIBBON, "boolean", true, {
-        description: Strings.LIVE_PREVIEW_EDIT_IMAGE_RIBBON
-    });
-
     const LIVE_PREVIEW_PANEL_ID = "live-preview-panel";
     const LIVE_PREVIEW_IFRAME_ID = "panel-live-preview-frame";
     const LIVE_PREVIEW_IFRAME_HTML = `
@@ -46497,7 +46904,6 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
         if (isEditFeaturesActive) {
             items.push("---");
             items.push(Strings.LIVE_PREVIEW_EDIT_HIGHLIGHT_ON);
-            items.push(Strings.LIVE_PREVIEW_EDIT_IMAGE_RIBBON);
         }
 
         const rawMode = PreferencesManager.get(PREFERENCE_LIVE_PREVIEW_MODE) || _getDefaultMode();
@@ -46523,12 +46929,6 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
                     return `✓ ${Strings.LIVE_PREVIEW_EDIT_HIGHLIGHT_ON}`;
                 }
                 return `${'\u00A0'.repeat(4)}${Strings.LIVE_PREVIEW_EDIT_HIGHLIGHT_ON}`;
-            } else if (item === Strings.LIVE_PREVIEW_EDIT_IMAGE_RIBBON) {
-                const isImageRibbonEnabled = PreferencesManager.get(PREFERENCE_PROJECT_IMAGE_RIBBON) !== false;
-                if(isImageRibbonEnabled) {
-                    return `✓ ${item}`;
-                }
-                return `${'\u00A0'.repeat(4)}${item}`;
             }
             return item;
         });
@@ -46576,15 +46976,6 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
                 const currentMode = PreferencesManager.get(PREFERENCE_PROJECT_ELEMENT_HIGHLIGHT);
                 const newMode = currentMode !== "click" ? "click" : "hover";
                 PreferencesManager.set(PREFERENCE_PROJECT_ELEMENT_HIGHLIGHT, newMode);
-                return; // Don't dismiss highlights for this option
-            } else if (item === Strings.LIVE_PREVIEW_EDIT_IMAGE_RIBBON) {
-                // Don't allow image ribbon toggle if edit features are not active
-                if (!isEditFeaturesActive) {
-                    return;
-                }
-                // Toggle image ribbon preference
-                const currentEnabled = PreferencesManager.get(PREFERENCE_PROJECT_IMAGE_RIBBON);
-                PreferencesManager.set(PREFERENCE_PROJECT_IMAGE_RIBBON, !currentEnabled);
                 return; // Don't dismiss highlights for this option
             }
 
@@ -47391,15 +47782,8 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
             LiveDevelopment.updateElementHighlightConfig();
         });
 
-        // Handle image ribbon preference changes from this extension
-        PreferencesManager.on("change", PREFERENCE_PROJECT_IMAGE_RIBBON, function() {
-            LiveDevelopment.updateImageRibbonConfig();
-        });
-
         // Initialize element highlight config on startup
         LiveDevelopment.updateElementHighlightConfig();
-        // Initialize image ribbon config on startup
-        LiveDevelopment.updateImageRibbonConfig();
 
         LiveDevelopment.openLivePreview();
         LiveDevelopment.on(LiveDevelopment.EVENT_OPEN_PREVIEW_URL, _openLivePreviewURL);
@@ -112517,17 +112901,27 @@ define("nls/root/strings", {
     "LIVE_DEV_MORE_OPTIONS_DUPLICATE": "Duplicate",
     "LIVE_DEV_MORE_OPTIONS_DELETE": "Delete",
     "LIVE_DEV_MORE_OPTIONS_AI": "Edit with AI",
+    "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "Image Gallery",
     "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Use this image",
     "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Select image from computer",
-    "LIVE_DEV_IMAGE_GALLERY_CHOOSE_FOLDER": "Choose download folder",
+    "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "Choose image download folder",
     "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Search images...",
+    "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "Search",
+    "LIVE_DEV_IMAGE_GALLERY_LOADING_INITIAL": "Loading images...",
+    "LIVE_DEV_IMAGE_GALLERY_LOADING_MORE": "Loading...",
+    "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "No images found",
+    "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Failed to load images",
+    "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Select Folder to Save Image",
+    "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Choose where to download the image:",
+    "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "Type folder path (e.g., assets/images/)",
+    "LIVE_DEV_IMAGE_FOLDER_DIALOG_HELP": "💡 Type folder path or leave empty to download in project root",
+    "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "Don't ask again for this project",
     "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Ask Phoenix AI to modify this element...",
     "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Getting preview from your custom server {0}",
     "LIVE_PREVIEW_MODE_PREVIEW": "Preview Mode",
     "LIVE_PREVIEW_MODE_HIGHLIGHT": "Highlight Mode",
     "LIVE_PREVIEW_MODE_EDIT": "Edit Mode",
     "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Edit Highlights on Hover",
-    "LIVE_PREVIEW_EDIT_IMAGE_RIBBON": "Show Image Picker on Image click",
     "LIVE_PREVIEW_MODE_PREFERENCE": "{0} shows only the webpage, {1} connects the webpage to your code - click on elements to jump to their code and vice versa, {2} provides highlighting along with advanced element manipulation",
     "LIVE_PREVIEW_CONFIGURE_MODES": "Configure Live Preview Modes",
     "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Pro Feature",
