@@ -72527,6 +72527,7 @@ define("nls/ar/strings", {
   "ERROR_FETCH_REMOTE": "فشل جلب معلومات جهاز التحكم عن بعد",
   "ERROR_PREPARING_COMMIT_DIALOG": "فشل تحضير مربع حوار الالتزام",
   "GIT_TOAST_TITLE": "استكشف ميزات Git في Phoenix Code",
+  "GIT_TOAST_MESSAGE": "انقر على أيقونة لوحة Git لإدارة مستودعك. قم بسهولة بعمل commit، وpush، وpull، وعرض تاريخ مشروعك—كل ذلك في مكان واحد.<br><a href='https://docs.phcode.dev/app-links/git'>تعلم المزيد عن لوحة Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "صوت للميزات التي ترغب برؤيتها تالياً!",
   "SIGNED_OUT": "تم تسجيل خروجك.",
   "SIGNED_OUT_MESSAGE": "تم تسجيل خروجك من حساب {APP_NAME} الخاص بك. يُرجى تسجيل الدخول مرة أخرى للمتابعة.",
@@ -72651,7 +72652,13 @@ define("nls/ar/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "قام مسؤول النظام بتعطيل الوصول إلى الذكاء الاصطناعي. يرجى الاتصال بـ {0} للحصول على المساعدة.",
   "AI_UPSELL_DIALOG_TITLE": "المتابعة باستخدام {0}؟",
   "AI_UPSELL_DIALOG_MESSAGE": "لقد اكتشفت {0}. للمتابعة، ستحتاج إلى اشتراك في الذكاء الاصطناعي أو أرصدة.",
-  "GIT_TOAST_MESSAGE": "انقر على أيقونة لوحة Git لإدارة مستودعك. قم بسهولة بعمل commit، وpush، وpull، وعرض تاريخ مشروعك—كل ذلك في مكان واحد.<br><a href='https://docs.phcode.dev/app-links/git'>تعلم المزيد عن لوحة Git →</a>"
+  "ERROR_UNINSTALLING_EXTENSION_TITLE": "خطأ في إلغاء تثبيت الملحق",
+  "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "فشل إلغاء تثبيت الملحق {0}",
+  "RESTART_APP_BUTTON": "إعادة تشغيل {APP_NAME}",
+  "REMOVING": "جارٍ الإزالة...",
+  "DEPRECATED_EXTENSIONS_TITLE": "تم اكتشاف ملحقات مهملة",
+  "DEPRECATED_EXTENSIONS_MESSAGE": "الملحقات المثبتة التالية أصبحت الآن مدعومة بشكل أصلي بواسطة {APP_NAME} ويمكن إلغاء تثبيتها بأمان من مدير الملحقات:",
+  "DEPRECATED_EXTENSIONS_LEARN_MORE": "مدمج الآن — اعرف المزيد"
 });
 /*
  * GNU AGPL-3.0 License
@@ -74056,6 +74063,7 @@ define("nls/bg/strings", {
   "ERROR_FETCH_REMOTE": "Извличането на информация за отдалеченото хранилище е неуспешно",
   "ERROR_PREPARING_COMMIT_DIALOG": "Неуспешно подготвяне на диалогов прозорец за commit",
   "GIT_TOAST_TITLE": "Разгледайте Git функциите в Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Кликнете върху иконата на Git панела, за да управлявате вашето хранилище. Лесно извършвайте commit, push, pull и преглеждайте историята на проекта си — всичко на едно място.<br><a href='https://docs.phcode.dev/app-links/git'>Научете повече за Git панела →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Гласувайте за функциите, които искате да видите следващи!",
   "SIGNED_OUT": "Излязохте от профила си.",
   "SIGNED_OUT_MESSAGE": "Излязохте от профила си в {APP_NAME}. Моля, влезте отново, за да продължите.",
@@ -74180,7 +74188,13 @@ define("nls/bg/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Достъпът до AI е деактивиран от вашия системен администратор. Моля, свържете се с {0} за съдействие.",
   "AI_UPSELL_DIALOG_TITLE": "Да продължите ли с {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Вие открихте {0}. За да продължите, ще ви е необходим AI абонамент или кредити.",
-  "GIT_TOAST_MESSAGE": "Кликнете върху иконата на Git панела, за да управлявате вашето хранилище. Лесно извършвайте commit, push, pull и преглеждайте историята на проекта си — всичко на едно място.<br><a href='https://docs.phcode.dev/app-links/git'>Научете повече за Git панела →</a>"
+  "ERROR_UNINSTALLING_EXTENSION_TITLE": "Грешка при деинсталиране на разширение",
+  "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "Неуспешно деинсталиране на разширение {0}",
+  "RESTART_APP_BUTTON": "Рестартиране на {APP_NAME}",
+  "REMOVING": "Премахване…",
+  "DEPRECATED_EXTENSIONS_TITLE": "Открити са остарели разширения",
+  "DEPRECATED_EXTENSIONS_MESSAGE": "Следните инсталирани разширения вече се поддържат вградено от {APP_NAME} и могат да бъдат безопасно деинсталирани от мениджъра на разширения:",
+  "DEPRECATED_EXTENSIONS_LEARN_MORE": "Вече е вградено — научете повече"
 });
 /*
  * Copyright (c) 2013 Adobe Systems Incorporated. All rights reserved.
@@ -75614,6 +75628,7 @@ define("nls/cs/strings", {
   "ERROR_FETCH_REMOTE": "Získání informací o vzdáleném repozitáři selhalo",
   "ERROR_PREPARING_COMMIT_DIALOG": "Chyba při přípravě dialogu pro commit",
   "GIT_TOAST_TITLE": "Prozkoumejte funkce Gitu v Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Klikněte na ikonu panelu Git pro správu vašeho repozitáře. Snadno vytvářejte commity, pushujte, pullujte a prohlížejte si historii svého projektu – vše na jednom místě.<br><a href='https://docs.phcode.dev/app-links/git'>Zjistit více o panelu Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Hlasujte pro funkce, které chcete vidět v další verzi!",
   "SIGNED_OUT": "Byli jste odhlášeni.",
   "SIGNED_OUT_MESSAGE": "Byli jste odhlášeni ze svého účtu {APP_NAME}. Pro pokračování se prosím znovu přihlaste.",
@@ -75738,7 +75753,13 @@ define("nls/cs/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Přístup k AI byl zakázán správcem systému. Pro pomoc prosím kontaktujte {0}.",
   "AI_UPSELL_DIALOG_TITLE": "Pokračovat s {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Objevili jste {0}. Chcete-li pokračovat, budete potřebovat předplatné AI nebo kredity.",
-  "GIT_TOAST_MESSAGE": "Klikněte na ikonu panelu Git pro správu vašeho repozitáře. Snadno vytvářejte commity, pushujte, pullujte a prohlížejte si historii svého projektu – vše na jednom místě.<br><a href='https://docs.phcode.dev/app-links/git'>Zjistit více o panelu Git →</a>"
+  "ERROR_UNINSTALLING_EXTENSION_TITLE": "Chyba při odinstalaci rozšíření",
+  "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "Nepodařilo se odinstalovat rozšíření {0}",
+  "RESTART_APP_BUTTON": "Restartovat {APP_NAME}",
+  "REMOVING": "Odstraňování…",
+  "DEPRECATED_EXTENSIONS_TITLE": "Zjištěna zastaralá rozšíření",
+  "DEPRECATED_EXTENSIONS_MESSAGE": "Následující nainstalovaná rozšíření jsou nyní nativně podporována aplikací {APP_NAME} a lze je bezpečně odinstalovat ze Správce rozšíření:",
+  "DEPRECATED_EXTENSIONS_LEARN_MORE": "Nyní vestavěné — zjistit více"
 });
 /*
  * GNU AGPL-3.0 License
@@ -77170,6 +77191,7 @@ define("nls/da/strings", {
   "ERROR_FETCH_REMOTE": "Hentning af remote-information mislykkedes",
   "ERROR_PREPARING_COMMIT_DIALOG": "Forberedelse af commit-dialog mislykkedes",
   "GIT_TOAST_TITLE": "Udforsk Git-funktioner i Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Klik på Git-panelikonet for at administrere dit repository. Commit, push, pull og se nemt din projekthistorik – alt på ét sted.<br><a href='https://docs.phcode.dev/app-links/git'>Lær mere om Git-panelet →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stem på de funktioner, du gerne vil se!",
   "SIGNED_OUT": "Du er blevet logget ud.",
   "SIGNED_OUT_MESSAGE": "Du er blevet logget ud af din {APP_NAME}-konto. Log venligst ind igen for at fortsætte.",
@@ -77294,7 +77316,13 @@ define("nls/da/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Adgang til AI er blevet deaktiveret af din systemadministrator. Kontakt venligst {0} for hjælp.",
   "AI_UPSELL_DIALOG_TITLE": "Fortsæt med {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Du har opdaget {0}. For at fortsætte har du brug for et AI-abonnement eller kreditter.",
-  "GIT_TOAST_MESSAGE": "Klik på Git-panelikonet for at administrere dit repository. Commit, push, pull og se nemt din projekthistorik – alt på ét sted.<br><a href='https://docs.phcode.dev/app-links/git'>Lær mere om Git-panelet →</a>"
+  "ERROR_UNINSTALLING_EXTENSION_TITLE": "Fejl ved afinstallation af udvidelse",
+  "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "Kunne ikke afinstallere udvidelsen {0}",
+  "RESTART_APP_BUTTON": "Genstart {APP_NAME}",
+  "REMOVING": "Fjerner...",
+  "DEPRECATED_EXTENSIONS_TITLE": "Forældede udvidelser fundet",
+  "DEPRECATED_EXTENSIONS_MESSAGE": "Følgende installerede udvidelser understøttes nu som standard af {APP_NAME} og kan trygt afinstalleres fra Udvidelsesadministratoren:",
+  "DEPRECATED_EXTENSIONS_LEARN_MORE": "Nu indbygget — få mere at vide"
 });
 /*
  * GNU AGPL-3.0 License
@@ -78724,6 +78752,7 @@ define("nls/de/strings", {
   "ERROR_FETCH_REMOTE": "Abrufen der Remote-Informationen fehlgeschlagen",
   "ERROR_PREPARING_COMMIT_DIALOG": "Fehler beim Vorbereiten des Commit-Dialogs",
   "GIT_TOAST_TITLE": "Git-Funktionen in Phoenix Code entdecken",
+  "GIT_TOAST_MESSAGE": "Klicken Sie auf das Git-Panel-Symbol, um Ihr Repository zu verwalten. Committen, pushen und pullen Sie ganz einfach und sehen Sie Ihren Projektverlauf ein – alles an einem Ort.<br><a href='https://docs.phcode.dev/app-links/git'>Mehr über das Git-Panel erfahren →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stimmen Sie für die Funktionen ab, die Sie als Nächstes sehen möchten!",
   "SIGNED_OUT": "Sie wurden abgemeldet.",
   "SIGNED_OUT_MESSAGE": "Sie wurden von Ihrem {APP_NAME}-Konto abgemeldet. Bitte melden Sie sich erneut an, um fortzufahren.",
@@ -78848,7 +78877,13 @@ define("nls/de/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Der KI-Zugriff wurde von Ihrem Systemadministrator deaktiviert. Bitte kontaktieren Sie {0} für Unterstützung.",
   "AI_UPSELL_DIALOG_TITLE": "Mit {0} fortfahren?",
   "AI_UPSELL_DIALOG_MESSAGE": "Sie haben {0} entdeckt. Um fortzufahren, benötigen Sie ein KI-Abonnement oder Guthaben.",
-  "GIT_TOAST_MESSAGE": "Klicken Sie auf das Git-Panel-Symbol, um Ihr Repository zu verwalten. Committen, pushen und pullen Sie ganz einfach und sehen Sie Ihren Projektverlauf ein – alles an einem Ort.<br><a href='https://docs.phcode.dev/app-links/git'>Mehr über das Git-Panel erfahren →</a>"
+  "ERROR_UNINSTALLING_EXTENSION_TITLE": "Fehler beim Deinstallieren der Erweiterung",
+  "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "Die Erweiterung {0} konnte nicht deinstalliert werden",
+  "RESTART_APP_BUTTON": "{APP_NAME} neu starten",
+  "REMOVING": "Wird entfernt…",
+  "DEPRECATED_EXTENSIONS_TITLE": "Veraltete Erweiterungen erkannt",
+  "DEPRECATED_EXTENSIONS_MESSAGE": "Die folgenden installierten Erweiterungen werden jetzt nativ von {APP_NAME} unterstützt und können sicher über den Erweiterungs-Manager deinstalliert werden:",
+  "DEPRECATED_EXTENSIONS_LEARN_MORE": "Jetzt integriert – mehr erfahren"
 });
 /*
  * GNU AGPL-3.0 License
@@ -80280,6 +80315,7 @@ define("nls/el/strings", {
   "ERROR_FETCH_REMOTE": "Αποτυχία λήψης πληροφοριών απομακρυσμένου",
   "ERROR_PREPARING_COMMIT_DIALOG": "Αποτυχία προετοιμασίας παραθύρου δημιουργίας commit",
   "GIT_TOAST_TITLE": "Εξερευνήστε τις Λειτουργίες Git στο Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Κάντε κλικ στο εικονίδιο του Πάνελ Git για να διαχειριστείτε το αποθετήριό σας. Κάντε εύκολα καταχώριση, προώθηση, ανάκτηση και δείτε το ιστορικό του έργου σας—όλα σε ένα μέρος.<br><a href='https://docs.phcode.dev/app-links/git'>Μάθετε περισσότερα για το Πάνελ Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Ψηφίστε για τις λειτουργίες που θέλετε να δείτε στη συνέχεια!",
   "SIGNED_OUT": "Αποσυνδεθήκατε.",
   "SIGNED_OUT_MESSAGE": "Αποσυνδεθήκατε από τον λογαριασμό σας στο {APP_NAME}. Παρακαλούμε συνδεθείτε ξανά για να συνεχίσετε.",
@@ -80404,7 +80440,13 @@ define("nls/el/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Η πρόσβαση στο AI έχει απενεργοποιηθεί από τον διαχειριστή του συστήματός σας. Παρακαλούμε επικοινωνήστε με {0} για βοήθεια.",
   "AI_UPSELL_DIALOG_TITLE": "Συνέχεια με {0};",
   "AI_UPSELL_DIALOG_MESSAGE": "Ανακαλύψατε το {0}. Για να συνεχίσετε, θα χρειαστείτε μια συνδρομή AI ή πιστώσεις.",
-  "GIT_TOAST_MESSAGE": "Κάντε κλικ στο εικονίδιο του Πάνελ Git για να διαχειριστείτε το αποθετήριό σας. Κάντε εύκολα καταχώριση, προώθηση, ανάκτηση και δείτε το ιστορικό του έργου σας—όλα σε ένα μέρος.<br><a href='https://docs.phcode.dev/app-links/git'>Μάθετε περισσότερα για το Πάνελ Git →</a>"
+  "ERROR_UNINSTALLING_EXTENSION_TITLE": "Σφάλμα απεγκατάστασης επέκτασης",
+  "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "Αποτυχία απεγκατάστασης της επέκτασης {0}",
+  "RESTART_APP_BUTTON": "Επανεκκίνηση του {APP_NAME}",
+  "REMOVING": "Κατάργηση…",
+  "DEPRECATED_EXTENSIONS_TITLE": "Εντοπίστηκαν καταργημένες επεκτάσεις",
+  "DEPRECATED_EXTENSIONS_MESSAGE": "Οι παρακάτω εγκατεστημένες επεκτάσεις υποστηρίζονται πλέον εγγενώς από το {APP_NAME} και μπορεί να γίνει με ασφάλεια η απεγκατάστασή τους από τη Διαχείριση Επεκτάσεων:",
+  "DEPRECATED_EXTENSIONS_LEARN_MORE": "Πλέον ενσωματωμένη — μάθετε περισσότερα"
 });
 /*
  * GNU AGPL-3.0 License
@@ -81836,6 +81878,7 @@ define("nls/en-gb/strings", {
   "ERROR_FETCH_REMOTE": "Fetching remote information failed",
   "ERROR_PREPARING_COMMIT_DIALOG": "Failed to prepare the commit dialogue",
   "GIT_TOAST_TITLE": "Explore Git Features in Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Click the Git panel icon to manage your repository. Easily commit, push, pull, and view your project history—all in one place.<br><a href='https://docs.phcode.dev/app-links/git'>Learn more about the Git panel →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote for the features you'd like to see next!",
   "SIGNED_OUT": "You've been signed out.",
   "SIGNED_OUT_MESSAGE": "You've been signed out of your {APP_NAME} account. Please sign in again to continue.",
@@ -81960,7 +82003,13 @@ define("nls/en-gb/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "AI access has been disabled by your system administrator. Please contact {0} for assistance.",
   "AI_UPSELL_DIALOG_TITLE": "Continue with {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "You’ve discovered {0}. To proceed, you’ll need an AI subscription or credits.",
-  "GIT_TOAST_MESSAGE": "Click the Git panel icon to manage your repository. Easily commit, push, pull, and view your project history—all in one place.<br><a href='https://docs.phcode.dev/app-links/git'>Learn more about the Git panel →</a>"
+  "ERROR_UNINSTALLING_EXTENSION_TITLE": "Error Uninstalling Extension",
+  "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "Failed to uninstall extension {0}",
+  "RESTART_APP_BUTTON": "Restart {APP_NAME}",
+  "REMOVING": "Removing…",
+  "DEPRECATED_EXTENSIONS_TITLE": "Deprecated Extensions Detected",
+  "DEPRECATED_EXTENSIONS_MESSAGE": "The following installed extensions are now natively supported by {APP_NAME} and can be safely uninstalled from the Extension Manager:",
+  "DEPRECATED_EXTENSIONS_LEARN_MORE": "Now built-in — learn more"
 });
 /*
  * GNU AGPL-3.0 License
@@ -83365,6 +83414,7 @@ define("nls/es/strings", {
   "ERROR_FETCH_REMOTE": "Error al obtener la información del remoto.",
   "ERROR_PREPARING_COMMIT_DIALOG": "Error al preparar el diálogo de confirmación",
   "GIT_TOAST_TITLE": "Explora las funciones de Git en Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Haz clic en el icono del panel de Git para gestionar tu repositorio. Haz commit, push, pull y visualiza el historial de tu proyecto fácilmente, todo en un solo lugar.<br><a href='https://docs.phcode.dev/app-links/git'>Aprende más sobre el panel de Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "¡Vota por las funciones que quieres ver próximamente!",
   "SIGNED_OUT": "Se ha cerrado la sesión.",
   "SIGNED_OUT_MESSAGE": "Se ha cerrado la sesión de tu cuenta de {APP_NAME}. Inicia sesión de nuevo para continuar.",
@@ -83489,7 +83539,13 @@ define("nls/es/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "El acceso a la IA ha sido desactivado por el administrador del sistema. Póngase en contacto con {0} para obtener ayuda.",
   "AI_UPSELL_DIALOG_TITLE": "¿Continuar con {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Has descubierto {0}. Para continuar, necesitarás una suscripción de IA o créditos.",
-  "GIT_TOAST_MESSAGE": "Haz clic en el icono del panel de Git para gestionar tu repositorio. Haz commit, push, pull y visualiza el historial de tu proyecto fácilmente, todo en un solo lugar.<br><a href='https://docs.phcode.dev/app-links/git'>Aprende más sobre el panel de Git →</a>"
+  "ERROR_UNINSTALLING_EXTENSION_TITLE": "Error al desinstalar la extensión",
+  "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "No se pudo desinstalar la extensión {0}",
+  "RESTART_APP_BUTTON": "Reiniciar {APP_NAME}",
+  "REMOVING": "Eliminando…",
+  "DEPRECATED_EXTENSIONS_TITLE": "Extensiones obsoletas detectadas",
+  "DEPRECATED_EXTENSIONS_MESSAGE": "Las siguientes extensiones instaladas ahora cuentan con soporte nativo en {APP_NAME} y se pueden desinstalar de forma segura desde el administrador de extensiones:",
+  "DEPRECATED_EXTENSIONS_LEARN_MORE": "Ahora integrado — más información"
 });
 /*
  * GNU AGPL-3.0 License
@@ -84922,6 +84978,7 @@ define("nls/fa-ir/strings", {
   "ERROR_FETCH_REMOTE": "دریافت اطلاعات ریموت با شکست مواجه شد",
   "ERROR_PREPARING_COMMIT_DIALOG": "خطا در آماده‌سازی پنجره ثبت کامیت",
   "GIT_TOAST_TITLE": "کاوش ویژگی‌های گیت در Phoenix Code",
+  "GIT_TOAST_MESSAGE": "برای مدیریت مخزن خود، روی آیکون پنل گیت کلیک کنید. به راحتی کامیت، پوش، پول کرده و تاریخچه پروژه خود را مشاهده کنید—همه در یک جا.<br><a href='https://docs.phcode.dev/app-links/git'>اطلاعات بیشتر درباره پنل گیت →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "برای قابلیت‌هایی که می‌خواهید در آینده ببینید، رأی دهید!",
   "SIGNED_OUT": "از حساب کاربری خارج شدید.",
   "SIGNED_OUT_MESSAGE": "از حساب کاربری {APP_NAME} خود خارج شدید. لطفاً برای ادامه دوباره وارد شوید.",
@@ -85046,7 +85103,13 @@ define("nls/fa-ir/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "دسترسی به هوش مصنوعی توسط مدیر سیستم شما غیرفعال شده است. لطفاً برای راهنمایی با {0} تماس بگیرید.",
   "AI_UPSELL_DIALOG_TITLE": "ادامه با {0}؟",
   "AI_UPSELL_DIALOG_MESSAGE": "شما قابلیت {0} را کشف کرده‌اید. برای ادامه، به اشتراک AI یا اعتبار نیاز دارید.",
-  "GIT_TOAST_MESSAGE": "برای مدیریت مخزن خود، روی آیکون پنل گیت کلیک کنید. به راحتی کامیت، پوش، پول کرده و تاریخچه پروژه خود را مشاهده کنید—همه در یک جا.<br><a href='https://docs.phcode.dev/app-links/git'>اطلاعات بیشتر درباره پنل گیت →</a>"
+  "ERROR_UNINSTALLING_EXTENSION_TITLE": "خطای لغو نصب افزونه",
+  "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "لغو نصب افزونهٔ {0} ناموفق بود",
+  "RESTART_APP_BUTTON": "راه‌اندازی مجدد {APP_NAME}",
+  "REMOVING": "در حال حذف…",
+  "DEPRECATED_EXTENSIONS_TITLE": "افزونه‌های منسوخ‌شده شناسایی شد",
+  "DEPRECATED_EXTENSIONS_MESSAGE": "افزونه‌های نصب‌شدهٔ زیر اکنون به‌صورت پیش‌فرض توسط {APP_NAME} پشتیبانی می‌شوند و می‌توان آن‌ها را با خیال راحت از «مدیریت افزونه‌ها» لغو نصب کرد:",
+  "DEPRECATED_EXTENSIONS_LEARN_MORE": "اکنون داخلی است — بیشتر بدانید"
 });
 /*
  * GNU AGPL-3.0 License
@@ -86478,6 +86541,7 @@ define("nls/fi/strings", {
   "ERROR_FETCH_REMOTE": "Etäyhteyden tietojen haku epäonnistui",
   "ERROR_PREPARING_COMMIT_DIALOG": "Commit-valintaikkunan valmistelu epäonnistui",
   "GIT_TOAST_TITLE": "Tutustu Git-ominaisuuksiin Phoenix Codessa",
+  "GIT_TOAST_MESSAGE": "Napsauta Git-paneelin kuvaketta hallitaksesi tietovarastoasi. Voit helposti tehdä committeja, puskea ja noutaa muutoksia sekä tarkastella projektisi historiaa – kaikki yhdessä paikassa.<br><a href='https://docs.phcode.dev/app-links/git'>Lue lisää Git-paneelista →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Äänestä ominaisuuksia, jotka haluat nähdä seuraavaksi!",
   "SIGNED_OUT": "Olet kirjautunut ulos.",
   "SIGNED_OUT_MESSAGE": "Olet kirjautunut ulos {APP_NAME}-tilistäsi. Kirjaudu sisään uudelleen jatkaaksesi.",
@@ -86602,7 +86666,13 @@ define("nls/fi/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Järjestelmänvalvoja on poistanut tekoälyn käytöstä. Ota yhteyttä {0} saadaksesi apua.",
   "AI_UPSELL_DIALOG_TITLE": "Jatketaanko {0}:n kanssa?",
   "AI_UPSELL_DIALOG_MESSAGE": "Olet löytänyt ominaisuuden {0}. Jatkaaksesi tarvitset tekoälytilauksen tai krediittejä.",
-  "GIT_TOAST_MESSAGE": "Napsauta Git-paneelin kuvaketta hallitaksesi tietovarastoasi. Voit helposti tehdä committeja, puskea ja noutaa muutoksia sekä tarkastella projektisi historiaa – kaikki yhdessä paikassa.<br><a href='https://docs.phcode.dev/app-links/git'>Lue lisää Git-paneelista →</a>"
+  "ERROR_UNINSTALLING_EXTENSION_TITLE": "Virhe poistettaessa laajennusta",
+  "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "Laajennuksen {0} poistaminen epäonnistui",
+  "RESTART_APP_BUTTON": "Käynnistä {APP_NAME} uudelleen",
+  "REMOVING": "Poistetaan…",
+  "DEPRECATED_EXTENSIONS_TITLE": "Vanhentuneita laajennuksia havaittu",
+  "DEPRECATED_EXTENSIONS_MESSAGE": "Seuraavat asennetut laajennukset ovat nyt {APP_NAME}:n natiivisti tukemia, ja ne voidaan turvallisesti poistaa Laajennusten hallinnasta:",
+  "DEPRECATED_EXTENSIONS_LEARN_MORE": "Nyt sisäänrakennettu — lue lisää"
 });
 /*
  * GNU AGPL-3.0 License
@@ -88034,6 +88104,7 @@ define("nls/fr/strings", {
   "ERROR_FETCH_REMOTE": "Échec de la récupération des informations du dépôt distant",
   "ERROR_PREPARING_COMMIT_DIALOG": "Échec de la préparation de la boîte de dialogue de commit",
   "GIT_TOAST_TITLE": "Explorer les fonctionnalités Git dans Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Cliquez sur l'icône du panneau Git pour gérer votre dépôt. Validez, poussez, récupérez et consultez facilement l'historique de votre projet — le tout au même endroit.<br><a href='https://docs.phcode.dev/app-links/git'>En savoir plus sur le panneau Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Votez pour les fonctionnalités que vous souhaitez voir apparaître !",
   "SIGNED_OUT": "Vous avez été déconnecté(e).",
   "SIGNED_OUT_MESSAGE": "Vous avez été déconnecté(e) de votre compte {APP_NAME}. Veuillez vous reconnecter pour continuer.",
@@ -88158,7 +88229,13 @@ define("nls/fr/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "L'accès à l'IA a été désactivé par votre administrateur système. Veuillez contacter {0} pour obtenir de l'aide.",
   "AI_UPSELL_DIALOG_TITLE": "Continuer avec {0} ?",
   "AI_UPSELL_DIALOG_MESSAGE": "Vous avez découvert {0}. Pour continuer, vous aurez besoin d'un abonnement IA ou de crédits.",
-  "GIT_TOAST_MESSAGE": "Cliquez sur l'icône du panneau Git pour gérer votre dépôt. Validez, poussez, récupérez et consultez facilement l'historique de votre projet — le tout au même endroit.<br><a href='https://docs.phcode.dev/app-links/git'>En savoir plus sur le panneau Git →</a>"
+  "ERROR_UNINSTALLING_EXTENSION_TITLE": "Erreur lors de la désinstallation de l'extension",
+  "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "Échec de la désinstallation de l'extension {0}",
+  "RESTART_APP_BUTTON": "Redémarrer {APP_NAME}",
+  "REMOVING": "Suppression en cours…",
+  "DEPRECATED_EXTENSIONS_TITLE": "Extensions obsolètes détectées",
+  "DEPRECATED_EXTENSIONS_MESSAGE": "Les extensions installées suivantes sont désormais prises en charge nativement par {APP_NAME} et peuvent être désinstallées en toute sécurité depuis le gestionnaire d'extensions :",
+  "DEPRECATED_EXTENSIONS_LEARN_MORE": "Désormais intégré — en savoir plus"
 });
 /*
  * GNU AGPL-3.0 License
@@ -89590,6 +89667,7 @@ define("nls/gl/strings", {
   "ERROR_FETCH_REMOTE": "Fallou a obtención da información do remoto",
   "ERROR_PREPARING_COMMIT_DIALOG": "Produciuse un erro ao preparar o diálogo de confirmación",
   "GIT_TOAST_TITLE": "Explora as funcionalidades de Git en Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Fai clic na icona do panel de Git para xestionar o teu repositorio. Confirma, envía, recibe e consulta o historial do teu proxecto de xeito doado, todo nun só lugar.<br><a href='https://docs.phcode.dev/app-links/git'>Máis información sobre o panel de Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vota polas funcionalidades que queres ver a continuación!",
   "SIGNED_OUT": "Pechouse a sesión.",
   "SIGNED_OUT_MESSAGE": "Pechouse a sesión da súa conta de {APP_NAME}. Inicie sesión de novo para continuar.",
@@ -89714,7 +89792,13 @@ define("nls/gl/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "O acceso á IA foi desactivado polo seu administrador do sistema. Póñase en contacto con {0} para obter axuda.",
   "AI_UPSELL_DIALOG_TITLE": "Continuar con {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Descubriches {0}. Para continuar, necesitarás unha subscrición de IA ou créditos.",
-  "GIT_TOAST_MESSAGE": "Fai clic na icona do panel de Git para xestionar o teu repositorio. Confirma, envía, recibe e consulta o historial do teu proxecto de xeito doado, todo nun só lugar.<br><a href='https://docs.phcode.dev/app-links/git'>Máis información sobre o panel de Git →</a>"
+  "ERROR_UNINSTALLING_EXTENSION_TITLE": "Erro ao desinstalar a extensión",
+  "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "Non se puido desinstalar a extensión {0}",
+  "RESTART_APP_BUTTON": "Reiniciar {APP_NAME}",
+  "REMOVING": "Eliminando…",
+  "DEPRECATED_EXTENSIONS_TITLE": "Detectáronse extensións obsoletas",
+  "DEPRECATED_EXTENSIONS_MESSAGE": "As seguintes extensións instaladas agora teñen soporte nativo en {APP_NAME} e pódense desinstalar de forma segura desde o xestor de extensións:",
+  "DEPRECATED_EXTENSIONS_LEARN_MORE": "Agora incorporado — máis información"
 });
 /*
  * GNU AGPL-3.0 License
@@ -91119,6 +91203,7 @@ define("nls/hi/strings", {
   "ERROR_FETCH_REMOTE": "रिमोट जानकारी प्राप्त करने में विफलता",
   "ERROR_PREPARING_COMMIT_DIALOG": "कमिट डायलॉग तैयार करने में विफल रहा",
   "GIT_TOAST_TITLE": "फ़ीनिक्स कोड में Git सुविधाओं का अन्वेषण करें",
+  "GIT_TOAST_MESSAGE": "अपनी रिपॉजिटरी को मैनेज करने के लिए Git पैनल आइकन पर क्लिक करें। आसानी से कमिट, पुश, पुल करें, और अपने प्रोजेक्ट का इतिहास देखें—सब कुछ एक ही जगह पर।<br><a href='https://docs.phcode.dev/app-links/git'>Git पैनल के बारे में और जानें →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "उन विशेषताओं के लिए वोट करें जिन्हें आप आगे देखना चाहते हैं!",
   "SIGNED_OUT": "आप साइन आउट हो गए हैं।",
   "SIGNED_OUT_MESSAGE": "आप अपने {APP_NAME} खाते से साइन आउट हो गए हैं। कृपया जारी रखने के लिए फिर से साइन इन करें।",
@@ -91243,7 +91328,13 @@ define("nls/hi/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "आपके सिस्टम एडमिनिस्ट्रेटर द्वारा AI एक्सेस अक्षम कर दिया गया है। सहायता के लिए कृपया {0} से संपर्क करें।",
   "AI_UPSELL_DIALOG_TITLE": "{0} के साथ जारी रखें?",
   "AI_UPSELL_DIALOG_MESSAGE": "आपने {0} खोज लिया है। आगे बढ़ने के लिए, आपको AI सब्सक्रिप्शन या क्रेडिट्स की ज़रूरत होगी।",
-  "GIT_TOAST_MESSAGE": "अपनी रिपॉजिटरी को मैनेज करने के लिए Git पैनल आइकन पर क्लिक करें। आसानी से कमिट, पुश, पुल करें, और अपने प्रोजेक्ट का इतिहास देखें—सब कुछ एक ही जगह पर।<br><a href='https://docs.phcode.dev/app-links/git'>Git पैनल के बारे में और जानें →</a>"
+  "ERROR_UNINSTALLING_EXTENSION_TITLE": "एक्सटेंशन अनइंस्टॉल करने में त्रुटि",
+  "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "एक्सटेंशन {0} को अनइंस्टॉल करने में विफल",
+  "RESTART_APP_BUTTON": "{APP_NAME} रीस्टार्ट करें",
+  "REMOVING": "हटाया जा रहा है…",
+  "DEPRECATED_EXTENSIONS_TITLE": "डेप्रिकेटेड एक्सटेंशन पाए गए",
+  "DEPRECATED_EXTENSIONS_MESSAGE": "निम्नलिखित इंस्टॉल किए गए एक्सटेंशन अब {APP_NAME} द्वारा मूल रूप से समर्थित हैं और इन्हें एक्सटेंशन मैनेजर से सुरक्षित रूप से अनइंस्टॉल किया जा सकता है:",
+  "DEPRECATED_EXTENSIONS_LEARN_MORE": "अब अंतर्निहित — और जानें"
 });
 /*
  * GNU AGPL-3.0 License
@@ -92648,6 +92739,7 @@ define("nls/hr/strings", {
   "ERROR_FETCH_REMOTE": "Dohvaćanje informacija o udaljenom repozitoriju nije uspjelo",
   "ERROR_PREPARING_COMMIT_DIALOG": "Priprema dijaloga za commit nije uspjela",
   "GIT_TOAST_TITLE": "Istražite Git značajke u Phoenix Codeu",
+  "GIT_TOAST_MESSAGE": "Kliknite na ikonu Git panela kako biste upravljali svojim repozitorijem. Jednostavno commitajte, pushajte, pullajte i pregledajte povijest svog projekta—sve na jednom mjestu.<br><a href='https://docs.phcode.dev/app-links/git'>Saznajte više o Git panelu →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Glasajte za značajke koje želite vidjeti sljedeće!",
   "SIGNED_OUT": "Odjavljeni ste.",
   "SIGNED_OUT_MESSAGE": "Odjavljeni ste iz svog {APP_NAME} računa. Prijavite se ponovno kako biste nastavili.",
@@ -92772,7 +92864,13 @@ define("nls/hr/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Pristup AI-ju onemogućio je vaš administrator sustava. Molimo kontaktirajte {0} za pomoć.",
   "AI_UPSELL_DIALOG_TITLE": "Nastaviti s {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Otkrili ste {0}. Da biste nastavili, potrebna vam je AI pretplata ili krediti.",
-  "GIT_TOAST_MESSAGE": "Kliknite na ikonu Git panela kako biste upravljali svojim repozitorijem. Jednostavno commitajte, pushajte, pullajte i pregledajte povijest svog projekta—sve na jednom mjestu.<br><a href='https://docs.phcode.dev/app-links/git'>Saznajte više o Git panelu →</a>"
+  "ERROR_UNINSTALLING_EXTENSION_TITLE": "Greška pri deinstalaciji proširenja",
+  "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "Deinstalacija proširenja {0} nije uspjela",
+  "RESTART_APP_BUTTON": "Ponovno pokreni {APP_NAME}",
+  "REMOVING": "Uklanjanje…",
+  "DEPRECATED_EXTENSIONS_TITLE": "Otkrivena su zastarjela proširenja",
+  "DEPRECATED_EXTENSIONS_MESSAGE": "Sljedeća instalirana proširenja sada su izvorno podržana u aplikaciji {APP_NAME} i mogu se sigurno deinstalirati putem Upravitelja proširenja:",
+  "DEPRECATED_EXTENSIONS_LEARN_MORE": "Sada ugrađeno — saznajte više"
 });
 /*
  * GNU AGPL-3.0 License
@@ -94204,6 +94302,7 @@ define("nls/hu/strings", {
   "ERROR_FETCH_REMOTE": "Távoli adattár információinak lekérése sikertelen",
   "ERROR_PREPARING_COMMIT_DIALOG": "A kommitdialógus előkészítése sikertelen volt",
   "GIT_TOAST_TITLE": "Fedezd fel a Git funkciókat a Phoenix Code-ban",
+  "GIT_TOAST_MESSAGE": "Kattints a Git panel ikonjára a tárolód kezeléséhez. Könnyedén commitelhetsz, pusholhatsz, pullolhatsz és megtekintheted a projektelőzményeidet – mindezt egy helyen.<br><a href='https://docs.phcode.dev/app-links/git'>Tudj meg többet a Git panelről →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Szavazzon azokra a funkciókra, amelyeket a jövőben látni szeretne!",
   "SIGNED_OUT": "Kijelentkeztél.",
   "SIGNED_OUT_MESSAGE": "Kijelentkeztél a(z) {APP_NAME} fiókodból. Kérjük, jelentkezz be újra a folytatáshoz.",
@@ -94328,7 +94427,13 @@ define("nls/hu/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "A MI-hozzáférést a rendszergazda letiltotta. Segítségért forduljon a(z) {0} elérhetőséghez.",
   "AI_UPSELL_DIALOG_TITLE": "Folytatja a(z) {0} használatával?",
   "AI_UPSELL_DIALOG_MESSAGE": "Felfedezte a(z) {0} szolgáltatást. A folytatáshoz MI-előfizetésre vagy kreditekre lesz szüksége.",
-  "GIT_TOAST_MESSAGE": "Kattints a Git panel ikonjára a tárolód kezeléséhez. Könnyedén commitelhetsz, pusholhatsz, pullolhatsz és megtekintheted a projektelőzményeidet – mindezt egy helyen.<br><a href='https://docs.phcode.dev/app-links/git'>Tudj meg többet a Git panelről →</a>"
+  "ERROR_UNINSTALLING_EXTENSION_TITLE": "Hiba a bővítmény eltávolítása során",
+  "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "Nem sikerült eltávolítani a(z) {0} bővítményt",
+  "RESTART_APP_BUTTON": "{APP_NAME} újraindítása",
+  "REMOVING": "Eltávolítás…",
+  "DEPRECATED_EXTENSIONS_TITLE": "Elavult bővítmények észlelve",
+  "DEPRECATED_EXTENSIONS_MESSAGE": "A következő telepített bővítményeket mostantól natívan támogatja a(z) {APP_NAME}, és biztonságosan eltávolíthatók a Bővítménykezelőből:",
+  "DEPRECATED_EXTENSIONS_LEARN_MORE": "Mostantól beépítve — tudjon meg többet"
 });
 /*
  * GNU AGPL-3.0 License
@@ -95733,6 +95838,7 @@ define("nls/id/strings", {
   "ERROR_FETCH_REMOTE": "Gagal mengambil informasi remote",
   "ERROR_PREPARING_COMMIT_DIALOG": "Gagal mempersiapkan dialog commit",
   "GIT_TOAST_TITLE": "Jelajahi Fitur Git di Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Klik ikon panel Git untuk mengelola repositori Anda. Lakukan commit, push, pull, dan lihat riwayat proyek Anda dengan mudah—semua di satu tempat.<br><a href='https://docs.phcode.dev/app-links/git'>Pelajari lebih lanjut tentang panel Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Pilih fitur yang ingin Anda lihat selanjutnya!",
   "SIGNED_OUT": "Anda telah keluar.",
   "SIGNED_OUT_MESSAGE": "Anda telah keluar dari akun {APP_NAME} Anda. Silakan masuk lagi untuk melanjutkan.",
@@ -95857,7 +95963,13 @@ define("nls/id/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Akses AI telah dinonaktifkan oleh administrator sistem Anda. Silakan hubungi {0} untuk bantuan.",
   "AI_UPSELL_DIALOG_TITLE": "Lanjutkan dengan {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Anda telah menemukan {0}. Untuk melanjutkan, Anda memerlukan langganan AI atau kredit.",
-  "GIT_TOAST_MESSAGE": "Klik ikon panel Git untuk mengelola repositori Anda. Lakukan commit, push, pull, dan lihat riwayat proyek Anda dengan mudah—semua di satu tempat.<br><a href='https://docs.phcode.dev/app-links/git'>Pelajari lebih lanjut tentang panel Git →</a>"
+  "ERROR_UNINSTALLING_EXTENSION_TITLE": "Galat Mencopot Ekstensi",
+  "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "Gagal mencopot ekstensi {0}",
+  "RESTART_APP_BUTTON": "Mulai Ulang {APP_NAME}",
+  "REMOVING": "Menghapus…",
+  "DEPRECATED_EXTENSIONS_TITLE": "Ekstensi Usang Terdeteksi",
+  "DEPRECATED_EXTENSIONS_MESSAGE": "Ekstensi terinstal berikut kini didukung secara bawaan oleh {APP_NAME} dan dapat dicopot dengan aman dari Pengelola Ekstensi:",
+  "DEPRECATED_EXTENSIONS_LEARN_MORE": "Kini bawaan — pelajari lebih lanjut"
 });
 /*
  * GNU AGPL-3.0 License
@@ -97288,6 +97400,7 @@ define("nls/it/strings", {
   "ERROR_FETCH_REMOTE": "Recupero delle informazioni del remote non riuscito",
   "ERROR_PREPARING_COMMIT_DIALOG": "Preparazione della finestra di commit non riuscita",
   "GIT_TOAST_TITLE": "Esplora le funzionalità Git in Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Clicca sull'icona del pannello Git per gestire il tuo repository. Esegui commit, push, pull e visualizza la cronologia del tuo progetto con facilità—tutto in un unico posto.<br><a href='https://docs.phcode.dev/app-links/git'>Scopri di più sul pannello Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vota per le funzionalità che desideri vedere in futuro!",
   "SIGNED_OUT": "Sessione terminata.",
   "SIGNED_OUT_MESSAGE": "La tua sessione per l'account {APP_NAME} è terminata. Accedi di nuovo per continuare.",
@@ -97412,7 +97525,13 @@ define("nls/it/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "L'accesso all'AI è stato disattivato dal tuo amministratore di sistema. Contatta {0} per assistenza.",
   "AI_UPSELL_DIALOG_TITLE": "Continuare con {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Hai scoperto {0}. Per procedere, avrai bisogno di un abbonamento AI o di crediti.",
-  "GIT_TOAST_MESSAGE": "Clicca sull'icona del pannello Git per gestire il tuo repository. Esegui commit, push, pull e visualizza la cronologia del tuo progetto con facilità—tutto in un unico posto.<br><a href='https://docs.phcode.dev/app-links/git'>Scopri di più sul pannello Git →</a>"
+  "ERROR_UNINSTALLING_EXTENSION_TITLE": "Errore durante la disinstallazione dell'estensione",
+  "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "Impossibile disinstallare l'estensione {0}",
+  "RESTART_APP_BUTTON": "Riavvia {APP_NAME}",
+  "REMOVING": "Rimozione in corso…",
+  "DEPRECATED_EXTENSIONS_TITLE": "Rilevate estensioni obsolete",
+  "DEPRECATED_EXTENSIONS_MESSAGE": "Le seguenti estensioni installate sono ora supportate in modo nativo da {APP_NAME} e possono essere disinstallate in sicurezza da Gestione estensioni:",
+  "DEPRECATED_EXTENSIONS_LEARN_MORE": "Ora integrato — scopri di più"
 });
 /*
  * GNU AGPL-3.0 License
@@ -98844,6 +98963,7 @@ define("nls/ja/strings", {
   "ERROR_FETCH_REMOTE": "リモート情報の取得に失敗しました。",
   "ERROR_PREPARING_COMMIT_DIALOG": "コミットダイアログの準備に失敗しました",
   "GIT_TOAST_TITLE": "Phoenix CodeのGit機能を試す",
+  "GIT_TOAST_MESSAGE": "Ｇｉｔパネルアイコンをクリックすれば、コミット、プッシュ、プル、プロジェクト履歴の表示など、リポジトリの管理をすべて１か所で簡単に行えます。<br><a href='https://docs.phcode.dev/app-links/git'>Ｇｉｔパネルについてさらに詳しく →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "次に実装してほしい機能に投票してください！",
   "SIGNED_OUT": "サインアウトしました。",
   "SIGNED_OUT_MESSAGE": "{APP_NAME}アカウントからサインアウトしました。続行するにはもう一度サインインしてください。",
@@ -98968,7 +99088,13 @@ define("nls/ja/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "AIアクセスはシステム管理者によって無効にされています。サポートが必要な場合は、{0}にお問い合わせください。",
   "AI_UPSELL_DIALOG_TITLE": "{0}を続行しますか？",
   "AI_UPSELL_DIALOG_MESSAGE": "「{0}」をご利用になるには、AIサブスクリプションまたはクレジットが必要です。",
-  "GIT_TOAST_MESSAGE": "Ｇｉｔパネルアイコンをクリックすれば、コミット、プッシュ、プル、プロジェクト履歴の表示など、リポジトリの管理をすべて１か所で簡単に行えます。<br><a href='https://docs.phcode.dev/app-links/git'>Ｇｉｔパネルについてさらに詳しく →</a>"
+  "ERROR_UNINSTALLING_EXTENSION_TITLE": "拡張機能のアンインストールエラー",
+  "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "拡張機能「{0}」のアンインストールに失敗しました",
+  "RESTART_APP_BUTTON": "{APP_NAME}を再起動",
+  "REMOVING": "削除中…",
+  "DEPRECATED_EXTENSIONS_TITLE": "非推奨の拡張機能を検出",
+  "DEPRECATED_EXTENSIONS_MESSAGE": "以下のインストール済み拡張機能は、{APP_NAME}に標準で搭載されるようになったため、拡張機能マネージャーから安全にアンインストールできます。",
+  "DEPRECATED_EXTENSIONS_LEARN_MORE": "標準搭載 — 詳細はこちら"
 });
 /*
  * GNU AGPL-3.0 License
@@ -100400,6 +100526,7 @@ define("nls/ko/strings", {
   "ERROR_FETCH_REMOTE": "리모트 정보 가져오기 실패",
   "ERROR_PREPARING_COMMIT_DIALOG": "커밋 대화 상자 준비 실패",
   "GIT_TOAST_TITLE": "Phoenix Code의 Git 기능 살펴보기",
+  "GIT_TOAST_MESSAGE": "깃 패널 아이콘을 클릭해 리포지토리를 관리하세요. 한곳에서 손쉽게 커밋, 푸시, 풀을 실행하고 프로젝트 기록을 볼 수 있습니다.<br><a href='https://docs.phcode.dev/app-links/git'>깃 패널에 대해 자세히 알아보기 →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "다음에 보고 싶은 기능에 투표하세요!",
   "SIGNED_OUT": "로그아웃되었습니다.",
   "SIGNED_OUT_MESSAGE": "{APP_NAME} 계정에서 로그아웃되었습니다. 계속하려면 다시 로그인하세요.",
@@ -100524,7 +100651,13 @@ define("nls/ko/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "시스템 관리자에 의해 AI 액세스가 비활성화되었습니다. 도움이 필요하시면 {0}에게 문의하세요.",
   "AI_UPSELL_DIALOG_TITLE": "{0}(으)로 계속하시겠습니까?",
   "AI_UPSELL_DIALOG_MESSAGE": "{0} 기능을 발견하셨습니다. 계속 진행하려면 AI 구독 또는 크레딧이 필요합니다.",
-  "GIT_TOAST_MESSAGE": "깃 패널 아이콘을 클릭해 리포지토리를 관리하세요. 한곳에서 손쉽게 커밋, 푸시, 풀을 실행하고 프로젝트 기록을 볼 수 있습니다.<br><a href='https://docs.phcode.dev/app-links/git'>깃 패널에 대해 자세히 알아보기 →</a>"
+  "ERROR_UNINSTALLING_EXTENSION_TITLE": "확장 프로그램 제거 오류",
+  "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "{0} 확장 프로그램을 제거하지 못했습니다",
+  "RESTART_APP_BUTTON": "{APP_NAME} 다시 시작",
+  "REMOVING": "제거 중…",
+  "DEPRECATED_EXTENSIONS_TITLE": "지원 중단된 확장 프로그램 감지됨",
+  "DEPRECATED_EXTENSIONS_MESSAGE": "다음 설치된 확장 프로그램은 이제 {APP_NAME}에서 기본적으로 지원되므로 확장 프로그램 관리자에서 안전하게 제거할 수 있습니다:",
+  "DEPRECATED_EXTENSIONS_LEARN_MORE": "이제 내장 기능 — 자세히 알아보기"
 });
 /*
  * GNU AGPL-3.0 License
@@ -101956,6 +102089,7 @@ define("nls/lv/strings", {
   "ERROR_FETCH_REMOTE": "Neizdevās iegūt informāciju par attālo krātuvi",
   "ERROR_PREPARING_COMMIT_DIALOG": "Neizdevās sagatavot izmaiņu apstiprināšanas dialogu",
   "GIT_TOAST_TITLE": "Izpētiet Git funkcijas Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Noklikšķiniet uz Git paneļa ikonas, lai pārvaldītu savu repozitoriju. Viegli veiciet `commit`, `push`, `pull` darbības un apskatiet sava projekta vēsturi — viss vienuviet.<br><a href='https://docs.phcode.dev/app-links/git'>Uzziniet vairāk par Git paneli →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Nobalsot par funkcijām, kuras vēlaties redzēt nākamreiz!",
   "SIGNED_OUT": "Jūs esat izrakstījies.",
   "SIGNED_OUT_MESSAGE": "Jūs esat izrakstījies no sava {APP_NAME} konta. Lūdzu, piesakieties vēlreiz, lai turpinātu.",
@@ -102080,7 +102214,13 @@ define("nls/lv/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "MI piekļuvi ir atspējojis jūsu sistēmas administrators. Lūdzu, sazinieties ar {0}, lai saņemtu palīdzību.",
   "AI_UPSELL_DIALOG_TITLE": "Turpināt ar {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Jūs atklājāt {0}. Lai turpinātu, jums būs nepieciešams MI abonements vai kredīti.",
-  "GIT_TOAST_MESSAGE": "Noklikšķiniet uz Git paneļa ikonas, lai pārvaldītu savu repozitoriju. Viegli veiciet `commit`, `push`, `pull` darbības un apskatiet sava projekta vēsturi — viss vienuviet.<br><a href='https://docs.phcode.dev/app-links/git'>Uzziniet vairāk par Git paneli →</a>"
+  "ERROR_UNINSTALLING_EXTENSION_TITLE": "Kļūda, atinstalējot paplašinājumu",
+  "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "Neizdevās atinstalēt paplašinājumu {0}",
+  "RESTART_APP_BUTTON": "Restartēt {APP_NAME}",
+  "REMOVING": "Noņem...",
+  "DEPRECATED_EXTENSIONS_TITLE": "Konstatēti novecojuši paplašinājumi",
+  "DEPRECATED_EXTENSIONS_MESSAGE": "Tālāk norādītie instalētie paplašinājumi tagad ir iebūvēti {APP_NAME}, un tos var droši atinstalēt Paplašinājumu pārvaldniekā:",
+  "DEPRECATED_EXTENSIONS_LEARN_MORE": "Tagad iebūvēts — uzzināt vairāk"
 });
 /*
  * GNU AGPL-3.0 License
@@ -103485,6 +103625,7 @@ define("nls/ml/strings", {
   "ERROR_FETCH_REMOTE": "റിമോട്ട് വിവരങ്ങൾ എടുക്കുന്നതിൽ പിഴവ്",
   "ERROR_PREPARING_COMMIT_DIALOG": "കമ്മിറ്റ് ഡയലോഗ് തയ്യാറാക്കുന്നതിൽ പിഴവ്",
   "GIT_TOAST_TITLE": "ഫീനിക്സ് കോഡിലെ ഗിറ്റ് സവിശേഷതകൾ പര്യവേക്ഷണം ചെയ്യുക",
+  "GIT_TOAST_MESSAGE": "നിങ്ങളുടെ റെപ്പോസിറ്ററി നിയന്ത്രിക്കാൻ Git പാനൽ ഐക്കണിൽ ക്ലിക്ക് ചെയ്യുക. കമിറ്റ്, പുഷ്, പുൾ ചെയ്യാനും, നിങ്ങളുടെ പ്രോജക്റ്റ് ഹിസ്റ്ററി കാണാനും എല്ലാം ഒരിടത്ത് നിന്ന് എളുപ്പത്തിൽ സാധിക്കും.<br><a href='https://docs.phcode.dev/app-links/git'>Git പാനലിനെക്കുറിച്ച് കൂടുതൽ അറിയുക →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "നിങ്ങൾക്ക് അടുത്തതായി കാണാൻ ആഗ്രഹിക്കുന്ന സവിശേഷതകൾക്ക് വോട്ട് ചെയ്യുക!",
   "SIGNED_OUT": "നിങ്ങൾ സൈൻ ഔട്ട് ചെയ്‌തു.",
   "SIGNED_OUT_MESSAGE": "നിങ്ങളുടെ {APP_NAME} അക്കൗണ്ടിൽ നിന്ന് നിങ്ങൾ സൈൻ ഔട്ട് ചെയ്‌തു. തുടരാൻ വീണ്ടും സൈൻ ഇൻ ചെയ്യുക.",
@@ -103609,7 +103750,13 @@ define("nls/ml/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "നിങ്ങളുടെ സിസ്റ്റം അഡ്മിനിസ്ട്രേറ്റർ എഐ ആക്‌സസ് പ്രവർത്തനരഹിതമാക്കിയിരിക്കുന്നു. സഹായത്തിനായി ദയവായി {0}-മായി ബന്ധപ്പെടുക.",
   "AI_UPSELL_DIALOG_TITLE": "{0} ഉപയോഗിച്ച് തുടരണോ?",
   "AI_UPSELL_DIALOG_MESSAGE": "നിങ്ങൾ {0} കണ്ടെത്തിയിരിക്കുന്നു. തുടരാൻ, നിങ്ങൾക്ക് ഒരു എഐ സബ്സ്ക്രിപ്ഷനോ ക്രെഡിറ്റുകളോ ആവശ്യമാണ്.",
-  "GIT_TOAST_MESSAGE": "നിങ്ങളുടെ റെപ്പോസിറ്ററി നിയന്ത്രിക്കാൻ Git പാനൽ ഐക്കണിൽ ക്ലിക്ക് ചെയ്യുക. കമിറ്റ്, പുഷ്, പുൾ ചെയ്യാനും, നിങ്ങളുടെ പ്രോജക്റ്റ് ഹിസ്റ്ററി കാണാനും എല്ലാം ഒരിടത്ത് നിന്ന് എളുപ്പത്തിൽ സാധിക്കും.<br><a href='https://docs.phcode.dev/app-links/git'>Git പാനലിനെക്കുറിച്ച് കൂടുതൽ അറിയുക →</a>"
+  "ERROR_UNINSTALLING_EXTENSION_TITLE": "എക്സ്റ്റൻഷൻ അൺഇൻസ്റ്റാൾ ചെയ്യുന്നതിൽ പിശക്",
+  "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "{0} എന്ന എക്സ്റ്റൻഷൻ അൺഇൻസ്റ്റാൾ ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു",
+  "RESTART_APP_BUTTON": "{APP_NAME} പുനരാരംഭിക്കുക",
+  "REMOVING": "നീക്കം ചെയ്യുന്നു...",
+  "DEPRECATED_EXTENSIONS_TITLE": "കാലഹരണപ്പെട്ട എക്സ്റ്റൻഷനുകൾ കണ്ടെത്തി",
+  "DEPRECATED_EXTENSIONS_MESSAGE": "ഇൻസ്റ്റാൾ ചെയ്തിട്ടുള്ള താഴെ പറയുന്ന എക്സ്റ്റൻഷനുകൾക്ക് ഇപ്പോൾ {APP_NAME} നേരിട്ട് പിന്തുണ നൽകുന്നുണ്ട്, ആയതിനാൽ അവ എക്സ്റ്റൻഷൻ മാനേജറിൽ നിന്ന് സുരക്ഷിതമായി അൺഇൻസ്റ്റാൾ ചെയ്യാവുന്നതാണ്:",
+  "DEPRECATED_EXTENSIONS_LEARN_MORE": "ഇപ്പോൾ അന്തർനിർമ്മിതം — കൂടുതൽ അറിയുക"
 });
 /*
  * GNU AGPL-3.0 License
@@ -105014,6 +105161,7 @@ define("nls/nb/strings", {
   "ERROR_FETCH_REMOTE": "Kunne ikke hente informasjon om eksternt repositorium",
   "ERROR_PREPARING_COMMIT_DIALOG": "Klargjøring av commit-dialogen feilet",
   "GIT_TOAST_TITLE": "Utforsk Git-funksjoner i Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Klikk på Git-panelikonet for å administrere repositoriet ditt. Her kan du enkelt committe, pushe, pulle og se prosjekthistorikken din – alt på ett sted.<br><a href='https://docs.phcode.dev/app-links/git'>Les mer om Git-panelet →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stem på funksjonene du ønsker å se neste!",
   "SIGNED_OUT": "Du er logget ut.",
   "SIGNED_OUT_MESSAGE": "Du er logget ut av {APP_NAME}-kontoen din. Logg inn på nytt for å fortsette.",
@@ -105138,7 +105286,13 @@ define("nls/nb/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "AI-tilgang er deaktivert av systemadministratoren din. Vennligst kontakt {0} for hjelp.",
   "AI_UPSELL_DIALOG_TITLE": "Fortsette med {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Du har oppdaget {0}. For å fortsette trenger du et AI-abonnement eller kreditter.",
-  "GIT_TOAST_MESSAGE": "Klikk på Git-panelikonet for å administrere repositoriet ditt. Her kan du enkelt committe, pushe, pulle og se prosjekthistorikken din – alt på ett sted.<br><a href='https://docs.phcode.dev/app-links/git'>Les mer om Git-panelet →</a>"
+  "ERROR_UNINSTALLING_EXTENSION_TITLE": "Feil ved avinstallering av utvidelse",
+  "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "Kunne ikke avinstallere utvidelsen {0}",
+  "RESTART_APP_BUTTON": "Start {APP_NAME} på nytt",
+  "REMOVING": "Fjerner …",
+  "DEPRECATED_EXTENSIONS_TITLE": "Foreldede utvidelser funnet",
+  "DEPRECATED_EXTENSIONS_MESSAGE": "Følgende installerte utvidelser er nå innebygd i {APP_NAME} og kan trygt avinstalleres fra utvidelsesbehandleren:",
+  "DEPRECATED_EXTENSIONS_LEARN_MORE": "Nå innebygd – lær mer"
 });
 /*
  * GNU AGPL-3.0 License
@@ -106570,6 +106724,7 @@ define("nls/nl/strings", {
   "ERROR_FETCH_REMOTE": "Ophalen van remote-informatie mislukt",
   "ERROR_PREPARING_COMMIT_DIALOG": "Voorbereiden commit-dialoogvenster mislukt",
   "GIT_TOAST_TITLE": "Ontdek Git-functies in Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Klik op het Git-paneelicoon om je repository te beheren. Eenvoudig committen, pushen, pullen en je projectgeschiedenis bekijken—alles op één plek.<br><a href='https://docs.phcode.dev/app-links/git'>Meer informatie over het Git-paneel →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Stem op de functies die u graag wilt zien!",
   "SIGNED_OUT": "U bent afgemeld.",
   "SIGNED_OUT_MESSAGE": "U bent afgemeld van uw {APP_NAME}-account. Meld u opnieuw aan om verder te gaan.",
@@ -106694,7 +106849,13 @@ define("nls/nl/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "De toegang tot AI is uitgeschakeld door uw systeembeheerder. Neem contact op met {0} voor hulp.",
   "AI_UPSELL_DIALOG_TITLE": "Doorgaan met {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "U heeft {0} ontdekt. Om verder te gaan, heeft u een AI-abonnement of credits nodig.",
-  "GIT_TOAST_MESSAGE": "Klik op het Git-paneelicoon om je repository te beheren. Eenvoudig committen, pushen, pullen en je projectgeschiedenis bekijken—alles op één plek.<br><a href='https://docs.phcode.dev/app-links/git'>Meer informatie over het Git-paneel →</a>"
+  "ERROR_UNINSTALLING_EXTENSION_TITLE": "Fout bij verwijderen van extensie",
+  "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "Kon extensie {0} niet verwijderen",
+  "RESTART_APP_BUTTON": "{APP_NAME} herstarten",
+  "REMOVING": "Verwijderen…",
+  "DEPRECATED_EXTENSIONS_TITLE": "Verouderde extensies gedetecteerd",
+  "DEPRECATED_EXTENSIONS_MESSAGE": "De volgende geïnstalleerde extensies worden nu standaard ondersteund door {APP_NAME} en kunnen veilig worden verwijderd via de Extensiebeheerder:",
+  "DEPRECATED_EXTENSIONS_LEARN_MORE": "Nu ingebouwd — meer informatie"
 });
 /*
  * GNU AGPL-3.0 License
@@ -108126,6 +108287,7 @@ define("nls/pl/strings", {
   "ERROR_FETCH_REMOTE": "Pobieranie informacji o zdalnym repozytorium nie powiodło się",
   "ERROR_PREPARING_COMMIT_DIALOG": "Przygotowanie okna dialogowego zatwierdzenia nie powiodło się",
   "GIT_TOAST_TITLE": "Poznaj funkcje Gita w Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Kliknij ikonę panelu Git, aby zarządzać swoim repozytorium. Z łatwością zatwierdzaj, wypychaj, pobieraj i przeglądaj historię projektu — wszystko w jednym miejscu.<br><a href='https://docs.phcode.dev/app-links/git'>Dowiedz się więcej o panelu Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Zagłosuj na funkcje, które chcesz zobaczyć w przyszłości!",
   "SIGNED_OUT": "Wylogowano.",
   "SIGNED_OUT_MESSAGE": "Zostałeś wylogowany z konta {APP_NAME}. Zaloguj się ponownie, aby kontynuować.",
@@ -108250,7 +108412,13 @@ define("nls/pl/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Dostęp do AI został wyłączony przez administratora systemu. Prosimy o kontakt z {0} w celu uzyskania pomocy.",
   "AI_UPSELL_DIALOG_TITLE": "Kontynuować z {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Odkryłeś {0}. Aby kontynuować, potrzebujesz subskrypcji AI lub kredytów.",
-  "GIT_TOAST_MESSAGE": "Kliknij ikonę panelu Git, aby zarządzać swoim repozytorium. Z łatwością zatwierdzaj, wypychaj, pobieraj i przeglądaj historię projektu — wszystko w jednym miejscu.<br><a href='https://docs.phcode.dev/app-links/git'>Dowiedz się więcej o panelu Git →</a>"
+  "ERROR_UNINSTALLING_EXTENSION_TITLE": "Błąd odinstalowywania rozszerzenia",
+  "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "Nie udało się odinstalować rozszerzenia {0}",
+  "RESTART_APP_BUTTON": "Uruchom ponownie {APP_NAME}",
+  "REMOVING": "Usuwanie…",
+  "DEPRECATED_EXTENSIONS_TITLE": "Wykryto wycofane rozszerzenia",
+  "DEPRECATED_EXTENSIONS_MESSAGE": "Następujące zainstalowane rozszerzenia są teraz natywnie obsługiwane przez {APP_NAME} i mogą zostać bezpiecznie odinstalowane z Menedżera rozszerzeń:",
+  "DEPRECATED_EXTENSIONS_LEARN_MORE": "Teraz wbudowane — dowiedz się więcej"
 });
 /*
  * GNU AGPL-3.0 License
@@ -109682,6 +109850,7 @@ define("nls/pt-br/strings", {
   "ERROR_FETCH_REMOTE": "Falha ao buscar informações do remoto",
   "ERROR_PREPARING_COMMIT_DIALOG": "Falha ao preparar a caixa de diálogo de commit",
   "GIT_TOAST_TITLE": "Explore os Recursos do Git no Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Clique no ícone do painel Git para gerenciar seu repositório. Faça commit, push, pull e visualize facilmente o histórico do seu projeto — tudo em um só lugar.<br><a href='https://docs.phcode.dev/app-links/git'>Saiba mais sobre o painel Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote nos recursos que você quer ver em seguida!",
   "SIGNED_OUT": "Você foi desconectado.",
   "SIGNED_OUT_MESSAGE": "Você foi desconectado da sua conta do {APP_NAME}. Faça login novamente para continuar.",
@@ -109806,7 +109975,13 @@ define("nls/pt-br/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "O acesso à IA foi desativado pelo administrador do seu sistema. Entre em contato com {0} para obter assistência.",
   "AI_UPSELL_DIALOG_TITLE": "Continuar com {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Você descobriu o {0}. Para prosseguir, você precisará de uma assinatura de IA ou de créditos.",
-  "GIT_TOAST_MESSAGE": "Clique no ícone do painel Git para gerenciar seu repositório. Faça commit, push, pull e visualize facilmente o histórico do seu projeto — tudo em um só lugar.<br><a href='https://docs.phcode.dev/app-links/git'>Saiba mais sobre o painel Git →</a>"
+  "ERROR_UNINSTALLING_EXTENSION_TITLE": "Erro ao Desinstalar a Extensão",
+  "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "Falha ao desinstalar a extensão {0}",
+  "RESTART_APP_BUTTON": "Reiniciar o {APP_NAME}",
+  "REMOVING": "Removendo…",
+  "DEPRECATED_EXTENSIONS_TITLE": "Extensões Obsoletas Detectadas",
+  "DEPRECATED_EXTENSIONS_MESSAGE": "As seguintes extensões instaladas agora são suportadas nativamente pelo {APP_NAME} e podem ser desinstaladas com segurança do Gerenciador de Extensões:",
+  "DEPRECATED_EXTENSIONS_LEARN_MORE": "Agora integrado — saiba mais"
 });
 /*
  * GNU AGPL-3.0 License
@@ -111236,6 +111411,7 @@ define("nls/pt-pt/strings", {
   "ERROR_FETCH_REMOTE": "Falha ao obter informações do remoto",
   "ERROR_PREPARING_COMMIT_DIALOG": "Falha ao preparar a janela de _commit_",
   "GIT_TOAST_TITLE": "Explore as funcionalidades do Git no Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Clique no ícone do painel Git para gerir o seu repositório. Efetue commit, push, pull e consulte o histórico do seu projeto facilmente—tudo num só lugar.<br><a href='https://docs.phcode.dev/app-links/git'>Saiba mais sobre o painel Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Vote nas funcionalidades que quer ver a seguir!",
   "SIGNED_OUT": "Terminou a sessão.",
   "SIGNED_OUT_MESSAGE": "Terminou a sessão da sua conta {APP_NAME}. Inicie sessão novamente para continuar.",
@@ -111360,7 +111536,13 @@ define("nls/pt-pt/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "O acesso à IA foi desativado pelo seu administrador de sistema. Por favor, contacte {0} para obter assistência.",
   "AI_UPSELL_DIALOG_TITLE": "Continuar com {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Descobriu {0}. Para continuar, precisará de uma subscrição de IA ou de créditos.",
-  "GIT_TOAST_MESSAGE": "Clique no ícone do painel Git para gerir o seu repositório. Efetue commit, push, pull e consulte o histórico do seu projeto facilmente—tudo num só lugar.<br><a href='https://docs.phcode.dev/app-links/git'>Saiba mais sobre o painel Git →</a>"
+  "ERROR_UNINSTALLING_EXTENSION_TITLE": "Erro ao Desinstalar Extensão",
+  "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "Falha ao desinstalar a extensão {0}",
+  "RESTART_APP_BUTTON": "Reiniciar o {APP_NAME}",
+  "REMOVING": "A remover…",
+  "DEPRECATED_EXTENSIONS_TITLE": "Detetadas Extensões Obsoletas",
+  "DEPRECATED_EXTENSIONS_MESSAGE": "As seguintes extensões instaladas são agora suportadas nativamente pelo {APP_NAME} e podem ser desinstaladas com segurança a partir do Gestor de Extensões:",
+  "DEPRECATED_EXTENSIONS_LEARN_MORE": "Agora incorporado — saiba mais"
 });
 /*
  * GNU AGPL-3.0 License
@@ -112790,6 +112972,7 @@ define("nls/ro/strings", {
   "ERROR_FETCH_REMOTE": "Obținerea informațiilor despre depozitul remote a eșuat",
   "ERROR_PREPARING_COMMIT_DIALOG": "Pregătirea dialogului de commit a eșuat",
   "GIT_TOAST_TITLE": "Explorați funcțiile Git în Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Faceți clic pe pictograma panoului Git pentru a vă gestiona repository-ul. Aici puteți efectua cu ușurință commit, push, pull și vizualiza istoricul proiectului — totul într-un singur loc.<br><a href='https://docs.phcode.dev/app-links/git'>Aflați mai multe despre panoul Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Votează pentru funcționalitățile pe care dorești să le vezi în continuare!",
   "SIGNED_OUT": "Sesiunea a fost închisă.",
   "SIGNED_OUT_MESSAGE": "Sesiunea contului tău {APP_NAME} a fost închisă. Te rugăm să te autentifici din nou pentru a continua.",
@@ -112914,7 +113097,13 @@ define("nls/ro/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Accesul AI a fost dezactivat de către administratorul dvs. de sistem. Vă rugăm să contactați {0} pentru asistență.",
   "AI_UPSELL_DIALOG_TITLE": "Continuați cu {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Ați descoperit {0}. Pentru a continua, veți avea nevoie de un abonament AI sau de credite.",
-  "GIT_TOAST_MESSAGE": "Faceți clic pe pictograma panoului Git pentru a vă gestiona repository-ul. Aici puteți efectua cu ușurință commit, push, pull și vizualiza istoricul proiectului — totul într-un singur loc.<br><a href='https://docs.phcode.dev/app-links/git'>Aflați mai multe despre panoul Git →</a>"
+  "ERROR_UNINSTALLING_EXTENSION_TITLE": "Eroare dezinstalare extensie",
+  "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "Nu s-a putut dezinstala extensia {0}",
+  "RESTART_APP_BUTTON": "Repornește {APP_NAME}",
+  "REMOVING": "Se elimină…",
+  "DEPRECATED_EXTENSIONS_TITLE": "Extensii învechite detectate",
+  "DEPRECATED_EXTENSIONS_MESSAGE": "Următoarele extensii instalate sunt acum suportate nativ de {APP_NAME} și pot fi dezinstalate în siguranță din Managerul de extensii:",
+  "DEPRECATED_EXTENSIONS_LEARN_MORE": "Acum încorporat — află mai multe"
 });
 /*
  * GNU AGPL-3.0 License
@@ -116158,6 +116347,7 @@ define("nls/ru/strings", {
   "ERROR_FETCH_REMOTE": "Не удалось получить информацию об удалённом репозитории",
   "ERROR_PREPARING_COMMIT_DIALOG": "Не удалось подготовить диалог фиксации",
   "GIT_TOAST_TITLE": "Возможности Git в Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Нажмите на значок панели Git, чтобы управлять репозиторием. С лёгкостью создавайте коммиты, отправляйте и получайте изменения, а также просматривайте историю проекта — всё в одном месте.<br><a href='https://docs.phcode.dev/app-links/git'>Подробнее о панели Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Проголосуйте за функции, которые вы хотите увидеть в будущем!",
   "SIGNED_OUT": "Вы вышли из системы.",
   "SIGNED_OUT_MESSAGE": "Вы вышли из своей учётной записи {APP_NAME}. Пожалуйста, войдите снова, чтобы продолжить.",
@@ -116282,7 +116472,13 @@ define("nls/ru/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Доступ к ИИ был отключён вашим системным администратором. Пожалуйста, свяжитесь с {0} для получения помощи.",
   "AI_UPSELL_DIALOG_TITLE": "Продолжить с {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Вы открыли для себя {0}. Чтобы продолжить, вам понадобится подписка на ИИ или кредиты.",
-  "GIT_TOAST_MESSAGE": "Нажмите на значок панели Git, чтобы управлять репозиторием. С лёгкостью создавайте коммиты, отправляйте и получайте изменения, а также просматривайте историю проекта — всё в одном месте.<br><a href='https://docs.phcode.dev/app-links/git'>Подробнее о панели Git →</a>"
+  "ERROR_UNINSTALLING_EXTENSION_TITLE": "Ошибка удаления расширения",
+  "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "Не удалось удалить расширение {0}",
+  "RESTART_APP_BUTTON": "Перезапустить {APP_NAME}",
+  "REMOVING": "Удаление…",
+  "DEPRECATED_EXTENSIONS_TITLE": "Обнаружены устаревшие расширения",
+  "DEPRECATED_EXTENSIONS_MESSAGE": "Следующие установленные расширения теперь поддерживаются в {APP_NAME} по умолчанию и могут быть безопасно удалены из Менеджера расширений:",
+  "DEPRECATED_EXTENSIONS_LEARN_MORE": "Теперь встроено — узнать больше"
 });
 /*
  * GNU AGPL-3.0 License
@@ -117714,6 +117910,7 @@ define("nls/sk/strings", {
   "ERROR_FETCH_REMOTE": "Získanie informácií o vzdialenom repozitári zlyhalo",
   "ERROR_PREPARING_COMMIT_DIALOG": "Chyba pri príprave dialógového okna pre commit",
   "GIT_TOAST_TITLE": "Preskúmajte funkcie Gitu v Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Kliknite na ikonu panela Git na správu svojho repozitára. Jednoducho commitujte, pushujte, pullujte a prezerajte si históriu svojho projektu – všetko na jednom mieste.<br><a href='https://docs.phcode.dev/app-links/git'>Zistite viac o paneli Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Hlasujte za funkcie, ktoré chcete vidieť v ďalšej verzii!",
   "SIGNED_OUT": "Boli ste odhlásení.",
   "SIGNED_OUT_MESSAGE": "Boli ste odhlásení z vášho účtu {APP_NAME}. Pre pokračovanie sa prosím prihláste.",
@@ -117838,7 +118035,13 @@ define("nls/sk/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Prístup k AI bol vypnutý správcom vášho systému. So žiadosťou o pomoc sa obráťte na {0}.",
   "AI_UPSELL_DIALOG_TITLE": "Pokračovať s {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Objavili ste {0}. Ak chcete pokračovať, budete potrebovať predplatné AI alebo kredity.",
-  "GIT_TOAST_MESSAGE": "Kliknite na ikonu panela Git na správu svojho repozitára. Jednoducho commitujte, pushujte, pullujte a prezerajte si históriu svojho projektu – všetko na jednom mieste.<br><a href='https://docs.phcode.dev/app-links/git'>Zistite viac o paneli Git →</a>"
+  "ERROR_UNINSTALLING_EXTENSION_TITLE": "Chyba pri odinštalovaní rozšírenia",
+  "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "Nepodarilo sa odinštalovať rozšírenie {0}",
+  "RESTART_APP_BUTTON": "Reštartovať {APP_NAME}",
+  "REMOVING": "Odstraňuje sa…",
+  "DEPRECATED_EXTENSIONS_TITLE": "Zistené zastarané rozšírenia",
+  "DEPRECATED_EXTENSIONS_MESSAGE": "Nasledujúce nainštalované rozšírenia sú teraz natívne podporované aplikáciou {APP_NAME} a je možné ich bezpečne odinštalovať v Správcovi rozšírení:",
+  "DEPRECATED_EXTENSIONS_LEARN_MORE": "Teraz vstavané – zistite viac"
 });
 /*
  * GNU AGPL-3.0 License
@@ -119269,6 +119472,7 @@ define("nls/sr/strings", {
   "ERROR_FETCH_REMOTE": "Преузимање информација о удаљеном репозиторијуму није успело",
   "ERROR_PREPARING_COMMIT_DIALOG": "Дошло је до грешке приликом припреме дијалога за креирање комита.",
   "GIT_TOAST_TITLE": "Истражите Гит функције у Phoenix Code-у",
+  "GIT_TOAST_MESSAGE": "Кликните на икону Git панела да бисте управљали својим репозиторијумом. Лако комитујте, пушујте, пулујте и прегледајте историју свог пројекта — све на једном месту.<br><a href='https://docs.phcode.dev/app-links/git'>Сазнајте више о Git панелу →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Гласајте за функције које желите да видите у будућности!",
   "SIGNED_OUT": "Одјавили сте се.",
   "SIGNED_OUT_MESSAGE": "Одјавили сте се са свог {APP_NAME} налога. Молимо вас да се поново пријавите да бисте наставили.",
@@ -119393,7 +119597,13 @@ define("nls/sr/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Приступ AI је онемогућио администратор система. Молимо вас, контактирајте {0} за помоћ.",
   "AI_UPSELL_DIALOG_TITLE": "Наставити са {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Открили сте {0}. Да бисте наставили, потребна вам је AI претплата или кредити.",
-  "GIT_TOAST_MESSAGE": "Кликните на икону Git панела да бисте управљали својим репозиторијумом. Лако комитујте, пушујте, пулујте и прегледајте историју свог пројекта — све на једном месту.<br><a href='https://docs.phcode.dev/app-links/git'>Сазнајте више о Git панелу →</a>"
+  "ERROR_UNINSTALLING_EXTENSION_TITLE": "Грешка при деинсталирању екстензије",
+  "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "Није успело деинсталирање екстензије {0}",
+  "RESTART_APP_BUTTON": "Рестартуј {APP_NAME}",
+  "REMOVING": "Уклањање…",
+  "DEPRECATED_EXTENSIONS_TITLE": "Пронађене застареле екстензије",
+  "DEPRECATED_EXTENSIONS_MESSAGE": "Следеће инсталиране екстензије сада имају изворну подршку у апликацији {APP_NAME} и могу се безбедно деинсталирати из Управљача екстензијама:",
+  "DEPRECATED_EXTENSIONS_LEARN_MORE": "Сада уграђено — сазнајте више"
 });
 /*
  * GNU AGPL-3.0 License
@@ -120908,6 +121118,7 @@ define("nls/sv/strings", {
   "ERROR_FETCH_REMOTE": "Det gick inte att hämta information om fjärranslutning",
   "ERROR_PREPARING_COMMIT_DIALOG": "Det gick inte att förbereda commit-dialogrutan",
   "GIT_TOAST_TITLE": "Utforska Git-funktioner i Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Klicka på Git-panelikonen för att hantera ditt repository. Gör enkelt commit, push, pull och se din projekthistorik – allt på ett och samma ställe.<br><a href='https://docs.phcode.dev/app-links/git'>Lär dig mer om Git-panelen →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Rösta på funktionerna du vill se härnäst!",
   "SIGNED_OUT": "Du har loggats ut.",
   "SIGNED_OUT_MESSAGE": "Du har loggats ut från ditt {APP_NAME}-konto. Logga in igen för att fortsätta.",
@@ -121032,7 +121243,13 @@ define("nls/sv/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "AI-åtkomst har inaktiverats av din systemadministratör. Kontakta {0} för hjälp.",
   "AI_UPSELL_DIALOG_TITLE": "Fortsätt med {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Du har upptäckt {0}. För att fortsätta behöver du ett AI-abonnemang eller krediter.",
-  "GIT_TOAST_MESSAGE": "Klicka på Git-panelikonen för att hantera ditt repository. Gör enkelt commit, push, pull och se din projekthistorik – allt på ett och samma ställe.<br><a href='https://docs.phcode.dev/app-links/git'>Lär dig mer om Git-panelen →</a>"
+  "ERROR_UNINSTALLING_EXTENSION_TITLE": "Fel vid avinstallation av tillägg",
+  "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "Det gick inte att avinstallera tillägget {0}",
+  "RESTART_APP_BUTTON": "Starta om {APP_NAME}",
+  "REMOVING": "Tar bort…",
+  "DEPRECATED_EXTENSIONS_TITLE": "Inaktuella tillägg har upptäckts",
+  "DEPRECATED_EXTENSIONS_MESSAGE": "Följande installerade tillägg har nu inbyggt stöd i {APP_NAME} och kan tryggt avinstalleras från tilläggshanteraren:",
+  "DEPRECATED_EXTENSIONS_LEARN_MORE": "Nu inbyggt — läs mer"
 });
 /*
  * GNU AGPL-3.0 License
@@ -122464,6 +122681,7 @@ define("nls/tr/strings", {
   "ERROR_FETCH_REMOTE": "Uzak depo bilgileri alınamadı",
   "ERROR_PREPARING_COMMIT_DIALOG": "Kaydetme iletişim kutusu hazırlanamadı",
   "GIT_TOAST_TITLE": "Phoenix Code'da Git Özelliklerini Keşfedin",
+  "GIT_TOAST_MESSAGE": "Deponuzu yönetmek için Git paneli simgesine tıklayın. Tek bir yerden kolayca commit, push, pull yapın ve proje geçmişinizi görüntüleyin.<br><a href='https://docs.phcode.dev/app-links/git'>Git paneli hakkında daha fazla bilgi edinin →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Gelecekte görmek istediğiniz özellikler için oy verin!",
   "SIGNED_OUT": "Oturumunuz kapatıldı.",
   "SIGNED_OUT_MESSAGE": "{APP_NAME} hesabınızdan çıkış yaptınız. Devam etmek için lütfen tekrar oturum açın.",
@@ -122588,7 +122806,13 @@ define("nls/tr/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Yapay zeka erişimi sistem yöneticiniz tarafından devre dışı bırakıldı. Yardım için lütfen {0} ile iletişime geçin.",
   "AI_UPSELL_DIALOG_TITLE": "{0} ile devam edilsin mi?",
   "AI_UPSELL_DIALOG_MESSAGE": "{0} özelliğini keşfettiniz. Devam etmek için bir Yapay Zeka aboneliğine veya kredilere ihtiyacınız var.",
-  "GIT_TOAST_MESSAGE": "Deponuzu yönetmek için Git paneli simgesine tıklayın. Tek bir yerden kolayca commit, push, pull yapın ve proje geçmişinizi görüntüleyin.<br><a href='https://docs.phcode.dev/app-links/git'>Git paneli hakkında daha fazla bilgi edinin →</a>"
+  "ERROR_UNINSTALLING_EXTENSION_TITLE": "Uzantı Kaldırma Hatası",
+  "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "{0} uzantısı kaldırılamadı",
+  "RESTART_APP_BUTTON": "{APP_NAME} Yeniden Başlat",
+  "REMOVING": "Kaldırılıyor…",
+  "DEPRECATED_EXTENSIONS_TITLE": "Kullanımdan Kaldırılmış Uzantılar Algılandı",
+  "DEPRECATED_EXTENSIONS_MESSAGE": "Aşağıdaki yüklü uzantılar artık {APP_NAME} tarafından yerel olarak desteklenmektedir ve Uzantı Yöneticisi'nden güvenle kaldırılabilir:",
+  "DEPRECATED_EXTENSIONS_LEARN_MORE": "Artık yerleşik — daha fazla bilgi edinin"
 });
 /*
  * GNU AGPL-3.0 License
@@ -124020,6 +124244,7 @@ define("nls/uk/strings", {
   "ERROR_FETCH_REMOTE": "Не вдалося отримати інформацію про віддалений репозиторій",
   "ERROR_PREPARING_COMMIT_DIALOG": "Не вдалося підготувати діалог коміту",
   "GIT_TOAST_TITLE": "Ознайомтеся з функціями Git у Phoenix Code",
+  "GIT_TOAST_MESSAGE": "Натисніть іконку панелі Git, щоб керувати вашим репозиторієм. Легко комітьте, пуште, пульте та переглядайте історію вашого проєкту — усе в одному місці.<br><a href='https://docs.phcode.dev/app-links/git'>Дізнайтеся більше про панель Git →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "Проголосуйте за функції, які ви хочете бачити наступними!",
   "SIGNED_OUT": "Ви вийшли з системи.",
   "SIGNED_OUT_MESSAGE": "Ви вийшли зі свого облікового запису {APP_NAME}. Будь ласка, увійдіть знову, щоб продовжити.",
@@ -124144,7 +124369,13 @@ define("nls/uk/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Доступ до ШІ було вимкнено вашим системним адміністратором. Будь ласка, зверніться до {0} за допомогою.",
   "AI_UPSELL_DIALOG_TITLE": "Продовжити з {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Ви відкрили для себе {0}. Щоб продовжити, вам знадобиться підписка на ШІ або кредити.",
-  "GIT_TOAST_MESSAGE": "Натисніть іконку панелі Git, щоб керувати вашим репозиторієм. Легко комітьте, пуште, пульте та переглядайте історію вашого проєкту — усе в одному місці.<br><a href='https://docs.phcode.dev/app-links/git'>Дізнайтеся більше про панель Git →</a>"
+  "ERROR_UNINSTALLING_EXTENSION_TITLE": "Помилка видалення розширення",
+  "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "Не вдалося видалити розширення {0}",
+  "RESTART_APP_BUTTON": "Перезапустити {APP_NAME}",
+  "REMOVING": "Видалення…",
+  "DEPRECATED_EXTENSIONS_TITLE": "Виявлено застарілі розширення",
+  "DEPRECATED_EXTENSIONS_MESSAGE": "Наступні встановлені розширення тепер підтримуються {APP_NAME} нативно, і їх можна безпечно видалити з Менеджера розширень:",
+  "DEPRECATED_EXTENSIONS_LEARN_MORE": "Тепер вбудовано — дізнатися більше"
 });
 /*
  * GNU AGPL-3.0 License
@@ -125576,6 +125807,7 @@ define("nls/ur/strings", {
   "ERROR_FETCH_REMOTE": "ریموٹ معلومات حاصل کرنے میں ناکامی۔",
   "ERROR_PREPARING_COMMIT_DIALOG": "کمیٹ ڈائیلاگ تیار کرنے میں ناکام",
   "GIT_TOAST_TITLE": "فینکس کوڈ میں گٹ فیچرز دریافت کریں",
+  "GIT_TOAST_MESSAGE": "اپنی ریپازٹری کو منظم کرنے کے لیے گٹ پینل آئیکن پر کلک کریں۔ آسانی سے کمٹ، پش، پل کریں، اور اپنے پروجیکٹ کی ہسٹری دیکھیں—سب ایک ہی جگہ پر۔<br><a href='https://docs.phcode.dev/app-links/git'>گٹ پینل کے بارے میں مزید جانیں →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "اپنی پسندیدہ خصوصیات کے لیے ووٹ دیں!",
   "SIGNED_OUT": "آپ سائن آؤٹ ہو گئے ہیں۔",
   "SIGNED_OUT_MESSAGE": "آپ اپنے {APP_NAME} اکاؤنٹ سے سائن آؤٹ ہو گئے ہیں۔ براہ کرم جاری رکھنے کے لیے دوبارہ سائن ان کریں۔",
@@ -125700,7 +125932,13 @@ define("nls/ur/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "آپ کے سسٹم ایڈمنسٹریٹر نے AI تک رسائی کو غیر فعال کر دیا ہے۔ براہ کرم مدد کے لیے {0} سے رابطہ کریں۔",
   "AI_UPSELL_DIALOG_TITLE": "{0} کے ساتھ جاری رکھیں؟",
   "AI_UPSELL_DIALOG_MESSAGE": "آپ نے {0} کو دریافت کیا ہے۔ آگے بڑھنے کے لیے، آپ کو AI سبسکرپشن یا کریڈٹس کی ضرورت ہوگی۔",
-  "GIT_TOAST_MESSAGE": "اپنی ریپازٹری کو منظم کرنے کے لیے گٹ پینل آئیکن پر کلک کریں۔ آسانی سے کمٹ، پش، پل کریں، اور اپنے پروجیکٹ کی ہسٹری دیکھیں—سب ایک ہی جگہ پر۔<br><a href='https://docs.phcode.dev/app-links/git'>گٹ پینل کے بارے میں مزید جانیں →</a>"
+  "ERROR_UNINSTALLING_EXTENSION_TITLE": "ایکسٹینشن ان انسٹال کرنے میں خرابی",
+  "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "ایکسٹینشن {0} کو ان انسٹال کرنے میں ناکامی ہوئی",
+  "RESTART_APP_BUTTON": "{APP_NAME} کو دوبارہ شروع کریں",
+  "REMOVING": "ہٹایا جا رہا ہے…",
+  "DEPRECATED_EXTENSIONS_TITLE": "متروک ایکسٹینشنز کا پتہ چلا",
+  "DEPRECATED_EXTENSIONS_MESSAGE": "درج ذیل انسٹال شدہ ایکسٹینشنز اب {APP_NAME} میں مقامی طور پر سپورٹ کی جاتی ہیں اور انہیں ایکسٹینشن مینیجر سے محفوظ طریقے سے ان انسٹال کیا جا سکتا ہے:",
+  "DEPRECATED_EXTENSIONS_LEARN_MORE": "اب شامل ہے — مزید جانیں"
 });
 /*
  * GNU AGPL-3.0 License
@@ -127162,6 +127400,7 @@ define("nls/zh-cn/strings", {
   "ERROR_FETCH_REMOTE": "获取远程仓库信息失败",
   "ERROR_PREPARING_COMMIT_DIALOG": "准备提交对话框失败",
   "GIT_TOAST_TITLE": "探索 Phoenix Code 中的 Git 功能",
+  "GIT_TOAST_MESSAGE": "点击 Git 面板图标来管理您的仓库。一站式轻松完成提交、推送、拉取和查看项目历史。<br><a href='https://docs.phcode.dev/app-links/git'>进一步了解 Git 面板 →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "为您希望看到的下一个功能投票！",
   "SIGNED_OUT": "您已退出登录。",
   "SIGNED_OUT_MESSAGE": "您已退出 {APP_NAME} 帐户。请重新登录以继续。",
@@ -127286,7 +127525,13 @@ define("nls/zh-cn/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "AI 访问权限已被您的系统管理员禁用。请联系 {0} 以获取帮助。",
   "AI_UPSELL_DIALOG_TITLE": "继续使用 {0}？",
   "AI_UPSELL_DIALOG_MESSAGE": "您发现了 {0}。要继续，您需要 AI 订阅或点数。",
-  "GIT_TOAST_MESSAGE": "点击 Git 面板图标来管理您的仓库。一站式轻松完成提交、推送、拉取和查看项目历史。<br><a href='https://docs.phcode.dev/app-links/git'>进一步了解 Git 面板 →</a>"
+  "ERROR_UNINSTALLING_EXTENSION_TITLE": "卸载扩展时出错",
+  "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "卸载扩展 {0} 失败",
+  "RESTART_APP_BUTTON": "重启 {APP_NAME}",
+  "REMOVING": "正在删除…",
+  "DEPRECATED_EXTENSIONS_TITLE": "检测到已弃用的扩展",
+  "DEPRECATED_EXTENSIONS_MESSAGE": "以下已安装的扩展现已由 {APP_NAME} 原生支持，可以从扩展管理器中安全卸载：",
+  "DEPRECATED_EXTENSIONS_LEARN_MORE": "现已内置 — 了解更多"
 });
 /*
  * GNU AGPL-3.0 License
@@ -128718,6 +128963,7 @@ define("nls/zh-tw/strings", {
   "ERROR_FETCH_REMOTE": "擷取遠端資訊失敗",
   "ERROR_PREPARING_COMMIT_DIALOG": "準備提交對話框失敗",
   "GIT_TOAST_TITLE": "在 Phoenix Code 中探索 Git 功能",
+  "GIT_TOAST_MESSAGE": "點擊 Git 面板圖示來管理您的儲存庫。輕鬆提交、推送、拉取，並檢視您的專案歷史紀錄 — 全都在同一個地方。<br><a href='https://docs.phcode.dev/app-links/git'>深入了解 Git 面板 →</a>",
   "SURVEY_TITLE_VOTE_FOR_FEATURES_YOU_WANT": "投票選出您希望看到的下個功能！",
   "SIGNED_OUT": "您已登出。",
   "SIGNED_OUT_MESSAGE": "您已登出 {APP_NAME} 帳號。請重新登入以繼續。",
@@ -128842,7 +129088,13 @@ define("nls/zh-tw/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "您的系統管理員已停用 AI 存取權限。如需協助，請聯絡 {0}。",
   "AI_UPSELL_DIALOG_TITLE": "要繼續使用 {0} 嗎？",
   "AI_UPSELL_DIALOG_MESSAGE": "您已發現 {0}。您需要 AI 訂閱或點數才能繼續。",
-  "GIT_TOAST_MESSAGE": "點擊 Git 面板圖示來管理您的儲存庫。輕鬆提交、推送、拉取，並檢視您的專案歷史紀錄 — 全都在同一個地方。<br><a href='https://docs.phcode.dev/app-links/git'>深入了解 Git 面板 →</a>"
+  "ERROR_UNINSTALLING_EXTENSION_TITLE": "解除安裝擴充功能錯誤",
+  "ERROR_UNINSTALLING_EXTENSION_MESSAGE": "解除安裝擴充功能 {0} 失敗",
+  "RESTART_APP_BUTTON": "重新啟動 {APP_NAME}",
+  "REMOVING": "正在移除…",
+  "DEPRECATED_EXTENSIONS_TITLE": "偵測到已棄用的擴充功能",
+  "DEPRECATED_EXTENSIONS_MESSAGE": "下列已安裝的擴充功能現已由 {APP_NAME} 原生支援，可從「擴充功能管理員」中安全地解除安裝：",
+  "DEPRECATED_EXTENSIONS_LEARN_MORE": "現已內建 — 了解更多"
 });
 /*
  * GNU AGPL-3.0 License
