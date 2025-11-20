@@ -3796,6 +3796,7 @@ define("LiveDevelopment/LiveDevMultiBrowser", function (require, exports, module
                             const urlString = `${url.origin}${url.pathname}`;
                             if (_liveDocument &&  urlString === _resolveUrl(_liveDocument.doc.file.fullPath)) {
                                 _setStatus(STATUS_ACTIVE);
+                                resetLPEditState();
                             }
                         }
                         Metrics.countEvent(Metrics.EVENT_TYPE.LIVE_PREVIEW, "connect",
@@ -4094,7 +4095,18 @@ define("LiveDevelopment/LiveDevMultiBrowser", function (require, exports, module
      */
     function updateConfig(configJSON) {
         if (_protocol) {
-            _protocol.evaluate("_LD.updateConfig('" + configJSON + "')");
+            _protocol.evaluate("_LD.updateConfig(" + JSON.stringify(configJSON) + ")");
+        }
+    }
+
+    /**
+     * this function is to completely reset the live preview edit
+     * its done so that when live preview is opened/popped out, we can re-update the config so that
+     * there are no stale markers and edit works perfectly
+     */
+    function resetLPEditState() {
+        if (_protocol) {
+            _protocol.evaluate("_LD.resetState()");
         }
     }
 
@@ -4410,6 +4422,7 @@ define("LiveDevelopment/LiveDevelopmentUtils", function (require, exports, modul
 define("LiveDevelopment/LivePreviewEdit", function (require, exports, module) {
     const HTMLInstrumentation = require("LiveDevelopment/MultiBrowserImpl/language/HTMLInstrumentation");
     const LiveDevMultiBrowser = require("LiveDevelopment/LiveDevMultiBrowser");
+    const LiveDevelopment = require("LiveDevelopment/main");
     const CodeMirror = require("thirdparty/CodeMirror/lib/codemirror");
     const ProjectManager = require("project/ProjectManager");
     const FileSystem = require("filesystem/FileSystem");
@@ -4442,7 +4455,7 @@ define("LiveDevelopment/LivePreviewEdit", function (require, exports, module) {
 
         <div class="remember-folder-container">
             <label>
-                <input type="checkbox" id="remember-folder-checkbox" checked>
+                <input type="checkbox" id="remember-folder-checkbox">
                 <span>{{Strings.LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER}}</span>
             </label>
         </div>
@@ -4456,6 +4469,14 @@ define("LiveDevelopment/LivePreviewEdit", function (require, exports, module) {
 
     // state manager key, to save the download location of the image
     const IMAGE_DOWNLOAD_FOLDER_KEY = "imageGallery.downloadFolder";
+    const IMAGE_DOWNLOAD_PERSIST_FOLDER_KEY = "imageGallery.persistFolder";
+
+    const DOWNLOAD_EVENTS = {
+        STARTED: 'downloadStarted',
+        COMPLETED: 'downloadCompleted',
+        CANCELLED: 'downloadCancelled',
+        ERROR: 'downloadError'
+    };
 
     const KernalModeTrust = window.KernalModeTrust;
     if(!KernalModeTrust){
@@ -5100,6 +5121,32 @@ define("LiveDevelopment/LivePreviewEdit", function (require, exports, module) {
         }
     }
 
+    function _sendDownloadStatusToBrowser(eventType, data) {
+        const currLiveDoc = LiveDevMultiBrowser.getCurrentLiveDoc();
+        if (currLiveDoc && currLiveDoc.protocol && currLiveDoc.protocol.evaluate) {
+            const dataJson = JSON.stringify(data || {});
+            const evalString = `_LD.handleDownloadEvent('${eventType}', ${dataJson})`;
+            currLiveDoc.protocol.evaluate(evalString);
+        }
+    }
+
+    function _handleDownloadError(error, downloadId) {
+        console.error('something went wrong while download the image. error:', error);
+        if (downloadId) {
+            _sendDownloadStatusToBrowser(DOWNLOAD_EVENTS.ERROR, { downloadId: downloadId });
+        }
+    }
+
+    function _trackDownload(downloadLocation) {
+        if (!downloadLocation) {
+            return;
+        }
+        fetch(`https://images.phcode.dev/api/images/download?download_location=${encodeURIComponent(downloadLocation)}`)
+            .catch(error => {
+                console.error('download tracking failed:', error);
+            });
+    }
+
     /**
      * Helper function to update image src attribute and dismiss ribbon gallery
      *
@@ -5131,7 +5178,7 @@ define("LiveDevelopment/LivePreviewEdit", function (require, exports, module) {
      * @param {Directory} projectRoot - the project root in which the image is to be saved
      */
     function _handleUseThisImageLocalFiles(message, filename, projectRoot) {
-        const { tagId, imageData } = message;
+        const { tagId, imageData, downloadLocation, downloadId } = message;
 
         const uint8Array = new Uint8Array(imageData);
         const targetPath = projectRoot.fullPath + filename;
@@ -5139,8 +5186,10 @@ define("LiveDevelopment/LivePreviewEdit", function (require, exports, module) {
         window.fs.writeFile(targetPath, window.Filer.Buffer.from(uint8Array),
             { encoding: window.fs.BYTE_ARRAY_ENCODING }, (err) => {
                 if (err) {
-                    console.error('Failed to save image:', err);
+                    _handleDownloadError(err, downloadId);
                 } else {
+                    _trackDownload(downloadLocation);
+                    _sendDownloadStatusToBrowser(DOWNLOAD_EVENTS.COMPLETED, { downloadId });
                     _updateImageAndDismissRibbon(tagId, targetPath, filename);
                 }
             });
@@ -5153,7 +5202,7 @@ define("LiveDevelopment/LivePreviewEdit", function (require, exports, module) {
      * @param {Directory} projectRoot - the project root in which the image is to be saved
      */
     function _handleUseThisImageRemote(message, filename, projectRoot) {
-        const { imageUrl, tagId } = message;
+        const { imageUrl, tagId, downloadLocation, downloadId } = message;
 
         fetch(imageUrl)
             .then(response => {
@@ -5169,14 +5218,16 @@ define("LiveDevelopment/LivePreviewEdit", function (require, exports, module) {
                 window.fs.writeFile(targetPath, window.Filer.Buffer.from(uint8Array),
                     { encoding: window.fs.BYTE_ARRAY_ENCODING }, (err) => {
                         if (err) {
-                            console.error('Failed to save image:', err);
+                            _handleDownloadError(err, downloadId);
                         } else {
+                            _trackDownload(downloadLocation);
+                            _sendDownloadStatusToBrowser(DOWNLOAD_EVENTS.COMPLETED, { downloadId });
                             _updateImageAndDismissRibbon(tagId, targetPath, filename);
                         }
                     });
             })
             .catch(error => {
-                console.error('Failed to fetch image:', error);
+                _handleDownloadError(error, downloadId);
             });
     }
 
@@ -5193,6 +5244,10 @@ define("LiveDevelopment/LivePreviewEdit", function (require, exports, module) {
             return;
         }
 
+        if (message.downloadId) {
+            _sendDownloadStatusToBrowser(DOWNLOAD_EVENTS.STARTED, { downloadId: message.downloadId });
+        }
+
         const filename = message.filename;
         const extnName = message.extnName || "jpg";
 
@@ -5207,11 +5262,17 @@ define("LiveDevelopment/LivePreviewEdit", function (require, exports, module) {
         // the directory name that user wrote, first check if it exists or not
         // if it doesn't exist we create it and then download the image inside it
         targetDir.exists((err, exists) => {
-            if (err) { return; }
+            if (err) {
+                _handleDownloadError(err, message.downloadId);
+                return;
+            }
 
             if (!exists) {
                 targetDir.create((err) => {
-                    if (err) { return; }
+                    if (err) {
+                        _handleDownloadError(err, message.downloadId);
+                        return;
+                    }
                     _downloadImageToDirectory(message, filename, extnName, targetDir);
                 });
             } else {
@@ -5524,6 +5585,10 @@ define("LiveDevelopment/LivePreviewEdit", function (require, exports, module) {
         let rootFolders = [];
         let stringMatcher = null;
 
+        const persistFolder = StateManager.get(IMAGE_DOWNLOAD_PERSIST_FOLDER_KEY, StateManager.PROJECT_CONTEXT);
+        const shouldBeChecked = persistFolder !== false;
+        $rememberCheckbox.prop('checked', shouldBeChecked);
+
         _scanRootDirectoriesOnly(projectRoot, rootFolders).then(() => {
             stringMatcher = new StringMatch.StringMatcher({ segmentedSearch: true });
             _renderFolderSuggestions(rootFolders.slice(0, 15), $suggestions, $input);
@@ -5549,13 +5614,21 @@ define("LiveDevelopment/LivePreviewEdit", function (require, exports, module) {
                 const folderPath = $input.val().trim();
 
                 // if the checkbox is checked, we save the folder preference for this project
-                if ($rememberCheckbox.is(':checked')) {
+                const isChecked = $rememberCheckbox.is(':checked');
+                StateManager.set(IMAGE_DOWNLOAD_PERSIST_FOLDER_KEY, isChecked, StateManager.PROJECT_CONTEXT);
+                if (isChecked) {
                     StateManager.set(IMAGE_DOWNLOAD_FOLDER_KEY, folderPath, StateManager.PROJECT_CONTEXT);
+                } else {
+                    StateManager.set(IMAGE_DOWNLOAD_FOLDER_KEY, undefined, StateManager.PROJECT_CONTEXT);
                 }
 
                 // if message is provided, download the image
                 if (message) {
                     _downloadToFolder(message, folderPath);
+                }
+            } else {
+                if (message && message.downloadId) {
+                    _sendDownloadStatusToBrowser(DOWNLOAD_EVENTS.CANCELLED, { downloadId: message.downloadId });
                 }
             }
             dialog.close();
@@ -5602,7 +5675,7 @@ define("LiveDevelopment/LivePreviewEdit", function (require, exports, module) {
                 _handleUseThisImageRemote(message, uniqueFilename, targetDir);
             }
         }).catch(error => {
-            console.error('Something went wrong when trying to use this image', error);
+            _handleDownloadError(error, message.downloadId);
         });
     }
 
@@ -5646,6 +5719,12 @@ define("LiveDevelopment/LivePreviewEdit", function (require, exports, module) {
         // handle reset image folder selection
         if (message.resetImageFolderSelection) {
             _handleResetImageFolderSelection();
+            return;
+        }
+
+        // handle image gallery state change message
+        if (message.type === "imageGalleryStateChange") {
+            LiveDevelopment.setImageGalleryState(message.selected);
             return;
         }
 
@@ -8869,6 +8948,7 @@ define("LiveDevelopment/main", function main(require, exports, module) {
         LivePreviewTransport  = require("LiveDevelopment/MultiBrowserImpl/transports/LivePreviewTransport"),
         CommandManager      = require("command/CommandManager"),
         PreferencesManager  = require("preferences/PreferencesManager"),
+        StateManager        = require("preferences/StateManager"),
         UrlParams           = require("utils/UrlParams").UrlParams,
         Strings             = require("strings"),
         ExtensionUtils      = require("utils/ExtensionUtils"),
@@ -8887,6 +8967,33 @@ define("LiveDevelopment/main", function main(require, exports, module) {
 
     const EVENT_LIVE_HIGHLIGHT_PREF_CHANGED = "liveHighlightPrefChange";
 
+    // state manager key to track image gallery selected state, by default we keep this as selected
+    // if this is true we show the image gallery when an image element is clicked
+    const IMAGE_GALLERY_STATE = "livePreview.imageGallery.state";
+
+    /**
+     * get the image gallery state from StateManager
+     * @returns {boolean} true (default)
+     */
+    function _getImageGalleryState() {
+        const savedState = StateManager.get(IMAGE_GALLERY_STATE);
+        return savedState !== undefined && savedState !== null ? savedState : true;
+    }
+
+    /**
+     * sets the image gallery state
+     * @param {Boolean} the state that we need to set
+     */
+    function setImageGalleryState(state) {
+        StateManager.set(IMAGE_GALLERY_STATE, state);
+
+        // update the config with the new state
+        config.imageGalleryState = state;
+        if (MultiBrowserLiveDev && MultiBrowserLiveDev.status >= MultiBrowserLiveDev.STATUS_ACTIVE) {
+            MultiBrowserLiveDev.updateConfig(JSON.stringify(config));
+        }
+    }
+
     var params = new UrlParams();
     var config = {
         experimental: false, // enable experimental features
@@ -8901,6 +9008,7 @@ define("LiveDevelopment/main", function main(require, exports, module) {
         },
         isProUser: isProUser,
         elemHighlights: "hover", // default value, this will get updated when the extension loads
+        imageGalleryState: _getImageGalleryState(), // image gallery selected state
         // this strings are used in RemoteFunctions.js
         // we need to pass this through config as remoteFunctions runs in browser context and cannot
         // directly reference Strings file
@@ -8920,7 +9028,11 @@ define("LiveDevelopment/main", function main(require, exports, module) {
             imageGalleryLoadingInitial: Strings.LIVE_DEV_IMAGE_GALLERY_LOADING_INITIAL,
             imageGalleryLoadingMore: Strings.LIVE_DEV_IMAGE_GALLERY_LOADING_MORE,
             imageGalleryNoImages: Strings.LIVE_DEV_IMAGE_GALLERY_NO_IMAGES,
-            imageGalleryLoadError: Strings.LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR
+            imageGalleryLoadError: Strings.LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR,
+            imageGalleryClose: Strings.LIVE_DEV_IMAGE_GALLERY_CLOSE,
+            imageGalleryUpload: Strings.LIVE_DEV_IMAGE_GALLERY_UPLOAD,
+            toastNotEditable: Strings.LIVE_DEV_TOAST_NOT_EDITABLE,
+            toastDontShowAgain: Strings.LIVE_DEV_TOAST_DONT_SHOW_AGAIN
         }
     };
     // Status labels/styles are ordered: error, not connected, progress1, progress2, connected.
@@ -9272,6 +9384,7 @@ define("LiveDevelopment/main", function main(require, exports, module) {
     exports.setLivePreviewTransportBridge = setLivePreviewTransportBridge;
     exports.togglePreviewHighlight = togglePreviewHighlight;
     exports.setLivePreviewEditFeaturesActive = setLivePreviewEditFeaturesActive;
+    exports.setImageGalleryState = setImageGalleryState;
     exports.updateElementHighlightConfig = updateElementHighlightConfig;
     exports.getConnectionIds = MultiBrowserLiveDev.getConnectionIds;
     exports.getLivePreviewDetails = MultiBrowserLiveDev.getLivePreviewDetails;
@@ -113363,14 +113476,18 @@ define("nls/root/strings", {
     "LIVE_DEV_MORE_OPTIONS_AI": "Edit with AI",
     "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "Image Gallery",
     "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Use this image",
-    "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Select image from computer",
+    "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Upload image from computer",
     "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "Choose image download folder",
-    "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Search images...",
+    "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Search images\u2026",
     "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "Search",
-    "LIVE_DEV_IMAGE_GALLERY_LOADING_INITIAL": "Loading images...",
-    "LIVE_DEV_IMAGE_GALLERY_LOADING_MORE": "Loading...",
+    "LIVE_DEV_IMAGE_GALLERY_LOADING_INITIAL": "Loading images\u2026",
+    "LIVE_DEV_IMAGE_GALLERY_LOADING_MORE": "Loading\u2026",
     "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "No images found",
     "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Failed to load images",
+    "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Close",
+    "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "Upload",
+    "LIVE_DEV_TOAST_NOT_EDITABLE": "Element not editable - generated by script.",
+    "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "Don't show again",
     "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Select Folder to Save Image",
     "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Choose where to download the image:",
     "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "Type folder path (e.g., assets/images/)",
