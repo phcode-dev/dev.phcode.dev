@@ -469,12 +469,10 @@ define({
     "STATUSBAR_TASKS_RESTART": "Restart",
 
     // Tab bar Strings
-    "CLOSE_TAB": "Close Tab",
     "CLOSE_TABS_TO_THE_RIGHT": "Close Tabs to the Right",
     "CLOSE_TABS_TO_THE_LEFT": "Close Tabs to the Left",
     "CLOSE_ALL_TABS": "Close All Tabs",
     "CLOSE_SAVED_TABS": "Close Saved Tabs",
-    "REOPEN_CLOSED_FILE": "Reopen Closed File",
 
     // CodeInspection: errors/warnings
     "ERRORS_NO_FILE": "No File Open",
@@ -1664,7 +1662,7 @@ define({
     "CUSTOM_SNIPPETS_SAVE": "Save",
     "CUSTOM_SNIPPETS_NO_DESCRIPTION": "No description",
     "CUSTOM_SNIPPETS_NO_MATCHES": "No snippets match \"{0}\"",
-    "CUSTOM_SNIPPETS_LEARN_MORE": "Add your own code hints to speed up coding - <a href=\"https://docs.phcode.dev\" target=\"_blank\">Learn More</a>",
+    "CUSTOM_SNIPPETS_LEARN_MORE": "Add your own code hints to speed up coding - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Learn More</a>",
     "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "A snippet with abbreviation \"{0}\" already exists.",
     "CUSTOM_SNIPPETS_SPACE_ERROR": "Space is not accepted as a valid abbreviation character.",
     "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "Abbreviation cannot be more than 30 characters.",

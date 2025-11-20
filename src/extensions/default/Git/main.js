@@ -2964,27 +2964,35 @@ define("src/Main", function (require, exports) {
 
     var _toggleMenuEntriesState = false,
         _divider1 = null,
-        _divider2 = null;
+        _divider2 = null,
+        _divider3 = null;
     function toggleMenuEntries(bool) {
         if (bool === _toggleMenuEntriesState) {
             return;
         }
         var projectCmenu = Menus.getContextMenu(Menus.ContextMenuIds.PROJECT_MENU);
         var workingCmenu = Menus.getContextMenu(Menus.ContextMenuIds.WORKING_SET_CONTEXT_MENU);
+        var tabbarCmenu = Menus.getContextMenu("tabbar-context-menu");
         if (bool) {
             _divider1 = projectCmenu.addMenuDivider();
             _divider2 = workingCmenu.addMenuDivider();
+            _divider3 = tabbarCmenu.addMenuDivider();
             projectCmenu.addMenuItem(CMD_ADD_TO_IGNORE);
             workingCmenu.addMenuItem(CMD_ADD_TO_IGNORE);
+            tabbarCmenu.addMenuItem(CMD_ADD_TO_IGNORE);
             projectCmenu.addMenuItem(CMD_REMOVE_FROM_IGNORE);
             workingCmenu.addMenuItem(CMD_REMOVE_FROM_IGNORE);
+            tabbarCmenu.addMenuItem(CMD_REMOVE_FROM_IGNORE);
         } else {
             projectCmenu.removeMenuDivider(_divider1.id);
             workingCmenu.removeMenuDivider(_divider2.id);
+            tabbarCmenu.removeMenuDivider(_divider3.id);
             projectCmenu.removeMenuItem(CMD_ADD_TO_IGNORE);
             workingCmenu.removeMenuItem(CMD_ADD_TO_IGNORE);
+            tabbarCmenu.removeMenuItem(CMD_ADD_TO_IGNORE);
             projectCmenu.removeMenuItem(CMD_REMOVE_FROM_IGNORE);
             workingCmenu.removeMenuItem(CMD_REMOVE_FROM_IGNORE);
+            tabbarCmenu.removeMenuItem(CMD_REMOVE_FROM_IGNORE);
         }
         _toggleMenuEntriesState = bool;
     }
@@ -5297,6 +5305,10 @@ define("src/ProjectTreeMarks", function (require) {
         detachEvents();
     });
 
+    return {
+        isIgnored: isIgnored
+    };
+
 });
 
 define("src/Remotes", function (require) {
@@ -5948,6 +5960,7 @@ define("src/TabBarIntegration", function (require) {
     const Events = require("src/Events");
     const Git = require("src/git/Git");
     const Preferences = require("src/Preferences");
+    const ProjectTreeMarks = require("src/ProjectTreeMarks");
 
     // the cache of file statuses by path
     let fileStatusCache = {};
@@ -6000,6 +6013,19 @@ define("src/TabBarIntegration", function (require) {
         );
     }
 
+    /**
+     * whether the file is gitignored or not
+     *
+     * @param {string} fullPath - the file path
+     * @returns {boolean} - if the file is gitignored it returns true otherwise false
+     */
+    function isIgnored(fullPath) {
+        if (!ProjectTreeMarks || !ProjectTreeMarks.isIgnored) {
+            return false;
+        }
+        return ProjectTreeMarks.isIgnored(fullPath);
+    }
+
 
     // Update file status cache when Git status results are received
     EventEmitter.on(Events.GIT_STATUS_RESULTS, function (files) {
@@ -6030,7 +6056,8 @@ define("src/TabBarIntegration", function (require) {
     return {
         getFileStatus: getFileStatus,
         isModified: isModified,
-        isUntracked: isUntracked
+        isUntracked: isUntracked,
+        isIgnored: isIgnored
     };
 });
 
