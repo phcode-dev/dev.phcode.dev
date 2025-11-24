@@ -4425,6 +4425,8 @@ define("LiveDevelopment/LivePreviewEdit", function (require, exports, module) {
     const LiveDevelopment = require("LiveDevelopment/main");
     const CodeMirror = require("thirdparty/CodeMirror/lib/codemirror");
     const ProjectManager = require("project/ProjectManager");
+    const CommandManager = require("command/CommandManager");
+    const Commands = require("command/Commands");
     const FileSystem = require("filesystem/FileSystem");
     const PathUtils = require("thirdparty/path-utils/path-utils");
     const StringMatch = require("utils/StringMatch");
@@ -5693,6 +5695,33 @@ define("LiveDevelopment/LivePreviewEdit", function (require, exports, module) {
     }
 
     /**
+     * this function is responsible to save the active file (and previewed file, both might be same though)
+     * when ctrl/cmd + s is pressed in the live preview
+     */
+    function _handleLivePreviewSave() {
+        // this saves the active file
+        CommandManager.execute(Commands.FILE_SAVE);
+
+        // we also save the previewed file, (active file might be same as previewed or different)
+        const currLiveDoc = LiveDevMultiBrowser.getCurrentLiveDoc();
+        if (currLiveDoc && currLiveDoc.editor) {
+            const previewedDoc = currLiveDoc.editor.document;
+            CommandManager.execute(Commands.FILE_SAVE, { doc: previewedDoc });
+        }
+    }
+
+    /**
+     * This function is responsible to toggle the live preview Preview mode (play icon)
+     * this is done when user presses F8 key in the live preview
+     */
+    function _handlePreviewModeToggle() {
+        const $previewBtn = $("#previewModeLivePreviewButton");
+        if ($previewBtn.length > 0) {
+            $previewBtn.trigger("click");
+        }
+    }
+
+    /**
      * This is the main function that is exported.
      * it will be called by LiveDevProtocol when it receives a message from RemoteFunctions.js
      * or LiveDevProtocolRemote.js (for undo) using MessageBroker
@@ -5716,6 +5745,18 @@ define("LiveDevelopment/LivePreviewEdit", function (require, exports, module) {
     * these are the main properties that are passed through the message
      */
     function handleLivePreviewEditOperation(message) {
+        // handle save current document in live preview (ctrl/cmd + s)
+        if (message.saveCurrentDocument) {
+            _handleLivePreviewSave();
+            return;
+        }
+
+        // toggle live preview mode using F8 key
+        if (message.toggleLivePreviewMode) {
+            _handlePreviewModeToggle();
+            return;
+        }
+
         // handle reset image folder selection
         if (message.resetImageFolderSelection) {
             _handleResetImageFolderSelection();
@@ -9021,7 +9062,6 @@ define("LiveDevelopment/main", function main(require, exports, module) {
             imageGallery: Strings.LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY,
             aiPromptPlaceholder: Strings.LIVE_DEV_AI_PROMPT_PLACEHOLDER,
             imageGalleryUseImage: Strings.LIVE_DEV_IMAGE_GALLERY_USE_IMAGE,
-            imageGallerySelectFromComputer: Strings.LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER,
             imageGallerySelectDownloadFolder: Strings.LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER,
             imageGallerySearchPlaceholder: Strings.LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER,
             imageGallerySearchButton: Strings.LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON,
@@ -9030,9 +9070,9 @@ define("LiveDevelopment/main", function main(require, exports, module) {
             imageGalleryNoImages: Strings.LIVE_DEV_IMAGE_GALLERY_NO_IMAGES,
             imageGalleryLoadError: Strings.LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR,
             imageGalleryClose: Strings.LIVE_DEV_IMAGE_GALLERY_CLOSE,
-            imageGalleryUpload: Strings.LIVE_DEV_IMAGE_GALLERY_UPLOAD,
-            toastNotEditable: Strings.LIVE_DEV_TOAST_NOT_EDITABLE,
-            toastDontShowAgain: Strings.LIVE_DEV_TOAST_DONT_SHOW_AGAIN
+            imageGallerySelectFromComputer: Strings.LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER,
+            imageGallerySelectFromComputerTooltip: Strings.LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP,
+            toastNotEditable: Strings.LIVE_DEV_TOAST_NOT_EDITABLE
         }
     };
     // Status labels/styles are ordered: error, not connected, progress1, progress2, connected.
@@ -9414,7 +9454,6 @@ define("LiveDevelopment/main", function main(require, exports, module) {
     config.highlight = PreferencesManager.getViewState("livedevHighlight");
 
     function setLivePreviewEditFeaturesActive(enabled) {
-        // TODO: @abose here add kernal mode trust check
         isProUser = enabled;
         config.isProUser = enabled;
         if (MultiBrowserLiveDev && MultiBrowserLiveDev.status >= MultiBrowserLiveDev.STATUS_ACTIVE) {
@@ -10694,8 +10733,6 @@ define("command/DefaultMenus", function (require, exports, module) {
         menu.addMenuItem(Commands.TOGGLE_LINE_NUMBERS);
         menu.addMenuItem(Commands.TOGGLE_WORD_WRAP);
         menu.addMenuItem(Commands.TOGGLE_RULERS);
-        menu.addMenuDivider();
-        menu.addMenuItem(Commands.FILE_LIVE_HIGHLIGHT);
         menu.addMenuDivider();
         menu.addMenuItem(Commands.VIEW_TOGGLE_PROBLEMS);
         menu.addMenuItem(Commands.VIEW_TOGGLE_INSPECTION);
@@ -46746,6 +46783,7 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
 `,
         Dialogs = require("widgets/Dialogs"),
         DefaultDialogs = require("widgets/DefaultDialogs"),
+        ProDialogs = require("services/pro-dialogs"),
         utils = require('./utils');
 
     const StateManager = PreferencesManager.stateManager;
@@ -46947,35 +46985,6 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
         }
     }
 
-    function _showProFeatureDialog() {
-        const dialog = Dialogs.showModalDialog(
-            DefaultDialogs.DIALOG_ID_INFO,
-            Strings.LIVE_PREVIEW_PRO_FEATURE_TITLE,
-            Strings.LIVE_PREVIEW_PRO_FEATURE_MESSAGE,
-            [
-                {
-                    className: Dialogs.DIALOG_BTN_CLASS_NORMAL,
-                    id: Dialogs.DIALOG_BTN_CANCEL,
-                    text: Strings.CANCEL
-                },
-                {
-                    className: Dialogs.DIALOG_BTN_CLASS_PRIMARY,
-                    id: "subscribe",
-                    text: Strings.LIVE_PREVIEW_PRO_SUBSCRIBE
-                }
-            ]
-        );
-
-        dialog.done(function (buttonId) {
-            if (buttonId === "subscribe") {
-                // TODO: write the implementation here...@abose
-                console.log("the subscribe button got clicked");
-            }
-        });
-
-        return dialog;
-    }
-
     // this function is to check if the live highlight feature is enabled or not
     function _isLiveHighlightEnabled() {
         return CommandManager.get(Commands.FILE_LIVE_HIGHLIGHT).getChecked();
@@ -47112,7 +47121,7 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
                 LiveDevelopment.setMode("highlight");
             } else if (index === 2) {
                 if (!LiveDevelopment.setMode("edit")) {
-                    _showProFeatureDialog();
+                    ProDialogs.showProUpsellDialog(ProDialogs.UPSELL_TYPE_LIVE_EDIT);
                 }
             } else if (item === Strings.LIVE_PREVIEW_EDIT_HIGHLIGHT_ON) {
                 // Don't allow edit highlight toggle if edit features are not active
@@ -47392,7 +47401,7 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
             Strings: Strings,
             livePreview: Strings.LIVE_DEV_STATUS_TIP_OUT_OF_SYNC,
             clickToReload: Strings.LIVE_DEV_CLICK_TO_RELOAD_PAGE,
-            clickToPreview: Strings.LIVE_PREVIEW_MODE_PREVIEW,
+            clickToPreview: Strings.LIVE_PREVIEW_MODE_TOGGLE_PREVIEW,
             livePreviewSettings: Strings.LIVE_DEV_SETTINGS,
             livePreviewConfigureModes: Strings.LIVE_PREVIEW_CONFIGURE_MODES,
             clickToPopout: Strings.LIVE_DEV_CLICK_POPOUT,
@@ -47847,6 +47856,13 @@ define("extensionsIntegrated/Phoenix-live-preview/main", function (require, expo
 
         $(document).on("click", "#livePreviewModeBtn", function (e) {
             _handleLPModeBtnClick(e);
+        });
+
+        $(document).on("keydown", function (e) {
+            if (e.key === "F8") {
+                e.preventDefault();
+                _handlePreviewBtnClick();
+            }
         });
     }
 
@@ -113380,7 +113396,6 @@ define("nls/root/strings", {
     "LIVE_DEV_MORE_OPTIONS_AI": "Edit with AI",
     "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "Image Gallery",
     "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Use this image",
-    "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Upload image from computer",
     "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "Choose image download folder",
     "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Search images\u2026",
     "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "Search",
@@ -113389,9 +113404,9 @@ define("nls/root/strings", {
     "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "No images found",
     "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Failed to load images",
     "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Close",
-    "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "Upload",
+    "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Select an image from your device",
+    "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Select from device",
     "LIVE_DEV_TOAST_NOT_EDITABLE": "Element not editable - generated by script.",
-    "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "Don't show again",
     "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Select Folder to Save Image",
     "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Choose where to download the image:",
     "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "Type folder path (e.g., assets/images/)",
@@ -113399,15 +113414,13 @@ define("nls/root/strings", {
     "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "Don't ask again for this project",
     "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Ask Phoenix AI to modify this element...",
     "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Getting preview from your custom server {0}",
+    "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Toggle Preview Mode (F8)",
     "LIVE_PREVIEW_MODE_PREVIEW": "Preview Mode",
     "LIVE_PREVIEW_MODE_HIGHLIGHT": "Highlight Mode",
     "LIVE_PREVIEW_MODE_EDIT": "Edit Mode",
     "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Edit Highlights on Hover",
     "LIVE_PREVIEW_MODE_PREFERENCE": "{0} shows only the webpage, {1} connects the webpage to your code - click on elements to jump to their code and vice versa, {2} provides highlighting along with advanced element manipulation",
     "LIVE_PREVIEW_CONFIGURE_MODES": "Configure Live Preview Modes",
-    "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Pro Feature",
-    "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "This is a Pro feature. Subscribe to Phoenix Pro to keep using this feature.",
-    "LIVE_PREVIEW_PRO_SUBSCRIBE": "Subscribe",
 
     "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "Live Preview was canceled because the browser's developer tools were opened",
     "LIVE_DEV_DETACHED_TARGET_CLOSED": "Live Preview was canceled because the page was closed in the browser",

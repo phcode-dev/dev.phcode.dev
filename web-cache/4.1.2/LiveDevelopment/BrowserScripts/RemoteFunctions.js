@@ -33,10 +33,6 @@ function RemoteFunctions(config = {}) {
     // we need this so that we can remove click styling from the previous element when a new element is clicked
     let previouslyClickedElement = null;
 
-    // this is needed so that when user starts typing we can dismiss all the boxes and highlights
-    // now with this variable we check if its a first keystroke on an element or a subsequent keystroke
-    let _uiHiddenDuringTyping = false;
-
     var req, timeout;
     var animateHighlight = function (time) {
         if(req) {
@@ -133,6 +129,7 @@ function RemoteFunctions(config = {}) {
         if(element && // element should exist
            element.tagName.toLowerCase() !== "body" && // shouldn't be the body tag
            element.tagName.toLowerCase() !== "html" && // shouldn't be the HTML tag
+           !element.closest("[data-phcode-internal-c15r5a9]") && // this attribute is used by phoenix internal elements
            !_isInsideHeadTag(element)) { // shouldn't be inside the head tag like meta tags and all
             return true;
         }
@@ -1368,10 +1365,10 @@ function RemoteFunctions(config = {}) {
       `,
 
         selectImageFromComputer: `
-        <svg viewBox="0 0 24 24" fill="currentColor" width="19" height="19">
-          <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/>
-        </svg>
-      `,
+          <svg viewBox="0 0 24 24" fill="currentColor" width="19" height="19">
+            <path d="M11 5v6H5v2h6v6h2v-6h6v-2h-6V5h-2z"/>
+          </svg>
+        `,
 
         downloadImage: `
         <svg viewBox="0 0 640 640" fill="currentColor">
@@ -1465,6 +1462,7 @@ function RemoteFunctions(config = {}) {
 
         _style: function() {
             this.body = window.document.createElement("div");
+            this.body.setAttribute("data-phcode-internal-c15r5a9", "true");
 
             // this is shadow DOM.
             // we need it because if we add the box directly to the DOM then users style might override it.
@@ -1744,6 +1742,7 @@ function RemoteFunctions(config = {}) {
 
         _style: function() {
             this.body = window.document.createElement("div");
+            this.body.setAttribute("data-phcode-internal-c15r5a9", "true");
 
             // this is shadow DOM.
             // we need it because if we add the box directly to the DOM then users style might override it.
@@ -1928,6 +1927,7 @@ function RemoteFunctions(config = {}) {
 
         _style: function() {
             this.body = window.document.createElement("div");
+            this.body.setAttribute("data-phcode-internal-c15r5a9", "true");
             // using shadow dom so that user styles doesn't override it
             const shadow = this.body.attachShadow({ mode: "open" });
 
@@ -2297,7 +2297,8 @@ function RemoteFunctions(config = {}) {
     ImageRibbonGallery.prototype = {
         _style: function () {
             this.body = window.document.createElement("div");
-            this._shadow = this.body.attachShadow({mode: 'closed'});
+            this.body.setAttribute("data-phcode-internal-c15r5a9", "true");
+            this._shadow = this.body.attachShadow({ mode: 'open' });
 
             this._shadow.innerHTML = `
                 <style>
@@ -2333,7 +2334,7 @@ function RemoteFunctions(config = {}) {
                         margin-right: 10px !important;
                     }
 
-                    @media (max-width: 525px) {
+                    @media (max-width: 565px) {
                         .phoenix-image-gallery-header-title {
                             display: none !important;
                         }
@@ -2419,10 +2420,10 @@ function RemoteFunctions(config = {}) {
                         background: #3c3f41 !important;
                     }
 
-                    @media (max-width: 400px) {
+                    @media (max-width: 450px) {
                         .phoenix-image-gallery-upload-container button {
                             font-size: 0 !important;
-                            padding: 3px 6px !important;
+                            padding: 3px 5px 3px 6px !important;
                         }
 
                         .phoenix-image-gallery-upload-container button svg {
@@ -2502,12 +2503,12 @@ function RemoteFunctions(config = {}) {
                         color: #eaeaf0 !important;
                         background: rgba(21,25,36,0.65) !important;
                         cursor: pointer !important;
-                        font-size: 20px !important;
+                        font-size: 22px !important;
                         font-weight: 600 !important;
                         user-select: none !important;
                         transition: all 0.2s ease !important;
                         z-index: 2147483647 !important;
-                        padding: 4px 12px 8px 12px !important;
+                        padding: 2px 11px 7px 11px !important;
                         display: none !important;
                         align-items: center !important;
                         justify-content: center !important;
@@ -2518,8 +2519,6 @@ function RemoteFunctions(config = {}) {
                     .phoenix-image-gallery-nav:hover {
                         background: rgba(21,25,36,0.85) !important;
                         border-color: rgba(255,255,255,0.25) !important;
-                        transform: scale(1.05) !important;
-                        box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
                     }
 
                     .phoenix-image-gallery-nav:active {
@@ -2707,7 +2706,7 @@ function RemoteFunctions(config = {}) {
                         </div>
 
                         <div class='phoenix-image-gallery-upload-container'>
-                            <button title="${config.strings.imageGallerySelectFromComputer}">${ICONS.selectImageFromComputer} ${config.strings.imageGalleryUpload}</button>
+                            <button title="${config.strings.imageGallerySelectFromComputerTooltip}">${ICONS.selectImageFromComputer} ${config.strings.imageGallerySelectFromComputer}</button>
                             <input type="file" class="phoenix-file-input" accept="image/*" style="display: none !important;">
                         </div>
 
@@ -3822,12 +3821,10 @@ function RemoteFunctions(config = {}) {
      * @param {Element} element - The DOM element to select
      */
     function _selectElement(element) {
-        // user selected a new element, we need to reset this variable
-        _uiHiddenDuringTyping = false;
-
         dismissNodeMoreOptionsBox();
         dismissAIPromptBox();
         dismissNodeInfoBox();
+        dismissToastMessage();
         cleanupPreviousElementState();
 
         // this should also be there when users are in highlight mode
@@ -3850,12 +3847,9 @@ function RemoteFunctions(config = {}) {
         }
 
         // if element is not editable and user clicks on it, then we show a toast notification saying
-        // that this element is not editable (unless user dismissed it permanently)
+        // that this element is not editable
         if (!element.hasAttribute("data-brackets-id")) {
-            const hideToast = localStorage.getItem('phoenix-hide-dynamic-toast');
-            if (!hideToast) {
-                showToast(config.strings.toastNotEditable);
-            }
+            showToastMessage(config.strings.toastNotEditable);
         }
 
         // make sure that the element is actually visible to the user
@@ -4431,15 +4425,7 @@ function RemoteFunctions(config = {}) {
         });
 
         this.rememberedNodes = {};
-
-        // when user starts typing in the editor we hide all the boxes and highlights
-        // _uiHiddenDuringTyping variable keeps track if its a first keystroke or subsequent
-        // so that we don't end up calling dismiss/hide kinda functions multiple times
-        if (!_uiHiddenDuringTyping) {
-            dismissUIAndCleanupState();
-            hideHighlight();
-            _uiHiddenDuringTyping = true;
-        }
+        redrawEverything();
     };
 
     function applyDOMEdits(edits) {
@@ -4558,6 +4544,7 @@ function RemoteFunctions(config = {}) {
         dismissAIPromptBox();
         dismissNodeInfoBox();
         dismissImageRibbonGallery();
+        dismissToastMessage();
     }
 
     let _toastTimeout = null;
@@ -4567,19 +4554,14 @@ function RemoteFunctions(config = {}) {
      * this toast message is used when user tries to edit a non-editable element
      * @param {String} message - the message to display in the toast
      */
-    function showToast(message) {
+    function showToastMessage(message) {
         // clear any existing toast & timer, if there are any
-        const existingToast = window.document.getElementById('phoenix-toast-notification');
-        if (existingToast) {
-            existingToast.remove();
-        }
-        if (_toastTimeout) {
-            clearTimeout(_toastTimeout);
-        }
+        dismissToastMessage();
 
         // create a new fresh toast container
         const toast = window.document.createElement('div');
         toast.id = 'phoenix-toast-notification';
+        toast.setAttribute("data-phcode-internal-c15r5a9", "true");
         const shadow = toast.attachShadow({ mode: 'open' });
 
         const styles = `
@@ -4607,27 +4589,6 @@ function RemoteFunctions(config = {}) {
                 animation: slideUp 0.3s ease-out !important;
             }
 
-            .toast-message {
-                margin-bottom: 6px !important;
-            }
-
-            .toast-button {
-                background: none !important;
-                border: none !important;
-                color: #A0A0A0 !important;
-                cursor: pointer !important;
-                font-size: 12px !important;
-                font-family: Arial, sans-serif !important;
-                text-decoration: none !important;
-                pointer-events: auto !important;
-                transition: opacity 0.2s !important;
-            }
-
-            .toast-button:hover {
-                opacity: 0.8 !important;
-                text-decoration: underline !important;
-            }
-
             @keyframes slideUp {
                 from {
                     opacity: 0;
@@ -4643,34 +4604,34 @@ function RemoteFunctions(config = {}) {
         const content = `
             <div class="toast-container">
                 <div class="toast-message">${message}</div>
-                <button class="toast-button">${config.strings.toastDontShowAgain}</button>
             </div>
         `;
 
         shadow.innerHTML = `<style>${styles}</style>${content}`;
         window.document.body.appendChild(toast);
 
-        // add click handler to "Don't show again" button
-        const button = shadow.querySelector('.toast-button');
-        button.addEventListener('click', () => {
-            // save to localStorage to never show again and close toast rn
-            localStorage.setItem('phoenix-hide-dynamic-toast', 'true');
-            if (toast && toast.parentNode) {
-                toast.remove();
-            }
-            if (_toastTimeout) {
-                clearTimeout(_toastTimeout);
-                _toastTimeout = null;
-            }
-        });
-
-        // Auto-dismiss after 6 seconds
+        // Auto-dismiss after 3 seconds
         _toastTimeout = setTimeout(() => {
             if (toast && toast.parentNode) {
                 toast.remove();
             }
             _toastTimeout = null;
-        }, 6000);
+        }, 3000);
+    }
+
+    /**
+     * this function is to dismiss the toast message
+     * and clear its timeout (if any)
+     */
+    function dismissToastMessage() {
+        const toastMessage = window.document.getElementById('phoenix-toast-notification');
+        if (toastMessage) {
+            toastMessage.remove();
+        }
+        if (_toastTimeout) {
+            clearTimeout(_toastTimeout);
+        }
+        _toastTimeout = null;
     }
 
     /**
