@@ -71271,7 +71271,6 @@ define("nls/ar/strings", {
   "LIVE_DEV_MORE_OPTIONS_AI": "تعديل باستخدام الذكاء الاصطناعي",
   "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "معرض الصور",
   "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "استخدام هذه الصورة",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "رفع صورة من الحاسوب",
   "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "اختر مجلد تنزيل الصور",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "ابحث عن صور...",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "بحث",
@@ -71280,9 +71279,7 @@ define("nls/ar/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "لم يتم العثور على صور",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "فشل تحميل الصور",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "إغلاق",
-  "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "رفع",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "العنصر غير قابل للتعديل - تم إنشاؤه بواسطة سكربت.",
-  "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "عدم الإظهار مرة أخرى",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "حدد مجلدًا لحفظ الصورة",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "اختر مكان تنزيل الصورة:",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "اكتب مسار المجلد (مثال: assets/images/)",
@@ -71296,9 +71293,6 @@ define("nls/ar/strings", {
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "تحرير التمييزات عند المرور",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} يعرض صفحة الويب فقط، {1} يربط صفحة الويب بكودك - انقر على العناصر للانتقال إلى الكود الخاص بها والعكس صحيح، {2} يوفر التمييز بالإضافة إلى معالجة العناصر المتقدمة",
   "LIVE_PREVIEW_CONFIGURE_MODES": "تكوين أوضاع المعاينة المباشرة",
-  "LIVE_PREVIEW_PRO_FEATURE_TITLE": "ميزة احترافية",
-  "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "هذه ميزة احترافية. اشترك في Phoenix Pro للاستمرار في استخدام هذه الميزة.",
-  "LIVE_PREVIEW_PRO_SUBSCRIBE": "اشترك",
   "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "تم إلغاء المعاينة المباشرة لأن أدوات مطوّري المتصفح كانت مفتوحة",
   "LIVE_DEV_DETACHED_TARGET_CLOSED": "تم إلغاء المعاينة المباشرة لأن الصفحة تم إغلاقها في المتصفح",
   "LIVE_DEV_NAVIGATED_AWAY": "تم إلغاء المعاينة المباشرة لأن المتصفح انتقل إلى صفحة ليست جزءًا من المشروع الحالي",
@@ -72563,6 +72557,7 @@ define("nls/ar/strings", {
   "CUSTOM_SNIPPETS_SAVE": "حفظ",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "بدون وصف",
   "CUSTOM_SNIPPETS_NO_MATCHES": "لا توجد مُقتطفات مُطابقة لـ \"{0}\"",
+  "CUSTOM_SNIPPETS_LEARN_MORE": "أضف تلميحات الكود الخاصة بك لتسريع عملية كتابة الكود - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">اعرف المزيد</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "يوجد مُقتطف برمز مختصر \"{0}\" مُسبقًا.",
   "CUSTOM_SNIPPETS_SPACE_ERROR": "المسافة غير مقبولة كحرف اختصار صالح.",
   "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "لا يُمكن أن يتجاوز الاختصار ٣٠ حرفًا.",
@@ -72639,7 +72634,9 @@ define("nls/ar/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "قام مسؤول النظام بتعطيل الوصول إلى الذكاء الاصطناعي. يرجى الاتصال بـ {0} للحصول على المساعدة.",
   "AI_UPSELL_DIALOG_TITLE": "المتابعة باستخدام {0}؟",
   "AI_UPSELL_DIALOG_MESSAGE": "لقد اكتشفت {0}. للمتابعة، ستحتاج إلى اشتراك في الذكاء الاصطناعي أو أرصدة.",
-  "CUSTOM_SNIPPETS_LEARN_MORE": "أضف تلميحات الكود الخاصة بك لتسريع عملية كتابة الكود - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">اعرف المزيد</a>"
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "حدد صورة من جهازك",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "تحديد من الجهاز",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "تبديل وضع المعاينة (F8)"
 });
 /*
  * GNU AGPL-3.0 License
@@ -72809,7 +72806,6 @@ define("nls/bg/strings", {
   "LIVE_DEV_MORE_OPTIONS_AI": "Редактиране с ИИ",
   "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "Галерия с изображения",
   "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Използвай това изображение",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Качване на изображение от компютъра",
   "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "Изберете папка за изтегляне на изображения",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Търсене на изображения…",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "Търсене",
@@ -72818,9 +72814,7 @@ define("nls/bg/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Няма намерени изображения",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Грешка при зареждане на изображения",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Затваряне",
-  "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "Качване",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Елементът не може да се редактира – генериран е от скрипт.",
-  "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "Да не се показва повече",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Избор на папка за запазване на изображението",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Изберете къде да изтеглите изображението:",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "Въведете път до папката (напр. assets/images/)",
@@ -72834,9 +72828,6 @@ define("nls/bg/strings", {
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Подсветяване при задържане на курсора",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} показва само уеб страницата, {1} свързва уеб страницата с вашия код - кликнете върху елементи, за да преминете към техния код и обратно, {2} предоставя подсветяване заедно с разширени манипулации на елементи",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Конфигуриране на режимите за преглед на живо",
-  "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Pro функция",
-  "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "Това е Pro функция. Абонирайте се за Phoenix Pro, за да продължите да използвате тази функция.",
-  "LIVE_PREVIEW_PRO_SUBSCRIBE": "Абониране",
   "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "Прегледът на живо беше прекъснат, тъй като бяха отворени инструментите за разработчици на браузъра.",
   "LIVE_DEV_DETACHED_TARGET_CLOSED": "Прегледът на живо беше прекъснат, тъй като страницата в браузъра беше затворена.",
   "LIVE_DEV_NAVIGATED_AWAY": "Прегледът на живо беше прекъснат, тъй като бръузърът премина към страница, която не е част от текущия проект.",
@@ -74101,6 +74092,7 @@ define("nls/bg/strings", {
   "CUSTOM_SNIPPETS_SAVE": "Запазване",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Няма описание",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Няма съвпадения за \"{0}\"",
+  "CUSTOM_SNIPPETS_LEARN_MORE": "Добавете свои собствени фрагменти с код, за да ускорите кодирането - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Научете повече</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Вече съществува фрагмент с абревиатура \"{0}\".",
   "CUSTOM_SNIPPETS_SPACE_ERROR": "Интервалът не е разрешен като символ за абревиатура.",
   "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "Абревиатурата не може да бъде по-дълга от 30 символа.",
@@ -74177,7 +74169,9 @@ define("nls/bg/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Достъпът до AI е деактивиран от вашия системен администратор. Моля, свържете се с {0} за съдействие.",
   "AI_UPSELL_DIALOG_TITLE": "Да продължите ли с {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Вие открихте {0}. За да продължите, ще ви е необходим AI абонамент или кредити.",
-  "CUSTOM_SNIPPETS_LEARN_MORE": "Добавете свои собствени фрагменти с код, за да ускорите кодирането - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Научете повече</a>"
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Изберете изображение от вашето устройство",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Изберете от устройство",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Превключване на режим на преглед (F8)"
 });
 /*
  * Copyright (c) 2013 Adobe Systems Incorporated. All rights reserved.
@@ -74376,7 +74370,6 @@ define("nls/cs/strings", {
   "LIVE_DEV_MORE_OPTIONS_AI": "Upravit pomocí AI",
   "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "Galerie obrázků",
   "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Použít tento obrázek",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Nahrát obrázek z počítače",
   "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "Vybrat složku pro stažení obrázků",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Hledat obrázky…",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "Hledat",
@@ -74385,9 +74378,7 @@ define("nls/cs/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Nebyly nalezeny žádné obrázky",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Nepodařilo se načíst obrázky",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Zavřít",
-  "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "Nahrát",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Prvek nelze upravit – vygenerováno skriptem.",
-  "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "Příště nezobrazovat",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Vybrat složku pro uložení obrázku",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Zvolte, kam chcete obrázek stáhnout:",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "Zadejte cestu ke složce (např. assets/images/)",
@@ -74401,9 +74392,6 @@ define("nls/cs/strings", {
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Zvýraznit při najetí myší",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} zobrazuje pouze webovou stránku, {1} propojuje webovou stránku s vaším kódem – kliknutím na prvky se přesunete do jejich kódu a naopak, {2} poskytuje zvýraznění spolu s pokročilou manipulací s prvky",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Konfigurovat režimy živého náhledu",
-  "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Funkce Pro",
-  "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "Toto je funkce Pro. Přihlaste se k odběru Phoenix Pro, abyste mohli tuto funkci nadále používat.",
-  "LIVE_PREVIEW_PRO_SUBSCRIBE": "Přihlásit k odběru",
   "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "Živý náhled byl zrušen, protože byly otevřeny vývojářské nástroje prohlížeče",
   "LIVE_DEV_DETACHED_TARGET_CLOSED": "Živý náhled byl zrušen, protože dokument byl zavřen v prohlížeči",
   "LIVE_DEV_NAVIGATED_AWAY": "Živý náhled byl zrušen, protože prohlížeč přešel na stránku, která není součástí projektu",
@@ -75668,6 +75656,7 @@ define("nls/cs/strings", {
   "CUSTOM_SNIPPETS_SAVE": "Uložit",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Bez popisu",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Žádný úryvek neodpovídá \"{0}\"",
+  "CUSTOM_SNIPPETS_LEARN_MORE": "Přidejte si vlastní fragmenty kódu pro zrychlení kódování - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Zjistit více</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Úryvek se zkratkou \"{0}\" již existuje.",
   "CUSTOM_SNIPPETS_SPACE_ERROR": "Mezera není akceptována jako platný znak zkratky.",
   "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "Zkratka nesmí být delší než 30 znaků.",
@@ -75744,7 +75733,9 @@ define("nls/cs/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Přístup k AI byl zakázán správcem systému. Pro pomoc prosím kontaktujte {0}.",
   "AI_UPSELL_DIALOG_TITLE": "Pokračovat s {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Objevili jste {0}. Chcete-li pokračovat, budete potřebovat předplatné AI nebo kredity.",
-  "CUSTOM_SNIPPETS_LEARN_MORE": "Přidejte si vlastní fragmenty kódu pro zrychlení kódování - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Zjistit více</a>"
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Vyberte obrázek z vašeho zařízení",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Vybrat ze zařízení",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Přepnout režim náhledu (F8)"
 });
 /*
  * GNU AGPL-3.0 License
@@ -75941,7 +75932,6 @@ define("nls/da/strings", {
   "LIVE_DEV_MORE_OPTIONS_AI": "Rediger med AI",
   "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "Billedgalleri",
   "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Brug dette billede",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Upload billede fra computer",
   "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "Vælg mappe til download af billeder",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Søg efter billeder…",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "Søg",
@@ -75950,9 +75940,7 @@ define("nls/da/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Ingen billeder fundet",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Kunne ikke indlæse billeder",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Luk",
-  "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "Upload",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Element kan ikke redigeres - genereret af script.",
-  "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "Vis ikke igen",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Vælg mappe til at gemme billede",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Vælg, hvor billedet skal downloades:",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "Indtast mappesti (f.eks. assets/images/)",
@@ -75966,9 +75954,6 @@ define("nls/da/strings", {
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Rediger fremhævninger ved hover",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} viser kun websiden, {1} forbinder websiden til din kode - klik på elementer for at hoppe til deres kode og omvendt, {2} giver fremhævning sammen med avanceret elementmanipulation",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Konfigurer Live Preview-tilstande",
-  "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Pro-funktion",
-  "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "Dette er en Pro-funktion. Abonner på Phoenix Pro for at fortsætte med at bruge denne funktion.",
-  "LIVE_PREVIEW_PRO_SUBSCRIBE": "Abonner",
   "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "Live-Forhåndsvisning blev afbrudt fordi udviklerværktøjer blev åbnet i browseren",
   "LIVE_DEV_DETACHED_TARGET_CLOSED": "Live-Forhåndsvisning blev afbrudt fordi siden blev lukket i browseren",
   "LIVE_DEV_NAVIGATED_AWAY": "Live-Forhåndsvisning blev afbrudt fordi browseren navigerede til en side udenfor projektet",
@@ -77233,6 +77218,7 @@ define("nls/da/strings", {
   "CUSTOM_SNIPPETS_SAVE": "Gem",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Ingen beskrivelse",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Ingen snippets matcher \"{0}\"",
+  "CUSTOM_SNIPPETS_LEARN_MORE": "Tilføj dine egne kodeforslag for at fremskynde din kodning - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Lær mere</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Et snippet med forkortelsen \"{0}\" findes allerede.",
   "CUSTOM_SNIPPETS_SPACE_ERROR": "Mellemrum er ikke tilladt som et gyldigt tegn i forkortelser.",
   "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "Forkortelser må ikke være længere end 30 tegn.",
@@ -77309,7 +77295,9 @@ define("nls/da/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Adgang til AI er blevet deaktiveret af din systemadministrator. Kontakt venligst {0} for hjælp.",
   "AI_UPSELL_DIALOG_TITLE": "Fortsæt med {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Du har opdaget {0}. For at fortsætte har du brug for et AI-abonnement eller kreditter.",
-  "CUSTOM_SNIPPETS_LEARN_MORE": "Tilføj dine egne kodeforslag for at fremskynde din kodning - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Lær mere</a>"
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Vælg et billede fra din enhed",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Vælg fra enhed",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Skift forhåndsvisningstilstand (F8)"
 });
 /*
  * GNU AGPL-3.0 License
@@ -77504,7 +77492,6 @@ define("nls/de/strings", {
   "LIVE_DEV_MORE_OPTIONS_AI": "Mit KI bearbeiten",
   "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "Bildergalerie",
   "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Dieses Bild verwenden",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Bild vom Computer hochladen",
   "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "Download-Ordner für Bilder auswählen",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Bilder suchen…",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "Suchen",
@@ -77513,9 +77500,7 @@ define("nls/de/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Keine Bilder gefunden",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Fehler beim Laden der Bilder",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Schließen",
-  "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "Hochladen",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Element nicht bearbeitbar - von Skript generiert.",
-  "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "Nicht erneut anzeigen",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Ordner zum Speichern des Bildes auswählen",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Wählen Sie, wohin das Bild heruntergeladen werden soll:",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "Ordnerpfad eingeben (z. B. assets/images/)",
@@ -77529,9 +77514,6 @@ define("nls/de/strings", {
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Hervorhebungen beim Hover bearbeiten",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} zeigt nur die Webseite an, {1} verbindet die Webseite mit Ihrem Code - klicken Sie auf Elemente, um zu deren Code zu springen und umgekehrt, {2} bietet Hervorhebungen zusammen mit erweiterter Elementmanipulation",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Live-Vorschau-Modi konfigurieren",
-  "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Pro-Funktion",
-  "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "Dies ist eine Pro-Funktion. Abonnieren Sie Phoenix Pro, um diese Funktion weiterhin nutzen zu können.",
-  "LIVE_PREVIEW_PRO_SUBSCRIBE": "Abonnieren",
   "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "Die Live-Vorschau wurde abgebrochen, weil die Entwickler-Tools des Browsers geöffnet wurden",
   "LIVE_DEV_DETACHED_TARGET_CLOSED": "Die Live-Vorschau wurde abgebrochen, weil die Seite im Browser geschlossen wurde",
   "LIVE_DEV_NAVIGATED_AWAY": "Die Live-Vorschau wurde abgebrochen, weil der Browser eine Seite geladen hat, die nicht Teil des aktuellen Projekts ist",
@@ -78796,6 +78778,7 @@ define("nls/de/strings", {
   "CUSTOM_SNIPPETS_SAVE": "Speichern",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Keine Beschreibung",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Keine Snippets entsprechen \"{0}\"",
+  "CUSTOM_SNIPPETS_LEARN_MORE": "Fügen Sie Ihre eigenen Code-Snippets hinzu, um das Codieren zu beschleunigen - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Mehr erfahren</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Ein Snippet mit der Abkürzung \"{0}\" existiert bereits.",
   "CUSTOM_SNIPPETS_SPACE_ERROR": "Leerzeichen sind als Abkürzungszeichen nicht zulässig.",
   "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "Die Abkürzung darf nicht mehr als 30 Zeichen lang sein.",
@@ -78872,7 +78855,9 @@ define("nls/de/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Der KI-Zugriff wurde von Ihrem Systemadministrator deaktiviert. Bitte kontaktieren Sie {0} für Unterstützung.",
   "AI_UPSELL_DIALOG_TITLE": "Mit {0} fortfahren?",
   "AI_UPSELL_DIALOG_MESSAGE": "Sie haben {0} entdeckt. Um fortzufahren, benötigen Sie ein KI-Abonnement oder Guthaben.",
-  "CUSTOM_SNIPPETS_LEARN_MORE": "Fügen Sie Ihre eigenen Code-Snippets hinzu, um das Codieren zu beschleunigen - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Mehr erfahren</a>"
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Wählen Sie ein Bild von Ihrem Gerät aus",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Vom Gerät auswählen",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Vorschaumodus umschalten (F8)"
 });
 /*
  * GNU AGPL-3.0 License
@@ -79069,7 +79054,6 @@ define("nls/el/strings", {
   "LIVE_DEV_MORE_OPTIONS_AI": "Επεξεργασία με Τεχνητή Νοημοσύνη",
   "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "Συλλογή Εικόνων",
   "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Χρήση αυτής της εικόνας",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Μεταφόρτωση εικόνας από τον υπολογιστή",
   "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "Επιλέξτε φάκελο λήψης εικόνων",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Αναζήτηση εικόνων…",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "Αναζήτηση",
@@ -79078,9 +79062,7 @@ define("nls/el/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Δεν βρέθηκαν εικόνες",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Αποτυχία φόρτωσης εικόνων",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Κλείσιμο",
-  "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "Μεταφόρτωση",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Το στοιχείο δεν είναι επεξεργάσιμο - δημιουργήθηκε από script.",
-  "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "Να μην εμφανιστεί ξανά",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Επιλέξτε φάκελο για αποθήκευση εικόνας",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Επιλέξτε πού θα γίνει η λήψη της εικόνας:",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "Πληκτρολογήστε διαδρομή φακέλου (π.χ., assets/images/)",
@@ -79094,9 +79076,6 @@ define("nls/el/strings", {
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Επεξεργασία Επισημάνσεων με Επιλογή",
   "LIVE_PREVIEW_MODE_PREFERENCE": "Το {0} εμφανίζει μόνο την ιστοσελίδα, το {1} συνδέει την ιστοσελίδα με τον κώδικά σας - κάντε κλικ στα στοιχεία για να μεταβείτε στον κώδικά τους και αντίστροφα, το {2} παρέχει επισήμανση μαζί με προηγμένη χειραγώγηση στοιχείων",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Ρύθμιση Λειτουργιών Ζωντανής Προεπισκόπησης",
-  "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Δυνατότητα Pro",
-  "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "Αυτή είναι μια δυνατότητα Pro. Εγγραφείτε στο Phoenix Pro για να συνεχίσετε να χρησιμοποιείτε αυτήν τη δυνατότητα.",
-  "LIVE_PREVIEW_PRO_SUBSCRIBE": "Εγγραφή",
   "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "Το Live Preview ακυρώθηκε επειδή τα developer tools του browser ανοίχτηκαν",
   "LIVE_DEV_DETACHED_TARGET_CLOSED": "Το Live Preview ακυρώθηκε επειδή η σελίδα στον browser έκλεισε",
   "LIVE_DEV_NAVIGATED_AWAY": "Το Live Preview ακυρώθηκε επειδή ο browser πήγε σε μια σελίδα που δεν είναι μέρος του τρέχων project",
@@ -80361,6 +80340,7 @@ define("nls/el/strings", {
   "CUSTOM_SNIPPETS_SAVE": "Αποθήκευση",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Δεν υπάρχει περιγραφή",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Δεν υπάρχουν αποσπάσματα κώδικα που να ταιριάζουν με \"{0}\"",
+  "CUSTOM_SNIPPETS_LEARN_MORE": "Προσθέστε τα δικά σας αποσπάσματα κώδικα για να επιταχύνετε την κωδικοποίηση - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Μάθετε περισσότερα</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Ένα απόσπασμα κώδικα με συντομογραφία \"{0}\" υπάρχει ήδη.",
   "CUSTOM_SNIPPETS_SPACE_ERROR": "Το κενό δεν γίνεται δεκτό ως έγκυρος χαρακτήρας συντομογραφίας.",
   "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "Η συντομογραφία δεν μπορεί να έχει περισσότερους από 30 χαρακτήρες.",
@@ -80437,7 +80417,9 @@ define("nls/el/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Η πρόσβαση στο AI έχει απενεργοποιηθεί από τον διαχειριστή του συστήματός σας. Παρακαλούμε επικοινωνήστε με {0} για βοήθεια.",
   "AI_UPSELL_DIALOG_TITLE": "Συνέχεια με {0};",
   "AI_UPSELL_DIALOG_MESSAGE": "Ανακαλύψατε το {0}. Για να συνεχίσετε, θα χρειαστείτε μια συνδρομή AI ή πιστώσεις.",
-  "CUSTOM_SNIPPETS_LEARN_MORE": "Προσθέστε τα δικά σας αποσπάσματα κώδικα για να επιταχύνετε την κωδικοποίηση - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Μάθετε περισσότερα</a>"
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Επιλέξτε μια εικόνα από τη συσκευή σας",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Επιλογή από τη συσκευή",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Εναλλαγή λειτουργίας προεπισκόπησης (F8)"
 });
 /*
  * GNU AGPL-3.0 License
@@ -80634,7 +80616,6 @@ define("nls/en-gb/strings", {
   "LIVE_DEV_MORE_OPTIONS_AI": "Edit with AI",
   "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "Image Gallery",
   "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Use this image",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Upload image from computer",
   "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "Choose image download folder",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Search images…",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "Search",
@@ -80643,9 +80624,7 @@ define("nls/en-gb/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "No images found",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Failed to load images",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Close",
-  "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "Upload",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Element not editable - generated by script.",
-  "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "Don't show again",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Select Folder to Save Image",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Choose where to download the image:",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "Type folder path (e.g., assets/images/)",
@@ -80659,9 +80638,6 @@ define("nls/en-gb/strings", {
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Edit Highlights on Hover",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} shows only the webpage, {1} connects the webpage to your code - click on elements to jump to their code and vice versa, {2} provides highlighting along with advanced element manipulation",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Configure Live Preview Modes",
-  "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Pro Feature",
-  "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "This is a Pro feature. Subscribe to Phoenix Pro to continue using this feature.",
-  "LIVE_PREVIEW_PRO_SUBSCRIBE": "Subscribe",
   "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "Live Preview was cancelled because the browser's developer tools were opened",
   "LIVE_DEV_DETACHED_TARGET_CLOSED": "Live Preview was cancelled because the page was closed in the browser",
   "LIVE_DEV_NAVIGATED_AWAY": "Live Preview was cancelled because the browser navigated to a page that isn't part of the current project",
@@ -81926,6 +81902,7 @@ define("nls/en-gb/strings", {
   "CUSTOM_SNIPPETS_SAVE": "Save",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "No description",
   "CUSTOM_SNIPPETS_NO_MATCHES": "No snippets match \"{0}\"",
+  "CUSTOM_SNIPPETS_LEARN_MORE": "Add your own code hints to speed up coding - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Learn More</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "A snippet with abbreviation \"{0}\" already exists.",
   "CUSTOM_SNIPPETS_SPACE_ERROR": "Spaces are not accepted as valid abbreviation characters.",
   "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "Abbreviations cannot be more than 30 characters long.",
@@ -82002,7 +81979,9 @@ define("nls/en-gb/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "AI access has been disabled by your system administrator. Please contact {0} for assistance.",
   "AI_UPSELL_DIALOG_TITLE": "Continue with {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "You’ve discovered {0}. To proceed, you’ll need an AI subscription or credits.",
-  "CUSTOM_SNIPPETS_LEARN_MORE": "Add your own code hints to speed up coding - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Learn More</a>"
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Select an image from your device",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Select from device",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Toggle Preview Mode (F8)"
 });
 /*
  * GNU AGPL-3.0 License
@@ -82172,7 +82151,6 @@ define("nls/es/strings", {
   "LIVE_DEV_MORE_OPTIONS_AI": "Editar con IA",
   "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "Galería de imágenes",
   "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Usar esta imagen",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Subir imagen desde el ordenador",
   "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "Elegir carpeta de descarga de imágenes",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Buscar imágenes…",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "Buscar",
@@ -82181,9 +82159,7 @@ define("nls/es/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "No se encontraron imágenes",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Error al cargar las imágenes",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Cerrar",
-  "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "Subir",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Elemento no editable: generado por un script.",
-  "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "No volver a mostrar",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Seleccionar carpeta para guardar la imagen",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Elige dónde descargar la imagen:",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "Escribe la ruta de la carpeta (p. ej., assets/images/)",
@@ -82197,9 +82173,6 @@ define("nls/es/strings", {
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Resaltar al pasar el cursor en la edición",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} muestra solo la página web, {1} conecta la página web a tu código (haz clic en los elementos para saltar a su código y viceversa), {2} proporciona resaltado junto con manipulación avanzada de elementos",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Configurar modos de Vista Previa en Vivo",
-  "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Función Pro",
-  "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "Esta es una función Pro. Suscríbete a Phoenix Pro para seguir usando esta función.",
-  "LIVE_PREVIEW_PRO_SUBSCRIBE": "Suscribirse",
   "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "Vista previa dinámica se ha detenido porque se han abierto las herramientas de desarrollo",
   "LIVE_DEV_DETACHED_TARGET_CLOSED": "Vista previa dinámica se ha detenido porque se ha cerrado la página en el navegador",
   "LIVE_DEV_NAVIGATED_AWAY": "Vista previa dinámica se ha detenido porque se ha accedido a una página que no es parte del proyecto actual",
@@ -83464,6 +83437,7 @@ define("nls/es/strings", {
   "CUSTOM_SNIPPETS_SAVE": "Guardar",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Sin descripción",
   "CUSTOM_SNIPPETS_NO_MATCHES": "No hay fragmentos que coincidan con \"{0}\"",
+  "CUSTOM_SNIPPETS_LEARN_MORE": "Añade tus propios fragmentos de código para acelerar la programación - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Más información</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Ya existe un fragmento con la abreviatura \"{0}\".",
   "CUSTOM_SNIPPETS_SPACE_ERROR": "El espacio no es un carácter válido para la abreviatura.",
   "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "La abreviatura no puede tener más de 30 caracteres.",
@@ -83540,7 +83514,9 @@ define("nls/es/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "El acceso a la IA ha sido desactivado por el administrador del sistema. Póngase en contacto con {0} para obtener ayuda.",
   "AI_UPSELL_DIALOG_TITLE": "¿Continuar con {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Has descubierto {0}. Para continuar, necesitarás una suscripción de IA o créditos.",
-  "CUSTOM_SNIPPETS_LEARN_MORE": "Añade tus propios fragmentos de código para acelerar la programación - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Más información</a>"
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Seleccionar una imagen de tu dispositivo",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Seleccionar del dispositivo",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Alternar modo de previsualización (F8)"
 });
 /*
  * GNU AGPL-3.0 License
@@ -83738,7 +83714,6 @@ define("nls/fa-ir/strings", {
   "LIVE_DEV_MORE_OPTIONS_AI": "ویرایش با هوش مصنوعی",
   "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "گالری تصاویر",
   "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "از این تصویر استفاده کنید",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "بارگذاری تصویر از رایانه",
   "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "انتخاب پوشه دانلود تصاویر",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "جستجوی تصاویر…",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "جستجو",
@@ -83747,9 +83722,7 @@ define("nls/fa-ir/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "هیچ تصویری یافت نشد",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "بارگذاری تصاویر با خطا مواجه شد",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "بستن",
-  "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "بارگذاری",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "عنصر قابل ویرایش نیست - توسط اسکریپت ایجاد شده است.",
-  "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "دوباره نمایش داده نشود",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "انتخاب پوشه برای ذخیره تصویر",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "محل دانلود تصویر را انتخاب کنید:",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "مسیر پوشه را تایپ کنید (مثلاً assets/images/)",
@@ -83763,9 +83736,6 @@ define("nls/fa-ir/strings", {
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "برجسته‌سازی هنگام شناور بودن روی عناصر",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} فقط صفحه وب را نشان می‌دهد، {1} صفحه وب را به کد شما متصل می‌کند - روی عناصر کلیک کنید تا به کد مربوطه پرش کنید و برعکس، {2} علاوه بر دستکاری پیشرفته عناصر، برجسته‌سازی را نیز فراهم می‌کند.",
   "LIVE_PREVIEW_CONFIGURE_MODES": "پیکربندی حالت‌های پیش‌نمایش زنده",
-  "LIVE_PREVIEW_PRO_FEATURE_TITLE": "قابلیت ویژه حرفه‌ای",
-  "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "این یک قابلیت ویژه حرفه‌ای است. برای ادامه استفاده از این قابلیت در فینیکس پرو مشترک شوید.",
-  "LIVE_PREVIEW_PRO_SUBSCRIBE": "اشتراک",
   "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "پیش نمایش زنده لغو شد زیرا از برخی از ابزارهای توسعه مختص مرورگرتان استفاده کرده اید.",
   "LIVE_DEV_DETACHED_TARGET_CLOSED": "پیش نمایش زنده لغو شد زیرا پنجره یا زبانه مربوط به صفحه در مرورگر بسته شده.",
   "LIVE_DEV_NAVIGATED_AWAY": "پیش نمایش زنده لغو شد زیرا پنجره یا زبانه موجود در مرورگر آدرس دیگری را پیمایش کرده است.",
@@ -85030,6 +85000,7 @@ define("nls/fa-ir/strings", {
   "CUSTOM_SNIPPETS_SAVE": "ذخیره",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "بدون شرح",
   "CUSTOM_SNIPPETS_NO_MATCHES": "هیچ قطعه کدی با \"{0}\" مطابقت ندارد.",
+  "CUSTOM_SNIPPETS_LEARN_MORE": "با افزودن قطعه کدهای سفارشی خود، سرعت کدنویسی را افزایش دهید - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">اطلاعات بیشتر</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "قطعه کدی با مخفف \"{0}\" از قبل وجود دارد.",
   "CUSTOM_SNIPPETS_SPACE_ERROR": "فاصله به عنوان یک کاراکتر معتبر برای مخفف پذیرفته نمی‌شود.",
   "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "مخفف نمی‌تواند بیش از ۳۰ کاراکتر باشد.",
@@ -85106,7 +85077,9 @@ define("nls/fa-ir/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "دسترسی به هوش مصنوعی توسط مدیر سیستم شما غیرفعال شده است. لطفاً برای راهنمایی با {0} تماس بگیرید.",
   "AI_UPSELL_DIALOG_TITLE": "ادامه با {0}؟",
   "AI_UPSELL_DIALOG_MESSAGE": "شما قابلیت {0} را کشف کرده‌اید. برای ادامه، به اشتراک AI یا اعتبار نیاز دارید.",
-  "CUSTOM_SNIPPETS_LEARN_MORE": "با افزودن قطعه کدهای سفارشی خود، سرعت کدنویسی را افزایش دهید - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">اطلاعات بیشتر</a>"
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "انتخاب یک تصویر از دستگاه شما",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "انتخاب از دستگاه",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "تغییر وضعیت حالت پیش‌نمایش (F8)"
 });
 /*
  * GNU AGPL-3.0 License
@@ -85303,7 +85276,6 @@ define("nls/fi/strings", {
   "LIVE_DEV_MORE_OPTIONS_AI": "Muokkaa tekoälyn avulla",
   "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "Kuvagalleria",
   "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Käytä tätä kuvaa",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Lataa kuva tietokoneelta",
   "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "Valitse kuvien latauskansio",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Hae kuvia…",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "Hae",
@@ -85312,9 +85284,7 @@ define("nls/fi/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Kuvia ei löytynyt",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Kuvien lataaminen epäonnistui",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Sulje",
-  "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "Lataa",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Elementtiä ei voi muokata – komentosarjan luoma.",
-  "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "Älä näytä uudelleen",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Valitse kuvan tallennuskansio",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Valitse, mihin kuva ladataan:",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "Kirjoita kansion polku (esim. assets/images/)",
@@ -85328,9 +85298,6 @@ define("nls/fi/strings", {
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Korosta muokattavat kohdat osoitettaessa",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} näyttää vain verkkosivun, {1} yhdistää verkkosivun koodiisi – klikkaa elementtejä siirtyäksesi niiden koodiin ja päinvastoin, {2} tarjoaa korostuksen sekä kehittyneet elementtien muokkaustyökalut",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Määritä reaaliaikaisen esikatselun tilat",
-  "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Pro-ominaisuus",
-  "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "Tämä on Pro-ominaisuus. Tilaa Phoenix Pro jatkaaksesi tämän ominaisuuden käyttöä.",
-  "LIVE_PREVIEW_PRO_SUBSCRIBE": "Tilaa",
   "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "Esikatselu peruutettiin, koska selaimen kehitystyökalut avattiin",
   "LIVE_DEV_DETACHED_TARGET_CLOSED": "Esikatselu peruutettiin, koska sivu suljettiin selaimessa",
   "LIVE_DEV_NAVIGATED_AWAY": "Esikatselu peruutettiin, koska selain siirtyi sivulle, joka ei kuulu nykyiseen projektiin",
@@ -86595,6 +86562,7 @@ define("nls/fi/strings", {
   "CUSTOM_SNIPPETS_SAVE": "Tallenna",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Ei kuvausta",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Hakusanalla \"{0}\" ei löytynyt koodinpätkiä.",
+  "CUSTOM_SNIPPETS_LEARN_MORE": "Lisää omia koodinpätkiäsi nopeuttaaksesi koodaamista - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Lue lisää</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Lyhenteellä \"{0}\" on jo olemassa koodinpätkä.",
   "CUSTOM_SNIPPETS_SPACE_ERROR": "Välilyöntiä ei sallita lyhenteen merkkinä.",
   "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "Lyhenne saa olla enintään 30 merkkiä pitkä.",
@@ -86671,7 +86639,9 @@ define("nls/fi/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Järjestelmänvalvoja on poistanut tekoälyn käytöstä. Ota yhteyttä {0} saadaksesi apua.",
   "AI_UPSELL_DIALOG_TITLE": "Jatketaanko {0}:n kanssa?",
   "AI_UPSELL_DIALOG_MESSAGE": "Olet löytänyt ominaisuuden {0}. Jatkaaksesi tarvitset tekoälytilauksen tai krediittejä.",
-  "CUSTOM_SNIPPETS_LEARN_MORE": "Lisää omia koodinpätkiäsi nopeuttaaksesi koodaamista - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Lue lisää</a>"
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Valitse kuva laitteeltasi",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Valitse laitteelta",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Vaihda esikatselutila (F8)"
 });
 /*
  * GNU AGPL-3.0 License
@@ -86868,7 +86838,6 @@ define("nls/fr/strings", {
   "LIVE_DEV_MORE_OPTIONS_AI": "Modifier avec l'IA",
   "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "Galerie d'images",
   "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Utiliser cette image",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Téléverser une image depuis l'ordinateur",
   "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "Sélectionner le dossier de téléchargement des images",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Rechercher des images…",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "Rechercher",
@@ -86877,9 +86846,7 @@ define("nls/fr/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Aucune image trouvée",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Échec du chargement des images",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Fermer",
-  "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "Téléverser",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Élément non modifiable - généré par un script.",
-  "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "Ne plus afficher",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Sélectionner un dossier pour enregistrer l'image",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Choisissez où télécharger l'image :",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "Saisir le chemin du dossier (ex. : assets/images/)",
@@ -86893,9 +86860,6 @@ define("nls/fr/strings", {
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Surligner au survol",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} affiche uniquement la page web, {1} connecte la page web à votre code - cliquez sur les éléments pour accéder à leur code et vice versa, {2} fournit la mise en évidence ainsi que la manipulation avancée des éléments",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Configurer les modes d'aperçu en direct",
-  "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Fonctionnalité Pro",
-  "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "Ceci est une fonctionnalité Pro. Abonnez-vous à Phoenix Pro pour continuer à utiliser cette fonctionnalité.",
-  "LIVE_PREVIEW_PRO_SUBSCRIBE": "S'abonner",
   "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "Aperçu en direct annulé car les outils de développement du navigateur étaient ouverts",
   "LIVE_DEV_DETACHED_TARGET_CLOSED": "Aperçu en direct annulé car la page a été fermée dans le navigateur",
   "LIVE_DEV_NAVIGATED_AWAY": "Aperçu en direct annulé car le navigateur a accédé à une page qui ne fait pas partie du projet actuel",
@@ -88160,6 +88124,7 @@ define("nls/fr/strings", {
   "CUSTOM_SNIPPETS_SAVE": "Enregistrer",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Aucune description",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Aucun extrait ne correspond à « {0} »",
+  "CUSTOM_SNIPPETS_LEARN_MORE": "Ajoutez vos propres extraits de code pour accélérer le codage - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">En savoir plus</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Un extrait avec l'abréviation « {0} » existe déjà.",
   "CUSTOM_SNIPPETS_SPACE_ERROR": "L'espace n'est pas accepté comme caractère d'abréviation valide.",
   "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "L'abréviation ne peut pas dépasser 30 caractères.",
@@ -88236,7 +88201,9 @@ define("nls/fr/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "L'accès à l'IA a été désactivé par votre administrateur système. Veuillez contacter {0} pour obtenir de l'aide.",
   "AI_UPSELL_DIALOG_TITLE": "Continuer avec {0} ?",
   "AI_UPSELL_DIALOG_MESSAGE": "Vous avez découvert {0}. Pour continuer, vous aurez besoin d'un abonnement IA ou de crédits.",
-  "CUSTOM_SNIPPETS_LEARN_MORE": "Ajoutez vos propres extraits de code pour accélérer le codage - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">En savoir plus</a>"
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Sélectionner une image depuis votre appareil",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Sélectionner depuis l'appareil",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Basculer le mode Aperçu (F8)"
 });
 /*
  * GNU AGPL-3.0 License
@@ -88433,7 +88400,6 @@ define("nls/gl/strings", {
   "LIVE_DEV_MORE_OPTIONS_AI": "Editar con IA",
   "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "Galería de imaxes",
   "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Usar esta imaxe",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Cargar imaxe dende o ordenador",
   "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "Escoller o cartafol de descarga de imaxes",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Buscar imaxes…",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "Buscar",
@@ -88442,9 +88408,7 @@ define("nls/gl/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Non se atoparon imaxes",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Erro ao cargar as imaxes",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Pechar",
-  "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "Cargar",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Elemento non editable: xerado por un script.",
-  "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "Non amosar de novo",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Seleccionar cartafol para gardar a imaxe",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Escolla onde descargar a imaxe:",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "Escriba a ruta do cartafol (p. ex., assets/images/)",
@@ -88458,9 +88422,6 @@ define("nls/gl/strings", {
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Editar resaltados ao pasar o rato",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} mostra só a páxina web, {1} conecta a páxina web ao teu código (fai clic nos elementos para saltar ao seu código e viceversa), {2} proporciona resaltado xunto con manipulación avanzada de elementos",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Configurar os modos de vista previa en directo",
-  "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Función Pro",
-  "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "Esta é unha función Pro. Subscríbete a Phoenix Pro para seguir usando esta función.",
-  "LIVE_PREVIEW_PRO_SUBSCRIBE": "Subscribirse",
   "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "Vista Previa en Vivo detiuse porque abríronse as ferramentas de desenvolvemento",
   "LIVE_DEV_DETACHED_TARGET_CLOSED": "Vista Previa en Vivo detiuse porque cerrouse a páxina no navegador",
   "LIVE_DEV_NAVIGATED_AWAY": "Vista Previa en Vivo detiuse porque accediuse a unha páxina que non é parte do proxecto actual",
@@ -89725,6 +89686,7 @@ define("nls/gl/strings", {
   "CUSTOM_SNIPPETS_SAVE": "Gardar",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Sen descripción",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Non hai fragmentos que coincidan con \"{0}\"",
+  "CUSTOM_SNIPPETS_LEARN_MORE": "Engade os teus propios fragmentos de código para axilizar a programación - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Máis información</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Xa existe un fragmento coa abreviatura \"{0}\".",
   "CUSTOM_SNIPPETS_SPACE_ERROR": "O espazo non se acepta como un carácter de abreviatura válido.",
   "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "A abreviatura non pode ter máis de 30 caracteres.",
@@ -89801,7 +89763,9 @@ define("nls/gl/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "O acceso á IA foi desactivado polo seu administrador do sistema. Póñase en contacto con {0} para obter axuda.",
   "AI_UPSELL_DIALOG_TITLE": "Continuar con {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Descubriches {0}. Para continuar, necesitarás unha subscrición de IA ou créditos.",
-  "CUSTOM_SNIPPETS_LEARN_MORE": "Engade os teus propios fragmentos de código para axilizar a programación - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Máis información</a>"
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Seleccionar unha imaxe do seu dispositivo",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Seleccionar do dispositivo",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Alternar o modo de vista previa (F8)"
 });
 /*
  * GNU AGPL-3.0 License
@@ -89971,7 +89935,6 @@ define("nls/hi/strings", {
   "LIVE_DEV_MORE_OPTIONS_AI": "AI से संपादित करें",
   "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "छवि गैलरी",
   "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "इस इमेज का इस्तेमाल करें",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "कंप्यूटर से इमेज अपलोड करें",
   "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "छवि डाउनलोड फ़ोल्डर चुनें",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "इमेज खोजें…",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "खोजें",
@@ -89980,9 +89943,7 @@ define("nls/hi/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "कोई छवि नहीं मिली",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "छवियाँ लोड करने में विफल",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "बंद करें",
-  "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "अपलोड करें",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "एलिमेंट संपादन योग्य नहीं है - स्क्रिप्ट द्वारा जेनरेट किया गया है।",
-  "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "दोबारा न दिखाएँ",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "छवि सहेजने के लिए फ़ोल्डर चुनें",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "छवि डाउनलोड करने के लिए स्थान चुनें:",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "फ़ोल्डर पाथ टाइप करें (जैसे, assets/images/)",
@@ -89996,9 +89957,6 @@ define("nls/hi/strings", {
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "होवर पर हाइलाइट संपादित करें",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} केवल वेबपृष्ठ दिखाता है, {1} वेबपृष्ठ को आपके कोड से जोड़ता है - उनके कोड पर जाने के लिए तत्वों पर क्लिक करें और इसके विपरीत, {2} उन्नत तत्व हेरफेर के साथ हाइलाइटिंग प्रदान करता है",
   "LIVE_PREVIEW_CONFIGURE_MODES": "लाइव पूर्वावलोकन मोड कॉन्फ़िगर करें",
-  "LIVE_PREVIEW_PRO_FEATURE_TITLE": "प्रो सुविधा",
-  "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "यह एक प्रो सुविधा है। इस सुविधा का उपयोग जारी रखने के लिए फीनिक्स प्रो की सदस्यता लें।",
-  "LIVE_PREVIEW_PRO_SUBSCRIBE": "सदस्यता लें",
   "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "लाइव प्रीव्यू रद्द कर दिया गया क्योंकि ब्राउज़र के डेवलपर टूल खोले गए थे",
   "LIVE_DEV_DETACHED_TARGET_CLOSED": "लाइव प्रीव्यू रद्द कर दिया गया क्योंकि ब्राउज़र में पृष्ठ बंद कर दिया गया था",
   "LIVE_DEV_NAVIGATED_AWAY": "लाइव प्रीव्यू रद्द कर दिया गया क्योंकि ब्राउज़र ने ऐसे पृष्ठ पर नेविगेट किया जो वर्तमान प्रोजेक्ट का हिस्सा नहीं है",
@@ -91263,6 +91221,7 @@ define("nls/hi/strings", {
   "CUSTOM_SNIPPETS_SAVE": "सहेजें",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "कोई विवरण नहीं",
   "CUSTOM_SNIPPETS_NO_MATCHES": "\"{0}\" से मेल खाने वाला कोई स्निपेट नहीं है",
+  "CUSTOM_SNIPPETS_LEARN_MORE": "कोडिंग की गति बढ़ाने के लिए अपने खुद के कोड हिंट्स जोड़ें - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">और जानें</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "\"{0}\" संक्षिप्त नाम वाला एक स्निपेट पहले से मौजूद है।",
   "CUSTOM_SNIPPETS_SPACE_ERROR": "मान्य संक्षिप्त नाम वर्ण के रूप में रिक्त स्थान स्वीकार्य नहीं है।",
   "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "संक्षिप्त नाम 30 वर्णों से अधिक नहीं हो सकता।",
@@ -91339,7 +91298,9 @@ define("nls/hi/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "आपके सिस्टम एडमिनिस्ट्रेटर द्वारा AI एक्सेस अक्षम कर दिया गया है। सहायता के लिए कृपया {0} से संपर्क करें।",
   "AI_UPSELL_DIALOG_TITLE": "{0} के साथ जारी रखें?",
   "AI_UPSELL_DIALOG_MESSAGE": "आपने {0} खोज लिया है। आगे बढ़ने के लिए, आपको AI सब्सक्रिप्शन या क्रेडिट्स की ज़रूरत होगी।",
-  "CUSTOM_SNIPPETS_LEARN_MORE": "कोडिंग की गति बढ़ाने के लिए अपने खुद के कोड हिंट्स जोड़ें - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">और जानें</a>"
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "अपने डिवाइस से एक छवि चुनें",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "डिवाइस से चुनें",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "पूर्वावलोकन मोड टॉगल करें (F8)"
 });
 /*
  * GNU AGPL-3.0 License
@@ -91509,7 +91470,6 @@ define("nls/hr/strings", {
   "LIVE_DEV_MORE_OPTIONS_AI": "Uredi pomoću umjetne inteligencije",
   "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "Galerija slika",
   "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Koristi ovu sliku",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Učitaj sliku s računala",
   "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "Odaberite mapu za preuzimanje slika",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Pretraži slike…",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "Traži",
@@ -91518,9 +91478,7 @@ define("nls/hr/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Nema pronađenih slika",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Učitavanje slika nije uspjelo",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Zatvori",
-  "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "Učitaj",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Element nije moguće uređivati - generiran je skriptom.",
-  "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "Ne prikazuj ponovno",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Odaberite mapu za spremanje slike",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Odaberite gdje želite preuzeti sliku:",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "Upišite putanju mape (npr. assets/images/)",
@@ -91534,9 +91492,6 @@ define("nls/hr/strings", {
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Istakni kod pri lebdenju",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} prikazuje samo web stranicu, {1} povezuje web stranicu s vašim kodom - kliknite na elemente da biste skočili na njihov kod i obrnuto, {2} omogućuje isticanje zajedno s naprednom manipulacijom elementima",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Konfiguriraj načine rada pregleda uživo",
-  "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Pro značajka",
-  "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "Ovo je Pro značajka. Pretplatite se na Phoenix Pro da biste nastavili koristiti ovu značajku.",
-  "LIVE_PREVIEW_PRO_SUBSCRIBE": "Pretplati se",
   "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "Prikaz uživo je otkazan jer su u pregledniku bili otvoreni razvojni alati",
   "LIVE_DEV_DETACHED_TARGET_CLOSED": "Prikaz uživo je otkazan jer je stranica zatvorena u pregledniku",
   "LIVE_DEV_NAVIGATED_AWAY": "Prikaz uživo je otkazan jer je preglednik otišao na stranicu koja nije dio trenutnog projekta.",
@@ -92801,6 +92756,7 @@ define("nls/hr/strings", {
   "CUSTOM_SNIPPETS_SAVE": "Sačuvaj",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Nema opisa",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Nema isječaka koji odgovaraju \"{0}\"",
+  "CUSTOM_SNIPPETS_LEARN_MORE": "Dodajte svoje isječke koda za brže kodiranje - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Saznajte više</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Isječak s kraticom \"{0}\" već postoji.",
   "CUSTOM_SNIPPETS_SPACE_ERROR": "Razmak nije dopušten kao znak kratice.",
   "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "Kratica ne može biti dulja od 30 znakova.",
@@ -92877,7 +92833,9 @@ define("nls/hr/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Pristup AI-ju onemogućio je vaš administrator sustava. Molimo kontaktirajte {0} za pomoć.",
   "AI_UPSELL_DIALOG_TITLE": "Nastaviti s {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Otkrili ste {0}. Da biste nastavili, potrebna vam je AI pretplata ili krediti.",
-  "CUSTOM_SNIPPETS_LEARN_MORE": "Dodajte svoje isječke koda za brže kodiranje - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Saznajte više</a>"
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Odaberite sliku s vašeg uređaja",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Odaberite s uređaja",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Uključi/isključi način pretpregleda (F8)"
 });
 /*
  * GNU AGPL-3.0 License
@@ -93074,7 +93032,6 @@ define("nls/hu/strings", {
   "LIVE_DEV_MORE_OPTIONS_AI": "Szerkesztés MI-vel",
   "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "Képgaléria",
   "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Kép használata",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Kép feltöltése a számítógépről",
   "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "Kép letöltési mappa kiválasztása",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Képek keresése…",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "Keresés",
@@ -93083,9 +93040,7 @@ define("nls/hu/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Nem található kép",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "A képek betöltése sikertelen",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Bezárás",
-  "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "Feltöltés",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Az elem nem szerkeszthető – szkript által generált.",
-  "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "Ne jelenjen meg újra",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Mappa kiválasztása a kép mentéséhez",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Válassza ki, hova szeretné letölteni a képet:",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "Adja meg a mappa elérési útját (pl. assets/images/)",
@@ -93099,9 +93054,6 @@ define("nls/hu/strings", {
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Kiemelések szerkesztése az egérmutató fölé húzásakor",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} csak a weboldalt mutatja, {1} összeköti a weboldalt a kóddal - kattintson az elemekre, hogy a kódjukhoz ugorjon, és fordítva, {2} kiemelést biztosít a fejlett elemkezelés mellett",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Élő előnézeti módok konfigurálása",
-  "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Pro funkció",
-  "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "Ez egy Pro funkció. Iratkozzon fel a Phoenix Próra a funkció további használatához.",
-  "LIVE_PREVIEW_PRO_SUBSCRIBE": "Feliratkozás",
   "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "Az Élő Előnézet lecsatlakozott mert a bongésző fejlesztő eszközei meg lettek nyitva",
   "LIVE_DEV_DETACHED_TARGET_CLOSED": "Az Élő Előnézet lecsatlakozott mert az oldal be lett zárva a böngészőben",
   "LIVE_DEV_NAVIGATED_AWAY": "Az Élő Előnézet lecsatlakozott mert a böngésző olyan oldalra lépett amely nem része a jelenlegi projektnek",
@@ -94366,6 +94318,7 @@ define("nls/hu/strings", {
   "CUSTOM_SNIPPETS_SAVE": "Mentés",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Nincs leírás",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Nincsenek „{0}” kifejezésre illeszkedő kódrészletek.",
+  "CUSTOM_SNIPPETS_LEARN_MORE": "Adj hozzá saját kódrészleteket a kódolás felgyorsításához - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Bővebben</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Már létezik egy „{0}” rövidítésű kódrészlet.",
   "CUSTOM_SNIPPETS_SPACE_ERROR": "A szóköz nem megengedett karakter a rövidítésben.",
   "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "A rövidítés nem lehet hosszabb 30 karakternél.",
@@ -94442,7 +94395,9 @@ define("nls/hu/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "A MI-hozzáférést a rendszergazda letiltotta. Segítségért forduljon a(z) {0} elérhetőséghez.",
   "AI_UPSELL_DIALOG_TITLE": "Folytatja a(z) {0} használatával?",
   "AI_UPSELL_DIALOG_MESSAGE": "Felfedezte a(z) {0} szolgáltatást. A folytatáshoz MI-előfizetésre vagy kreditekre lesz szüksége.",
-  "CUSTOM_SNIPPETS_LEARN_MORE": "Adj hozzá saját kódrészleteket a kódolás felgyorsításához - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Bővebben</a>"
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Kép kiválasztása az eszközről",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Kiválasztás eszközről",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Előnézeti mód be-/kikapcsolása (F8)"
 });
 /*
  * GNU AGPL-3.0 License
@@ -94612,7 +94567,6 @@ define("nls/id/strings", {
   "LIVE_DEV_MORE_OPTIONS_AI": "Edit dengan AI",
   "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "Galeri Gambar",
   "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Gunakan gambar ini",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Unggah gambar dari komputer",
   "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "Pilih folder unduhan gambar",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Cari gambar…",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "Cari",
@@ -94621,9 +94575,7 @@ define("nls/id/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Tidak ada gambar yang ditemukan",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Gagal memuat gambar",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Tutup",
-  "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "Unggah",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Elemen tidak dapat diedit - dihasilkan oleh skrip.",
-  "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "Jangan tampilkan lagi",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Pilih Folder untuk Menyimpan Gambar",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Pilih lokasi untuk mengunduh gambar:",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "Ketik jalur folder (mis., assets/images/)",
@@ -94637,9 +94589,6 @@ define("nls/id/strings", {
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Edit Sorotan saat Melayang",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} hanya menampilkan halaman web, {1} menghubungkan halaman web ke kode Anda - klik elemen untuk melompat ke kodenya dan sebaliknya, {2} menyediakan penyorootan beserta manipulasi elemen lanjutan",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Konfigurasi Mode Pratinjau Langsung",
-  "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Fitur Pro",
-  "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "Ini adalah fitur Pro. Berlangganan Phoenix Pro untuk terus menggunakan fitur ini.",
-  "LIVE_PREVIEW_PRO_SUBSCRIBE": "Berlangganan",
   "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "Tinjauan Langsung dibatalkan karena Alat Pengembang pada peramban sedang dibuka",
   "LIVE_DEV_DETACHED_TARGET_CLOSED": "Tinjauan Langsung dibatalkan karena halaman telah ditutup pada peramban",
   "LIVE_DEV_NAVIGATED_AWAY": "Tinjauan Langsung dibatalkan karena peramban berpindah ke halaman yang bukan dari proyek",
@@ -95904,6 +95853,7 @@ define("nls/id/strings", {
   "CUSTOM_SNIPPETS_SAVE": "Simpan",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Tanpa keterangan",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Tidak ada cuplikan yang cocok dengan \"{0}\"",
+  "CUSTOM_SNIPPETS_LEARN_MORE": "Tambahkan petunjuk kode Anda sendiri untuk mempercepat pengodean - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Pelajari Lebih Lanjut</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Cuplikan dengan singkatan \"{0}\" sudah ada.",
   "CUSTOM_SNIPPETS_SPACE_ERROR": "Spasi tidak diterima sebagai karakter singkatan yang valid.",
   "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "Singkatan tidak boleh lebih dari 30 karakter.",
@@ -95980,7 +95930,9 @@ define("nls/id/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Akses AI telah dinonaktifkan oleh administrator sistem Anda. Silakan hubungi {0} untuk bantuan.",
   "AI_UPSELL_DIALOG_TITLE": "Lanjutkan dengan {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Anda telah menemukan {0}. Untuk melanjutkan, Anda memerlukan langganan AI atau kredit.",
-  "CUSTOM_SNIPPETS_LEARN_MORE": "Tambahkan petunjuk kode Anda sendiri untuk mempercepat pengodean - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Pelajari Lebih Lanjut</a>"
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Pilih gambar dari perangkat Anda",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Pilih dari perangkat",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Alihkan Mode Pratinjau (F8)"
 });
 /*
  * GNU AGPL-3.0 License
@@ -96176,7 +96128,6 @@ define("nls/it/strings", {
   "LIVE_DEV_MORE_OPTIONS_AI": "Modifica con IA",
   "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "Galleria immagini",
   "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Usa questa immagine",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Carica immagine dal computer",
   "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "Scegli la cartella per il download delle immagini",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Cerca immagini…",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "Cerca",
@@ -96185,9 +96136,7 @@ define("nls/it/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Nessuna immagine trovata",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Caricamento delle immagini non riuscito",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Chiudi",
-  "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "Carica",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Elemento non modificabile - generato da script.",
-  "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "Non mostrare più",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Seleziona la cartella per salvare l'immagine",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Scegli dove scaricare l'immagine:",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "Inserisci il percorso della cartella (es. assets/images/)",
@@ -96201,9 +96150,6 @@ define("nls/it/strings", {
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Evidenzia al passaggio del mouse",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} mostra solo la pagina web, {1} connette la pagina web al tuo codice - clicca sugli elementi per passare al loro codice e viceversa, {2} fornisce l'evidenziazione insieme alla manipolazione avanzata degli elementi",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Configura le modalità di Anteprima Live",
-  "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Funzionalità Pro",
-  "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "Questa è una funzionalità Pro. Abbonati a Phoenix Pro per continuare a utilizzare questa funzionalità.",
-  "LIVE_PREVIEW_PRO_SUBSCRIBE": "Abbonati",
   "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "L’Anteprima Live è stata cancellata perché uno strumento di sviluppo è stato aperto nel browser",
   "LIVE_DEV_DETACHED_TARGET_CLOSED": "L’Anteprima Live è stata cancellata perché è stato chiuso il browser",
   "LIVE_DEV_NAVIGATED_AWAY": "L’Anteprima Live è stata cancellata perché il browser ha caricato una pagina che non fa parte del progetto corrente",
@@ -97468,6 +97414,7 @@ define("nls/it/strings", {
   "CUSTOM_SNIPPETS_SAVE": "Salva",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Nessuna descrizione",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Nessuno snippet corrisponde a \"{0}\"",
+  "CUSTOM_SNIPPETS_LEARN_MORE": "Aggiungi i tuoi frammenti di codice personalizzati per velocizzare la scrittura del codice - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Scopri di più</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Esiste già uno snippet con l'abbreviazione \"{0}\".",
   "CUSTOM_SNIPPETS_SPACE_ERROR": "Lo spazio non è un carattere valido per l'abbreviazione.",
   "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "L'abbreviazione non può superare i 30 caratteri.",
@@ -97544,7 +97491,9 @@ define("nls/it/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "L'accesso all'AI è stato disattivato dal tuo amministratore di sistema. Contatta {0} per assistenza.",
   "AI_UPSELL_DIALOG_TITLE": "Continuare con {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Hai scoperto {0}. Per procedere, avrai bisogno di un abbonamento AI o di crediti.",
-  "CUSTOM_SNIPPETS_LEARN_MORE": "Aggiungi i tuoi frammenti di codice personalizzati per velocizzare la scrittura del codice - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Scopri di più</a>"
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Seleziona un'immagine dal tuo dispositivo",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Seleziona da dispositivo",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Attiva/disattiva anteprima (F8)"
 });
 /*
  * GNU AGPL-3.0 License
@@ -97741,7 +97690,6 @@ define("nls/ja/strings", {
   "LIVE_DEV_MORE_OPTIONS_AI": "AIで編集",
   "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "画像ギャラリー",
   "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "この画像を使用",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "パソコンから画像をアップロード",
   "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "画像ダウンロードフォルダーを選択",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "画像を検索…",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "検索",
@@ -97750,9 +97698,7 @@ define("nls/ja/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "画像が見つかりません",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "画像の読み込みに失敗しました",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "閉じる",
-  "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "アップロード",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "スクリプトにより生成された要素は編集できません。",
-  "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "今後表示しない",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "画像を保存するフォルダーを選択",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "画像のダウンロード先を選択してください：",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "フォルダーパスを入力（例：assets/images/）",
@@ -97766,9 +97712,6 @@ define("nls/ja/strings", {
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "ホバー時にハイライトを表示",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0}はウェブページのみを表示し、{1}はウェブページとコードを接続します - 要素をクリックしてコードにジャンプしたり、その逆も可能です。{2}は高度な要素操作と共にハイライトを提供します。",
   "LIVE_PREVIEW_CONFIGURE_MODES": "ライブプレビューモードの設定",
-  "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Pro 機能",
-  "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "これはPro機能です。この機能を使い続けるには、Phoenix Proに登録してください。",
-  "LIVE_PREVIEW_PRO_SUBSCRIBE": "登録",
   "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "ブラウザーの開発ツールが開いているため、ライブプレビューはキャンセルされました",
   "LIVE_DEV_DETACHED_TARGET_CLOSED": "ブラウザーでページが閉じられたため、ライブプレビューはキャンセルされました",
   "LIVE_DEV_NAVIGATED_AWAY": "ブラウザーで現在のプロジェクトに含まれないページに移動したため、ライブプレビューはキャンセルされました",
@@ -99033,6 +98976,7 @@ define("nls/ja/strings", {
   "CUSTOM_SNIPPETS_SAVE": "保存",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "説明なし",
   "CUSTOM_SNIPPETS_NO_MATCHES": "「{0}」に一致するスニペットはありません",
+  "CUSTOM_SNIPPETS_LEARN_MORE": "独自のコードヒントを追加してコーディングをスピードアップ - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">詳細</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "略語「{0}」のスニペットは既に存在します。",
   "CUSTOM_SNIPPETS_SPACE_ERROR": "略語にスペースは使用できません。",
   "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "略語は30文字以内にしてください。",
@@ -99109,7 +99053,9 @@ define("nls/ja/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "AIアクセスはシステム管理者によって無効にされています。サポートが必要な場合は、{0}にお問い合わせください。",
   "AI_UPSELL_DIALOG_TITLE": "{0}を続行しますか？",
   "AI_UPSELL_DIALOG_MESSAGE": "「{0}」をご利用になるには、AIサブスクリプションまたはクレジットが必要です。",
-  "CUSTOM_SNIPPETS_LEARN_MORE": "独自のコードヒントを追加してコーディングをスピードアップ - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">詳細</a>"
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "お使いのデバイスから画像を選択",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "デバイスから選択",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "プレビューモードの切り替え (F8)"
 });
 /*
  * GNU AGPL-3.0 License
@@ -99306,7 +99252,6 @@ define("nls/ko/strings", {
   "LIVE_DEV_MORE_OPTIONS_AI": "AI로 편집",
   "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "이미지 갤러리",
   "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "이 이미지 사용",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "컴퓨터에서 이미지 업로드",
   "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "이미지 다운로드 폴더 선택",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "이미지 검색…",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "검색",
@@ -99315,9 +99260,7 @@ define("nls/ko/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "발견된 이미지가 없습니다",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "이미지 로드에 실패했습니다",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "닫기",
-  "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "업로드",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "편집할 수 없는 요소 - 스크립트로 생성됨.",
-  "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "다시 보지 않기",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "이미지를 저장할 폴더 선택",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "이미지를 다운로드할 위치를 선택하세요:",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "폴더 경로 입력 (예: assets/images/)",
@@ -99331,9 +99274,6 @@ define("nls/ko/strings", {
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "마우스 오버 시 강조 표시 편집",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0}은 웹페이지만 표시하고, {1}은 웹페이지를 코드에 연결합니다. 요소를 클릭하면 코드로 이동하고 그 반대도 가능합니다. {2}는 고급 요소 조작과 함께 강조 표시 기능을 제공합니다.",
   "LIVE_PREVIEW_CONFIGURE_MODES": "라이브 미리보기 모드 설정",
-  "LIVE_PREVIEW_PRO_FEATURE_TITLE": "프로 기능",
-  "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "프로 기능입니다. 이 기능을 계속 사용하려면 Phoenix Pro를 구독하세요.",
-  "LIVE_PREVIEW_PRO_SUBSCRIBE": "구독",
   "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "브라우저의 개발 도구가 열려 있기 때문에 실시간 미리보기가 취소되었습니다뷰.",
   "LIVE_DEV_DETACHED_TARGET_CLOSED": "브라우저에서 페이지가 닫혀 있으므로 실시간 미리보기가 취소되었습니다.",
   "LIVE_DEV_NAVIGATED_AWAY": "브라우저에서 현재 프로젝트에 포함되지 않은 페이지로 이동했기 때문에 실시간 미리보기가 취소되었습니다.",
@@ -100598,6 +100538,7 @@ define("nls/ko/strings", {
   "CUSTOM_SNIPPETS_SAVE": "저장",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "설명 없음",
   "CUSTOM_SNIPPETS_NO_MATCHES": "\"{0}\"(와)과 일치하는 스니펫이 없습니다.",
+  "CUSTOM_SNIPPETS_LEARN_MORE": "나만의 코드 힌트를 추가하여 코딩 속도를 높이세요 - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">자세히 알아보기</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "\"{0}\" 약어를 가진 스니펫이 이미 존재합니다.",
   "CUSTOM_SNIPPETS_SPACE_ERROR": "공백은 유효한 약어 문자로 사용할 수 없습니다.",
   "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "약어는 30자를 초과할 수 없습니다.",
@@ -100674,7 +100615,9 @@ define("nls/ko/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "시스템 관리자에 의해 AI 액세스가 비활성화되었습니다. 도움이 필요하시면 {0}에게 문의하세요.",
   "AI_UPSELL_DIALOG_TITLE": "{0}(으)로 계속하시겠습니까?",
   "AI_UPSELL_DIALOG_MESSAGE": "{0} 기능을 발견하셨습니다. 계속 진행하려면 AI 구독 또는 크레딧이 필요합니다.",
-  "CUSTOM_SNIPPETS_LEARN_MORE": "나만의 코드 힌트를 추가하여 코딩 속도를 높이세요 - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">자세히 알아보기</a>"
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "기기에서 이미지를 선택하세요",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "기기에서 선택",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "미리보기 모드 전환 (F8)"
 });
 /*
  * GNU AGPL-3.0 License
@@ -100871,7 +100814,6 @@ define("nls/lv/strings", {
   "LIVE_DEV_MORE_OPTIONS_AI": "Rediģēt ar AI",
   "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "Attēlu galerija",
   "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Izmantot šo attēlu",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Augšupielādēt attēlu no datora",
   "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "Izvēlieties attēlu lejupielādes mapi",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Meklēt attēlus…",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "Meklēt",
@@ -100880,9 +100822,7 @@ define("nls/lv/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Nav atrasti attēli",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Neizdevās ielādēt attēlus",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Aizvērt",
-  "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "Augšupielādēt",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Elements nav rediģējams - to ģenerējis skripts.",
-  "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "Vairs nerādīt",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Izvēlieties mapi attēla saglabāšanai",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Izvēlieties, kur lejupielādēt attēlu:",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "Ierakstiet mapes ceļu (piem., assets/images/)",
@@ -100896,9 +100836,6 @@ define("nls/lv/strings", {
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Iezīmēt rediģēšanu, novietojot kursoru",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} rāda tikai tīmekļa lapu, {1} savieno tīmekļa lapu ar jūsu kodu - noklikšķiniet uz elementiem, lai pārietu uz to kodu un otrādi, {2} nodrošina iezīmēšanu kopā ar uzlabotu elementu manipulāciju",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Konfigurēt tiešā priekšskatījuma režīmus",
-  "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Pro līdzekļa funkcija",
-  "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "Šī ir Pro līdzekļa funkcija. Abonējiet Phoenix Pro, lai turpinātu izmantot šo funkciju.",
-  "LIVE_PREVIEW_PRO_SUBSCRIBE": "Abonēt",
   "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "Tiešais priekšskatījums tika atcelts, jo bija atvērti pārlūka izstrādātāja rīki",
   "LIVE_DEV_DETACHED_TARGET_CLOSED": "Tiešais priekšskatījums tika atcelts, jo lapa tika aizvērta pārlūkā",
   "LIVE_DEV_NAVIGATED_AWAY": "Tiešais priekšskatījums tika atcelts, jo pārlūks pārvietojās uz lapu, kas nav daļa no šī projekta",
@@ -102163,6 +102100,7 @@ define("nls/lv/strings", {
   "CUSTOM_SNIPPETS_SAVE": "Saglabāt",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Nav apraksta",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Nav fragmentu, kas atbilst \"{0}\"",
+  "CUSTOM_SNIPPETS_LEARN_MORE": "Pievienojiet savus koda ieteikumus, lai paātrinātu kodēšanu - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Uzziniet vairāk</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Fragments ar abreviatūru \"{0}\" jau pastāv.",
   "CUSTOM_SNIPPETS_SPACE_ERROR": "Atstarpe nav pieņemama kā derīga abreviatūras rakstzīme.",
   "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "Abreviatūra nedrīkst būt garāka par 30 rakstzīmēm.",
@@ -102239,7 +102177,9 @@ define("nls/lv/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "MI piekļuvi ir atspējojis jūsu sistēmas administrators. Lūdzu, sazinieties ar {0}, lai saņemtu palīdzību.",
   "AI_UPSELL_DIALOG_TITLE": "Turpināt ar {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Jūs atklājāt {0}. Lai turpinātu, jums būs nepieciešams MI abonements vai kredīti.",
-  "CUSTOM_SNIPPETS_LEARN_MORE": "Pievienojiet savus koda ieteikumus, lai paātrinātu kodēšanu - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Uzziniet vairāk</a>"
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Atlasiet attēlu no savas ierīces",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Atlasīt no ierīces",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Pārslēgt priekšskatījuma režīmu (F8)"
 });
 /*
  * GNU AGPL-3.0 License
@@ -102409,7 +102349,6 @@ define("nls/ml/strings", {
   "LIVE_DEV_MORE_OPTIONS_AI": "AI ഉപയോഗിച്ച് എഡിറ്റ് ചെയ്യുക",
   "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "ചിത്ര ഗാലറി",
   "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "ഈ ചിത്രം ഉപയോഗിക്കുക",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "കമ്പ്യൂട്ടറിൽ നിന്ന് ചിത്രം അപ്‌ലോഡ് ചെയ്യുക",
   "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "ചിത്രം ഡൗൺലോഡ് ചെയ്യാനുള്ള ഫോൾഡർ തിരഞ്ഞെടുക്കുക",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "ചിത്രങ്ങൾ തിരയുക…",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "തിരയുക",
@@ -102418,9 +102357,7 @@ define("nls/ml/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "ചിത്രങ്ങളൊന്നും കണ്ടെത്തിയില്ല",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "ചിത്രങ്ങൾ ലോഡ് ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "അടയ്ക്കുക",
-  "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "അപ്‌ലോഡ് ചെയ്യുക",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "ഘടകം എഡിറ്റ് ചെയ്യാൻ സാധിക്കില്ല - സ്ക്രിപ്റ്റ് ഉപയോഗിച്ച് നിർമ്മിച്ചത്.",
-  "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "ഇനി കാണിക്കരുത്",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "ചിത്രം സേവ് ചെയ്യാനുള്ള ഫോൾഡർ തിരഞ്ഞെടുക്കുക",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "ചിത്രം എവിടെയാണ് ഡൗൺലോഡ് ചെയ്യേണ്ടതെന്ന് തിരഞ്ഞെടുക്കുക:",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "ഫോൾഡർ പാത്ത് ടൈപ്പ് ചെയ്യുക (ഉദാ: assets/images/)",
@@ -102434,9 +102371,6 @@ define("nls/ml/strings", {
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "ഹോവറിൽ ഹൈലൈറ്റുകൾ എഡിറ്റ് ചെയ്യുക",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} വെബ്‌പേജ് മാത്രം കാണിക്കുന്നു, {1} വെബ്‌പേജിനെ നിങ്ങളുടെ കോഡുമായി ബന്ധിപ്പിക്കുന്നു - എലമെന്റുകളിൽ ക്ലിക്ക് ചെയ്‌ത് അവയുടെ കോഡിലേക്ക് പോകുക, തിരിച്ചും, {2} വിപുലമായ എലമെന്റ് കൈകാര്യം ചെയ്യലിനൊപ്പം ഹൈലൈറ്റിംഗും നൽകുന്നു",
   "LIVE_PREVIEW_CONFIGURE_MODES": "ലൈവ് പ്രിവ്യൂ മോഡുകൾ കോൺഫിഗർ ചെയ്യുക",
-  "LIVE_PREVIEW_PRO_FEATURE_TITLE": "പ്രോ ഫീച്ചർ",
-  "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "ഇതൊരു പ്രോ ഫീച്ചറാണ്. ഈ ഫീച്ചർ ഉപയോഗിക്കുന്നത് തുടരാൻ ഫീനിക്സ് പ്രോയിൽ സബ്‌സ്‌ക്രൈബുചെയ്യുക.",
-  "LIVE_PREVIEW_PRO_SUBSCRIBE": "സബ്‌സ്‌ക്രൈബുചെയ്യുക",
   "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "ബ്രൗസറിന്റെ ഡെവലപ്പർ ടൂളുകൾ തുറന്നതിനാൽ ലൈവ് പ്രിവ്യൂ റദ്ദാക്കി",
   "LIVE_DEV_DETACHED_TARGET_CLOSED": "ബ്രൗസറിൽ പേജ് അടച്ചതിനാൽ ലൈവ് പ്രിവ്യൂ റദ്ദാക്കി",
   "LIVE_DEV_NAVIGATED_AWAY": "ബ്രൗസർ നിലവിലെ പ്രോജക്റ്റിന്റെ ഭാഗമല്ലാത്ത ഒരു പേജിലേക്ക് നാവിഗേറ്റ് ചെയ്തതിനാൽ ലൈവ് പ്രിവ്യൂ റദ്ദാക്കി",
@@ -103701,6 +103635,7 @@ define("nls/ml/strings", {
   "CUSTOM_SNIPPETS_SAVE": "സേവ് ചെയ്യുക",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "വിവരണമില്ല",
   "CUSTOM_SNIPPETS_NO_MATCHES": "\"{0}\" എന്നതിനോട് യോജിക്കുന്ന സ്നിപ്പെറ്റുകളൊന്നുമില്ല",
+  "CUSTOM_SNIPPETS_LEARN_MORE": "കോഡിംഗ് വേഗത്തിലാക്കാൻ നിങ്ങളുടെ സ്വന്തം കോഡ് സൂചനകൾ ചേർക്കുക - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">കൂടുതലറിയുക</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "\"{0}\" എന്ന ചുരുക്കപ്പേരുള്ള ഒരു സ്നിപ്പെറ്റ് ഇതിനകം നിലവിലുണ്ട്.",
   "CUSTOM_SNIPPETS_SPACE_ERROR": "ശരിയായ ചുരുക്കപ്പേര് പ്രതീകമായി സ്പെയ്സ് അനുവദനീയമല്ല.",
   "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "ചുരുക്കപ്പേരിന് 30 പ്രതീകങ്ങളിൽ കൂടുതലാകാൻ പാടില്ല.",
@@ -103777,7 +103712,9 @@ define("nls/ml/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "നിങ്ങളുടെ സിസ്റ്റം അഡ്മിനിസ്ട്രേറ്റർ എഐ ആക്‌സസ് പ്രവർത്തനരഹിതമാക്കിയിരിക്കുന്നു. സഹായത്തിനായി ദയവായി {0}-മായി ബന്ധപ്പെടുക.",
   "AI_UPSELL_DIALOG_TITLE": "{0} ഉപയോഗിച്ച് തുടരണോ?",
   "AI_UPSELL_DIALOG_MESSAGE": "നിങ്ങൾ {0} കണ്ടെത്തിയിരിക്കുന്നു. തുടരാൻ, നിങ്ങൾക്ക് ഒരു എഐ സബ്സ്ക്രിപ്ഷനോ ക്രെഡിറ്റുകളോ ആവശ്യമാണ്.",
-  "CUSTOM_SNIPPETS_LEARN_MORE": "കോഡിംഗ് വേഗത്തിലാക്കാൻ നിങ്ങളുടെ സ്വന്തം കോഡ് സൂചനകൾ ചേർക്കുക - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">കൂടുതലറിയുക</a>"
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "നിങ്ങളുടെ ഉപകരണത്തിൽ നിന്ന് ഒരു ചിത്രം തിരഞ്ഞെടുക്കുക",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "ഉപകരണത്തിൽ നിന്ന് തിരഞ്ഞെടുക്കുക",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "പ്രിവ്യൂ മോഡ് ടോഗിൾ ചെയ്യുക (F8)"
 });
 /*
  * GNU AGPL-3.0 License
@@ -103947,7 +103884,6 @@ define("nls/nb/strings", {
   "LIVE_DEV_MORE_OPTIONS_AI": "Rediger med AI",
   "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "Bildegalleri",
   "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Bruk dette bildet",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Last opp bilde fra datamaskin",
   "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "Velg nedlastingsmappe for bilder",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Søk etter bilder …",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "Søk",
@@ -103956,9 +103892,7 @@ define("nls/nb/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Ingen bilder funnet",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Kunne ikke laste inn bilder",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Lukk",
-  "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "Last opp",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Elementet kan ikke redigeres – generert av skript.",
-  "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "Ikke vis igjen",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Velg mappe for å lagre bildet",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Velg hvor bildet skal lastes ned:",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "Skriv inn mappesti (f.eks. assets/images/)",
@@ -103972,9 +103906,6 @@ define("nls/nb/strings", {
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Rediger uthevinger ved hovering",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} viser bare nettsiden, {1} kobler nettsiden til koden din - klikk på elementer for å hoppe til koden deres og omvendt, {2} gir utheving sammen med avansert elementmanipulering",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Konfigurer forhåndsvisningsmoduser",
-  "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Pro-funksjon",
-  "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "Dette er en Pro-funksjon. Abonner på Phoenix Pro for å fortsette å bruke denne funksjonen.",
-  "LIVE_PREVIEW_PRO_SUBSCRIBE": "Abonner",
   "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "Live Preview ble kansellert fordi nettleserens utviklerverktøy ble åpnet",
   "LIVE_DEV_DETACHED_TARGET_CLOSED": "Live Preview ble kansellert fordi siden ble stengt i nettleseren",
   "LIVE_DEV_NAVIGATED_AWAY": "Live Preview ble kansellert fordi nettleseren navigerte til en side som ikke er en del av prosjektet",
@@ -105239,6 +105170,7 @@ define("nls/nb/strings", {
   "CUSTOM_SNIPPETS_SAVE": "Lagre",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Ingen beskrivelse",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Ingen snutter samsvarer med \"{0}\"",
+  "CUSTOM_SNIPPETS_LEARN_MORE": "Legg til dine egne kodesnutter for å kode raskere - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Lær mer</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "En snutt med forkortelsen \"{0}\" finnes allerede.",
   "CUSTOM_SNIPPETS_SPACE_ERROR": "Mellomrom er ikke tillatt som et gyldig tegn i forkortelsen.",
   "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "Forkortelsen kan ikke være lenger enn 30 tegn.",
@@ -105315,7 +105247,9 @@ define("nls/nb/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "AI-tilgang er deaktivert av systemadministratoren din. Vennligst kontakt {0} for hjelp.",
   "AI_UPSELL_DIALOG_TITLE": "Fortsette med {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Du har oppdaget {0}. For å fortsette trenger du et AI-abonnement eller kreditter.",
-  "CUSTOM_SNIPPETS_LEARN_MORE": "Legg til dine egne kodesnutter for å kode raskere - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Lær mer</a>"
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Velg et bilde fra enheten din",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Velg fra enhet",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Veksle forhåndsvisningsmodus (F8)"
 });
 /*
  * GNU AGPL-3.0 License
@@ -105512,7 +105446,6 @@ define("nls/nl/strings", {
   "LIVE_DEV_MORE_OPTIONS_AI": "Bewerken met AI",
   "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "Afbeeldingengalerij",
   "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Afbeelding gebruiken",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Afbeelding uploaden vanaf computer",
   "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "Kies downloadmap voor afbeeldingen",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Afbeeldingen zoeken…",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "Zoek",
@@ -105521,9 +105454,7 @@ define("nls/nl/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Geen afbeeldingen gevonden",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Laden van afbeeldingen mislukt",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Sluiten",
-  "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "Uploaden",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Element niet bewerkbaar - gegenereerd door script.",
-  "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "Niet opnieuw weergeven",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Selecteer map om afbeelding op te slaan",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Kies waar de afbeelding gedownload moet worden:",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "Typ mappad (bijv. assets/images/)",
@@ -105537,9 +105468,6 @@ define("nls/nl/strings", {
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Markeringen bewerken bij hover",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} toont alleen de webpagina, {1} verbindt de webpagina met je code - klik op elementen om naar hun code te springen en vice versa, {2} biedt markering samen met geavanceerde elementmanipulatie",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Live preview-modi configureren",
-  "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Pro-functie",
-  "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "Dit is een Pro-functie. Abonneer je op Phoenix Pro om deze functie te blijven gebruiken.",
-  "LIVE_PREVIEW_PRO_SUBSCRIBE": "Abonneren",
   "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "Live Voorbeeld is geannuleerd omdat de developer tools in de browser zijn geopend",
   "LIVE_DEV_DETACHED_TARGET_CLOSED": "Live Voorbeeld is geannuleerd omdat de pagina gesloten werd in de browser",
   "LIVE_DEV_NAVIGATED_AWAY": "Live Voorbeeld is geannuleerd omdat de browser navigeerde naar een pagina die geen deel uit maakt van het huidige project",
@@ -106804,6 +106732,7 @@ define("nls/nl/strings", {
   "CUSTOM_SNIPPETS_SAVE": "Opslaan",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Geen beschrijving",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Geen snippets gevonden voor \"{0}\"",
+  "CUSTOM_SNIPPETS_LEARN_MORE": "Voeg je eigen codefragmenten toe om sneller te coderen - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Meer informatie</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Er bestaat al een snippet met de afkorting \"{0}\".",
   "CUSTOM_SNIPPETS_SPACE_ERROR": "Spaties zijn niet toegestaan als afkortingsteken.",
   "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "Afkorting mag niet meer dan 30 tekens bevatten.",
@@ -106880,7 +106809,9 @@ define("nls/nl/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "De toegang tot AI is uitgeschakeld door uw systeembeheerder. Neem contact op met {0} voor hulp.",
   "AI_UPSELL_DIALOG_TITLE": "Doorgaan met {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "U heeft {0} ontdekt. Om verder te gaan, heeft u een AI-abonnement of credits nodig.",
-  "CUSTOM_SNIPPETS_LEARN_MORE": "Voeg je eigen codefragmenten toe om sneller te coderen - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Meer informatie</a>"
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Selecteer een afbeelding vanaf je apparaat",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Selecteer vanaf apparaat",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Voorbeeldmodus in-/uitschakelen (F8)"
 });
 /*
  * GNU AGPL-3.0 License
@@ -107077,7 +107008,6 @@ define("nls/pl/strings", {
   "LIVE_DEV_MORE_OPTIONS_AI": "Edytuj z AI",
   "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "Galeria obrazów",
   "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Użyj tego obrazu",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Prześlij obraz z komputera",
   "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "Wybierz folder pobierania obrazów",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Szukaj obrazów…",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "Szukaj",
@@ -107086,9 +107016,7 @@ define("nls/pl/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Nie znaleziono obrazów",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Nie udało się załadować obrazów",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Zamknij",
-  "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "Prześlij",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Element nieedytowalny - wygenerowany przez skrypt.",
-  "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "Nie pokazuj ponownie",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Wybierz folder zapisu obrazu",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Wybierz, gdzie pobrać obraz:",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "Wpisz ścieżkę folderu (np. assets/images/)",
@@ -107102,9 +107030,6 @@ define("nls/pl/strings", {
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Podświetlaj elementy po najechaniu",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} pokazuje tylko stronę internetową, {1} łączy stronę internetową z Twoim kodem - kliknij na elementy, aby przejść do ich kodu i odwrotnie, {2} zapewnia podświetlanie wraz z zaawansowaną manipulacją elementami",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Konfiguruj tryby podglądu na żywo",
-  "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Funkcja Pro",
-  "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "To jest funkcja Pro. Subskrybuj Phoenix Pro, aby nadal korzystać z tej funkcji.",
-  "LIVE_PREVIEW_PRO_SUBSCRIBE": "Subskrybuj",
   "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "Podgląd na żywo został wyłączony, ponieważ uruchomiono narzędzia dla programistów w przeglądarce",
   "LIVE_DEV_DETACHED_TARGET_CLOSED": "Podgląd na żywo został wyłączony, ponieważ strona została zamknięta w przeglądarce",
   "LIVE_DEV_NAVIGATED_AWAY": "Podgląd na żywo został wyłączony, ponieważ została załadowana strona nie należąca do aktualnego projektu",
@@ -108369,6 +108294,7 @@ define("nls/pl/strings", {
   "CUSTOM_SNIPPETS_SAVE": "Zapisz",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Brak opisu",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Brak fragmentów kodu pasujących do \"{0}\"",
+  "CUSTOM_SNIPPETS_LEARN_MORE": "Dodaj własne fragmenty kodu, aby przyspieszyć kodowanie - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Dowiedz się więcej</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Fragment kodu ze skrótem \"{0}\" już istnieje.",
   "CUSTOM_SNIPPETS_SPACE_ERROR": "Spacja nie jest akceptowana jako prawidłowy znak skrótu.",
   "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "Skrót nie może mieć więcej niż 30 znaków.",
@@ -108445,7 +108371,9 @@ define("nls/pl/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Dostęp do AI został wyłączony przez administratora systemu. Prosimy o kontakt z {0} w celu uzyskania pomocy.",
   "AI_UPSELL_DIALOG_TITLE": "Kontynuować z {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Odkryłeś {0}. Aby kontynuować, potrzebujesz subskrypcji AI lub kredytów.",
-  "CUSTOM_SNIPPETS_LEARN_MORE": "Dodaj własne fragmenty kodu, aby przyspieszyć kodowanie - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Dowiedz się więcej</a>"
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Wybierz obraz z urządzenia",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Wybierz z urządzenia",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Przełącz tryb podglądu (F8)"
 });
 /*
  * GNU AGPL-3.0 License
@@ -108642,7 +108570,6 @@ define("nls/pt-br/strings", {
   "LIVE_DEV_MORE_OPTIONS_AI": "Editar com IA",
   "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "Galeria de Imagens",
   "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Usar esta imagem",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Carregar imagem do computador",
   "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "Escolher pasta de download de imagens",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Pesquisar imagens…",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "Pesquisar",
@@ -108651,9 +108578,7 @@ define("nls/pt-br/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Nenhuma imagem encontrada",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Falha ao carregar imagens",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Fechar",
-  "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "Carregar",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Elemento não editável - gerado por script.",
-  "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "Não mostrar novamente",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Selecionar Pasta para Salvar Imagem",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Escolha onde baixar a imagem:",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "Digite o caminho da pasta (ex.: assets/images/)",
@@ -108667,9 +108592,6 @@ define("nls/pt-br/strings", {
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Editar Destaques ao Passar o Mouse",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} mostra apenas a página web, {1} conecta a página web ao seu código - clique nos elementos para ir até o código e vice-versa, {2} fornece destaque junto com manipulação avançada de elementos",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Configurar Modos de Visualização em Tempo Real",
-  "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Recurso Pro",
-  "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "Este é um recurso Pro. Assine o Phoenix Pro para continuar usando este recurso.",
-  "LIVE_PREVIEW_PRO_SUBSCRIBE": "Assinar",
   "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "O Live Preview foi cancelado pois as ferramentas de desenvolvedor do navegador foram abertas",
   "LIVE_DEV_DETACHED_TARGET_CLOSED": "O Live Preview foi cancelado pois a página foi fechada no navegador",
   "LIVE_DEV_NAVIGATED_AWAY": "O Live Preview foi cancelado pois o navegador foi para uma página que não pertence a este projeto atual",
@@ -109934,6 +109856,7 @@ define("nls/pt-br/strings", {
   "CUSTOM_SNIPPETS_SAVE": "Salvar",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Sem descrição",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Nenhum snippet corresponde a \"{0}\"",
+  "CUSTOM_SNIPPETS_LEARN_MORE": "Adicione suas próprias sugestões de código para acelerar a codificação - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Saiba Mais</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Já existe um snippet com a abreviação \"{0}\".",
   "CUSTOM_SNIPPETS_SPACE_ERROR": "Espaço não é aceito como um caractere válido para abreviação.",
   "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "A abreviação não pode ter mais de 30 caracteres.",
@@ -110010,7 +109933,9 @@ define("nls/pt-br/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "O acesso à IA foi desativado pelo administrador do seu sistema. Entre em contato com {0} para obter assistência.",
   "AI_UPSELL_DIALOG_TITLE": "Continuar com {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Você descobriu o {0}. Para prosseguir, você precisará de uma assinatura de IA ou de créditos.",
-  "CUSTOM_SNIPPETS_LEARN_MORE": "Adicione suas próprias sugestões de código para acelerar a codificação - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Saiba Mais</a>"
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Selecione uma imagem do seu dispositivo",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Selecionar do dispositivo",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Alternar Modo de Visualização (F8)"
 });
 /*
  * GNU AGPL-3.0 License
@@ -110205,7 +110130,6 @@ define("nls/pt-pt/strings", {
   "LIVE_DEV_MORE_OPTIONS_AI": "Editar com IA",
   "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "Galeria de Imagens",
   "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Usar esta imagem",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Carregar imagem do computador",
   "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "Escolher pasta para descarregar a imagem",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Procurar imagens…",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "Pesquisar",
@@ -110214,9 +110138,7 @@ define("nls/pt-pt/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Não foram encontradas imagens",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Falha ao carregar as imagens",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Fechar",
-  "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "Carregar",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Elemento não editável - gerado por script.",
-  "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "Não mostrar novamente",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Selecionar Pasta para Guardar a Imagem",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Escolha onde descarregar a imagem:",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "Escreva o caminho da pasta (p. ex., assets/images/)",
@@ -110230,9 +110152,6 @@ define("nls/pt-pt/strings", {
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Editar Destaques ao Sobrepor",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} mostra apenas a página web, {1} liga a página web ao seu código - clique nos elementos para saltar para o respetivo código e vice-versa, {2} fornece destaque juntamente com manipulação avançada de elementos",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Configurar Modos de Pré-visualização em Tempo Real",
-  "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Funcionalidade Pro",
-  "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "Esta é uma funcionalidade Pro. Assine o Phoenix Pro para continuar a utilizar esta funcionalidade.",
-  "LIVE_PREVIEW_PRO_SUBSCRIBE": "Assinar",
   "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "A Pré-visualização Dinâmica foi cancelada porque as ferramentas de desenvolvimento do navegador foram abertas",
   "LIVE_DEV_DETACHED_TARGET_CLOSED": "A Pré-visualização Dinâmica foi cancelada porque a página foi fechada no navegador",
   "LIVE_DEV_NAVIGATED_AWAY": "A Pré-visualização Dinâmica foi cancelada porque o navegador navegou para uma página que não faz parte do projeto atual",
@@ -111497,6 +111416,7 @@ define("nls/pt-pt/strings", {
   "CUSTOM_SNIPPETS_SAVE": "Guardar",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Sem descrição",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Nenhum snippet corresponde a \"{0}\"",
+  "CUSTOM_SNIPPETS_LEARN_MORE": "Adicione os seus próprios snippets de código para acelerar a programação - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Saiba Mais</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Já existe um snippet com a abreviatura \"{0}\".",
   "CUSTOM_SNIPPETS_SPACE_ERROR": "Espaço não é aceite como um caráter de abreviatura válido.",
   "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "A abreviatura não pode ter mais de 30 caracteres.",
@@ -111573,7 +111493,9 @@ define("nls/pt-pt/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "O acesso à IA foi desativado pelo seu administrador de sistema. Por favor, contacte {0} para obter assistência.",
   "AI_UPSELL_DIALOG_TITLE": "Continuar com {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Descobriu {0}. Para continuar, precisará de uma subscrição de IA ou de créditos.",
-  "CUSTOM_SNIPPETS_LEARN_MORE": "Adicione os seus próprios snippets de código para acelerar a programação - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Saiba Mais</a>"
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Selecione uma imagem do seu dispositivo",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Selecionar do dispositivo",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Alternar Modo de Pré-visualização (F8)"
 });
 /*
  * GNU AGPL-3.0 License
@@ -111768,7 +111690,6 @@ define("nls/ro/strings", {
   "LIVE_DEV_MORE_OPTIONS_AI": "Editează cu AI",
   "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "Galerie de imagini",
   "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Folosește această imagine",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Încarcă imagine de pe computer",
   "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "Alegeți folderul de descărcare a imaginilor",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Caută imagini…",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "Caută",
@@ -111777,9 +111698,7 @@ define("nls/ro/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Nu s-au găsit imagini",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Imaginile nu au putut fi încărcate",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Închide",
-  "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "Încarcă",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Elementul nu este editabil - generat de script.",
-  "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "Nu mai afișa",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Selectați folderul pentru a salva imaginea",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Alegeți unde să descărcați imaginea:",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "Introduceți calea folderului (ex., assets/images/)",
@@ -111793,9 +111712,6 @@ define("nls/ro/strings", {
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Evidențiază la Trecere",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} afișează doar pagina web, {1} conectează pagina web la codul tău - dă clic pe elemente pentru a sări la codul lor și invers, {2} oferă evidențiere împreună cu manipulare avansată a elementelor",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Configurează Modurile Live Preview",
-  "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Funcționalitate Pro",
-  "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "Aceasta este o funcționalitate Pro. Abonează-te la Phoenix Pro pentru a continua să utilizezi această funcționalitate.",
-  "LIVE_PREVIEW_PRO_SUBSCRIBE": "Abonează-te",
   "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "Live Preview a fost revocat din cauza că în browser au fost deschise uneltele pentru dezvoltatori",
   "LIVE_DEV_DETACHED_TARGET_CLOSED": "Live Preview a fost revocat din cauza că pagina a fost închisă în browser",
   "LIVE_DEV_NAVIGATED_AWAY": "Live Preview a fost revocat din cauza că browser-ul a navigat spre o pagină care nu face parte din proiectul curent",
@@ -113060,6 +112976,7 @@ define("nls/ro/strings", {
   "CUSTOM_SNIPPETS_SAVE": "Salvează",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Nicio descriere",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Niciun fragment de cod nu corespunde cu \"{0}\"",
+  "CUSTOM_SNIPPETS_LEARN_MORE": "Adaugă-ți propriile fragmente de cod pentru a programa mai rapid - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Află mai multe</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Există deja un fragment de cod cu abrevierea \"{0}\".",
   "CUSTOM_SNIPPETS_SPACE_ERROR": "Spațiul nu este acceptat ca și caracter valid pentru abreviere.",
   "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "Abrevierea nu poate avea mai mult de 30 de caractere.",
@@ -113136,7 +113053,9 @@ define("nls/ro/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Accesul AI a fost dezactivat de către administratorul dvs. de sistem. Vă rugăm să contactați {0} pentru asistență.",
   "AI_UPSELL_DIALOG_TITLE": "Continuați cu {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Ați descoperit {0}. Pentru a continua, veți avea nevoie de un abonament AI sau de credite.",
-  "CUSTOM_SNIPPETS_LEARN_MORE": "Adaugă-ți propriile fragmente de cod pentru a programa mai rapid - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Află mai multe</a>"
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Selectați o imagine de pe dispozitiv",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Selectați de pe dispozitiv",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Comutați modul de previzualizare (F8)"
 });
 /*
  * GNU AGPL-3.0 License
@@ -115144,7 +115063,6 @@ define("nls/ru/strings", {
   "LIVE_DEV_MORE_OPTIONS_AI": "Редактировать с помощью ИИ",
   "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "Галерея изображений",
   "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Использовать это изображение",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Загрузить изображение с компьютера",
   "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "Выберите папку для загрузки изображений",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Поиск изображений…",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "Поиск",
@@ -115153,9 +115071,7 @@ define("nls/ru/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Изображения не найдены",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Не удалось загрузить изображения",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Закрыть",
-  "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "Загрузить",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Элемент не редактируется — создан скриптом.",
-  "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "Больше не показывать",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Выберите папку для сохранения изображения",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Выберите, куда загрузить изображение:",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "Введите путь к папке (например, assets/images/)",
@@ -115169,9 +115085,6 @@ define("nls/ru/strings", {
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Подсвечивать при наведении в режиме редактирования",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} показывает только веб-страницу, {1} связывает веб-страницу с вашим кодом - кликните по элементам, чтобы перейти к их коду и наоборот, {2} обеспечивает подсветку наряду с расширенными возможностями манипуляции элементами",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Настроить режимы просмотра в реальном времени",
-  "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Функция Pro",
-  "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "Это функция Pro. Подпишитесь на Phoenix Pro, чтобы продолжить использовать эту функцию.",
-  "LIVE_PREVIEW_PRO_SUBSCRIBE": "Подписаться",
   "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "Функция Live Preview была отключена при открытии инструментов разработки в браузере",
   "LIVE_DEV_DETACHED_TARGET_CLOSED": "Функция Live Preview была отключена при закрытии страницы в браузере",
   "LIVE_DEV_NAVIGATED_AWAY": "Функция Live Preview была отключена при переходе на страницу не принадлежащую проекту",
@@ -116436,6 +116349,7 @@ define("nls/ru/strings", {
   "CUSTOM_SNIPPETS_SAVE": "Сохранить",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Описание отсутвует",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Нет фрагментов, соответствующих \"{0}\"",
+  "CUSTOM_SNIPPETS_LEARN_MORE": "Добавьте свои сниппеты кода, чтобы ускорить разработку - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Узнать больше</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Фрагмент с аббревиатурой \"{0}\" уже существует.",
   "CUSTOM_SNIPPETS_SPACE_ERROR": "Пробел не допускается в качестве символа аббревиатуры.",
   "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "Аббревиатура не может быть длиннее 30 символов.",
@@ -116512,7 +116426,9 @@ define("nls/ru/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Доступ к ИИ был отключён вашим системным администратором. Пожалуйста, свяжитесь с {0} для получения помощи.",
   "AI_UPSELL_DIALOG_TITLE": "Продолжить с {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Вы открыли для себя {0}. Чтобы продолжить, вам понадобится подписка на ИИ или кредиты.",
-  "CUSTOM_SNIPPETS_LEARN_MORE": "Добавьте свои сниппеты кода, чтобы ускорить разработку - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Узнать больше</a>"
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Выберите изображение с вашего устройства",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Выбрать с устройства",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Переключить режим предпросмотра (F8)"
 });
 /*
  * GNU AGPL-3.0 License
@@ -116709,7 +116625,6 @@ define("nls/sk/strings", {
   "LIVE_DEV_MORE_OPTIONS_AI": "Upraviť s AI",
   "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "Galéria obrázkov",
   "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Použiť tento obrázok",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Nahrať obrázok z počítača",
   "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "Vyberte priečinok na stiahnutie obrázkov",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Hľadať obrázky…",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "Hľadať",
@@ -116718,9 +116633,7 @@ define("nls/sk/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Nenašli sa žiadne obrázky",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Nepodarilo sa načítať obrázky",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Zatvoriť",
-  "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "Nahrať",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Prvok nie je možné upraviť – bol vygenerovaný skriptom.",
-  "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "Už viac nezobrazovať",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Vyberte priečinok na uloženie obrázka",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Vyberte, kam stiahnuť obrázok:",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "Zadajte cestu k priečinku (napr. assets/images/)",
@@ -116734,9 +116647,6 @@ define("nls/sk/strings", {
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Zvýrazniť pri prejdení myšou",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} zobrazuje iba webovú stránku, {1} prepája webovú stránku s vaším kódom - kliknutím na prvky prejdete do ich kódu a naopak, {2} poskytuje zvýrazňovanie spolu s pokročilou manipuláciou s prvkami",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Konfigurovať režimy živého náhľadu",
-  "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Funkcia Pro",
-  "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "Toto je funkcia Pro. Prihláste sa na odber Phoenix Pro, aby ste mohli túto funkciu naďalej používať.",
-  "LIVE_PREVIEW_PRO_SUBSCRIBE": "Prihlásiť sa na odber",
   "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "Živý náhľad bol zrušený kvôli tomu, že boli otvorené vývojárske nástroje v prehliadači",
   "LIVE_DEV_DETACHED_TARGET_CLOSED": "Živý náhľad bol zrušený kvôli tomu, že stránka bola zatvorená v prehliadači",
   "LIVE_DEV_NAVIGATED_AWAY": "Živý náhľad bol zrušený kvôli tomu, že prehliadač odkazoval na stránku, ktorá nie je súčasťou aktuálneho projektu",
@@ -118001,6 +117911,7 @@ define("nls/sk/strings", {
   "CUSTOM_SNIPPETS_SAVE": "Uložiť",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Bez popisu",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Žiadne úryvky sa nezhodujú s \"{0}\"",
+  "CUSTOM_SNIPPETS_LEARN_MORE": "Pridajte si vlastné úryvky kódu na zrýchlenie kódovania - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Dozvedieť sa viac</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Úryvok so skratkou \"{0}\" už existuje.",
   "CUSTOM_SNIPPETS_SPACE_ERROR": "Medzera nie je akceptovaná ako platný znak skratky.",
   "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "Skratka nemôže mať viac ako 30 znakov.",
@@ -118077,7 +117988,9 @@ define("nls/sk/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Prístup k AI bol vypnutý správcom vášho systému. So žiadosťou o pomoc sa obráťte na {0}.",
   "AI_UPSELL_DIALOG_TITLE": "Pokračovať s {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Objavili ste {0}. Ak chcete pokračovať, budete potrebovať predplatné AI alebo kredity.",
-  "CUSTOM_SNIPPETS_LEARN_MORE": "Pridajte si vlastné úryvky kódu na zrýchlenie kódovania - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Dozvedieť sa viac</a>"
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Vyberte obrázok z vášho zariadenia",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Vybrať zo zariadenia",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Prepnúť režim náhľadu (F8)"
 });
 /*
  * GNU AGPL-3.0 License
@@ -118273,7 +118186,6 @@ define("nls/sr/strings", {
   "LIVE_DEV_MORE_OPTIONS_AI": "Измени помоћу вештачке интелигенције",
   "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "Галерија слика",
   "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Користи ову слику",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Отпреми слику са рачунара",
   "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "Изаберите фасциклу за преузимање слика",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Претражи слике…",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "Пронађи",
@@ -118282,9 +118194,7 @@ define("nls/sr/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Није пронађена ниједна слика",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Учитавање слика није успело",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Затвори",
-  "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "Отпреми",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Елемент није могуће уредити - генерисан је скриптом.",
-  "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "Не приказуј поново",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Изаберите фасциклу за чување слике",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Изаберите где желите да преузмете слику:",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "Унесите путању фасцикле (нпр. assets/images/)",
@@ -118298,9 +118208,6 @@ define("nls/sr/strings", {
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Истицање при преласку мишем",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} приказује само веб страницу, {1} повезује веб страницу са вашим кодом - кликните на елементе да бисте прешли на њихов код и обрнуто, {2} пружа истицање заједно са напредним манипулацијама елементима",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Конфигуришите режиме живог прегледа",
-  "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Про функција",
-  "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "Ово је Про функција. Претплатите се на Phoenix Pro да бисте наставили да користите ову функцију.",
-  "LIVE_PREVIEW_PRO_SUBSCRIBE": "Претплатите се",
   "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "Живи приказ је отказан јер су развојни алати били отворени у претраживачу",
   "LIVE_DEV_DETACHED_TARGET_CLOSED": "Живи приказ је отказан јер је страница затворена у претраживачу",
   "LIVE_DEV_NAVIGATED_AWAY": "Живи приказ је отказан јер је претраживач отишао на страницу која није део тренутног пројекта",
@@ -119565,6 +119472,7 @@ define("nls/sr/strings", {
   "CUSTOM_SNIPPETS_SAVE": "Сачувај",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Не постоји опис",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Нема фрагмената кода који одговарају \"{0}\"",
+  "CUSTOM_SNIPPETS_LEARN_MORE": "Додајте сопствене исечке кôда да бисте убрзали кодирање - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Сазнајте више</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Фрагмент кода са скраћеницом \"{0}\" већ постоји.",
   "CUSTOM_SNIPPETS_SPACE_ERROR": "Размак није дозвољен као валидан карактер скраћенице.",
   "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "Скраћеница не може бити дужа од 30 карактера.",
@@ -119641,7 +119549,9 @@ define("nls/sr/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Приступ AI је онемогућио администратор система. Молимо вас, контактирајте {0} за помоћ.",
   "AI_UPSELL_DIALOG_TITLE": "Наставити са {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Открили сте {0}. Да бисте наставили, потребна вам је AI претплата или кредити.",
-  "CUSTOM_SNIPPETS_LEARN_MORE": "Додајте сопствене исечке кôда да бисте убрзали кодирање - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Сазнајте више</a>"
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Изаберите слику са свог уређаја",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Изаберите са уређаја",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Промени режим прегледа (F8)"
 });
 /*
  * GNU AGPL-3.0 License
@@ -119921,7 +119831,6 @@ define("nls/sv/strings", {
   "LIVE_DEV_MORE_OPTIONS_AI": "Redigera med AI",
   "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "Bildgalleri",
   "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Använd bilden",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Ladda upp bild från datorn",
   "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "Välj mapp för nedladdning av bilder",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Sök bilder…",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "Sök",
@@ -119930,9 +119839,7 @@ define("nls/sv/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Inga bilder hittades",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Kunde inte ladda bilder",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Stäng",
-  "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "Ladda upp",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Elementet är inte redigerbart - genererat av skript.",
-  "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "Visa inte igen",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Välj mapp för att spara bild",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Välj var bilden ska laddas ner:",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "Ange mappsökväg (t.ex. assets/images/)",
@@ -119946,9 +119853,6 @@ define("nls/sv/strings", {
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Redigera markeringar vid hovring",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} visar bara webbsidan, {1} kopplar webbsidan till din kod - klicka på element för att hoppa till deras kod och vice versa, {2} ger markering tillsammans med avancerad elementmanipulation",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Konfigurera Live Preview-lägen",
-  "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Pro-funktion",
-  "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "Detta är en Pro-funktion. Prenumerera på Phoenix Pro för att fortsätta använda den här funktionen.",
-  "LIVE_PREVIEW_PRO_SUBSCRIBE": "Prenumerera",
   "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "Förhandsvisningen avbröts eftersom webbläsarens utvecklarverktyg öppnades.",
   "LIVE_DEV_DETACHED_TARGET_CLOSED": "Förhandsvisningen avbröts eftersom sidan stängdes i webbläsaren.",
   "LIVE_DEV_NAVIGATED_AWAY": "Förhandsvisningen avbröts eftersom webbläsaren navigerades till en sida som inte är del av det nuvarande projektet.",
@@ -121213,6 +121117,7 @@ define("nls/sv/strings", {
   "CUSTOM_SNIPPETS_SAVE": "Spara",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Ingen beskrivning",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Inga snippets matchar \"{0}\"",
+  "CUSTOM_SNIPPETS_LEARN_MORE": "Lägg till dina egna kodfragment för att snabba på kodningen - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Läs mer</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Ett snippet med förkortningen \"{0}\" finns redan.",
   "CUSTOM_SNIPPETS_SPACE_ERROR": "Mellanslag är inte tillåtet som förkortningstecken.",
   "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "Förkortningen får inte vara längre än 30 tecken.",
@@ -121289,7 +121194,9 @@ define("nls/sv/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "AI-åtkomst har inaktiverats av din systemadministratör. Kontakta {0} för hjälp.",
   "AI_UPSELL_DIALOG_TITLE": "Fortsätt med {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Du har upptäckt {0}. För att fortsätta behöver du ett AI-abonnemang eller krediter.",
-  "CUSTOM_SNIPPETS_LEARN_MORE": "Lägg till dina egna kodfragment för att snabba på kodningen - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Läs mer</a>"
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Välj en bild från din enhet",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Välj från enhet",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Växla förhandsgranskningsläge (F8)"
 });
 /*
  * GNU AGPL-3.0 License
@@ -121486,7 +121393,6 @@ define("nls/tr/strings", {
   "LIVE_DEV_MORE_OPTIONS_AI": "Yapay Zeka ile Düzenle",
   "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "Resim Galerisi",
   "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Resmi kullan",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Bilgisayardan resim yükle",
   "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "Resim indirme klasörünü seçin",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Resim ara…",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "Ara",
@@ -121495,9 +121401,7 @@ define("nls/tr/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Hiç resim bulunamadı",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Resimler yüklenemedi",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Kapat",
-  "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "Yükle",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Öğe düzenlenemez - betik tarafından oluşturuldu.",
-  "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "Tekrar gösterme",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Resmi Kaydetmek İçin Klasör Seçin",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Resmi nereye indireceğinizi seçin:",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "Klasör yolunu yazın (örn., assets/images/)",
@@ -121511,9 +121415,6 @@ define("nls/tr/strings", {
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Üzerine Gelince Vurguları Düzenle",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} yalnızca web sayfasını gösterir, {1} web sayfasını kodunuza bağlar - kodlarına gitmek için öğelere tıklayın ve tam tersi, {2} gelişmiş öğe manipülasyonu ile birlikte vurgulama sağlar",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Canlı Önizleme Modlarını Yapılandır",
-  "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Pro Özelliği",
-  "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "Bu bir Pro özelliğidir. Bu özelliği kullanmaya devam etmek için Phoenix Pro'ya abone olun.",
-  "LIVE_PREVIEW_PRO_SUBSCRIBE": "Abone Ol",
   "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "Tarayıcının geliştirici araçları açıldığı için Canlı Önizleme iptal edildi",
   "LIVE_DEV_DETACHED_TARGET_CLOSED": "Sayfa tarayıcıda kapatıldığı için Canlı Önizleme iptal edildi",
   "LIVE_DEV_NAVIGATED_AWAY": "Tarayıcı mevcut projenin parçası olmayan bir sayfaya gittiği için Canlı Önizleme iptal edildi",
@@ -122778,6 +122679,7 @@ define("nls/tr/strings", {
   "CUSTOM_SNIPPETS_SAVE": "Kaydet",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Açıklama yok",
   "CUSTOM_SNIPPETS_NO_MATCHES": "\"{0}\" ile eşleşen snippet yok",
+  "CUSTOM_SNIPPETS_LEARN_MORE": "Kodlamayı hızlandırmak için kendi kod parçacıklarınızı ekleyin - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Daha Fazlasını Öğrenin</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "\"{0}\" kısaltmasına sahip bir snippet zaten mevcut.",
   "CUSTOM_SNIPPETS_SPACE_ERROR": "Boşluk, geçerli bir kısaltma karakteri olarak kabul edilmez.",
   "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "Kısaltma 30 karakterden fazla olamaz.",
@@ -122854,7 +122756,9 @@ define("nls/tr/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Yapay zeka erişimi sistem yöneticiniz tarafından devre dışı bırakıldı. Yardım için lütfen {0} ile iletişime geçin.",
   "AI_UPSELL_DIALOG_TITLE": "{0} ile devam edilsin mi?",
   "AI_UPSELL_DIALOG_MESSAGE": "{0} özelliğini keşfettiniz. Devam etmek için bir Yapay Zeka aboneliğine veya kredilere ihtiyacınız var.",
-  "CUSTOM_SNIPPETS_LEARN_MORE": "Kodlamayı hızlandırmak için kendi kod parçacıklarınızı ekleyin - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Daha Fazlasını Öğrenin</a>"
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Cihazınızdan bir resim seçin",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Cihazdan seç",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Önizleme Modunu Aç/Kapat (F8)"
 });
 /*
  * GNU AGPL-3.0 License
@@ -123051,7 +122955,6 @@ define("nls/uk/strings", {
   "LIVE_DEV_MORE_OPTIONS_AI": "Редагувати за допомогою ШІ",
   "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "Галерея зображень",
   "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "Використати це зображення",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Завантажити зображення з комп'ютера",
   "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "Вибрати папку для завантаження зображень",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "Пошук зображень…",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "Пошук",
@@ -123060,9 +122963,7 @@ define("nls/uk/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Зображень не знайдено",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Не вдалося завантажити зображення",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Закрити",
-  "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "Завантажити",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Елемент не можна редагувати – згенеровано скриптом.",
-  "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "Більше не показувати",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Виберіть папку для збереження зображення",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Виберіть, куди завантажити зображення:",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "Введіть шлях до папки (напр., assets/images/)",
@@ -123076,9 +122977,6 @@ define("nls/uk/strings", {
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "Підсвічування при наведенні",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} показує лише вебсторінку, {1} з'єднує вебсторінку з вашим кодом - клацніть на елементи, щоб перейти до їх коду і навпаки, {2} забезпечує підсвічування разом з розширеним керуванням елементами",
   "LIVE_PREVIEW_CONFIGURE_MODES": "Налаштувати режими попереднього перегляду",
-  "LIVE_PREVIEW_PRO_FEATURE_TITLE": "Функція Pro",
-  "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "Це функція Pro. Підпишіться на Phoenix Pro, щоб продовжувати користуватися цією функцією.",
-  "LIVE_PREVIEW_PRO_SUBSCRIBE": "Підписатися",
   "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "Live Preview зупинено, оскільки в браузері відкрито панель інструментів розробника",
   "LIVE_DEV_DETACHED_TARGET_CLOSED": "Live Preview зупинено, оскільки сторінку закрито в браузері",
   "LIVE_DEV_NAVIGATED_AWAY": "Live Preview зупинено, оскільки браузер перенаправлено на сторінку, що не є частиною поточного проекту",
@@ -124343,6 +124241,7 @@ define("nls/uk/strings", {
   "CUSTOM_SNIPPETS_SAVE": "Зберегти",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "Опис відсутній",
   "CUSTOM_SNIPPETS_NO_MATCHES": "Немає сніпетів, що відповідають \"{0}\"",
+  "CUSTOM_SNIPPETS_LEARN_MORE": "Додайте власні підказки коду, щоб пришвидшити кодування - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Дізнатися більше</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "Сніпет зі скороченням \"{0}\" вже існує.",
   "CUSTOM_SNIPPETS_SPACE_ERROR": "Пробіл не допускається як символ скорочення.",
   "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "Скорочення не може перевищувати 30 символів.",
@@ -124419,7 +124318,9 @@ define("nls/uk/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Доступ до ШІ було вимкнено вашим системним адміністратором. Будь ласка, зверніться до {0} за допомогою.",
   "AI_UPSELL_DIALOG_TITLE": "Продовжити з {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Ви відкрили для себе {0}. Щоб продовжити, вам знадобиться підписка на ШІ або кредити.",
-  "CUSTOM_SNIPPETS_LEARN_MORE": "Додайте власні підказки коду, щоб пришвидшити кодування - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">Дізнатися більше</a>"
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Оберіть зображення з вашого пристрою",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Вибрати з пристрою",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Перемкнути режим попереднього перегляду (F8)"
 });
 /*
  * GNU AGPL-3.0 License
@@ -124616,7 +124517,6 @@ define("nls/ur/strings", {
   "LIVE_DEV_MORE_OPTIONS_AI": "مصنوعی ذہانت سے ترمیم کریں",
   "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "امیج گیلری",
   "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "اس تصویر کو استعمال کریں",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "کمپیوٹر سے تصویر اپ لوڈ کریں",
   "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "امیج ڈاؤن لوڈ فولڈر منتخب کریں",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "تصاویر تلاش کریں…",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "تلاش کریں",
@@ -124625,9 +124525,7 @@ define("nls/ur/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "کوئی تصاویر نہیں ملیں",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "تصاویر لوڈ کرنے میں ناکامی ہوئی",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "بند کریں",
-  "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "اپ لوڈ کریں",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "عنصر قابلِ تدوین نہیں - اسکرپٹ سے تیار کردہ۔",
-  "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "دوبارہ نہ دکھائیں",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "تصویر محفوظ کرنے کے لیے فولڈر منتخب کریں",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "تصویر ڈاؤن لوڈ کرنے کی جگہ منتخب کریں:",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "فولڈر کا پاتھ ٹائپ کریں (مثلاً، assets/images/)",
@@ -124641,9 +124539,6 @@ define("nls/ur/strings", {
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "ماؤس منڈلانے پر نمایاں ترمیم کریں",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} صرف ویب پیج دکھاتا ہے، {1} ویب پیج کو آپ کے کوڈ سے جوڑتا ہے - عناصر پر کلک کر کے ان کے کوڈ پر جائیں اور اس کے برعکس، {2} جدید عنصر ہیرا پھیری کے ساتھ نمایاں کرنے کی سہولت فراہم کرتا ہے۔",
   "LIVE_PREVIEW_CONFIGURE_MODES": "براہ راست پیش نظارہ کے طریقوں کو ترتیب دیں",
-  "LIVE_PREVIEW_PRO_FEATURE_TITLE": "پرو خصوصیت",
-  "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "یہ ایک پرو خصوصیت ہے۔ اس خصوصیت کو استعمال جاری رکھنے کیلئے فینکس پرو کو سبسکرائب کریں۔",
-  "LIVE_PREVIEW_PRO_SUBSCRIBE": "سبسکرائب کریں",
   "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "براؤزر کے ڈویلپر ٹولز کھولے جانے کی وجہ سے لائیو پیش نظارہ منسوخ کر دیا گیا",
   "LIVE_DEV_DETACHED_TARGET_CLOSED": "براؤزر میں پیج بند ہونے کی وجہ سے لائیو پیش نظارہ منسوخ کر دیا گیا",
   "LIVE_DEV_NAVIGATED_AWAY": "لائیو پیش نظارہ منسوخ کر دیا گیا کیونکہ براؤزر موجودہ پراجیکٹ کے کسی ایسے پیج پر چلا گیا جو اس کا حصہ نہیں ہے",
@@ -125908,6 +125803,7 @@ define("nls/ur/strings", {
   "CUSTOM_SNIPPETS_SAVE": "محفوظ کریں",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "کوئی وضاحت نہیں",
   "CUSTOM_SNIPPETS_NO_MATCHES": "\"{0}\" سے مماثل کوئی اسنیپٹ نہیں ہے۔",
+  "CUSTOM_SNIPPETS_LEARN_MORE": "کوڈنگ کو تیز کرنے کے لیے اپنے کوڈ کے اشارے شامل کریں - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">مزید جانیں</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "مخفف \"{0}\" والا ایک اسنیپٹ پہلے سے موجود ہے۔",
   "CUSTOM_SNIPPETS_SPACE_ERROR": "خالی جگہ ایک درست مخفف حرف کے طور پر قبول نہیں ہے۔",
   "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "مخفف 30 حروف سے زیادہ نہیں ہو سکتا۔",
@@ -125984,7 +125880,9 @@ define("nls/ur/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "آپ کے سسٹم ایڈمنسٹریٹر نے AI تک رسائی کو غیر فعال کر دیا ہے۔ براہ کرم مدد کے لیے {0} سے رابطہ کریں۔",
   "AI_UPSELL_DIALOG_TITLE": "{0} کے ساتھ جاری رکھیں؟",
   "AI_UPSELL_DIALOG_MESSAGE": "آپ نے {0} کو دریافت کیا ہے۔ آگے بڑھنے کے لیے، آپ کو AI سبسکرپشن یا کریڈٹس کی ضرورت ہوگی۔",
-  "CUSTOM_SNIPPETS_LEARN_MORE": "کوڈنگ کو تیز کرنے کے لیے اپنے کوڈ کے اشارے شامل کریں - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">مزید جانیں</a>"
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "اپنے ڈیوائس سے ایک تصویر منتخب کریں",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "ڈیوائس سے منتخب کریں",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "پریویو موڈ ٹوگل کریں (F8)"
 });
 /*
  * GNU AGPL-3.0 License
@@ -126211,7 +126109,6 @@ define("nls/zh-cn/strings", {
   "LIVE_DEV_MORE_OPTIONS_AI": "使用 AI 编辑",
   "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "图片库",
   "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "使用此图片",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "从电脑上传图片",
   "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "选择图片下载文件夹",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "搜索图片…",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "搜索",
@@ -126220,9 +126117,7 @@ define("nls/zh-cn/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "未找到图片",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "图片加载失败",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "关闭",
-  "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "上传",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "元素不可编辑 - 由脚本生成。",
-  "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "不再显示",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "选择图片保存文件夹",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "选择图片的下载位置：",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "输入文件夹路径（例如：assets/images/）",
@@ -126236,9 +126131,6 @@ define("nls/zh-cn/strings", {
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "悬停时高亮编辑内容",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} 仅显示网页，{1} 将网页连接到您的代码 - 点击元素跳转到代码，反之亦然，{2} 提供高亮显示以及高级元素操作",
   "LIVE_PREVIEW_CONFIGURE_MODES": "配置实时预览模式",
-  "LIVE_PREVIEW_PRO_FEATURE_TITLE": "专业版功能",
-  "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "这是一个专业版功能。订阅 Phoenix Pro 即可继续使用此功能。",
-  "LIVE_PREVIEW_PRO_SUBSCRIBE": "订阅",
   "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "由于浏览器开发人员工具已打开, 实时预览已关闭。",
   "LIVE_DEV_DETACHED_TARGET_CLOSED": "由于浏览器中页面已关闭, 实时预览已关闭",
   "LIVE_DEV_NAVIGATED_AWAY": "由于浏览器打开一个不属于本项目的页面, 实时预览已关闭",
@@ -127503,6 +127395,7 @@ define("nls/zh-cn/strings", {
   "CUSTOM_SNIPPETS_SAVE": "保存",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "没有描述",
   "CUSTOM_SNIPPETS_NO_MATCHES": "没有与“{0}”匹配的代码片段",
+  "CUSTOM_SNIPPETS_LEARN_MORE": "添加您自己的代码提示以加快编码速度 - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">了解更多</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "缩写为“{0}”的代码片段已存在。",
   "CUSTOM_SNIPPETS_SPACE_ERROR": "空格不是有效的缩写字符。",
   "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "缩写不能超过 30 个字符。",
@@ -127579,7 +127472,9 @@ define("nls/zh-cn/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "AI 访问权限已被您的系统管理员禁用。请联系 {0} 以获取帮助。",
   "AI_UPSELL_DIALOG_TITLE": "继续使用 {0}？",
   "AI_UPSELL_DIALOG_MESSAGE": "您发现了 {0}。要继续，您需要 AI 订阅或点数。",
-  "CUSTOM_SNIPPETS_LEARN_MORE": "添加您自己的代码提示以加快编码速度 - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">了解更多</a>"
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "从您的设备选择一张图片",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "从设备选择",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "切换预览模式 (F8)"
 });
 /*
  * GNU AGPL-3.0 License
@@ -127776,7 +127671,6 @@ define("nls/zh-tw/strings", {
   "LIVE_DEV_MORE_OPTIONS_AI": "使用 AI 編輯",
   "LIVE_DEV_MORE_OPTIONS_IMAGE_GALLERY": "圖片庫",
   "LIVE_DEV_IMAGE_GALLERY_USE_IMAGE": "使用此圖片",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "從電腦上傳圖片",
   "LIVE_DEV_IMAGE_GALLERY_SELECT_DOWNLOAD_FOLDER": "選擇圖片下載資料夾",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_PLACEHOLDER": "搜尋圖片…",
   "LIVE_DEV_IMAGE_GALLERY_SEARCH_BUTTON": "搜尋",
@@ -127785,9 +127679,7 @@ define("nls/zh-tw/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "找不到任何圖片",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "載入圖片失敗",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "關閉",
-  "LIVE_DEV_IMAGE_GALLERY_UPLOAD": "上傳",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "元素無法編輯 - 由腳本產生。",
-  "LIVE_DEV_TOAST_DONT_SHOW_AGAIN": "不再顯示",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "選取儲存圖片的資料夾",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "選擇要下載圖片的位置：",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_PLACEHOLDER": "輸入資料夾路徑 (例如：assets/images/)",
@@ -127801,9 +127693,6 @@ define("nls/zh-tw/strings", {
   "LIVE_PREVIEW_EDIT_HIGHLIGHT_ON": "滑鼠懸停時醒目顯示編輯內容",
   "LIVE_PREVIEW_MODE_PREFERENCE": "{0} 僅顯示網頁，{1} 將網頁連接到您的程式碼 - 點擊元素即可跳轉到其程式碼，反之亦然，{2} 提供醒目顯示以及進階元素操作",
   "LIVE_PREVIEW_CONFIGURE_MODES": "設定即時預覽模式",
-  "LIVE_PREVIEW_PRO_FEATURE_TITLE": "專業版功能",
-  "LIVE_PREVIEW_PRO_FEATURE_MESSAGE": "這是專業版功能。訂閱 Phoenix Pro 即可繼續使用此功能。",
-  "LIVE_PREVIEW_PRO_SUBSCRIBE": "訂閱",
   "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS": "已取消即時預覽，因為開發者工具被打開了",
   "LIVE_DEV_DETACHED_TARGET_CLOSED": "已取消即時預覽，因為頁面被關掉了",
   "LIVE_DEV_NAVIGATED_AWAY": "已取消即時預覽，因為您連到專案外的頁面了",
@@ -129068,6 +128957,7 @@ define("nls/zh-tw/strings", {
   "CUSTOM_SNIPPETS_SAVE": "儲存",
   "CUSTOM_SNIPPETS_NO_DESCRIPTION": "沒有描述資訊",
   "CUSTOM_SNIPPETS_NO_MATCHES": "沒有符合「{0}」的程式碼片段",
+  "CUSTOM_SNIPPETS_LEARN_MORE": "新增您自己的程式碼片段，加快編碼速度 - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">了解更多</a>",
   "CUSTOM_SNIPPETS_DUPLICATE_ERROR": "縮寫為「{0}」的程式碼片段已存在。",
   "CUSTOM_SNIPPETS_SPACE_ERROR": "空格不能作為有效的縮寫字元。",
   "CUSTOM_SNIPPETS_ABBR_LENGTH_ERROR": "縮寫不能超過 30 個字元。",
@@ -129144,7 +129034,9 @@ define("nls/zh-tw/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "您的系統管理員已停用 AI 存取權限。如需協助，請聯絡 {0}。",
   "AI_UPSELL_DIALOG_TITLE": "要繼續使用 {0} 嗎？",
   "AI_UPSELL_DIALOG_MESSAGE": "您已發現 {0}。您需要 AI 訂閱或點數才能繼續。",
-  "CUSTOM_SNIPPETS_LEARN_MORE": "新增您自己的程式碼片段，加快編碼速度 - <a href=\"https://docs.phcode.dev/app-links/custom-snippets\" target=\"_blank\">了解更多</a>"
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "從您的裝置選取圖片",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "從裝置選取",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "切換預覽模式 (F8)"
 });
 /*
  * GNU AGPL-3.0 License
