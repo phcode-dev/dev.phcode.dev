@@ -71279,6 +71279,8 @@ define("nls/ar/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "لم يتم العثور على صور",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "فشل تحميل الصور",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "إغلاق",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "حدد صورة من جهازك",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "تحديد من الجهاز",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "العنصر غير قابل للتعديل - تم إنشاؤه بواسطة سكربت.",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "حدد مجلدًا لحفظ الصورة",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "اختر مكان تنزيل الصورة:",
@@ -71287,6 +71289,7 @@ define("nls/ar/strings", {
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "لا تسأل مرة أخرى بخصوص هذا المشروع",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "اطلب من فينيكس AI تعديل هذا العنصر...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "الحصول على معاينة من خادمك المخصص {0}",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "تبديل وضع المعاينة (F8)",
   "LIVE_PREVIEW_MODE_PREVIEW": "وضع المعاينة",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "وضع التمييز",
   "LIVE_PREVIEW_MODE_EDIT": "وضع التحرير",
@@ -72634,9 +72637,7 @@ define("nls/ar/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "قام مسؤول النظام بتعطيل الوصول إلى الذكاء الاصطناعي. يرجى الاتصال بـ {0} للحصول على المساعدة.",
   "AI_UPSELL_DIALOG_TITLE": "المتابعة باستخدام {0}؟",
   "AI_UPSELL_DIALOG_MESSAGE": "لقد اكتشفت {0}. للمتابعة، ستحتاج إلى اشتراك في الذكاء الاصطناعي أو أرصدة.",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "حدد صورة من جهازك",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "تحديد من الجهاز",
-  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "تبديل وضع المعاينة (F8)"
+  "LICENSE_KEY_PLACEHOLDER": "أدخل مفتاح ترخيصك…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -72814,6 +72815,8 @@ define("nls/bg/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Няма намерени изображения",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Грешка при зареждане на изображения",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Затваряне",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Изберете изображение от вашето устройство",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Изберете от устройство",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Елементът не може да се редактира – генериран е от скрипт.",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Избор на папка за запазване на изображението",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Изберете къде да изтеглите изображението:",
@@ -72822,6 +72825,7 @@ define("nls/bg/strings", {
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "Не питай отново за този проект",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Помолете Phoenix AI да модифицира този елемент...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Получаване на преглед от вашия потребителски сървър {0}",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Превключване на режим на преглед (F8)",
   "LIVE_PREVIEW_MODE_PREVIEW": "Режим на преглед",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Режим на осветяване",
   "LIVE_PREVIEW_MODE_EDIT": "Режим на редактиране",
@@ -74169,9 +74173,7 @@ define("nls/bg/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Достъпът до AI е деактивиран от вашия системен администратор. Моля, свържете се с {0} за съдействие.",
   "AI_UPSELL_DIALOG_TITLE": "Да продължите ли с {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Вие открихте {0}. За да продължите, ще ви е необходим AI абонамент или кредити.",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Изберете изображение от вашето устройство",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Изберете от устройство",
-  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Превключване на режим на преглед (F8)"
+  "LICENSE_KEY_PLACEHOLDER": "Въведете вашия лицензионен ключ…"
 });
 /*
  * Copyright (c) 2013 Adobe Systems Incorporated. All rights reserved.
@@ -74378,6 +74380,8 @@ define("nls/cs/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Nebyly nalezeny žádné obrázky",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Nepodařilo se načíst obrázky",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Zavřít",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Vyberte obrázek z vašeho zařízení",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Vybrat ze zařízení",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Prvek nelze upravit – vygenerováno skriptem.",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Vybrat složku pro uložení obrázku",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Zvolte, kam chcete obrázek stáhnout:",
@@ -74386,6 +74390,7 @@ define("nls/cs/strings", {
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "U tohoto projektu se znovu neptat",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Požádejte Phoenix AI o úpravu tohoto prvku...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Získávání náhledu z vašeho vlastního serveru {0}",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Přepnout režim náhledu (F8)",
   "LIVE_PREVIEW_MODE_PREVIEW": "Režim náhledu",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Režim zvýraznění",
   "LIVE_PREVIEW_MODE_EDIT": "Režim úprav",
@@ -75733,9 +75738,7 @@ define("nls/cs/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Přístup k AI byl zakázán správcem systému. Pro pomoc prosím kontaktujte {0}.",
   "AI_UPSELL_DIALOG_TITLE": "Pokračovat s {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Objevili jste {0}. Chcete-li pokračovat, budete potřebovat předplatné AI nebo kredity.",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Vyberte obrázek z vašeho zařízení",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Vybrat ze zařízení",
-  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Přepnout režim náhledu (F8)"
+  "LICENSE_KEY_PLACEHOLDER": "Zadejte licenční klíč…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -75940,6 +75943,8 @@ define("nls/da/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Ingen billeder fundet",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Kunne ikke indlæse billeder",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Luk",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Vælg et billede fra din enhed",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Vælg fra enhed",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Element kan ikke redigeres - genereret af script.",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Vælg mappe til at gemme billede",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Vælg, hvor billedet skal downloades:",
@@ -75948,6 +75953,7 @@ define("nls/da/strings", {
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "Spørg ikke igen for dette projekt",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Bed Phoenix AI om at ændre dette element...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Henter forhåndsvisning fra din brugerdefinerede server {0}",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Skift forhåndsvisningstilstand (F8)",
   "LIVE_PREVIEW_MODE_PREVIEW": "Forhåndsvisningstilstand",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Fremhævningstilstand",
   "LIVE_PREVIEW_MODE_EDIT": "Redigeringstilstand",
@@ -77295,9 +77301,7 @@ define("nls/da/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Adgang til AI er blevet deaktiveret af din systemadministrator. Kontakt venligst {0} for hjælp.",
   "AI_UPSELL_DIALOG_TITLE": "Fortsæt med {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Du har opdaget {0}. For at fortsætte har du brug for et AI-abonnement eller kreditter.",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Vælg et billede fra din enhed",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Vælg fra enhed",
-  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Skift forhåndsvisningstilstand (F8)"
+  "LICENSE_KEY_PLACEHOLDER": "Indtast din licensnøgle…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -77500,6 +77504,8 @@ define("nls/de/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Keine Bilder gefunden",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Fehler beim Laden der Bilder",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Schließen",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Wählen Sie ein Bild von Ihrem Gerät aus",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Vom Gerät auswählen",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Element nicht bearbeitbar - von Skript generiert.",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Ordner zum Speichern des Bildes auswählen",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Wählen Sie, wohin das Bild heruntergeladen werden soll:",
@@ -77508,6 +77514,7 @@ define("nls/de/strings", {
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "Für dieses Projekt nicht erneut fragen",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Bitte Phoenix AI, dieses Element zu modifizieren...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Vorschau von Ihrem benutzerdefinierten Server {0} wird abgerufen",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Vorschaumodus umschalten (F8)",
   "LIVE_PREVIEW_MODE_PREVIEW": "Vorschaumodus",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Hervorhebungsmodus",
   "LIVE_PREVIEW_MODE_EDIT": "Bearbeitungsmodus",
@@ -78855,9 +78862,7 @@ define("nls/de/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Der KI-Zugriff wurde von Ihrem Systemadministrator deaktiviert. Bitte kontaktieren Sie {0} für Unterstützung.",
   "AI_UPSELL_DIALOG_TITLE": "Mit {0} fortfahren?",
   "AI_UPSELL_DIALOG_MESSAGE": "Sie haben {0} entdeckt. Um fortzufahren, benötigen Sie ein KI-Abonnement oder Guthaben.",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Wählen Sie ein Bild von Ihrem Gerät aus",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Vom Gerät auswählen",
-  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Vorschaumodus umschalten (F8)"
+  "LICENSE_KEY_PLACEHOLDER": "Geben Sie Ihren Lizenzschlüssel ein…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -79062,6 +79067,8 @@ define("nls/el/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Δεν βρέθηκαν εικόνες",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Αποτυχία φόρτωσης εικόνων",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Κλείσιμο",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Επιλέξτε μια εικόνα από τη συσκευή σας",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Επιλογή από τη συσκευή",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Το στοιχείο δεν είναι επεξεργάσιμο - δημιουργήθηκε από script.",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Επιλέξτε φάκελο για αποθήκευση εικόνας",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Επιλέξτε πού θα γίνει η λήψη της εικόνας:",
@@ -79070,6 +79077,7 @@ define("nls/el/strings", {
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "Να μην ερωτηθώ ξανά για αυτό το έργο",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Ζητήστε από το Phoenix AI να τροποποιήσει αυτό το στοιχείο...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Λήψη προεπισκόπησης από τον προσαρμοσμένο διακομιστή σας {0}",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Εναλλαγή λειτουργίας προεπισκόπησης (F8)",
   "LIVE_PREVIEW_MODE_PREVIEW": "Λειτουργία Προεπισκόπησης",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Λειτουργία Επισήμανσης",
   "LIVE_PREVIEW_MODE_EDIT": "Λειτουργία Επεξεργασίας",
@@ -80417,9 +80425,7 @@ define("nls/el/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Η πρόσβαση στο AI έχει απενεργοποιηθεί από τον διαχειριστή του συστήματός σας. Παρακαλούμε επικοινωνήστε με {0} για βοήθεια.",
   "AI_UPSELL_DIALOG_TITLE": "Συνέχεια με {0};",
   "AI_UPSELL_DIALOG_MESSAGE": "Ανακαλύψατε το {0}. Για να συνεχίσετε, θα χρειαστείτε μια συνδρομή AI ή πιστώσεις.",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Επιλέξτε μια εικόνα από τη συσκευή σας",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Επιλογή από τη συσκευή",
-  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Εναλλαγή λειτουργίας προεπισκόπησης (F8)"
+  "LICENSE_KEY_PLACEHOLDER": "Εισαγάγετε το κλειδί άδειας χρήσης…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -80624,6 +80630,8 @@ define("nls/en-gb/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "No images found",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Failed to load images",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Close",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Select an image from your device",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Select from device",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Element not editable - generated by script.",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Select Folder to Save Image",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Choose where to download the image:",
@@ -80632,6 +80640,7 @@ define("nls/en-gb/strings", {
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "Don't ask again for this project",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Ask Phoenix AI to modify this element…",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Getting preview from your custom server {0}",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Toggle Preview Mode (F8)",
   "LIVE_PREVIEW_MODE_PREVIEW": "Preview Mode",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Highlight Mode",
   "LIVE_PREVIEW_MODE_EDIT": "Edit Mode",
@@ -81979,9 +81988,7 @@ define("nls/en-gb/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "AI access has been disabled by your system administrator. Please contact {0} for assistance.",
   "AI_UPSELL_DIALOG_TITLE": "Continue with {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "You’ve discovered {0}. To proceed, you’ll need an AI subscription or credits.",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Select an image from your device",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Select from device",
-  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Toggle Preview Mode (F8)"
+  "LICENSE_KEY_PLACEHOLDER": "Enter your license key…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -82159,6 +82166,8 @@ define("nls/es/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "No se encontraron imágenes",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Error al cargar las imágenes",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Cerrar",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Seleccionar una imagen de tu dispositivo",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Seleccionar del dispositivo",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Elemento no editable: generado por un script.",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Seleccionar carpeta para guardar la imagen",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Elige dónde descargar la imagen:",
@@ -82167,6 +82176,7 @@ define("nls/es/strings", {
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "No volver a preguntar para este proyecto",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Pedir a Phoenix AI que modifique este elemento...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Obteniendo vista previa desde tu servidor personalizado {0}",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Alternar modo de previsualización (F8)",
   "LIVE_PREVIEW_MODE_PREVIEW": "Modo de vista previa",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Modo de resaltado",
   "LIVE_PREVIEW_MODE_EDIT": "Modo de edición",
@@ -83514,9 +83524,7 @@ define("nls/es/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "El acceso a la IA ha sido desactivado por el administrador del sistema. Póngase en contacto con {0} para obtener ayuda.",
   "AI_UPSELL_DIALOG_TITLE": "¿Continuar con {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Has descubierto {0}. Para continuar, necesitarás una suscripción de IA o créditos.",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Seleccionar una imagen de tu dispositivo",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Seleccionar del dispositivo",
-  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Alternar modo de previsualización (F8)"
+  "LICENSE_KEY_PLACEHOLDER": "Introduzca su clave de licencia…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -83722,6 +83730,8 @@ define("nls/fa-ir/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "هیچ تصویری یافت نشد",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "بارگذاری تصاویر با خطا مواجه شد",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "بستن",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "انتخاب یک تصویر از دستگاه شما",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "انتخاب از دستگاه",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "عنصر قابل ویرایش نیست - توسط اسکریپت ایجاد شده است.",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "انتخاب پوشه برای ذخیره تصویر",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "محل دانلود تصویر را انتخاب کنید:",
@@ -83730,6 +83740,7 @@ define("nls/fa-ir/strings", {
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "دیگر برای این پروژه سؤال نشود",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "از فینیکس هوش مصنوعی بخواهید این المان را تغییر دهد...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "دریافت پیش‌نمایش از سرور سفارشی شما {0}",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "تغییر وضعیت حالت پیش‌نمایش (F8)",
   "LIVE_PREVIEW_MODE_PREVIEW": "حالت پیش‌نمایش",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "حالت هایلایت",
   "LIVE_PREVIEW_MODE_EDIT": "حالت ویرایش",
@@ -85077,9 +85088,7 @@ define("nls/fa-ir/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "دسترسی به هوش مصنوعی توسط مدیر سیستم شما غیرفعال شده است. لطفاً برای راهنمایی با {0} تماس بگیرید.",
   "AI_UPSELL_DIALOG_TITLE": "ادامه با {0}؟",
   "AI_UPSELL_DIALOG_MESSAGE": "شما قابلیت {0} را کشف کرده‌اید. برای ادامه، به اشتراک AI یا اعتبار نیاز دارید.",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "انتخاب یک تصویر از دستگاه شما",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "انتخاب از دستگاه",
-  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "تغییر وضعیت حالت پیش‌نمایش (F8)"
+  "LICENSE_KEY_PLACEHOLDER": "کلید لایسنس خود را وارد کنید…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -85284,6 +85293,8 @@ define("nls/fi/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Kuvia ei löytynyt",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Kuvien lataaminen epäonnistui",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Sulje",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Valitse kuva laitteeltasi",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Valitse laitteelta",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Elementtiä ei voi muokata – komentosarjan luoma.",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Valitse kuvan tallennuskansio",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Valitse, mihin kuva ladataan:",
@@ -85292,6 +85303,7 @@ define("nls/fi/strings", {
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "Älä kysy uudelleen tämän projektin osalta",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Pyydä Phoenix-tekoälyä muokkaamaan tätä elementtiä...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Esikatselu haetaan mukautetulta palvelimeltasi {0}",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Vaihda esikatselutila (F8)",
   "LIVE_PREVIEW_MODE_PREVIEW": "Esikatselutila",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Korostustila",
   "LIVE_PREVIEW_MODE_EDIT": "Muokkaustila",
@@ -86639,9 +86651,7 @@ define("nls/fi/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Järjestelmänvalvoja on poistanut tekoälyn käytöstä. Ota yhteyttä {0} saadaksesi apua.",
   "AI_UPSELL_DIALOG_TITLE": "Jatketaanko {0}:n kanssa?",
   "AI_UPSELL_DIALOG_MESSAGE": "Olet löytänyt ominaisuuden {0}. Jatkaaksesi tarvitset tekoälytilauksen tai krediittejä.",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Valitse kuva laitteeltasi",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Valitse laitteelta",
-  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Vaihda esikatselutila (F8)"
+  "LICENSE_KEY_PLACEHOLDER": "Syötä lisenssiavaimesi…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -86846,6 +86856,8 @@ define("nls/fr/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Aucune image trouvée",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Échec du chargement des images",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Fermer",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Sélectionner une image depuis votre appareil",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Sélectionner depuis l'appareil",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Élément non modifiable - généré par un script.",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Sélectionner un dossier pour enregistrer l'image",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Choisissez où télécharger l'image :",
@@ -86854,6 +86866,7 @@ define("nls/fr/strings", {
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "Ne plus demander pour ce projet",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Demander à Phoenix AI de modifier cet élément...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Aperçu en direct depuis votre serveur personnalisé {0}",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Basculer le mode Aperçu (F8)",
   "LIVE_PREVIEW_MODE_PREVIEW": "Mode Aperçu",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Mode Surbrillance",
   "LIVE_PREVIEW_MODE_EDIT": "Mode Édition",
@@ -88201,9 +88214,7 @@ define("nls/fr/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "L'accès à l'IA a été désactivé par votre administrateur système. Veuillez contacter {0} pour obtenir de l'aide.",
   "AI_UPSELL_DIALOG_TITLE": "Continuer avec {0} ?",
   "AI_UPSELL_DIALOG_MESSAGE": "Vous avez découvert {0}. Pour continuer, vous aurez besoin d'un abonnement IA ou de crédits.",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Sélectionner une image depuis votre appareil",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Sélectionner depuis l'appareil",
-  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Basculer le mode Aperçu (F8)"
+  "LICENSE_KEY_PLACEHOLDER": "Saisissez votre clé de licence…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -88408,6 +88419,8 @@ define("nls/gl/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Non se atoparon imaxes",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Erro ao cargar as imaxes",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Pechar",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Seleccionar unha imaxe do seu dispositivo",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Seleccionar do dispositivo",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Elemento non editable: xerado por un script.",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Seleccionar cartafol para gardar a imaxe",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Escolla onde descargar a imaxe:",
@@ -88416,6 +88429,7 @@ define("nls/gl/strings", {
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "Non volver preguntar para este proxecto",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Pedir a Phoenix AI que modifique este elemento...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Obtendo a vista previa do teu servidor personalizado {0}",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Alternar o modo de vista previa (F8)",
   "LIVE_PREVIEW_MODE_PREVIEW": "Modo de vista previa",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Modo de realce",
   "LIVE_PREVIEW_MODE_EDIT": "Modo de edición",
@@ -89763,9 +89777,7 @@ define("nls/gl/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "O acceso á IA foi desactivado polo seu administrador do sistema. Póñase en contacto con {0} para obter axuda.",
   "AI_UPSELL_DIALOG_TITLE": "Continuar con {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Descubriches {0}. Para continuar, necesitarás unha subscrición de IA ou créditos.",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Seleccionar unha imaxe do seu dispositivo",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Seleccionar do dispositivo",
-  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Alternar o modo de vista previa (F8)"
+  "LICENSE_KEY_PLACEHOLDER": "Introduza a súa clave de licenza…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -89943,6 +89955,8 @@ define("nls/hi/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "कोई छवि नहीं मिली",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "छवियाँ लोड करने में विफल",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "बंद करें",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "अपने डिवाइस से एक छवि चुनें",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "डिवाइस से चुनें",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "एलिमेंट संपादन योग्य नहीं है - स्क्रिप्ट द्वारा जेनरेट किया गया है।",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "छवि सहेजने के लिए फ़ोल्डर चुनें",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "छवि डाउनलोड करने के लिए स्थान चुनें:",
@@ -89951,6 +89965,7 @@ define("nls/hi/strings", {
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "इस प्रोजेक्ट के लिए दोबारा न पूछें",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "इस एलिमेंट को संशोधित करने के लिए Phoenix AI से पूछें...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "आपके कस्टम सर्वर {0} से प्रीव्यू प्राप्त कर रहा है",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "पूर्वावलोकन मोड टॉगल करें (F8)",
   "LIVE_PREVIEW_MODE_PREVIEW": "पूर्वावलोकन मोड",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "हाइलाइट मोड",
   "LIVE_PREVIEW_MODE_EDIT": "संपादन मोड",
@@ -91298,9 +91313,7 @@ define("nls/hi/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "आपके सिस्टम एडमिनिस्ट्रेटर द्वारा AI एक्सेस अक्षम कर दिया गया है। सहायता के लिए कृपया {0} से संपर्क करें।",
   "AI_UPSELL_DIALOG_TITLE": "{0} के साथ जारी रखें?",
   "AI_UPSELL_DIALOG_MESSAGE": "आपने {0} खोज लिया है। आगे बढ़ने के लिए, आपको AI सब्सक्रिप्शन या क्रेडिट्स की ज़रूरत होगी।",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "अपने डिवाइस से एक छवि चुनें",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "डिवाइस से चुनें",
-  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "पूर्वावलोकन मोड टॉगल करें (F8)"
+  "LICENSE_KEY_PLACEHOLDER": "अपनी लाइसेंस कुंजी दर्ज करें..."
 });
 /*
  * GNU AGPL-3.0 License
@@ -91478,6 +91491,8 @@ define("nls/hr/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Nema pronađenih slika",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Učitavanje slika nije uspjelo",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Zatvori",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Odaberite sliku s vašeg uređaja",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Odaberite s uređaja",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Element nije moguće uređivati - generiran je skriptom.",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Odaberite mapu za spremanje slike",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Odaberite gdje želite preuzeti sliku:",
@@ -91486,6 +91501,7 @@ define("nls/hr/strings", {
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "Ne pitaj ponovno za ovaj projekt",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Zatražite od Phoenix AI-ja da izmijeni ovaj element...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Dohvaćanje pregleda s vašeg prilagođenog poslužitelja {0}",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Uključi/isključi način pretpregleda (F8)",
   "LIVE_PREVIEW_MODE_PREVIEW": "Način pregleda",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Način isticanja",
   "LIVE_PREVIEW_MODE_EDIT": "Uredi",
@@ -92833,9 +92849,7 @@ define("nls/hr/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Pristup AI-ju onemogućio je vaš administrator sustava. Molimo kontaktirajte {0} za pomoć.",
   "AI_UPSELL_DIALOG_TITLE": "Nastaviti s {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Otkrili ste {0}. Da biste nastavili, potrebna vam je AI pretplata ili krediti.",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Odaberite sliku s vašeg uređaja",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Odaberite s uređaja",
-  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Uključi/isključi način pretpregleda (F8)"
+  "LICENSE_KEY_PLACEHOLDER": "Unesite vaš licencni ključ…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -93040,6 +93054,8 @@ define("nls/hu/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Nem található kép",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "A képek betöltése sikertelen",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Bezárás",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Kép kiválasztása az eszközről",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Kiválasztás eszközről",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Az elem nem szerkeszthető – szkript által generált.",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Mappa kiválasztása a kép mentéséhez",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Válassza ki, hova szeretné letölteni a képet:",
@@ -93048,6 +93064,7 @@ define("nls/hu/strings", {
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "Ne kérdezze újra ennél a projektnél",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Kérd meg a Phoenix MI-t, hogy módosítsa ezt az elemet...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Előnézet lekérése az egyéni szerverről ({0})",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Előnézeti mód be-/kikapcsolása (F8)",
   "LIVE_PREVIEW_MODE_PREVIEW": "Előnézeti mód",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Kiemelés mód",
   "LIVE_PREVIEW_MODE_EDIT": "Szerkesztő mód",
@@ -94395,9 +94412,7 @@ define("nls/hu/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "A MI-hozzáférést a rendszergazda letiltotta. Segítségért forduljon a(z) {0} elérhetőséghez.",
   "AI_UPSELL_DIALOG_TITLE": "Folytatja a(z) {0} használatával?",
   "AI_UPSELL_DIALOG_MESSAGE": "Felfedezte a(z) {0} szolgáltatást. A folytatáshoz MI-előfizetésre vagy kreditekre lesz szüksége.",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Kép kiválasztása az eszközről",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Kiválasztás eszközről",
-  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Előnézeti mód be-/kikapcsolása (F8)"
+  "LICENSE_KEY_PLACEHOLDER": "Adja meg a licenckulcsát…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -94575,6 +94590,8 @@ define("nls/id/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Tidak ada gambar yang ditemukan",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Gagal memuat gambar",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Tutup",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Pilih gambar dari perangkat Anda",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Pilih dari perangkat",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Elemen tidak dapat diedit - dihasilkan oleh skrip.",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Pilih Folder untuk Menyimpan Gambar",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Pilih lokasi untuk mengunduh gambar:",
@@ -94583,6 +94600,7 @@ define("nls/id/strings", {
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "Jangan tanya lagi untuk proyek ini",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Minta Phoenix AI untuk memodifikasi elemen ini...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Mendapatkan pratinjau dari server kustom Anda {0}",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Alihkan Mode Pratinjau (F8)",
   "LIVE_PREVIEW_MODE_PREVIEW": "Mode Pratinjau",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Mode Sorotan",
   "LIVE_PREVIEW_MODE_EDIT": "Mode Edit",
@@ -95930,9 +95948,7 @@ define("nls/id/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Akses AI telah dinonaktifkan oleh administrator sistem Anda. Silakan hubungi {0} untuk bantuan.",
   "AI_UPSELL_DIALOG_TITLE": "Lanjutkan dengan {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Anda telah menemukan {0}. Untuk melanjutkan, Anda memerlukan langganan AI atau kredit.",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Pilih gambar dari perangkat Anda",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Pilih dari perangkat",
-  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Alihkan Mode Pratinjau (F8)"
+  "LICENSE_KEY_PLACEHOLDER": "Masukkan kunci lisensi Anda…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -96136,6 +96152,8 @@ define("nls/it/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Nessuna immagine trovata",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Caricamento delle immagini non riuscito",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Chiudi",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Seleziona un'immagine dal tuo dispositivo",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Seleziona da dispositivo",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Elemento non modificabile - generato da script.",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Seleziona la cartella per salvare l'immagine",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Scegli dove scaricare l'immagine:",
@@ -96144,6 +96162,7 @@ define("nls/it/strings", {
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "Non chiedere più per questo progetto",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Chiedi a Phoenix AI di modificare questo elemento...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Anteprima dal tuo server personalizzato {0}",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Attiva/disattiva anteprima (F8)",
   "LIVE_PREVIEW_MODE_PREVIEW": "Modalità Anteprima",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Modalità Evidenziazione",
   "LIVE_PREVIEW_MODE_EDIT": "Modalità di modifica",
@@ -97491,9 +97510,7 @@ define("nls/it/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "L'accesso all'AI è stato disattivato dal tuo amministratore di sistema. Contatta {0} per assistenza.",
   "AI_UPSELL_DIALOG_TITLE": "Continuare con {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Hai scoperto {0}. Per procedere, avrai bisogno di un abbonamento AI o di crediti.",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Seleziona un'immagine dal tuo dispositivo",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Seleziona da dispositivo",
-  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Attiva/disattiva anteprima (F8)"
+  "LICENSE_KEY_PLACEHOLDER": "Inserisci il codice di licenza…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -97698,6 +97715,8 @@ define("nls/ja/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "画像が見つかりません",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "画像の読み込みに失敗しました",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "閉じる",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "お使いのデバイスから画像を選択",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "デバイスから選択",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "スクリプトにより生成された要素は編集できません。",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "画像を保存するフォルダーを選択",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "画像のダウンロード先を選択してください：",
@@ -97706,6 +97725,7 @@ define("nls/ja/strings", {
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "このプロジェクトでは次回から表示しない",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Phoenix AIにこの要素の変更を依頼してください…",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "カスタムサーバー {0} からプレビューを取得しています",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "プレビューモードの切り替え (F8)",
   "LIVE_PREVIEW_MODE_PREVIEW": "プレビューモード",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "ハイライトモード",
   "LIVE_PREVIEW_MODE_EDIT": "編集モード",
@@ -99053,9 +99073,7 @@ define("nls/ja/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "AIアクセスはシステム管理者によって無効にされています。サポートが必要な場合は、{0}にお問い合わせください。",
   "AI_UPSELL_DIALOG_TITLE": "{0}を続行しますか？",
   "AI_UPSELL_DIALOG_MESSAGE": "「{0}」をご利用になるには、AIサブスクリプションまたはクレジットが必要です。",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "お使いのデバイスから画像を選択",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "デバイスから選択",
-  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "プレビューモードの切り替え (F8)"
+  "LICENSE_KEY_PLACEHOLDER": "ライセンスキーを入力…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -99260,6 +99278,8 @@ define("nls/ko/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "발견된 이미지가 없습니다",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "이미지 로드에 실패했습니다",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "닫기",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "기기에서 이미지를 선택하세요",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "기기에서 선택",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "편집할 수 없는 요소 - 스크립트로 생성됨.",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "이미지를 저장할 폴더 선택",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "이미지를 다운로드할 위치를 선택하세요:",
@@ -99268,6 +99288,7 @@ define("nls/ko/strings", {
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "이 프로젝트에 대해 다시 묻지 않기",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Phoenix AI에게 이 요소 수정을 요청하세요...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "사용자 지정 서버 {0}에서 미리보기 가져오는 중",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "미리보기 모드 전환 (F8)",
   "LIVE_PREVIEW_MODE_PREVIEW": "미리보기 모드",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "강조 표시 모드",
   "LIVE_PREVIEW_MODE_EDIT": "편집 모드",
@@ -100615,9 +100636,7 @@ define("nls/ko/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "시스템 관리자에 의해 AI 액세스가 비활성화되었습니다. 도움이 필요하시면 {0}에게 문의하세요.",
   "AI_UPSELL_DIALOG_TITLE": "{0}(으)로 계속하시겠습니까?",
   "AI_UPSELL_DIALOG_MESSAGE": "{0} 기능을 발견하셨습니다. 계속 진행하려면 AI 구독 또는 크레딧이 필요합니다.",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "기기에서 이미지를 선택하세요",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "기기에서 선택",
-  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "미리보기 모드 전환 (F8)"
+  "LICENSE_KEY_PLACEHOLDER": "라이선스 키를 입력하세요…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -100822,6 +100841,8 @@ define("nls/lv/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Nav atrasti attēli",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Neizdevās ielādēt attēlus",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Aizvērt",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Atlasiet attēlu no savas ierīces",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Atlasīt no ierīces",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Elements nav rediģējams - to ģenerējis skripts.",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Izvēlieties mapi attēla saglabāšanai",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Izvēlieties, kur lejupielādēt attēlu:",
@@ -100830,6 +100851,7 @@ define("nls/lv/strings", {
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "Vairs nejautāt šim projektam",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Palūdziet Phoenix AI modificēt šo elementu...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Priekšskatījuma iegūšana no pielāgotā servera {0}",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Pārslēgt priekšskatījuma režīmu (F8)",
   "LIVE_PREVIEW_MODE_PREVIEW": "Priekšskatījuma režīms",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Izcelšanas režīms",
   "LIVE_PREVIEW_MODE_EDIT": "Rediģēšanas režīms",
@@ -102177,9 +102199,7 @@ define("nls/lv/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "MI piekļuvi ir atspējojis jūsu sistēmas administrators. Lūdzu, sazinieties ar {0}, lai saņemtu palīdzību.",
   "AI_UPSELL_DIALOG_TITLE": "Turpināt ar {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Jūs atklājāt {0}. Lai turpinātu, jums būs nepieciešams MI abonements vai kredīti.",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Atlasiet attēlu no savas ierīces",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Atlasīt no ierīces",
-  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Pārslēgt priekšskatījuma režīmu (F8)"
+  "LICENSE_KEY_PLACEHOLDER": "Ievadiet savu licences atslēgu…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -102357,6 +102377,8 @@ define("nls/ml/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "ചിത്രങ്ങളൊന്നും കണ്ടെത്തിയില്ല",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "ചിത്രങ്ങൾ ലോഡ് ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "അടയ്ക്കുക",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "നിങ്ങളുടെ ഉപകരണത്തിൽ നിന്ന് ഒരു ചിത്രം തിരഞ്ഞെടുക്കുക",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "ഉപകരണത്തിൽ നിന്ന് തിരഞ്ഞെടുക്കുക",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "ഘടകം എഡിറ്റ് ചെയ്യാൻ സാധിക്കില്ല - സ്ക്രിപ്റ്റ് ഉപയോഗിച്ച് നിർമ്മിച്ചത്.",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "ചിത്രം സേവ് ചെയ്യാനുള്ള ഫോൾഡർ തിരഞ്ഞെടുക്കുക",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "ചിത്രം എവിടെയാണ് ഡൗൺലോഡ് ചെയ്യേണ്ടതെന്ന് തിരഞ്ഞെടുക്കുക:",
@@ -102365,6 +102387,7 @@ define("nls/ml/strings", {
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "ഈ പ്രോജക്റ്റിനായി ഇനി ചോദിക്കരുത്",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "ഈ എലമെന്റ് മാറ്റാൻ ഫീനിക്സ് AI-യോട് ആവശ്യപ്പെടുക...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "നിങ്ങളുടെ ഇച്ഛാനുസൃത സെർവറിൽ നിന്ന് പ്രിവ്യൂ ലഭിക്കുന്നു {0}",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "പ്രിവ്യൂ മോഡ് ടോഗിൾ ചെയ്യുക (F8)",
   "LIVE_PREVIEW_MODE_PREVIEW": "പ്രിവ്യൂ മോഡ്",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "ഹൈലൈറ്റ് മോഡ്",
   "LIVE_PREVIEW_MODE_EDIT": "എഡിറ്റ് മോഡ്",
@@ -103712,9 +103735,7 @@ define("nls/ml/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "നിങ്ങളുടെ സിസ്റ്റം അഡ്മിനിസ്ട്രേറ്റർ എഐ ആക്‌സസ് പ്രവർത്തനരഹിതമാക്കിയിരിക്കുന്നു. സഹായത്തിനായി ദയവായി {0}-മായി ബന്ധപ്പെടുക.",
   "AI_UPSELL_DIALOG_TITLE": "{0} ഉപയോഗിച്ച് തുടരണോ?",
   "AI_UPSELL_DIALOG_MESSAGE": "നിങ്ങൾ {0} കണ്ടെത്തിയിരിക്കുന്നു. തുടരാൻ, നിങ്ങൾക്ക് ഒരു എഐ സബ്സ്ക്രിപ്ഷനോ ക്രെഡിറ്റുകളോ ആവശ്യമാണ്.",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "നിങ്ങളുടെ ഉപകരണത്തിൽ നിന്ന് ഒരു ചിത്രം തിരഞ്ഞെടുക്കുക",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "ഉപകരണത്തിൽ നിന്ന് തിരഞ്ഞെടുക്കുക",
-  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "പ്രിവ്യൂ മോഡ് ടോഗിൾ ചെയ്യുക (F8)"
+  "LICENSE_KEY_PLACEHOLDER": "നിങ്ങളുടെ ലൈസൻസ് കീ നൽകുക…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -103892,6 +103913,8 @@ define("nls/nb/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Ingen bilder funnet",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Kunne ikke laste inn bilder",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Lukk",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Velg et bilde fra enheten din",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Velg fra enhet",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Elementet kan ikke redigeres – generert av skript.",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Velg mappe for å lagre bildet",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Velg hvor bildet skal lastes ned:",
@@ -103900,6 +103923,7 @@ define("nls/nb/strings", {
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "Ikke spør igjen for dette prosjektet",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Be Phoenix AI om å endre dette elementet...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Henter forhåndsvisning fra din tilpassede server {0}",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Veksle forhåndsvisningsmodus (F8)",
   "LIVE_PREVIEW_MODE_PREVIEW": "Forhåndsvisningsmodus",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Fremhevingsmodus",
   "LIVE_PREVIEW_MODE_EDIT": "Redigeringsmodus",
@@ -105247,9 +105271,7 @@ define("nls/nb/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "AI-tilgang er deaktivert av systemadministratoren din. Vennligst kontakt {0} for hjelp.",
   "AI_UPSELL_DIALOG_TITLE": "Fortsette med {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Du har oppdaget {0}. For å fortsette trenger du et AI-abonnement eller kreditter.",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Velg et bilde fra enheten din",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Velg fra enhet",
-  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Veksle forhåndsvisningsmodus (F8)"
+  "LICENSE_KEY_PLACEHOLDER": "Skriv inn lisensnøkkelen din …"
 });
 /*
  * GNU AGPL-3.0 License
@@ -105454,6 +105476,8 @@ define("nls/nl/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Geen afbeeldingen gevonden",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Laden van afbeeldingen mislukt",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Sluiten",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Selecteer een afbeelding vanaf je apparaat",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Selecteer vanaf apparaat",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Element niet bewerkbaar - gegenereerd door script.",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Selecteer map om afbeelding op te slaan",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Kies waar de afbeelding gedownload moet worden:",
@@ -105462,6 +105486,7 @@ define("nls/nl/strings", {
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "Niet opnieuw vragen voor dit project",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Vraag Phoenix AI om dit element aan te passen...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Voorbeeld ophalen van uw aangepaste server {0}",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Voorbeeldmodus in-/uitschakelen (F8)",
   "LIVE_PREVIEW_MODE_PREVIEW": "Voorvertoningsmodus",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Markeringsmodus",
   "LIVE_PREVIEW_MODE_EDIT": "Bewerken",
@@ -106809,9 +106834,7 @@ define("nls/nl/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "De toegang tot AI is uitgeschakeld door uw systeembeheerder. Neem contact op met {0} voor hulp.",
   "AI_UPSELL_DIALOG_TITLE": "Doorgaan met {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "U heeft {0} ontdekt. Om verder te gaan, heeft u een AI-abonnement of credits nodig.",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Selecteer een afbeelding vanaf je apparaat",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Selecteer vanaf apparaat",
-  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Voorbeeldmodus in-/uitschakelen (F8)"
+  "LICENSE_KEY_PLACEHOLDER": "Voer je licentiesleutel in…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -107016,6 +107039,8 @@ define("nls/pl/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Nie znaleziono obrazów",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Nie udało się załadować obrazów",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Zamknij",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Wybierz obraz z urządzenia",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Wybierz z urządzenia",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Element nieedytowalny - wygenerowany przez skrypt.",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Wybierz folder zapisu obrazu",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Wybierz, gdzie pobrać obraz:",
@@ -107024,6 +107049,7 @@ define("nls/pl/strings", {
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "Nie pytaj ponownie dla tego projektu",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Poproś Phoenix AI o modyfikację tego elementu...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Pobieranie podglądu z Twojego własnego serwera {0}",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Przełącz tryb podglądu (F8)",
   "LIVE_PREVIEW_MODE_PREVIEW": "Tryb podglądu",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Tryb podświetlania",
   "LIVE_PREVIEW_MODE_EDIT": "Tryb edycji",
@@ -108371,9 +108397,7 @@ define("nls/pl/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Dostęp do AI został wyłączony przez administratora systemu. Prosimy o kontakt z {0} w celu uzyskania pomocy.",
   "AI_UPSELL_DIALOG_TITLE": "Kontynuować z {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Odkryłeś {0}. Aby kontynuować, potrzebujesz subskrypcji AI lub kredytów.",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Wybierz obraz z urządzenia",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Wybierz z urządzenia",
-  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Przełącz tryb podglądu (F8)"
+  "LICENSE_KEY_PLACEHOLDER": "Wprowadź swój klucz licencyjny…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -108578,6 +108602,8 @@ define("nls/pt-br/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Nenhuma imagem encontrada",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Falha ao carregar imagens",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Fechar",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Selecione uma imagem do seu dispositivo",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Selecionar do dispositivo",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Elemento não editável - gerado por script.",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Selecionar Pasta para Salvar Imagem",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Escolha onde baixar a imagem:",
@@ -108586,6 +108612,7 @@ define("nls/pt-br/strings", {
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "Não perguntar novamente para este projeto",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Peça à Phoenix AI para modificar este elemento...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Obtendo pré-visualização do seu servidor personalizado {0}",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Alternar Modo de Visualização (F8)",
   "LIVE_PREVIEW_MODE_PREVIEW": "Modo de Pré-visualização",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Modo de Destaque",
   "LIVE_PREVIEW_MODE_EDIT": "Modo de Edição",
@@ -109933,9 +109960,7 @@ define("nls/pt-br/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "O acesso à IA foi desativado pelo administrador do seu sistema. Entre em contato com {0} para obter assistência.",
   "AI_UPSELL_DIALOG_TITLE": "Continuar com {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Você descobriu o {0}. Para prosseguir, você precisará de uma assinatura de IA ou de créditos.",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Selecione uma imagem do seu dispositivo",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Selecionar do dispositivo",
-  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Alternar Modo de Visualização (F8)"
+  "LICENSE_KEY_PLACEHOLDER": "Insira sua chave de licença…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -110138,6 +110163,8 @@ define("nls/pt-pt/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Não foram encontradas imagens",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Falha ao carregar as imagens",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Fechar",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Selecione uma imagem do seu dispositivo",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Selecionar do dispositivo",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Elemento não editável - gerado por script.",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Selecionar Pasta para Guardar a Imagem",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Escolha onde descarregar a imagem:",
@@ -110146,6 +110173,7 @@ define("nls/pt-pt/strings", {
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "Não voltar a perguntar para este projeto",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Pedir à Phoenix AI para modificar este elemento...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "A obter pré-visualização do seu servidor personalizado {0}",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Alternar Modo de Pré-visualização (F8)",
   "LIVE_PREVIEW_MODE_PREVIEW": "Modo de Pré-visualização",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Modo Destaque",
   "LIVE_PREVIEW_MODE_EDIT": "Modo Edição",
@@ -111493,9 +111521,7 @@ define("nls/pt-pt/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "O acesso à IA foi desativado pelo seu administrador de sistema. Por favor, contacte {0} para obter assistência.",
   "AI_UPSELL_DIALOG_TITLE": "Continuar com {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Descobriu {0}. Para continuar, precisará de uma subscrição de IA ou de créditos.",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Selecione uma imagem do seu dispositivo",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Selecionar do dispositivo",
-  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Alternar Modo de Pré-visualização (F8)"
+  "LICENSE_KEY_PLACEHOLDER": "Introduza a sua chave de licença…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -111698,6 +111724,8 @@ define("nls/ro/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Nu s-au găsit imagini",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Imaginile nu au putut fi încărcate",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Închide",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Selectați o imagine de pe dispozitiv",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Selectați de pe dispozitiv",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Elementul nu este editabil - generat de script.",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Selectați folderul pentru a salva imaginea",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Alegeți unde să descărcați imaginea:",
@@ -111706,6 +111734,7 @@ define("nls/ro/strings", {
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "Nu mai întrebați pentru acest proiect",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Roagă Phoenix AI să modifice acest element...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Se obține previzualizarea de la serverul personalizat {0}",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Comutați modul de previzualizare (F8)",
   "LIVE_PREVIEW_MODE_PREVIEW": "Mod Previzualizare",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Mod Evidențiere",
   "LIVE_PREVIEW_MODE_EDIT": "Mod Editare",
@@ -113053,9 +113082,7 @@ define("nls/ro/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Accesul AI a fost dezactivat de către administratorul dvs. de sistem. Vă rugăm să contactați {0} pentru asistență.",
   "AI_UPSELL_DIALOG_TITLE": "Continuați cu {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Ați descoperit {0}. Pentru a continua, veți avea nevoie de un abonament AI sau de credite.",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Selectați o imagine de pe dispozitiv",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Selectați de pe dispozitiv",
-  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Comutați modul de previzualizare (F8)"
+  "LICENSE_KEY_PLACEHOLDER": "Introduceți cheia de licență…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -115072,6 +115099,8 @@ define("nls/ru/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Изображения не найдены",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Не удалось загрузить изображения",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Закрыть",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Выберите изображение с вашего устройства",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Выбрать с устройства",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Элемент не редактируется — создан скриптом.",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Выберите папку для сохранения изображения",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Выберите, куда загрузить изображение:",
@@ -115080,6 +115109,7 @@ define("nls/ru/strings", {
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "Больше не спрашивать для этого проекта",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Попросите Phoenix AI изменить этот элемент...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Получение предварительного просмотра с вашего пользовательского сервера {0}",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Переключить режим предпросмотра (F8)",
   "LIVE_PREVIEW_MODE_PREVIEW": "Режим предпросмотра",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Режим подсветки",
   "LIVE_PREVIEW_MODE_EDIT": "Режим редактирования",
@@ -116427,9 +116457,7 @@ define("nls/ru/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Доступ к ИИ был отключён вашим системным администратором. Пожалуйста, свяжитесь с {0} для получения помощи.",
   "AI_UPSELL_DIALOG_TITLE": "Продолжить с {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Вы открыли для себя {0}. Чтобы продолжить, вам понадобится подписка на ИИ или кредиты.",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Выберите изображение с вашего устройства",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Выбрать с устройства",
-  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Переключить режим предпросмотра (F8)"
+  "LICENSE_KEY_PLACEHOLDER": "Введите ваш лицензионный ключ…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -116634,6 +116662,8 @@ define("nls/sk/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Nenašli sa žiadne obrázky",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Nepodarilo sa načítať obrázky",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Zatvoriť",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Vyberte obrázok z vášho zariadenia",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Vybrať zo zariadenia",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Prvok nie je možné upraviť – bol vygenerovaný skriptom.",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Vyberte priečinok na uloženie obrázka",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Vyberte, kam stiahnuť obrázok:",
@@ -116642,6 +116672,7 @@ define("nls/sk/strings", {
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "Pre tento projekt sa už nepýtať",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Požiadajte Phoenix AI o úpravu tohto prvku...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Získavanie náhľadu z vášho vlastného servera {0}",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Prepnúť režim náhľadu (F8)",
   "LIVE_PREVIEW_MODE_PREVIEW": "Režim náhľadu",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Režim zvýraznenia",
   "LIVE_PREVIEW_MODE_EDIT": "Režim úprav",
@@ -117989,9 +118020,7 @@ define("nls/sk/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Prístup k AI bol vypnutý správcom vášho systému. So žiadosťou o pomoc sa obráťte na {0}.",
   "AI_UPSELL_DIALOG_TITLE": "Pokračovať s {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Objavili ste {0}. Ak chcete pokračovať, budete potrebovať predplatné AI alebo kredity.",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Vyberte obrázok z vášho zariadenia",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Vybrať zo zariadenia",
-  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Prepnúť režim náhľadu (F8)"
+  "LICENSE_KEY_PLACEHOLDER": "Zadajte váš licenčný kľúč…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -118195,6 +118224,8 @@ define("nls/sr/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Није пронађена ниједна слика",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Учитавање слика није успело",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Затвори",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Изаберите слику са свог уређаја",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Изаберите са уређаја",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Елемент није могуће уредити - генерисан је скриптом.",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Изаберите фасциклу за чување слике",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Изаберите где желите да преузмете слику:",
@@ -118203,6 +118234,7 @@ define("nls/sr/strings", {
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "Не питај поново за овај пројекат",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Замолите Phoenix AI да измени овај елемент...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Преглед са вашег прилагођеног сервера {0}",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Промени режим прегледа (F8)",
   "LIVE_PREVIEW_MODE_PREVIEW": "Режим прегледа",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Режим истицања",
   "LIVE_PREVIEW_MODE_EDIT": "Режим измене",
@@ -119550,9 +119582,7 @@ define("nls/sr/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Приступ AI је онемогућио администратор система. Молимо вас, контактирајте {0} за помоћ.",
   "AI_UPSELL_DIALOG_TITLE": "Наставити са {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Открили сте {0}. Да бисте наставили, потребна вам је AI претплата или кредити.",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Изаберите слику са свог уређаја",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Изаберите са уређаја",
-  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Промени режим прегледа (F8)"
+  "LICENSE_KEY_PLACEHOLDER": "Унесите ваш лиценцни кључ…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -119840,6 +119870,8 @@ define("nls/sv/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Inga bilder hittades",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Kunde inte ladda bilder",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Stäng",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Välj en bild från din enhet",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Välj från enhet",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Elementet är inte redigerbart - genererat av skript.",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Välj mapp för att spara bild",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Välj var bilden ska laddas ner:",
@@ -119848,6 +119880,7 @@ define("nls/sv/strings", {
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "Fråga inte igen för det här projektet",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Be Phoenix AI att modifiera detta element...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Hämtar förhandsvisning från din anpassade server {0}",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Växla förhandsgranskningsläge (F8)",
   "LIVE_PREVIEW_MODE_PREVIEW": "Förhandsgranskningsläge",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Markeringsläge",
   "LIVE_PREVIEW_MODE_EDIT": "Redigeringsläge",
@@ -121195,9 +121228,7 @@ define("nls/sv/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "AI-åtkomst har inaktiverats av din systemadministratör. Kontakta {0} för hjälp.",
   "AI_UPSELL_DIALOG_TITLE": "Fortsätt med {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Du har upptäckt {0}. För att fortsätta behöver du ett AI-abonnemang eller krediter.",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Välj en bild från din enhet",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Välj från enhet",
-  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Växla förhandsgranskningsläge (F8)"
+  "LICENSE_KEY_PLACEHOLDER": "Ange din licensnyckel…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -121402,6 +121433,8 @@ define("nls/tr/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Hiç resim bulunamadı",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Resimler yüklenemedi",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Kapat",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Cihazınızdan bir resim seçin",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Cihazdan seç",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Öğe düzenlenemez - betik tarafından oluşturuldu.",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Resmi Kaydetmek İçin Klasör Seçin",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Resmi nereye indireceğinizi seçin:",
@@ -121410,6 +121443,7 @@ define("nls/tr/strings", {
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "Bu proje için tekrar sorma",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Phoenix AI'dan bu öğeyi değiştirmesini isteyin...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Özel sunucunuzdan önizleme alınıyor {0}",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Önizleme Modunu Aç/Kapat (F8)",
   "LIVE_PREVIEW_MODE_PREVIEW": "Önizleme Modu",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Vurgulama Modu",
   "LIVE_PREVIEW_MODE_EDIT": "Düzenleme Modu",
@@ -122757,9 +122791,7 @@ define("nls/tr/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Yapay zeka erişimi sistem yöneticiniz tarafından devre dışı bırakıldı. Yardım için lütfen {0} ile iletişime geçin.",
   "AI_UPSELL_DIALOG_TITLE": "{0} ile devam edilsin mi?",
   "AI_UPSELL_DIALOG_MESSAGE": "{0} özelliğini keşfettiniz. Devam etmek için bir Yapay Zeka aboneliğine veya kredilere ihtiyacınız var.",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Cihazınızdan bir resim seçin",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Cihazdan seç",
-  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Önizleme Modunu Aç/Kapat (F8)"
+  "LICENSE_KEY_PLACEHOLDER": "Lisans anahtarınızı girin…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -122964,6 +122996,8 @@ define("nls/uk/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "Зображень не знайдено",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "Не вдалося завантажити зображення",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "Закрити",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Оберіть зображення з вашого пристрою",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Вибрати з пристрою",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "Елемент не можна редагувати – згенеровано скриптом.",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "Виберіть папку для збереження зображення",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "Виберіть, куди завантажити зображення:",
@@ -122972,6 +123006,7 @@ define("nls/uk/strings", {
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "Не запитувати знову для цього проєкту",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "Попросіть Phoenix AI змінити цей елемент...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "Отримання попереднього перегляду з вашого власного сервера {0}",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Перемкнути режим попереднього перегляду (F8)",
   "LIVE_PREVIEW_MODE_PREVIEW": "Режим попереднього перегляду",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "Режим підсвічування",
   "LIVE_PREVIEW_MODE_EDIT": "Режим редагування",
@@ -124319,9 +124354,7 @@ define("nls/uk/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "Доступ до ШІ було вимкнено вашим системним адміністратором. Будь ласка, зверніться до {0} за допомогою.",
   "AI_UPSELL_DIALOG_TITLE": "Продовжити з {0}?",
   "AI_UPSELL_DIALOG_MESSAGE": "Ви відкрили для себе {0}. Щоб продовжити, вам знадобиться підписка на ШІ або кредити.",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "Оберіть зображення з вашого пристрою",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "Вибрати з пристрою",
-  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "Перемкнути режим попереднього перегляду (F8)"
+  "LICENSE_KEY_PLACEHOLDER": "Введіть ваш ліцензійний ключ…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -124526,6 +124559,8 @@ define("nls/ur/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "کوئی تصاویر نہیں ملیں",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "تصاویر لوڈ کرنے میں ناکامی ہوئی",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "بند کریں",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "اپنے ڈیوائس سے ایک تصویر منتخب کریں",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "ڈیوائس سے منتخب کریں",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "عنصر قابلِ تدوین نہیں - اسکرپٹ سے تیار کردہ۔",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "تصویر محفوظ کرنے کے لیے فولڈر منتخب کریں",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "تصویر ڈاؤن لوڈ کرنے کی جگہ منتخب کریں:",
@@ -124534,6 +124569,7 @@ define("nls/ur/strings", {
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "اس پروجیکٹ کے لیے دوبارہ نہ پوچھیں۔",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "فینکس مصنوعی ذہانت سے اس عنصر میں ترمیم کرنے کو کہیں...",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "آپ کے اپنی مرضی کے سرور {0} سے پیش نظارہ حاصل کرنا",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "پریویو موڈ ٹوگل کریں (F8)",
   "LIVE_PREVIEW_MODE_PREVIEW": "پیش نظارہ وضع",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "نمایاں وضع",
   "LIVE_PREVIEW_MODE_EDIT": "ترمیم وضع",
@@ -125881,9 +125917,7 @@ define("nls/ur/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "آپ کے سسٹم ایڈمنسٹریٹر نے AI تک رسائی کو غیر فعال کر دیا ہے۔ براہ کرم مدد کے لیے {0} سے رابطہ کریں۔",
   "AI_UPSELL_DIALOG_TITLE": "{0} کے ساتھ جاری رکھیں؟",
   "AI_UPSELL_DIALOG_MESSAGE": "آپ نے {0} کو دریافت کیا ہے۔ آگے بڑھنے کے لیے، آپ کو AI سبسکرپشن یا کریڈٹس کی ضرورت ہوگی۔",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "اپنے ڈیوائس سے ایک تصویر منتخب کریں",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "ڈیوائس سے منتخب کریں",
-  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "پریویو موڈ ٹوگل کریں (F8)"
+  "LICENSE_KEY_PLACEHOLDER": "اپنی لائسنس کی درج کریں…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -126118,6 +126152,8 @@ define("nls/zh-cn/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "未找到图片",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "图片加载失败",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "关闭",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "从您的设备选择一张图片",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "从设备选择",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "元素不可编辑 - 由脚本生成。",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "选择图片保存文件夹",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "选择图片的下载位置：",
@@ -126126,6 +126162,7 @@ define("nls/zh-cn/strings", {
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "针对此项目不再询问",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "让 Phoenix AI 修改此元素……",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "正在从您的自定义服务器 {0} 获取预览",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "切换预览模式 (F8)",
   "LIVE_PREVIEW_MODE_PREVIEW": "预览模式",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "高亮模式",
   "LIVE_PREVIEW_MODE_EDIT": "编辑模式",
@@ -127473,9 +127510,7 @@ define("nls/zh-cn/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "AI 访问权限已被您的系统管理员禁用。请联系 {0} 以获取帮助。",
   "AI_UPSELL_DIALOG_TITLE": "继续使用 {0}？",
   "AI_UPSELL_DIALOG_MESSAGE": "您发现了 {0}。要继续，您需要 AI 订阅或点数。",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "从您的设备选择一张图片",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "从设备选择",
-  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "切换预览模式 (F8)"
+  "LICENSE_KEY_PLACEHOLDER": "输入您的许可证密钥…"
 });
 /*
  * GNU AGPL-3.0 License
@@ -127680,6 +127715,8 @@ define("nls/zh-tw/strings", {
   "LIVE_DEV_IMAGE_GALLERY_NO_IMAGES": "找不到任何圖片",
   "LIVE_DEV_IMAGE_GALLERY_LOAD_ERROR": "載入圖片失敗",
   "LIVE_DEV_IMAGE_GALLERY_CLOSE": "關閉",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "從您的裝置選取圖片",
+  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "從裝置選取",
   "LIVE_DEV_TOAST_NOT_EDITABLE": "元素無法編輯 - 由腳本產生。",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_TITLE": "選取儲存圖片的資料夾",
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_DESCRIPTION": "選擇要下載圖片的位置：",
@@ -127688,6 +127725,7 @@ define("nls/zh-tw/strings", {
   "LIVE_DEV_IMAGE_FOLDER_DIALOG_REMEMBER": "針對此專案不再詢問",
   "LIVE_DEV_AI_PROMPT_PLACEHOLDER": "讓 Phoenix AI 修改此元素…",
   "LIVE_PREVIEW_CUSTOM_SERVER_BANNER": "從您的自訂伺服器 {0} 取得預覽",
+  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "切換預覽模式 (F8)",
   "LIVE_PREVIEW_MODE_PREVIEW": "預覽模式",
   "LIVE_PREVIEW_MODE_HIGHLIGHT": "醒目提示模式",
   "LIVE_PREVIEW_MODE_EDIT": "編輯模式",
@@ -129035,9 +129073,7 @@ define("nls/zh-tw/strings", {
   "AI_CONTROL_ADMIN_DISABLED_CONTACT": "您的系統管理員已停用 AI 存取權限。如需協助，請聯絡 {0}。",
   "AI_UPSELL_DIALOG_TITLE": "要繼續使用 {0} 嗎？",
   "AI_UPSELL_DIALOG_MESSAGE": "您已發現 {0}。您需要 AI 訂閱或點數才能繼續。",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER_TOOLTIP": "從您的裝置選取圖片",
-  "LIVE_DEV_IMAGE_GALLERY_SELECT_FROM_COMPUTER": "從裝置選取",
-  "LIVE_PREVIEW_MODE_TOGGLE_PREVIEW": "切換預覽模式 (F8)"
+  "LICENSE_KEY_PLACEHOLDER": "輸入您的授權金鑰…"
 });
 /*
  * GNU AGPL-3.0 License
