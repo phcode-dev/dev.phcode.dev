@@ -33,7 +33,7 @@ window.AppConfig = {
         "app_update_url": "https://updates.phcode.io/tauri/update-latest-pre-release.json",
         "extensionTakedownURL": "https://updates.phcode.io/extension_takedown.json",
         "linting.enabled_by_default": true,
-        "build_timestamp": "2025-12-19T03:54:48.641Z",
+        "build_timestamp": "2025-12-19T03:55:08.013Z",
         "googleAnalyticsID": "G-FP5S9BKDSJ",
         "googleAnalyticsIDDesktop": "G-D5R1Y6PTS8",
         "mixPanelID": "a7e08ffd43c37767c29b13df1d2e6c62",
