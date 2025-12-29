@@ -4,6 +4,7 @@ window.AppConfig = {
         "app_title": "Phoenix Code",
         "app_name_about": "Phoenix Code",
         "main_pro_plan": "Phoenix Pro",
+        "main_pro_plan_short": "Pro",
         "ai_brand_name": "Phoenix AI",
         "about_icon": "styles/images/phoenix-icon.svg",
         "account_url": "https://account-stage.phcode.dev/",
@@ -33,7 +34,7 @@ window.AppConfig = {
         "app_update_url": "https://updates.phcode.io/tauri/update-latest-pre-release.json",
         "extensionTakedownURL": "https://updates.phcode.io/extension_takedown.json",
         "linting.enabled_by_default": true,
-        "build_timestamp": "2025-12-29T15:10:51.522Z",
+        "build_timestamp": "2025-12-29T16:30:55.103Z",
         "googleAnalyticsID": "G-FP5S9BKDSJ",
         "googleAnalyticsIDDesktop": "G-D5R1Y6PTS8",
         "mixPanelID": "a7e08ffd43c37767c29b13df1d2e6c62",
@@ -45,7 +46,7 @@ window.AppConfig = {
         "bugsnagEnv": "staging"
     },
     "name": "Phoenix Code",
-    "version": "4.1.2-21824",
+    "version": "4.1.2-21828",
     "apiVersion": "4.1.2",
     "homepage": "https://core.ai",
     "issues": {
