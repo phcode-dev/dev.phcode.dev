@@ -601,6 +601,9 @@ function RemoteFunctions(config = {}) {
         if(!LivePreviewView.isElementInspectable(element) || element.nodeType !== Node.ELEMENT_NODE) {
             return false;
         }
+        if(element && element.closest('.phcode-no-lp-edit')) {
+            return false;
+        }
 
         // if _hoverHighlight is uninitialized, initialize it
         if (!_hoverHighlight && shouldShowHighlightOnHover()) {
@@ -741,6 +744,9 @@ function RemoteFunctions(config = {}) {
      * @param {Event} event - The click event
      */
     function handleElementClick(element, event) {
+        if(element && element.closest('.phcode-no-lp-edit')) {
+            return;
+        }
         if (!LivePreviewView.isElementInspectable(element)) {
             dismissUIAndCleanupState();
             return;
