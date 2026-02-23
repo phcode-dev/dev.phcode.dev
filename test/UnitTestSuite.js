@@ -132,6 +132,8 @@ define(function (require, exports, module) {
     require("spec/Extn-CSSColorPreview-integ-test");
     require("spec/Extn-CollapseFolders-integ-test");
     require("spec/Extn-Tabbar-integ-test");
+    require("spec/Extn-CustomSnippets-test");
+    require("spec/Extn-CustomSnippets-integ-test");
     // extension integration tests
     require("spec/Extn-CSSCodeHints-integ-test");
     require("spec/Extn-HTMLCodeHints-Lint-integ-test");
