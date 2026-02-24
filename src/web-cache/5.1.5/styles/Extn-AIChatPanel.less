@@ -243,6 +243,9 @@
     padding: 8px 10px;
     min-height: 0;
     min-width: 0;
+    -webkit-user-select: text;
+    user-select: text;
+    cursor: default;
 }
 
 /* ── Individual messages ────────────────────────────────────────────── */
@@ -265,6 +268,7 @@
         word-wrap: break-word;
         overflow-wrap: anywhere;
         min-width: 0;
+        -webkit-user-select: text;
         user-select: text;
         cursor: text;
     }
@@ -475,6 +479,7 @@
     margin-bottom: 3px;
     border-radius: 4px;
     background-color: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.04);
     border-left: 2px solid var(--tool-color, @project-panel-text-2);
 
     .ai-tool-header {
