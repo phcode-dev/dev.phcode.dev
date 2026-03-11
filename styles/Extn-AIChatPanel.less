@@ -89,6 +89,28 @@
         }
     }
 
+    .ai-settings-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: none;
+        border: none;
+        color: @project-panel-text-2;
+        font-size: @menu-item-font-size;
+        width: 26px;
+        height: 26px;
+        border-radius: 3px;
+        cursor: pointer;
+        opacity: 0;
+        transition: opacity 0.15s ease, background-color 0.15s ease;
+        pointer-events: none;
+
+        &:hover {
+            opacity: 1;
+            background-color: rgba(255, 255, 255, 0.06);
+        }
+    }
+
     .ai-new-session-btn {
         display: flex;
         align-items: center;
@@ -108,6 +130,12 @@
             background-color: rgba(255, 255, 255, 0.06);
         }
     }
+}
+
+/* Show settings gear on tab container hover */
+.ai-tab-container:hover .ai-settings-btn {
+    opacity: 0.7;
+    pointer-events: auto;
 }
 
 /* ── Session history dropdown ──────────────────────────────────────── */
@@ -1588,4 +1616,205 @@
             background: #FFa820;
         }
     }
+}
+
+/* ── AI Settings Dialog ────────────────────────────────────────────── */
+.ai-settings-dialog {
+    .ai-settings-section-label {
+        font-size: 12px;
+        font-weight: 600;
+        color: @bc-text-medium;
+        margin-bottom: 6px;
+
+        .dark & {
+            color: @dark-bc-text-medium;
+        }
+    }
+
+    .ai-settings-active-select {
+        width: 100%;
+        line-height: normal;
+    }
+
+    .ai-settings-divider {
+        border: none;
+        border-top: 1px solid @bc-panel-separator;
+        margin: 14px 0;
+
+        .dark & {
+            border-top-color: @dark-bc-panel-separator;
+        }
+    }
+
+    .ai-settings-provider-list {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-bottom: 10px;
+    }
+
+    .ai-settings-provider-card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 10px;
+        border: 1px solid @bc-panel-border;
+        border-radius: @bc-border-radius;
+        background: @bc-panel-bg-alt;
+
+        .dark & {
+            border-color: @dark-bc-panel-border;
+            background: @dark-bc-panel-bg-alt;
+        }
+    }
+
+    .ai-settings-provider-info {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        min-width: 0;
+        flex: 1;
+    }
+
+    .ai-settings-provider-name {
+        font-size: 13px;
+        font-weight: 600;
+        color: @bc-text;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        .dark & {
+            color: @dark-bc-text;
+        }
+    }
+
+    .ai-settings-provider-url {
+        font-size: 11px;
+        color: @bc-text-quiet;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        .dark & {
+            color: @dark-bc-text-quiet;
+        }
+    }
+
+    .ai-settings-provider-actions {
+        display: flex;
+        gap: 4px;
+        margin-left: 10px;
+        flex-shrink: 0;
+    }
+
+    .ai-settings-add-btn {
+        margin-bottom: 10px;
+    }
+
+    .ai-settings-edit-form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 12px;
+        border: 1px solid @bc-btn-border-focused;
+        border-radius: @bc-border-radius;
+        background: @bc-panel-bg-alt;
+        margin-bottom: 10px;
+
+        .dark & {
+            border-color: @dark-bc-btn-border-focused;
+            background: @dark-bc-panel-bg-alt;
+        }
+    }
+
+    .ai-settings-edit-error {
+        font-size: 12px;
+        color: @bc-error;
+        min-height: 0;
+
+        &:not(:empty) {
+            min-height: 16px;
+        }
+    }
+
+    .ai-settings-edit-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+    }
+
+    .ai-settings-field {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+
+        label {
+            font-size: 12px;
+            font-weight: 600;
+            color: @bc-text-medium;
+
+            .dark & {
+                color: @dark-bc-text-medium;
+            }
+        }
+
+        input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 8px 10px;
+            height: 30px;
+            border: 1px solid @bc-panel-border;
+            border-radius: @bc-border-radius;
+            background: @bc-input-bg;
+            color: @bc-text;
+            font-size: 13px;
+            outline: none;
+
+            &:focus {
+                border-color: @bc-btn-border-focused;
+            }
+
+            &::placeholder {
+                color: @bc-text-quiet;
+                opacity: 0.7;
+            }
+
+            .dark & {
+                border-color: @dark-bc-panel-border;
+                background: @dark-bc-input-bg;
+                color: @dark-bc-text;
+
+                &:focus {
+                    border-color: @dark-bc-btn-border-focused;
+                }
+
+                &::placeholder {
+                    color: @dark-bc-text-quiet;
+                    opacity: 0.7;
+                }
+            }
+        }
+    }
+
+    .ai-settings-footer {
+        display: flex;
+        align-items: center;
+    }
+
+    .ai-settings-footer-spacer {
+        flex: 1;
+    }
+}
+
+/* ── Custom endpoint notice ────────────────────────────────────────── */
+.ai-custom-endpoint-notice {
+    padding: 6px 10px;
+    margin: 0 8px 4px 8px;
+    background: rgba(76, 175, 80, 0.08);
+    border: 1px solid rgba(76, 175, 80, 0.2);
+    border-radius: 4px;
+    font-size: @sidebar-xs-font-size;
+    color: @project-panel-text-2;
+    text-align: center;
 }
