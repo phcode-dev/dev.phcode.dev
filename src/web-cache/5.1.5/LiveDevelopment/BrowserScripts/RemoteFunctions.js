@@ -357,6 +357,7 @@ function RemoteFunctions(config = {}) {
             // Container div — sized to the margin box so all rects fit inside it
             const div = window.document.createElement("div");
             div.className = GLOBALS.HIGHLIGHT_CLASSNAME;
+            div.setAttribute(GLOBALS.PHCODE_INTERNAL_ATTR, "true");
             div.trackingElement = element;
             const divStyle = div.style;
             divStyle.position = "absolute";
@@ -1218,8 +1219,12 @@ function RemoteFunctions(config = {}) {
             SHARED_STATE._hotCorner.updateState(config.mode === 'preview', true);
         }
 
+        // Clear highlights when sync is turned off
+        const syncTurnedOff = oldConfig.syncSourceAndPreview !== false &&
+            config.syncSourceAndPreview === false;
+
         // Handle configuration changes
-        if (highlightModeChanged || isModeChanged) {
+        if (highlightModeChanged || isModeChanged || syncTurnedOff) {
             _handleConfigurationChange();
         }
 
@@ -1228,8 +1233,8 @@ function RemoteFunctions(config = {}) {
         // doesn't clear the element highlighting.
         const selectedBeforeReregister = previouslySelectedElement;
         registerHandlers();
-        if (!isModeChanged && !highlightModeChanged && selectedBeforeReregister
-            && config.mode === 'edit') {
+        if (!isModeChanged && !highlightModeChanged && !syncTurnedOff
+            && selectedBeforeReregister && config.mode === 'edit') {
             // Restore the click highlight for the previously selected element
             if (!_clickHighlight) {
                 _clickHighlight = new Highlight(true);
