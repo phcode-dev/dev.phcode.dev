@@ -111,6 +111,9 @@ define(function (require, exports, module) {
     require("spec/LiveDevelopmentMultiBrowser-test");
     require("spec/LiveDevelopmentCustomServer-test");
     require("spec/md-editor-integ-test");
+    require("spec/md-editor-edit-integ-test");
+    require("spec/md-editor-edit-more-integ-test");
+    require("spec/md-editor-table-integ-test");
     require("spec/NewFileContentManager-test");
     require("spec/InstallExtensionDialog-integ-test");
     require("spec/ExtensionInstallation-test");
