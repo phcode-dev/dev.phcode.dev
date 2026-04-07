@@ -180,6 +180,35 @@ img.panel-titlebar-icon {
     pointer-events: none;
 }
 
+/* Overflow button: shown when tabs overflow even after collapsing to icons */
+.bottom-panel-overflow-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.9rem;
+    height: 2rem;
+    cursor: pointer;
+    color: #666;
+    font-size: 0.9rem;
+    flex: 0 0 auto;
+    transition: color 0.12s ease, background-color 0.12s ease;
+
+    .dark & {
+        color: #aaa;
+    }
+
+    &:hover {
+        background-color: #e0e0e0;
+        color: #333;
+
+        .dark & {
+            background-color: #333;
+            color: #eee;
+        }
+    }
+
+}
+
 /* Drag-and-drop tab reordering */
 .bottom-panel-tab-dragging {
     opacity: 0.5;
@@ -280,6 +309,7 @@ img.panel-titlebar-icon {
             color: #eee;
         }
     }
+
 }
 
 .bottom-panel-tab-bar-actions {
