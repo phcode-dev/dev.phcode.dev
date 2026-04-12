@@ -70,6 +70,7 @@ function RemoteFunctions(config = {}) {
         "renderDropdownItems",
         // called when an item is selected from the more options dropdown
         "handleDropdownClick",
+        "updateContent", // in-place content refresh for control box etc. after drag
         "reRegisterEventHandlers",
         "handleClick", // handle click on an icon in the tool box.
         // when escape key is presses in the editor, we may need to dismiss the live edit boxes.
@@ -572,6 +573,10 @@ function RemoteFunctions(config = {}) {
         // don't want highlighting and stuff when auto scrolling or when dragging (svgs)
         // for dragging normal html elements its already taken care of...so we just add svg drag checking
         if (SHARED_STATE.isAutoScrolling || SHARED_STATE._isDraggingSVG) {
+            return;
+        }
+        if (customReturns.selectorBox && customReturns.selectorBox.isOpen &&
+                customReturns.selectorBox.isOpen()) {
             return;
         }
 
@@ -1353,7 +1358,7 @@ function RemoteFunctions(config = {}) {
         }
 
         // Preserve the currently selected element across re-registration
-        // so that toggling options (e.g. show measurements, show spacing handles)
+        // so that toggling options (e.g. show measurements)
         // doesn't clear the element highlighting.
         const selectedBeforeReregister = previouslySelectedElement;
         registerHandlers();
