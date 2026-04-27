@@ -40,6 +40,10 @@
     flex: 1;
     min-height: 0;
     overflow: hidden;
+    // Positioning context for the onboarding prompt overlay, which is
+    // detached from its template position and re-parented here so it
+    // covers the Files/AI tab strip as well as the panel body.
+    position: relative;
 }
 
 .ai-chat-panel {
@@ -53,6 +57,32 @@
     color: @project-panel-text-1;
     font-size: @ai-text-body;
     container-type: inline-size;
+
+    /* Onboarding-iframe theme variables — single source of truth for
+       what gets forwarded to the iframe's `?configCSS=` param.
+       AIChatPanel.js _buildOnboardingConfigCSS reads each of these via
+       getComputedStyle and serialises them into a :root{...} block.
+       To retheme the iframe, edit only this list. The names match the
+       iframe's published contract (see ai-panel-onboarding README). */
+    --bg-panel:              @bc-ai-sidebar-bg;
+    --bg-card:               rgba(255, 255, 255, 0.04);
+    --bg-card-hover:         rgba(255, 255, 255, 0.07);
+    --bg-input:              rgba(255, 255, 255, 0.04);
+    --bg-input-focus:        rgba(255, 255, 255, 0.06);
+    --text-primary:          @project-panel-text-1;
+    --text-secondary:        @project-panel-text-2;
+    --text-muted:            rgba(168, 176, 180, 0.6);
+    --border-subtle:         rgba(255, 255, 255, 0.12);
+    --border-active:         rgba(107, 158, 255, 0.4);
+    --border-focus:          rgba(107, 158, 255, 0.5);
+    --accent-primary:        #6b9eff;
+    --accent-primary-soft:   rgba(107, 158, 255, 0.12);
+    --accent-primary-border: rgba(107, 158, 255, 0.3);
+    --font-body:             14px;
+    --font-secondary:        12px;
+    --font-meta:             11px;
+    --radius-md:             6px;
+    --radius-lg:             8px;
 }
 
 /* ── Header ─────────────────────────────────────────────────────────── */
@@ -145,7 +175,8 @@
 .ai-chat-panel.ai-history-open {
     > .ai-chat-messages,
     > .ai-chat-status,
-    > .ai-chat-input-area {
+    > .ai-chat-input-area,
+    > .ai-onboarding-wrap {
         display: none !important;
     }
 }
@@ -262,6 +293,179 @@
 
     i {
         font-size: 10px;
+    }
+}
+
+/* ── Onboarding iframe (guided AI starter) ──────────────────────────── */
+/* The wrap sits where .ai-chat-messages would. When visible it claims
+   the same flex slot — when hidden the chat takes that slot back. */
+.ai-onboarding-wrap {
+    flex: 1;
+    min-height: 0;
+    min-width: 0;
+    position: relative;
+    background-color: @bc-ai-sidebar-bg;
+
+    .ai-onboarding-frame {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        display: block;
+    }
+}
+
+/* Prompt confirm overlay — top-level rule (NOT nested under
+   .ai-onboarding-wrap) because at runtime _initOnboarding detaches
+   the overlay element and re-parents it to .ai-tab-container so it
+   covers the Files/AI tab strip in addition to the panel body.
+   Neutral dark-panel chrome — no blue accent. Title strip + full-
+   bleed textarea + bottom action row with Cancel and an icon-only
+   send button that mirrors .ai-send-btn's transparent quiet style. */
+.ai-onboarding-prompt-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    animation: ai-onboarding-overlay-fade 0.15s ease-out;
+
+    .ai-onboarding-prompt-card {
+        width: 100%;
+        max-width: 440px;
+        border: 1px solid @bc-ai-input-border;
+        border-radius: 8px;
+        background: @bc-ai-sidebar-bg;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+        animation: ai-onboarding-card-pop 0.18s ease-out;
+    }
+
+    .ai-onboarding-prompt-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 8px 8px 14px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .ai-onboarding-prompt-title {
+        flex: 1;
+        min-width: 0;
+        font-size: @ai-text-body;
+        font-weight: 600;
+        color: @project-panel-text-1;
+        line-height: 1.3;
+    }
+
+    .ai-onboarding-prompt-close {
+        background: none;
+        border: 0;
+        color: @project-panel-text-2;
+        width: 26px;
+        height: 26px;
+        border-radius: 4px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0.55;
+        flex-shrink: 0;
+        transition: opacity 0.15s ease, color 0.15s ease, background-color 0.15s ease;
+
+        i { font-size: 0.95em; }
+
+        &:hover {
+            opacity: 1;
+            color: @project-panel-text-1;
+            background: rgba(255, 255, 255, 0.05);
+        }
+    }
+
+    .ai-onboarding-prompt-text {
+        // display: block + width: 100% + box-sizing makes the textarea
+        // span the card's full inner width regardless of the rows attr
+        // or the browser's textarea default width.
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        background: @bc-ai-input-bg;
+        border: 0;
+        border-radius: 0;
+        color: @project-panel-text-1;
+        font-size: @ai-text-body;
+        line-height: @ai-line-prose;
+        padding: 12px 14px;
+        resize: vertical;
+        min-height: 110px;
+        max-height: 260px;
+        outline: none;
+        box-shadow: none;
+
+        // Phoenix's global textarea focus rule paints a border + shadow
+        // that shifts the dialog by ~2px and reads as a flicker. Force
+        // the no-chrome focus state so only the bg darkening signals
+        // focus.
+        &:focus,
+        &:focus-visible {
+            background: @bc-ai-input-bg-focused;
+            border: 0;
+            outline: none;
+            box-shadow: none;
+        }
+    }
+
+    .ai-onboarding-prompt-actions {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 4px;
+        padding: 6px 8px 6px 12px;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .ai-onboarding-prompt-cancel {
+        background: transparent;
+        border: 0;
+        color: @project-panel-text-2;
+        font-size: @ai-text-secondary;
+        line-height: @ai-line-compact;
+        padding: 6px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.15s ease, color 0.15s ease;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: @project-panel-text-1;
+        }
+    }
+
+    .ai-onboarding-prompt-send {
+        background: none;
+        border: 0;
+        color: @project-panel-text-2;
+        width: 32px;
+        height: 28px;
+        border-radius: 4px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0.6;
+        transition: opacity 0.15s ease, color 0.15s ease, background-color 0.15s ease;
+
+        i { font-size: 0.95em; }
+
+        &:hover {
+            opacity: 1;
+            color: @project-panel-text-1;
+            background: rgba(255, 255, 255, 0.05);
+        }
     }
 }
 
@@ -686,6 +890,17 @@
         &:hover {
             opacity: 1;
         }
+    }
+
+    // Per-edit line stats shown next to the Show-diff toggle on
+    // restored cards. Match the toggle's muted look so the right edge
+    // reads as a single secondary-action cluster — without this the
+    // +x/-y use the panel's default bright text and clash.
+    .ai-tool-edit-stats {
+        font-size: @ai-text-meta;
+        color: @project-panel-text-2;
+        opacity: 0.65;
+        font-family: 'SourceCodePro-Medium', 'SourceCodePro', monospace;
     }
 
     .ai-tool-diff-more {
@@ -1352,6 +1567,94 @@
     color: #6b9eff;
     font-size: @ai-text-body;
     font-weight: 600;
+}
+
+// Maximize button on the plan header — sits flush right via auto
+// margin so the title and icon stay left-aligned. Same muted look as
+// the diff toggle / more menu so it reads as a quiet affordance.
+.ai-plan-maximize-btn {
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: #6b9eff;
+    font-size: @ai-text-secondary;
+    line-height: 1;
+    padding: 2px 6px;
+    border-radius: 4px;
+    cursor: pointer;
+    opacity: 0.65;
+    transition: opacity 0.15s ease, background-color 0.15s ease;
+
+    &:hover {
+        opacity: 1;
+        background-color: rgba(107, 158, 255, 0.15);
+    }
+}
+
+// Fullscreen plan overlay — covers the whole window (over the editor,
+// not just the AI panel). z-index above modal dialogs so a long plan
+// is readable in detail without horizontal cramping.
+.ai-plan-fullscreen-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10001;
+    background: rgba(0, 0, 0, 0.72);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    user-select: text;
+
+    .ai-plan-fullscreen-card {
+        // Same chrome as the inline plan card so the maximized view is
+        // a faithful magnification, not a different surface.
+        width: min(960px, 96vw);
+        max-height: 92vh;
+        display: flex;
+        flex-direction: column;
+        background-color: rgba(40, 44, 52, 0.98);
+        border: 1px solid rgba(107, 158, 255, 0.35);
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+
+        .ai-plan-header {
+            flex-shrink: 0;
+        }
+
+        .ai-plan-body {
+            // Override the inline card's max-height — in fullscreen we
+            // want the body to consume the remaining card height.
+            max-height: none;
+            flex: 1 1 auto;
+            overflow-y: auto;
+            padding: 22px 28px;
+        }
+    }
+
+    .ai-plan-fullscreen-close {
+        margin-left: auto;
+        background: none;
+        border: none;
+        color: #6b9eff;
+        font-size: @ai-text-body;
+        line-height: 1;
+        padding: 2px 8px;
+        border-radius: 4px;
+        cursor: pointer;
+        opacity: 0.7;
+        transition: opacity 0.15s ease, background-color 0.15s ease;
+
+        &:hover {
+            opacity: 1;
+            background-color: rgba(107, 158, 255, 0.15);
+        }
+    }
 }
 
 .ai-plan-body {
@@ -2110,6 +2413,14 @@
         .ai-context-chip-icon { color: #6b9eff; }
     }
 
+    // Folder context chip — extra working directories the user has
+    // attached to the conversation. Tinted amber/orange so it reads
+    // as a different *kind* of context than file/selection chips.
+    .ai-context-chip-folder {
+        border-color: rgba(232, 168, 56, 0.35);
+        .ai-context-chip-icon { color: #e8a838; }
+    }
+
     /* ── Image preview strip (between context bar and textarea) ──────── */
     .ai-chat-image-preview {
         display: none;
@@ -2334,7 +2645,8 @@
         }
     }
 
-    .ai-screenshot-dropup {
+    .ai-screenshot-dropup,
+    .ai-attach-dropup {
         position: fixed;
         background: @bc-ai-input-bg;
         border: 1px solid @bc-ai-input-border;
@@ -2344,7 +2656,8 @@
         z-index: 100;
         min-width: 200px;
 
-        .ai-screenshot-option {
+        .ai-screenshot-option,
+        .ai-attach-option {
             padding: 8px 12px;
             cursor: pointer;
             color: @project-panel-text-1;
@@ -2722,5 +3035,82 @@
     font-size: @ai-text-meta;
     color: @project-panel-text-2;
     text-align: center;
+}
+
+/* ── Sidebar-is-always-dark overrides ───────────────────────────────── */
+/* The AI panel renders against a fixed dark sidebar background. Both
+   Bootstrap's stock .btn skins AND Phoenix's light-theme overrides of
+   them paint badly here in light editor themes. Neutralise the skins
+   inside the panel so the AI panel's own per-element rules
+   (.ai-plan-approve-btn, .ai-plan-revise-btn, .ai-plan-feedback-send,
+   etc.) own the look — and that look is identical in both themes. */
+.ai-chat-panel {
+    .btn,
+    .btn:hover,
+    .btn:focus,
+    .btn:active,
+    .btn-primary,
+    .btn-primary:hover,
+    .btn-primary:focus,
+    .btn-primary:active,
+    .btn-secondary,
+    .btn-secondary:hover,
+    .btn-secondary:focus,
+    .btn-secondary:active {
+        background: none;
+        background-color: transparent;
+        background-image: none;
+        border-color: transparent;
+        box-shadow: none;
+        text-shadow: none;
+        color: inherit;
+    }
+
+    /* Inputs and textareas — same story. The chat textarea has its own
+       per-class style; this is the safety net for any other input we
+       drop in (plan feedback textarea today, future ones tomorrow). */
+    input[type="text"],
+    input[type="search"],
+    input[type="email"],
+    input[type="password"],
+    input[type="number"],
+    select,
+    textarea {
+        background-color: rgba(255, 255, 255, 0.04);
+        color: @project-panel-text-1;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 4px;
+        box-shadow: none;
+
+        &:focus {
+            background-color: rgba(255, 255, 255, 0.06);
+            border-color: rgba(107, 158, 255, 0.4);
+            outline: none;
+            box-shadow: none;
+        }
+
+        &::placeholder {
+            color: @project-panel-text-2;
+            opacity: 0.6;
+        }
+    }
+}
+
+/* Onboarding prompt overlay entrance animations. Kept at file scope so
+   the keyframes resolve regardless of nesting context. */
+@keyframes ai-onboarding-overlay-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes ai-onboarding-card-pop {
+    from {
+        opacity: 0;
+        transform: scale(0.96) translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
 }
 
