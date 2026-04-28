@@ -570,11 +570,19 @@ define(function (require, exports, module) {
                     "sidebar to settle at baseline 200px", 2000);
             });
 
-            it("should leave Live Preview open after exit", async function () {
+            it("should leave Live Preview open after exit when LP was already open at entry", async function () {
+                // Mirror of the "LP was opened by the toggle" test below: when
+                // the user already had LP open, exiting design mode must keep
+                // LP visible and main-toolbar at a real LP-panel width (well
+                // above the icon-bar width).
                 await openLivePreview();
                 await enterDesignMode();
                 await exitDesignMode();
+
                 expect(livePanel().isVisible()).toBe(true);
+                const iconsW = _$("#plugin-icons-bar").outerWidth();
+                const toolbarW = _$("#main-toolbar").outerWidth();
+                expect(toolbarW).toBeGreaterThan(iconsW + 50);
             });
 
             it("should fit sidebar + CCB + toolbar + a reasonable editor area in the window after exit", async function () {
@@ -591,17 +599,20 @@ define(function (require, exports, module) {
                 expect(testWindow.innerWidth - total).toBeGreaterThan(100);
             });
 
-            it("should use the innerWidth/2.5 default for toolbar when LP was opened by the toggle itself", async function () {
-                // LP is closed on entry — the toggle opens it.
+            it("should close Live Preview and shrink toolbar to the icon-bar width when LP was opened by the toggle itself", async function () {
+                // LP is closed on entry — the toggle opens it. On exit we
+                // restore the original "pure code" layout: LP closes again
+                // and main-toolbar shrinks to the icon-bar width.
                 await enterDesignMode();
+                expect(livePanel().isVisible()).toBe(true);
                 await exitDesignMode();
 
-                expect(livePanel().isVisible()).toBe(true);
-                const expectedDefault = Math.floor(testWindow.innerWidth / 2.5);
-                // `_restoreExpandedLayout` may trim a bit to honour the MIN_EDITOR clamp
-                // on narrow viewports, so compare with a generous tolerance.
-                const toolbar = _$("#main-toolbar").outerWidth();
-                expect(Math.abs(toolbar - expectedDefault)).toBeLessThan(30);
+                await awaitsFor(function () { return !livePanel().isVisible(); },
+                    "live preview to close on exit", 5000);
+
+                const iconsW = _$("#plugin-icons-bar").outerWidth();
+                const toolbarW = _$("#main-toolbar").outerWidth();
+                expect(Math.abs(toolbarW - iconsW)).toBeLessThan(3);
             });
 
             it("should not let the sidebar snap wider than the rendered (capped) width after exit even if user dragged past the cap in design mode", async function () {
@@ -643,27 +654,41 @@ define(function (require, exports, module) {
             });
         });
 
-        describe("6. Exit triggered by hiding live preview", function () {
+        describe("6. #toolbar-go-live click in design mode", function () {
 
-            it("should exit design mode, hide LP, and shrink main-toolbar to the icon-bar width when #toolbar-go-live is clicked in design mode", async function () {
+            it("should exit design mode and keep Live Preview visible when #toolbar-go-live is clicked in design mode", async function () {
                 await openLivePreview();
                 await enterDesignMode();
                 expect(WorkspaceManager.isInDesignMode()).toBe(true);
                 expect(livePanel().isVisible()).toBe(true);
 
-                _$("#toolbar-go-live").trigger("click");
+                // Native click — CCB intercepts via a capture-phase listener,
+                // which jQuery's `.trigger("click")` would not exercise.
+                _$("#toolbar-go-live")[0].click();
 
-                // LP hides → visible to the user.
-                await awaitsFor(function () { return !livePanel().isVisible(); },
-                    "live preview to hide", 5000);
-                // And the editor chrome comes back — design mode ends.
+                // Design mode ends — editor chrome comes back.
                 await awaitsFor(function () { return !WorkspaceManager.isInDesignMode(); },
-                    "design mode to deactivate after LP close", 5000);
+                    "design mode to deactivate after toolbar-go-live click", 5000);
+                // LP should remain open — the click in design mode must NOT hide it.
+                expect(livePanel().isVisible()).toBe(true);
 
-                // Main-toolbar should end up at the icon-bar-only width (its no-panel state).
+                // Main-toolbar should be at a real LP-panel width (well above
+                // just the icon-bar width).
                 const iconsW = _$("#plugin-icons-bar").outerWidth();
                 const toolbarW = _$("#main-toolbar").outerWidth();
-                expect(Math.abs(toolbarW - iconsW)).toBeLessThan(3);
+                expect(toolbarW).toBeGreaterThan(iconsW + 50);
+            });
+
+            it("should toggle Live Preview off normally when #toolbar-go-live is clicked outside design mode", async function () {
+                await openLivePreview();
+                expect(WorkspaceManager.isInDesignMode()).toBe(false);
+                expect(livePanel().isVisible()).toBe(true);
+
+                _$("#toolbar-go-live")[0].click();
+
+                await awaitsFor(function () { return !livePanel().isVisible(); },
+                    "live preview to hide on toolbar-go-live click", 5000);
+                expect(WorkspaceManager.isInDesignMode()).toBe(false);
             });
         });
 
