@@ -64,6 +64,24 @@ Phoenix Code allows you to open multiple terminal tabs with your preferred shell
 
 ![Image](https://docs-images.phcode.dev/in-app/terminal.png)
 
+## [All Your Tools, One Place](https://docs.phcode.dev/app-links/git)
+
+`Added in April 2026`
+
+A new tools drawer brings Git, Terminal, Problems, and more into one place. Switch between them instantly without panels getting in your way.
+
+![Image](https://docs-images.phcode.dev/in-app/bottom-panel.png)
+
+## [Phoenix Neo Themes](https://docs.phcode.dev/app-links/themes)
+
+`Added in April 2026`
+
+Meet Phoenix Dark Neo and Phoenix Light Neo - the redesigned default themes with a cleaner, modernized look.
+
+> Switch between them anytime from `View > Themes...`.
+
+![Image](https://docs-images.phcode.dev/in-app/themes-settings.png)
+
 ## [Live Preview Edit](https://docs.phcode.dev/app-links/live-preview-edit)
 
 `Added in 2025`
