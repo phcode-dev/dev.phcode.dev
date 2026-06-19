@@ -2142,6 +2142,479 @@ a, img {
     }
 }
 
+// LSP hover documentation (rendered inside #quick-view-container)
+.lsp-hover-quickview {
+    text-align: left;
+    max-width: 520px;
+    padding: 2px 4px;
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: @bc-text;
+    word-wrap: break-word;
+
+    .dark & {
+        color: @dark-bc-text;
+    }
+
+    // The documentation scrolls; the action footer below it stays pinned and always visible.
+    .lsp-hover-doc {
+        max-height: 320px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    // First block is the function/type signature (a ```ts``` fence): the visual focal point.
+    pre {
+        margin: 0 0 9px 0;
+        padding: 8px 11px;
+        background: @bc-panel-bg-alt;
+        border: 1px solid rgba(0, 0, 0, 0.10);
+        border-radius: 6px;
+        overflow-x: auto;
+        white-space: pre;
+
+        .dark & {
+            background: #1c1c1c;
+            border-color: rgba(255, 255, 255, 0.09);
+        }
+    }
+
+    pre code {
+        font-family: 'SourceCodePro', 'SF Mono', Menlo, Consolas, monospace;
+        font-size: 12px;
+        line-height: 1.5;
+        color: @bc-text-emphasized;
+        background: none;
+        padding: 0;
+        border: 0;
+
+        .dark & {
+            color: @dark-bc-text-emphasized;
+        }
+    }
+
+    // highlight.js token colours for the signature block. The app's global hljs theme is
+    // github-dark (locked, for the always-dark sidebar); override it within the hover so the
+    // signature reads well on the light theme too. The chip background follows the editor theme,
+    // so we use a GitHub-light palette in light mode and a GitHub-dark palette in dark mode.
+    pre code.hljs { background: none; }
+    .hljs-keyword, .hljs-literal, .hljs-doctag, .hljs-meta .hljs-keyword { color: #cf222e; }
+    .hljs-string, .hljs-regexp, .hljs-meta-string { color: #0a3069; }
+    .hljs-title, .hljs-title.function_, .hljs-title.class_, .hljs-section { color: #6639ba; }
+    .hljs-built_in, .hljs-type, .hljs-class .hljs-title { color: #953800; }
+    .hljs-number, .hljs-symbol, .hljs-bullet { color: #0550ae; }
+    .hljs-attr, .hljs-attribute, .hljs-property, .hljs-variable, .hljs-params { color: @bc-text-emphasized; }
+    .hljs-comment, .hljs-quote, .hljs-meta { color: #6e7781; }
+
+    .dark & {
+        .hljs-keyword, .hljs-literal, .hljs-doctag, .hljs-meta .hljs-keyword { color: #ff7b72; }
+        .hljs-string, .hljs-regexp, .hljs-meta-string { color: #a5d6ff; }
+        .hljs-title, .hljs-title.function_, .hljs-title.class_, .hljs-section { color: #d2a8ff; }
+        .hljs-built_in, .hljs-type, .hljs-class .hljs-title { color: #ffa657; }
+        .hljs-number, .hljs-symbol, .hljs-bullet { color: #79c0ff; }
+        .hljs-attr, .hljs-attribute, .hljs-property, .hljs-variable, .hljs-params { color: @dark-bc-text-emphasized; }
+        .hljs-comment, .hljs-quote, .hljs-meta { color: #8b949e; }
+    }
+
+    // Inline code: parameter names, types, identifiers.
+    code {
+        font-family: 'SourceCodePro', 'SF Mono', Menlo, Consolas, monospace;
+        font-size: 11.5px;
+        padding: 1px 5px;
+        border-radius: 4px;
+        background: rgba(0, 0, 0, 0.06);
+        color: @bc-text-emphasized;
+
+        .dark & {
+            background: rgba(255, 255, 255, 0.08);
+            color: @dark-bc-text-emphasized;
+        }
+    }
+
+    p {
+        margin: 6px 0;
+    }
+    p:first-of-type {
+        margin-top: 0;
+    }
+    p:last-child {
+        margin-bottom: 0;
+    }
+
+    // JSDoc tags (@param, @returns, ...) arrive as emphasis - present them as crisp accent labels.
+    em {
+        font-style: normal;
+        font-weight: 600;
+        color: @bc-text-link;
+
+        .dark & {
+            color: @dark-bc-text-link;
+        }
+    }
+
+    strong {
+        font-weight: 600;
+        color: @bc-text-emphasized;
+        .dark & {
+            color: @dark-bc-text-emphasized;
+        }
+    }
+
+    a {
+        color: @bc-text-link;
+        text-decoration: none;
+        .dark & {
+            color: @dark-bc-text-link;
+        }
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    // Separator between signature/sections (rendered from markdown `---`).
+    hr {
+        border: 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.08);
+        margin: 9px 0;
+        .dark & {
+            border-top-color: rgba(255, 255, 255, 0.08);
+        }
+    }
+
+    ul, ol {
+        margin: 5px 0;
+        padding-left: 18px;
+    }
+    li {
+        margin: 2px 0;
+    }
+
+    // Slim, unobtrusive scrollbar on the scrolling doc that matches both themes.
+    .lsp-hover-doc::-webkit-scrollbar {
+        width: 9px;
+        height: 9px;
+    }
+    .lsp-hover-doc::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.18);
+        border-radius: 5px;
+        .dark & {
+            background: rgba(255, 255, 255, 0.18);
+        }
+    }
+    .lsp-hover-doc::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    // Quick actions (Go to Definition / Find Usages) pinned below the documentation.
+    .lsp-hover-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 3px;
+        margin-top: 8px;
+        padding-top: 7px;
+        border-top: 1px solid rgba(0, 0, 0, 0.08);
+        .dark & {
+            border-top-color: rgba(255, 255, 255, 0.08);
+        }
+    }
+    .lsp-hover-action {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 9px;
+        border-radius: 5px;
+        cursor: pointer;
+        user-select: none;
+        color: @bc-text-link;
+        transition: background-color 0.12s ease;
+
+        .dark & {
+            color: @dark-bc-text-link;
+        }
+        &:hover,
+        &:focus {
+            outline: none;
+            background: rgba(0, 0, 0, 0.06);
+            .dark & {
+                background: rgba(255, 255, 255, 0.09);
+            }
+        }
+
+        // Push this action to the far right of the row (e.g. Find Usages).
+        &.lsp-hover-action--end {
+            margin-left: auto;
+        }
+
+        .lsp-hover-action-icon {
+            font-size: 11px;
+            opacity: 0.85;
+        }
+        .lsp-hover-action-label {
+            font-size: 12px;
+            font-weight: 500;
+        }
+    }
+}
+
+// LSP code-hint documentation popup (shown beside the code hint list)
+.lsp-hint-doc-popup {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    box-sizing: border-box;
+    width: 360px;
+    max-height: 320px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 8px 12px;
+    font-size: 12.5px;
+    line-height: 1.5;
+    word-wrap: break-word;
+
+    background: @bc-panel-bg;
+    color: @bc-text;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 6px;
+    box-shadow: 0 4px 15px @bc-shadow-large;
+
+    .dark & {
+        background: @dark-bc-panel-bg;
+        color: @dark-bc-text;
+        border-color: rgba(255, 255, 255, 0.10);
+        box-shadow: 0 4px 15px @dark-bc-shadow-large;
+    }
+
+    p { margin: 6px 0; }
+    p:first-child { margin-top: 0; }
+    p:last-child { margin-bottom: 0; }
+
+    pre {
+        margin: 6px 0;
+        padding: 8px 10px;
+        background: @bc-panel-bg-alt;
+        border: 1px solid rgba(0, 0, 0, 0.10);
+        border-radius: 5px;
+        overflow-x: auto;
+        white-space: pre;
+        .dark & {
+            background: #1c1c1c;
+            border-color: rgba(255, 255, 255, 0.09);
+        }
+    }
+    pre code {
+        font-family: 'SourceCodePro', 'SF Mono', Menlo, Consolas, monospace;
+        font-size: 12px;
+        color: @bc-text-emphasized;
+        background: none;
+        padding: 0;
+        .dark & { color: @dark-bc-text-emphasized; }
+    }
+    code {
+        font-family: 'SourceCodePro', 'SF Mono', Menlo, Consolas, monospace;
+        font-size: 11.5px;
+        padding: 1px 5px;
+        border-radius: 4px;
+        background: rgba(0, 0, 0, 0.06);
+        color: @bc-text-emphasized;
+        .dark & {
+            background: rgba(255, 255, 255, 0.08);
+            color: @dark-bc-text-emphasized;
+        }
+    }
+    em { font-style: normal; font-weight: 600; color: @bc-text-link; .dark & { color: @dark-bc-text-link; } }
+    a { color: @bc-text-link; text-decoration: none; .dark & { color: @dark-bc-text-link; } }
+    a:hover { text-decoration: underline; }
+    hr {
+        border: 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.08);
+        margin: 8px 0;
+        .dark & { border-top-color: rgba(255, 255, 255, 0.08); }
+    }
+    ul, ol { margin: 5px 0; padding-left: 18px; }
+
+    &::-webkit-scrollbar { width: 9px; }
+    &::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.18); border-radius: 5px;
+        .dark & { background: rgba(255, 255, 255, 0.18); }
+    }
+    &::-webkit-scrollbar-track { background: transparent; }
+}
+
+// LSP / language-tools code hints. Moved here from languageTools/styles/default_provider_style.css
+// now that languageTools is a core module loaded at boot (no per-extension stylesheet). Covers the
+// completion list rows, the inline signature, the type/keyword/doc decorations and the
+// parameter-hint container.
+span.brackets-hints-with-type-details {
+    width: 300px;
+    display: inline-block;
+}
+
+.brackets-hints-type-details {
+    color: #a3a3a3 !important;
+    font-weight: 100;
+    font-style: italic !important;
+    margin-right: 5px;
+    float: right;
+
+    .dark & {
+        color: #696969 !important;
+    }
+}
+
+.highlight .brackets-hints-type-details {
+    display: none;
+}
+
+.hint-description {
+    display: none;
+    color: #d4d4d4;
+    word-wrap: break-word;
+    white-space: normal;
+    box-sizing: border-box;
+
+    .dark & {
+        color: #ccc;
+    }
+}
+
+.highlight .hint-description {
+    display: block;
+    color: #6495ed !important;
+}
+
+.hint-doc {
+    display: none;
+    padding-right: 10px !important;
+    color: grey;
+    word-wrap: break-word;
+    white-space: normal;
+    box-sizing: border-box;
+    float: left;
+    clear: left;
+    max-height: 2em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1em;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+
+    .dark & {
+        color: #ccc;
+    }
+}
+
+.highlight .hint-doc {
+    display: -webkit-box;
+}
+
+.brackets-hints-keyword {
+    font-weight: 100;
+    font-style: italic !important;
+    margin-right: 5px;
+    float: right;
+    color: #6495ed !important;
+}
+
+.brackets-hints .matched-hint {
+    font-weight: 500;
+    color: #437900;
+
+    .dark & {
+        color: #74B120;
+    }
+}
+
+.codehint-menu {
+    font-family: SourceCodePro;
+}
+
+// LSP completion signature (VS Code style). The list keeps a STABLE width and each row is a flex
+// line: the label (flexible, truncates with ellipsis) and the highlighted row's signature
+// (fixed-size) sit side-by-side, so they never overlap and arrow-navigation never resizes the
+// popup. Scoped to `.lsp-hints` menus so other providers are unaffected. The full signature is in
+// the side doc popup.
+.codehint-menu.lsp-hints .dropdown-menu {
+    // Fixed width so the list never resizes while navigating (the Bootstrap dropdown is
+    // shrink-to-fit, so a min-width floor isn't enough - it would still grow per row).
+    width: 380px;
+    min-width: 380px;
+    max-width: 380px;
+}
+
+// Make the <a> the flex container so the row template's whitespace text nodes collapse (a
+// block-level .codehint-item would otherwise add an extra line box, making rows ~2x tall).
+.codehint-menu.lsp-hints li a {
+    display: flex;
+    align-items: center;
+}
+
+.codehint-menu.lsp-hints .codehint-item {
+    display: flex;
+    flex: 1 1 auto;
+    min-width: 0;
+    align-items: center;
+}
+
+.codehint-menu.lsp-hints .codehint-item > .brackets-hints {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.lsp-hint-sig {
+    display: none;
+}
+
+.highlight .lsp-hint-sig {
+    display: block;
+    flex: 0 0 auto;
+    margin-left: 12px;
+    max-width: 55%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-style: italic;
+    font-size: 11px;
+    color: rgba(0, 0, 0, 0.5);
+
+    .dark & {
+        color: rgba(255, 255, 255, 0.65);
+    }
+}
+
+#function-hint-container-new {
+    display: none;
+    background: #fff;
+    position: absolute;
+    z-index: var(--z-index-parameter-hints);
+    left: 400px;
+    top: 40px;
+    height: auto;
+    width: auto;
+    overflow: scroll;
+    padding: 1px 6px;
+    text-align: center;
+    border-radius: 3px;
+    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.24);
+
+    .dark & {
+        background: #000;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: #fff;
+        box-shadow: 0 3px 9px rgba(0, 0, 0, 0.24);
+    }
+}
+
+#function-hint-container-new .function-hint-content-new {
+    text-align: left;
+}
+
+.brackets-hints .current-parameter {
+    font-weight: 500;
+}
+
 // selection view
 #selection-view-container {
     display: none;

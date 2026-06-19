@@ -126,6 +126,7 @@ define(function (require, exports, module) {
     require("spec/Generic-integ-test");
     require("spec/spacing-auto-detect-integ-test");
     require("spec/LocalizationUtils-test");
+    require("spec/TabstopManager-test");
     require("spec/ScrollTrackHandler-integ-test");
     // Integrated extension tests
     require("spec/Extn-RemoteFileAdapter-integ-test");
@@ -149,6 +150,5 @@ define(function (require, exports, module) {
     // pro test suite optional components
     require("./pro-test-suite");
     // todo TEST_MODERN
-    // require("spec/LanguageTools-test"); LSP tests. disabled for now
     // require("spec/Menu-native-integ-test"); evaluate after we have native menus in os installed builds
 });
