@@ -2143,6 +2143,82 @@ a, img {
 }
 
 // LSP hover documentation (rendered inside #quick-view-container)
+// Problems-panel re-enable row (TypeScriptSupport/CodeIntelligence.js).
+.ts-code-intel-panel-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    border-bottom: 1px solid @bc-panel-separator;
+    background: @bc-panel-bg-promoted;
+    font-size: 13px;
+    .ts-code-intel-panel-text {
+        flex: 1;
+        color: @bc-text;
+        line-height: 1.5;
+    }
+    .ts-code-intel-panel-enable {
+        flex: none;
+        margin: 0;
+    }
+    .ts-code-intel-panel-close {
+        flex: none;
+        cursor: pointer;
+        color: @bc-text-quiet;
+        font-size: 17px;
+        line-height: 1;
+        padding: 0 2px;
+        text-decoration: none;
+        &:hover { color: @bc-text; text-decoration: none; }
+    }
+    .dark & {
+        background: @dark-bc-panel-bg-promoted;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        .ts-code-intel-panel-text { color: @dark-bc-text; }
+        .ts-code-intel-panel-close {
+            color: #888;
+            &:hover { color: @dark-bc-text; }
+        }
+    }
+}
+
+// Project-wide code intelligence toast inner layout (TypeScriptSupport/CodeIntelligence.js).
+// The surface comes from the reusable NotificationUI `SUBTLE` style; this is just the content.
+.ts-code-intel-toast {
+    .ts-code-intel-msg {
+        font-size: 12px;
+        line-height: 1.45;
+        margin: 0;
+    }
+    .ts-code-intel-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 4px 14px;
+        margin-top: 12px;
+    }
+    // flat text actions - no chunky button chrome
+    .ts-code-intel-action {
+        background: none;
+        border: none;
+        box-shadow: none;
+        margin: 0;
+        padding: 0;
+        font-size: 12px;
+        line-height: 1.6;
+        cursor: pointer;
+        color: #0a6cbf;
+        &:hover { color: #085699; text-decoration: underline; }
+        &:focus { outline: none; box-shadow: none; }
+    }
+    .dark & {
+        .ts-code-intel-action {
+            color: #6cb6ff;
+            &:hover { color: #8cc6ff; }
+        }
+    }
+}
+
 .lsp-hover-quickview {
     text-align: left;
     max-width: 520px;
@@ -2193,28 +2269,8 @@ a, img {
         }
     }
 
-    // highlight.js token colours for the signature block. The app's global hljs theme is
-    // github-dark (locked, for the always-dark sidebar); override it within the hover so the
-    // signature reads well on the light theme too. The chip background follows the editor theme,
-    // so we use a GitHub-light palette in light mode and a GitHub-dark palette in dark mode.
-    pre code.hljs { background: none; }
-    .hljs-keyword, .hljs-literal, .hljs-doctag, .hljs-meta .hljs-keyword { color: #cf222e; }
-    .hljs-string, .hljs-regexp, .hljs-meta-string { color: #0a3069; }
-    .hljs-title, .hljs-title.function_, .hljs-title.class_, .hljs-section { color: #6639ba; }
-    .hljs-built_in, .hljs-type, .hljs-class .hljs-title { color: #953800; }
-    .hljs-number, .hljs-symbol, .hljs-bullet { color: #0550ae; }
-    .hljs-attr, .hljs-attribute, .hljs-property, .hljs-variable, .hljs-params { color: @bc-text-emphasized; }
-    .hljs-comment, .hljs-quote, .hljs-meta { color: #6e7781; }
-
-    .dark & {
-        .hljs-keyword, .hljs-literal, .hljs-doctag, .hljs-meta .hljs-keyword { color: #ff7b72; }
-        .hljs-string, .hljs-regexp, .hljs-meta-string { color: #a5d6ff; }
-        .hljs-title, .hljs-title.function_, .hljs-title.class_, .hljs-section { color: #d2a8ff; }
-        .hljs-built_in, .hljs-type, .hljs-class .hljs-title { color: #ffa657; }
-        .hljs-number, .hljs-symbol, .hljs-bullet { color: #79c0ff; }
-        .hljs-attr, .hljs-attribute, .hljs-property, .hljs-variable, .hljs-params { color: @dark-bc-text-emphasized; }
-        .hljs-comment, .hljs-quote, .hljs-meta { color: #8b949e; }
-    }
+    // hljs token colours for the signature block are shared with the code-hint doc popup -
+    // see the `.lsp-hover-quickview, .lsp-hint-doc-popup` rule below.
 
     // Inline code: parameter names, types, identifiers.
     code {
@@ -2357,6 +2413,31 @@ a, img {
 }
 
 // LSP code-hint documentation popup (shown beside the code hint list)
+// Shared highlight.js token colours for both LSP popups (hover signature + code-hint docs). The
+// app's global hljs theme is github-dark (locked, for the always-dark sidebar); these override it
+// so highlighted code reads well on the light theme too - GitHub-light palette in light mode,
+// GitHub-dark in dark mode. `&` is the popup selector, so `.dark &` scopes both correctly.
+.lsp-hover-quickview, .lsp-hint-doc-popup {
+    pre code.hljs { background: none; }
+    .hljs-keyword, .hljs-literal, .hljs-doctag, .hljs-meta .hljs-keyword { color: #cf222e; }
+    .hljs-string, .hljs-regexp, .hljs-meta-string { color: #0a3069; }
+    .hljs-title, .hljs-title.function_, .hljs-title.class_, .hljs-section { color: #6639ba; }
+    .hljs-built_in, .hljs-type, .hljs-class .hljs-title { color: #953800; }
+    .hljs-number, .hljs-symbol, .hljs-bullet { color: #0550ae; }
+    .hljs-attr, .hljs-attribute, .hljs-property, .hljs-variable, .hljs-params { color: @bc-text-emphasized; }
+    .hljs-comment, .hljs-quote, .hljs-meta { color: #6e7781; }
+
+    .dark & {
+        .hljs-keyword, .hljs-literal, .hljs-doctag, .hljs-meta .hljs-keyword { color: #ff7b72; }
+        .hljs-string, .hljs-regexp, .hljs-meta-string { color: #a5d6ff; }
+        .hljs-title, .hljs-title.function_, .hljs-title.class_, .hljs-section { color: #d2a8ff; }
+        .hljs-built_in, .hljs-type, .hljs-class .hljs-title { color: #ffa657; }
+        .hljs-number, .hljs-symbol, .hljs-bullet { color: #79c0ff; }
+        .hljs-attr, .hljs-attribute, .hljs-property, .hljs-variable, .hljs-params { color: @dark-bc-text-emphasized; }
+        .hljs-comment, .hljs-quote, .hljs-meta { color: #8b949e; }
+    }
+}
+
 .lsp-hint-doc-popup {
     display: none;
     position: fixed;
@@ -3914,6 +3995,29 @@ label input {
     a {
         color: white;
         cursor: pointer;
+    }
+}
+// SUBTLE: a quiet, theme-matching surface instead of a bright colored toast.
+.notification-popup-container.style-subtle {
+    background: #ffffff;
+    color: #5a5f66;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    .notification-dialog-title {
+        color: #1c1c1c;
+        font-weight: 600;
+        font-size: 13px;
+    }
+    .notification-popup-close-button {
+        color: #9aa0a6;
+        font-weight: 400;
+    }
+    a { cursor: pointer; }
+    .dark & {
+        background: #2b2f36;
+        color: #9aa0a6;
+        border: 1px solid rgba(255, 255, 255, 0.10);
+        .notification-dialog-title { color: #eceef0; }
+        .notification-popup-close-button { color: #9aa0a6; }
     }
 }
 
