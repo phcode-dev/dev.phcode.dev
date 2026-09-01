@@ -1,0 +1,939 @@
+/*
+ * GNU AGPL-3.0 License
+ *
+ * Copyright (c) 2021 - present core.ai . All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see https://opensource.org/licenses/AGPL-3.0.
+ *
+ */
+
+/* Layers sidebar tab — the live preview element tree and element details. */
+
+@layers-accent:         #6b9eff;
+@layers-accent-soft:    rgba(107, 158, 255, 0.16);
+@layers-accent-strong:  rgba(107, 158, 255, 0.26);
+@layers-hover-bg:       rgba(255, 255, 255, 0.06);
+@layers-border:         rgba(255, 255, 255, 0.09);
+@layers-input-bg:       rgba(255, 255, 255, 0.04);
+@layers-input-bg-focus: rgba(255, 255, 255, 0.06);
+@layers-row-height:     22px;
+@layers-indent:         12px;
+@layers-mono:           ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+@layers-prop-name:      #9cdcfe;
+@layers-prop-value:     #ce9178;
+@layers-row-bg:         @bc-ai-sidebar-bg;
+@layers-row-hover-bg:   mix(#ffffff, @bc-ai-sidebar-bg, 6%);
+@layers-row-select-bg:  mix(#ffffff, @bc-ai-sidebar-bg, 9%);
+@layers-row-focus-bg:   mix(fade(@bc-sidebar-selection, 100%), @bc-ai-sidebar-bg, 30%);
+
+.layers-tab-container {
+    display: flex;
+    flex-direction: column;
+    -webkit-box-flex: 1;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    position: relative;
+    background-color: @bc-ai-sidebar-bg;
+    color: @project-panel-text-1;
+    font-size: @sidebar-small-font-size;
+
+    .layers-hidden {
+        display: none !important;
+    }
+
+    .layers-message {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        justify-content: safe center;
+        -webkit-box-flex: 1;
+        flex: 1;
+        width: 100%;
+        min-width: 0;
+        min-height: 0;
+        padding: 24px 14px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        text-align: center;
+        white-space: normal;
+        overflow-wrap: break-word;
+        word-break: break-word;
+    }
+
+    .layers-message-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: none;
+        width: 44px;
+        height: 44px;
+        margin-bottom: 14px;
+        border: 1px solid @layers-border;
+        border-radius: 50%;
+        background: @layers-accent-soft;
+        color: @layers-accent;
+        font-size: 17px;
+    }
+
+    .layers-message-title {
+        max-width: 100%;
+        margin-bottom: 5px;
+        font-size: @sidebar-content-font-size;
+        font-weight: 600;
+        line-height: 1.35;
+        color: @project-panel-text-1;
+    }
+
+    .layers-message-text {
+        max-width: 240px;
+        color: @project-panel-text-2;
+        line-height: 1.5;
+    }
+
+    .layers-message-btn {
+        box-sizing: border-box;
+        max-width: 100%;
+        margin-top: 16px;
+        padding: 7px 16px;
+        border: 1px solid @layers-accent;
+        border-radius: 6px;
+        background: @layers-accent-soft;
+        color: @project-panel-text-1;
+        font-family: inherit;
+        font-size: @sidebar-small-font-size;
+        font-weight: 500;
+        line-height: 1.35;
+        white-space: normal;
+        cursor: pointer;
+        outline: none;
+        transition: background-color 120ms ease, border-color 120ms ease;
+
+        &:hover {
+            background: @layers-accent-strong;
+        }
+
+        &:active {
+            background: @layers-accent-strong;
+            transform: translateY(1px);
+        }
+
+        &:focus-visible {
+            box-shadow: 0 0 0 2px @layers-accent-soft;
+        }
+    }
+
+    .layers-panel {
+        display: flex;
+        flex-direction: column;
+        -webkit-box-flex: 1;
+        flex: 1;
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    .layers-section {
+        display: flex;
+        flex-direction: column;
+        flex-grow: var(--layers-grow, 1);
+        flex-shrink: 1;
+        flex-basis: 0;
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    .layers-section.layers-collapsed {
+        flex: 0 0 auto;
+    }
+
+    .layers-section-properties .layers-section-content,
+    .layers-section-styles .layers-section-content {
+        padding: 2px 8px 10px;
+    }
+
+    .layers-section-header {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        height: 26px;
+        padding: 0 6px 0 2px;
+        flex-shrink: 0;
+        box-sizing: border-box;
+        cursor: pointer;
+        user-select: none;
+        font-size: @sidebar-xs-font-size;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: @project-panel-text-1;
+
+        &:hover {
+            background: @layers-hover-bg;
+        }
+    }
+
+    .layers-chevron {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 18px;
+        height: 18px;
+        flex: none;
+        color: @project-panel-text-2;
+
+        svg {
+            width: 18px;
+            height: 18px;
+            transition: transform 120ms ease;
+        }
+    }
+
+    .layers-collapsed > .layers-section-header .layers-chevron svg {
+        transform: rotate(-90deg);
+    }
+
+    .layers-section-title {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .layers-section-actions {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        margin-left: auto;
+        flex-shrink: 0;
+        opacity: 0;
+    }
+
+    .layers-section-header:hover .layers-section-actions,
+    .layers-section-actions:focus-within,
+    .layers-menu-open .layers-section-actions {
+        opacity: 1;
+    }
+
+    .layers-hdr-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 22px;
+        height: 22px;
+        padding: 0;
+        margin: 0;
+        border: none;
+        border-radius: 4px;
+        background: none;
+        color: @project-panel-text-2;
+        cursor: pointer;
+        outline: none;
+
+        svg {
+            width: 15px;
+            height: 15px;
+            display: block;
+            flex: none;
+        }
+
+        &:hover {
+            background: @layers-hover-bg;
+            color: @project-panel-text-1;
+        }
+
+        &.layers-active {
+            background: @layers-accent-soft;
+            color: @layers-accent;
+
+            &:hover {
+                background: @layers-accent-strong;
+            }
+        }
+    }
+
+
+    .layers-section-content {
+        position: relative;
+        flex: 1;
+        min-height: 0;
+        overflow: auto;
+    }
+
+    .layers-section.layers-collapsed .layers-section-content,
+    .layers-section.layers-collapsed .layers-search {
+        display: none;
+    }
+
+    .layers-divider {
+        position: relative;
+        flex: 0 0 5px;
+        height: 5px;
+        cursor: row-resize;
+
+        &::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 2px;
+            height: 1px;
+            background: @layers-border;
+        }
+
+        &:hover::after,
+        &.layers-dragging::after {
+            height: 2px;
+            background: @layers-accent;
+        }
+    }
+
+    .layers-divider.layers-no-resize {
+        cursor: default;
+
+        &:hover::after {
+            height: 1px;
+            background: @layers-border;
+        }
+    }
+
+
+    .layers-search {
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+        padding: 2px 8px 6px;
+    }
+
+    .layers-search-box {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        width: 100%;
+        height: 26px;
+        padding: 0 6px 0 8px;
+        box-sizing: border-box;
+        border: 1px solid @layers-border;
+        border-radius: 6px;
+        background: @layers-input-bg;
+
+        &:focus-within {
+            border-color: @layers-accent;
+            background: @layers-input-bg-focus;
+        }
+
+        > svg {
+            width: 13px;
+            height: 13px;
+            flex: none;
+            color: @project-panel-text-2;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            min-width: 0;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            border: none;
+            outline: none;
+            box-shadow: none;
+            background: transparent;
+            color: @project-panel-text-1;
+            font-family: inherit;
+            font-size: @sidebar-small-font-size;
+
+            &::placeholder {
+                color: @project-panel-text-2;
+                opacity: 0.75;
+            }
+        }
+    }
+
+    .layers-search-clear {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+        padding: 0;
+        margin: 0;
+        border: none;
+        border-radius: 4px;
+        background: transparent;
+        color: @project-panel-text-2;
+        cursor: pointer;
+        outline: none;
+        flex: none;
+
+        svg {
+            width: 11px;
+            height: 11px;
+            display: block;
+        }
+
+        &:hover {
+            background: @layers-hover-bg;
+            color: @project-panel-text-1;
+        }
+
+        &.layers-hidden {
+            display: none;
+        }
+    }
+
+    .layers-tree {
+        padding-bottom: 6px;
+        min-width: min-content;
+        outline: none;
+    }
+
+    .layers-tree:focus .layers-node.layers-selected {
+        background: @layers-row-focus-bg;
+    }
+
+    .layers-node.layers-cursor:not(.layers-selected) {
+        background: @layers-hover-bg;
+        box-shadow: inset 2px 0 0 fade(@layers-accent, 55%);
+    }
+
+    .layers-tree.layers-kbd-nav .layers-node:hover:not(.layers-selected):not(.layers-cursor) {
+        background: transparent;
+    }
+
+    .layers-tree.layers-kbd-nav .layers-node:hover .layers-node-actions {
+        display: none;
+    }
+
+    .layers-node.layers-flash {
+        animation: layers-flash-row 800ms ease-out;
+    }
+
+    .layers-node {
+        display: flex;
+        align-items: center;
+        height: @layers-row-height;
+        padding-right: 6px;
+        box-sizing: border-box;
+        white-space: nowrap;
+        cursor: default;
+        user-select: none;
+
+        &:hover {
+            background: @layers-hover-bg;
+        }
+
+        &.layers-selected {
+            background: @layers-row-select-bg;
+        }
+    }
+
+    .layers-twisty {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+        flex: none;
+        color: @project-panel-text-2;
+
+        svg {
+            width: 14px;
+            height: 14px;
+        }
+    }
+
+    .layers-node.layers-collapsed-node .layers-twisty svg {
+        transform: rotate(-90deg);
+    }
+
+    .layers-node-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 14px;
+        height: 14px;
+        flex: none;
+        margin-right: 5px;
+        color: @project-panel-text-2;
+
+        svg {
+            width: 14px;
+            height: 14px;
+            display: block;
+        }
+    }
+
+    .layers-node-tag {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: @project-panel-text-1;
+    }
+
+    .layers-node-actions {
+        display: none;
+        align-items: center;
+        gap: 1px;
+        position: sticky;
+        right: 0;
+        margin-left: auto;
+        padding-left: 6px;
+        flex: none;
+        background: @layers-row-bg;
+    }
+
+    .layers-node:hover .layers-node-actions,
+    .layers-node.layers-actions-open .layers-node-actions,
+    .layers-node-actions:focus-within {
+        display: flex;
+    }
+
+    .layers-node:hover .layers-node-actions {
+        background: @layers-row-hover-bg;
+    }
+
+    .layers-node.layers-selected .layers-node-actions {
+        background: @layers-row-select-bg;
+    }
+
+    .layers-tree:focus .layers-node.layers-selected .layers-node-actions {
+        background: @layers-row-focus-bg;
+    }
+
+    .layers-node-action {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 18px;
+        height: 18px;
+        padding: 0;
+        margin: 0;
+        border: none;
+        border-radius: 3px;
+        background: none;
+        color: @project-panel-text-2;
+        cursor: pointer;
+        outline: none;
+        flex: none;
+
+        svg {
+            width: 12px;
+            height: 12px;
+            display: block;
+        }
+
+        &:hover {
+            background: @layers-hover-bg;
+            color: @project-panel-text-1;
+        }
+
+        &.layers-disabled {
+            opacity: 0.3;
+            cursor: default;
+            pointer-events: none;
+        }
+    }
+
+    .layers-node-grip {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 14px;
+        height: 18px;
+        flex: none;
+        color: @project-panel-text-2;
+        cursor: grab;
+
+        svg {
+            width: 12px;
+            height: 12px;
+            display: block;
+        }
+
+        &:hover {
+            color: @project-panel-text-1;
+        }
+    }
+
+    .layers-node-text {
+        color: @project-panel-text-2;
+        font-style: italic;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .layers-drop-line {
+        position: absolute;
+        right: 0;
+        height: 2px;
+        margin-top: -1px;
+        background: @layers-accent;
+        pointer-events: none;
+        z-index: 2;
+
+        &::before {
+            content: "";
+            position: absolute;
+            left: -3px;
+            top: -2px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: @layers-accent;
+        }
+    }
+
+    .layers-node.layers-drop-into {
+        box-shadow: inset 0 0 0 1px @layers-accent;
+        background: @layers-accent-soft;
+    }
+
+    .layers-empty {
+        padding: 10px 12px;
+        color: @project-panel-text-2;
+    }
+
+    .layers-label {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: @project-panel-text-2;
+        user-select: none;
+    }
+
+    .layers-prop-row {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        min-height: 24px;
+
+        .layers-label {
+            flex: 0 0 44px;
+        }
+    }
+
+    .layers-prop-input[type="text"] {
+        flex: 1;
+        min-width: 0;
+        height: 22px;
+        padding: 0 5px;
+        margin: 0;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        outline: none;
+        box-shadow: none;
+        background: transparent;
+        color: @project-panel-text-1;
+        font-family: @layers-mono;
+        font-size: @sidebar-xs-font-size;
+        text-overflow: ellipsis;
+
+        &::placeholder {
+            color: @project-panel-text-2;
+            opacity: 0.6;
+        }
+
+        &:hover:not([readonly]) {
+            border-color: @layers-border;
+            background: @layers-input-bg;
+        }
+
+        &:focus {
+            border-color: @layers-accent;
+            background: @layers-input-bg-focus;
+            text-overflow: clip;
+        }
+
+        &[readonly] {
+            color: @project-panel-text-2;
+            cursor: default;
+        }
+    }
+
+    .layers-attrs {
+        margin-top: 6px;
+    }
+
+    .layers-attrs-header {
+        display: flex;
+        align-items: center;
+        min-height: 20px;
+
+        .layers-label {
+            flex: 1;
+        }
+
+        .layers-icon-btn {
+            opacity: 0;
+        }
+    }
+
+    .layers-attrs:hover .layers-attrs-header .layers-icon-btn,
+    .layers-attrs-header .layers-icon-btn:focus {
+        opacity: 1;
+    }
+
+    .layers-attrs-none {
+        padding: 2px 0 2px 5px;
+        color: @project-panel-text-2;
+        opacity: 0.7;
+    }
+
+    .layers-attr-row {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        min-height: 24px;
+
+        .layers-icon-btn {
+            opacity: 0;
+        }
+
+        &:hover .layers-icon-btn,
+        .layers-icon-btn:focus {
+            opacity: 1;
+        }
+    }
+
+    .layers-attr-name {
+        flex: 0 1 auto;
+        min-width: 44px;
+        max-width: 45%;
+        padding-left: 5px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-family: @layers-mono;
+        font-size: @sidebar-xs-font-size;
+        color: @layers-prop-name;
+    }
+
+    .layers-attr-row [data-role="name"] {
+        flex: 0 0 44px;
+        color: @layers-prop-name;
+    }
+
+    .layers-decl {
+        display: flex;
+        align-items: baseline;
+        gap: 4px;
+        min-height: 20px;
+        padding-left: 8px;
+        font-family: @layers-mono;
+        font-size: @sidebar-xs-font-size;
+        user-select: text;
+
+        &:hover {
+            background: @layers-hover-bg;
+        }
+    }
+
+    .layers-decl-name {
+        flex: none;
+        color: @layers-prop-name;
+    }
+
+    .layers-decl-sep {
+        flex: none;
+        color: @project-panel-text-2;
+    }
+
+    .layers-decl-value {
+        flex: 1;
+        min-width: 0;
+        color: @layers-prop-value;
+        word-break: break-all;
+    }
+
+    .layers-decl.layers-overridden {
+        .layers-decl-name,
+        .layers-decl-value {
+            text-decoration: line-through;
+            color: @project-panel-text-2;
+        }
+    }
+
+    .layers-icon-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 18px;
+        height: 18px;
+        padding: 0;
+        margin: 0;
+        border: none;
+        border-radius: 4px;
+        background: none;
+        color: @project-panel-text-2;
+        cursor: pointer;
+        outline: none;
+        flex: none;
+        align-self: center;
+
+        svg {
+            width: 12px;
+            height: 12px;
+            display: block;
+        }
+
+        &:hover {
+            background: @layers-hover-bg;
+            color: @project-panel-text-1;
+        }
+    }
+
+    .layers-decl .layers-icon-btn {
+        opacity: 0;
+    }
+
+    .layers-decl:hover .layers-icon-btn,
+    .layers-decl .layers-icon-btn:focus {
+        opacity: 1;
+    }
+
+    .layers-rule {
+        margin-bottom: 6px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid @layers-border;
+
+        &:last-child {
+            margin-bottom: 0;
+            border-bottom: none;
+        }
+
+        &.layers-inactive {
+            opacity: 0.6;
+        }
+    }
+
+    .layers-rule-header {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        min-height: 20px;
+    }
+
+    .layers-rule-selector {
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-family: @layers-mono;
+        font-size: @sidebar-xs-font-size;
+        color: @project-panel-text-1;
+    }
+
+    .layers-rule-source {
+        flex: none;
+        max-width: 45%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 10px;
+        color: @project-panel-text-2;
+        cursor: pointer;
+
+        &:hover {
+            color: @layers-accent;
+            text-decoration: underline;
+        }
+    }
+}
+
+body.layers-resizing {
+    cursor: row-resize;
+    user-select: none;
+}
+
+.dropdownbutton-popup.layers-menu-popup {
+    max-height: 80vh;
+}
+
+.layers-menu-popup .layers-menu-check {
+    display: inline-block;
+    width: 12px;
+}
+
+.layers-menu-popup .layers-menu-icon {
+    display: inline-block;
+    width: 13px;
+    margin-right: 7px;
+    vertical-align: -2px;
+
+    svg {
+        width: 13px;
+        height: 13px;
+        display: block;
+    }
+}
+
+body.layers-dnd {
+    cursor: grabbing;
+    user-select: none;
+
+    .layers-node-grip {
+        cursor: grabbing;
+    }
+}
+
+body.layers-dnd-invalid {
+    cursor: no-drop;
+}
+
+.layers-drag-ghost {
+    position: fixed;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 2px 8px 2px 6px;
+    border: 1px solid rgba(107, 158, 255, 0.5);
+    border-radius: 4px;
+    background: #2f2f2f;
+    color: #e0e0e0;
+    font-size: 12px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0.92;
+
+    svg {
+        width: 14px;
+        height: 14px;
+        display: block;
+    }
+}
+
+@keyframes layers-flash-row {
+    0% {
+        background-color: fade(@layers-accent, 45%);
+    }
+
+    60% {
+        background-color: fade(@layers-accent, 32%);
+    }
+
+    100% {
+        background-color: transparent;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .layers-tab-container .layers-node.layers-flash {
+        animation-duration: 1ms;
+        background-color: fade(@layers-accent, 32%);
+    }
+}
