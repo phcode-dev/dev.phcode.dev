@@ -27,15 +27,43 @@
 @layers-border:         rgba(255, 255, 255, 0.09);
 @layers-input-bg:       rgba(255, 255, 255, 0.04);
 @layers-input-bg-focus: rgba(255, 255, 255, 0.06);
-@layers-row-height:     22px;
-@layers-indent:         12px;
+@layers-row-height:     26px;
+@layers-indent:         14px;
 @layers-mono:           ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 @layers-prop-name:      #9cdcfe;
 @layers-prop-value:     #ce9178;
 @layers-row-bg:         @bc-ai-sidebar-bg;
 @layers-row-hover-bg:   mix(#ffffff, @bc-ai-sidebar-bg, 6%);
-@layers-row-select-bg:  mix(#ffffff, @bc-ai-sidebar-bg, 9%);
-@layers-row-focus-bg:   mix(fade(@bc-sidebar-selection, 100%), @bc-ai-sidebar-bg, 30%);
+@layers-row-select-bg:  mix(@layers-accent, @bc-ai-sidebar-bg, 16%);
+
+.layers-icon-button() {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    margin: 0;
+    border: none;
+    border-radius: 4px;
+    background: none;
+    color: @project-panel-text-2;
+    cursor: pointer;
+    outline: none;
+    flex: none;
+
+    svg {
+        width: 13px;
+        height: 13px;
+        display: block;
+        flex: none;
+    }
+
+    &:hover {
+        background: @layers-hover-bg;
+        color: @project-panel-text-1;
+    }
+}
 
 .layers-tab-container {
     display: flex;
@@ -48,6 +76,8 @@
     background-color: @bc-ai-sidebar-bg;
     color: @project-panel-text-1;
     font-size: @sidebar-small-font-size;
+    letter-spacing: normal;
+    text-shadow: none;
 
     .layers-hidden {
         display: none !important;
@@ -227,31 +257,7 @@
     }
 
     .layers-hdr-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 22px;
-        height: 22px;
-        padding: 0;
-        margin: 0;
-        border: none;
-        border-radius: 4px;
-        background: none;
-        color: @project-panel-text-2;
-        cursor: pointer;
-        outline: none;
-
-        svg {
-            width: 15px;
-            height: 15px;
-            display: block;
-            flex: none;
-        }
-
-        &:hover {
-            background: @layers-hover-bg;
-            color: @project-panel-text-1;
-        }
+        .layers-icon-button();
 
         &.layers-active {
             background: @layers-accent-soft;
@@ -262,7 +268,6 @@
             }
         }
     }
-
 
     .layers-section-content {
         position: relative;
@@ -397,15 +402,7 @@
         padding-bottom: 6px;
         min-width: min-content;
         outline: none;
-    }
-
-    .layers-tree:focus .layers-node.layers-selected {
-        background: @layers-row-focus-bg;
-    }
-
-    .layers-node.layers-cursor:not(.layers-selected) {
-        background: @layers-hover-bg;
-        box-shadow: inset 2px 0 0 fade(@layers-accent, 55%);
+        font-size: @sidebar-content-font-size;
     }
 
     .layers-tree.layers-kbd-nav .layers-node:hover:not(.layers-selected):not(.layers-cursor) {
@@ -436,6 +433,26 @@
 
         &.layers-selected {
             background: @layers-row-select-bg;
+            box-shadow: inset 2px 0 0 @layers-accent;
+        }
+
+        &.layers-cursor {
+            background: @layers-hover-bg;
+            box-shadow: inset 2px 0 0 fade(@layers-accent, 70%);
+        }
+
+        &.layers-cursor-ancestor {
+            box-shadow: inset 2px 0 0 fade(@layers-accent, 35%);
+        }
+
+        &.layers-moving {
+            position: relative;
+            z-index: 1;
+            transition: transform 260ms cubic-bezier(0.2, 0, 0, 1);
+        }
+
+        &.layers-spring {
+            animation: layers-spring-row 600ms ease-in-out;
         }
     }
 
@@ -446,11 +463,12 @@
         width: 16px;
         height: 16px;
         flex: none;
+        margin-right: 6px;
         color: @project-panel-text-2;
 
         svg {
-            width: 14px;
-            height: 14px;
+            width: 15px;
+            height: 15px;
         }
     }
 
@@ -462,15 +480,15 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 14px;
-        height: 14px;
+        width: 15px;
+        height: 15px;
         flex: none;
-        margin-right: 5px;
+        margin-right: 6px;
         color: @project-panel-text-2;
 
         svg {
-            width: 14px;
-            height: 14px;
+            width: 15px;
+            height: 15px;
             display: block;
         }
     }
@@ -508,36 +526,12 @@
         background: @layers-row-select-bg;
     }
 
-    .layers-tree:focus .layers-node.layers-selected .layers-node-actions {
-        background: @layers-row-focus-bg;
+    .layers-node.layers-cursor .layers-node-actions {
+        background: @layers-row-hover-bg;
     }
 
     .layers-node-action {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 18px;
-        height: 18px;
-        padding: 0;
-        margin: 0;
-        border: none;
-        border-radius: 3px;
-        background: none;
-        color: @project-panel-text-2;
-        cursor: pointer;
-        outline: none;
-        flex: none;
-
-        svg {
-            width: 12px;
-            height: 12px;
-            display: block;
-        }
-
-        &:hover {
-            background: @layers-hover-bg;
-            color: @project-panel-text-1;
-        }
+        .layers-icon-button();
 
         &.layers-disabled {
             opacity: 0.3;
@@ -550,15 +544,15 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 14px;
-        height: 18px;
+        width: 16px;
+        height: 20px;
         flex: none;
         color: @project-panel-text-2;
         cursor: grab;
 
         svg {
-            width: 12px;
-            height: 12px;
+            width: 13px;
+            height: 13px;
             display: block;
         }
 
@@ -577,22 +571,12 @@
     .layers-drop-line {
         position: absolute;
         right: 0;
-        height: 2px;
+        height: 3px;
         margin-top: -1px;
+        border-radius: 2px;
         background: @layers-accent;
         pointer-events: none;
         z-index: 2;
-
-        &::before {
-            content: "";
-            position: absolute;
-            left: -3px;
-            top: -2px;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: @layers-accent;
-        }
     }
 
     .layers-node.layers-drop-into {
@@ -767,32 +751,8 @@
     }
 
     .layers-icon-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 18px;
-        height: 18px;
-        padding: 0;
-        margin: 0;
-        border: none;
-        border-radius: 4px;
-        background: none;
-        color: @project-panel-text-2;
-        cursor: pointer;
-        outline: none;
-        flex: none;
+        .layers-icon-button();
         align-self: center;
-
-        svg {
-            width: 12px;
-            height: 12px;
-            display: block;
-        }
-
-        &:hover {
-            background: @layers-hover-bg;
-            color: @project-panel-text-1;
-        }
     }
 
     .layers-decl .layers-icon-btn {
@@ -931,9 +891,34 @@ body.layers-dnd-invalid {
     }
 }
 
+@keyframes layers-spring-row {
+    0%, 100% {
+        background-color: @layers-accent-soft;
+        box-shadow: inset 0 0 0 1px @layers-accent;
+    }
+
+    25%, 75% {
+        background-color: transparent;
+        box-shadow: inset 0 0 0 1px transparent;
+    }
+
+    50% {
+        background-color: @layers-accent-soft;
+        box-shadow: inset 0 0 0 1px @layers-accent;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     .layers-tab-container .layers-node.layers-flash {
         animation-duration: 1ms;
         background-color: fade(@layers-accent, 32%);
+    }
+
+    .layers-tab-container .layers-node.layers-moving {
+        transition: none;
+    }
+
+    .layers-tab-container .layers-node.layers-spring {
+        animation: none;
     }
 }
