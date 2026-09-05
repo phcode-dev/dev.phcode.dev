@@ -39,7 +39,7 @@
             "ruff": "0.16.5"
         },
         "linting.enabled_by_default": true,
-        "build_timestamp": "2026-09-05T13:04:09.483Z",
+        "build_timestamp": "2026-09-05T13:19:13.325Z",
         "googleAnalyticsID": "G-FP5S9BKDSJ",
         "googleAnalyticsIDDesktop": "G-D5R1Y6PTS8",
         "mixPanelID": "a7e08ffd43c37767c29b13df1d2e6c62",
@@ -51,7 +51,7 @@
         "bugsnagEnv": "staging"
     },
     "name": "Phoenix Code",
-    "version": "5.5.3-23418",
+    "version": "5.5.3-23419",
     "apiVersion": "5.5.3",
     "homepage": "https://core.ai",
     "issues": {
