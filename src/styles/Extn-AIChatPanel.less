@@ -62,6 +62,7 @@
 }
 
 .ai-chat-panel {
+    position: relative; // anchors .ai-scroll-to-bottom-btn
     display: flex;
     flex-direction: column;
     -webkit-box-flex: 1;
@@ -873,6 +874,34 @@
     background-color: @bc-ai-sidebar-bg;
 }
 
+// Floating "scroll to bottom" control over the lower right of the message
+// list; shown by AIChatPanel._updateScrollToBottomBtn while the list is
+// scrolled away from its end (top is set from the list's bottom edge).
+.ai-scroll-to-bottom-btn {
+    position: absolute;
+    right: 18px;
+    z-index: 5;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background-color: #3a3a3a;
+    color: @project-panel-text-1;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    font-size: @ai-text-secondary;
+    opacity: 0.9;
+
+    &:hover {
+        opacity: 1;
+        background-color: #454545;
+    }
+}
+
 /* ── Individual messages ────────────────────────────────────────────── */
 .ai-msg {
     margin-bottom: 16px;
@@ -882,6 +911,15 @@
     // it was `display: none` otherwise costs ~750ms of synchronous reflow.
     content-visibility: auto;
     contain-intrinsic-size: auto 300px;
+
+    // A message appended at the bottom is laid out as the 300px placeholder
+    // for one frame before it renders, which makes a bottom-pinned list
+    // jolt on every new card or bubble. The newest messages are on screen
+    // anyway, so render them normally; once older, they carry a remembered
+    // size and switch to `auto` without a size change.
+    &:nth-last-child(-n + 5) {
+        content-visibility: visible;
+    }
 
     .ai-msg-label {
         font-size: @ai-text-meta;
@@ -1203,6 +1241,33 @@
         padding: 2px 10px 6px 28px;
     }
 
+    // Text detail (command, path, code lines) only — task lists and subagent
+    // step lists share .ai-tool-detail but always show in full.
+    .ai-tool-detail.ai-tool-detail-lines {
+        // A long command or script must not turn the card into a wall of
+        // text: cap the detail at roughly nine lines and scroll inside it.
+        max-height: 160px;
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        // The global scrollbar theme paints the thumb only while hovering
+        // the scrolling element itself, which hides the fact that there is
+        // more text below the cap. Show it while the pointer is anywhere
+        // over the AI panel instead.
+        &::-webkit-scrollbar {
+            background-color: transparent;
+        }
+        .ai-chat-panel:hover &::-webkit-scrollbar-thumb {
+            border-radius: 999px;
+            background-color: rgba(255, 255, 255, 0.28);
+            background-clip: padding-box;
+            border: 2px solid transparent;
+        }
+        .ai-chat-panel:hover &::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(255, 255, 255, 0.45);
+        }
+    }
+
     .ai-tool-screenshot {
         max-width: 100%;
         border-radius: 4px;
@@ -1222,6 +1287,27 @@
         line-height: @ai-line-compact;
         white-space: normal;
         word-break: break-all;
+    }
+
+    // Restored cards keep only the beginning of a long detail; this note
+    // sits under the kept text so the cut is unmistakable.
+    .ai-tool-detail-truncated {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 4px;
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-size: @ai-text-meta;
+        font-style: italic;
+        color: #e8a838;
+        background-color: rgba(232, 168, 56, 0.08);
+        border: 1px dashed rgba(232, 168, 56, 0.45);
+        line-height: @ai-line-compact;
+
+        i {
+            flex-shrink: 0;
+        }
     }
 
     .ai-tool-preview {
@@ -1258,6 +1344,21 @@
     // Expand chevron hint
     &.ai-tool-done .ai-tool-header:hover .ai-tool-label {
         opacity: 1;
+    }
+
+    // Copy button at the right edge of the header row, identical to the
+    // markdown code block one (icon + "Copy", "Copied!" with a tick); copies
+    // the card's detail lines. Only present while the card is expanded:
+    // there is nothing to copy from a card whose detail is hidden.
+    .ai-tool-header .ai-tool-copy-btn {
+        display: none;
+        margin-left: auto;
+        flex-shrink: 0;
+        transition: background-color 0.15s ease, color 0.15s ease;
+    }
+
+    &.ai-tool-expanded .ai-tool-header .ai-tool-copy-btn {
+        display: inline-block;
     }
 
     // Inline edit actions (diff toggle) — sits at the right edge of the
@@ -1418,6 +1519,238 @@
         color: @project-panel-text-2;
         opacity: 0.5;
         margin-left: auto;
+    }
+}
+
+/* ── Failed tool call ──────────────────────────────────────────────── */
+// A card whose call returned an error: red accent and a "failed" note at
+// the right of its header. Set by AIToolGroup.markCardFailed, live and on
+// restore; the pile header counts these.
+.ai-msg-tool.ai-tool-failed {
+    border-left-color: #e57373;
+
+    .ai-tool-copy-btn + .ai-tool-failed-tag {
+        margin-left: 6px;
+    }
+
+    .ai-tool-failed-tag {
+        margin-left: auto;
+        flex-shrink: 0;
+        font-size: @ai-text-meta;
+        line-height: 1;
+        padding: 2px 6px;
+        border-radius: 8px;
+        color: #e57373;
+        border: 1px solid rgba(229, 115, 115, 0.45);
+        background-color: rgba(229, 115, 115, 0.08);
+    }
+}
+
+/* ── Collapsed run of finished tool cards ──────────────────────────── */
+// A long run of finished tool cards (e.g. 20 "Ran command" rows) folds into
+// one of these; see core-ai/AIToolGroup.js. Collapsed, it is drawn as a
+// stack of cards: the header card on top with two offset card edges
+// peeking out below it, so the pile reads as "several cards" at a glance.
+// The header shows the distinct tool icons and the step count, and expands
+// to the original cards on click.
+@ai-tool-group-stack-step: 3px;
+
+.ai-tool-group {
+    position: relative;
+    margin-bottom: 6px;
+    // room for the two stacked card edges below the header
+    padding-bottom: (@ai-tool-group-stack-step * 2);
+
+    .ai-tool-group-header {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        flex-wrap: wrap; // the read-files abstract wraps onto its own line
+        align-items: center;
+        gap: 6px;
+        padding: 6px 10px;
+        cursor: pointer;
+        border-radius: 4px;
+        background-color: @bc-ai-sidebar-bg;
+        background-image: linear-gradient(rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.035));
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-left: 2px solid var(--tool-color, @project-panel-text-2);
+        min-width: 0;
+
+        &:hover .ai-tool-group-label {
+            opacity: 1;
+        }
+    }
+
+    // The two card edges "behind" the header. Each is narrower and lower
+    // than the one above it, like a fanned pile of cards.
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 10px;
+        border-radius: 0 0 4px 4px;
+        background-color: @bc-ai-sidebar-bg;
+        background-image: linear-gradient(rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.02));
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-top: none;
+        pointer-events: none;
+    }
+
+    &::before {
+        z-index: 1;
+        left: 4px;
+        right: 4px;
+        bottom: @ai-tool-group-stack-step;
+    }
+
+    &::after {
+        z-index: 0;
+        left: 8px;
+        right: 8px;
+        bottom: 0;
+    }
+
+    .ai-tool-group-chevron {
+        width: 14px;
+        text-align: center;
+        flex-shrink: 0;
+        font-size: @ai-text-meta;
+        color: @project-panel-text-2;
+        opacity: 0.6;
+        transition: transform 0.15s ease;
+    }
+
+    .ai-tool-group-icons {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        flex-shrink: 0;
+    }
+
+    .ai-tool-group-icon {
+        font-size: @ai-text-secondary;
+        width: 14px;
+        text-align: center;
+    }
+
+    .ai-tool-group-label {
+        font-size: @ai-text-body;
+        color: @project-panel-text-2;
+        opacity: 0.75;
+        line-height: @ai-line-compact;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-width: 0;
+    }
+
+    // "N failed" note before the count pill, only when a collated tool call
+    // returned an error.
+    .ai-tool-group-failed {
+        margin-left: auto;
+        flex-shrink: 0;
+        font-size: @ai-text-meta;
+        color: #e57373;
+        opacity: 0.9;
+        white-space: nowrap;
+    }
+
+    .ai-tool-group-body {
+        display: none;
+        margin-top: 4px;
+        padding-left: 8px;
+        border-left: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    // Second header line: the Read icon then "a.html, b.css +3 more", most
+    // recent first. Hidden while the pile is expanded since the cards show.
+    .ai-tool-group-summary {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-basis: 100%;
+        margin-top: -2px;
+        padding-left: 20px; // under the label, past the chevron column
+        font-size: @ai-text-meta;
+        color: @project-panel-text-2;
+        opacity: 0.7;
+        min-width: 0;
+
+        .ai-tool-group-summary-icon {
+            width: 14px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .ai-tool-group-summary-text {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-width: 0;
+        }
+    }
+
+    &.ai-tool-group-expanded .ai-tool-group-summary {
+        display: none;
+    }
+
+    // Label bump when a card lands in the pile.
+    .ai-tool-group-label.ai-tool-group-label-bump {
+        animation: ai-tool-group-label-bump 0.3s ease-out;
+        transform-origin: left center;
+    }
+
+    &.ai-tool-group-expanded {
+        padding-bottom: 0;
+
+        &::before,
+        &::after {
+            display: none;
+        }
+
+        .ai-tool-group-chevron {
+            transform: rotate(90deg);
+        }
+
+        .ai-tool-group-body {
+            display: block;
+        }
+    }
+}
+
+@keyframes ai-tool-group-label-bump {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.12); }
+    100% { transform: scale(1); }
+}
+
+// A finished card being collated into the pile above it. The real card is
+// moved into the (hidden) group body at once; this floating copy is laid
+// over its old spot and flies up into the pile header, shrinking and fading.
+// The copies live in a fixed overlay over the messages container, outside
+// the scroll container, so they never touch its scroll height. Duration
+// must match FOLD_ANIMATION_MS in core-ai/AIToolGroup.js.
+.ai-tool-group-ghost-layer {
+    position: fixed;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+.ai-msg-tool.ai-tool-group-ghost {
+    position: absolute;
+    margin: 0;
+    overflow: hidden;
+    transform-origin: top center;
+    will-change: transform, opacity;
+    transition: transform 0.28s ease-in, opacity 0.28s ease-in;
+
+    &.ai-tool-group-ghost-active {
+        transform: translateY(var(--ghost-dy, -40px)) scale(0.94, 0.15);
+        opacity: 0;
     }
 }
 
