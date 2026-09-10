@@ -450,34 +450,78 @@ function RemoteFunctions(config = {}) {
         _overlayPool.push(overlay);
     }
 
-    // Update an existing overlay's position, dimensions, and colors to match the target element.
-    // No DOM elements are created or destroyed — only style properties are updated.
-    function _updateOverlay(overlay, element) {
+    // Everything an overlay needs read off the page. Split from the painting
+    // below so a batch of overlays can read first and write after: interleaving
+    // the two forces a layout per element.
+    // What screenOffset() needs off the body, read once for a whole batch
+    // instead of once per element.
+    function _bodyOffsetContext() {
+        const body = window.document.body;
+        if (window.getComputedStyle(body).position === "static") {
+            return { isStatic: true, x: window.pageXOffset, y: window.pageYOffset };
+        }
+        const bodyBounds = body.getBoundingClientRect();
+        return { isStatic: false, x: bodyBounds.left, y: bodyBounds.top };
+    }
+
+    function _offsetFromBounds(bounds, bodyOffset) {
+        if (bodyOffset.isStatic) {
+            return { left: bounds.left + bodyOffset.x, top: bounds.top + bodyOffset.y };
+        }
+        return { left: bounds.left - bodyOffset.x, top: bounds.top - bodyOffset.y };
+    }
+
+    function _measureOverlay(element, bodyOffset) {
         const bounds = element.getBoundingClientRect();
         if (bounds.width === 0 && bounds.height === 0) {
+            return null;
+        }
+        const cs = window.getComputedStyle(element);
+        return {
+            bounds: bounds,
+            scroll: _offsetFromBounds(bounds, bodyOffset || _bodyOffsetContext()),
+            bt: parseFloat(cs.borderTopWidth) || 0,
+            br: parseFloat(cs.borderRightWidth) || 0,
+            bb: parseFloat(cs.borderBottomWidth) || 0,
+            bl: parseFloat(cs.borderLeftWidth) || 0,
+            pt: parseFloat(cs.paddingTop) || 0,
+            pr: parseFloat(cs.paddingRight) || 0,
+            pb: parseFloat(cs.paddingBottom) || 0,
+            pl: parseFloat(cs.paddingLeft) || 0,
+            mt: parseFloat(cs.marginTop) || 0,
+            mr: parseFloat(cs.marginRight) || 0,
+            mb: parseFloat(cs.marginBottom) || 0,
+            ml: parseFloat(cs.marginLeft) || 0
+        };
+    }
+
+    function _measureAll(elements) {
+        const bodyOffset = _bodyOffsetContext();
+        const measured = [];
+        for (let i = 0; i < elements.length; i++) {
+            measured.push(_measureOverlay(elements[i], bodyOffset));
+        }
+        return measured;
+    }
+
+    // Update an existing overlay's position, dimensions, and colors to match the target element.
+    // No DOM elements are created or destroyed — only style properties are updated.
+    function _paintOverlay(overlay, element, measured) {
+        if (!measured) {
             overlay.classList.add('hidden');
             return;
         }
 
-        const cs = window.getComputedStyle(element);
+        const bounds = measured.bounds;
 
         // Parse box model values (getComputedStyle always resolves to px)
-        const bt = parseFloat(cs.borderTopWidth) || 0,
-            br = parseFloat(cs.borderRightWidth) || 0,
-            bb = parseFloat(cs.borderBottomWidth) || 0,
-            bl = parseFloat(cs.borderLeftWidth) || 0;
-        const pt = parseFloat(cs.paddingTop) || 0,
-            pr = parseFloat(cs.paddingRight) || 0,
-            pb = parseFloat(cs.paddingBottom) || 0,
-            pl = parseFloat(cs.paddingLeft) || 0;
-        const mt = parseFloat(cs.marginTop) || 0,
-            mr = parseFloat(cs.marginRight) || 0,
-            mb = parseFloat(cs.marginBottom) || 0,
-            ml = parseFloat(cs.marginLeft) || 0;
+        const bt = measured.bt, br = measured.br, bb = measured.bb, bl = measured.bl;
+        const pt = measured.pt, pr = measured.pr, pb = measured.pb, pl = measured.pl;
+        const mt = measured.mt, mr = measured.mr, mb = measured.mb, ml = measured.ml;
 
         // Compute the 4 absolute boxes exactly like dev tools:
         // getBoundingClientRect() always returns the border box regardless of box-sizing.
-        const scroll = LivePreviewView.screenOffset(element);
+        const scroll = measured.scroll;
         const borderBox = {
             left: scroll.left,
             top: scroll.top,
@@ -551,6 +595,10 @@ function RemoteFunctions(config = {}) {
         outlineStyle.border = `1px solid ${outlineColor}`;
     }
 
+    function _updateOverlay(overlay, element) {
+        _paintOverlay(overlay, element, _measureOverlay(element));
+    }
+
     function Highlight(trigger) {
         this.trigger = !!trigger;
         this.elements = [];
@@ -571,6 +619,28 @@ function RemoteFunctions(config = {}) {
             const overlay = _getOverlay();
             this._overlays.push(overlay);
             _updateOverlay(overlay, element);
+        },
+
+        addAll: function (elements) {
+            const seen = new Set(this.elements);
+            const fresh = [];
+            for (let i = 0; i < elements.length; i++) {
+                const element = elements[i];
+                if (element !== window.document && !seen.has(element)) {
+                    seen.add(element);
+                    fresh.push(element);
+                }
+            }
+            const measured = _measureAll(fresh);
+            for (let i = 0; i < fresh.length; i++) {
+                if (this.trigger) {
+                    _trigger(fresh[i], "highlight", 1);
+                }
+                this.elements.push(fresh[i]);
+                const overlay = _getOverlay();
+                this._overlays.push(overlay);
+                _paintOverlay(overlay, fresh[i], measured[i]);
+            }
         },
 
         clear: function () {
@@ -611,8 +681,9 @@ function RemoteFunctions(config = {}) {
             this.elements = elements;
 
             // Update all overlays in place — no DOM creation or destruction
+            const measured = _measureAll(elements);
             for (let i = 0; i < elements.length; i++) {
-                _updateOverlay(this._overlays[i], elements[i]);
+                _paintOverlay(this._overlays[i], elements[i], measured[i]);
             }
         }
     };
@@ -672,11 +743,6 @@ function RemoteFunctions(config = {}) {
         if (SHARED_STATE.isAutoScrolling || SHARED_STATE._isDraggingSVG) {
             return;
         }
-        if (customReturns.selectorBox && customReturns.selectorBox.isOpen &&
-                customReturns.selectorBox.isOpen()) {
-            return;
-        }
-
         const element = event.target;
 
         if (element === _lastHoverTarget) {
@@ -742,7 +808,7 @@ function RemoteFunctions(config = {}) {
      * @param {Element} element - The DOM element to select
      * @param {boolean} [fromEditor] - If true, this is an editor-cursor-driven selection;
      *   only lightweight highlights (outline, margin/padding overlay) are shown, not interactive
-     *   UI like control box, spacing handles, or measurements.
+     *   UI like the control box or the styles bar.
      * @param {boolean} [byName] - Selected by name (a layers panel row), so the edit
      *   opt-out and the body block don't apply while it stays selected.
      */
@@ -1008,13 +1074,15 @@ function RemoteFunctions(config = {}) {
         // Highlight all matching elements except the selected one
         // (it already has a click highlight)
         _cssSelectorHighlight = new Highlight();
+        const wanted = [];
         for (let i = 0; i < nodes.length; i++) {
             if (nodes[i] !== previouslySelectedElement &&
                 LivePreviewView.isElementInspectable(nodes[i], true) &&
                 nodes[i].nodeType === Node.ELEMENT_NODE) {
-                _cssSelectorHighlight.add(nodes[i]);
+                wanted.push(nodes[i]);
             }
         }
+        _cssSelectorHighlight.addAll(wanted);
         _cssSelectorHighlight.selector = rule;
     }
 
@@ -1042,6 +1110,20 @@ function RemoteFunctions(config = {}) {
         if (LivePreviewView.isElementInspectable(element, true) && element.nodeType === Node.ELEMENT_NODE) {
             _clickHighlight.add(element);
         }
+    }
+
+    function highlightAll(elements) {
+        if (!_clickHighlight) {
+            _clickHighlight = new Highlight();
+        }
+        const wanted = [];
+        for (let i = 0; i < elements.length; i++) {
+            if (LivePreviewView.isElementInspectable(elements[i], true) &&
+                    elements[i].nodeType === Node.ELEMENT_NODE) {
+                wanted.push(elements[i]);
+            }
+        }
+        _clickHighlight.addAll(wanted);
     }
 
     /**
@@ -1110,17 +1192,6 @@ function RemoteFunctions(config = {}) {
 
         const nodes = window.document.querySelectorAll(rule);
 
-        // Highlight all matching nodes. selectElement() will narrow _clickHighlight
-        // down to the chosen element below; createCssSelectorHighlight() then
-        // re-highlights the siblings in a separate overlay.
-        for (let i = 0; i < nodes.length; i++) {
-            highlight(nodes[i]);
-        }
-
-        if (_clickHighlight) {
-            _clickHighlight.selector = rule;
-        }
-
         // Both edit and highlight modes go through the same selection path:
         // selectElement() handles scroll-to-view and the prominent click-highlight,
         // createCssSelectorHighlight() shows siblings dimly. fromEditor=true
@@ -1128,8 +1199,15 @@ function RemoteFunctions(config = {}) {
         // highlighting/scroll behavior without any UI boxes.
         const { element, skipSelection } = findBestElementToSelect(nodes, rule);
 
-        if (!skipSelection) {
+        if (skipSelection) {
+            // A recent preview click owns the selection and its open tools.
+            // Keep the existing selector highlight without re-selecting it.
+            highlightAll(nodes);
+            _clickHighlight.selector = rule;
+        } else {
             if (element) {
+                // Select first: drawing every match here would immediately be
+                // cleared by selectElement() and drawn again as siblings below.
                 selectElement(element, true);
             } else {
                 // No valid element found, dismiss UI
