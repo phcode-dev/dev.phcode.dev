@@ -27,10 +27,13 @@
 @layers-border:         rgba(255, 255, 255, 0.09);
 @layers-input-bg:       rgba(255, 255, 255, 0.04);
 @layers-input-bg-focus: rgba(255, 255, 255, 0.06);
-@layers-row-height:     26px;
+@layers-font-size:      13px;
+@layers-font-xs:        12px;
+@layers-font-tree:      14px;
+@layers-row-height:     28px;
 @layers-label-min-width: 72px;
 @layers-row-intrinsic-width: 115px;
-@layers-tools-width:    96px;
+@layers-tools-width:    106px;
 @layers-indent:         14px;
 @layers-mono:           ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 @layers-prop-name:      #9cdcfe;
@@ -44,8 +47,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     padding: 0;
     margin: 0;
     border: none;
@@ -57,8 +60,8 @@
     flex: none;
 
     svg {
-        width: 13px;
-        height: 13px;
+        width: 14px;
+        height: 14px;
         display: block;
         flex: none;
     }
@@ -71,7 +74,7 @@
 
 .layers-field-input() {
     box-sizing: border-box;
-    height: 22px;
+    height: 24px;
     padding: 0 6px;
     margin: 0;
     border: 1px solid transparent;
@@ -81,8 +84,8 @@
     background: transparent;
     color: @project-panel-text-1;
     font-family: @layers-mono;
-    font-size: @sidebar-xs-font-size;
-    line-height: 20px;
+    font-size: @layers-font-xs;
+    line-height: 22px;
     transition: none;
 
     &::placeholder {
@@ -116,7 +119,7 @@
     position: relative;
     background-color: @bc-ai-sidebar-bg;
     color: @project-panel-text-1;
-    font-size: @sidebar-small-font-size;
+    font-size: @layers-font-size;
     letter-spacing: normal;
     text-shadow: none;
 
@@ -163,7 +166,7 @@
     .layers-message-title {
         max-width: 100%;
         margin-bottom: 5px;
-        font-size: @sidebar-content-font-size;
+        font-size: @layers-font-tree;
         font-weight: 600;
         line-height: 1.35;
         color: @project-panel-text-1;
@@ -185,7 +188,7 @@
         background: @layers-accent-soft;
         color: @project-panel-text-1;
         font-family: inherit;
-        font-size: @sidebar-small-font-size;
+        font-size: @layers-font-size;
         font-weight: 500;
         line-height: 1.35;
         white-space: normal;
@@ -239,13 +242,13 @@
         display: flex;
         align-items: center;
         gap: 2px;
-        height: 26px;
+        height: 28px;
         padding: 0 6px 0 2px;
         flex-shrink: 0;
         box-sizing: border-box;
         cursor: default;
         user-select: none;
-        font-size: @sidebar-xs-font-size;
+        font-size: @layers-font-xs;
         font-weight: 700;
         letter-spacing: 0.04em;
         text-transform: uppercase;
@@ -260,16 +263,16 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 18px;
-        height: 18px;
+        width: 20px;
+        height: 20px;
         flex: none;
         border-radius: 4px;
         color: @project-panel-text-2;
         cursor: pointer;
 
         svg {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             transition: transform 120ms ease;
         }
 
@@ -292,7 +295,7 @@
     .layers-section-actions {
         display: flex;
         align-items: center;
-        gap: 4px;
+        gap: 2px;
         margin-left: auto;
         flex-shrink: 0;
     }
@@ -324,8 +327,8 @@
         opacity: 0;
 
         svg {
-            width: 11px;
-            height: 11px;
+            width: 12px;
+            height: 12px;
         }
     }
 
@@ -393,7 +396,7 @@
         align-items: center;
         gap: 6px;
         width: 100%;
-        height: 26px;
+        height: 28px;
         padding: 0 6px 0 8px;
         box-sizing: border-box;
         border: 1px solid @layers-border;
@@ -406,8 +409,8 @@
         }
 
         > svg {
-            width: 13px;
-            height: 13px;
+            width: 14px;
+            height: 14px;
             flex: none;
             color: @project-panel-text-2;
         }
@@ -424,7 +427,7 @@
             background: transparent;
             color: @project-panel-text-1;
             font-family: inherit;
-            font-size: @sidebar-small-font-size;
+            font-size: @layers-font-size;
 
             &::placeholder {
                 color: @project-panel-text-2;
@@ -437,8 +440,8 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 16px;
-        height: 16px;
+        width: 18px;
+        height: 18px;
         padding: 0;
         margin: 0;
         border: none;
@@ -450,8 +453,8 @@
         flex: none;
 
         svg {
-            width: 11px;
-            height: 11px;
+            width: 12px;
+            height: 12px;
             display: block;
         }
 
@@ -469,7 +472,7 @@
         padding-bottom: 6px;
         min-width: min-content;
         outline: none;
-        font-size: @sidebar-content-font-size;
+        font-size: @layers-font-tree;
     }
 
     .layers-sprite {
@@ -511,11 +514,14 @@
 
         &.layers-selected {
             background: @layers-row-select-bg;
-            box-shadow: inset 2px 0 0 @layers-accent;
         }
 
         &.layers-match {
             box-shadow: inset 2px 0 0 fade(@layers-accent, 40%);
+        }
+
+        &.layers-caret-target {
+            box-shadow: inset 0 0 0 1px fade(@layers-accent, 55%);
         }
 
         &.layers-holds-selected {
@@ -561,7 +567,7 @@
         border-radius: 6px;
         background: @layers-input-bg;
         color: @project-panel-text-1;
-        font-size: @sidebar-xs-font-size;
+        font-size: @layers-font-xs;
         line-height: 1.4;
         white-space: normal;
         animation: layers-notice-in 180ms ease-out;
@@ -571,15 +577,15 @@
             align-items: center;
             justify-content: center;
             flex: none;
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
             border-radius: 4px;
             background: @layers-accent-soft;
             color: @layers-accent;
 
             svg {
-                width: 12px;
-                height: 12px;
+                width: 13px;
+                height: 13px;
                 display: block;
             }
         }
@@ -594,15 +600,15 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 16px;
-        height: 16px;
+        width: 17px;
+        height: 17px;
         flex: none;
         margin-right: 6px;
         color: @project-panel-text-2;
 
         svg {
-            width: 15px;
-            height: 15px;
+            width: 16px;
+            height: 16px;
         }
     }
 
@@ -614,15 +620,15 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 15px;
-        height: 15px;
+        width: 16px;
+        height: 16px;
         flex: none;
         margin-right: 6px;
         color: @project-panel-text-2;
 
         svg {
-            width: 15px;
-            height: 15px;
+            width: 16px;
+            height: 16px;
             display: block;
         }
     }
@@ -647,8 +653,8 @@
         opacity: 0.8;
 
         svg {
-            width: 11px;
-            height: 11px;
+            width: 12px;
+            height: 12px;
             display: block;
         }
     }
@@ -670,14 +676,14 @@
         margin-top: 1px;
 
         svg {
-            width: 13px;
-            height: 13px;
+            width: 14px;
+            height: 14px;
             display: block;
         }
     }
 
     .layers-node.layers-root-node .layers-node-tag {
-        font-weight: 500;
+        font-weight: 400;
         color: @project-panel-text-2;
     }
 
@@ -700,7 +706,7 @@
     .layers-node-tools {
         display: flex;
         align-items: center;
-        gap: 1px;
+        gap: 2px;
         position: sticky;
         right: 0;
         width: fit-content;
@@ -737,7 +743,7 @@
         background: @layers-row-select-bg;
     }
 
-    .layers-node.layers-holds-selected:not(:hover) .layers-node-tools {
+    .layers-node.layers-holds-selected .layers-node-tools {
         background: @layers-row-holder-bg;
     }
 
@@ -745,9 +751,9 @@
         position: absolute;
         left: 0;
         top: 50%;
-        width: 6px;
-        height: 18px;
-        margin-top: -9px;
+        width: 8px;
+        height: 24px;
+        margin-top: -12px;
         padding: 0;
         border: none;
         border-radius: 0 3px 3px 0;
@@ -758,7 +764,7 @@
         transition: width 100ms ease, background-color 100ms ease;
 
         &:hover {
-            width: 9px;
+            width: 11px;
             background: @layers-accent;
         }
     }
@@ -833,7 +839,7 @@
         }
     }
 
-    .layers-decl:not(.layers-editing) .layers-decl-value.layers-decl-numeric {
+    .layers-decl-value.layers-decl-numeric {
         cursor: ew-resize;
     }
 
@@ -846,10 +852,7 @@
     }
 
     .layers-label {
-        font-size: 10px;
-        font-weight: 700;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
+        font-size: @layers-font-xs;
         color: @project-panel-text-2;
         user-select: none;
     }
@@ -858,10 +861,10 @@
         display: flex;
         align-items: center;
         gap: 6px;
-        min-height: 24px;
+        min-height: 26px;
 
         .layers-label {
-            flex: 0 0 44px;
+            flex: 0 0 48px;
         }
     }
 
@@ -887,8 +890,8 @@
         padding: 0 5px;
         color: @project-panel-text-2;
         font-family: @layers-mono;
-        font-size: @sidebar-xs-font-size;
-        line-height: 22px;
+        font-size: @layers-font-xs;
+        line-height: 24px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -903,7 +906,7 @@
     .layers-attrs-header {
         display: flex;
         align-items: center;
-        min-height: 20px;
+        min-height: 22px;
 
         .layers-label {
             flex: 1;
@@ -929,7 +932,7 @@
         display: flex;
         align-items: center;
         gap: 4px;
-        min-height: 24px;
+        min-height: 26px;
 
         .layers-icon-btn {
             opacity: 0;
@@ -943,39 +946,55 @@
 
     .layers-attr-name {
         flex: 0 1 auto;
-        min-width: 44px;
+        min-width: 48px;
         max-width: 45%;
         padding-left: 5px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
         font-family: @layers-mono;
-        font-size: @sidebar-xs-font-size;
+        font-size: @layers-font-xs;
         color: @layers-prop-name;
     }
 
     .layers-attr-row [data-role="name"] {
-        flex: 0 0 44px;
+        flex: 0 0 48px;
         color: @layers-prop-name;
     }
 
-    .layers-decl {
+    .layers-decl,
+    .layers-rule-empty {
         position: relative;
         display: flex;
         align-items: center;
         box-sizing: border-box;
         min-width: 100%;
         width: max-content;
-        min-height: 26px;
+        min-height: 24px;
         padding: 0 4px 0 8px;
         font-family: @layers-mono;
-        font-size: @sidebar-xs-font-size;
-        line-height: 22px;
+        font-size: @layers-font-xs;
+        line-height: 24px;
         user-select: none;
 
         &:hover {
             background: @layers-hover-bg;
         }
+    }
+
+    .layers-rule-empty {
+        opacity: 0.4;
+        cursor: text;
+
+        &:hover,
+        &:focus-visible {
+            opacity: 0.75;
+            outline: none;
+        }
+    }
+
+    .layers-rule:has(.layers-decl) .layers-rule-empty {
+        display: none;
     }
 
     .layers-decl-name {
@@ -994,8 +1013,45 @@
         color: @layers-prop-value;
     }
 
+    .layers-decl-value-wrap {
+        display: inline-flex;
+        align-items: center;
+        flex: none;
+        gap: 4px;
+        margin-left: 5px;
+
+        .layers-decl-value {
+            margin-left: 0;
+        }
+    }
+
+    .layers-decl-color {
+        position: relative;
+        flex: none;
+        width: 13px;
+        height: 13px;
+        padding: 0;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        border-radius: 2px;
+        background: repeating-conic-gradient(#999 0% 25%, #fff 0% 50%) 0 0 / 6px 6px;
+        cursor: pointer;
+
+        &::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: var(--layers-color);
+        }
+
+        &:focus-visible {
+            outline: 1px solid @layers-accent;
+            outline-offset: 2px;
+        }
+    }
+
     input.layers-decl-input[type="text"] {
         .layers-field-input();
+        user-select: text;
         flex: none;
         min-width: 3ch;
         padding: 0 4px;
@@ -1045,8 +1101,54 @@
         display: flex;
     }
 
-    .layers-decl.layers-editing .layers-decl-actions {
+    .layers-decl.layers-editing .layers-decl-actions,
+    .layers-decl.layers-copied .layers-decl-actions {
         display: none;
+    }
+
+    .layers-decl.layers-menu-target,
+    .layers-rule-header.layers-menu-target {
+        background: @layers-hover-bg;
+    }
+
+    .layers-decl.layers-copied {
+        animation: layers-flash-row 800ms ease-out;
+    }
+
+    .layers-rule-header.layers-copied {
+        border-radius: 3px;
+        animation: layers-flash-row 800ms ease-out;
+    }
+
+    .layers-copied-tip {
+        position: fixed;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        box-sizing: border-box;
+        height: 22px;
+        margin-top: -11px;
+        padding: 0 8px 0 6px;
+        border: 1px solid fade(@layers-accent, 55%);
+        border-radius: 11px;
+        background: #2a2a2a;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+        color: @project-panel-text-1;
+        font-size: @layers-font-xs;
+        white-space: nowrap;
+        pointer-events: none;
+        animation: layers-copied-tip 1400ms ease-out forwards;
+
+        .layers-copied-icon {
+            display: flex;
+            color: @layers-accent;
+
+            svg {
+                width: 12px;
+                height: 12px;
+            }
+        }
     }
 
     .layers-decl.layers-overridden {
@@ -1085,7 +1187,21 @@
         display: flex;
         align-items: center;
         gap: 6px;
-        min-height: 20px;
+        min-height: 22px;
+    }
+
+    .layers-rule-header:focus-visible {
+        outline: 1px solid @layers-accent;
+        outline-offset: 2px;
+    }
+
+    .layers-style-notice {
+        padding: 8px;
+        margin-bottom: 6px;
+        border-radius: 4px;
+        background: @layers-accent-soft;
+        color: @project-panel-text-1;
+        font-size: @layers-font-size;
     }
 
     .layers-rule-selector {
@@ -1095,7 +1211,8 @@
         text-overflow: ellipsis;
         white-space: nowrap;
         font-family: @layers-mono;
-        font-size: @sidebar-xs-font-size;
+        font-size: @layers-font-xs;
+        font-weight: 600;
         color: @project-panel-text-1;
     }
 
@@ -1105,7 +1222,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        font-size: 10px;
+        font-size: @layers-font-xs;
         color: @project-panel-text-2;
         cursor: pointer;
 
@@ -1162,8 +1279,8 @@
     background: #2f2f2f;
     color: @project-panel-text-1;
     font-family: @layers-mono;
-    font-size: 11px;
-    line-height: 15px;
+    font-size: 12px;
+    line-height: 16px;
     white-space: nowrap;
     pointer-events: none;
 }
@@ -1188,342 +1305,371 @@ body.layers-scrubbing {
 }
 
 .layers-insert-popup {
+    @layers-insert-accent: @layers-accent;
+    @layers-insert-scrollbar: #555555;
+    @layers-insert-scrollbar-hover: #707070;
+
     position: fixed;
     z-index: 1000;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    padding: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    background: #2a2a2a;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(0, 0, 0, 0.3);
+    border: 1px solid @layers-border;
+    border-radius: 3px;
+    background: @bc-ai-sidebar-bg;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
     color: @project-panel-text-1;
-    font-size: @sidebar-small-font-size;
+    color-scheme: dark;
+    font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 12.5px;
+    line-height: 1.3;
     letter-spacing: normal;
     text-shadow: none;
     animation: layers-notice-in 90ms ease-out;
 
+    button {
+        margin: 0;
+        box-shadow: none;
+        font: inherit;
+        text-align: left;
+
+        &:focus-visible {
+            outline: 1px solid @layers-insert-accent;
+            outline-offset: -1px;
+        }
+    }
+
     .layers-insert-head {
         display: flex;
         align-items: center;
+        justify-content: space-between;
         gap: 8px;
-        min-height: 24px;
-        padding: 0 0 8px;
+        min-height: 30px;
+        padding: 0 8px;
+        background: @layers-input-bg;
+        flex: none;
+    }
+
+    .layers-icon-btn {
+        .layers-icon-button();
+        width: 22px;
+        height: 22px;
+    }
+
+    .layers-insert-target {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        flex: 0 1 auto;
+        min-width: 0;
+    }
+
+    .layers-insert-target-name,
+    .layers-insert-where {
+        font-size: 11.5px;
+        font-weight: 600;
+        overflow: hidden;
+        text-overflow: ellipsis;
         white-space: nowrap;
     }
 
-    .layers-insert-where {
-        flex: 1;
-        min-width: 0;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        font-weight: 600;
+    .layers-insert-close {
+        margin-left: auto;
+    }
+
+    .layers-insert-placement {
+        position: relative;
+        flex: none;
+        max-width: 45%;
+    }
+
+    .layers-insert-position {
+        width: auto;
+        max-width: 100%;
+        box-sizing: border-box;
+        height: 24px;
+        margin: 0;
+        padding: 2px 24px 2px 7px;
+        border: 1px solid @layers-border;
+        border-radius: 3px;
+        box-shadow: none;
+        background: @layers-input-bg;
         color: @project-panel-text-1;
+        font: inherit;
+        font-size: 11.5px;
+        text-overflow: ellipsis;
+        appearance: none;
+        cursor: pointer;
+
+        &:hover {
+            background: @layers-hover-bg;
+            border-color: fade(@layers-insert-accent, 40%);
+        }
+
+        &:focus-visible {
+            outline: 1px solid @layers-insert-accent;
+            outline-offset: -1px;
+        }
+
+        option {
+            background: @bc-ai-sidebar-bg;
+            color: @project-panel-text-1;
+        }
+    }
+
+    .layers-insert-chevron {
+        position: absolute;
+        top: 0;
+        right: 6px;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        color: @project-panel-text-2;
+        pointer-events: none;
+
+        svg {
+            width: 12px;
+            height: 12px;
+        }
+    }
+
+    .layers-insert-search {
+        flex: none;
+        display: flex;
+        align-items: center;
+        position: relative;
+        margin-bottom: 6px;
+    }
+
+    .layers-insert-search-icon {
+        position: absolute;
+        left: 7px;
+        display: flex;
+        align-items: center;
+        color: @project-panel-text-2;
+        pointer-events: none;
+    }
+
+    .layers-insert-search-icon > svg {
+        width: 13px;
+        height: 13px;
+    }
+
+    .layers-insert-search input[type="text"] {
+        height: auto;
+        margin: 0;
+        box-shadow: none;
+        line-height: 1.3;
+        width: 100%;
+        background: @layers-input-bg;
+        border: 1px solid @layers-border;
+        border-radius: 3px;
+        color: @project-panel-text-1;
+        font-size: 12px;
+        padding: 4px 8px 4px 26px;
+        outline: none;
+        font-family: inherit;
+        box-sizing: border-box;
+    }
+
+    .layers-insert-search input[type="text"]:focus {
+        border-color: @layers-insert-accent;
+    }
+
+    .layers-insert-search.layers-insert-search-connected {
+        margin-bottom: 0;
+    }
+
+    .layers-insert-search-connected input[type="text"] {
+        border-radius: 3px 3px 0 0;
+    }
+
+    .layers-insert-search input[type="text"]::placeholder {
+        color: @project-panel-text-2;
+    }
+
+    .layers-insert-content {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        min-height: 0;
+        padding: 8px;
+    }
+
+    .layers-insert-list {
+        flex: 1;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        min-height: 0;
+        scrollbar-width: thin;
+        scrollbar-color: @layers-insert-scrollbar @bc-ai-sidebar-bg;
+        scrollbar-gutter: stable;
+        overscroll-behavior: contain;
+    }
+
+    @supports selector(::-webkit-scrollbar) {
+        .layers-insert-list {
+            scrollbar-width: auto;
+            scrollbar-color: auto;
+        }
+    }
+
+    .layers-insert-list::-webkit-scrollbar {
+        width: 6px !important;
+        height: 6px !important;
+        background: @bc-ai-sidebar-bg !important;
+    }
+
+    .layers-insert-list::-webkit-scrollbar-track {
+        margin: 0 !important;
+        background: @bc-ai-sidebar-bg !important;
+    }
+
+    .layers-insert-list::-webkit-scrollbar-thumb {
+        border: none !important;
+        border-radius: 3px !important;
+        background: @layers-insert-scrollbar !important;
+        background-clip: padding-box !important;
+    }
+
+    .layers-insert-list::-webkit-scrollbar-thumb:hover {
+        background: @layers-insert-scrollbar-hover !important;
+    }
+
+    .layers-insert-list::-webkit-scrollbar-corner {
+        background: @bc-ai-sidebar-bg !important;
+    }
+
+    .layers-insert-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px 12px;
+    }
+
+    .layers-insert-tile {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        padding: 6px;
+        border: 1px solid @layers-border;
+        border-radius: 3px;
+        cursor: pointer;
+        min-width: 0;
+        background: transparent;
+        transition:
+            border-color 0.12s,
+            background 0.12s;
+    }
+
+    .layers-insert-tile:hover {
+        background: @layers-hover-bg;
+        border-color: @layers-insert-accent;
     }
 
     .layers-node-icon {
         display: flex;
         align-items: center;
-        justify-content: center;
-        width: 15px;
-        height: 15px;
-        flex: none;
+        flex-shrink: 0;
         color: @project-panel-text-2;
-
-        svg {
-            width: 15px;
-            height: 15px;
-            display: block;
-        }
     }
 
-    .layers-insert-target {
+    .layers-node-icon > svg {
+        width: 16px;
+        height: 16px;
+        stroke-width: 1.8px;
+    }
+
+    .layers-insert-item-text {
         display: flex;
-        flex: 0 1 auto;
-        align-items: center;
-        gap: 4px;
-        min-width: 40px;
-        max-width: 38%;
-        height: 24px;
-        padding: 0 7px 0 5px;
-        box-sizing: border-box;
-        border-radius: 6px;
-        background: @layers-accent-soft;
-        color: @project-panel-text-1;
-
-        .layers-node-icon {
-            width: 14px;
-            height: 14px;
-            color: @layers-accent;
-
-            svg {
-                width: 14px;
-                height: 14px;
-            }
-        }
-    }
-
-    .layers-insert-target-name {
+        align-items: baseline;
+        justify-content: space-between;
         min-width: 0;
         overflow: hidden;
-        text-overflow: ellipsis;
-        font-family: @layers-mono;
-        font-size: @sidebar-xs-font-size;
-        font-weight: 500;
+        flex: 1;
     }
 
-    .layers-insert-positions {
-        display: flex;
-        flex: 1 1 auto;
-        min-width: 0;
-        gap: 2px;
-        padding: 2px;
-        border-radius: 6px;
-        background: rgba(255, 255, 255, 0.06);
-    }
-
-    .layers-insert-pos {
-        display: flex;
-        flex: 1 1 0;
-        align-items: center;
-        justify-content: center;
-        gap: 3px;
-        min-width: 0;
-        height: 20px;
-        padding: 0 4px;
-        margin: 0;
-        border: none;
-        border-radius: 4px;
-        background: transparent;
-        color: @project-panel-text-1;
-        font-family: inherit;
-        font-size: 10px;
-        font-weight: 500;
-        opacity: 0.8;
-        cursor: pointer;
-        outline: none;
-
-        svg {
-            width: 12px;
-            height: 12px;
-            flex: none;
-        }
-
-        span {
-            min-width: 0;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        &:hover {
-            background: rgba(255, 255, 255, 0.1);
-            opacity: 1;
-        }
-
-        &.layers-active {
-            background: @layers-accent;
-            color: #ffffff;
-            opacity: 1;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-        }
-
-        &:disabled {
-            opacity: 0.3;
-            cursor: default;
-
-            &:hover {
-                background: transparent;
-            }
-        }
-    }
-
-    .layers-insert-search {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        height: 26px;
-        padding: 0 6px 0 8px;
-        box-sizing: border-box;
-        border: 1px solid @layers-border;
-        border-radius: 6px;
-        background: @layers-input-bg;
-
-        &:focus-within {
-            border-color: @layers-accent;
-            background: @layers-input-bg-focus;
-        }
-
-        > svg {
-            width: 13px;
-            height: 13px;
-            flex: none;
-            color: @project-panel-text-2;
-        }
-
-        input[type="text"] {
-            flex: 1;
-            min-width: 0;
-            height: 100%;
-            padding: 0;
-            margin: 0;
-            border: none;
-            outline: none;
-            box-shadow: none;
-            background: transparent;
-            color: @project-panel-text-1;
-            font-family: inherit;
-            font-size: @sidebar-small-font-size;
-
-            &::placeholder {
-                color: @project-panel-text-2;
-                opacity: 0.75;
-            }
-        }
-    }
-
-    .layers-insert-list {
-        margin: 8px -6px 0 0;
-        padding: 0;
-        overflow-y: auto;
-        overflow-x: hidden;
-        scrollbar-gutter: stable;
-
-        &::-webkit-scrollbar {
-            width: 6px !important;
-            background-color: transparent !important;
-        }
-
-        &::-webkit-scrollbar-thumb {
-            border-radius: 3px !important;
-            border: none !important;
-            background-color: rgba(255, 255, 255, 0.18) !important;
-        }
-    }
-
-    .layers-insert-grid {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+    .layers-insert-item-text-inner {
+        display: inline-flex;
+        align-items: baseline;
         gap: 4px;
-    }
-
-    .layers-insert-item {
-        border-radius: 5px;
-        cursor: pointer;
-
-        &.layers-insert-selected {
-            background: @layers-accent-strong;
-
-            .layers-node-icon,
-            .layers-insert-item-tag {
-                color: @project-panel-text-1;
-            }
-        }
-    }
-
-    .layers-insert-tile {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 3px;
-        min-width: 0;
-        height: 42px;
-        padding: 0 3px;
-        box-sizing: border-box;
-        border: 1px solid @layers-border;
-        background: rgba(255, 255, 255, 0.03);
-
-        .layers-node-icon {
-            width: 15px;
-            height: 15px;
-            color: @project-panel-text-1;
-
-            svg {
-                width: 15px;
-                height: 15px;
-            }
-        }
-
-        .layers-insert-item-name {
-            max-width: 100%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            font-size: 10px;
-            line-height: 1.2;
-        }
-
-        &.layers-insert-selected {
-            border-color: @layers-accent;
-
-            .layers-node-icon {
-                color: @layers-accent;
-            }
-        }
-    }
-
-    .layers-insert-more {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 4px;
+        white-space: nowrap;
         width: 100%;
-        height: 24px;
-        margin: 6px 0 0;
-        padding: 0;
-        border: none;
-        border-radius: 4px;
-        background: transparent;
-        color: @project-panel-text-2;
-        font-family: inherit;
-        font-size: @sidebar-xs-font-size;
-        cursor: pointer;
-        outline: none;
+        justify-content: space-between;
+    }
 
-        svg {
-            width: 11px;
-            height: 11px;
-            flex: none;
-            transition: transform 120ms ease;
-        }
+    .layers-insert-tile:hover .layers-insert-item-text-inner {
+        animation: layers-insert-text-scroll 2s ease-in-out 0.3s;
+    }
 
-        &.layers-insert-open svg {
-            transform: rotate(180deg);
-        }
+    @keyframes layers-insert-text-scroll {
+        0%, 15% { transform: translateX(0); }
+        50% { transform: translateX(min(0px, calc(-100% + 140px))); }
+        85%, 100% { transform: translateX(0); }
+    }
 
-        &:hover {
-            background: @layers-hover-bg;
-            color: @project-panel-text-1;
-        }
+    .layers-insert-item-name {
+        font-size: 11.5px;
+        color: @project-panel-text-1;
+        white-space: nowrap;
+        line-height: 1.3;
+    }
+
+    .layers-insert-item-tag {
+        font-size: 9.5px;
+        color: @layers-insert-accent;
+        font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+        line-height: 1.3;
     }
 
     .layers-insert-create {
         display: flex;
         align-items: center;
-        gap: 7px;
-        height: 24px;
-        margin-top: 4px;
-        padding: 0 6px;
-        white-space: nowrap;
+        gap: 6px;
+        padding: 5px 8px 5px 26px;
+        cursor: pointer;
+        border-radius: 0 0 3px 3px;
+        margin: 0 0 6px;
+        border: 1px solid @layers-border;
+        border-top: none;
+        background: transparent;
+        flex-shrink: 0;
+    }
 
-        .layers-node-icon {
-            color: @layers-accent;
-        }
-
-        .layers-insert-item-name {
-            flex: 1;
-            min-width: 0;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+    .layers-insert-create:hover {
+        background: @layers-hover-bg;
     }
 
     .layers-insert-empty {
-        padding: 8px 6px;
+        font-size: 11px;
         color: @project-panel-text-2;
-        white-space: normal;
+        font-style: italic;
+        padding: 12px 4px;
+        text-align: center;
+    }
+
+    .layers-insert-custom {
+        flex: none;
+    }
+
+    .layers-insert-create {
+        width: 100%;
+        box-sizing: border-box;
+        color: @project-panel-text-2;
+
+        .layers-node-icon svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .layers-insert-item-name {
+            font-size: 12px;
+            color: @project-panel-text-2;
+
+            span {
+                color: @project-panel-text-1;
+                font-weight: 600;
+            }
+        }
     }
 }
 
@@ -1540,8 +1686,8 @@ body.layers-scrubbing {
     background: #2a2a2a;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(0, 0, 0, 0.3);
     font-family: @layers-mono;
-    font-size: @sidebar-xs-font-size;
-    line-height: 20px;
+    font-size: @layers-font-xs;
+    line-height: 22px;
     animation: layers-notice-in 90ms ease-out;
 
     &::-webkit-scrollbar {
@@ -1571,7 +1717,7 @@ body.layers-scrubbing {
     display: flex;
     align-items: center;
     gap: 8px;
-    height: 22px;
+    height: 24px;
     padding: 0 8px;
     border-radius: 4px;
     color: #d8d8d8;
@@ -1655,14 +1801,14 @@ body.layers-dnd-invalid {
     border-radius: 4px;
     background: #2f2f2f;
     color: #e0e0e0;
-    font-size: 12px;
+    font-size: 13px;
     white-space: nowrap;
     pointer-events: none;
     opacity: 0.92;
 
     svg {
-        width: 14px;
-        height: 14px;
+        width: 15px;
+        height: 15px;
         display: block;
     }
 
@@ -1725,6 +1871,23 @@ body.layers-dnd-invalid {
     }
 }
 
+@keyframes layers-copied-tip {
+    0% {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+
+    12%, 80% {
+        opacity: 1;
+        transform: none;
+    }
+
+    100% {
+        opacity: 0;
+        transform: none;
+    }
+}
+
 @keyframes layers-notice-in {
     0% {
         opacity: 0;
@@ -1772,5 +1935,103 @@ body.layers-dnd-invalid {
     .layers-tab-container .layers-node.layers-clone-in,
     .layers-tab-container .layers-notice {
         animation-duration: 1ms;
+    }
+}
+
+.layers-color-popup {
+    position: fixed;
+    z-index: 1000;
+    box-sizing: border-box;
+    padding: 12px;
+    overflow: auto;
+    border: 1px solid @layers-border;
+    border-radius: 10px;
+    background: @bc-ai-sidebar-bg;
+    color: @project-panel-text-1;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3);
+
+    .layers-color-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+        font-size: @sidebar-small-font-size;
+        font-weight: 500;
+    }
+
+    .layers-icon-btn {
+        .layers-icon-button();
+    }
+
+    .color-editor {
+        min-width: 0;
+        width: 100%;
+        height: auto;
+        padding: 0;
+
+        aside {
+            display: none;
+        }
+
+        section {
+            display: block;
+            width: 100%;
+
+            .sliders {
+                display: flex;
+                align-items: stretch;
+            }
+
+            .color-selection-field {
+                flex: 1;
+                min-width: 0;
+                width: auto;
+                margin-right: 12px;
+                float: none;
+            }
+
+            .slider {
+                flex: none;
+                margin-right: 12px;
+                float: none;
+            }
+
+            .opacity-slider {
+                margin-right: 0;
+            }
+
+            footer {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding-top: 12px;
+            }
+
+            footer input.color-value {
+                flex: 1;
+                min-width: 0;
+                width: 0;
+                height: 26px;
+                margin: 0;
+                padding: 0 6px;
+                border-color: @layers-border;
+                background: @layers-input-bg;
+                color: @project-panel-text-1;
+                font-family: @layers-mono;
+                font-size: 11px;
+
+                &:focus {
+                    border-color: @layers-accent;
+                    background: @layers-input-bg-focus;
+                    box-shadow: none;
+                }
+            }
+        }
+
+        ul.button-bar {
+            flex: none;
+            margin-left: 0;
+            white-space: nowrap;
+        }
     }
 }
