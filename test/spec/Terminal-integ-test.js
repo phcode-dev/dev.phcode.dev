@@ -18,7 +18,7 @@
  *
  */
 
-/*global describe, it, expect, beforeAll, afterAll, afterEach, awaitsFor, spyOn */
+/*global describe, it, expect, beforeAll, afterAll, beforeEach, afterEach, awaitsFor, spyOn */
 
 define(function (require, exports, module) {
 
@@ -28,6 +28,7 @@ define(function (require, exports, module) {
 
     const SpecRunnerUtils = require("spec/SpecRunnerUtils");
     const Strings = require("strings");
+    const StringUtils = require("utils/StringUtils");
 
     const IS_WINDOWS = Phoenix.platform === "win";
     const IS_MAC = Phoenix.platform === "mac";
@@ -597,6 +598,276 @@ define(function (require, exports, module) {
                 });
         });
 
+        describe("Project-switch banner", function () {
+            let termModule, secondProjectPath;
+
+            beforeAll(async function () {
+                termModule = testWindow.brackets.getModule("extensionsIntegrated/Terminal/main");
+                await SpecRunnerUtils.createTempDirectory();
+                secondProjectPath = SpecRunnerUtils.getTempDirectory();
+            });
+
+            beforeEach(async function () {
+                await termModule._disposeAll();
+                WorkspaceManager.getPanelForID(PANEL_ID).hide();
+                await SpecRunnerUtils.loadProjectInTestWindow(testProjectPath);
+            }, 30000);
+
+            afterEach(async function () {
+                if (isDialogOpen()) {
+                    __PR.clickDialogButtonID(__PR.Dialogs.DIALOG_BTN_CANCEL);
+                    await __PR.waitForModalDialogClosed();
+                }
+                await termModule._disposeAll();
+                WorkspaceManager.getPanelForID(PANEL_ID).hide();
+                await SpecRunnerUtils.loadProjectInTestWindow(testProjectPath);
+            }, 30000);
+
+            afterAll(async function () {
+                await SpecRunnerUtils.removeTempDirectory();
+            });
+
+            /**
+             * Open a real shell and wait for its first prompt output.
+             * @return {Promise<TerminalInstance>} The ready terminal.
+             */
+            async function openReadyTerminal() {
+                await openTerminal();
+                await waitForShellReady();
+                const instance = termModule._getActiveTerminal();
+                await instance.firstDataReceived;
+                return instance;
+            }
+
+            /**
+             * Verify the shell's actual directory without depending on its prompt format.
+             * @param {TerminalInstance} instance The shell to query.
+             * @param {string} path Expected native directory.
+             */
+            async function expectWorkingDirectory(instance, path) {
+                const shell = instance.shellProfile.path.split(/[\\/]/).pop().toLowerCase();
+                const command = shell === "cmd.exe" ? "cd"
+                    : /^(powershell|pwsh)(\.exe)?$/.test(shell) ? "(Get-Location).Path" : "pwd";
+                await instance.firstDataReceived;
+                await termModule.getNodeConnector().execPeer("writeTerminal", {id: instance.id, data: command + "\r"});
+                await awaitsFor(function () {
+                    const buffer = instance.terminal.buffer.active;
+                    let text = "";
+                    for (let i = 0; i < buffer.length; i++) {
+                        text += buffer.getLine(i).translateToString();
+                    }
+                    return text.includes(path);
+                }, "shell to report the new project directory", 10000);
+            }
+
+            /**
+             * Report a busy terminal while keeping real PTY creation, input and disposal.
+             * @return {jasmine.Spy} Connector spy for checking restart calls.
+             */
+            function reportActiveProcess() {
+                const connector = termModule.getNodeConnector();
+                const execPeer = connector.execPeer.bind(connector);
+                return spyOn(connector, "execPeer").and.callFake(function (method, params) {
+                    if (method === "getTerminalProcess") {
+                        return Promise.resolve({process: "test-running-task"});
+                    }
+                    return execPeer(method, params);
+                });
+            }
+
+            it("does not show a banner when no terminals exist", async function () {
+                await SpecRunnerUtils.loadProjectInTestWindow(secondProjectPath);
+                expect(testWindow.$(".terminal-project-banner").length).toBe(0);
+                const instance = await openReadyTerminal();
+                expect(instance.cwd).toBe(getNativeProjectPath());
+                expect(testWindow.$(".terminal-project-banner").length).toBe(0);
+            }, 30000);
+
+            it("keeps sessions and dismisses the notice until the next project switch", async function () {
+                const instance = await openReadyTerminal();
+                await writeToTerminal("cd ..\r");
+                expect(testWindow.$(".terminal-project-banner").length).toBe(0);
+                await SpecRunnerUtils.loadProjectInTestWindow(secondProjectPath);
+                expect(testWindow.$(".terminal-project-banner").is(":visible")).toBeTrue();
+                expect(testWindow.$(".terminal-project-path").text())
+                    .toBe(StringUtils.format(Strings.TERMINAL_PROJECT_RESTART_PATH, getNativeProjectPath()));
+                testWindow.$(".terminal-project-keep").click();
+
+                const panel = WorkspaceManager.getPanelForID(PANEL_ID);
+                panel.hide();
+                panel.show();
+                testWindow.brackets.test.ProjectManager.trigger("projectOpen");
+                expect(testWindow.$(".terminal-project-banner").length).toBe(0);
+                expect(termModule._getActiveTerminal()).toBe(instance);
+                expect(instance.isAlive).toBeTrue();
+                await SpecRunnerUtils.loadProjectInTestWindow(testProjectPath);
+                expect(testWindow.$(".terminal-project-banner").length).toBe(0);
+                await SpecRunnerUtils.loadProjectInTestWindow(secondProjectPath);
+                expect(testWindow.$(".terminal-project-banner").is(":visible")).toBeTrue();
+            }, 30000);
+
+            it("clears the banner when returning to the original project without restarting", async function () {
+                const instance = await openReadyTerminal();
+                await writeToTerminal("cd ..\r");
+                await SpecRunnerUtils.loadProjectInTestWindow(secondProjectPath);
+                expect(testWindow.$(".terminal-project-banner").is(":visible")).toBeTrue();
+                await SpecRunnerUtils.loadProjectInTestWindow(testProjectPath);
+                expect(testWindow.$(".terminal-project-banner").length).toBe(0);
+                expect(termModule._getActiveTerminal()).toBe(instance);
+                expect(instance.isAlive).toBeTrue();
+            }, 30000);
+
+            it("keeps the banner while tabs from another project remain", async function () {
+                const first = await openReadyTerminal();
+                await SpecRunnerUtils.loadProjectInTestWindow(secondProjectPath);
+                await __PR.execCommand(termModule.CMD_NEW_TERMINAL);
+                const second = termModule._getActiveTerminal();
+                await second.firstDataReceived;
+                await SpecRunnerUtils.loadProjectInTestWindow(testProjectPath);
+                expect(testWindow.$(".terminal-project-banner").is(":visible")).toBeTrue();
+                testWindow.$('.terminal-flyout-item[data-terminal-id="' + second.id + '"] .terminal-flyout-close')
+                    .click();
+                await awaitsFor(function () {
+                    return second._disposed && getTerminalCount() === 1;
+                }, "the other project's terminal to close", 10000);
+                expect(testWindow.$(".terminal-project-banner").length).toBe(0);
+                expect(termModule._getActiveTerminal()).toBe(first);
+                expect(first.isAlive).toBeTrue();
+            }, 30000);
+
+            it("restarts every tab in the new project and preserves its shell and selection", async function () {
+                const first = await openReadyTerminal();
+                const ShellProfiles = testWindow.brackets.getModule("extensionsIntegrated/Terminal/ShellProfiles");
+                // Distinct profiles using an installed shell keep this portable to machines with only one shell.
+                const profileSpy = spyOn(ShellProfiles, "getDefaultShell").and.returnValue(
+                    Object.assign({}, first.shellProfile, {name: "Secondary test shell"})
+                );
+                await __PR.execCommand(termModule.CMD_NEW_TERMINAL);
+                profileSpy.and.callThrough();
+                const second = termModule._getActiveTerminal();
+                await second.firstDataReceived;
+                testWindow.$('.terminal-flyout-item[data-terminal-id="' + first.id + '"]').click();
+                await SpecRunnerUtils.loadProjectInTestWindow(secondProjectPath);
+                const path = getNativeProjectPath();
+                testWindow.$(".terminal-project-restart").click();
+                await awaitsFor(function () {
+                    const active = termModule._getActiveTerminal();
+                    return getTerminalCount() === 2 && active && active.isAlive && active.id !== first.id
+                        && testWindow.$(".terminal-flyout-item.active").index() === 0;
+                }, "both terminals to restart and the first tab to remain selected", 15000);
+
+                expect(first._disposed).toBeTrue();
+                expect(second._disposed).toBeTrue();
+                expect(testWindow.$(".terminal-project-banner").length).toBe(0);
+                const replacements = testWindow.$(".terminal-flyout-item").map(function () {
+                    return testWindow.$(this).attr("data-terminal-id");
+                }).get();
+                const originals = [first, second];
+                for (let i = 0; i < replacements.length; i++) {
+                    testWindow.$('.terminal-flyout-item[data-terminal-id="' + replacements[i] + '"]').click();
+                    const instance = termModule._getActiveTerminal();
+                    expect(instance.id).not.toBe(originals[i].id);
+                    expect(instance.shellProfile).toEqual(originals[i].shellProfile);
+                    expect(instance.cwd).toBe(path);
+                    await expectWorkingDirectory(instance, path);
+                }
+                await SpecRunnerUtils.loadProjectInTestWindow(testProjectPath);
+                expect(testWindow.$(".terminal-project-banner").is(":visible")).toBeTrue();
+                await SpecRunnerUtils.loadProjectInTestWindow(secondProjectPath);
+                expect(testWindow.$(".terminal-project-banner").length).toBe(0);
+            }, 30000);
+
+            it("confirms active processes and leaves sessions untouched when canceled", async function () {
+                const instance = await openReadyTerminal();
+                const connectorSpy = reportActiveProcess();
+                await SpecRunnerUtils.loadProjectInTestWindow(secondProjectPath);
+                testWindow.$(".terminal-project-restart").click();
+                await __PR.waitForModalDialog();
+                expect(getDialogTitle()).toBe(Strings.TERMINAL_RESTART_CONFIRM_TITLE);
+                __PR.clickDialogButtonID(__PR.Dialogs.DIALOG_BTN_CANCEL);
+                await __PR.waitForModalDialogClosed();
+                await awaitsFor(function () {
+                    return !testWindow.$(".terminal-project-restart").prop("disabled");
+                }, "restart action to be available again", 3000);
+                expect(termModule._getActiveTerminal()).toBe(instance);
+                expect(instance.isAlive).toBeTrue();
+                expect(connectorSpy.calls.allArgs().some(args => args[0] === "killTerminal")).toBeFalse();
+
+                testWindow.$(".terminal-project-restart").click();
+                await __PR.waitForModalDialog();
+                __PR.clickDialogButtonID(__PR.Dialogs.DIALOG_BTN_OK);
+                await __PR.waitForModalDialogClosed();
+                await awaitsFor(function () {
+                    const active = termModule._getActiveTerminal();
+                    return active && active.id !== instance.id && active.isAlive;
+                }, "confirmed restart to replace the terminal", 10000);
+                expect(instance._disposed).toBeTrue();
+                expect(termModule._getActiveTerminal().cwd).toBe(getNativeProjectPath());
+            }, 30000);
+
+            it("does not restart into a stale project if the project changes during confirmation", async function () {
+                const instance = await openReadyTerminal();
+                const connectorSpy = reportActiveProcess();
+                await SpecRunnerUtils.loadProjectInTestWindow(secondProjectPath);
+                testWindow.$(".terminal-project-restart").click();
+                await __PR.waitForModalDialog();
+                await SpecRunnerUtils.loadProjectInTestWindow(testProjectPath);
+                __PR.clickDialogButtonID(__PR.Dialogs.DIALOG_BTN_OK);
+                await __PR.waitForModalDialogClosed();
+                expect(testWindow.$(".terminal-project-banner").length).toBe(0);
+                expect(termModule._getActiveTerminal()).toBe(instance);
+                expect(connectorSpy.calls.allArgs().some(args => args[0] === "killTerminal")).toBeFalse();
+            }, 30000);
+
+            it("retains the notice while hidden and removes it when all terminals close", async function () {
+                await openReadyTerminal();
+                const panel = WorkspaceManager.getPanelForID(PANEL_ID);
+                panel.hide();
+                await SpecRunnerUtils.loadProjectInTestWindow(secondProjectPath);
+                expect(panel.isVisible()).toBeFalse();
+                panel.show();
+                expect(testWindow.$(".terminal-project-banner").is(":visible")).toBeTrue();
+                await termModule._disposeAll();
+                expect(testWindow.$(".terminal-project-banner").length).toBe(0);
+            }, 30000);
+        });
+
+        it("should forward Alt+Up to the terminal instead of a Phoenix command", async function () {
+            const termModule = testWindow.brackets.getModule("extensionsIntegrated/Terminal/main");
+            let inputListener;
+            try {
+                await openTerminal();
+                await waitForShellReady();
+                const instance = termModule._getActiveTerminal();
+                const KeyBindingManager = testWindow.brackets.getModule("command/KeyBindingManager");
+                const binding = KeyBindingManager.getKeymap()["Alt-Up"];
+                const command = testWindow.brackets.test.CommandManager.get(binding.commandID);
+                const execute = spyOn(command, "execute")
+                    .and.returnValue(testWindow.$.Deferred().resolve().promise());
+                const input = [];
+                inputListener = instance.terminal.onData(function (data) { input.push(data); });
+                instance.focus();
+                await awaitsFor(function () {
+                    return testWindow.document.activeElement === instance.terminal.textarea;
+                }, "terminal input to have focus", 3000);
+
+                const key = {key: "ArrowUp", code: "ArrowUp", keyCode: 38, which: 38,
+                    altKey: true, bubbles: true, cancelable: true};
+                instance.terminal.textarea.dispatchEvent(new testWindow.KeyboardEvent("keydown", key));
+                instance.terminal.textarea.dispatchEvent(new testWindow.KeyboardEvent("keyup", key));
+                await awaitsFor(function () {
+                    return input.includes("\x1b[1;3A");
+                }, "Alt+Up escape sequence to reach the terminal", 3000);
+                expect(execute).not.toHaveBeenCalled();
+            } finally {
+                if (inputListener) {
+                    inputListener.dispose();
+                }
+                await termModule._disposeAll();
+                WorkspaceManager.getPanelForID(PANEL_ID).hide();
+            }
+        });
+
         describe("Context menu commands", function () {
             let CommandManager;
 
@@ -631,6 +902,43 @@ define(function (require, exports, module) {
                 CommandManager =
                     testWindow.brackets.test.CommandManager;
             });
+
+            it("should open Copy, Paste and Clear Terminal on right-click",
+                async function () {
+                    const Menus = testWindow.brackets.test.Menus;
+                    const ctxMenu = Menus.getContextMenu("terminal-context-menu");
+                    const termModule = testWindow.brackets.getModule("extensionsIntegrated/Terminal/main");
+                    const commandStates = ["terminal.copy", "terminal.paste", "terminal.clear"].map(function (id) {
+                        const command = CommandManager.get(id);
+                        return {command, enabled: command.getEnabled()};
+                    });
+                    try {
+                        await openTerminal();
+                        await waitForShellReady();
+                        const active = getActiveTerminal();
+                        active.terminal.clearSelection();
+                        active.$container.find(".xterm-screen").trigger(testWindow.$.Event("contextmenu", {
+                            pageX: 100,
+                            pageY: 100
+                        }));
+                        await awaitsFor(function () {
+                            return testWindow.$("#terminal-context-menu.open > .dropdown-menu").is(":visible");
+                        }, "terminal context menu to open on right-click", 3000);
+
+                        const labels = testWindow.$("#terminal-context-menu .menu-name").map(function () {
+                            return testWindow.$(this).text();
+                        }).get();
+                        expect(labels).toEqual([Strings.CMD_COPY, Strings.CMD_PASTE, Strings.TERMINAL_CLEAR]);
+                        expect(CommandManager.get("terminal.copy").getEnabled()).toBeFalse();
+                        expect(CommandManager.get("terminal.paste").getEnabled()).toBeTrue();
+                        expect(CommandManager.get("terminal.clear").getEnabled()).toBeTrue();
+                    } finally {
+                        ctxMenu.close();
+                        commandStates.forEach(function (state) { state.command.setEnabled(state.enabled); });
+                        await termModule._disposeAll();
+                        WorkspaceManager.getPanelForID(PANEL_ID).hide();
+                    }
+                });
 
             it("should clear the terminal screen",
                 async function () {
