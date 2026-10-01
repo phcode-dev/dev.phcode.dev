@@ -1351,7 +1351,12 @@ define(function (require, exports, module) {
                     // just exec and return if no compare function is specified
                     return true;
                 },
-                "awaitRemoteExec",
+                // Name the script and the page's last answer: a spec may wait on several of
+                // these in a row, and a bare "awaitRemoteExec" never said which one stalled.
+                function () {
+                    return "awaitRemoteExec: " + script + " - last reply: " +
+                        (replied ? JSON.stringify(result) : "none");
+                },
                 5000,
                 50
             );
@@ -1423,6 +1428,27 @@ define(function (require, exports, module) {
                 });
 
             await endPreviewSession();
+        }, 30000);
+
+        it("should highlight the same element after opening preview with a restored cursor", async function () {
+            await endPreviewSession();
+            try {
+                await awaitsForDone(SpecRunnerUtils.openProjectFiles(["simple1.html"]),
+                    "SpecRunnerUtils.openProjectFiles simple1.html");
+                const editor = EditorManager.getActiveEditor();
+                editor.setCursorPos({ line: 11, ch: 10 });
+
+                // Attaching the live document attempts to highlight this cursor before the
+                // preview connects. A failed send must not suppress later cursor updates.
+                LiveDevMultiBrowser.open();
+                await awaitsFor(() => LiveDevMultiBrowser.status === LiveDevMultiBrowser.STATUS_ACTIVE,
+                    "preview connected with a restored cursor", 20000);
+                editor.setCursorPos({ line: 11, ch: 11 });
+                await forRemoteExec("_LD.getHighlightCount()", result => result === 1);
+                await forRemoteExec("_LD.getHighlightTrackingElement(0).id", result => result === "testId");
+            } finally {
+                await endPreviewSession();
+            }
         }, 30000);
 
         it("should live highlight resize as window size changes", async function () {
