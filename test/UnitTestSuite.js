@@ -119,6 +119,7 @@ define(function (require, exports, module) {
     require("spec/LiveDevelopmentCustomServer-test");
     require("spec/LivePreviewTabs-test");
     require("spec/md-editor-integ-test");
+    require("spec/md-ask-ai-integ-test");
     require("spec/md-editor-edit-integ-test");
     require("spec/md-editor-edit-more-integ-test");
     require("spec/md-editor-table-integ-test");
@@ -161,6 +162,7 @@ define(function (require, exports, module) {
     require("spec/MediaServer-test");
     require("spec/NpmNodeShim-test");
     require("spec/AIImageTools-test");
+    require("spec/AICliConnector-test");
     // pro test suite optional components
     require("./pro-test-suite");
     // todo TEST_MODERN
