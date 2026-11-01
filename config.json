@@ -35,11 +35,11 @@
         "extensionTakedownURL": "https://updates.phcode.io/extension_takedown.json",
         "lsp_server_pins": {
             "intelephense": "1.18.5",
-            "pyrefly": "1.2.0",
-            "ruff": "0.16.5"
+            "pyrefly": "1.4.0",
+            "ruff": "0.17.3"
         },
         "linting.enabled_by_default": true,
-        "build_timestamp": "2026-10-29T05:24:03.546Z",
+        "build_timestamp": "2026-11-01T02:01:12.900Z",
         "googleAnalyticsID": "G-FP5S9BKDSJ",
         "googleAnalyticsIDDesktop": "G-D5R1Y6PTS8",
         "mixPanelID": "a7e08ffd43c37767c29b13df1d2e6c62",
@@ -51,7 +51,7 @@
         "bugsnagEnv": "staging"
     },
     "name": "Phoenix Code",
-    "version": "5.6.0-23835",
+    "version": "5.6.0-23836",
     "apiVersion": "5.6.0",
     "homepage": "https://core.ai",
     "issues": {
